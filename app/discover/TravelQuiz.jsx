@@ -20,19 +20,27 @@ const questions = [
   {
     id: "escape",
     question: "How should it feel?",
-    type: "text",
+    type: "visual",
     options: [
-      { label: "Slow mornings" }, { label: "Balanced days" }, { label: "Packed schedule" },
-      { label: "Mostly relaxing" }, { label: "Adventure days" }, { label: "Surprise me" },
+      { label: "Slow mornings", image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085", alt: "A beautiful slow morning with coffee" },
+      { label: "Balanced days", image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee", alt: "A calm open road beneath a wide sky" },
+      { label: "Packed schedule", image: "https://images.unsplash.com/photo-1519501025264-65ba15a82390", alt: "A vibrant city seen from above" },
+      { label: "Mostly relaxing", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e", alt: "Clear water and a quiet tropical beach" },
+      { label: "Adventure days", image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b", alt: "A hiker overlooking dramatic mountains" },
+      { label: "Surprise me", image: "https://images.unsplash.com/photo-1527631746610-bca00a040d60", alt: "Travelers laughing together in the sun" },
     ],
   },
   {
     id: "self",
     question: "Who’s coming?",
-    type: "text",
+    type: "visual",
     options: [
-      { label: "Solo", display: "Just me" }, { label: "Couple", display: "Two of us" },
-      { label: "Friends" }, { label: "Family" }, { label: "Honeymoon" }, { label: "Not sure" },
+      { label: "Solo", display: "Just me", image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee", alt: "A solo traveler on an open road" },
+      { label: "Couple", display: "Two of us", image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac", alt: "A couple traveling together" },
+      { label: "Friends", image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac", alt: "Friends sharing a memorable trip" },
+      { label: "Family", image: "https://images.unsplash.com/photo-1511895426328-dc8714191300", alt: "A family enjoying time together" },
+      { label: "Honeymoon", image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed", alt: "Newlyweds in an elegant destination" },
+      { label: "Not sure", image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828", alt: "A stylish traveler ready for anywhere" },
     ],
   },
   {
@@ -64,20 +72,27 @@ const questions = [
   {
     id: "memory",
     question: "What are we spending?",
-    type: "text",
+    type: "visual",
     options: [
-      { label: "Smart value" }, { label: "Comfortable" }, { label: "Premium" },
-      { label: "Blowout" }, { label: "Mixed" }, { label: "Not sure" },
+      { label: "Smart value", image: "https://images.unsplash.com/photo-1528127269322-539801943592", alt: "A beautiful affordable tropical stay" },
+      { label: "Comfortable", image: "https://images.unsplash.com/photo-1566073771259-6a8506099945", alt: "A comfortable resort pool and terrace" },
+      { label: "Premium", image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c", alt: "A refined contemporary hotel interior" },
+      { label: "Blowout", image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb", alt: "A spectacular luxury hotel" },
+      { label: "Mixed", image: "https://images.unsplash.com/photo-1445019980597-93fa8acb246c", alt: "An elegant hotel room with a view" },
+      { label: "Not sure", image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828", alt: "A stylish traveler considering the possibilities" },
     ],
   },
   {
     id: "length",
     question: "How long are you gone?",
-    type: "text",
+    type: "visual",
     options: [
-      { label: "Long Weekend", display: "A long weekend" }, { label: "Five Nights", display: "Five nights" },
-      { label: "One Week", display: "A week" }, { label: "Ten Days", display: "Ten days" },
-      { label: "Two Weeks", display: "Two weeks" }, { label: "Open-Ended", display: "Open-ended" },
+      { label: "Long Weekend", display: "A long weekend", image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34", alt: "Paris for a long city weekend" },
+      { label: "Five Nights", display: "Five nights", image: "https://images.unsplash.com/photo-1533105079780-92b9be482077", alt: "A five-night escape on the Amalfi Coast" },
+      { label: "One Week", display: "A week", image: "https://images.unsplash.com/photo-1528360983277-13d401cdc186", alt: "A week exploring Kyoto" },
+      { label: "Ten Days", display: "Ten days", image: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429", alt: "A ten-day mountain journey" },
+      { label: "Two Weeks", display: "Two weeks", image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee", alt: "A long road trip beneath a vast sky" },
+      { label: "Open-Ended", display: "Open-ended", image: "https://images.unsplash.com/photo-1483729558449-99ef09a8c325", alt: "Rio de Janeiro and an open-ended adventure" },
     ],
   },
 ];
@@ -116,21 +131,6 @@ function VisualQuestion({ question, value, onChoose }) {
           })}
         </div>
       </div>
-    </div>
-  );
-}
-
-function TextQuestion({ question, value, step, onChoose, onBack }) {
-  return (
-    <div className="quiz-stage flex min-h-[calc(100svh-5rem)] flex-col px-5 pb-10 pt-9 sm:px-10 lg:px-16">
-      <div className="flex items-center justify-between"><span className="text-xl font-semibold tracking-[-0.055em]">GLOBTREK</span><Progress step={step} /></div>
-      <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center py-16">
-        <h1 className="max-w-5xl text-[clamp(3.6rem,8vw,8.5rem)] font-medium leading-[0.88] tracking-[-0.075em]">{question.question}</h1>
-        <div className="mt-14 border-t border-black/15">
-          {question.options.map((option, index) => <button type="button" key={option.label} onClick={() => onChoose(option.label)} className={`group flex min-h-16 w-full items-center justify-between border-b border-black/15 py-4 text-left text-xl transition-colors sm:min-h-20 sm:text-3xl ${value === option.label ? "text-black" : "text-[#777] hover:text-black"}`}><span><span className="mr-5 text-[10px] tabular-nums text-[#999]">{String(index + 1).padStart(2, "0")}</span>{option.display || option.label}</span><span aria-hidden="true" className={`text-lg transition-transform ${value === option.label ? "translate-x-0 opacity-100" : "-translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100"}`}>→</span></button>)}
-        </div>
-      </div>
-      <button type="button" onClick={onBack} className="min-h-11 w-fit text-xs text-[#777] underline decoration-black/20 hover:text-black">Back</button>
     </div>
   );
 }
@@ -216,6 +216,6 @@ export default function TravelQuiz() {
   if (phase === "complete") return <div className="grid min-h-[calc(100svh-5rem)] place-items-center bg-[#f5f3ef] px-5"><p className="text-[clamp(3.5rem,8vw,8rem)] font-medium tracking-[-0.07em]">We found it.</p></div>;
 
   return <section id="quiz" className={`overflow-hidden bg-[#f5f3ef] text-[#171717] transition-[opacity,transform] duration-300 ease-out ${phase === "leaving" ? "-translate-y-2 opacity-0" : phase === "leaving-back" ? "translate-y-2 opacity-0" : phase === "entering" ? "translate-y-2 opacity-0" : "translate-y-0 opacity-100"}`}>
-    {step < questions.length ? current.type === "visual" ? <VisualQuestion question={current} value={answers[current.id]} onChoose={choose} /> : <TextQuestion question={current} value={answers[current.id]} step={step} onChoose={choose} onBack={back} /> : <DateQuestion answers={answers} setAnswers={setAnswers} tripStart={tripStart} tripEnd={tripEnd} isFlexible={isFlexible} setTripStart={setTripStart} setTripEnd={setTripEnd} setIsFlexible={setIsFlexible} onBack={back} onSubmit={submit} canSubmit={canSubmit} />}
+    {step < questions.length ? <VisualQuestion question={current} value={answers[current.id]} onChoose={choose} /> : <DateQuestion answers={answers} setAnswers={setAnswers} tripStart={tripStart} tripEnd={tripEnd} isFlexible={isFlexible} setTripStart={setTripStart} setTripEnd={setTripEnd} setIsFlexible={setIsFlexible} onBack={back} onSubmit={submit} canSubmit={canSubmit} />}
   </section>;
 }
