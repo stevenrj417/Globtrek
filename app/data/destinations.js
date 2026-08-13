@@ -91,6 +91,11 @@ export const bookingLinks = {
   taxis: "https://www.dpbolvw.net/click-101801755-17322565",
 };
 
+export function bookingStayUrl(destination) {
+  const target = `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(`${destination.city}, ${destination.country}`)}`;
+  return `${bookingLinks.stays}?url=${encodeURIComponent(target)}`;
+}
+
 export function diningSearchUrl(destination) {
   return `https://www.google.com/maps/search/${encodeURIComponent(`restaurants in ${destination.city}, ${destination.country}`)}`;
 }

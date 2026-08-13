@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { bookingLinks, destinations, diningSearchUrl, scoreDestination } from "../data/destinations";
+import { bookingLinks, bookingStayUrl, destinations, diningSearchUrl, scoreDestination } from "../data/destinations";
 
 const navItems = [
   ["Discover", "/#discover"],
@@ -297,7 +297,7 @@ export default function ResultsPage() {
               </div>
 
               <div className="mt-10 flex flex-wrap gap-4">
-                <a href={bookingLinks.stays} target="_blank" rel="noopener sponsored" className="bg-[#efe6dc] px-8 py-4 text-sm font-semibold uppercase tracking-[0.14em] text-black transition duration-300 hover:bg-white">
+                <a href={bookingStayUrl(primaryTrip)} target="_blank" rel="noopener sponsored" className="bg-[#efe6dc] px-8 py-4 text-sm font-semibold uppercase tracking-[0.14em] text-black transition duration-300 hover:bg-white">
                   Search stays ↗
                 </a>
                 <Link
@@ -332,7 +332,7 @@ export default function ResultsPage() {
             <p className="mt-5 max-w-3xl text-sm leading-7 text-[#b8a796]">Continue to Booking.com to check current inventory, pricing, availability, and final terms. Restaurant ideas open as a local map search; GlobTrek does not claim live restaurant availability.</p>
             <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {[
-                ["Hotels & stays", `Find a base in ${primaryTrip.city}`, bookingLinks.stays, true],
+                ["Hotels & stays", `Find a base in ${primaryTrip.city}`, bookingStayUrl(primaryTrip), true],
                 ["Flights", `Compare routes to ${primaryTrip.airport}`, bookingLinks.flights, true],
                 ["Activities", `See things to do in ${primaryTrip.city}`, bookingLinks.activities, true],
                 ["Rental cars", "Compare current car options", bookingLinks.cars, true],
