@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #f7f7f4;
   --foreground: #171717;
 }
 
@@ -12,23 +12,64 @@
   --font-mono: "SFMono-Regular", "SF Mono", Consolas, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
+  overflow-x: hidden;
   font-family: "Avenir Next", "Inter", "Helvetica Neue", Arial, sans-serif;
   text-rendering: geometricPrecision;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+*:focus-visible {
+  outline: 2px solid #171717;
+  outline-offset: 4px;
+}
+
+::selection {
+  background: #171717;
+  color: #ffffff;
+}
+
 a,
 button {
   text-underline-offset: 0.25em;
+}
+
+.brand-mark {
+  filter: invert(1);
+  mix-blend-mode: multiply;
+}
+
+.image-calm {
+  transition: transform 600ms cubic-bezier(.2,.7,.2,1);
+}
+
+.group:hover .image-calm {
+  transform: scale(1.018);
+}
+
+@keyframes quiet-reveal {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation: quiet-reveal both linear;
+    animation-timeline: view();
+    animation-range: entry 5% cover 28%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

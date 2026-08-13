@@ -2,7 +2,7 @@ const destinations = [
   {
     name: "KYOTO, JAPAN",
     image: "https://images.unsplash.com/photo-1528360983277-13d401cdc186",
-    price: "Estimated $4,850-$6,400 per person",
+    price: "Est. $4,850–$6,400 per person",
     costs: ["Flights: $1,100-$1,600", "Stay: $2,400-$3,300", "Food: $650-$900", "Experiences: $700-$900"],
     nights: "6 nights",
     style: "Culture / Food / Slow mornings",
@@ -23,7 +23,7 @@ const destinations = [
   {
     name: "AMALFI COAST, ITALY",
     image: "https://images.unsplash.com/photo-1533105079780-92b9be482077",
-    price: "Estimated $5,900-$8,200 per person",
+    price: "Est. $5,900–$8,200 per person",
     costs: ["Flights: $900-$1,400", "Stay: $3,600-$5,200", "Food: $800-$1,100", "Experiences: $600-$900"],
     nights: "5 nights",
     style: "Ocean / Romance / Long lunches",
@@ -43,7 +43,7 @@ const destinations = [
   {
     name: "BANFF, CANADA",
     image: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429",
-    price: "Estimated $3,750-$5,600 per person",
+    price: "Est. $3,750–$5,600 per person",
     costs: ["Flights: $450-$850", "Stay: $2,100-$3,200", "Food: $550-$800", "Experiences: $650-$750"],
     nights: "6 nights",
     style: "Mountains / Lodge / Big views",
@@ -64,7 +64,7 @@ const destinations = [
   {
     name: "PROVENCE, FRANCE",
     image: "https://images.unsplash.com/photo-1499002238440-d264edd596ec",
-    price: "Estimated $4,250-$6,100 per person",
+    price: "Est. $4,250–$6,100 per person",
     costs: ["Flights: $850-$1,300", "Stay: $2,200-$3,300", "Food: $650-$950", "Car + experiences: $550-$700"],
     nights: "7 nights",
     style: "Road Trips / Markets / Villa days",
@@ -86,7 +86,7 @@ const destinations = [
   {
     name: "MEXICO CITY, MEXICO",
     image: "https://images.unsplash.com/photo-1518659526054-190340b32735",
-    price: "Estimated $2,950-$4,800 per person",
+    price: "Est. $2,950–$4,800 per person",
     costs: ["Flights: $450-$900", "Stay: $1,300-$2,200", "Food: $500-$850", "Experiences: $450-$850"],
     nights: "5 nights",
     style: "Cities / Food / Design",
@@ -106,7 +106,7 @@ const destinations = [
   {
     name: "RIO DE JANEIRO, BRAZIL",
     image: "https://images.unsplash.com/photo-1483729558449-99ef09a8c325",
-    price: "Estimated $4,600-$6,900 per person",
+    price: "Est. $4,600–$6,900 per person",
     costs: ["Flights: $1,000-$1,600", "Stay: $2,200-$3,500", "Food: $650-$950", "Experiences: $750-$850"],
     nights: "6 nights",
     style: "Surprise / Beach / Music",
@@ -197,7 +197,7 @@ export async function POST(request) {
           {
             role: "system",
             content:
-              "You are Globtrek's premium travel matching AI. Rank only the provided destinations. Choose a strong fit, but if several options are close, vary the reveal instead of always choosing the same destination. Include realistic trip-planning rationale and mock costs. Return strict JSON with rankedNames, why, and itinerary. No markdown.",
+              "You are GlobTrek's travel matching assistant. Rank only the provided destinations using the traveler's stated preferences. Choose a strong fit, but if several options are close, vary the reveal instead of always choosing the same destination. Explain the recommendation using only the supplied preferences and destination attributes. Do not invent prices, ratings, availability, bookings, or provider relationships. Return strict JSON with rankedNames, why, and itinerary. No markdown.",
           },
           {
             role: "user",

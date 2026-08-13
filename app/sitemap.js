@@ -1,6 +1,16 @@
-const siteUrl = "https://glob-trek.com";
+const siteUrl = "https://www.glob-trek.com";
 
-const routes = ["", "/discover", "/thinking", "/results"];
+const routes = [
+  "",
+  "/discover",
+  "/about",
+  "/how-it-works",
+  "/contact",
+  "/privacy",
+  "/terms",
+  "/affiliate-disclosure",
+  "/demo-booking",
+];
 
 export default function sitemap() {
   return routes.map((route) => ({

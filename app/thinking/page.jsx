@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { BrandMark } from "../components/BrandMark";
 
 const thoughts = [
   "Reading your travel mood",
@@ -28,25 +29,26 @@ export default function ThinkingPage() {
   }, []);
 
   return (
-    <main className="grid min-h-screen place-items-center bg-[#070604] px-6 text-[#efe6dc]">
-      <section className="w-full max-w-3xl border-y border-[#efe6dc]/10 py-16 text-center">
-        <p className="text-[10px] uppercase tracking-[0.28em] text-[#b8a796]">
-          Globtrek AI · Coming Soon
+    <main className="grid min-h-screen place-items-center bg-[#f7f7f4] px-6 text-[#171717]">
+      <section className="w-full max-w-3xl border-y border-black/10 py-16 text-center">
+        <BrandMark className="mx-auto mb-7" />
+        <p className="text-xs font-semibold uppercase tracking-[0.1em] text-[#707070]">
+          Finding your trip
         </p>
-        <h1 className="mt-6 text-[clamp(2.4rem,6vw,5rem)] font-light leading-[0.95]">
-          Thinking through your trip
+        <h1 className="mt-6 text-[clamp(2.4rem,6vw,5rem)] font-semibold leading-[0.92] tracking-[-0.06em]">
+          Matching what matters.
         </h1>
-        <div className="mx-auto mt-10 h-px max-w-md bg-[#efe6dc]/10">
+        <div className="mx-auto mt-10 h-px max-w-md bg-black/10">
           <div
-            className="h-px bg-[#efe6dc] transition-all duration-700"
+            className="h-px bg-black transition-all duration-700"
             style={{ width: `${((index + 1) / thoughts.length) * 100}%` }}
           />
         </div>
-        <p className="mt-8 text-sm uppercase tracking-[0.18em] text-[#d8c7b6]">
+        <p className="mt-8 text-sm text-[#606060]">
           {thoughts[index]}
         </p>
         <Link
-          className="mt-12 inline-block text-xs uppercase tracking-[0.18em] text-[#8f857b] transition hover:text-[#efe6dc]"
+          className="mt-12 inline-block text-xs font-medium text-[#707070] underline decoration-black/20 transition hover:text-black hover:decoration-black"
           href="/results"
         >
           Skip wait
