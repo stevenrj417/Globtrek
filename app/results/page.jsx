@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { bookingActivityUrl, bookingFlightUrl, bookingLinks, bookingStayUrl, destinations, diningSearchUrl, scoreDestination } from "../data/destinations";
+import { bookingActivityUrl, bookingFlightUrl, bookingLinks, destinations, diningSearchUrl, scoreDestination } from "../data/destinations";
+import { hotelsFor } from "../data/hotels";
 
 function getMatches(quiz) {
   const answers = quiz?.answers || {};
@@ -15,6 +16,87 @@ function getMatches(quiz) {
 function formatDate(value) {
   if (!value) return null;
   return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" }).format(new Date(`${value}T00:00:00Z`));
+}
+
+function bookingHotelUrl(destination, hotelName, trip = {}) {
+  const params = new URLSearchParams({ ss: `${hotelName}, ${destination.city}, ${destination.country}` });
+  if (!trip?.isFlexible && trip?.tripStart && trip?.tripEnd) {
+    params.set("checkin", trip.tripStart);
+    params.set("checkout", trip.tripEnd);
+  }
+  const adults = Number.parseInt(trip?.guestCount, 10);
+  params.set("group_adults", String(Number.isFinite(adults) && adults > 0 ? Math.min(adults, 30) : 2));
+  params.set("no_rooms", "1");
+  params.set("group_children", "0");
+  const target = `https://www.booking.com/searchresults.html?${params.toString()}`;
+  return `${bookingLinks.stays}?url=${encodeURIComponent(target)}`;
+}
+
+function HotelShortlist({ destination, quiz }) {
+  const hotels = useMemo(() => hotelsFor(destination), [destination]);
+  const [selected, setSelected] = useState(null);
+  const [customHotel, setCustomHotel] = useState("");
+  const [editingCustom, setEditingCustom] = useState(false);
+
+  useEffect(() => {
+    const raw = window.localStorage.getItem(`globtrekStay:${destination.city}`);
+    if (raw) setSelected(JSON.parse(raw));
+  }, [destination.city]);
+
+  function choose(stay) {
+    setSelected(stay);
+    window.localStorage.setItem(`globtrekStay:${destination.city}`, JSON.stringify(stay));
+  }
+
+  function remove() {
+    setSelected({ type: "none", name: "No hotel needed" });
+    window.localStorage.setItem(`globtrekStay:${destination.city}`, JSON.stringify({ type: "none", name: "No hotel needed" }));
+  }
+
+  function addCustom(event) {
+    event.preventDefault();
+    const name = customHotel.trim();
+    if (!name) return;
+    choose({ type: "custom", name });
+    setEditingCustom(false);
+  }
+
+  const selectedHotel = selected?.type !== "none" ? selected : null;
+
+  return <section className="mt-24">
+    <div className="flex flex-col gap-6 border-b border-black/15 pb-8 sm:flex-row sm:items-end sm:justify-between">
+      <div><p className="text-[10px] uppercase tracking-[0.3em] text-black/45">Your stay</p><h2 className="mt-5 font-serif text-[clamp(2.4rem,5vw,4.8rem)] tracking-[-0.04em]">Four worth traveling for</h2></div>
+      <p className="max-w-md text-sm font-light leading-6 text-black/50">An editorial shortlist for {destination.city}. Booking.com confirms live rooms, prices, and final terms.</p>
+    </div>
+
+    <div className="grid gap-px bg-black/15 md:grid-cols-2 xl:grid-cols-4">
+      {hotels.map((hotel, index) => {
+        const isSelected = selected?.id === hotel.id;
+        return <article key={hotel.id} className="group bg-[#f3f0eb]">
+          <div className="relative aspect-[4/5] overflow-hidden bg-black/5">
+            <Image src={hotel.image} alt={`${hotel.name} in ${destination.city}`} fill className={`object-cover transition duration-700 group-hover:scale-[1.025] ${index === 1 ? "object-[65%_center]" : index === 2 ? "object-[35%_center]" : index === 3 ? "object-bottom" : "object-center"}`} sizes="(min-width:1280px) 25vw,(min-width:768px) 50vw,100vw" quality={88} />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
+            <p className="absolute left-5 top-5 text-[9px] uppercase tracking-[0.25em] text-white/80">0{index + 1} · {hotel.descriptor}</p>
+            {isSelected && <span className="absolute right-5 top-5 bg-white px-3 py-2 text-[9px] uppercase tracking-[0.2em] text-black">Selected</span>}
+            <div className="absolute inset-x-5 bottom-5 text-white"><h3 className="font-serif text-[1.65rem] leading-[1.05]">{hotel.name}</h3><p className="mt-3 text-[9px] uppercase tracking-[0.2em] text-white/65">{destination.city}, {destination.country}</p></div>
+          </div>
+          <div className="grid grid-cols-2 border-b border-black/10">
+            <button type="button" onClick={() => choose({ ...hotel, type: "curated" })} className={`min-h-14 border-r border-black/10 text-[10px] uppercase tracking-[0.18em] transition ${isSelected ? "bg-black text-white" : "hover:bg-black hover:text-white"}`}>{isSelected ? "In your trip" : "Select stay"}</button>
+            <a href={bookingHotelUrl(destination, hotel.name, quiz)} target="_blank" rel="noopener sponsored" className="grid min-h-14 place-items-center text-[10px] uppercase tracking-[0.18em] transition hover:bg-black hover:text-white">Check live →</a>
+          </div>
+        </article>;
+      })}
+    </div>
+
+    <div className="border-b border-black/15 py-7">
+      {editingCustom ? <form onSubmit={addCustom} className="flex flex-col gap-3 sm:flex-row"><input autoFocus value={customHotel} onChange={(event) => setCustomHotel(event.target.value)} placeholder="Hotel name" className="min-h-14 flex-1 border border-black/20 bg-transparent px-5 font-serif text-lg outline-none focus:border-black" /><button className="min-h-14 bg-black px-8 text-[10px] uppercase tracking-[0.18em] text-white">Add to trip</button><button type="button" onClick={() => setEditingCustom(false)} className="min-h-14 px-5 text-[10px] uppercase tracking-[0.18em]">Cancel</button></form> : <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+        <p className="font-serif text-xl">{selected ? selected.name : "Choose one—or keep the trip open."}</p>
+        <div className="flex flex-wrap gap-x-6 gap-y-3 text-[10px] uppercase tracking-[0.18em]"><button onClick={() => setEditingCustom(true)}>Add another hotel</button><button onClick={remove}>I already have a stay</button>{selected && <button onClick={() => { setSelected(null); window.localStorage.removeItem(`globtrekStay:${destination.city}`); }}>Clear</button>}</div>
+      </div>}
+    </div>
+
+    {selectedHotel && <a href={bookingHotelUrl(destination, selectedHotel.name, quiz)} target="_blank" rel="noopener sponsored" className="mt-8 flex min-h-20 items-center justify-between bg-[#171714] px-7 text-white sm:px-10"><span><span className="block text-[9px] uppercase tracking-[0.24em] text-white/50">Selected stay</span><strong className="mt-2 block font-serif text-xl font-normal sm:text-2xl">{selectedHotel.name}</strong></span><span className="text-[10px] uppercase tracking-[0.2em]">Check rooms →</span></a>}
+  </section>;
 }
 
 export default function ResultsPage() {
@@ -45,7 +127,6 @@ export default function ResultsPage() {
     : [formatDate(quiz?.tripStart), formatDate(quiz?.tripEnd)].filter(Boolean).join(" — ") || "Flexible dates";
   const companions = quiz?.answers?.self || "Your trip";
   const tools = [
-    ["Stay", `Hotels in ${trip.city}`, bookingStayUrl(trip, quiz), true],
     ["Fly", `Flights to ${trip.airport}`, bookingFlightUrl(trip, quiz), true],
     ["Do", `Experiences in ${trip.city}`, bookingActivityUrl(trip), true],
     ["Drive", "Cars & transfers", bookingLinks.cars, true],
@@ -82,6 +163,8 @@ export default function ResultsPage() {
             <span>{trip.nights}</span><span>{trip.season}</span><span>{trip.price}</span>
           </div>
         </div>
+
+        <HotelShortlist destination={trip} quiz={quiz} />
 
         <div className="mt-24 border-y border-black/15">
           {tools.map(([label, detail, href, sponsored]) => (
