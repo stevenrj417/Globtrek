@@ -5,388 +5,109 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { bookingLinks, bookingStayUrl, destinations, diningSearchUrl, scoreDestination } from "../data/destinations";
 
-const navItems = [
-  ["Discover", "/#discover"],
-  ["Quiz", "/discover"],
-  ["Collections", "/#collections"],
-  ["Journal", "/#journal"],
-];
-
-/*const legacyDestinations = [
-  {
-    name: "KYOTO, JAPAN",
-    image: "https://images.unsplash.com/photo-1528360983277-13d401cdc186",
-    price: "Estimated $4,850-$6,400 per person",
-    costs: ["Flights: $1,100-$1,600", "Stay: $2,400-$3,300", "Food: $650-$900", "Experiences: $700-$900"],
-    nights: "6 nights",
-    style: "Culture / Food / Slow mornings",
-    season: "Spring or fall",
-    tags: ["Culture", "Slow mornings", "Balanced days", "Solo", "Couple", "Traditional inn", "Boutique hotel", "Food", "Premium", "One Week"],
-    why:
-      "Kyoto fits a traveler who wants ritual, beauty, food, and quiet depth. Your answers point toward a trip that should unfold slowly, with temples, markets, tea, and evenings that feel considered rather than crowded.",
-    itinerary: [
-      "Day 1: Arrive, settle in, evening walk",
-      "Day 2: Temples, gardens, tea",
-      "Day 3: Food markets and old streets",
-      "Day 4: Day trip to Nara or Arashiyama",
-      "Day 5: Slow morning, shopping, dinner",
-      "Day 6: Final full day",
-      "Day 7: Depart",
-    ],
-  },
-  {
-    name: "AMALFI COAST, ITALY",
-    image: "https://images.unsplash.com/photo-1533105079780-92b9be482077",
-    price: "Estimated $5,900-$8,200 per person",
-    costs: ["Flights: $900-$1,400", "Stay: $3,600-$5,200", "Food: $800-$1,100", "Experiences: $600-$900"],
-    nights: "5 nights",
-    style: "Ocean / Romance / Long lunches",
-    season: "May, June, or September",
-    tags: ["Ocean", "Mostly relaxing", "Couple", "Honeymoon", "Beach resort", "Private villa", "Food", "Premium", "Blowout", "Five Nights"],
-    why:
-      "Your choices lean toward water, pleasure, and a trip that feels sun-warmed without being overplanned. Amalfi gives you boat days, cliffside hotels, lingering meals, and a little drama every time the road bends.",
-    itinerary: [
-      "Day 1: Arrive, terrace dinner",
-      "Day 2: Positano, beach club, late lunch",
-      "Day 3: Private boat day",
-      "Day 4: Ravello gardens and music",
-      "Day 5: Slow coast drive, final dinner",
-      "Day 6: Depart",
-    ],
-  },
-  {
-    name: "BANFF, CANADA",
-    image: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429",
-    price: "Estimated $3,750-$5,600 per person",
-    costs: ["Flights: $450-$850", "Stay: $2,100-$3,200", "Food: $550-$800", "Experiences: $650-$750"],
-    nights: "6 nights",
-    style: "Mountains / Lodge / Big views",
-    season: "Late summer or early fall",
-    tags: ["Mountains", "Adventure days", "Family", "Friends", "Mountain lodge", "Nature", "Comfortable", "One Week", "Two Weeks"],
-    why:
-      "Your answers point to scale, air, and the kind of reset that happens when the landscape does most of the talking. Banff is a strong fit for alpine mornings, blue lakes, lodge evenings, and days that feel clean and expansive.",
-    itinerary: [
-      "Day 1: Arrive, settle into the lodge",
-      "Day 2: Lake Louise and Moraine Lake",
-      "Day 3: Scenic drive and lookout picnic",
-      "Day 4: Spa morning, mountain dinner",
-      "Day 5: Hike or helicopter view",
-      "Day 6: Slow final day",
-      "Day 7: Depart",
-    ],
-  },
-  {
-    name: "PROVENCE, FRANCE",
-    image: "https://images.unsplash.com/photo-1499002238440-d264edd596ec",
-    price: "Estimated $4,250-$6,100 per person",
-    costs: ["Flights: $850-$1,300", "Stay: $2,200-$3,300", "Food: $650-$950", "Car + experiences: $550-$700"],
-    nights: "7 nights",
-    style: "Road Trips / Markets / Villa days",
-    season: "June or September",
-    tags: ["Road Trips", "Slow mornings", "Couple", "Family", "Private villa", "Food", "Shopping", "Premium", "Ten Days"],
-    why:
-      "You chose movement, space, and a slower rhythm. Provence gives you village roads, morning markets, pool afternoons, and enough freedom for the trip to feel discovered instead of scheduled.",
-    itinerary: [
-      "Day 1: Arrive, villa check-in",
-      "Day 2: Market morning and countryside lunch",
-      "Day 3: Luberon villages by car",
-      "Day 4: Winery and slow afternoon",
-      "Day 5: Antiques, galleries, dinner",
-      "Day 6: Open road day",
-      "Day 7: Final village lunch",
-      "Day 8: Depart",
-    ],
-  },
-  {
-    name: "MEXICO CITY, MEXICO",
-    image: "https://images.unsplash.com/photo-1518659526054-190340b32735",
-    price: "Estimated $2,950-$4,800 per person",
-    costs: ["Flights: $450-$900", "Stay: $1,300-$2,200", "Food: $500-$850", "Experiences: $450-$850"],
-    nights: "5 nights",
-    style: "Cities / Food / Design",
-    season: "October through April",
-    tags: ["Cities", "Packed schedule", "Friends", "Solo", "Design hotel", "Food", "Nightlife", "Shopping", "Smart value", "Long Weekend", "Five Nights"],
-    why:
-      "Your answers suggest appetite, energy, and a need for texture. Mexico City gives you galleries, design hotels, street food, late dinners, and neighborhoods that reward curiosity block by block.",
-    itinerary: [
-      "Day 1: Arrive, Roma Norte dinner",
-      "Day 2: Museums, parks, cocktail bar",
-      "Day 3: Markets and street food",
-      "Day 4: Architecture and galleries",
-      "Day 5: Slow brunch, shopping",
-      "Day 6: Depart",
-    ],
-  },
-  {
-    name: "RIO DE JANEIRO, BRAZIL",
-    image: "https://images.unsplash.com/photo-1483729558449-99ef09a8c325",
-    price: "Estimated $4,600-$6,900 per person",
-    costs: ["Flights: $1,000-$1,600", "Stay: $2,200-$3,500", "Food: $650-$950", "Experiences: $750-$850"],
-    nights: "6 nights",
-    style: "Surprise / Beach / Music",
-    season: "May through September",
-    tags: ["Surprise Me", "Surprise me", "Adventure days", "Friends", "Beach resort", "Nightlife", "Nature", "Mixed", "Open-Ended"],
-    why:
-      "Your picks leave room for instinct and surprise. Rio matches that energy with beach mornings, mountain views, music, generous meals, and a feeling that the trip is alive from the first day.",
-    itinerary: [
-      "Day 1: Arrive, Ipanema sunset",
-      "Day 2: Beach morning, music at night",
-      "Day 3: Christ the Redeemer and gardens",
-      "Day 4: Boat or island day",
-      "Day 5: Food, design, neighborhood wandering",
-      "Day 6: Final beach day",
-      "Day 7: Depart",
-    ],
-  },
-];*/
-
-function getMatches(storedQuiz) {
-  const answers = storedQuiz?.answers || {};
+function getMatches(quiz) {
+  const answers = quiz?.answers || {};
   return [...destinations]
-    .map((destination) => ({
-      ...destination,
-      score: scoreDestination(destination, answers) + Math.random() * 4.5,
-    }))
+    .map((destination) => ({ ...destination, score: scoreDestination(destination, answers) + Math.random() * 4.5 }))
     .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
 }
 
+function formatDate(value) {
+  if (!value) return null;
+  return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" }).format(new Date(`${value}T00:00:00Z`));
+}
+
 export default function ResultsPage() {
-  const [storedQuiz, setStoredQuiz] = useState(null);
-  const [aiMatches, setAiMatches] = useState(null);
-  const [matchSource, setMatchSource] = useState("local");
-  const [revealReady, setRevealReady] = useState(false);
+  const [quiz, setQuiz] = useState(null);
+  const [remoteMatches, setRemoteMatches] = useState(null);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const fade = window.setTimeout(() => setRevealReady(true), 120);
     const raw = window.localStorage.getItem("globtrekQuiz");
-    const quiz = raw ? JSON.parse(raw) : { answers: {} };
-    setStoredQuiz(quiz);
-
-    fetch("/api/match", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(quiz),
-    })
+    const stored = raw ? JSON.parse(raw) : { answers: {} };
+    setQuiz(stored);
+    fetch("/api/match", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(stored) })
       .then((response) => response.json())
-      .then((data) => {
-        if (Array.isArray(data.matches) && data.matches.length) {
-          setAiMatches(data.matches);
-          setMatchSource(data.source === "openai" ? "OpenAI" : "local");
-        }
-      })
-      .catch(() => {
-        setMatchSource("local");
-      });
-
-    return () => window.clearTimeout(fade);
+      .then((data) => Array.isArray(data.matches) && data.matches.length && setRemoteMatches(data.matches))
+      .catch(() => {});
+    const timer = window.setTimeout(() => setReady(true), 100);
+    return () => window.clearTimeout(timer);
   }, []);
 
-  const localMatches = useMemo(() => getMatches(storedQuiz), [storedQuiz]);
-  const matches = aiMatches || localMatches;
-  const primaryTrip = matches[0];
-  const otherMatches = matches.slice(1, 4);
-  const answerList = Object.values(storedQuiz?.answers || {}).slice(0, 5);
+  const localMatches = useMemo(() => getMatches(quiz), [quiz]);
+  const matches = remoteMatches || localMatches;
+  const trip = matches[0];
+  const alternatives = matches.slice(1, 4);
+  if (!trip) return null;
 
-  if (!primaryTrip) {
-    return null;
-  }
+  const dates = quiz?.isFlexible
+    ? quiz?.answers?.season || "Flexible dates"
+    : [formatDate(quiz?.tripStart), formatDate(quiz?.tripEnd)].filter(Boolean).join(" — ") || "Flexible dates";
+  const companions = quiz?.answers?.self || "Your trip";
+  const tools = [
+    ["Stay", `Hotels in ${trip.city}`, bookingStayUrl(trip), true],
+    ["Fly", `Flights to ${trip.airport}`, bookingLinks.flights, true],
+    ["Do", `Experiences in ${trip.city}`, bookingLinks.activities, true],
+    ["Drive", "Cars & transfers", bookingLinks.cars, true],
+    ["Dine", `Restaurants in ${trip.city}`, diningSearchUrl(trip), false],
+  ];
 
   return (
-    <main className="min-h-screen bg-[#070604] text-[#efe6dc]">
-      <div className="border-b border-[#efe6dc]/10 bg-[#7f634d] px-6 py-3 text-center text-[10px] uppercase tracking-[0.2em] text-[#fff7ef] sm:tracking-[0.3em]">
-        One Tab Travel · Coming Soon
-      </div>
+    <main className={`min-h-screen bg-[#f3f0eb] text-[#171714] transition duration-1000 ${ready ? "opacity-100" : "opacity-0"}`}>
+      <header className="absolute inset-x-0 top-0 z-30 flex items-center justify-between px-6 py-7 text-[#171714] sm:px-12 sm:py-10">
+        <Link href="/" className="text-[13px] font-semibold uppercase tracking-[0.32em]">Globtrēk</Link>
+        <Link href="/discover" className="group flex items-center gap-3 text-[10px] uppercase tracking-[0.2em]"><span className="hidden sm:inline">Retake quiz</span><span className="grid h-10 w-10 place-items-center rounded-full border border-black/25 transition group-hover:bg-black group-hover:text-white">↺</span></Link>
+      </header>
 
-      <nav className="border-b border-[#efe6dc]/10">
-        <div className="mx-auto flex max-w-[2200px] items-center justify-between gap-8 px-5 py-7 sm:px-8 sm:py-8">
-          <Link
-            href="/"
-            className="text-4xl font-black tracking-tight sm:text-5xl"
-          >
-            globtrek
-          </Link>
-
-          <span className="border border-[#efe6dc]/20 px-3 py-2 text-[10px] uppercase tracking-[0.18em] text-[#b8a796]">
-            Coming soon
-          </span>
-
-          <div className="hidden items-center gap-8 text-xs uppercase tracking-[0.22em] text-[#d8c7b6] md:flex">
-            {navItems.map(([label, href]) => (
-              <Link className="transition hover:text-white" href={href} key={label}>
-                {label}
-              </Link>
-            ))}
+      <section className="relative min-h-[92svh] overflow-hidden">
+        <Image src={trip.image} alt={`${trip.city}, ${trip.country}`} fill priority className="object-cover" sizes="100vw" quality={88} />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#f3f0eb]/55 via-transparent to-black/30" />
+        <div className="absolute inset-0 flex items-center justify-center px-5 text-center">
+          <div className="max-w-6xl text-white [text-shadow:0_2px_24px_rgba(0,0,0,.2)]">
+            <p className="mb-7 text-[10px] font-medium uppercase tracking-[0.35em]">Your place is</p>
+            <h1 className="font-serif text-[clamp(3.4rem,9vw,9.5rem)] font-normal leading-[0.82] tracking-[-0.055em]">{trip.city}</h1>
+            <p className="mt-7 text-[11px] uppercase tracking-[0.32em]">{trip.country}</p>
+            <p className="mt-7 text-[10px] uppercase tracking-[0.24em]">{dates} <span className="mx-3">•</span> {companions}</p>
           </div>
         </div>
-      </nav>
+        <a href="#trip" aria-label="Explore your result" className="absolute bottom-8 left-1/2 grid h-14 w-14 -translate-x-1/2 place-items-center rounded-full border border-white/70 text-xl text-white transition hover:bg-white hover:text-black">↓</a>
+      </section>
 
-      <section
-        className={`px-5 py-16 transition duration-700 sm:px-8 sm:py-24 ${
-          revealReady ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-        }`}
-      >
-        <div className="mx-auto max-w-[1800px]">
-          <div className="relative min-h-[620px] overflow-hidden border border-[#efe6dc]/10">
-            <Image
-              src={primaryTrip.image}
-              alt={primaryTrip.name}
-              fill
-              preload
-              className="object-cover"
-              sizes="100vw"
-              quality={75}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/10" />
-            <div className="absolute inset-x-0 bottom-0 z-10 p-6 sm:p-10 lg:p-14">
-              <p className="text-[10px] uppercase tracking-[0.24em] text-[#d8c7b6]">
-                {matchSource === "OpenAI" ? "OpenAI Reveal" : "AI Reveal"}
-              </p>
-              <h1 className="mt-5 text-[clamp(3rem,7.6vw,8rem)] font-light leading-[0.9] text-[#f4eadf]">
-                {primaryTrip.name}
-              </h1>
-            </div>
+      <section id="trip" className="mx-auto max-w-[1460px] px-6 py-24 sm:px-12 sm:py-32">
+        <div className="mx-auto max-w-4xl text-center">
+          <p className="text-[10px] uppercase tracking-[0.3em] text-black/50">Why this is yours</p>
+          <h2 className="mt-8 font-serif text-[clamp(2.3rem,5vw,5rem)] leading-[1.02] tracking-[-0.035em]">{trip.style}</h2>
+          <p className="mx-auto mt-8 max-w-2xl text-base font-light leading-8 text-black/60 sm:text-lg">{trip.why}</p>
+          <div className="mt-10 flex flex-wrap justify-center gap-x-10 gap-y-4 text-[10px] uppercase tracking-[0.2em] text-black/55">
+            <span>{trip.nights}</span><span>{trip.season}</span><span>{trip.price}</span>
           </div>
+        </div>
 
-          <div className="grid gap-10 border-x border-b border-[#efe6dc]/10 bg-[#0d0b08] p-6 sm:p-10 lg:grid-cols-[0.95fr_1.05fr] lg:p-14">
-            <div>
-              <div className="grid gap-4 text-sm uppercase tracking-[0.14em] text-[#b8a796] sm:grid-cols-2">
-                <p>
-                  Your trip:{" "}
-                  <span className="text-[#efe6dc]">{primaryTrip.nights}</span>
-                </p>
-                <p>
-                  Price:{" "}
-                  <span className="text-[#efe6dc]">{primaryTrip.price}</span>
-                </p>
-                <p>
-                  Style:{" "}
-                  <span className="text-[#efe6dc]">{primaryTrip.style}</span>
-                </p>
-                <p>
-                  Best season:{" "}
-                  <span className="text-[#efe6dc]">{primaryTrip.season}</span>
-                </p>
+        <div className="mt-24 border-y border-black/15">
+          {tools.map(([label, detail, href, sponsored]) => (
+            <a key={label} href={href} target="_blank" rel={sponsored ? "noopener sponsored" : "noopener"} className="group grid min-h-20 grid-cols-[4rem_1fr_auto] items-center border-b border-black/10 last:border-b-0 sm:grid-cols-[8rem_1fr_auto]">
+              <span className="text-[10px] uppercase tracking-[0.25em] text-black/45">{label}</span>
+              <span className="font-serif text-xl sm:text-2xl">{detail}</span>
+              <span className="text-xl transition-transform group-hover:translate-x-2">→</span>
+            </a>
+          ))}
+        </div>
+        <p className="mt-4 text-center text-[10px] leading-5 text-black/40">Booking.com links are sponsored affiliate links. Current prices, availability, and final terms are shown by the provider.</p>
+
+        <div className="mt-28 flex items-end justify-between border-b border-black/15 pb-7">
+          <h2 className="font-serif text-[clamp(2.4rem,5vw,4.8rem)] tracking-[-0.04em]">Other possibilities</h2>
+          <Link href="/discover" className="hidden text-[10px] uppercase tracking-[0.22em] sm:block">Try again →</Link>
+        </div>
+        <div className="grid gap-10 pt-10 md:grid-cols-3">
+          {alternatives.map((place) => (
+            <article key={place.name} className="group">
+              <div className="relative aspect-[4/3] overflow-hidden bg-black/5"><Image src={place.image} alt={place.name} fill className="object-cover transition duration-700 group-hover:scale-[1.035]" sizes="(min-width:768px) 33vw,100vw" quality={82} /></div>
+              <div className="flex items-end justify-between border-b border-black/10 px-1 py-6">
+                <div><h3 className="font-serif text-2xl">{place.city}</h3><p className="mt-2 text-[9px] uppercase tracking-[0.22em] text-black/45">{place.country} · {place.season}</p></div>
+                <span className="text-xl">→</span>
               </div>
-
-              {answerList.length ? (
-                <p className="mt-8 border-l border-[#7f634d] pl-5 text-sm uppercase tracking-[0.14em] text-[#d8c7b6]">
-                  Matched from: {answerList.join(" / ")}
-                  <br />
-                  Engine: {matchSource}
-                </p>
-              ) : null}
-
-              <div className="mt-8 grid gap-3 border-t border-[#efe6dc]/10 pt-6 text-sm text-[#b8a796] sm:grid-cols-2">
-                {(primaryTrip.costs || []).map((item) => (
-                  <p
-                    className="border-b border-[#efe6dc]/10 pb-3 text-[#d8c7b6]"
-                    key={item}
-                  >
-                    {item}
-                  </p>
-                ))}
-              </div>
-
-              <div className="mt-10 border-t border-[#efe6dc]/10 pt-8">
-                <p className="text-xs uppercase tracking-[0.22em] text-[#8f857b]">
-                  Why we chose it
-                </p>
-                <p className="mt-5 max-w-2xl text-xl font-light leading-relaxed text-[#efe6dc]">
-                  {primaryTrip.why}
-                </p>
-              </div>
-
-              <div className="mt-10 flex flex-wrap gap-4">
-                <a href={bookingStayUrl(primaryTrip)} target="_blank" rel="noopener sponsored" className="bg-[#efe6dc] px-8 py-4 text-sm font-semibold uppercase tracking-[0.14em] text-black transition duration-300 hover:bg-white">
-                  Search stays ↗
-                </a>
-                <Link
-                  className="border border-[#efe6dc]/25 px-8 py-4 text-sm font-semibold uppercase tracking-[0.14em] text-[#efe6dc] transition duration-300 hover:border-[#efe6dc] hover:bg-[#efe6dc]/10"
-                  href="/discover"
-                >
-                  Retake Quiz
-                </Link>
-              </div>
-            </div>
-
-            <div>
-              <p className="text-xs uppercase tracking-[0.22em] text-[#8f857b]">
-                Suggested itinerary
-              </p>
-              <div className="mt-5 border-t border-[#efe6dc]/10">
-                {primaryTrip.itinerary.map((item) => (
-                  <p
-                    className="border-b border-[#efe6dc]/10 py-4 text-lg font-light text-[#efe6dc]"
-                    key={item}
-                  >
-                    {item}
-                  </p>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <section className="mt-16 border-y border-[#efe6dc]/10 bg-[#0d0b08] p-6 sm:p-10 lg:p-14">
-            <p className="text-xs uppercase tracking-[0.22em] text-[#8f857b]">Build this trip</p>
-            <h2 className="mt-4 text-[clamp(2rem,4vw,3.8rem)] font-light">Hotels, flights, activities & tables</h2>
-            <p className="mt-5 max-w-3xl text-sm leading-7 text-[#b8a796]">Continue to Booking.com to check current inventory, pricing, availability, and final terms. Restaurant ideas open as a local map search; GlobTrek does not claim live restaurant availability.</p>
-            <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {[
-                ["Hotels & stays", `Find a base in ${primaryTrip.city}`, bookingStayUrl(primaryTrip), true],
-                ["Flights", `Compare routes to ${primaryTrip.airport}`, bookingLinks.flights, true],
-                ["Activities", `See things to do in ${primaryTrip.city}`, bookingLinks.activities, true],
-                ["Rental cars", "Compare current car options", bookingLinks.cars, true],
-                ["Airport taxis", "Plan the arrival handoff", bookingLinks.taxis, true],
-                ["Restaurants", `Explore dining in ${primaryTrip.city}`, diningSearchUrl(primaryTrip), false],
-              ].map(([label, description, href, sponsored]) => (
-                <a key={label} href={href} target="_blank" rel={sponsored ? "noopener sponsored" : "noopener"} className="group border border-[#efe6dc]/15 p-6 transition hover:border-[#efe6dc]/60 hover:bg-white/[0.03]">
-                  <p className="text-xl font-light text-[#efe6dc]">{label}</p>
-                  <p className="mt-3 text-sm leading-6 text-[#b8a796]">{description}</p>
-                  <p className="mt-6 text-xs font-semibold uppercase tracking-[0.16em] text-[#efe6dc]">Open {sponsored ? "Booking.com" : "map search"} ↗</p>
-                </a>
-              ))}
-            </div>
-            <p className="mt-6 text-xs leading-5 text-[#8f857b]">Booking.com links are affiliate links. GlobTrek may earn compensation from eligible in-session bookings at no additional charge to you.</p>
-          </section>
-
-          <div className="mt-16">
-            <div className="mb-8 flex items-end justify-between gap-5 border-b border-[#efe6dc]/10 pb-6">
-              <h2 className="text-[clamp(2rem,4vw,3.4rem)] font-light">
-                Other matches
-              </h2>
-            </div>
-
-            <div className="grid gap-8 lg:grid-cols-3">
-              {otherMatches.map((match) => (
-                <article className="group" key={match.name}>
-                  <div className="relative h-[360px] overflow-hidden border border-[#efe6dc]/10 bg-[#111] transition duration-500 group-hover:border-[#efe6dc]/70">
-                    <Image
-                      src={match.image}
-                      alt={match.name}
-                      fill
-                      className="object-cover brightness-[0.72] saturate-75 contrast-125 transition duration-700 group-hover:scale-[1.055] group-hover:brightness-[0.86]"
-                      sizes="(min-width: 1024px) 30vw, 100vw"
-                      quality={75}
-                    />
-                  </div>
-                  <div className="mt-5 border-t border-[#efe6dc]/10 pt-5">
-                    <div className="flex items-start justify-between gap-4">
-                      <h3 className="text-3xl font-light">{match.name}</h3>
-                      <p className="shrink-0 text-right text-xs uppercase tracking-[0.14em] text-[#d8c7b6]">
-                        {match.price}
-                      </p>
-                    </div>
-                    <p className="mt-5 text-sm leading-6 text-[#b8a796]">
-                      {match.why}
-                    </p>
-                    <button className="mt-6 text-xs font-semibold uppercase tracking-[0.18em] text-[#efe6dc] transition hover:text-white">
-                      Discover -&gt;
-                    </button>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
+            </article>
+          ))}
         </div>
       </section>
     </main>

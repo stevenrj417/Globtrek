@@ -1,59 +1,34 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
-import { BrandMark } from "../components/BrandMark";
 
-const thoughts = [
-  "Reading your travel mood",
-  "Comparing pace, place, and season",
-  "Scoring destinations against your answers",
-  "Building your reveal",
-];
+const words = ["PLACE", "PACE", "LIGHT", "TASTE", "TIME"];
 
 export default function ThinkingPage() {
   const [index, setIndex] = useState(0);
+  const [closing, setClosing] = useState(false);
 
   useEffect(() => {
-    const ticker = window.setInterval(() => {
-      setIndex((current) => Math.min(current + 1, thoughts.length - 1));
-    }, 650);
-    const redirect = window.setTimeout(() => {
-      window.location.assign("/results");
-    }, 3100);
-
-    return () => {
-      window.clearInterval(ticker);
-      window.clearTimeout(redirect);
-    };
+    const ticker = window.setInterval(() => setIndex((value) => (value + 1) % words.length), 520);
+    const close = window.setTimeout(() => setClosing(true), 3000);
+    const redirect = window.setTimeout(() => window.location.assign("/results"), 3900);
+    return () => { window.clearInterval(ticker); window.clearTimeout(close); window.clearTimeout(redirect); };
   }, []);
 
   return (
-    <main className="grid min-h-screen place-items-center bg-[#f7f7f4] px-6 text-[#171717]">
-      <section className="w-full max-w-3xl border-y border-black/10 py-16 text-center">
-        <BrandMark className="mx-auto mb-7" />
-        <p className="text-xs font-semibold uppercase tracking-[0.1em] text-[#707070]">
-          Finding your trip
-        </p>
-        <h1 className="mt-6 text-[clamp(2.4rem,6vw,5rem)] font-semibold leading-[0.92] tracking-[-0.06em]">
-          Matching what matters.
-        </h1>
-        <div className="mx-auto mt-10 h-px max-w-md bg-black/10">
-          <div
-            className="h-px bg-black transition-all duration-700"
-            style={{ width: `${((index + 1) / thoughts.length) * 100}%` }}
-          />
+    <main className={`relative grid min-h-svh overflow-hidden bg-[#f3f0eb] text-[#171714] transition duration-700 ${closing ? "scale-[1.025] opacity-0" : "scale-100 opacity-100"}`}>
+      <div className="absolute left-6 top-7 text-[12px] font-semibold uppercase tracking-[0.32em] sm:left-12 sm:top-10">Globtrēk</div>
+      <div className="absolute right-6 top-7 text-[9px] uppercase tracking-[0.25em] text-black/45 sm:right-12 sm:top-10">Finding your place</div>
+      <section className="grid place-items-center px-6 text-center">
+        <div>
+          <p className="text-[9px] uppercase tracking-[0.35em] text-black/45">Reading the way you travel</p>
+          <div className="mt-10 h-[clamp(4rem,11vw,10rem)] overflow-hidden">
+            <p key={words[index]} className="result-word font-serif text-[clamp(4rem,11vw,10rem)] leading-none tracking-[-0.055em]">{words[index]}</p>
+          </div>
+          <div className="mx-auto mt-12 h-px w-52 overflow-hidden bg-black/10 sm:w-80"><span className="result-progress block h-full bg-black" /></div>
         </div>
-        <p className="mt-8 text-sm text-[#606060]">
-          {thoughts[index]}
-        </p>
-        <Link
-          className="mt-12 inline-block text-xs font-medium text-[#707070] underline decoration-black/20 transition hover:text-black hover:decoration-black"
-          href="/results"
-        >
-          Skip wait
-        </Link>
       </section>
+      <p className="absolute inset-x-0 bottom-8 text-center text-[9px] uppercase tracking-[0.25em] text-black/40">Your answer is almost here</p>
     </main>
   );
 }

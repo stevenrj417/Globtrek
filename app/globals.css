@@ -5,6 +5,23 @@
   --foreground: #171717;
 }
 
+@keyframes resultWord {
+  from { opacity: 0; transform: translateY(55%); filter: blur(8px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+@keyframes resultProgress {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+.result-word { animation: resultWord 520ms cubic-bezier(.22,.61,.36,1) both; }
+.result-progress { animation: resultProgress 3.8s cubic-bezier(.22,.61,.36,1) both; transform-origin: left; }
+
+@media (prefers-reduced-motion: reduce) {
+  .result-word, .result-progress { animation: none; }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
