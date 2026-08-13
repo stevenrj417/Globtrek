@@ -160,8 +160,9 @@ export function bookingFlightUrl(destination, trip = {}) {
     adults: String(travelerCount(trip)),
     to: `${destination.airport}.AIRPORT`,
   });
-  const origin = String(trip.originAirport || "").trim().toUpperCase();
-  if (/^[A-Z]{3}$/.test(origin)) params.set("from", `${origin}.AIRPORT`);
+  
+  
+    const origin = String(trip?.originAirport || "").trim().toUpperCase();if (/^[A-Z]{3}$/.test(origin)) params.set("from", `${origin}.AIRPORT`);
   if (!trip?.isFlexible && trip?.tripStart && trip?.tripEnd) {
     params.set("depart", trip.tripStart);
     params.set("return", trip.tripEnd);
@@ -177,3 +178,4 @@ export function bookingActivityUrl(destination) {
 export function diningSearchUrl(destination) {
   return `https://www.google.com/maps/search/${encodeURIComponent(`restaurants in ${destination.city}, ${destination.country}`)}`;
 }
+
