@@ -40,7 +40,10 @@ function HotelShortlist({ destination, quiz }) {
 
   useEffect(() => {
     const raw = window.localStorage.getItem(`globtrekStay:${destination.city}`);
-    if (raw) setSelected(JSON.parse(raw));
+    const timer = window.setTimeout(() => {
+      if (raw) setSelected(JSON.parse(raw));
+    }, 0);
+    return () => window.clearTimeout(timer);
   }, [destination.city]);
 
   function choose(stay) {
@@ -102,24 +105,32 @@ function HotelShortlist({ destination, quiz }) {
 export default function ResultsPage() {
   const [quiz, setQuiz] = useState(null);
   const [remoteMatches, setRemoteMatches] = useState(null);
+  const [chosenAirport, setChosenAirport] = useState(null);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
     const raw = window.localStorage.getItem("globtrekQuiz");
     const stored = raw ? JSON.parse(raw) : { answers: {} };
-    setQuiz(stored);
+    const initialize = window.setTimeout(() => {
+      setChosenAirport(new URLSearchParams(window.location.search).get("destination"));
+      setQuiz(stored);
+    }, 0);
     fetch("/api/match", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(stored) })
       .then((response) => response.json())
       .then((data) => Array.isArray(data.matches) && data.matches.length && setRemoteMatches(data.matches))
       .catch(() => {});
     const timer = window.setTimeout(() => setReady(true), 100);
-    return () => window.clearTimeout(timer);
+    return () => {
+      window.clearTimeout(initialize);
+      window.clearTimeout(timer);
+    };
   }, []);
 
   const localMatches = useMemo(() => getMatches(quiz), [quiz]);
   const matches = remoteMatches || localMatches;
-  const trip = matches[0];
-  const alternatives = matches.slice(1, 4);
+  const chosenTrip = chosenAirport ? destinations.find((destination) => destination.airport === chosenAirport) : null;
+  const trip = chosenTrip || matches[0];
+  const alternatives = matches.filter((place) => place.airport !== trip?.airport).slice(0, 3);
   if (!trip) return null;
 
   const dates = quiz?.isFlexible
@@ -183,13 +194,13 @@ export default function ResultsPage() {
         </div>
         <div className="grid gap-10 pt-10 md:grid-cols-3">
           {alternatives.map((place) => (
-            <article key={place.name} className="group">
+            <Link key={place.name} href={`/results?destination=${encodeURIComponent(place.airport)}`} scroll onClick={() => setChosenAirport(place.airport)} className="group block" aria-label={`Plan a complete trip to ${place.city}`}>
               <div className="relative aspect-[4/3] overflow-hidden bg-black/5"><Image src={place.image} alt={place.name} fill className="object-cover transition duration-700 group-hover:scale-[1.035]" sizes="(min-width:768px) 33vw,100vw" quality={82} /></div>
               <div className="flex items-end justify-between border-b border-black/10 px-1 py-6">
                 <div><h3 className="font-serif text-2xl">{place.city}</h3><p className="mt-2 text-[9px] uppercase tracking-[0.22em] text-black/45">{place.country} · {place.season}</p></div>
-                <span className="text-xl">→</span>
+                <span className="text-xl transition-transform group-hover:translate-x-2">→</span>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       </section>
