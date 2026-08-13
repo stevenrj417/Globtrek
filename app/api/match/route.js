@@ -1,4 +1,6 @@
-const destinations = [
+import { destinations, scoreDestination } from "../../data/destinations";
+
+/*const legacyDestinations = [
   {
     name: "KYOTO, JAPAN",
     image: "https://images.unsplash.com/photo-1528360983277-13d401cdc186",
@@ -124,14 +126,7 @@ const destinations = [
       "Day 7: Depart",
     ],
   },
-];
-
-function scoreDestination(destination, answers) {
-  return Object.values(answers || {}).reduce(
-    (score, answer) => score + (destination.tags.includes(answer) ? 3 : 0),
-    0,
-  );
-}
+];*/
 
 function fallbackMatches(answers) {
   return [...destinations]

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { bookingLinks, destinations, diningSearchUrl, scoreDestination } from "../data/destinations";
 
 const navItems = [
   ["Discover", "/#discover"],
@@ -11,7 +12,7 @@ const navItems = [
   ["Journal", "/#journal"],
 ];
 
-const destinations = [
+/*const legacyDestinations = [
   {
     name: "KYOTO, JAPAN",
     image: "https://images.unsplash.com/photo-1528360983277-13d401cdc186",
@@ -137,15 +138,7 @@ const destinations = [
       "Day 7: Depart",
     ],
   },
-];
-
-function scoreDestination(destination, answers) {
-  const picked = Object.values(answers || {});
-  return picked.reduce(
-    (score, answer) => score + (destination.tags.includes(answer) ? 3 : 0),
-    0,
-  );
-}
+];*/
 
 function getMatches(storedQuiz) {
   const answers = storedQuiz?.answers || {};
@@ -304,9 +297,9 @@ export default function ResultsPage() {
               </div>
 
               <div className="mt-10 flex flex-wrap gap-4">
-                <button className="bg-[#efe6dc] px-8 py-4 text-sm font-semibold uppercase tracking-[0.14em] text-black transition duration-300 hover:bg-white">
-                  Begin Planning · Coming Soon
-                </button>
+                <a href={bookingLinks.stays} target="_blank" rel="noopener sponsored" className="bg-[#efe6dc] px-8 py-4 text-sm font-semibold uppercase tracking-[0.14em] text-black transition duration-300 hover:bg-white">
+                  Search stays ↗
+                </a>
                 <Link
                   className="border border-[#efe6dc]/25 px-8 py-4 text-sm font-semibold uppercase tracking-[0.14em] text-[#efe6dc] transition duration-300 hover:border-[#efe6dc] hover:bg-[#efe6dc]/10"
                   href="/discover"
@@ -332,6 +325,29 @@ export default function ResultsPage() {
               </div>
             </div>
           </div>
+
+          <section className="mt-16 border-y border-[#efe6dc]/10 bg-[#0d0b08] p-6 sm:p-10 lg:p-14">
+            <p className="text-xs uppercase tracking-[0.22em] text-[#8f857b]">Build this trip</p>
+            <h2 className="mt-4 text-[clamp(2rem,4vw,3.8rem)] font-light">Hotels, flights, activities & tables</h2>
+            <p className="mt-5 max-w-3xl text-sm leading-7 text-[#b8a796]">Continue to Booking.com to check current inventory, pricing, availability, and final terms. Restaurant ideas open as a local map search; GlobTrek does not claim live restaurant availability.</p>
+            <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {[
+                ["Hotels & stays", `Find a base in ${primaryTrip.city}`, bookingLinks.stays, true],
+                ["Flights", `Compare routes to ${primaryTrip.airport}`, bookingLinks.flights, true],
+                ["Activities", `See things to do in ${primaryTrip.city}`, bookingLinks.activities, true],
+                ["Rental cars", "Compare current car options", bookingLinks.cars, true],
+                ["Airport taxis", "Plan the arrival handoff", bookingLinks.taxis, true],
+                ["Restaurants", `Explore dining in ${primaryTrip.city}`, diningSearchUrl(primaryTrip), false],
+              ].map(([label, description, href, sponsored]) => (
+                <a key={label} href={href} target="_blank" rel={sponsored ? "noopener sponsored" : "noopener"} className="group border border-[#efe6dc]/15 p-6 transition hover:border-[#efe6dc]/60 hover:bg-white/[0.03]">
+                  <p className="text-xl font-light text-[#efe6dc]">{label}</p>
+                  <p className="mt-3 text-sm leading-6 text-[#b8a796]">{description}</p>
+                  <p className="mt-6 text-xs font-semibold uppercase tracking-[0.16em] text-[#efe6dc]">Open {sponsored ? "Booking.com" : "map search"} ↗</p>
+                </a>
+              ))}
+            </div>
+            <p className="mt-6 text-xs leading-5 text-[#8f857b]">Booking.com links are affiliate links. GlobTrek may earn compensation from eligible in-session bookings at no additional charge to you.</p>
+          </section>
 
           <div className="mt-16">
             <div className="mb-8 flex items-end justify-between gap-5 border-b border-[#efe6dc]/10 pb-6">
@@ -376,4 +392,3 @@ export default function ResultsPage() {
     </main>
   );
 }
-
