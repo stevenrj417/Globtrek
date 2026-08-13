@@ -141,7 +141,7 @@ function travelerCount(trip) {
 
 export function bookingStayUrl(destination, trip = {}) {
   const params = new URLSearchParams({ ss: `${destination.city}, ${destination.country}` });
-  if (!trip.isFlexible && trip.tripStart && trip.tripEnd) {
+  if (!trip?.isFlexible && trip?.tripStart && trip?.tripEnd) {
     params.set("checkin", trip.tripStart);
     params.set("checkout", trip.tripEnd);
   }
@@ -162,7 +162,7 @@ export function bookingFlightUrl(destination, trip = {}) {
   });
   const origin = String(trip.originAirport || "").trim().toUpperCase();
   if (/^[A-Z]{3}$/.test(origin)) params.set("from", `${origin}.AIRPORT`);
-  if (!trip.isFlexible && trip.tripStart && trip.tripEnd) {
+  if (!trip?.isFlexible && trip?.tripStart && trip?.tripEnd) {
     params.set("depart", trip.tripStart);
     params.set("return", trip.tripEnd);
   }
