@@ -130,9 +130,48 @@ export const bookingLinks = {
   taxis: "https://www.dpbolvw.net/click-101801755-17322565",
 };
 
-export function bookingStayUrl(destination) {
-  const target = `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(`${destination.city}, ${destination.country}`)}`;
+function trackedUrl(clickUrl, targetUrl) {
+  return `${clickUrl}?url=${encodeURIComponent(targetUrl)}`;
+}
+
+function travelerCount(trip) {
+  const count = Number.parseInt(trip?.guestCount, 10);
+  return Number.isFinite(count) && count > 0 ? Math.min(count, 30) : 2;
+}
+
+export function bookingStayUrl(destination, trip = {}) {
+  const params = new URLSearchParams({ ss: `${destination.city}, ${destination.country}` });
+  if (!trip.isFlexible && trip.tripStart && trip.tripEnd) {
+    params.set("checkin", trip.tripStart);
+    params.set("checkout", trip.tripEnd);
+  }
+  params.set("group_adults", String(travelerCount(trip)));
+  params.set("no_rooms", "1");
+  params.set("group_children", "0");
+  const target = `https://www.booking.com/searchresults.html?${params.toString()}`;
   return `${bookingLinks.stays}?url=${encodeURIComponent(target)}`;
+}
+
+export function bookingFlightUrl(destination, trip = {}) {
+  const params = new URLSearchParams({
+    type: "ROUNDTRIP",
+    cabinClass: "ECONOMY",
+    children: "0",
+    adults: String(travelerCount(trip)),
+    to: `${destination.airport}.AIRPORT`,
+  });
+  const origin = String(trip.originAirport || "").trim().toUpperCase();
+  if (/^[A-Z]{3}$/.test(origin)) params.set("from", `${origin}.AIRPORT`);
+  if (!trip.isFlexible && trip.tripStart && trip.tripEnd) {
+    params.set("depart", trip.tripStart);
+    params.set("return", trip.tripEnd);
+  }
+  return trackedUrl(bookingLinks.flights, `https://www.booking.com/flights/index.html?${params.toString()}`);
+}
+
+export function bookingActivityUrl(destination) {
+  const params = new URLSearchParams({ query: `${destination.city}, ${destination.country}` });
+  return trackedUrl(bookingLinks.activities, `https://www.booking.com/attractions/searchresults.html?${params.toString()}`);
 }
 
 export function diningSearchUrl(destination) {

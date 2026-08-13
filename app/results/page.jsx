@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { bookingLinks, bookingStayUrl, destinations, diningSearchUrl, scoreDestination } from "../data/destinations";
+import { bookingActivityUrl, bookingFlightUrl, bookingLinks, bookingStayUrl, destinations, diningSearchUrl, scoreDestination } from "../data/destinations";
 
 function getMatches(quiz) {
   const answers = quiz?.answers || {};
@@ -45,9 +45,9 @@ export default function ResultsPage() {
     : [formatDate(quiz?.tripStart), formatDate(quiz?.tripEnd)].filter(Boolean).join(" — ") || "Flexible dates";
   const companions = quiz?.answers?.self || "Your trip";
   const tools = [
-    ["Stay", `Hotels in ${trip.city}`, bookingStayUrl(trip), true],
-    ["Fly", `Flights to ${trip.airport}`, bookingLinks.flights, true],
-    ["Do", `Experiences in ${trip.city}`, bookingLinks.activities, true],
+    ["Stay", `Hotels in ${trip.city}`, bookingStayUrl(trip, quiz), true],
+    ["Fly", `Flights to ${trip.airport}`, bookingFlightUrl(trip, quiz), true],
+    ["Do", `Experiences in ${trip.city}`, bookingActivityUrl(trip), true],
     ["Drive", "Cars & transfers", bookingLinks.cars, true],
     ["Dine", `Restaurants in ${trip.city}`, diningSearchUrl(trip), false],
   ];

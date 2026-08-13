@@ -135,7 +135,7 @@ function VisualQuestion({ question, value, onChoose }) {
   );
 }
 
-function DateQuestion({ answers, setAnswers, tripStart, tripEnd, isFlexible, setTripStart, setTripEnd, setIsFlexible, onBack, onSubmit, canSubmit }) {
+function DateQuestion({ answers, setAnswers, tripStart, tripEnd, isFlexible, setTripStart, setTripEnd, setIsFlexible, originAirport, setOriginAirport, guestCount, setGuestCount, onBack, onSubmit, canSubmit }) {
   const [mode, setMode] = useState(isFlexible ? "flexible" : "dates");
   const summary = questions.map((question) => answers[question.id]).filter(Boolean).join(" / ");
   const seasons = [["Spring", "Mar – May", "Spring (Mar-May)"], ["Summer", "Jun – Aug", "Summer (Jun-Aug)"], ["Fall", "Sep – Nov", "Fall (Sep-Nov)"], ["Winter", "Dec – Feb", "Winter (Dec-Feb)"]];
@@ -154,6 +154,11 @@ function DateQuestion({ answers, setAnswers, tripStart, tripEnd, isFlexible, set
         <h1 className="mt-6 max-w-xl text-[clamp(3.25rem,5.8vw,6.3rem)] font-medium leading-[0.9] tracking-[-0.075em]">When are you leaving?</h1>
         <p className="mt-5 text-lg text-[#8a847d]">Flexible dates are welcome.</p>
         <p className="mt-8 max-w-2xl border-l border-[#aaa39a] pl-6 text-[10px] uppercase leading-7 tracking-[0.18em] text-[#807970]">{summary}</p>
+
+        <div className="mt-8 grid gap-4 sm:grid-cols-2">
+          <label><span className="text-[10px] uppercase tracking-[0.15em] text-[#555]">Flying from <span className="text-[#999]">· optional</span></span><input className="mt-3 w-full border border-black/20 bg-transparent px-5 py-4 text-base uppercase outline-none focus:border-black" type="text" inputMode="text" maxLength={3} placeholder="LAX" value={originAirport} onChange={(event) => setOriginAirport(event.target.value.replace(/[^a-z]/gi, "").slice(0, 3).toUpperCase())} /></label>
+          <label><span className="text-[10px] uppercase tracking-[0.15em] text-[#555]">Travelers</span><input className="mt-3 w-full border border-black/20 bg-transparent px-5 py-4 text-base outline-none focus:border-black" type="number" min="1" max="30" value={guestCount} onChange={(event) => setGuestCount(event.target.value)} required /></label>
+        </div>
 
         <div className="mt-10 grid grid-cols-2 gap-3">
           <button type="button" onClick={() => selectMode("dates")} className={`min-h-16 border px-4 text-[11px] font-semibold uppercase tracking-[0.1em] transition-colors ${mode === "dates" ? "border-black bg-[#171717] text-white" : "border-black/20 text-[#555] hover:border-black"}`}>I know my dates</button>
@@ -185,6 +190,8 @@ export default function TravelQuiz() {
   const [tripStart, setTripStart] = useState("");
   const [tripEnd, setTripEnd] = useState("");
   const [isFlexible, setIsFlexible] = useState(false);
+  const [originAirport, setOriginAirport] = useState("");
+  const [guestCount, setGuestCount] = useState("2");
   const [phase, setPhase] = useState("idle");
   const timer = useRef(null);
 
@@ -208,7 +215,7 @@ export default function TravelQuiz() {
   function submit(event) {
     event.preventDefault();
     if (!canSubmit) return;
-    window.localStorage.setItem("globtrekQuiz", JSON.stringify({ answers, tripStart, tripEnd, isFlexible, createdAt: Date.now() }));
+    window.localStorage.setItem("globtrekQuiz", JSON.stringify({ answers, tripStart, tripEnd, isFlexible, originAirport, guestCount, createdAt: Date.now() }));
     setPhase("complete");
     timer.current = window.setTimeout(() => window.location.assign("/thinking"), 850);
   }
@@ -216,6 +223,6 @@ export default function TravelQuiz() {
   if (phase === "complete") return <div className="grid min-h-[calc(100svh-5rem)] place-items-center bg-[#f5f3ef] px-5"><p className="text-[clamp(3.5rem,8vw,8rem)] font-medium tracking-[-0.07em]">We found it.</p></div>;
 
   return <section id="quiz" className={`overflow-hidden bg-[#f5f3ef] text-[#171717] transition-[opacity,transform] duration-300 ease-out ${phase === "leaving" ? "-translate-y-2 opacity-0" : phase === "leaving-back" ? "translate-y-2 opacity-0" : phase === "entering" ? "translate-y-2 opacity-0" : "translate-y-0 opacity-100"}`}>
-    {step < questions.length ? <VisualQuestion question={current} value={answers[current.id]} onChoose={choose} /> : <DateQuestion answers={answers} setAnswers={setAnswers} tripStart={tripStart} tripEnd={tripEnd} isFlexible={isFlexible} setTripStart={setTripStart} setTripEnd={setTripEnd} setIsFlexible={setIsFlexible} onBack={back} onSubmit={submit} canSubmit={canSubmit} />}
+    {step < questions.length ? <VisualQuestion question={current} value={answers[current.id]} onChoose={choose} /> : <DateQuestion answers={answers} setAnswers={setAnswers} tripStart={tripStart} tripEnd={tripEnd} isFlexible={isFlexible} setTripStart={setTripStart} setTripEnd={setTripEnd} setIsFlexible={setIsFlexible} originAirport={originAirport} setOriginAirport={setOriginAirport} guestCount={guestCount} setGuestCount={setGuestCount} onBack={back} onSubmit={submit} canSubmit={canSubmit} />}
   </section>;
 }
