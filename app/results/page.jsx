@@ -18,18 +18,18 @@ function formatDate(value) {
   return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" }).format(new Date(`${value}T00:00:00Z`));
 }
 
-function bookingHotelUrl(destination, hotelName, trip = {}) {
-  const params = new URLSearchParams({ ss: `${hotelName}, ${destination.city}, ${destination.country}` });
+function bookingHotelUrl(hotel, trip = {}) {
+  if (!hotel?.bookingUrl) return null;
+  const target = new URL(hotel.bookingUrl);
   if (!trip?.isFlexible && trip?.tripStart && trip?.tripEnd) {
-    params.set("checkin", trip.tripStart);
-    params.set("checkout", trip.tripEnd);
+    target.searchParams.set("checkin", trip.tripStart);
+    target.searchParams.set("checkout", trip.tripEnd);
   }
   const adults = Number.parseInt(trip?.guestCount, 10);
-  params.set("group_adults", String(Number.isFinite(adults) && adults > 0 ? Math.min(adults, 30) : 2));
-  params.set("no_rooms", "1");
-  params.set("group_children", "0");
-  const target = `https://www.booking.com/searchresults.html?${params.toString()}`;
-  return `${bookingLinks.stays}?url=${encodeURIComponent(target)}`;
+  target.searchParams.set("group_adults", String(Number.isFinite(adults) && adults > 0 ? Math.min(adults, 30) : 2));
+  target.searchParams.set("no_rooms", "1");
+  target.searchParams.set("group_children", "0");
+  return `${bookingLinks.stays}?url=${encodeURIComponent(target.toString())}`;
 }
 
 function HotelShortlist({ destination, quiz }) {
@@ -82,7 +82,7 @@ function HotelShortlist({ destination, quiz }) {
           </div>
           <div className="grid grid-cols-2 border-b border-black/10">
             <button type="button" onClick={() => choose({ ...hotel, type: "curated" })} className={`min-h-14 border-r border-black/10 text-[10px] uppercase tracking-[0.18em] transition ${isSelected ? "bg-black text-white" : "hover:bg-black hover:text-white"}`}>{isSelected ? "In your trip" : "Select stay"}</button>
-            <a href={bookingHotelUrl(destination, hotel.name, quiz)} target="_blank" rel="noopener sponsored" className="grid min-h-14 place-items-center text-[10px] uppercase tracking-[0.18em] transition hover:bg-black hover:text-white">Check live →</a>
+            {hotel.bookingUrl ? <a href={bookingHotelUrl(hotel, quiz)} target="_blank" rel="noopener sponsored" className="grid min-h-14 place-items-center text-[10px] uppercase tracking-[0.18em] transition hover:bg-black hover:text-white">Check live →</a> : <span className="grid min-h-14 place-items-center text-[10px] uppercase tracking-[0.18em] text-black/35">Link being verified</span>}
           </div>
         </article>;
       })}
@@ -95,7 +95,7 @@ function HotelShortlist({ destination, quiz }) {
       </div>}
     </div>
 
-    {selectedHotel && <a href={bookingHotelUrl(destination, selectedHotel.name, quiz)} target="_blank" rel="noopener sponsored" className="mt-8 flex min-h-20 items-center justify-between bg-[#171714] px-7 text-white sm:px-10"><span><span className="block text-[9px] uppercase tracking-[0.24em] text-white/50">Selected stay</span><strong className="mt-2 block font-serif text-xl font-normal sm:text-2xl">{selectedHotel.name}</strong></span><span className="text-[10px] uppercase tracking-[0.2em]">Check rooms →</span></a>}
+    {selectedHotel?.bookingUrl && <a href={bookingHotelUrl(selectedHotel, quiz)} target="_blank" rel="noopener sponsored" className="mt-8 flex min-h-20 items-center justify-between bg-[#171714] px-7 text-white sm:px-10"><span><span className="block text-[9px] uppercase tracking-[0.24em] text-white/50">Selected stay</span><strong className="mt-2 block font-serif text-xl font-normal sm:text-2xl">{selectedHotel.name}</strong></span><span className="text-[10px] uppercase tracking-[0.2em]">Check rooms →</span></a>}
   </section>;
 }
 

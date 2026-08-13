@@ -123,7 +123,7 @@ export function scoreDestination(destination, answers) {
 }
 
 export const bookingLinks = {
-  stays: "https://www.dpbolvw.net/click-101801755-17293132",
+  stays: "https://www.kqzyfj.com/click-101801755-17293132",
   flights: "https://www.dpbolvw.net/click-101801755-17288982",
   activities: "https://www.dpbolvw.net/click-101801755-17288984",
   cars: "https://www.dpbolvw.net/click-101801755-17314628",
@@ -152,6 +152,18 @@ export function bookingStayUrl(destination, trip = {}) {
   return `${bookingLinks.stays}?url=${encodeURIComponent(target)}`;
 }
 
+export function bookingHotelUrl(destination, hotelName, trip = {}) {
+  const params = new URLSearchParams({ ss: `${hotelName}, ${destination.city}, ${destination.country}` });
+  if (!trip?.isFlexible && trip?.tripStart && trip?.tripEnd) {
+    params.set("checkin", trip.tripStart);
+    params.set("checkout", trip.tripEnd);
+  }
+  params.set("group_adults", String(travelerCount(trip)));
+  params.set("no_rooms", "1");
+  params.set("group_children", "0");
+  return trackedUrl(bookingLinks.stays, `https://www.booking.com/searchresults.html?${params.toString()}`);
+}
+
 export function bookingFlightUrl(destination, trip = {}) {
   const params = new URLSearchParams({
     type: "ROUNDTRIP",
@@ -160,9 +172,8 @@ export function bookingFlightUrl(destination, trip = {}) {
     adults: String(travelerCount(trip)),
     to: `${destination.airport}.AIRPORT`,
   });
-  
-  
-    const origin = String(trip?.originAirport || "").trim().toUpperCase();if (/^[A-Z]{3}$/.test(origin)) params.set("from", `${origin}.AIRPORT`);
+  const origin = String(trip?.originAirport || "").trim().toUpperCase();
+  if (/^[A-Z]{3}$/.test(origin)) params.set("from", `${origin}.AIRPORT`);
   if (!trip?.isFlexible && trip?.tripStart && trip?.tripEnd) {
     params.set("depart", trip.tripStart);
     params.set("return", trip.tripEnd);
@@ -178,4 +189,3 @@ export function bookingActivityUrl(destination) {
 export function diningSearchUrl(destination) {
   return `https://www.google.com/maps/search/${encodeURIComponent(`restaurants in ${destination.city}, ${destination.country}`)}`;
 }
-
