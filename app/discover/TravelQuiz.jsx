@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
+import airports from "../data/airports.json";
 
 const questions = [
   {
@@ -135,6 +136,82 @@ function VisualQuestion({ question, value, onChoose }) {
   );
 }
 
+function AirportAutocomplete({ value, onChange }) {
+  const [query, setQuery] = useState(value || "");
+  const [open, setOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const normalized = query.trim().toLowerCase();
+  const matches = useMemo(() => {
+    if (!normalized) return [];
+    const ranked = airports
+      .map((airport) => {
+        const code = airport.code.toLowerCase();
+        const city = airport.city.toLowerCase();
+        const name = airport.name.toLowerCase();
+        let rank = 99;
+        if (code === normalized) rank = 0;
+        else if (city === normalized) rank = 1;
+        else if (city.startsWith(normalized)) rank = 2;
+        else if (code.startsWith(normalized)) rank = 3;
+        else if (name.startsWith(normalized)) rank = 4;
+        else if (`${city} ${name} ${code}`.includes(normalized)) rank = 5;
+        return { airport, rank };
+      })
+      .filter(({ rank }) => rank < 99)
+      .sort((a, b) => a.rank - b.rank || Number(b.airport.scheduled) - Number(a.airport.scheduled) || a.airport.city.localeCompare(b.airport.city));
+    return ranked.slice(0, 8).map(({ airport }) => airport);
+  }, [normalized]);
+
+  function choose(airport) {
+    setQuery(`${airport.city || airport.name} (${airport.code})`);
+    onChange(airport.code);
+    setOpen(false);
+    setActiveIndex(0);
+  }
+
+  function handleKeyDown(event) {
+    if (!open || !matches.length) return;
+    if (event.key === "ArrowDown") { event.preventDefault(); setActiveIndex((current) => (current + 1) % matches.length); }
+    if (event.key === "ArrowUp") { event.preventDefault(); setActiveIndex((current) => (current - 1 + matches.length) % matches.length); }
+    if (event.key === "Enter") { event.preventDefault(); choose(matches[activeIndex]); }
+    if (event.key === "Escape") setOpen(false);
+  }
+
+  return <div className="relative mt-3">
+    <input
+      className="w-full border border-black/20 bg-transparent px-5 py-4 text-base outline-none focus:border-black"
+      type="text"
+      inputMode="text"
+      autoComplete="off"
+      role="combobox"
+      aria-autocomplete="list"
+      aria-expanded={open && matches.length > 0}
+      aria-controls="airport-suggestions"
+      placeholder="City, airport, or code"
+      value={query}
+      onFocus={() => setOpen(true)}
+      onBlur={() => window.setTimeout(() => setOpen(false), 150)}
+      onKeyDown={handleKeyDown}
+      onChange={(event) => { setQuery(event.target.value); onChange(""); setOpen(true); setActiveIndex(0); }}
+    />
+    {open && normalized && <div id="airport-suggestions" role="listbox" className="absolute inset-x-0 top-full z-50 max-h-80 overflow-y-auto border-x border-b border-black/20 bg-[#fbfaf7] shadow-[0_18px_35px_rgba(0,0,0,0.12)]">
+      {matches.length ? matches.map((airport, index) => <button
+        key={`${airport.code}-${airport.name}`}
+        type="button"
+        role="option"
+        aria-selected={index === activeIndex}
+        onMouseDown={(event) => event.preventDefault()}
+        onMouseEnter={() => setActiveIndex(index)}
+        onClick={() => choose(airport)}
+        className={`flex w-full items-center justify-between gap-5 border-t border-black/10 px-5 py-3 text-left transition-colors first:border-t-0 ${index === activeIndex ? "bg-[#ebe8e2]" : "hover:bg-[#f2f0eb]"}`}
+      >
+        <span className="min-w-0"><strong className="block truncate text-sm font-medium text-black">{airport.city || airport.name}</strong><span className="mt-1 block truncate text-[10px] uppercase tracking-[0.1em] text-[#777]">{airport.name}{airport.country ? ` · ${airport.country}` : ""}</span></span>
+        <span className="shrink-0 text-xs font-semibold tracking-[0.14em]">{airport.code}</span>
+      </button>) : <p className="px-5 py-4 text-xs text-[#777]">No matching airport found.</p>}
+    </div>}
+  </div>;
+}
+
 function DateQuestion({ answers, setAnswers, tripStart, tripEnd, isFlexible, setTripStart, setTripEnd, setIsFlexible, originAirport, setOriginAirport, guestCount, setGuestCount, onBack, onSubmit, canSubmit }) {
   const [mode, setMode] = useState(isFlexible ? "flexible" : "dates");
   const summary = questions.map((question) => answers[question.id]).filter(Boolean).join(" / ");
@@ -156,7 +233,7 @@ function DateQuestion({ answers, setAnswers, tripStart, tripEnd, isFlexible, set
         <p className="mt-8 max-w-2xl border-l border-[#aaa39a] pl-6 text-[10px] uppercase leading-7 tracking-[0.18em] text-[#807970]">{summary}</p>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
-          <label><span className="text-[10px] uppercase tracking-[0.15em] text-[#555]">Flying from <span className="text-[#999]">· optional</span></span><input className="mt-3 w-full border border-black/20 bg-transparent px-5 py-4 text-base uppercase outline-none focus:border-black" type="text" inputMode="text" maxLength={3} placeholder="LAX" value={originAirport} onChange={(event) => setOriginAirport(event.target.value.replace(/[^a-z]/gi, "").slice(0, 3).toUpperCase())} /></label>
+          <label><span className="text-[10px] uppercase tracking-[0.15em] text-[#555]">Flying from <span className="text-[#999]">· optional</span></span><AirportAutocomplete value={originAirport} onChange={setOriginAirport} /></label>
           <label><span className="text-[10px] uppercase tracking-[0.15em] text-[#555]">Travelers</span><input className="mt-3 w-full border border-black/20 bg-transparent px-5 py-4 text-base outline-none focus:border-black" type="number" min="1" max="30" value={guestCount} onChange={(event) => setGuestCount(event.target.value)} required /></label>
         </div>
 
