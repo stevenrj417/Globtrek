@@ -6,10 +6,14 @@ const hotelCatalog = {
     { name: "Sowaka", bookingUrl: "https://www.booking.com/hotel/jp/sowaka-jing-du-shi.html" },
   ],
   "TOKYO": [
-    { name: "TRUNK(HOTEL) YOYOGI PARK", bookingUrl: "https://www.booking.com/hotel/jp/trunk-yoyogi-park.html" },
-    { name: "The Tokyo EDITION, Toranomon", bookingUrl: "https://www.booking.com/hotel/jp/the-tokyo-edition-toranomon.html" },
-    { name: "Palace Hotel Tokyo", bookingUrl: "https://www.booking.com/hotel/jp/palace-tokyo.html" },
-    { name: "Mandarin Oriental, Tokyo", bookingUrl: "https://www.booking.com/hotel/jp/mandarin-oriental-tokyo.html" },
+    { name: "TRUNK(HOTEL) YOYOGI PARK", bookingUrl: "https://www.booking.com/hotel/jp/trunk-yoyogi-park.html", tags: ["Boutique hotel", "Design hotel", "Premium", "Slow mornings", "Food"] },
+    { name: "The Tokyo EDITION, Toranomon", bookingUrl: "https://www.booking.com/hotel/jp/the-tokyo-edition-toranomon.html", tags: ["Design hotel", "Blowout", "Packed schedule", "Nightlife"] },
+    { name: "Palace Hotel Tokyo", bookingUrl: "https://www.booking.com/hotel/jp/palace-tokyo.html", tags: ["Traditional inn", "Premium", "Mostly relaxing", "Culture"] },
+    { name: "Mandarin Oriental, Tokyo", bookingUrl: "https://www.booking.com/hotel/jp/mandarin-oriental-tokyo.html", tags: ["Blowout", "Mostly relaxing", "Food", "Wellness"] },
+    { name: "MUJI HOTEL GINZA", bookingUrl: "https://www.booking.com/hotel/jp/muji-ginza.html", tags: ["Design hotel", "Smart value", "Slow mornings", "Shopping"] },
+    { name: "sequence MIYASHITA PARK - Shibuya", bookingUrl: "https://www.booking.com/hotel/jp/sequence-miyashita-park-tokyo.html", tags: ["Design hotel", "Smart value", "Packed schedule", "Nightlife", "Shopping", "Friends"] },
+    { name: "Hotel K5", bookingUrl: "https://www.booking.com/hotel/jp/k5.html", tags: ["Boutique hotel", "Comfortable", "Slow mornings", "Food", "Couple"] },
+    { name: "OMO5 Tokyo Otsuka by Hoshino Resorts", bookingUrl: "https://www.booking.com/hotel/jp/xing-ye-rizoto-omo5-da-zhong.html", tags: ["Smart value", "Balanced days", "Family", "Friends", "Culture"] },
   ],
   "SEOUL": [
     { name: "Josun Palace", bookingUrl: "https://www.booking.com/hotel/kr/josun-palace-a-luxury-collection-seoul-gangnam.html" },
@@ -217,14 +221,33 @@ const hotelCatalog = {
   ],
 };
 
-const descriptors = ["The icon", "The design stay", "The quiet escape", "The scene"];
+const defaultProfiles = [
+  ["Premium", "Blowout", "Packed schedule"],
+  ["Design hotel", "Premium", "Food"],
+  ["Comfortable", "Mostly relaxing", "Slow mornings"],
+  ["Smart value", "Balanced days", "Culture"],
+];
 
-export function hotelsFor(destination) {
-  return (hotelCatalog[destination.city] || []).map((entry, index) => ({
-    id: `${destination.airport}-${index + 1}`,
-    ...(typeof entry === "string" ? { name: entry, bookingUrl: null } : entry),
-    descriptor: descriptors[index],
-    image: destination.image,
+function hotelScore(hotel, answers) {
+  const weights = { hotel: 7, memory: 7, escape: 4, luxury: 3, self: 2 };
+  return Object.entries(weights).reduce((score, [key, weight]) => score + (hotel.tags.includes(answers?.[key]) ? weight : 0), 0);
+}
+
+export function hotelsFor(destination, trip = {}) {
+  const answers = trip?.answers || {};
+  return (hotelCatalog[destination.city] || []).map((entry, index) => {
+    const hotel = typeof entry === "string" ? { name: entry, bookingUrl: null } : entry;
+    const tags = hotel.tags || defaultProfiles[index % defaultProfiles.length];
+    return {
+      id: `${destination.airport}-${hotel.name}`,
+      ...hotel,
+      tags,
+      score: hotelScore({ ...hotel, tags }, answers),
+      image: destination.image,
+    };
+  }).sort((a, b) => b.score - a.score || a.name.localeCompare(b.name)).slice(0, 4).map((hotel, index) => ({
+    ...hotel,
+    descriptor: index === 0 ? "Your best match" : index === 1 ? "Also your style" : index === 2 ? "A different pace" : "Worth a look",
   }));
 }
 

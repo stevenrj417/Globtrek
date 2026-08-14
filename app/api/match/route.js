@@ -132,7 +132,7 @@ function fallbackMatches(answers) {
   return [...destinations]
     .map((destination) => ({
       ...destination,
-      score: scoreDestination(destination, answers) + Math.random() * 4.5,
+      score: scoreDestination(destination, answers),
     }))
     .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
 }
@@ -149,16 +149,7 @@ function extractOutputText(data) {
 }
 
 function normalizeAiResult(aiResult, fallback) {
-  const orderedNames = Array.isArray(aiResult?.rankedNames)
-    ? aiResult.rankedNames
-    : [];
-  const ordered = orderedNames
-    .map((name) => fallback.find((destination) => destination.name === name))
-    .filter(Boolean);
-  const remaining = fallback.filter(
-    (destination) => !ordered.some((match) => match.name === destination.name),
-  );
-  const matches = [...ordered, ...remaining];
+  const matches = fallback;
   const primary = {
     ...matches[0],
     why: aiResult?.why || matches[0].why,
@@ -192,21 +183,21 @@ export async function POST(request) {
           {
             role: "system",
             content:
-              "You are GlobTrek's travel matching assistant. Rank only the provided destinations using the traveler's stated preferences. Choose a strong fit, but if several options are close, vary the reveal instead of always choosing the same destination. Explain the recommendation using only the supplied preferences and destination attributes. Do not invent prices, ratings, availability, bookings, or provider relationships. Return strict JSON with rankedNames, why, and itinerary. No markdown.",
+              "You are GlobTrek's travel matching assistant. Explain the top destination selected by GlobTrek's deterministic preference score. Respect the traveler's desired destination familiarity, where discovery is 0 for almost unknown and 100 for world famous. Use only supplied preferences and destination attributes. Do not invent prices, ratings, availability, bookings, or provider relationships. Return strict JSON with why and itinerary. No markdown.",
           },
           {
             role: "user",
             content: JSON.stringify({
               answers,
-              variationSeed: Math.random().toString(36).slice(2),
               destinations: destinations.map(
-                ({ name, style, season, tags, price, nights }) => ({
+                ({ name, style, season, tags, price, nights, recognition }) => ({
                   name,
                   style,
                   season,
                   tags,
                   price,
                   nights,
+                  recognition,
                 }),
               ),
             }),

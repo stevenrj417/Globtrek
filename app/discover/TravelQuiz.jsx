@@ -83,25 +83,12 @@ const questions = [
       { label: "Not sure", image: "/quiz/not-sure-budget.jpg", alt: "A stylish traveler considering the possibilities" },
     ],
   },
-  {
-    id: "length",
-    question: "How long are you gone?",
-    type: "visual",
-    options: [
-      { label: "Long Weekend", display: "A long weekend", image: "/quiz/long-weekend.jpg", alt: "Paris for a long city weekend" },
-      { label: "Five Nights", display: "Five nights", image: "/quiz/five-nights.jpg", alt: "A five-night escape on the Amalfi Coast" },
-      { label: "One Week", display: "A week", image: "/quiz/one-week.jpg", alt: "A week exploring Kyoto" },
-      { label: "Ten Days", display: "Ten days", image: "/quiz/ten-days.jpg", alt: "A ten-day mountain journey" },
-      { label: "Two Weeks", display: "Two weeks", image: "/quiz/two-weeks.jpg", alt: "A long road trip beneath a vast sky" },
-      { label: "Open-Ended", display: "Open-ended", image: "/quiz/open-ended.jpg", alt: "Rio de Janeiro and an open-ended adventure" },
-    ],
-  },
 ];
 
-const totalSteps = questions.length + 1;
+const preferenceSteps = questions.length + 1;
 
 function Progress({ step }) {
-  return <p className="text-[10px] font-medium tabular-nums tracking-[0.2em] text-[#777]">{String(step + 1).padStart(2, "0")} / {String(totalSteps).padStart(2, "0")}</p>;
+  return <p className="text-[10px] font-medium tabular-nums tracking-[0.2em] text-[#777]">{String(step + 1).padStart(2, "0")} / {String(preferenceSteps).padStart(2, "0")}</p>;
 }
 
 function VisualQuestion({ question, value, onChoose }) {
@@ -212,6 +199,32 @@ function AirportAutocomplete({ value, onChange }) {
   </div>;
 }
 
+function DiscoveryQuestion({ value, onChange, onBack, onContinue }) {
+  const level = Number.isFinite(value) ? value : 50;
+  const mood = level < 20 ? "Somewhere almost nobody knows" : level < 40 ? "A beautiful secret" : level < 65 ? "A little unexpected" : level < 85 ? "Known for a reason" : "The icons";
+
+  return <div className="quiz-stage flex min-h-[calc(100svh-5rem)] flex-col bg-[#f5f3ef] px-5 pb-8 pt-9 sm:px-8 lg:px-10">
+    <div className="flex items-center justify-between"><span className="text-xl font-semibold tracking-[-0.055em]">GLOBTREK</span><Progress step={questions.length} /></div>
+    <div className="mx-auto flex w-full max-w-[1450px] flex-1 flex-col justify-center py-14">
+      <p className="text-center text-[10px] uppercase tracking-[0.23em] text-[#777]">How far off the map?</p>
+      <h1 className="mx-auto mt-8 max-w-5xl text-center text-[clamp(3.2rem,7.5vw,8.5rem)] font-medium leading-[0.86] tracking-[-0.075em]">{mood}</h1>
+      <div className="mx-auto mt-16 w-full max-w-5xl sm:mt-24">
+        <div className="relative h-24 sm:h-32">
+          <div className="absolute inset-x-0 top-1/2 h-px bg-black/25" />
+          <div className="absolute left-0 top-1/2 h-px bg-black transition-[width] duration-300" style={{ width: `${level}%` }} />
+          <div className="pointer-events-none absolute top-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border border-black bg-[#f5f3ef] shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-[left] duration-150 sm:h-20 sm:w-20" style={{ left: `${level}%` }}><span className="grid h-full place-items-center text-[10px] tabular-nums tracking-[0.15em]">{level}</span></div>
+          <input aria-label="Destination familiarity" className="absolute inset-0 h-full w-full cursor-ew-resize opacity-0" type="range" min="0" max="100" step="1" value={level} onInput={(event) => onChange(Number(event.currentTarget.value))} onChange={(event) => onChange(Number(event.currentTarget.value))} />
+        </div>
+        <div className="flex justify-between gap-8 border-t border-black/10 pt-5 text-[10px] uppercase tracking-[0.2em] text-[#666]"><span>Never heard of it</span><span className="text-right">World famous</span></div>
+      </div>
+    </div>
+    <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-6 border-t border-black/10 pt-7">
+      <button type="button" onClick={onBack} className="min-h-12 text-xs uppercase tracking-[0.12em] text-[#666] hover:text-black">← Back</button>
+      <button type="button" onClick={onContinue} className="min-h-14 bg-[#171717] px-8 text-xs font-semibold uppercase tracking-[0.12em] text-white">Set the course →</button>
+    </div>
+  </div>;
+}
+
 function DateQuestion({ answers, setAnswers, tripStart, tripEnd, isFlexible, setTripStart, setTripEnd, setIsFlexible, originAirport, setOriginAirport, guestCount, setGuestCount, onBack, onSubmit, canSubmit }) {
   const [mode, setMode] = useState(isFlexible ? "flexible" : "dates");
   const summary = questions.map((question) => answers[question.id]).filter(Boolean).join(" / ");
@@ -225,7 +238,7 @@ function DateQuestion({ answers, setAnswers, tripStart, tripEnd, isFlexible, set
 
   return <form onSubmit={onSubmit} className="quiz-stage grid min-h-svh bg-[#f5f3ef] lg:grid-cols-2">
     <div className="flex min-h-svh flex-col px-5 pb-8 pt-8 sm:px-10 lg:px-14 lg:py-10">
-      <div className="flex items-center justify-between"><span className="text-xl font-semibold tracking-[-0.055em]">GLOBTREK</span><Progress step={questions.length} /></div>
+      <div className="flex items-center justify-between"><span className="text-xl font-semibold tracking-[-0.055em]">GLOBTREK</span><p className="text-[10px] uppercase tracking-[0.2em] text-[#777]">Trip details</p></div>
       <div className="flex flex-1 flex-col justify-center py-14 lg:py-10">
         <p className="text-[10px] uppercase tracking-[0.2em] text-[#777]">Final step</p>
         <h1 className="mt-6 max-w-xl text-[clamp(3.25rem,5.8vw,6.3rem)] font-medium leading-[0.9] tracking-[-0.075em]">When are you leaving?</h1>
@@ -269,6 +282,7 @@ export default function TravelQuiz() {
   const [isFlexible, setIsFlexible] = useState(false);
   const [originAirport, setOriginAirport] = useState("");
   const [guestCount, setGuestCount] = useState("2");
+  const [discoveryLevel, setDiscoveryLevel] = useState(50);
   const [phase, setPhase] = useState("idle");
   const timer = useRef(null);
 
@@ -289,6 +303,11 @@ export default function TravelQuiz() {
 
   function back() { if (step > 0) go(step - 1, "back"); }
 
+  function continueDiscovery() {
+    setAnswers((value) => ({ ...value, discovery: discoveryLevel }));
+    go(step + 1);
+  }
+
   function submit(event) {
     event.preventDefault();
     if (!canSubmit) return;
@@ -300,6 +319,6 @@ export default function TravelQuiz() {
   if (phase === "complete") return <div className="grid min-h-[calc(100svh-5rem)] place-items-center bg-[#f5f3ef] px-5"><p className="text-[clamp(3.5rem,8vw,8rem)] font-medium tracking-[-0.07em]">We found it.</p></div>;
 
   return <section id="quiz" className={`overflow-hidden bg-[#f5f3ef] text-[#171717] transition-[opacity,transform] duration-300 ease-out ${phase === "leaving" ? "-translate-y-2 opacity-0" : phase === "leaving-back" ? "translate-y-2 opacity-0" : phase === "entering" ? "translate-y-2 opacity-0" : "translate-y-0 opacity-100"}`}>
-    {step < questions.length ? <VisualQuestion question={current} value={answers[current.id]} onChoose={choose} /> : <DateQuestion answers={answers} setAnswers={setAnswers} tripStart={tripStart} tripEnd={tripEnd} isFlexible={isFlexible} setTripStart={setTripStart} setTripEnd={setTripEnd} setIsFlexible={setIsFlexible} originAirport={originAirport} setOriginAirport={setOriginAirport} guestCount={guestCount} setGuestCount={setGuestCount} onBack={back} onSubmit={submit} canSubmit={canSubmit} />}
+    {step < questions.length ? <VisualQuestion question={current} value={answers[current.id]} onChoose={choose} /> : step === questions.length ? <DiscoveryQuestion value={discoveryLevel} onChange={setDiscoveryLevel} onBack={back} onContinue={continueDiscovery} /> : <DateQuestion answers={answers} setAnswers={setAnswers} tripStart={tripStart} tripEnd={tripEnd} isFlexible={isFlexible} setTripStart={setTripStart} setTripEnd={setTripEnd} setIsFlexible={setIsFlexible} originAirport={originAirport} setOriginAirport={setOriginAirport} guestCount={guestCount} setGuestCount={setGuestCount} onBack={back} onSubmit={submit} canSubmit={canSubmit} />}
   </section>;
 }

@@ -46,6 +46,16 @@ const destinationPhotos = {
   "TAHITI & MOOREA": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
 };
 
+const recognitionLevels = {
+  "TOKYO": 96, "PARIS": 100, "ROME": 96, "LONDON": 97, "NEW YORK CITY": 100, "DUBAI": 94, "BALI": 91,
+  "BARCELONA": 92, "SANTORINI": 90, "AMALFI COAST": 89, "KYOTO": 86, "SYDNEY": 91, "RIO DE JANEIRO": 91,
+  "MALDIVES": 92, "BANFF": 82, "SINGAPORE": 84, "BANGKOK": 88, "MARRAKECH": 83, "CAPE TOWN": 82,
+  "LISBON": 80, "FLORENCE": 86, "MAUI": 87, "TULUM": 81, "SEOUL": 85, "COSTA RICA": 84,
+  "BUENOS AIRES": 52, "VANCOUVER": 56, "MEXICO CITY": 72, "ICELAND RING ROAD": 68, "PATAGONIA": 38,
+  "HANOI": 46, "CHIANG MAI": 40, "PROVENCE": 45, "NEW ZEALAND SOUTH ISLAND": 34,
+  "NAIROBI & THE MAASAI MARA": 30, "TAHITI & MOOREA": 22,
+};
+
 const catalog = [
   ["KYOTO", "JAPAN", "KIX", "culture", "Culture / Food / Slow mornings", "Spring or fall", ["Culture", "Slow mornings", "Balanced days", "Solo", "Couple", "Traditional inn", "Boutique hotel", "Food", "Premium", "One Week"]],
   ["TOKYO", "JAPAN", "HND", "city", "Design / Food / Electric nights", "March to May or October to November", ["Cities", "Packed schedule", "Solo", "Friends", "Design hotel", "Food", "Nightlife", "Shopping", "Premium", "One Week"]],
@@ -96,6 +106,7 @@ export const destinations = catalog.map(([city, country, airport, photo, style, 
   city,
   country,
   airport,
+  recognition: recognitionLevels[city] ?? 50,
   image: destinationPhotos[city] || photos[photo],
   price: estimate(tags),
   costs: ["Flights: check live fares", "Stay: check live rooms", "Dining: plan by neighborhood", "Experiences: check live options"],
@@ -116,10 +127,13 @@ export const destinations = catalog.map(([city, country, airport, photo, style, 
 }));
 
 export function scoreDestination(destination, answers) {
-  return Object.values(answers || {}).reduce(
-    (score, answer) => score + (destination.tags.includes(answer) ? 3 : 0),
+  const tagScore = Object.entries(answers || {}).filter(([key]) => key !== "discovery").reduce(
+    (score, [, answer]) => score + (destination.tags.includes(answer) ? 3 : 0),
     0,
   );
+  const desiredRecognition = Number(answers?.discovery);
+  const discoveryScore = Number.isFinite(desiredRecognition) ? Math.max(0, 9 - Math.abs(destination.recognition - desiredRecognition) / 8) : 0;
+  return tagScore + discoveryScore;
 }
 
 export const bookingLinks = {

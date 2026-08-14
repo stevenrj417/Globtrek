@@ -9,7 +9,7 @@ import { hotelsFor } from "../data/hotels";
 function getMatches(quiz) {
   const answers = quiz?.answers || {};
   return [...destinations]
-    .map((destination) => ({ ...destination, score: scoreDestination(destination, answers) + Math.random() * 4.5 }))
+    .map((destination) => ({ ...destination, score: scoreDestination(destination, answers) }))
     .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
 }
 
@@ -33,7 +33,7 @@ function bookingHotelUrl(hotel, trip = {}) {
 }
 
 function HotelShortlist({ destination, quiz }) {
-  const hotels = useMemo(() => hotelsFor(destination), [destination]);
+  const hotels = useMemo(() => hotelsFor(destination, quiz), [destination, quiz]);
   const [selected, setSelected] = useState(null);
   const [customHotel, setCustomHotel] = useState("");
   const [editingCustom, setEditingCustom] = useState(false);
