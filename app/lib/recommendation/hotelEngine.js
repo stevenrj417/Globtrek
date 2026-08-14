@@ -12,8 +12,8 @@ export function rankHotels(hotels, profile, budgetPlan) {
   const nights = Math.max(1, profile.tripLength);
   const nightlyAllowance = budgetPlan.hotelBudget / nights;
   return hotels.filter((hotel) => hotel.active !== false).map((hotel) => {
-    const low = Number(hotel.typicalNightlyLow);
-    const high = Number(hotel.typicalNightlyHigh);
+    const low = hotel.typicalNightlyLow == null ? Number.NaN : Number(hotel.typicalNightlyLow);
+    const high = hotel.typicalNightlyHigh == null ? Number.NaN : Number(hotel.typicalNightlyHigh);
     const hasPrice = Number.isFinite(low) && Number.isFinite(high);
     const checkedAt = Date.parse(hotel.priceLastChecked || hotel.lastPriceUpdated || "");
     const priceStale = hasPrice && (!Number.isFinite(checkedAt) || Date.now() - checkedAt > 180 * 86400000);
