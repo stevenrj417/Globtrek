@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { track } from "@vercel/analytics";
 import { useEffect, useMemo, useRef, useState } from "react";
 import airports from "../data/airports.json";
 
@@ -324,6 +325,7 @@ export default function TravelQuiz() {
   }
 
   function choose(label) {
+    if (step === 0) track("quiz_started");
     setAnswers((value) => ({ ...value, [current.id]: label }));
     timer.current = window.setTimeout(() => go(step + 1), 360);
   }
@@ -339,6 +341,7 @@ export default function TravelQuiz() {
     event.preventDefault();
     if (!canSubmit) return;
     window.localStorage.setItem("globtrekQuiz", JSON.stringify({ answers, tripStart, tripEnd, isFlexible, originAirport, guestCount, createdAt: Date.now() }));
+    track("quiz_completed", { setting: answers.alive || "unknown", duration: answers.duration || "unknown" });
     setPhase("complete");
     timer.current = window.setTimeout(() => window.location.assign("/thinking"), 850);
   }

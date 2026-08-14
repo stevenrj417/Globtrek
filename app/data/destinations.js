@@ -127,12 +127,13 @@ export const destinations = catalog.map(([city, country, airport, photo, style, 
 }));
 
 export function scoreDestination(destination, answers) {
+  const weights = { alive: 9, duration: 7, memory: 6, luxury: 6, hotel: 5, escape: 4, self: 3 };
   const tagScore = Object.entries(answers || {}).filter(([key]) => key !== "discovery").reduce(
-    (score, [, answer]) => score + (destination.tags.includes(answer) ? 3 : 0),
+    (score, [key, answer]) => score + (destination.tags.includes(answer) ? (weights[key] || 2) : 0),
     0,
   );
   const desiredRecognition = Number(answers?.discovery);
-  const discoveryScore = Number.isFinite(desiredRecognition) ? Math.max(0, 9 - Math.abs(destination.recognition - desiredRecognition) / 8) : 0;
+  const discoveryScore = Number.isFinite(desiredRecognition) ? Math.max(0, 14 - Math.abs(destination.recognition - desiredRecognition) / 5) : 0;
   return tagScore + discoveryScore;
 }
 

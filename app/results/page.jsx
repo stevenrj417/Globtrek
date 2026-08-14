@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { track } from "@vercel/analytics";
 import { bookingActivityUrl, bookingFlightUrl, bookingLinks, destinations, diningSearchUrl, scoreDestination } from "../data/destinations";
 import { hotelsFor } from "../data/hotels";
 
@@ -20,6 +21,44 @@ function formatDate(value) {
 
 function ArrowUpRight() {
   return <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5 fill-none stroke-current" strokeWidth="1.4"><path d="M7 17 17 7M8 7h9v9" /></svg>;
+}
+
+function encodeTrip(trip) {
+  const bytes = new TextEncoder().encode(JSON.stringify(trip));
+  let binary = "";
+  bytes.forEach((byte) => { binary += String.fromCharCode(byte); });
+  return btoa(binary).replaceAll("+", "-").replaceAll("/", "_").replaceAll("=", "");
+}
+
+function decodeTrip(value) {
+  try {
+    const normalized = value.replaceAll("-", "+").replaceAll("_", "/");
+    const binary = atob(normalized);
+    const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
+    return JSON.parse(new TextDecoder().decode(bytes));
+  } catch {
+    return null;
+  }
+}
+
+function venueUrl(name, destination) {
+  return `https://www.google.com/maps/search/${encodeURIComponent(`${name}, ${destination.city}, ${destination.country}`)}`;
+}
+
+function estimateTrip(quiz) {
+  const ranges = { "Smart value": [0, 3000], Comfortable: [3000, 6000], Premium: [6000, 10000], Blowout: [10000, 15000] };
+  const [low, high] = ranges[quiz?.answers?.memory] || [3000, 6000];
+  const guests = Math.max(1, Number.parseInt(quiz?.guestCount, 10) || 2);
+  const money = (value) => value === 0 ? "$0" : `$${Math.round(value / 1000)}k`;
+  return `${money(low * guests)}–${money(high * guests)} total · ${guests} traveler${guests === 1 ? "" : "s"}`;
+}
+
+function hotelReason(hotel, quiz, index) {
+  const labels = { memory: "budget", luxury: "main priority", hotel: "stay style", escape: "pace" };
+  for (const key of ["hotel", "luxury", "memory", "escape"]) {
+    if (hotel.tags?.includes(quiz?.answers?.[key])) return `Matched to your ${labels[key]}`;
+  }
+  return index === 0 ? "Strongest overall fit" : "A different take on your trip";
 }
 
 function bookingHotelUrl(hotel, trip = {}) {
@@ -53,6 +92,7 @@ function HotelShortlist({ destination, quiz }) {
   function choose(stay) {
     setSelected(stay);
     window.localStorage.setItem(`globtrekStay:${destination.city}`, JSON.stringify(stay));
+    track("hotel_selected", { destination: destination.city, hotel: stay.name });
   }
 
   function remove() {
@@ -87,9 +127,10 @@ function HotelShortlist({ destination, quiz }) {
             {isSelected && <span className="absolute right-5 top-5 bg-white px-3 py-2 text-[9px] uppercase tracking-[0.2em] text-black">Selected</span>}
             <div className="absolute inset-x-5 bottom-5 text-white"><h3 className="font-serif text-[1.35rem] leading-[1.05]">{hotel.name}</h3><p className="mt-2 text-[9px] uppercase tracking-[0.2em] text-white/65">{destination.city}, {destination.country}</p></div>
           </div>
+          <p className="border-b border-black/10 px-5 py-3 text-[9px] uppercase tracking-[0.16em] text-black/40">{hotelReason(hotel, quiz, index)}</p>
           <div className="grid grid-cols-2 border-b border-black/10">
             <button type="button" onClick={() => choose({ ...hotel, type: "curated" })} className={`min-h-12 border-r border-black/10 text-[10px] uppercase tracking-[0.18em] transition ${isSelected ? "bg-black text-white" : "hover:bg-black hover:text-white"}`}>{isSelected ? "In your trip" : "Select stay"}</button>
-            {hotel.bookingUrl ? <a href={bookingHotelUrl(hotel, quiz)} target="_blank" rel="noopener sponsored" className="grid min-h-12 place-items-center text-[10px] uppercase tracking-[0.18em] transition hover:bg-black hover:text-white">Check live →</a> : <span className="grid min-h-12 place-items-center text-[10px] uppercase tracking-[0.18em] text-black/35">Link being verified</span>}
+            {hotel.bookingUrl ? <a href={bookingHotelUrl(hotel, quiz)} onClick={() => track("hotel_affiliate_clicked", { destination: destination.city, hotel: hotel.name })} target="_blank" rel="noopener sponsored" className="grid min-h-12 place-items-center text-[10px] uppercase tracking-[0.18em] transition hover:bg-black hover:text-white">Check live →</a> : <span className="grid min-h-12 place-items-center text-[10px] uppercase tracking-[0.18em] text-black/35">Link being verified</span>}
           </div>
         </article>;
       })}
@@ -112,20 +153,25 @@ export default function ResultsPage() {
   const [chosenAirport, setChosenAirport] = useState(null);
   const [ready, setReady] = useState(false);
   const [planning, setPlanning] = useState(true);
+  const [refining, setRefining] = useState(false);
+  const [shareStatus, setShareStatus] = useState("");
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const shared = params.get("trip") ? decodeTrip(params.get("trip")) : null;
     const raw = window.localStorage.getItem("globtrekQuiz");
-    const stored = raw ? JSON.parse(raw) : { answers: {} };
+    const stored = shared?.quiz || (raw ? JSON.parse(raw) : { answers: {} });
     const initialize = window.setTimeout(() => {
-      setChosenAirport(new URLSearchParams(window.location.search).get("destination"));
+      setChosenAirport(shared?.destination || params.get("destination"));
       setQuiz(stored);
     }, 0);
-    fetch("/api/match", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(stored) })
+    fetch("/api/match", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...stored, destination: shared?.destination || params.get("destination") }) })
       .then((response) => response.json())
       .then((data) => Array.isArray(data.matches) && data.matches.length && setRemoteMatches(data.matches))
       .catch(() => {})
       .finally(() => setPlanning(false));
     const timer = window.setTimeout(() => setReady(true), 100);
+    track("result_viewed", { shared: Boolean(shared) });
     return () => {
       window.clearTimeout(initialize);
       window.clearTimeout(timer);
@@ -149,6 +195,52 @@ export default function ResultsPage() {
     ["Drive", "Cars & transfers", bookingLinks.cars, true],
     ["Dine", `Restaurants in ${trip.city}`, diningSearchUrl(trip), false],
   ];
+  const estimatedTotal = estimateTrip(quiz);
+
+  async function refine(tune) {
+    if (!quiz || refining) return;
+    setRefining(true);
+    track("trip_refined", { refinement: tune, destination: trip.city });
+    try {
+      const response = await fetch("/api/match", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...quiz, tune, destination: trip.airport }) });
+      const data = await response.json();
+      if (Array.isArray(data.matches) && data.matches.length) setRemoteMatches(data.matches);
+    } finally {
+      setRefining(false);
+    }
+  }
+
+  function tripLink() {
+    const payload = encodeTrip({ quiz, destination: trip.airport });
+    return `${window.location.origin}/results?trip=${payload}`;
+  }
+
+  async function shareTrip() {
+    const url = tripLink();
+    track("trip_shared", { destination: trip.city });
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: `My GlobTrek trip to ${trip.city}`, text: `GlobTrek planned ${trip.city} for me.`, url });
+        setShareStatus("Shared");
+        return;
+      } catch {
+        setShareStatus("");
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      setShareStatus("Link copied");
+    } catch {
+      window.prompt("Copy your trip link", url);
+    }
+  }
+
+  function emailTrip() {
+    const subject = encodeURIComponent(`My GlobTrek trip to ${trip.city}`);
+    const body = encodeURIComponent(`Here is my personalized GlobTrek trip:\n\n${tripLink()}`);
+    track("trip_emailed", { destination: trip.city });
+    window.location.href = `mailto:?subject=${subject}&body=${body}`;
+  }
 
   return (
     <main className={`min-h-screen bg-[#f3f0eb] text-[#171714] transition duration-1000 ${ready ? "opacity-100" : "opacity-0"}`}>
@@ -177,6 +269,12 @@ export default function ResultsPage() {
           <div className="lg:pb-1"><p className="max-w-2xl text-[clamp(1.05rem,1.6vw,1.35rem)] font-light leading-[1.55] text-black/60">{trip.why}</p><div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-[9px] uppercase tracking-[0.2em] text-black/45"><span>{quiz?.answers?.duration || trip.nights}</span><span>{trip.season}</span><span>{trip.price}</span></div></div>
         </div>
 
+        <div className="grid gap-px bg-black/10 sm:grid-cols-[1fr_auto_auto]">
+          <div className="bg-[#f3f0eb] px-5 py-5"><p className="text-[8px] uppercase tracking-[0.2em] text-black/40">Typical planning range</p><p className="mt-2 font-serif text-xl">{estimatedTotal}</p></div>
+          <button type="button" onClick={shareTrip} className="min-h-20 bg-[#f3f0eb] px-7 text-[9px] uppercase tracking-[0.2em] transition hover:bg-white">{shareStatus || "Save / share"}</button>
+          <button type="button" onClick={emailTrip} className="min-h-20 bg-[#f3f0eb] px-7 text-[9px] uppercase tracking-[0.2em] transition hover:bg-white">Email this trip</button>
+        </div>
+
         {planning && !trip.plan && <div className="mt-16 flex min-h-32 items-center justify-between border-y border-black/15 py-8"><div><p className="text-[9px] uppercase tracking-[0.25em] text-black/40">Building your edit</p><p className="mt-3 font-serif text-2xl">Finding the places that fit you.</p></div><span className="h-2 w-2 animate-pulse rounded-full bg-black" /></div>}
 
         {trip.plan && <section className="mt-16 bg-[#171714] px-6 py-8 text-white sm:px-10 sm:py-10">
@@ -194,25 +292,34 @@ export default function ResultsPage() {
               </article>)}
             </div>
           </div>
+          <div className="mt-8 flex flex-wrap gap-2 border-t border-white/15 pt-6">
+            {["More affordable", "More local", "More relaxing", "More adventurous"].map((label) => <button disabled={refining} type="button" key={label} onClick={() => refine(label.toLowerCase())} className="border border-white/20 px-4 py-3 text-[9px] uppercase tracking-[0.16em] text-white/65 transition hover:border-white/60 hover:text-white disabled:opacity-35">{refining ? "Refining…" : label}</button>)}
+            <Link href="/discover" className="border border-white/20 px-4 py-3 text-[9px] uppercase tracking-[0.16em] text-white/65 transition hover:border-white/60 hover:text-white">Different destination</Link>
+          </div>
           {trip.plan.picks && <div className="mt-8 grid border-l border-t border-white/15 md:grid-cols-2">
             {[["Eat", trip.plan.picks.restaurants], ["Experience", trip.plan.picks.experiences]].map(([label, picks]) => <div key={label} className="border-b border-r border-white/15 p-5 sm:p-6">
               <p className="text-[9px] uppercase tracking-[0.22em] text-white/40">{label}</p>
-              <div className="mt-4 space-y-4">{picks?.slice(0, 3).map((pick) => <div key={pick.name}><h3 className="font-serif text-lg">{pick.name}</h3><p className="mt-1 text-[11px] leading-4 text-white/45">{pick.why}</p></div>)}</div>
+              <div className="mt-4 space-y-4">{picks?.slice(0, 3).map((pick) => <a href={venueUrl(pick.name, trip)} target="_blank" rel="noopener" onClick={() => track("recommendation_clicked", { type: label, destination: trip.city })} className="group block" key={pick.name}><h3 className="flex items-center gap-2 font-serif text-lg group-hover:underline">{pick.name}<span className="h-4 w-4 text-white/35"><ArrowUpRight /></span></h3><p className="mt-1 text-[11px] leading-4 text-white/45">{pick.why}</p></a>)}</div>
             </div>)}
           </div>}
           {trip.plan.budget?.length > 0 && <div className="mt-8 grid grid-cols-2 border-l border-t border-white/15 lg:grid-cols-4">{trip.plan.budget.slice(0, 4).map((item) => <div key={item.category} className="border-b border-r border-white/15 p-4"><p className="text-[8px] uppercase tracking-[0.18em] text-white/35">{item.category}</p><p className="mt-2 font-serif text-xl">{item.share}</p></div>)}</div>}
           <p className="mt-4 text-[9px] leading-4 text-white/30">Typical planning estimates. Confirm schedules, prices, availability, and opening times.</p>
         </section>}
 
+        <a href="#book" onClick={() => track("booking_checklist_started", { destination: trip.city })} className="mt-5 flex min-h-16 items-center justify-between border border-black px-6 text-[10px] uppercase tracking-[0.2em] transition hover:bg-black hover:text-white"><span>Start booking this trip</span><span>↓</span></a>
+
         <HotelShortlist destination={trip} quiz={quiz} />
 
-        <div className="mt-16 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-          {tools.map(([label, detail, href, sponsored]) => (
-            <a key={label} href={href} target="_blank" rel={sponsored ? "noopener sponsored" : "noopener"} className="group flex min-h-36 flex-col justify-between bg-white p-5 shadow-[0_12px_40px_rgba(23,23,20,0.04)] transition hover:-translate-y-1 hover:shadow-[0_18px_55px_rgba(23,23,20,0.08)] sm:min-h-40 sm:p-6">
-              <span className="text-[9px] uppercase tracking-[0.25em] text-black/40">{label}</span>
+        <div id="book" className="mt-20 scroll-mt-6">
+          <div className="mb-8 flex items-end justify-between border-b border-black/15 pb-6"><div><p className="text-[9px] uppercase tracking-[0.24em] text-black/40">Booking checklist</p><h2 className="mt-3 font-serif text-[clamp(2.2rem,4vw,4rem)] leading-none">One trip. Four decisions.</h2></div><p className="hidden max-w-xs text-right text-xs leading-5 text-black/45 sm:block">Open each provider with your destination and traveler details already carried through.</p></div>
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+          {tools.map(([label, detail, href, sponsored], index) => (
+            <a key={label} href={href} onClick={() => track(`${label.toLowerCase()}_clicked`, { destination: trip.city })} target="_blank" rel={sponsored ? "noopener sponsored" : "noopener"} className="group flex min-h-36 flex-col justify-between bg-white p-5 shadow-[0_12px_40px_rgba(23,23,20,0.04)] transition hover:-translate-y-1 hover:shadow-[0_18px_55px_rgba(23,23,20,0.08)] sm:min-h-40 sm:p-6">
+              <span className="flex items-center justify-between text-[9px] uppercase tracking-[0.25em] text-black/40"><span>{label}</span><span>0{index + 1}</span></span>
               <span className="flex items-end justify-between gap-4"><span className="font-serif text-[1.15rem] leading-tight sm:text-xl">{detail}</span><span className="shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"><ArrowUpRight /></span></span>
             </a>
           ))}
+          </div>
         </div>
         <p className="mt-4 text-center text-[10px] leading-5 text-black/40">Booking.com links are sponsored affiliate links. Current prices, availability, and final terms are shown by the provider.</p>
 

@@ -20,6 +20,7 @@ export default function PrivacyPage() {
       <EditorialSection number="02" title="Quiz storage and recommendation processing">
         <p>
           Quiz answers and dates are stored in your browser using localStorage so the results page can read them. They remain there until browser storage is cleared or overwritten by a later quiz.
+          When you create a share link, the trip preferences needed to reproduce that result are encoded in the link itself. Anyone with that link can view those preferences. GlobTrek also uses privacy-friendly first-party analytics to understand page visits and actions such as quiz completion and provider-link clicks; payment details are never collected by GlobTrek.
         </p>
         <p>
           The answers are sent to GlobTrek’s server-side matching endpoint. When server-side OpenAI functionality is configured, those preferences may be sent to OpenAI to rank the limited destination set and prepare recommendation text. The current code does not include an account database or booking database.

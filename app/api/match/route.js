@@ -1,6 +1,9 @@
 import { destinations, scoreDestination } from "../../data/destinations";
 import { hotelsFor } from "../../data/hotels";
 
+const resultCache = new Map();
+const CACHE_TTL = 24 * 60 * 60 * 1000;
+
 /*const legacyDestinations = [
   {
     name: "KYOTO, JAPAN",
@@ -163,6 +166,32 @@ function normalizeAiResult(aiResult, fallback) {
   return [primary, ...matches.slice(1)];
 }
 
+function fallbackPlan(destination, answers) {
+  const priority = answers?.luxury || "local character";
+  return {
+    headline: `${destination.city}, at your pace`,
+    airport: { code: destination.airport, note: "Confirm your preferred arrival route before booking." },
+    arrivalWindow: { title: "Arrival", steps: ["Keep the first evening light and close to your stay."] },
+    picks: { restaurants: [], experiences: [] },
+    budget: [
+      { category: "Stay", share: "35–50%", note: "Compare live rooms" },
+      { category: "Flights", share: "20–35%", note: "Compare live fares" },
+      { category: "Food", share: "15–25%", note: `Prioritize ${priority.toLowerCase()}` },
+      { category: "Experiences", share: "10–20%", note: "Book key moments" },
+    ],
+    days: [
+      { day: "Day 1", title: "Arrive softly", morning: "Travel and arrival", afternoon: "Settle into your stay", evening: "Easy neighborhood dinner" },
+      { day: "Day 2", title: "Find the rhythm", morning: "One signature sight", afternoon: "Explore at your pace", evening: "A memorable local meal" },
+      { day: "Day 3", title: "Make it yours", morning: "Follow your main interest", afternoon: "Leave room to wander", evening: "Choose your favorite neighborhood" },
+    ],
+    practicalNotes: ["Confirm live schedules, availability, and final prices with each provider."],
+  };
+}
+
+function withFallbackPlans(matches, answers) {
+  return matches.map((destination) => ({ ...destination, plan: destination.plan || fallbackPlan(destination, answers) }));
+}
+
 function tripLength(body) {
   if (body?.isFlexible || !body?.tripStart || !body?.tripEnd) return null;
   const start = Date.parse(`${body.tripStart}T00:00:00Z`);
@@ -214,15 +243,25 @@ const planSchema = {
 };
 
 export async function POST(request) {
+  const startedAt = Date.now();
   const body = await request.json();
   const answers = body.answers || {};
-  const fallback = fallbackMatches(answers);
+  const ranked = fallbackMatches(answers);
+  const forcedDestination = typeof body.destination === "string" ? ranked.find((destination) => destination.airport === body.destination) : null;
+  const fallback = forcedDestination ? [forcedDestination, ...ranked.filter((destination) => destination.airport !== forcedDestination.airport)] : ranked;
   const primaryDestination = fallback[0];
   const stayOptions = hotelsFor(primaryDestination, body).map(({ name, tags }) => ({ name, tags }));
   const nights = tripLength(body);
+  const tune = typeof body.tune === "string" ? body.tune.slice(0, 40) : "original";
+  const cacheKey = JSON.stringify({ answers, nights, flexible: Boolean(body.isFlexible), guests: body.guestCount || "2", destination: primaryDestination.airport, tune });
+  const cached = resultCache.get(cacheKey);
+  if (cached && Date.now() - cached.createdAt < CACHE_TTL) {
+    console.log(JSON.stringify({ level: "info", msg: "match_cache_hit", route: "/api/match", ms: Date.now() - startedAt }));
+    return Response.json({ ...cached.value, cached: true });
+  }
 
   if (!process.env.OPENAI_API_KEY) {
-    return Response.json({ source: "fallback", aiStatus: "missing_key", matches: fallback });
+    return Response.json({ source: "fallback", aiStatus: "missing_key", matches: withFallbackPlans(fallback, answers) });
   }
 
   try {
@@ -242,7 +281,7 @@ export async function POST(request) {
           {
             role: "system",
             content:
-              "You are GlobTrek's invisible trip-planning engine. The destination is already selected. Write like a sharp travel editor, never a chatbot. Personalize from every supplied quiz answer and the requested trip length. Use web search to verify every named restaurant and experience is a real, currently operating place in the supplied destination. Prefer iconic choices when discoveryLevel is high and genuinely under-the-radar local choices when it is low; use a thoughtful mix in the middle. Never invent a venue, airport, flight time, live price, availability, reservation, address, opening hour, or transfer duration. The airport code and hotel shortlist are supplied facts; do not replace them. Return only valid JSON with this exact shape: {\"why\":string,\"itinerary\":[string],\"plan\":{\"headline\":string,\"airport\":{\"code\":string,\"note\":string},\"arrivalWindow\":{\"title\":string,\"steps\":[string]},\"picks\":{\"restaurants\":[{\"name\":string,\"why\":string}],\"experiences\":[{\"name\":string,\"why\":string}]},\"budget\":[{\"category\":string,\"share\":string,\"note\":string}],\"days\":[{\"day\":string,\"title\":string,\"morning\":string,\"afternoon\":string,\"evening\":string}],\"practicalNotes\":[string]}}. Constraints: why is one sentence; headline is under 8 words; airport note is under 12 words; arrivalWindow has exactly 1 step under 18 words; picks has exactly 3 verified restaurants and 3 verified experiences, each why under 12 words; budget has exactly 4 broad categories with percentage shares; days has exactly 3 items and each time-of-day string is under 12 words. Use actual venue names inside the day plan. No markdown.",
+              "You are GlobTrek's invisible trip-planning engine. The destination is already selected. Write like a sharp travel editor, never a chatbot. Personalize from every supplied quiz answer and the requested trip length. Honor the refinement when it requests more affordable, more local, more relaxing, or more adventurous choices. Use web search to verify every named restaurant and experience is a real, currently operating place in the supplied destination. Prefer iconic choices when the discovery slider is high and genuinely under-the-radar local choices when it is low; use a thoughtful mix in the middle. Never invent a venue, airport, flight time, live price, availability, reservation, address, opening hour, or transfer duration. The airport code and hotel shortlist are supplied facts; do not replace them. Return only valid JSON with this exact shape: {\"why\":string,\"itinerary\":[string],\"plan\":{\"headline\":string,\"airport\":{\"code\":string,\"note\":string},\"arrivalWindow\":{\"title\":string,\"steps\":[string]},\"picks\":{\"restaurants\":[{\"name\":string,\"why\":string}],\"experiences\":[{\"name\":string,\"why\":string}]},\"budget\":[{\"category\":string,\"share\":string,\"note\":string}],\"days\":[{\"day\":string,\"title\":string,\"morning\":string,\"afternoon\":string,\"evening\":string}],\"practicalNotes\":[string]}}. Constraints: why is one sentence; headline is under 8 words; airport note is under 12 words; arrivalWindow has exactly 1 step under 18 words; picks has exactly 3 verified restaurants and 3 verified experiences, each why under 12 words; budget has exactly 4 broad categories with percentage shares; days has exactly 3 items and each time-of-day string is under 12 words. Use actual venue names inside the day plan. No markdown.",
           },
           {
             role: "user",
@@ -254,6 +293,7 @@ export async function POST(request) {
                 guests: Number.parseInt(body.guestCount, 10) || 2,
                 originAirport: body.originAirport || null,
               },
+              refinement: tune,
               destination: (({ name, city, country, style, season, tags, price, nights: suggestedNights, recognition, airport }) => ({ name, city, country, style, season, tags, price, suggestedNights, recognition, airport }))(primaryDestination),
               verifiedHotelShortlist: stayOptions,
             }),
@@ -269,11 +309,16 @@ export async function POST(request) {
     const data = await response.json();
     const aiResult = JSON.parse(extractOutputText(data));
 
-    return Response.json({
+    const value = {
       source: "openai",
       matches: normalizeAiResult(aiResult, fallback),
-    });
+    };
+    if (resultCache.size >= 100) resultCache.delete(resultCache.keys().next().value);
+    resultCache.set(cacheKey, { createdAt: Date.now(), value });
+    console.log(JSON.stringify({ level: "info", msg: "match_complete", route: "/api/match", source: "openai", ms: Date.now() - startedAt }));
+    return Response.json(value);
   } catch (error) {
-    return Response.json({ source: "fallback", aiStatus: error instanceof Error ? error.message : "request_failed", matches: fallback });
+    console.error(JSON.stringify({ level: "error", msg: "match_failed", route: "/api/match", error: error instanceof Error ? error.message : "request_failed", ms: Date.now() - startedAt }));
+    return Response.json({ source: "fallback", aiStatus: error instanceof Error ? error.message : "request_failed", matches: withFallbackPlans(fallback, answers) });
   }
 }
