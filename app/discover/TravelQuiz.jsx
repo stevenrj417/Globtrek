@@ -7,33 +7,33 @@ import airports from "../data/airports.json";
 const questions = [
   {
     id: "alive",
-    question: "Where do you wanna be?",
+    question: "What setting sounds best?",
     type: "visual",
     options: [
-      { label: "Ocean", image: "/quiz/ocean.jpg", alt: "A woman overlooking a bright Mediterranean sea" },
+      { label: "Ocean", display: "Coast", image: "/quiz/ocean.jpg", alt: "A woman overlooking a bright Mediterranean sea" },
       { label: "Mountains", image: "/quiz/mountains.jpg", alt: "A fashion portrait in a snowy mountain landscape" },
-      { label: "Cities", image: "/quiz/cities.jpg", alt: "A black-and-white fashion portrait in Paris" },
-      { label: "Road Trips", image: "/quiz/road-trips.jpg", alt: "An open road through a dramatic desert landscape" },
-      { label: "Culture", image: "/quiz/culture.jpg", alt: "A quiet tree-lined street in Kyoto" },
-      { label: "Surprise Me", image: "/quiz/surprise-me.jpg", alt: "Rio de Janeiro seen from above" },
+      { label: "Cities", display: "City", image: "/quiz/cities.jpg", alt: "A black-and-white fashion portrait in Paris" },
+      { label: "Road Trips", display: "Road trip", image: "/quiz/road-trips.jpg", alt: "An open road through a dramatic desert landscape" },
+      { label: "Culture", display: "History & culture", image: "/quiz/culture.jpg", alt: "A quiet tree-lined street in Kyoto" },
+      { label: "Surprise Me", display: "No preference", image: "/quiz/surprise-me.jpg", alt: "Rio de Janeiro seen from above" },
     ],
   },
   {
     id: "escape",
-    question: "How should it feel?",
+    question: "What pace do you prefer?",
     type: "visual",
     options: [
-      { label: "Slow mornings", image: "/quiz/slow-mornings.jpg", alt: "A beautiful slow morning with coffee" },
-      { label: "Balanced days", image: "/quiz/balanced-days.jpg", alt: "A calm open road beneath a wide sky" },
-      { label: "Packed schedule", image: "/quiz/packed-schedule.jpg", alt: "A vibrant city seen from above" },
-      { label: "Mostly relaxing", image: "/quiz/mostly-relaxing.jpg", alt: "Clear water and a quiet tropical beach" },
-      { label: "Adventure days", image: "/quiz/adventure-days.jpg", alt: "A hiker overlooking dramatic mountains" },
-      { label: "Surprise me", image: "/quiz/surprise-pace.jpg", alt: "Travelers laughing together in the sun" },
+      { label: "Slow mornings", display: "Relaxed", image: "/quiz/slow-mornings.jpg", alt: "A beautiful slow morning with coffee" },
+      { label: "Balanced days", display: "Balanced", image: "/quiz/balanced-days.jpg", alt: "A calm open road beneath a wide sky" },
+      { label: "Packed schedule", display: "Full schedule", image: "/quiz/packed-schedule.jpg", alt: "A vibrant city seen from above" },
+      { label: "Mostly relaxing", display: "Mostly downtime", image: "/quiz/mostly-relaxing.jpg", alt: "Clear water and a quiet tropical beach" },
+      { label: "Adventure days", display: "Active", image: "/quiz/adventure-days.jpg", alt: "A hiker overlooking dramatic mountains" },
+      { label: "Surprise me", display: "No preference", image: "/quiz/surprise-pace.jpg", alt: "Travelers laughing together in the sun" },
     ],
   },
   {
     id: "self",
-    question: "Who’s coming?",
+    question: "Who are you traveling with?",
     type: "visual",
     options: [
       { label: "Solo", display: "Just me", image: "/quiz/solo.jpg", alt: "A solo traveler on an open road" },
@@ -46,7 +46,7 @@ const questions = [
   },
   {
     id: "hotel",
-    question: "Where are you staying?",
+    question: "What type of stay do you prefer?",
     type: "visual",
     options: [
       { label: "Boutique hotel", image: "/quiz/boutique-hotel.jpg", alt: "Editorial city style in Paris" },
@@ -59,7 +59,7 @@ const questions = [
   },
   {
     id: "luxury",
-    question: "What matters most?",
+    question: "What matters most on this trip?",
     type: "visual",
     options: [
       { label: "Food", image: "/quiz/food.jpg", alt: "A considered restaurant table" },
@@ -72,15 +72,13 @@ const questions = [
   },
   {
     id: "memory",
-    question: "What are we spending?",
+    question: "What’s your budget per person?",
     type: "visual",
     options: [
-      { label: "Smart value", image: "/quiz/smart-value.jpg", alt: "A beautiful affordable tropical stay" },
-      { label: "Comfortable", image: "/quiz/comfortable.jpg", alt: "A comfortable resort pool and terrace" },
-      { label: "Premium", image: "/quiz/premium.jpg", alt: "A refined contemporary hotel interior" },
-      { label: "Blowout", image: "/quiz/blowout.jpg", alt: "A spectacular luxury hotel" },
-      { label: "Mixed", image: "/quiz/mixed.jpg", alt: "An elegant hotel room with a view" },
-      { label: "Not sure", image: "/quiz/not-sure-budget.jpg", alt: "A stylish traveler considering the possibilities" },
+      { label: "Smart value", display: "$0–$3,000", image: "/quiz/smart-value.jpg", alt: "A beautiful affordable tropical stay" },
+      { label: "Comfortable", display: "$3,000–$6,000", image: "/quiz/comfortable.jpg", alt: "A comfortable resort pool and terrace" },
+      { label: "Premium", display: "$6,000–$10,000", image: "/quiz/premium.jpg", alt: "A refined contemporary hotel interior" },
+      { label: "Blowout", display: "$10,000+", image: "/quiz/blowout.jpg", alt: "A spectacular luxury hotel" },
     ],
   },
 ];
@@ -201,12 +199,12 @@ function AirportAutocomplete({ value, onChange }) {
 
 function DiscoveryQuestion({ value, onChange, onBack, onContinue }) {
   const level = Number.isFinite(value) ? value : 50;
-  const mood = level < 20 ? "Somewhere almost nobody knows" : level < 40 ? "A beautiful secret" : level < 65 ? "A little unexpected" : level < 85 ? "Known for a reason" : "The icons";
+  const mood = level < 20 ? "Off the radar" : level < 40 ? "Less discovered" : level < 65 ? "A mix of both" : level < 85 ? "Well known" : "The classics";
 
   return <div className="quiz-stage flex min-h-[calc(100svh-5rem)] flex-col bg-[#f5f3ef] px-5 pb-8 pt-9 sm:px-8 lg:px-10">
     <div className="flex items-center justify-between"><span className="text-xl font-semibold tracking-[-0.055em]">GLOBTREK</span><Progress step={questions.length} /></div>
     <div className="mx-auto flex w-full max-w-[1450px] flex-1 flex-col justify-center py-14">
-      <p className="text-center text-[10px] uppercase tracking-[0.23em] text-[#777]">How far off the map?</p>
+      <p className="text-center text-[10px] uppercase tracking-[0.23em] text-[#777]">How well known should it be?</p>
       <h1 className="mx-auto mt-8 max-w-5xl text-center text-[clamp(3.2rem,7.5vw,8.5rem)] font-medium leading-[0.86] tracking-[-0.075em]">{mood}</h1>
       <div className="mx-auto mt-16 w-full max-w-5xl sm:mt-24">
         <div className="relative h-24 sm:h-32">
@@ -215,7 +213,7 @@ function DiscoveryQuestion({ value, onChange, onBack, onContinue }) {
           <div className="pointer-events-none absolute top-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border border-black bg-[#f5f3ef] shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-[left] duration-150 sm:h-20 sm:w-20" style={{ left: `${level}%` }}><span className="grid h-full place-items-center text-[10px] tabular-nums tracking-[0.15em]">{level}</span></div>
           <input aria-label="Destination familiarity" className="absolute inset-0 h-full w-full cursor-ew-resize opacity-0" type="range" min="0" max="100" step="1" value={level} onInput={(event) => onChange(Number(event.currentTarget.value))} onChange={(event) => onChange(Number(event.currentTarget.value))} />
         </div>
-        <div className="flex justify-between gap-8 border-t border-black/10 pt-5 text-[10px] uppercase tracking-[0.2em] text-[#666]"><span>Never heard of it</span><span className="text-right">World famous</span></div>
+        <div className="flex justify-between gap-8 border-t border-black/10 pt-5 text-[10px] uppercase tracking-[0.2em] text-[#666]"><span>Hidden places</span><span className="text-right">Famous places</span></div>
       </div>
     </div>
     <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-6 border-t border-black/10 pt-7">
@@ -227,7 +225,7 @@ function DiscoveryQuestion({ value, onChange, onBack, onContinue }) {
 
 function DateQuestion({ answers, setAnswers, tripStart, tripEnd, isFlexible, setTripStart, setTripEnd, setIsFlexible, originAirport, setOriginAirport, guestCount, setGuestCount, onBack, onSubmit, canSubmit }) {
   const [mode, setMode] = useState(isFlexible ? "flexible" : "dates");
-  const summary = questions.map((question) => answers[question.id]).filter(Boolean).join(" / ");
+  const summary = questions.map((question) => question.options.find((option) => option.label === answers[question.id])).filter(Boolean).map((option) => option.display || option.label).join(" / ");
   const seasons = [["Spring", "Mar – May", "Spring (Mar-May)"], ["Summer", "Jun – Aug", "Summer (Jun-Aug)"], ["Fall", "Sep – Nov", "Fall (Sep-Nov)"], ["Winter", "Dec – Feb", "Winter (Dec-Feb)"]];
 
   function selectMode(nextMode) {
