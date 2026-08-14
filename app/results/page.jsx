@@ -107,6 +107,7 @@ export default function ResultsPage() {
   const [remoteMatches, setRemoteMatches] = useState(null);
   const [chosenAirport, setChosenAirport] = useState(null);
   const [ready, setReady] = useState(false);
+  const [planning, setPlanning] = useState(true);
 
   useEffect(() => {
     const raw = window.localStorage.getItem("globtrekQuiz");
@@ -118,7 +119,8 @@ export default function ResultsPage() {
     fetch("/api/match", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(stored) })
       .then((response) => response.json())
       .then((data) => Array.isArray(data.matches) && data.matches.length && setRemoteMatches(data.matches))
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => setPlanning(false));
     const timer = window.setTimeout(() => setReady(true), 100);
     return () => {
       window.clearTimeout(initialize);
@@ -146,9 +148,9 @@ export default function ResultsPage() {
 
   return (
     <main className={`min-h-screen bg-[#f3f0eb] text-[#171714] transition duration-1000 ${ready ? "opacity-100" : "opacity-0"}`}>
-      <header className="absolute inset-x-0 top-0 z-30 flex items-center justify-between px-6 py-7 text-[#171714] sm:px-12 sm:py-10">
+      <header className="absolute inset-x-0 top-0 z-30 flex items-center justify-between px-6 py-7 text-white sm:px-12 sm:py-10">
         <Link href="/" className="text-[13px] font-semibold uppercase tracking-[0.32em]">Globtrēk</Link>
-        <Link href="/discover" className="group flex items-center gap-3 text-[10px] uppercase tracking-[0.2em]"><span className="hidden sm:inline">Retake quiz</span><span className="grid h-10 w-10 place-items-center rounded-full border border-black/25 transition group-hover:bg-black group-hover:text-white">↺</span></Link>
+        <Link href="/discover" className="group flex items-center gap-3 text-[10px] uppercase tracking-[0.2em]"><span className="hidden sm:inline">Retake quiz</span><span className="grid h-10 w-10 place-items-center rounded-full border border-white/55 transition group-hover:bg-white group-hover:text-black">↺</span></Link>
       </header>
 
       <section className="relative min-h-svh overflow-hidden">
@@ -171,7 +173,7 @@ export default function ResultsPage() {
           <div className="lg:pb-1"><p className="max-w-2xl text-[clamp(1.05rem,1.6vw,1.35rem)] font-light leading-[1.55] text-black/60">{trip.why}</p><div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-[9px] uppercase tracking-[0.2em] text-black/45"><span>{quiz?.answers?.duration || trip.nights}</span><span>{trip.season}</span><span>{trip.price}</span></div></div>
         </div>
 
-        <HotelShortlist destination={trip} quiz={quiz} />
+        {planning && !trip.plan && <div className="mt-16 flex min-h-32 items-center justify-between border-y border-black/15 py-8"><div><p className="text-[9px] uppercase tracking-[0.25em] text-black/40">Building your edit</p><p className="mt-3 font-serif text-2xl">Finding the places that fit you.</p></div><span className="h-2 w-2 animate-pulse rounded-full bg-black" /></div>}
 
         {trip.plan && <section className="mt-16 bg-[#171714] px-6 py-8 text-white sm:px-10 sm:py-10">
           <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr]">
@@ -197,6 +199,8 @@ export default function ResultsPage() {
           {trip.plan.budget?.length > 0 && <div className="mt-8 grid grid-cols-2 border-l border-t border-white/15 lg:grid-cols-4">{trip.plan.budget.slice(0, 4).map((item) => <div key={item.category} className="border-b border-r border-white/15 p-4"><p className="text-[8px] uppercase tracking-[0.18em] text-white/35">{item.category}</p><p className="mt-2 font-serif text-xl">{item.share}</p></div>)}</div>}
           <p className="mt-4 text-[9px] leading-4 text-white/30">Typical planning estimates. Confirm schedules, prices, availability, and opening times.</p>
         </section>}
+
+        <HotelShortlist destination={trip} quiz={quiz} />
 
         <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {tools.map(([label, detail, href, sponsored]) => (
