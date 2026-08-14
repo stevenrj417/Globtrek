@@ -182,6 +182,7 @@ export default function ResultsPage() {
             <div>
               <p className="text-[10px] uppercase tracking-[0.3em] text-white/45">Your trip, organized</p>
               <h2 className="mt-5 max-w-xl font-serif text-[clamp(2.3rem,4vw,4rem)] leading-[0.95] tracking-[-0.04em]">{trip.plan.headline}</h2>
+              {trip.plan.airport && <p className="mt-5 text-[10px] uppercase tracking-[0.2em] text-white/45">Arrive via {trip.plan.airport.code} · {trip.plan.airport.note}</p>}
               {trip.plan.arrivalWindow && <div className="mt-8 border-l border-white/20 pl-5"><p className="text-[9px] uppercase tracking-[0.2em] text-white/40">{trip.plan.arrivalWindow.title}</p><p className="mt-3 text-sm leading-6 text-white/65">{trip.plan.arrivalWindow.steps?.[0]}</p></div>}
             </div>
             <div className="border-t border-white/15">
@@ -191,6 +192,12 @@ export default function ResultsPage() {
               </article>)}
             </div>
           </div>
+          {trip.plan.picks && <div className="mt-8 grid border-l border-t border-white/15 md:grid-cols-2">
+            {[["Eat", trip.plan.picks.restaurants], ["Experience", trip.plan.picks.experiences]].map(([label, picks]) => <div key={label} className="border-b border-r border-white/15 p-5 sm:p-6">
+              <p className="text-[9px] uppercase tracking-[0.22em] text-white/40">{label}</p>
+              <div className="mt-4 space-y-4">{picks?.slice(0, 3).map((pick) => <div key={pick.name}><h3 className="font-serif text-lg">{pick.name}</h3><p className="mt-1 text-[11px] leading-4 text-white/45">{pick.why}</p></div>)}</div>
+            </div>)}
+          </div>}
           {trip.plan.budget?.length > 0 && <div className="mt-8 grid grid-cols-2 border-l border-t border-white/15 lg:grid-cols-4">{trip.plan.budget.slice(0, 4).map((item) => <div key={item.category} className="border-b border-r border-white/15 p-4"><p className="text-[8px] uppercase tracking-[0.18em] text-white/35">{item.category}</p><p className="mt-2 font-serif text-xl">{item.share}</p></div>)}</div>}
           <p className="mt-4 text-[9px] leading-4 text-white/30">Typical planning estimates. Confirm schedules, prices, availability, and opening times.</p>
         </section>}

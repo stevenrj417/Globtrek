@@ -1,4 +1,5 @@
 import { destinations, scoreDestination } from "../../data/destinations";
+import { hotelsFor } from "../../data/hotels";
 
 /*const legacyDestinations = [
   {
@@ -162,10 +163,21 @@ function normalizeAiResult(aiResult, fallback) {
   return [primary, ...matches.slice(1)];
 }
 
+function tripLength(body) {
+  if (body?.isFlexible || !body?.tripStart || !body?.tripEnd) return null;
+  const start = Date.parse(`${body.tripStart}T00:00:00Z`);
+  const end = Date.parse(`${body.tripEnd}T00:00:00Z`);
+  if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) return null;
+  return Math.min(30, Math.max(1, Math.round((end - start) / 86400000)));
+}
+
 export async function POST(request) {
   const body = await request.json();
   const answers = body.answers || {};
   const fallback = fallbackMatches(answers);
+  const primaryDestination = fallback[0];
+  const stayOptions = hotelsFor(primaryDestination, body).map(({ name, tags }) => ({ name, tags }));
+  const nights = tripLength(body);
 
   if (!process.env.OPENAI_API_KEY) {
     return Response.json({ source: "fallback", aiStatus: "missing_key", matches: fallback });
@@ -181,18 +193,26 @@ export async function POST(request) {
       body: JSON.stringify({
         model: process.env.OPENAI_MODEL || "gpt-5.4-nano",
         reasoning: { effort: "low" },
-        max_output_tokens: 900,
+        max_output_tokens: 1400,
+        tools: [{ type: "web_search" }],
         input: [
           {
             role: "system",
             content:
-              "You are GlobTrek's invisible trip-planning engine. The destination is already selected. Write like a sharp travel editor, never a chatbot. Use only supplied facts. Never invent flight times, live prices, availability, reservations, addresses, opening hours, or transfer durations. Do not force a requested hotel style into a destination where it does not fit. Return only valid JSON with this exact shape: {\"why\":string,\"itinerary\":[string],\"plan\":{\"headline\":string,\"arrivalWindow\":{\"title\":string,\"steps\":[string]},\"budget\":[{\"category\":string,\"share\":string,\"note\":string}],\"days\":[{\"day\":string,\"title\":string,\"morning\":string,\"afternoon\":string,\"evening\":string}],\"practicalNotes\":[string]}}. Constraints: why is one sentence; headline is under 8 words; arrivalWindow has exactly 1 step under 18 words; budget has exactly 4 broad categories with percentage shares and notes under 8 words; days has exactly 3 items and each time-of-day string is under 10 words. No markdown.",
+              "You are GlobTrek's invisible trip-planning engine. The destination is already selected. Write like a sharp travel editor, never a chatbot. Personalize from every supplied quiz answer and the requested trip length. Use web search to verify every named restaurant and experience is a real, currently operating place in the supplied destination. Prefer iconic choices when discoveryLevel is high and genuinely under-the-radar local choices when it is low; use a thoughtful mix in the middle. Never invent a venue, airport, flight time, live price, availability, reservation, address, opening hour, or transfer duration. The airport code and hotel shortlist are supplied facts; do not replace them. Return only valid JSON with this exact shape: {\"why\":string,\"itinerary\":[string],\"plan\":{\"headline\":string,\"airport\":{\"code\":string,\"note\":string},\"arrivalWindow\":{\"title\":string,\"steps\":[string]},\"picks\":{\"restaurants\":[{\"name\":string,\"why\":string}],\"experiences\":[{\"name\":string,\"why\":string}]},\"budget\":[{\"category\":string,\"share\":string,\"note\":string}],\"days\":[{\"day\":string,\"title\":string,\"morning\":string,\"afternoon\":string,\"evening\":string}],\"practicalNotes\":[string]}}. Constraints: why is one sentence; headline is under 8 words; airport note is under 12 words; arrivalWindow has exactly 1 step under 18 words; picks has exactly 3 verified restaurants and 3 verified experiences, each why under 12 words; budget has exactly 4 broad categories with percentage shares; days has exactly 3 items and each time-of-day string is under 12 words. Use actual venue names inside the day plan. No markdown.",
           },
           {
             role: "user",
             content: JSON.stringify({
               answers,
-              destination: (({ name, style, season, tags, price, nights, recognition, airport }) => ({ name, style, season, tags, price, nights, recognition, airport }))(fallback[0]),
+              requestedTrip: {
+                nights,
+                flexible: Boolean(body.isFlexible),
+                guests: Number.parseInt(body.guestCount, 10) || 2,
+                originAirport: body.originAirport || null,
+              },
+              destination: (({ name, city, country, style, season, tags, price, nights: suggestedNights, recognition, airport }) => ({ name, city, country, style, season, tags, price, suggestedNights, recognition, airport }))(primaryDestination),
+              verifiedHotelShortlist: stayOptions,
             }),
           },
         ],
