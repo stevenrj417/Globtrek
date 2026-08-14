@@ -171,6 +171,48 @@ function tripLength(body) {
   return Math.min(30, Math.max(1, Math.round((end - start) / 86400000)));
 }
 
+const planSchema = {
+  type: "object",
+  additionalProperties: false,
+  required: ["why", "itinerary", "plan"],
+  properties: {
+    why: { type: "string" },
+    itinerary: { type: "array", items: { type: "string" } },
+    plan: {
+      type: "object",
+      additionalProperties: false,
+      required: ["headline", "airport", "arrivalWindow", "picks", "budget", "days", "practicalNotes"],
+      properties: {
+        headline: { type: "string" },
+        airport: {
+          type: "object",
+          additionalProperties: false,
+          required: ["code", "note"],
+          properties: { code: { type: "string" }, note: { type: "string" } },
+        },
+        arrivalWindow: {
+          type: "object",
+          additionalProperties: false,
+          required: ["title", "steps"],
+          properties: { title: { type: "string" }, steps: { type: "array", items: { type: "string" } } },
+        },
+        picks: {
+          type: "object",
+          additionalProperties: false,
+          required: ["restaurants", "experiences"],
+          properties: {
+            restaurants: { type: "array", items: { type: "object", additionalProperties: false, required: ["name", "why"], properties: { name: { type: "string" }, why: { type: "string" } } } },
+            experiences: { type: "array", items: { type: "object", additionalProperties: false, required: ["name", "why"], properties: { name: { type: "string" }, why: { type: "string" } } } },
+          },
+        },
+        budget: { type: "array", items: { type: "object", additionalProperties: false, required: ["category", "share", "note"], properties: { category: { type: "string" }, share: { type: "string" }, note: { type: "string" } } } },
+        days: { type: "array", items: { type: "object", additionalProperties: false, required: ["day", "title", "morning", "afternoon", "evening"], properties: { day: { type: "string" }, title: { type: "string" }, morning: { type: "string" }, afternoon: { type: "string" }, evening: { type: "string" } } } },
+        practicalNotes: { type: "array", items: { type: "string" } },
+      },
+    },
+  },
+};
+
 export async function POST(request) {
   const body = await request.json();
   const answers = body.answers || {};
@@ -193,8 +235,9 @@ export async function POST(request) {
       body: JSON.stringify({
         model: process.env.OPENAI_MODEL || "gpt-5.4-nano",
         reasoning: { effort: "low" },
-        max_output_tokens: 1400,
+        max_output_tokens: 2400,
         tools: [{ type: "web_search" }],
+        text: { format: { type: "json_schema", name: "globtrek_trip_plan", strict: true, schema: planSchema } },
         input: [
           {
             role: "system",
