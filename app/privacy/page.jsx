@@ -23,20 +23,25 @@ export default function PrivacyPage() {
           When you create a share link, the trip preferences needed to reproduce that result are encoded in the link itself. Anyone with that link can view those preferences. GlobTrek also uses privacy-friendly first-party analytics to understand page visits and actions such as quiz completion and provider-link clicks; payment details are never collected by GlobTrek.
         </p>
         <p>
-          The answers are sent to GlobTrek’s server-side matching endpoint. When server-side OpenAI functionality is configured, those preferences may be sent to OpenAI to rank the limited destination set and prepare recommendation text. The current code does not include an account database or booking database.
+          The answers are sent to GlobTrek’s server-side matching endpoint. When server-side OpenAI functionality is configured, those preferences may be sent to OpenAI to rank the limited destination set and prepare recommendation text.
         </p>
       </EditorialSection>
-      <EditorialSection number="03" title="Technical information and external content">
+      <EditorialSection number="03" title="Optional accounts and saved trips">
+        <p>
+          You can use GlobTrek without an account. If you choose to create one, Supabase processes authentication and GlobTrek stores the trips you deliberately save, including the destination, dates, travelers, preferences, itinerary, and selected trip components. Private saved trips are protected so an authenticated user can access only their own records. Account creation does not enroll you in marketing email, and emailing a trip does not create an account.
+        </p>
+      </EditorialSection>
+      <EditorialSection number="04" title="Technical information and external content">
         <p>
           Hosting providers and services requested by your browser may receive standard technical information such as IP address, browser details, request time, and requested URL. Editorial photography is loaded from Unsplash.
         </p>
       </EditorialSection>
-      <EditorialSection number="04" title="External booking providers">
+      <EditorialSection number="05" title="External booking providers">
         <p>
           If you follow a booking link, the external provider controls its own site, data collection, pricing, availability, payment, reservation, and privacy practices. Review that provider’s notices before completing a transaction.
         </p>
       </EditorialSection>
-      <EditorialSection number="05" title="Details still to be confirmed">
+      <EditorialSection number="06" title="Details still to be confirmed">
         <p>
           Product owner TODO: add the responsible legal entity, public privacy contact, jurisdiction-specific rights process, and any business retention practices introduced beyond the browser storage described above.
         </p>

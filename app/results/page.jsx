@@ -6,6 +6,8 @@ import { useEffect, useMemo, useState } from "react";
 import { track } from "@vercel/analytics";
 import { bookingActivityUrl, bookingFlightUrl, bookingLinks, destinations, diningSearchUrl, scoreDestination } from "../data/destinations";
 import { hotelsFor } from "../data/hotels";
+import { AccountEntry } from "../components/AccountEntry";
+import { SaveTripButton } from "../components/SaveTripButton";
 
 function getMatches(quiz) {
   const answers = quiz?.answers || {};
@@ -183,7 +185,7 @@ export default function ResultsPage() {
   const chosenTrip = chosenAirport ? destinations.find((destination) => destination.airport === chosenAirport) : null;
   const trip = chosenTrip || matches[0];
   const alternatives = matches.filter((place) => place.airport !== trip?.airport).slice(0, 3);
-  if (!trip) return null;
+  if (!ready || !quiz || !trip) return <main className="min-h-screen bg-[#f3f0eb]" />;
 
   const dates = quiz?.isFlexible
     ? quiz?.answers?.season || "Flexible dates"
@@ -196,6 +198,22 @@ export default function ResultsPage() {
     ["Dine", `Restaurants in ${trip.city}`, diningSearchUrl(trip), false],
   ];
   const estimatedTotal = estimateTrip(quiz);
+  const sharedPayload = encodeTrip({ quiz, destination: trip.airport });
+  const savedTrip = {
+    clientTripKey: `${trip.airport}:${sharedPayload.slice(0, 120)}`,
+    sharePath: `/results?trip=${sharedPayload}`,
+    destination: { city: trip.city, country: trip.country, airport: trip.airport, image: trip.image, style: trip.style },
+    trip: quiz,
+    preferences: {
+      quizAnswers: quiz?.answers || {},
+      budget: quiz?.answers?.memory || null,
+      pace: quiz?.answers?.escape || null,
+      familiarity: quiz?.discoveryLevel ?? null,
+    },
+    itinerary: trip.plan || null,
+    bookingLinks: { hotel: null, flight: tools[0][2], activities: tools[1][2], car: tools[2][2], dining: tools[3][2] },
+    selections: { hotel: null, flight: null, car: null, activities: [] },
+  };
 
   async function refine(tune) {
     if (!quiz || refining) return;
@@ -246,7 +264,7 @@ export default function ResultsPage() {
     <main className={`min-h-screen bg-[#f3f0eb] text-[#171714] transition duration-1000 ${ready ? "opacity-100" : "opacity-0"}`}>
       <header className="absolute inset-x-0 top-0 z-30 flex items-center justify-between px-6 py-7 text-white sm:px-12 sm:py-10">
         <Link href="/" className="text-[13px] font-semibold uppercase tracking-[0.32em]">Globtrēk</Link>
-        <Link href="/discover" className="group flex items-center gap-3 text-[10px] uppercase tracking-[0.2em]"><span className="hidden sm:inline">Retake quiz</span><span className="grid h-10 w-10 place-items-center rounded-full border border-white/55 transition group-hover:bg-white group-hover:text-black">↺</span></Link>
+        <div className="flex items-center gap-5"><AccountEntry compact light /><Link href="/discover" className="group flex items-center gap-3 text-[10px] uppercase tracking-[0.2em]"><span className="hidden sm:inline">Retake quiz</span><span className="grid h-10 w-10 place-items-center rounded-full border border-white/55 transition group-hover:bg-white group-hover:text-black">↺</span></Link></div>
       </header>
 
       <section className="relative min-h-svh overflow-hidden">
@@ -269,9 +287,10 @@ export default function ResultsPage() {
           <div className="lg:pb-1"><p className="max-w-2xl text-[clamp(1.05rem,1.6vw,1.35rem)] font-light leading-[1.55] text-black/60">{trip.why}</p><div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-[9px] uppercase tracking-[0.2em] text-black/45"><span>{quiz?.answers?.duration || trip.nights}</span><span>{trip.season}</span><span>{trip.price}</span></div></div>
         </div>
 
-        <div className="grid gap-px bg-black/10 sm:grid-cols-[1fr_auto_auto]">
+        <div className="grid gap-px bg-black/10 sm:grid-cols-[1fr_auto_auto_auto]">
           <div className="bg-[#f3f0eb] px-5 py-5"><p className="text-[8px] uppercase tracking-[0.2em] text-black/40">Typical planning range</p><p className="mt-2 font-serif text-xl">{estimatedTotal}</p></div>
           <button type="button" onClick={shareTrip} className="min-h-20 bg-[#f3f0eb] px-7 text-[9px] uppercase tracking-[0.2em] transition hover:bg-white">{shareStatus || "Save / share"}</button>
+          <SaveTripButton trip={savedTrip} className="min-h-20 bg-[#f3f0eb] px-7 text-[9px] uppercase tracking-[0.2em] transition hover:bg-white" />
           <button type="button" onClick={emailTrip} className="min-h-20 bg-[#f3f0eb] px-7 text-[9px] uppercase tracking-[0.2em] transition hover:bg-white">Email this trip</button>
         </div>
 

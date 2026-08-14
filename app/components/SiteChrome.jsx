@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BrandWordmark } from "./BrandMark";
+import { AccountEntry } from "./AccountEntry";
 
 const navigation = [["Trips", "/#trips"], ["Quiz", "/discover"], ["How it works", "/how-it-works"], ["About", "/about"]];
 
@@ -27,12 +28,12 @@ export function SiteHeader({ actionHref = "/discover", actionLabel = "Find my tr
               </Link>
             ))}
           </div>
-          <Link
+          <div className="flex items-center gap-5"><AccountEntry /><Link
             className="hidden min-h-11 shrink-0 items-center bg-[#171717] px-6 py-3 text-xs font-semibold uppercase tracking-[0.08em] text-white transition hover:bg-black sm:inline-flex"
             href={actionHref}
           >
             {actionLabel}
-          </Link>
+          </Link></div>
         </div>
         <div className="flex gap-7 overflow-x-auto border-t border-black/10 px-5 py-3.5 text-xs font-medium text-[#565656] lg:hidden" aria-label="Mobile navigation">
           {navigation.map(([label, href]) => (
