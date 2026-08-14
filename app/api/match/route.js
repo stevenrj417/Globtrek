@@ -156,6 +156,7 @@ function normalizeAiResult(aiResult, fallback) {
     itinerary: Array.isArray(aiResult?.itinerary)
       ? aiResult.itinerary
       : matches[0].itinerary,
+    plan: aiResult?.plan && typeof aiResult.plan === "object" ? aiResult.plan : null,
   };
 
   return [primary, ...matches.slice(1)];
@@ -178,28 +179,20 @@ export async function POST(request) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: process.env.OPENAI_MODEL || "gpt-5.4-mini",
+        model: process.env.OPENAI_MODEL || "gpt-5.4-nano",
+        reasoning: { effort: "low" },
+        max_output_tokens: 1800,
         input: [
           {
             role: "system",
             content:
-              "You are GlobTrek's travel matching assistant. Explain the top destination selected by GlobTrek's deterministic preference score. Respect the traveler's desired destination familiarity, where discovery is 0 for almost unknown and 100 for world famous. Use only supplied preferences and destination attributes. Do not invent prices, ratings, availability, bookings, or provider relationships. Return strict JSON with why and itinerary. No markdown.",
+              "You are GlobTrek's invisible trip-planning engine. The destination is already selected. Produce a concise plan that feels written by a precise travel editor, never a chatbot. Use only supplied facts. Never invent flight numbers, departure times, live prices, availability, reservations, addresses, opening hours, or transfer durations. Budget allocations must be labeled typical estimates. Give conditional arrival guidance because verified flight and hotel timing is not supplied. Return only valid JSON with this exact shape: {\"why\":string,\"itinerary\":[string],\"plan\":{\"headline\":string,\"arrivalWindow\":{\"title\":string,\"steps\":[string]},\"budget\":[{\"category\":string,\"share\":string,\"note\":string}],\"days\":[{\"day\":string,\"title\":string,\"morning\":string,\"afternoon\":string,\"evening\":string}],\"practicalNotes\":[string]}}. Keep days to 4 maximum and every string brief. No markdown.",
           },
           {
             role: "user",
             content: JSON.stringify({
               answers,
-              destinations: destinations.map(
-                ({ name, style, season, tags, price, nights, recognition }) => ({
-                  name,
-                  style,
-                  season,
-                  tags,
-                  price,
-                  nights,
-                  recognition,
-                }),
-              ),
+              destination: (({ name, style, season, tags, price, nights, recognition, airport }) => ({ name, style, season, tags, price, nights, recognition, airport }))(fallback[0]),
             }),
           },
         ],

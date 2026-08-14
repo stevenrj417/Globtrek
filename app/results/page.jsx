@@ -177,6 +177,24 @@ export default function ResultsPage() {
 
         <HotelShortlist destination={trip} quiz={quiz} />
 
+        {trip.plan && <section className="mt-28 border-t border-black/15 pt-10">
+          <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-black/45">Your trip, organized</p>
+              <h2 className="mt-6 max-w-xl font-serif text-[clamp(2.5rem,5vw,5rem)] leading-[0.95] tracking-[-0.04em]">{trip.plan.headline}</h2>
+              {trip.plan.arrivalWindow && <div className="mt-12 border-l border-black/20 pl-6"><p className="text-[10px] uppercase tracking-[0.2em] text-black/45">{trip.plan.arrivalWindow.title}</p><div className="mt-5 space-y-3 text-sm leading-6 text-black/60">{trip.plan.arrivalWindow.steps?.map((step) => <p key={step}>{step}</p>)}</div></div>}
+            </div>
+            <div className="border-t border-black/15">
+              {trip.plan.days?.map((day) => <article key={`${day.day}-${day.title}`} className="grid gap-5 border-b border-black/15 py-7 sm:grid-cols-[5rem_1fr]">
+                <p className="text-[10px] uppercase tracking-[0.2em] text-black/40">{day.day}</p>
+                <div><h3 className="font-serif text-2xl">{day.title}</h3><div className="mt-5 grid gap-4 text-sm leading-6 text-black/55 sm:grid-cols-3"><p><span className="block text-[9px] uppercase tracking-[0.18em] text-black/35">Morning</span>{day.morning}</p><p><span className="block text-[9px] uppercase tracking-[0.18em] text-black/35">Afternoon</span>{day.afternoon}</p><p><span className="block text-[9px] uppercase tracking-[0.18em] text-black/35">Evening</span>{day.evening}</p></div></div>
+              </article>)}
+            </div>
+          </div>
+          {trip.plan.budget?.length > 0 && <div className="mt-16 grid border-l border-t border-black/15 sm:grid-cols-2 lg:grid-cols-4">{trip.plan.budget.map((item) => <div key={item.category} className="border-b border-r border-black/15 p-6"><p className="text-[9px] uppercase tracking-[0.2em] text-black/40">{item.category}</p><p className="mt-4 font-serif text-2xl">{item.share}</p><p className="mt-3 text-xs leading-5 text-black/45">{item.note}</p></div>)}</div>}
+          <p className="mt-5 text-[10px] leading-5 text-black/40">Planning guidance and budget allocations are typical estimates. Confirm schedules, prices, availability, and opening times with the provider.</p>
+        </section>}
+
         <div className="mt-24 border-y border-black/15">
           {tools.map(([label, detail, href, sponsored]) => (
             <a key={label} href={href} target="_blank" rel={sponsored ? "noopener sponsored" : "noopener"} className="group grid min-h-20 grid-cols-[4rem_1fr_auto] items-center border-b border-black/10 last:border-b-0 sm:grid-cols-[8rem_1fr_auto]">
