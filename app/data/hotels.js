@@ -233,7 +233,7 @@ function hotelScore(hotel, answers) {
   return Object.entries(weights).reduce((score, [key, weight]) => score + (hotel.tags.includes(answers?.[key]) ? weight : 0), 0);
 }
 
-export function hotelsFor(destination, trip = {}) {
+export function hotelsFor(destination, trip = {}, options = {}) {
   const answers = trip?.answers || {};
   return (hotelCatalog[destination.city] || []).map((entry, index) => {
     const hotel = typeof entry === "string" ? { name: entry, bookingUrl: null } : entry;
@@ -245,7 +245,7 @@ export function hotelsFor(destination, trip = {}) {
       score: hotelScore({ ...hotel, tags }, answers),
       image: destination.image,
     };
-  }).sort((a, b) => b.score - a.score || a.name.localeCompare(b.name)).slice(0, 4).map((hotel, index) => ({
+  }).sort((a, b) => b.score - a.score || a.name.localeCompare(b.name)).slice(0, options.limit ?? 4).map((hotel, index) => ({
     ...hotel,
     descriptor: index === 0 ? "Your best match" : index === 1 ? "Also your style" : index === 2 ? "A different pace" : "Worth a look",
   }));

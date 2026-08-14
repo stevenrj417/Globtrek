@@ -1,0 +1,64 @@
+import { HotelInventoryProvider } from "./HotelInventoryProvider.js";
+import { rankHotels } from "../recommendation/hotelEngine.js";
+
+function mapHotel(row, destination) {
+  return {
+    id: row.id,
+    name: row.name,
+    destinationId: row.destination_id,
+    provider: row.provider,
+    providerPropertyId: row.provider_property_id,
+    bookingUrl: row.booking_com_property_url,
+    cjTrackingBaseUrl: row.cj_tracking_url,
+    latitude: row.latitude,
+    longitude: row.longitude,
+    starRating: row.star_rating,
+    currency: row.currency,
+    typicalNightlyLow: row.typical_nightly_low,
+    typicalNightlyHigh: row.typical_nightly_high,
+    priceSource: row.price_source,
+    priceConfidence: row.price_confidence,
+    lastPriceUpdated: row.price_last_checked,
+    tags: row.style_tags || [],
+    styleTags: row.style_tags || [],
+    image: row.image_url || destination.image,
+    imageSource: row.image_source,
+    imageLicense: row.image_license_metadata,
+    luxuryScore: row.luxury_score,
+    relaxationScore: row.relaxation_score,
+    designScore: row.design_score,
+    nightlifeScore: row.nightlife_score,
+    localFeelScore: row.local_feel_score,
+    familyScore: row.family_score,
+    romanticScore: row.romantic_score,
+    centralityScore: row.centrality_score,
+    valueScore: row.value_score,
+    verifiedAt: row.verified_at,
+    verificationSource: row.verification_source,
+  };
+}
+
+export class SupabaseCuratedHotelProvider extends HotelInventoryProvider {
+  constructor(supabase) {
+    super();
+    this.supabase = supabase;
+  }
+
+  async searchHotels({ destination, profile, budgetPlan, limit = 12 }) {
+    const { data, error } = await this.supabase
+      .from("hotel_catalog")
+      .select("*")
+      .eq("destination_id", destination.airport)
+      .eq("active", true)
+      .neq("review_status", "rejected")
+      .limit(100);
+    if (error) throw new Error(`curated_catalog_unavailable:${error.code || "query_failed"}`);
+    return rankHotels((data || []).map((row) => mapHotel(row, destination)), profile, budgetPlan).slice(0, limit);
+  }
+
+  async getProperty({ id, destination }) {
+    const { data, error } = await this.supabase.from("hotel_catalog").select("*").eq("id", id).maybeSingle();
+    if (error) throw new Error(`curated_property_unavailable:${error.code || "query_failed"}`);
+    return data ? mapHotel(data, destination) : null;
+  }
+}

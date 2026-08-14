@@ -4,6 +4,7 @@ import Image from "next/image";
 import { track } from "@vercel/analytics";
 import { useEffect, useMemo, useRef, useState } from "react";
 import airports from "../data/airports.json";
+import { legacyBudgetLabel, normalizeBudget } from "../lib/recommendation/travelerProfile";
 
 const questions = [
   {
@@ -30,19 +31,6 @@ const questions = [
       { label: "Mostly relaxing", display: "Mostly downtime", image: "/quiz/mostly-relaxing.jpg", alt: "Clear water and a quiet tropical beach" },
       { label: "Adventure days", display: "Active", image: "/quiz/adventure-days.jpg", alt: "A hiker overlooking dramatic mountains" },
       { label: "Surprise me", display: "No preference", image: "/quiz/surprise-pace.jpg", alt: "Travelers laughing together in the sun" },
-    ],
-  },
-  {
-    id: "self",
-    question: "Who are you traveling with?",
-    type: "visual",
-    options: [
-      { label: "Solo", display: "Just me", image: "/quiz/solo.jpg", alt: "A solo traveler on an open road" },
-      { label: "Couple", display: "Two of us", image: "/quiz/couple.jpg", alt: "A couple traveling together" },
-      { label: "Friends", image: "/quiz/friends.jpg", alt: "Friends sharing a memorable trip" },
-      { label: "Family", image: "/quiz/family.jpg", alt: "A family enjoying time together" },
-      { label: "Honeymoon", image: "/quiz/honeymoon.jpg", alt: "Newlyweds in an elegant destination" },
-      { label: "Not sure", image: "/quiz/not-sure-who.jpg", alt: "A stylish traveler ready for anywhere" },
     ],
   },
   {
@@ -84,17 +72,7 @@ const questions = [
       { label: "Shopping", image: "/quiz/shopping.jpg", alt: "Editorial fashion in Paris" },
     ],
   },
-  {
-    id: "memory",
-    question: "What’s your budget per person?",
-    type: "visual",
-    options: [
-      { label: "Smart value", display: "$0–$3,000", image: "/quiz/smart-value.jpg", alt: "A beautiful affordable tropical stay" },
-      { label: "Comfortable", display: "$3,000–$6,000", image: "/quiz/comfortable.jpg", alt: "A comfortable resort pool and terrace" },
-      { label: "Premium", display: "$6,000–$10,000", image: "/quiz/premium.jpg", alt: "A refined contemporary hotel interior" },
-      { label: "Blowout", display: "$10,000+", image: "/quiz/blowout.jpg", alt: "A spectacular luxury hotel" },
-    ],
-  },
+  { id: "budget", question: "How much do you want to spend?", type: "budget" },
 ];
 
 const preferenceSteps = questions.length + 1;
@@ -148,6 +126,40 @@ function VisualQuestion({ question, value, onChoose, step }) {
       </div>
     </div>
   );
+}
+
+const budgetCategoryLabels = {
+  flights: "Flights",
+  hotel: "Hotel",
+  food: "Food",
+  activities: "Activities",
+  transportation: "Transportation",
+};
+
+function BudgetQuestion({ value, includes, onValueChange, onToggle, onBack, onContinue, step }) {
+  const budget = normalizeBudget(value);
+  const valid = budget !== null && Object.values(includes).some(Boolean);
+  const formatted = value ? Number(String(value).replace(/\D/g, "")).toLocaleString("en-US") : "";
+  return <div className="quiz-stage flex min-h-[calc(100svh-5rem)] flex-col bg-[#f5f3ef] px-5 pb-8 pt-9 sm:px-8 lg:px-10">
+    <div className="flex items-center justify-between"><span className="text-xl font-semibold tracking-[-0.055em]">GLOBTREK</span><Progress step={step} /></div>
+    <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col justify-center py-12 text-center">
+      <p className="text-[10px] uppercase tracking-[0.24em] text-[#777]">Your total trip budget</p>
+      <h1 className="mx-auto mt-7 max-w-4xl text-[clamp(2.8rem,6vw,6.5rem)] font-medium leading-[0.9] tracking-[-0.07em]">How much do you want to spend?</h1>
+      <label className="mx-auto mt-12 flex max-w-3xl items-center justify-center border-b border-black pb-5">
+        <span className="mr-3 font-serif text-[clamp(3rem,7vw,7rem)] font-light">$</span>
+        <input aria-label="Exact trip budget" inputMode="numeric" autoComplete="off" value={formatted} onChange={(event) => onValueChange(event.target.value.replace(/\D/g, "").slice(0, 7))} placeholder="4,500" className="min-w-0 w-[7ch] bg-transparent text-center font-serif text-[clamp(3rem,7vw,7rem)] font-light tracking-[-0.055em] outline-none placeholder:text-black/18" />
+      </label>
+      <p className="mt-12 text-[10px] uppercase tracking-[0.24em] text-[#777]">What should that include?</p>
+      <div className="mx-auto mt-6 flex max-w-4xl flex-wrap justify-center gap-2">
+        {Object.entries(budgetCategoryLabels).map(([key, label]) => <button type="button" key={key} aria-pressed={includes[key]} onClick={() => onToggle(key)} className={`min-h-12 border px-5 text-[9px] uppercase tracking-[0.17em] transition ${includes[key] ? "border-black bg-black text-white" : "border-black/20 bg-white/40 text-black/50 hover:border-black"}`}>{label}</button>)}
+      </div>
+      <p className="mt-5 text-xs text-black/40">Excluded items can still appear in your plan, but they will not count toward this budget.</p>
+    </div>
+    <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-6 border-t border-black/10 pt-7">
+      <button type="button" onClick={onBack} className="min-h-12 text-xs uppercase tracking-[0.12em] text-[#666]">← Back</button>
+      <button type="button" disabled={!valid} onClick={() => onContinue(budget)} className="min-h-14 bg-black px-8 text-xs font-semibold uppercase tracking-[0.12em] text-white disabled:opacity-25">Continue →</button>
+    </div>
+  </div>;
 }
 
 function AirportAutocomplete({ value, onChange }) {
@@ -228,7 +240,7 @@ function AirportAutocomplete({ value, onChange }) {
 
 function DiscoveryQuestion({ value, onChange, onBack, onContinue }) {
   const level = Number.isFinite(value) ? value : 50;
-  const mood = level < 20 ? "Off the radar" : level < 40 ? "Less discovered" : level < 65 ? "A mix of both" : level < 85 ? "Well known" : "The classics";
+  const mood = level < 20 ? "The classics" : level < 40 ? "Well known" : level < 65 ? "A mix of both" : level < 85 ? "Less discovered" : "Off the radar";
 
   return <div className="quiz-stage flex min-h-[calc(100svh-5rem)] flex-col bg-[#f5f3ef] px-5 pb-8 pt-9 sm:px-8 lg:px-10">
     <div className="flex items-center justify-between"><span className="text-xl font-semibold tracking-[-0.055em]">GLOBTREK</span><Progress step={questions.length} /></div>
@@ -242,7 +254,7 @@ function DiscoveryQuestion({ value, onChange, onBack, onContinue }) {
           <div className="pointer-events-none absolute top-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border border-black bg-[#f5f3ef] shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-[left] duration-150 sm:h-20 sm:w-20" style={{ left: `${level}%` }}><span className="grid h-full place-items-center text-[10px] tabular-nums tracking-[0.15em]">{level}</span></div>
           <input aria-label="Destination familiarity" className="absolute inset-0 h-full w-full cursor-ew-resize opacity-0" type="range" min="0" max="100" step="1" value={level} onInput={(event) => onChange(Number(event.currentTarget.value))} onChange={(event) => onChange(Number(event.currentTarget.value))} />
         </div>
-        <div className="flex justify-between gap-8 border-t border-black/10 pt-5 text-[10px] uppercase tracking-[0.2em] text-[#666]"><span>Hidden places</span><span className="text-right">Famous places</span></div>
+        <div className="flex justify-between gap-8 border-t border-black/10 pt-5 text-[10px] uppercase tracking-[0.2em] text-[#666]"><span>Iconic places</span><span className="text-right">Hidden places</span></div>
       </div>
     </div>
     <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-6 border-t border-black/10 pt-7">
@@ -254,7 +266,7 @@ function DiscoveryQuestion({ value, onChange, onBack, onContinue }) {
 
 function DateQuestion({ answers, setAnswers, tripStart, tripEnd, isFlexible, setTripStart, setTripEnd, setIsFlexible, originAirport, setOriginAirport, guestCount, setGuestCount, onBack, onSubmit, canSubmit }) {
   const [mode, setMode] = useState(isFlexible ? "flexible" : "dates");
-  const summary = questions.map((question) => question.options.find((option) => option.label === answers[question.id])).filter(Boolean).map((option) => option.display || option.label).join(" / ");
+  const summary = questions.map((question) => question.options?.find((option) => option.label === answers[question.id])).filter(Boolean).map((option) => option.display || option.label).join(" / ");
   const seasons = [["Spring", "Mar – May", "Spring (Mar-May)"], ["Summer", "Jun – Aug", "Summer (Jun-Aug)"], ["Fall", "Sep – Nov", "Fall (Sep-Nov)"], ["Winter", "Dec – Feb", "Winter (Dec-Feb)"]];
 
   function selectMode(nextMode) {
@@ -310,6 +322,8 @@ export default function TravelQuiz() {
   const [originAirport, setOriginAirport] = useState("");
   const [guestCount, setGuestCount] = useState("2");
   const [discoveryLevel, setDiscoveryLevel] = useState(50);
+  const [exactBudget, setExactBudget] = useState("");
+  const [budgetIncludes, setBudgetIncludes] = useState({ flights: true, hotel: true, food: true, activities: true, transportation: true });
   const [phase, setPhase] = useState("idle");
   const timer = useRef(null);
 
@@ -317,7 +331,7 @@ export default function TravelQuiz() {
 
   const adaptiveQuestions = useMemo(() => questionsFor(answers), [answers]);
   const current = adaptiveQuestions[step];
-  const canSubmit = useMemo(() => (isFlexible && Boolean(answers.season)) || (!isFlexible && Boolean(tripStart) && Boolean(tripEnd)), [answers.season, isFlexible, tripStart, tripEnd]);
+  const canSubmit = useMemo(() => normalizeBudget(exactBudget) !== null && Object.values(budgetIncludes).some(Boolean) && ((isFlexible && Boolean(answers.season)) || (!isFlexible && Boolean(tripStart) && Boolean(tripEnd))), [answers.season, budgetIncludes, exactBudget, isFlexible, tripStart, tripEnd]);
 
   function go(next, direction = "forward") {
     setPhase(direction === "back" ? "leaving-back" : "leaving");
@@ -337,10 +351,32 @@ export default function TravelQuiz() {
     go(step + 1);
   }
 
+  function continueBudget(budget) {
+    setAnswers((value) => ({ ...value, memory: legacyBudgetLabel(budget), exactBudget: budget, includedBudgetCategories: budgetIncludes }));
+    go(step + 1);
+  }
+
   function submit(event) {
     event.preventDefault();
     if (!canSubmit) return;
-    window.localStorage.setItem("globtrekQuiz", JSON.stringify({ answers, tripStart, tripEnd, isFlexible, originAirport, guestCount, createdAt: Date.now() }));
+    const budget = normalizeBudget(exactBudget);
+    const completeAnswers = { ...answers, memory: legacyBudgetLabel(budget), exactBudget: budget, includedBudgetCategories: budgetIncludes };
+    window.localStorage.setItem("globtrekQuiz", JSON.stringify({
+      answers: completeAnswers,
+      exactBudget: budget,
+      includedBudgetCategories: budgetIncludes,
+      budgetIncludesFlights: budgetIncludes.flights,
+      budgetIncludesHotel: budgetIncludes.hotel,
+      budgetIncludesFood: budgetIncludes.food,
+      budgetIncludesActivities: budgetIncludes.activities,
+      budgetIncludesTransportation: budgetIncludes.transportation,
+      tripStart,
+      tripEnd,
+      isFlexible,
+      originAirport,
+      guestCount,
+      createdAt: Date.now(),
+    }));
     track("quiz_completed", { setting: answers.alive || "unknown", duration: answers.duration || "unknown" });
     setPhase("complete");
     timer.current = window.setTimeout(() => window.location.assign("/thinking"), 850);
@@ -349,6 +385,6 @@ export default function TravelQuiz() {
   if (phase === "complete") return <div className="grid min-h-[calc(100svh-5rem)] place-items-center bg-[#f5f3ef] px-5"><p className="text-[clamp(3.5rem,8vw,8rem)] font-medium tracking-[-0.07em]">We found it.</p></div>;
 
   return <section id="quiz" className={`overflow-hidden bg-[#f5f3ef] text-[#171717] transition-[opacity,transform] duration-300 ease-out ${phase === "leaving" ? "-translate-y-2 opacity-0" : phase === "leaving-back" ? "translate-y-2 opacity-0" : phase === "entering" ? "translate-y-2 opacity-0" : "translate-y-0 opacity-100"}`}>
-    {step < adaptiveQuestions.length ? <VisualQuestion question={current} value={answers[current.id]} onChoose={choose} step={step} /> : step === adaptiveQuestions.length ? <DiscoveryQuestion value={discoveryLevel} onChange={setDiscoveryLevel} onBack={back} onContinue={continueDiscovery} /> : <DateQuestion answers={answers} setAnswers={setAnswers} tripStart={tripStart} tripEnd={tripEnd} isFlexible={isFlexible} setTripStart={setTripStart} setTripEnd={setTripEnd} setIsFlexible={setIsFlexible} originAirport={originAirport} setOriginAirport={setOriginAirport} guestCount={guestCount} setGuestCount={setGuestCount} onBack={back} onSubmit={submit} canSubmit={canSubmit} />}
+    {step < adaptiveQuestions.length ? current.type === "budget" ? <BudgetQuestion value={exactBudget} includes={budgetIncludes} onValueChange={setExactBudget} onToggle={(key) => setBudgetIncludes((currentIncludes) => ({ ...currentIncludes, [key]: !currentIncludes[key] }))} onBack={back} onContinue={continueBudget} step={step} /> : <VisualQuestion question={current} value={answers[current.id]} onChoose={choose} step={step} /> : step === adaptiveQuestions.length ? <DiscoveryQuestion value={discoveryLevel} onChange={setDiscoveryLevel} onBack={back} onContinue={continueDiscovery} /> : <DateQuestion answers={answers} setAnswers={setAnswers} tripStart={tripStart} tripEnd={tripEnd} isFlexible={isFlexible} setTripStart={setTripStart} setTripEnd={setTripEnd} setIsFlexible={setIsFlexible} originAirport={originAirport} setOriginAirport={setOriginAirport} guestCount={guestCount} setGuestCount={setGuestCount} onBack={back} onSubmit={submit} canSubmit={canSubmit} />}
   </section>;
 }

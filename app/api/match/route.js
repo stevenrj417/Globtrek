@@ -1,5 +1,7 @@
-import { destinations, scoreDestination } from "../../data/destinations";
+import { destinations } from "../../data/destinations";
 import { hotelsFor } from "../../data/hotels";
+import { normalizeTravelerProfile } from "../../lib/recommendation/travelerProfile";
+import { rankDestinations } from "../../lib/recommendation/destinationEngine";
 
 const resultCache = new Map();
 const CACHE_TTL = 24 * 60 * 60 * 1000;
@@ -132,13 +134,9 @@ const CACHE_TTL = 24 * 60 * 60 * 1000;
   },
 ];*/
 
-function fallbackMatches(answers) {
-  return [...destinations]
-    .map((destination) => ({
-      ...destination,
-      score: scoreDestination(destination, answers),
-    }))
-    .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
+function fallbackMatches(body) {
+  const profile = normalizeTravelerProfile(body);
+  return rankDestinations(destinations, profile);
 }
 
 function extractOutputText(data) {
@@ -168,17 +166,24 @@ function normalizeAiResult(aiResult, fallback) {
 
 function fallbackPlan(destination, answers) {
   const priority = answers?.luxury || "local character";
+  const budgetPlan = destination.budgetPlan;
+  const money = (value) => `$${Math.round(value || 0).toLocaleString("en-US")}`;
+  const budget = budgetPlan?.estimates ? Object.entries(budgetPlan.estimates).filter(([key]) => key !== "miscBuffer").map(([key, item]) => ({
+    category: key === "transportation" ? "Transport" : `${key[0].toUpperCase()}${key.slice(1)}`,
+    share: budgetPlan.includedBudgetCategories[key] ? `${money(item.low)}–${money(item.high)}` : "Outside budget",
+    note: item.isLive ? "Live provider price" : "Estimated range",
+  })) : [
+    { category: "Stay", share: "Estimate unavailable", note: "Compare provider options" },
+    { category: "Flights", share: "Estimate unavailable", note: "Compare provider fares" },
+    { category: "Food", share: "Estimate unavailable", note: `Prioritize ${priority.toLowerCase()}` },
+    { category: "Experiences", share: "Estimate unavailable", note: "Confirm provider pricing" },
+  ];
   return {
     headline: `${destination.city}, at your pace`,
     airport: { code: destination.airport, note: "Confirm your preferred arrival route before booking." },
     arrivalWindow: { title: "Arrival", steps: ["Keep the first evening light and close to your stay."] },
     picks: { restaurants: [], experiences: [] },
-    budget: [
-      { category: "Stay", share: "35–50%", note: "Compare live rooms" },
-      { category: "Flights", share: "20–35%", note: "Compare live fares" },
-      { category: "Food", share: "15–25%", note: `Prioritize ${priority.toLowerCase()}` },
-      { category: "Experiences", share: "10–20%", note: "Book key moments" },
-    ],
+    budget,
     days: [
       { day: "Day 1", title: "Arrive softly", morning: "Travel and arrival", afternoon: "Settle into your stay", evening: "Easy neighborhood dinner" },
       { day: "Day 2", title: "Find the rhythm", morning: "One signature sight", afternoon: "Explore at your pace", evening: "A memorable local meal" },
@@ -246,14 +251,15 @@ export async function POST(request) {
   const startedAt = Date.now();
   const body = await request.json();
   const answers = body.answers || {};
-  const ranked = fallbackMatches(answers);
+  const travelerProfile = normalizeTravelerProfile(body);
+  const ranked = fallbackMatches(body);
   const forcedDestination = typeof body.destination === "string" ? ranked.find((destination) => destination.airport === body.destination) : null;
   const fallback = forcedDestination ? [forcedDestination, ...ranked.filter((destination) => destination.airport !== forcedDestination.airport)] : ranked;
   const primaryDestination = fallback[0];
   const stayOptions = hotelsFor(primaryDestination, body).map(({ name, tags }) => ({ name, tags }));
   const nights = tripLength(body);
   const tune = typeof body.tune === "string" ? body.tune.slice(0, 40) : "original";
-  const cacheKey = JSON.stringify({ answers, nights, flexible: Boolean(body.isFlexible), guests: body.guestCount || "2", destination: primaryDestination.airport, tune });
+  const cacheKey = JSON.stringify({ travelerProfile, destination: primaryDestination.airport, tune });
   const cached = resultCache.get(cacheKey);
   if (cached && Date.now() - cached.createdAt < CACHE_TTL) {
     console.log(JSON.stringify({ level: "info", msg: "match_cache_hit", route: "/api/match", ms: Date.now() - startedAt }));
@@ -261,7 +267,7 @@ export async function POST(request) {
   }
 
   if (!process.env.OPENAI_API_KEY) {
-    return Response.json({ source: "fallback", aiStatus: "missing_key", matches: withFallbackPlans(fallback, answers) });
+    return Response.json({ source: "fallback", aiStatus: "missing_key", travelerProfile, matches: withFallbackPlans(fallback, answers) });
   }
 
   try {
@@ -281,12 +287,14 @@ export async function POST(request) {
           {
             role: "system",
             content:
-              "You are GlobTrek's invisible trip-planning engine. The destination is already selected. Write like a sharp travel editor, never a chatbot. Personalize from every supplied quiz answer and the requested trip length. Honor the refinement when it requests more affordable, more local, more relaxing, or more adventurous choices. Use web search to verify every named restaurant and experience is a real, currently operating place in the supplied destination. Prefer iconic choices when the discovery slider is high and genuinely under-the-radar local choices when it is low; use a thoughtful mix in the middle. Never invent a venue, airport, flight time, live price, availability, reservation, address, opening hour, or transfer duration. The airport code and hotel shortlist are supplied facts; do not replace them. Return only valid JSON with this exact shape: {\"why\":string,\"itinerary\":[string],\"plan\":{\"headline\":string,\"airport\":{\"code\":string,\"note\":string},\"arrivalWindow\":{\"title\":string,\"steps\":[string]},\"picks\":{\"restaurants\":[{\"name\":string,\"why\":string}],\"experiences\":[{\"name\":string,\"why\":string}]},\"budget\":[{\"category\":string,\"share\":string,\"note\":string}],\"days\":[{\"day\":string,\"title\":string,\"morning\":string,\"afternoon\":string,\"evening\":string}],\"practicalNotes\":[string]}}. Constraints: why is one sentence; headline is under 8 words; airport note is under 12 words; arrivalWindow has exactly 1 step under 18 words; picks has exactly 3 verified restaurants and 3 verified experiences, each why under 12 words; budget has exactly 4 broad categories with percentage shares; days has exactly 3 items and each time-of-day string is under 12 words. Use actual venue names inside the day plan. No markdown.",
+              "You are GlobTrek's invisible trip-planning engine. The destination is already selected by deterministic preference and budget scoring. Write like a sharp travel editor, never a chatbot. Personalize from every supplied quiz answer and requested trip length. The supplied deterministic budget plan is authoritative: do not add plans that obviously exceed its activity, food, or transportation ranges, and treat excluded categories as outside the stated budget. Honor refinements requesting more affordable, local, relaxing, or adventurous choices. Use web search to verify every named restaurant and experience is a real, currently operating place in the supplied destination. Unknownness is 0 for iconic and 100 for obscure; high values still require practical, operating venues. Never invent a venue, airport, flight time, live price, availability, reservation, address, opening hour, or transfer duration. All prices are estimates unless explicitly marked isLive. The airport code and hotel shortlist are supplied facts; do not replace them. Return only valid JSON with this exact shape: {\"why\":string,\"itinerary\":[string],\"plan\":{\"headline\":string,\"airport\":{\"code\":string,\"note\":string},\"arrivalWindow\":{\"title\":string,\"steps\":[string]},\"picks\":{\"restaurants\":[{\"name\":string,\"why\":string}],\"experiences\":[{\"name\":string,\"why\":string}]},\"budget\":[{\"category\":string,\"share\":string,\"note\":string}],\"days\":[{\"day\":string,\"title\":string,\"morning\":string,\"afternoon\":string,\"evening\":string}],\"practicalNotes\":[string]}}. Constraints: why is one sentence; headline is under 8 words; airport note is under 12 words; arrivalWindow has exactly 1 step under 18 words; picks has exactly 3 verified restaurants and 3 verified experiences, each why under 12 words; budget has exactly 4 broad categories consistent with supplied allocations; days has exactly 3 items and each time-of-day string is under 12 words. Use actual venue names inside the day plan. No markdown.",
           },
           {
             role: "user",
             content: JSON.stringify({
               answers,
+              travelerProfile,
+              budgetPlan: primaryDestination.budgetPlan,
               requestedTrip: {
                 nights,
                 flexible: Boolean(body.isFlexible),
@@ -311,6 +319,7 @@ export async function POST(request) {
 
     const value = {
       source: "openai",
+      travelerProfile,
       matches: normalizeAiResult(aiResult, fallback),
     };
     if (resultCache.size >= 100) resultCache.delete(resultCache.keys().next().value);
@@ -319,6 +328,6 @@ export async function POST(request) {
     return Response.json(value);
   } catch (error) {
     console.error(JSON.stringify({ level: "error", msg: "match_failed", route: "/api/match", error: error instanceof Error ? error.message : "request_failed", ms: Date.now() - startedAt }));
-    return Response.json({ source: "fallback", aiStatus: error instanceof Error ? error.message : "request_failed", matches: withFallbackPlans(fallback, answers) });
+    return Response.json({ source: "fallback", aiStatus: error instanceof Error ? error.message : "request_failed", travelerProfile, matches: withFallbackPlans(fallback, answers) });
   }
 }

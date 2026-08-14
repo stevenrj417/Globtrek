@@ -132,7 +132,8 @@ export function scoreDestination(destination, answers) {
     (score, [key, answer]) => score + (destination.tags.includes(answer) ? (weights[key] || 2) : 0),
     0,
   );
-  const desiredRecognition = Number(answers?.discovery);
+  const desiredUnknownness = Number(answers?.discovery);
+  const desiredRecognition = Number.isFinite(desiredUnknownness) ? 100 - desiredUnknownness : Number.NaN;
   const discoveryScore = Number.isFinite(desiredRecognition) ? Math.max(0, 14 - Math.abs(destination.recognition - desiredRecognition) / 5) : 0;
   return tagScore + discoveryScore;
 }

@@ -4,16 +4,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { track } from "@vercel/analytics";
-import { bookingActivityUrl, bookingFlightUrl, bookingLinks, destinations, diningSearchUrl, scoreDestination } from "../data/destinations";
+import { bookingActivityUrl, bookingFlightUrl, bookingLinks, destinations, diningSearchUrl } from "../data/destinations";
 import { hotelsFor } from "../data/hotels";
+import { normalizeTravelerProfile } from "../lib/recommendation/travelerProfile";
+import { rankDestinations } from "../lib/recommendation/destinationEngine";
+import { shortlistHotels } from "../lib/recommendation/hotelEngine";
 import { AccountEntry } from "../components/AccountEntry";
 import { SaveTripButton } from "../components/SaveTripButton";
 
 function getMatches(quiz) {
-  const answers = quiz?.answers || {};
-  return [...destinations]
-    .map((destination) => ({ ...destination, score: scoreDestination(destination, answers) }))
-    .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
+  return rankDestinations(destinations, normalizeTravelerProfile(quiz || {}));
 }
 
 function formatDate(value) {
@@ -77,8 +77,11 @@ function bookingHotelUrl(hotel, trip = {}) {
   return `${bookingLinks.stays}?url=${encodeURIComponent(target.toString())}`;
 }
 
-function HotelShortlist({ destination, quiz }) {
-  const hotels = useMemo(() => hotelsFor(destination, quiz), [destination, quiz]);
+function HotelShortlist({ destination, quiz, budgetPlan }) {
+  const profile = useMemo(() => normalizeTravelerProfile(quiz), [quiz]);
+  const localHotels = useMemo(() => shortlistHotels(hotelsFor(destination, quiz, { limit: Number.MAX_SAFE_INTEGER }), profile, budgetPlan), [budgetPlan, destination, profile, quiz]);
+  const [catalogHotels, setCatalogHotels] = useState(null);
+  const hotels = catalogHotels?.length ? catalogHotels : localHotels;
   const [selected, setSelected] = useState(null);
   const [customHotel, setCustomHotel] = useState("");
   const [editingCustom, setEditingCustom] = useState(false);
@@ -90,6 +93,19 @@ function HotelShortlist({ destination, quiz }) {
     }, 0);
     return () => window.clearTimeout(timer);
   }, [destination.city]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/api/hotels/recommend", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ destinationId: destination.airport, quiz }),
+      signal: controller.signal,
+    }).then((response) => response.ok ? response.json() : null)
+      .then((payload) => { if (payload?.hotels?.length) setCatalogHotels(payload.hotels); })
+      .catch((error) => { if (error.name !== "AbortError") console.warn("Hotel catalog fallback active."); });
+    return () => controller.abort();
+  }, [destination.airport, quiz]);
 
   function choose(stay) {
     setSelected(stay);
@@ -114,11 +130,11 @@ function HotelShortlist({ destination, quiz }) {
 
   return <section className="mt-16">
     <div className="flex flex-col gap-6 border-b border-black/15 pb-8 sm:flex-row sm:items-end sm:justify-between">
-      <div><p className="text-[10px] uppercase tracking-[0.3em] text-black/45">Your stay</p><h2 className="mt-4 font-serif text-[clamp(2.2rem,4vw,3.8rem)] tracking-[-0.04em]">Four worth traveling for</h2></div>
+      <div><p className="text-[10px] uppercase tracking-[0.3em] text-black/45">Your stay</p><h2 className="mt-4 font-serif text-[clamp(2.2rem,4vw,3.8rem)] tracking-[-0.04em]">Three worth traveling for</h2></div>
       <p className="max-w-md text-sm font-light leading-6 text-black/50">An editorial shortlist for {destination.city}. Booking.com confirms live rooms, prices, and final terms.</p>
     </div>
 
-    <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 md:mx-0 md:grid md:grid-cols-2 md:gap-5 md:overflow-visible md:px-0 md:pb-0 xl:grid-cols-4">
+    <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 md:mx-0 md:grid md:grid-cols-3 md:gap-5 md:overflow-visible md:px-0 md:pb-0">
       {hotels.map((hotel, index) => {
         const isSelected = selected?.id === hotel.id;
         return <article key={hotel.id} className="group w-[82vw] max-w-[330px] shrink-0 snap-center overflow-hidden bg-white shadow-[0_12px_45px_rgba(23,23,20,0.055)] md:w-auto md:max-w-none">
@@ -197,13 +213,19 @@ export default function ResultsPage() {
     ["Drive", "Cars & transfers", bookingLinks.cars, true],
     ["Dine", `Restaurants in ${trip.city}`, diningSearchUrl(trip), false],
   ];
-  const estimatedTotal = estimateTrip(quiz);
+  const budgetPlan = trip.budgetPlan;
+  const travelerProfile = normalizeTravelerProfile(quiz);
+  const money = (value) => `$${Math.round(value || 0).toLocaleString("en-US")}`;
+  const estimatedTotal = budgetPlan?.targetBudget ? `${money(budgetPlan.estimatedTripLow)}–${money(budgetPlan.estimatedTripHigh)} estimated` : estimateTrip(quiz);
   const sharedPayload = encodeTrip({ quiz, destination: trip.airport });
   const savedTrip = {
     clientTripKey: `${trip.airport}:${sharedPayload.slice(0, 120)}`,
     sharePath: `/results?trip=${sharedPayload}`,
     destination: { city: trip.city, country: trip.country, airport: trip.airport, image: trip.image, style: trip.style },
     trip: quiz,
+    travelerProfile,
+    exactBudget: travelerProfile.exactBudget,
+    includedBudgetCategories: travelerProfile.includedBudgetCategories,
     preferences: {
       quizAnswers: quiz?.answers || {},
       budget: quiz?.answers?.memory || null,
@@ -211,6 +233,8 @@ export default function ResultsPage() {
       familiarity: quiz?.discoveryLevel ?? null,
     },
     itinerary: trip.plan || null,
+    estimatedCosts: budgetPlan || null,
+    costConfidence: budgetPlan?.confidence ?? null,
     bookingLinks: { hotel: null, flight: tools[0][2], activities: tools[1][2], car: tools[2][2], dining: tools[3][2] },
     selections: { hotel: null, flight: null, car: null, activities: [] },
   };
@@ -288,11 +312,18 @@ export default function ResultsPage() {
         </div>
 
         <div className="grid gap-px bg-black/10 sm:grid-cols-[1fr_auto_auto_auto]">
-          <div className="bg-[#f3f0eb] px-5 py-5"><p className="text-[8px] uppercase tracking-[0.2em] text-black/40">Typical planning range</p><p className="mt-2 font-serif text-xl">{estimatedTotal}</p></div>
+          <div className="bg-[#f3f0eb] px-5 py-5"><p className="text-[8px] uppercase tracking-[0.2em] text-black/40">Estimated trip range</p><p className="mt-2 font-serif text-xl">{estimatedTotal}</p>{budgetPlan?.targetBudget ? <p className="mt-2 text-[9px] uppercase tracking-[0.14em] text-black/40">Target {money(budgetPlan.targetBudget)} · estimates, not live prices</p> : null}</div>
           <button type="button" onClick={shareTrip} className="min-h-20 bg-[#f3f0eb] px-7 text-[9px] uppercase tracking-[0.2em] transition hover:bg-white">{shareStatus || "Save / share"}</button>
           <SaveTripButton trip={savedTrip} className="min-h-20 bg-[#f3f0eb] px-7 text-[9px] uppercase tracking-[0.2em] transition hover:bg-white" />
           <button type="button" onClick={emailTrip} className="min-h-20 bg-[#f3f0eb] px-7 text-[9px] uppercase tracking-[0.2em] transition hover:bg-white">Email this trip</button>
         </div>
+
+        {budgetPlan?.estimates ? <div className="grid grid-cols-2 border-l border-t border-black/10 sm:grid-cols-3 lg:grid-cols-6">
+          {Object.entries(budgetPlan.estimates).map(([key, item]) => {
+            const included = key === "miscBuffer" || budgetPlan.includedBudgetCategories[key];
+            return <div key={key} className="border-b border-r border-black/10 px-4 py-5"><p className="text-[8px] uppercase tracking-[0.18em] text-black/40">{key === "transportation" ? "Transport" : key.replace(/([A-Z])/g, " $1")}</p><p className="mt-2 font-serif text-lg">{included ? `${money(item.low)}–${money(item.high)}` : "Not included"}</p></div>;
+          })}
+        </div> : null}
 
         {planning && !trip.plan && <div className="mt-16 flex min-h-32 items-center justify-between border-y border-black/15 py-8"><div><p className="text-[9px] uppercase tracking-[0.25em] text-black/40">Building your edit</p><p className="mt-3 font-serif text-2xl">Finding the places that fit you.</p></div><span className="h-2 w-2 animate-pulse rounded-full bg-black" /></div>}
 
@@ -327,7 +358,7 @@ export default function ResultsPage() {
 
         <a href="#book" onClick={() => track("booking_checklist_started", { destination: trip.city })} className="mt-5 flex min-h-16 items-center justify-between border border-black px-6 text-[10px] uppercase tracking-[0.2em] transition hover:bg-black hover:text-white"><span>Start booking this trip</span><span>↓</span></a>
 
-        <HotelShortlist destination={trip} quiz={quiz} />
+        <HotelShortlist destination={trip} quiz={quiz} budgetPlan={budgetPlan} />
 
         <div id="book" className="mt-20 scroll-mt-6">
           <div className="mb-8 flex items-end justify-between border-b border-black/15 pb-6"><div><p className="text-[9px] uppercase tracking-[0.24em] text-black/40">Booking checklist</p><h2 className="mt-3 font-serif text-[clamp(2.2rem,4vw,4rem)] leading-none">One trip. Four decisions.</h2></div><p className="hidden max-w-xs text-right text-xs leading-5 text-black/45 sm:block">Open each provider with your destination and traveler details already carried through.</p></div>

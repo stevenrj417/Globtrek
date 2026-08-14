@@ -1,0 +1,29 @@
+export function serializeRecommendation({ travelerProfile, destination, budgetPlan, hotels = [], selectedHotel = null, itinerary = null, bookingLinks = {} }) {
+  return {
+    version: 2,
+    travelerProfile,
+    destination: { id: destination.airport, city: destination.city, country: destination.country },
+    exactBudget: travelerProfile.exactBudget,
+    includedBudgetCategories: travelerProfile.includedBudgetCategories,
+    hotelSelection: selectedHotel,
+    hotelAlternatives: hotels.slice(0, 3),
+    estimatedCosts: budgetPlan,
+    costConfidence: budgetPlan.confidence,
+    itinerary,
+    bookingLinks,
+    providerIds: { hotel: selectedHotel?.providerPropertyId || null },
+    generatedAt: new Date().toISOString(),
+  };
+}
+
+export function buildTripEmailModel(savedTrip) {
+  return {
+    destination: savedTrip.destination,
+    dates: savedTrip.travelerProfile?.dates || null,
+    hotel: savedTrip.hotelSelection || null,
+    estimatedCostBreakdown: savedTrip.estimatedCosts || null,
+    itinerary: savedTrip.itinerary || null,
+    bookingLinks: savedTrip.bookingLinks || {},
+    disclaimer: "Prices shown are estimates unless a provider explicitly marks them live. Confirm final prices and availability with the provider.",
+  };
+}
