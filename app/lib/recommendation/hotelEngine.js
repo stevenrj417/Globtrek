@@ -10,7 +10,7 @@ function inferredScore(hotel, tag, fallback = 50) {
 
 export function rankHotels(hotels, profile, budgetPlan) {
   const nights = Math.max(1, profile.tripLength);
-  const nightlyAllowance = budgetPlan.hotelBudget / nights;
+  const nightlyAllowance = (budgetPlan?.hotelBudget || 0) / nights;
   return hotels.filter((hotel) => hotel.active !== false).map((hotel) => {
     const low = hotel.typicalNightlyLow == null ? Number.NaN : Number(hotel.typicalNightlyLow);
     const high = hotel.typicalNightlyHigh == null ? Number.NaN : Number(hotel.typicalNightlyHigh);
@@ -29,7 +29,7 @@ export function rankHotels(hotels, profile, budgetPlan) {
       familyScore: profile.companions === "Family" ? 90 : 50,
       romanticScore: ["Couple", "Honeymoon"].includes(profile.companions) ? 90 : 50,
       centralityScore: 65,
-      valueScore: budgetPlan.budgetFeasibilityScore < 80 ? 90 : 65,
+      valueScore: (budgetPlan?.budgetFeasibilityScore ?? 50) < 80 ? 90 : 65,
     };
     const traitFit = SCORE_FIELDS.reduce((sum, field) => sum + (100 - Math.abs(inferredScore(hotel, field) - preferences[field])), 0) / SCORE_FIELDS.length;
     const tagMatches = hotel.tags?.filter((tag) => Object.values(profile.otherExistingQuizPreferences).includes(tag)).length || 0;
