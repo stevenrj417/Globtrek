@@ -45,6 +45,19 @@ const questions = [
     ],
   },
   {
+    id: "duration",
+    question: "How long do you want to be away?",
+    type: "visual",
+    options: [
+      { label: "Long Weekend", display: "3–4 nights", image: "/quiz/long-weekend.jpg", alt: "A polished long weekend escape" },
+      { label: "Five Nights", display: "5 nights", image: "/quiz/five-nights.jpg", alt: "A five-night city escape" },
+      { label: "One Week", display: "One week", image: "/quiz/one-week.jpg", alt: "A week of travel in a beautiful landscape" },
+      { label: "Ten Days", display: "10 days", image: "/quiz/ten-days.jpg", alt: "A ten-day road trip" },
+      { label: "Two Weeks", display: "Two weeks", image: "/quiz/two-weeks.jpg", alt: "A two-week journey through dramatic scenery" },
+      { label: "Open-Ended", display: "Not sure yet", image: "/quiz/open-ended.jpg", alt: "An open-ended journey" },
+    ],
+  },
+  {
     id: "hotel",
     question: "What type of stay do you prefer?",
     type: "visual",
@@ -85,11 +98,26 @@ const questions = [
 
 const preferenceSteps = questions.length + 1;
 
+const stayOptionsBySetting = {
+  Ocean: ["Beach resort", "Private villa", "Boutique hotel", "Design hotel"],
+  Mountains: ["Mountain lodge", "Boutique hotel", "Design hotel", "Traditional inn"],
+  Cities: ["Boutique hotel", "Design hotel", "Traditional inn"],
+  "Road Trips": ["Mountain lodge", "Private villa", "Boutique hotel", "Traditional inn"],
+  Culture: ["Traditional inn", "Boutique hotel", "Design hotel", "Private villa"],
+};
+
+function questionsFor(answers) {
+  const allowedStays = stayOptionsBySetting[answers.alive];
+  return questions.map((question) => question.id === "hotel" && allowedStays
+    ? { ...question, options: question.options.filter((option) => allowedStays.includes(option.label)) }
+    : question);
+}
+
 function Progress({ step }) {
   return <p className="text-[10px] font-medium tabular-nums tracking-[0.2em] text-[#777]">{String(step + 1).padStart(2, "0")} / {String(preferenceSteps).padStart(2, "0")}</p>;
 }
 
-function VisualQuestion({ question, value, onChoose }) {
+function VisualQuestion({ question, value, onChoose, step }) {
   const selected = value || question.options[0].label;
   const [preview, setPreview] = useState(selected);
 
@@ -97,7 +125,7 @@ function VisualQuestion({ question, value, onChoose }) {
 
   return (
     <div className="quiz-stage grid min-h-[calc(100svh-5rem)] grid-rows-[auto_1fr_auto] px-5 pb-6 pt-9 sm:px-8 lg:px-10">
-      <div className="flex items-center justify-between"><span className="text-xl font-semibold tracking-[-0.055em]">GLOBTREK</span><Progress step={questions.indexOf(question)} /></div>
+      <div className="flex items-center justify-between"><span className="text-xl font-semibold tracking-[-0.055em]">GLOBTREK</span><Progress step={step} /></div>
       <div className="grid items-center gap-9 py-8 lg:grid-cols-[30%_70%] lg:gap-0 lg:py-8">
         <div className="relative z-10 lg:pr-12">
           <p className="mb-6 text-[10px] uppercase tracking-[0.23em] text-[#777]">The GlobTrek quiz</p>
@@ -286,7 +314,8 @@ export default function TravelQuiz() {
 
   useEffect(() => { const onPop = (event) => { if (typeof event.state?.quizStep === "number") setStep(event.state.quizStep); }; window.addEventListener("popstate", onPop); window.history.replaceState({ ...window.history.state, quizStep: 0 }, ""); return () => { window.removeEventListener("popstate", onPop); window.clearTimeout(timer.current); }; }, []);
 
-  const current = questions[step];
+  const adaptiveQuestions = useMemo(() => questionsFor(answers), [answers]);
+  const current = adaptiveQuestions[step];
   const canSubmit = useMemo(() => (isFlexible && Boolean(answers.season)) || (!isFlexible && Boolean(tripStart) && Boolean(tripEnd)), [answers.season, isFlexible, tripStart, tripEnd]);
 
   function go(next, direction = "forward") {
@@ -317,6 +346,6 @@ export default function TravelQuiz() {
   if (phase === "complete") return <div className="grid min-h-[calc(100svh-5rem)] place-items-center bg-[#f5f3ef] px-5"><p className="text-[clamp(3.5rem,8vw,8rem)] font-medium tracking-[-0.07em]">We found it.</p></div>;
 
   return <section id="quiz" className={`overflow-hidden bg-[#f5f3ef] text-[#171717] transition-[opacity,transform] duration-300 ease-out ${phase === "leaving" ? "-translate-y-2 opacity-0" : phase === "leaving-back" ? "translate-y-2 opacity-0" : phase === "entering" ? "translate-y-2 opacity-0" : "translate-y-0 opacity-100"}`}>
-    {step < questions.length ? <VisualQuestion question={current} value={answers[current.id]} onChoose={choose} /> : step === questions.length ? <DiscoveryQuestion value={discoveryLevel} onChange={setDiscoveryLevel} onBack={back} onContinue={continueDiscovery} /> : <DateQuestion answers={answers} setAnswers={setAnswers} tripStart={tripStart} tripEnd={tripEnd} isFlexible={isFlexible} setTripStart={setTripStart} setTripEnd={setTripEnd} setIsFlexible={setIsFlexible} originAirport={originAirport} setOriginAirport={setOriginAirport} guestCount={guestCount} setGuestCount={setGuestCount} onBack={back} onSubmit={submit} canSubmit={canSubmit} />}
+    {step < adaptiveQuestions.length ? <VisualQuestion question={current} value={answers[current.id]} onChoose={choose} step={step} /> : step === adaptiveQuestions.length ? <DiscoveryQuestion value={discoveryLevel} onChange={setDiscoveryLevel} onBack={back} onContinue={continueDiscovery} /> : <DateQuestion answers={answers} setAnswers={setAnswers} tripStart={tripStart} tripEnd={tripEnd} isFlexible={isFlexible} setTripStart={setTripStart} setTripEnd={setTripEnd} setIsFlexible={setIsFlexible} originAirport={originAirport} setOriginAirport={setOriginAirport} guestCount={guestCount} setGuestCount={setGuestCount} onBack={back} onSubmit={submit} canSubmit={canSubmit} />}
   </section>;
 }

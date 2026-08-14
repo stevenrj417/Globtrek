@@ -72,11 +72,11 @@ function HotelShortlist({ destination, quiz }) {
       <p className="max-w-md text-sm font-light leading-6 text-black/50">An editorial shortlist for {destination.city}. Booking.com confirms live rooms, prices, and final terms.</p>
     </div>
 
-    <div className="grid gap-px bg-black/15 md:grid-cols-2 xl:grid-cols-4">
+    <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
       {hotels.map((hotel, index) => {
         const isSelected = selected?.id === hotel.id;
-        return <article key={hotel.id} className="group bg-[#f3f0eb]">
-          <div className="relative aspect-[5/4] overflow-hidden bg-black/5">
+        return <article key={hotel.id} className="group overflow-hidden bg-white shadow-[0_12px_45px_rgba(23,23,20,0.055)]">
+          <div className="relative aspect-[4/5] overflow-hidden bg-black/5">
             <Image src={hotel.image} alt={`${hotel.name} in ${destination.city}`} fill className={`object-cover transition duration-700 group-hover:scale-[1.025] ${index === 1 ? "object-[65%_center]" : index === 2 ? "object-[35%_center]" : index === 3 ? "object-bottom" : "object-center"}`} sizes="(min-width:1280px) 25vw,(min-width:768px) 50vw,100vw" quality={88} />
             <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
             <p className="absolute left-5 top-5 text-[9px] uppercase tracking-[0.25em] text-white/80">0{index + 1} · {hotel.descriptor}</p>
@@ -151,9 +151,9 @@ export default function ResultsPage() {
         <Link href="/discover" className="group flex items-center gap-3 text-[10px] uppercase tracking-[0.2em]"><span className="hidden sm:inline">Retake quiz</span><span className="grid h-10 w-10 place-items-center rounded-full border border-black/25 transition group-hover:bg-black group-hover:text-white">↺</span></Link>
       </header>
 
-      <section className="relative min-h-[92svh] overflow-hidden">
+      <section className="relative min-h-svh overflow-hidden">
         <Image src={trip.image} alt={`${trip.city}, ${trip.country}`} fill priority className="object-cover" sizes="100vw" quality={88} />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#f3f0eb]/55 via-transparent to-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/45" />
         <div className="absolute inset-0 flex items-center justify-center px-5 text-center">
           <div className="max-w-6xl text-white [text-shadow:0_2px_24px_rgba(0,0,0,.2)]">
             <p className="mb-7 text-[10px] font-medium uppercase tracking-[0.35em]">Your place is</p>
@@ -165,14 +165,10 @@ export default function ResultsPage() {
         <a href="#trip" aria-label="Explore your result" className="absolute bottom-8 left-1/2 grid h-14 w-14 -translate-x-1/2 place-items-center rounded-full border border-white/70 text-xl text-white transition hover:bg-white hover:text-black">↓</a>
       </section>
 
-      <section id="trip" className="mx-auto max-w-[1460px] px-6 py-16 sm:px-12 sm:py-20">
-        <div className="mx-auto max-w-4xl text-center">
-          <p className="text-[10px] uppercase tracking-[0.3em] text-black/50">Why this is yours</p>
-          <h2 className="mt-6 font-serif text-[clamp(2.2rem,4vw,4rem)] leading-[1.02] tracking-[-0.035em]">{trip.style}</h2>
-          <p className="mx-auto mt-6 max-w-2xl text-base font-light leading-7 text-black/60">{trip.why}</p>
-          <div className="mt-7 flex flex-wrap justify-center gap-x-8 gap-y-3 text-[10px] uppercase tracking-[0.2em] text-black/55">
-            <span>{trip.nights}</span><span>{trip.season}</span><span>{trip.price}</span>
-          </div>
+      <section id="trip" className="mx-auto max-w-[1460px] px-6 py-20 sm:px-12 sm:py-28">
+        <div className="grid items-end gap-10 border-b border-black/15 pb-14 lg:grid-cols-[0.8fr_1.2fr] lg:pb-20">
+          <div><p className="text-[10px] uppercase tracking-[0.3em] text-black/45">Why here</p><h2 className="mt-5 max-w-xl font-serif text-[clamp(2.7rem,5vw,5.8rem)] leading-[0.88] tracking-[-0.05em]">{trip.style}</h2></div>
+          <div className="lg:pb-1"><p className="max-w-2xl text-[clamp(1.05rem,1.6vw,1.35rem)] font-light leading-[1.55] text-black/60">{trip.why}</p><div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-[9px] uppercase tracking-[0.2em] text-black/45"><span>{quiz?.answers?.duration || trip.nights}</span><span>{trip.season}</span><span>{trip.price}</span></div></div>
         </div>
 
         <HotelShortlist destination={trip} quiz={quiz} />
@@ -202,12 +198,11 @@ export default function ResultsPage() {
           <p className="mt-4 text-[9px] leading-4 text-white/30">Typical planning estimates. Confirm schedules, prices, availability, and opening times.</p>
         </section>}
 
-        <div className="mt-16 border-y border-black/15">
+        <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {tools.map(([label, detail, href, sponsored]) => (
-            <a key={label} href={href} target="_blank" rel={sponsored ? "noopener sponsored" : "noopener"} className="group grid min-h-16 grid-cols-[4rem_1fr_auto] items-center border-b border-black/10 last:border-b-0 sm:grid-cols-[8rem_1fr_auto]">
-              <span className="text-[10px] uppercase tracking-[0.25em] text-black/45">{label}</span>
-              <span className="font-serif text-xl sm:text-2xl">{detail}</span>
-              <span className="text-xl transition-transform group-hover:translate-x-2">→</span>
+            <a key={label} href={href} target="_blank" rel={sponsored ? "noopener sponsored" : "noopener"} className="group flex min-h-40 flex-col justify-between bg-white p-6 shadow-[0_12px_40px_rgba(23,23,20,0.04)] transition hover:-translate-y-1 hover:shadow-[0_18px_55px_rgba(23,23,20,0.08)]">
+              <span className="text-[9px] uppercase tracking-[0.25em] text-black/40">{label}</span>
+              <span className="flex items-end justify-between gap-4"><span className="font-serif text-xl leading-tight">{detail}</span><span className="text-lg transition-transform group-hover:translate-x-1">↗</span></span>
             </a>
           ))}
         </div>
