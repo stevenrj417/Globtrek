@@ -30,17 +30,12 @@ export default function PrivacyPage() {
           Hosting providers and services requested by your browser may receive standard technical information such as IP address, browser details, request time, and requested URL. Editorial photography is loaded from Unsplash.
         </p>
       </EditorialSection>
-      <EditorialSection number="04" title="Travelpayouts Drive and affiliate tracking">
-        <p>
-          GlobTrek loads Travelpayouts Drive globally. Travelpayouts may use scripts, cookies, or similar technologies to recognize eligible referrals, adapt travel links, and measure qualifying activity according to its own policies.
-        </p>
-      </EditorialSection>
-      <EditorialSection number="05" title="External booking providers">
+      <EditorialSection number="04" title="External booking providers">
         <p>
           If you follow a booking link, the external provider controls its own site, data collection, pricing, availability, payment, reservation, and privacy practices. Review that provider’s notices before completing a transaction.
         </p>
       </EditorialSection>
-      <EditorialSection number="06" title="Details still to be confirmed">
+      <EditorialSection number="05" title="Details still to be confirmed">
         <p>
           Product owner TODO: add the responsible legal entity, public privacy contact, jurisdiction-specific rights process, and any business retention practices introduced beyond the browser storage described above.
         </p>

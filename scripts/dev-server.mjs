@@ -977,9 +977,8 @@ function informationPage(pathname) {
       intro: "This notice describes the code and services used by the current early-access version of GlobTrek.",
       sections: [
         ["01", "Quiz preferences", "Quiz answers and optional dates are stored in browser localStorage and sent to GlobTrek’s matching endpoint. OpenAI may process those preferences server-side when configured."],
-        ["02", "Travelpayouts Drive", "Travelpayouts may use scripts, cookies, or similar technologies to recognize eligible referrals and measure qualifying activity according to its policies."],
-        ["03", "External services", "Unsplash serves editorial imagery. External booking providers control their own data collection, pricing, payment, reservations, and privacy practices."],
-        ["04", "Details to complete", "Product owner TODO: add the responsible legal entity, public privacy contact, and any business retention practices introduced beyond browser storage."],
+        ["02", "External services", "Unsplash serves editorial imagery. External booking providers control their own data collection, pricing, payment, reservations, and privacy practices."],
+        ["03", "Details to complete", "Product owner TODO: add the responsible legal entity, public privacy contact, and any business retention practices introduced beyond browser storage."],
       ],
     },
     "/terms": {
