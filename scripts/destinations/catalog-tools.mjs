@@ -34,14 +34,47 @@ export function destinationCoverageReport(destinations, hotels = [], activities 
   hotels.filter((item) => item.active !== false).forEach((item) => hotelCounts.set(item.destinationId, (hotelCounts.get(item.destinationId) || 0) + 1));
   activities.filter((item) => item.active !== false).forEach((item) => activityCounts.set(item.destinationId, (activityCounts.get(item.destinationId) || 0) + 1));
   const countBands = (values, bands) => Object.fromEntries(bands.map(([name, test]) => [name, values.filter(test).length]));
-  const perDestination = destinations.map((item) => ({ id: item.id || item.destinationId, name: item.name || item.city, hotels: hotelCounts.get(item.id || item.destinationId) || 0, activities: activityCounts.get(item.id || item.destinationId) || 0 }));
+  const perDestination = destinations.map((item) => {
+    const id = item.id || item.destinationId;
+    const destinationHotels = hotels.filter((hotel) => hotel.active !== false && hotel.destinationId === id);
+    const destinationActivities = activities.filter((activity) => activity.active !== false && activity.destinationId === id);
+    return {
+      id,
+      name: item.name || item.city,
+      hotels: hotelCounts.get(id) || 0,
+      activities: activityCounts.get(id) || 0,
+      hotelPriceTiers: [...new Set(destinationHotels.map((hotel) => hotel.priceTier).filter(Boolean))],
+      hotelVibes: [...new Set(destinationHotels.flatMap((hotel) => hotel.styleTags || hotel.tags || []))],
+      affiliateHotels: destinationHotels.filter((hotel) => hotel.cjTrackingUrl && hotel.bookingComPropertyUrl).length,
+      pricedHotels: destinationHotels.filter((hotel) => hotel.typicalNightlyLow != null && hotel.typicalNightlyHigh != null).length,
+      affiliateActivities: destinationActivities.filter((activity) => activity.affiliateUrl || activity.bookingUrl).length,
+    };
+  });
   return {
     totalDestinations: destinations.length,
     knownnessTiers: Object.fromEntries(KNOWNNESS_TIERS.map(([low, high], index) => [`${low}-${high}`, destinations.filter((item) => knownnessTier(item.knownnessScore) === index).length])),
     costTiers: Object.fromEntries([...COST_LEVELS].map((level) => [level, destinations.filter((item) => item.costLevel === level).length])),
     costByKnownnessTier: Object.fromEntries(KNOWNNESS_TIERS.map(([low, high], index) => [`${low}-${high}`, Object.fromEntries([...COST_LEVELS].map((level) => [level, destinations.filter((item) => knownnessTier(item.knownnessScore) === index && item.costLevel === level).length]))])),
-    hotelCoverage: countBands(perDestination, [["0", (item) => item.hotels === 0], ["1-5", (item) => item.hotels >= 1 && item.hotels <= 5], ["6-11", (item) => item.hotels >= 6 && item.hotels <= 11], ["12+", (item) => item.hotels >= 12]]),
-    activityCoverage: countBands(perDestination, [["0", (item) => item.activities === 0], ["1-9", (item) => item.activities >= 1 && item.activities <= 9], ["10-19", (item) => item.activities >= 10 && item.activities <= 19], ["20+", (item) => item.activities >= 20]]),
+    recommendationReady: destinations.filter((item) => item.recommendationReady || item.recommendation_ready).length,
+    hotelCoverage: countBands(perDestination, [["0", (item) => item.hotels === 0], ["1-3", (item) => item.hotels >= 1 && item.hotels <= 3], ["4-8", (item) => item.hotels >= 4 && item.hotels <= 8], ["9+", (item) => item.hotels >= 9]]),
+    activityCoverage: countBands(perDestination, [["0", (item) => item.activities === 0], ["1-5", (item) => item.activities >= 1 && item.activities <= 5], ["6-11", (item) => item.activities >= 6 && item.activities <= 11], ["12+", (item) => item.activities >= 12]]),
+    hotelDataCoverage: {
+      affiliateLinks: hotels.filter((item) => item.active !== false && item.cjTrackingUrl && item.bookingComPropertyUrl).length,
+      priceEstimates: hotels.filter((item) => item.active !== false && item.typicalNightlyLow != null && item.typicalNightlyHigh != null).length,
+      propertyPhotos: hotels.filter((item) => item.active !== false && item.imageUrl && item.imageSource).length,
+      needsReview: hotels.filter((item) => item.active !== false && !["verified", "rejected"].includes(item.reviewStatus || item.review_status)).length,
+    },
+    activityDataCoverage: {
+      affiliateLinks: activities.filter((item) => item.active !== false && (item.affiliateUrl || item.bookingUrl)).length,
+      priceEstimates: activities.filter((item) => item.active !== false && item.estimatedCostLow != null && item.estimatedCostHigh != null).length,
+      photos: activities.filter((item) => item.active !== false && item.imageUrl && item.imageSource).length,
+      informationalOnly: activities.filter((item) => item.active !== false && !item.affiliateUrl && !item.bookingUrl).length,
+      needsReview: activities.filter((item) => item.active !== false && !["verified", "rejected"].includes(item.reviewStatus || item.review_status)).length,
+    },
+    photoCoverage: {
+      hero: destinations.filter((item) => item.images?.some((image) => image.isHero) || item.primaryImageUrl).length,
+      threePlus: destinations.filter((item) => (item.images || []).length >= 3).length,
+    },
     missing: {
       photos: destinations.filter((item) => !item.images?.length && !item.primaryImageUrl).length,
       costProfiles: destinations.filter((item) => !item.costProfile).length,

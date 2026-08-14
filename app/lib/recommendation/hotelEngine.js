@@ -8,6 +8,13 @@ function inferredScore(hotel, tag, fallback = 50) {
   return map[tag]?.some((value) => hotel.tags?.includes(value)) ? 82 : fallback;
 }
 
+export function hotelRecommendationGroup(hotel) {
+  const relaxed = (inferredScore(hotel, "relaxationScore") * 0.7) + ((100 - inferredScore(hotel, "nightlifeScore")) * 0.3);
+  const social = (inferredScore(hotel, "nightlifeScore") * 0.55) + (inferredScore(hotel, "centralityScore") * 0.45);
+  const premium = (inferredScore(hotel, "luxuryScore") * 0.6) + (inferredScore(hotel, "designScore") * 0.4);
+  return [["relaxed", relaxed], ["social", social], ["premium", premium]].sort((a, b) => b[1] - a[1])[0][0];
+}
+
 export function rankHotels(hotels, profile, budgetPlan) {
   const nights = Math.max(1, profile.tripLength);
   const nightlyAllowance = (budgetPlan?.hotelBudget || 0) / nights;
@@ -39,6 +46,23 @@ export function rankHotels(hotels, profile, budgetPlan) {
 }
 
 export function shortlistHotels(hotels, profile, budgetPlan) {
-  const ranked = rankHotels(hotels, profile, budgetPlan).slice(0, 3);
-  return ranked.map((hotel, index) => ({ ...hotel, descriptor: index === 0 ? "Our pick" : hotel.priceKnown ? (index === 1 ? "Lower price" : "Upgrade") : (index === 1 ? "Another fit" : "Different style") }));
+  const ranked = rankHotels(hotels, profile, budgetPlan);
+  if (!ranked.length) return [];
+  const selected = [ranked[0]];
+  const groups = new Set([hotelRecommendationGroup(ranked[0])]);
+  while (selected.length < 3) {
+    const differentGroup = ranked.find((hotel) => !selected.includes(hotel) && !groups.has(hotelRecommendationGroup(hotel)));
+    const next = differentGroup || ranked.find((hotel) => !selected.includes(hotel));
+    if (!next) break;
+    selected.push(next);
+    groups.add(hotelRecommendationGroup(next));
+  }
+  const valueIndex = selected.length > 1
+    ? selected.map((hotel, index) => ({ index, score: hotel.budgetFit + inferredScore(hotel, "valueScore") })).slice(1).sort((a, b) => b.score - a.score)[0]?.index
+    : -1;
+  return selected.map((hotel, index) => ({
+    ...hotel,
+    recommendationGroup: hotelRecommendationGroup(hotel),
+    descriptor: index === 0 ? "Our pick" : index === valueIndex ? "Best value" : "Upgrade",
+  }));
 }
