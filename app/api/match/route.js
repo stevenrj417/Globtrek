@@ -168,7 +168,7 @@ export async function POST(request) {
   const fallback = fallbackMatches(answers);
 
   if (!process.env.OPENAI_API_KEY) {
-    return Response.json({ source: "fallback", matches: fallback });
+    return Response.json({ source: "fallback", aiStatus: "missing_key", matches: fallback });
   }
 
   try {
@@ -200,7 +200,7 @@ export async function POST(request) {
     });
 
     if (!response.ok) {
-      throw new Error(`OpenAI request failed: ${response.status}`);
+      throw new Error(`request_${response.status}`);
     }
 
     const data = await response.json();
@@ -210,7 +210,7 @@ export async function POST(request) {
       source: "openai",
       matches: normalizeAiResult(aiResult, fallback),
     });
-  } catch {
-    return Response.json({ source: "fallback", matches: fallback });
+  } catch (error) {
+    return Response.json({ source: "fallback", aiStatus: error instanceof Error ? error.message : "request_failed", matches: fallback });
   }
 }
