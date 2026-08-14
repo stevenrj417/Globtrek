@@ -72,10 +72,10 @@ function HotelShortlist({ destination, quiz }) {
       <p className="max-w-md text-sm font-light leading-6 text-black/50">An editorial shortlist for {destination.city}. Booking.com confirms live rooms, prices, and final terms.</p>
     </div>
 
-    <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+    <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 md:mx-0 md:grid md:grid-cols-2 md:gap-5 md:overflow-visible md:px-0 md:pb-0 xl:grid-cols-4">
       {hotels.map((hotel, index) => {
         const isSelected = selected?.id === hotel.id;
-        return <article key={hotel.id} className="group overflow-hidden bg-white shadow-[0_12px_45px_rgba(23,23,20,0.055)]">
+        return <article key={hotel.id} className="group w-[82vw] max-w-[330px] shrink-0 snap-center overflow-hidden bg-white shadow-[0_12px_45px_rgba(23,23,20,0.055)] md:w-auto md:max-w-none">
           <div className="relative aspect-[4/5] overflow-hidden bg-black/5">
             <Image src={hotel.image} alt={`${hotel.name} in ${destination.city}`} fill className={`object-cover transition duration-700 group-hover:scale-[1.025] ${index === 1 ? "object-[65%_center]" : index === 2 ? "object-[35%_center]" : index === 3 ? "object-bottom" : "object-center"}`} sizes="(min-width:1280px) 25vw,(min-width:768px) 50vw,100vw" quality={88} />
             <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
@@ -202,9 +202,9 @@ export default function ResultsPage() {
 
         <HotelShortlist destination={trip} quiz={quiz} />
 
-        <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-16 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
           {tools.map(([label, detail, href, sponsored]) => (
-            <a key={label} href={href} target="_blank" rel={sponsored ? "noopener sponsored" : "noopener"} className="group flex min-h-40 flex-col justify-between bg-white p-6 shadow-[0_12px_40px_rgba(23,23,20,0.04)] transition hover:-translate-y-1 hover:shadow-[0_18px_55px_rgba(23,23,20,0.08)]">
+            <a key={label} href={href} target="_blank" rel={sponsored ? "noopener sponsored" : "noopener"} className="group flex min-h-36 flex-col justify-between bg-white p-5 shadow-[0_12px_40px_rgba(23,23,20,0.04)] transition hover:-translate-y-1 hover:shadow-[0_18px_55px_rgba(23,23,20,0.08)] sm:min-h-40 sm:p-6">
               <span className="text-[9px] uppercase tracking-[0.25em] text-black/40">{label}</span>
               <span className="flex items-end justify-between gap-4"><span className="font-serif text-xl leading-tight">{detail}</span><span className="text-lg transition-transform group-hover:translate-x-1">↗</span></span>
             </a>
@@ -216,9 +216,9 @@ export default function ResultsPage() {
           <h2 className="font-serif text-[clamp(2.4rem,5vw,4.8rem)] tracking-[-0.04em]">Other possibilities</h2>
           <Link href="/discover" className="hidden text-[10px] uppercase tracking-[0.22em] sm:block">Try again →</Link>
         </div>
-        <div className="grid gap-10 pt-10 md:grid-cols-3">
+        <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 pt-8 md:mx-0 md:grid md:grid-cols-3 md:gap-10 md:overflow-visible md:px-0 md:pb-0 md:pt-10">
           {alternatives.map((place) => (
-            <Link key={place.name} href={`/results?destination=${encodeURIComponent(place.airport)}`} scroll onClick={() => setChosenAirport(place.airport)} className="group block" aria-label={`Plan a complete trip to ${place.city}`}>
+            <Link key={place.name} href={`/results?destination=${encodeURIComponent(place.airport)}`} scroll onClick={() => setChosenAirport(place.airport)} className="group block w-[82vw] max-w-[330px] shrink-0 snap-center md:w-auto md:max-w-none" aria-label={`Plan a complete trip to ${place.city}`}>
               <div className="relative aspect-[4/3] overflow-hidden bg-black/5"><Image src={place.image} alt={place.name} fill className="object-cover transition duration-700 group-hover:scale-[1.035]" sizes="(min-width:768px) 33vw,100vw" quality={82} /></div>
               <div className="flex items-end justify-between border-b border-black/10 px-1 py-6">
                 <div><h3 className="font-serif text-2xl">{place.city}</h3><p className="mt-2 text-[9px] uppercase tracking-[0.22em] text-black/45">{place.country} · {place.season}</p></div>

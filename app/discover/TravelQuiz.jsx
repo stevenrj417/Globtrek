@@ -131,7 +131,7 @@ function VisualQuestion({ question, value, onChoose, step }) {
           <p className="mb-6 text-[10px] uppercase tracking-[0.23em] text-[#777]">The GlobTrek quiz</p>
           <h1 className="max-w-md text-[2.25rem] font-medium leading-[0.94] tracking-[-0.065em] sm:text-[clamp(2.7rem,5.2vw,5.6rem)]">{question.question}</h1>
         </div>
-        <div className="relative aspect-[4/3] min-h-[360px] overflow-hidden bg-[#e8e6e1] lg:aspect-auto lg:h-[min(69vh,760px)]">
+        <div className="relative h-[42svh] min-h-[300px] overflow-hidden bg-[#e8e6e1] sm:aspect-[4/3] sm:h-auto sm:min-h-[360px] lg:aspect-auto lg:h-[min(69vh,760px)]">
           {question.options.map((option) => (
             <Image key={option.label} src={option.image} alt={option.label === active.label ? option.alt : ""} fill priority={option.label === selected} className={`object-cover transition-[opacity,transform] duration-500 ease-[cubic-bezier(.22,.61,.36,1)] ${option.label === active.label ? "scale-100 opacity-100" : "pointer-events-none scale-[1.012] opacity-0"}`} sizes="(min-width:1024px) 70vw, 100vw" />
           ))}
@@ -296,7 +296,7 @@ function DateQuestion({ answers, setAnswers, tripStart, tripEnd, isFlexible, set
         </div>
       </div>
     </div>
-    <div className="relative min-h-[48svh] bg-[#ddd8d0] lg:min-h-svh"><Image src="/results-feature.jpg" alt="A coastal villa beside clear blue water" fill priority className="object-cover" sizes="(min-width:1024px) 50vw, 100vw" /></div>
+    <div className="relative hidden min-h-svh bg-[#ddd8d0] lg:block"><Image src="/results-feature.jpg" alt="A coastal villa beside clear blue water" fill priority className="object-cover" sizes="50vw" /></div>
   </form>;
 }
 
