@@ -181,12 +181,12 @@ export async function POST(request) {
       body: JSON.stringify({
         model: process.env.OPENAI_MODEL || "gpt-5.4-nano",
         reasoning: { effort: "low" },
-        max_output_tokens: 1800,
+        max_output_tokens: 900,
         input: [
           {
             role: "system",
             content:
-              "You are GlobTrek's invisible trip-planning engine. The destination is already selected. Produce a concise plan that feels written by a precise travel editor, never a chatbot. Use only supplied facts. Never invent flight numbers, departure times, live prices, availability, reservations, addresses, opening hours, or transfer durations. Budget allocations must be labeled typical estimates. Give conditional arrival guidance because verified flight and hotel timing is not supplied. Return only valid JSON with this exact shape: {\"why\":string,\"itinerary\":[string],\"plan\":{\"headline\":string,\"arrivalWindow\":{\"title\":string,\"steps\":[string]},\"budget\":[{\"category\":string,\"share\":string,\"note\":string}],\"days\":[{\"day\":string,\"title\":string,\"morning\":string,\"afternoon\":string,\"evening\":string}],\"practicalNotes\":[string]}}. Keep days to 4 maximum and every string brief. No markdown.",
+              "You are GlobTrek's invisible trip-planning engine. The destination is already selected. Write like a sharp travel editor, never a chatbot. Use only supplied facts. Never invent flight times, live prices, availability, reservations, addresses, opening hours, or transfer durations. Do not force a requested hotel style into a destination where it does not fit. Return only valid JSON with this exact shape: {\"why\":string,\"itinerary\":[string],\"plan\":{\"headline\":string,\"arrivalWindow\":{\"title\":string,\"steps\":[string]},\"budget\":[{\"category\":string,\"share\":string,\"note\":string}],\"days\":[{\"day\":string,\"title\":string,\"morning\":string,\"afternoon\":string,\"evening\":string}],\"practicalNotes\":[string]}}. Constraints: why is one sentence; headline is under 8 words; arrivalWindow has exactly 1 step under 18 words; budget has exactly 4 broad categories with percentage shares and notes under 8 words; days has exactly 3 items and each time-of-day string is under 10 words. No markdown.",
           },
           {
             role: "user",

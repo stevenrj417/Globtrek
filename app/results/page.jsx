@@ -66,9 +66,9 @@ function HotelShortlist({ destination, quiz }) {
 
   const selectedHotel = selected?.type !== "none" ? selected : null;
 
-  return <section className="mt-24">
+  return <section className="mt-16">
     <div className="flex flex-col gap-6 border-b border-black/15 pb-8 sm:flex-row sm:items-end sm:justify-between">
-      <div><p className="text-[10px] uppercase tracking-[0.3em] text-black/45">Your stay</p><h2 className="mt-5 font-serif text-[clamp(2.4rem,5vw,4.8rem)] tracking-[-0.04em]">Four worth traveling for</h2></div>
+      <div><p className="text-[10px] uppercase tracking-[0.3em] text-black/45">Your stay</p><h2 className="mt-4 font-serif text-[clamp(2.2rem,4vw,3.8rem)] tracking-[-0.04em]">Four worth traveling for</h2></div>
       <p className="max-w-md text-sm font-light leading-6 text-black/50">An editorial shortlist for {destination.city}. Booking.com confirms live rooms, prices, and final terms.</p>
     </div>
 
@@ -76,22 +76,22 @@ function HotelShortlist({ destination, quiz }) {
       {hotels.map((hotel, index) => {
         const isSelected = selected?.id === hotel.id;
         return <article key={hotel.id} className="group bg-[#f3f0eb]">
-          <div className="relative aspect-[4/5] overflow-hidden bg-black/5">
+          <div className="relative aspect-[5/4] overflow-hidden bg-black/5">
             <Image src={hotel.image} alt={`${hotel.name} in ${destination.city}`} fill className={`object-cover transition duration-700 group-hover:scale-[1.025] ${index === 1 ? "object-[65%_center]" : index === 2 ? "object-[35%_center]" : index === 3 ? "object-bottom" : "object-center"}`} sizes="(min-width:1280px) 25vw,(min-width:768px) 50vw,100vw" quality={88} />
             <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
             <p className="absolute left-5 top-5 text-[9px] uppercase tracking-[0.25em] text-white/80">0{index + 1} · {hotel.descriptor}</p>
             {isSelected && <span className="absolute right-5 top-5 bg-white px-3 py-2 text-[9px] uppercase tracking-[0.2em] text-black">Selected</span>}
-            <div className="absolute inset-x-5 bottom-5 text-white"><h3 className="font-serif text-[1.65rem] leading-[1.05]">{hotel.name}</h3><p className="mt-3 text-[9px] uppercase tracking-[0.2em] text-white/65">{destination.city}, {destination.country}</p></div>
+            <div className="absolute inset-x-5 bottom-5 text-white"><h3 className="font-serif text-[1.35rem] leading-[1.05]">{hotel.name}</h3><p className="mt-2 text-[9px] uppercase tracking-[0.2em] text-white/65">{destination.city}, {destination.country}</p></div>
           </div>
           <div className="grid grid-cols-2 border-b border-black/10">
-            <button type="button" onClick={() => choose({ ...hotel, type: "curated" })} className={`min-h-14 border-r border-black/10 text-[10px] uppercase tracking-[0.18em] transition ${isSelected ? "bg-black text-white" : "hover:bg-black hover:text-white"}`}>{isSelected ? "In your trip" : "Select stay"}</button>
-            {hotel.bookingUrl ? <a href={bookingHotelUrl(hotel, quiz)} target="_blank" rel="noopener sponsored" className="grid min-h-14 place-items-center text-[10px] uppercase tracking-[0.18em] transition hover:bg-black hover:text-white">Check live →</a> : <span className="grid min-h-14 place-items-center text-[10px] uppercase tracking-[0.18em] text-black/35">Link being verified</span>}
+            <button type="button" onClick={() => choose({ ...hotel, type: "curated" })} className={`min-h-12 border-r border-black/10 text-[10px] uppercase tracking-[0.18em] transition ${isSelected ? "bg-black text-white" : "hover:bg-black hover:text-white"}`}>{isSelected ? "In your trip" : "Select stay"}</button>
+            {hotel.bookingUrl ? <a href={bookingHotelUrl(hotel, quiz)} target="_blank" rel="noopener sponsored" className="grid min-h-12 place-items-center text-[10px] uppercase tracking-[0.18em] transition hover:bg-black hover:text-white">Check live →</a> : <span className="grid min-h-12 place-items-center text-[10px] uppercase tracking-[0.18em] text-black/35">Link being verified</span>}
           </div>
         </article>;
       })}
     </div>
 
-    <div className="border-b border-black/15 py-7">
+    <div className="border-b border-black/15 py-5">
       {editingCustom ? <form onSubmit={addCustom} className="flex flex-col gap-3 sm:flex-row"><input autoFocus value={customHotel} onChange={(event) => setCustomHotel(event.target.value)} placeholder="Hotel name" className="min-h-14 flex-1 border border-black/20 bg-transparent px-5 font-serif text-lg outline-none focus:border-black" /><button className="min-h-14 bg-black px-8 text-[10px] uppercase tracking-[0.18em] text-white">Add to trip</button><button type="button" onClick={() => setEditingCustom(false)} className="min-h-14 px-5 text-[10px] uppercase tracking-[0.18em]">Cancel</button></form> : <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
         <p className="font-serif text-xl">{selected ? selected.name : "Choose one—or keep the trip open."}</p>
         <div className="flex flex-wrap gap-x-6 gap-y-3 text-[10px] uppercase tracking-[0.18em]"><button onClick={() => setEditingCustom(true)}>Add another hotel</button><button onClick={remove}>I already have a stay</button>{selected && <button onClick={() => { setSelected(null); window.localStorage.removeItem(`globtrekStay:${destination.city}`); }}>Clear</button>}</div>
@@ -165,39 +165,39 @@ export default function ResultsPage() {
         <a href="#trip" aria-label="Explore your result" className="absolute bottom-8 left-1/2 grid h-14 w-14 -translate-x-1/2 place-items-center rounded-full border border-white/70 text-xl text-white transition hover:bg-white hover:text-black">↓</a>
       </section>
 
-      <section id="trip" className="mx-auto max-w-[1460px] px-6 py-24 sm:px-12 sm:py-32">
+      <section id="trip" className="mx-auto max-w-[1460px] px-6 py-16 sm:px-12 sm:py-20">
         <div className="mx-auto max-w-4xl text-center">
           <p className="text-[10px] uppercase tracking-[0.3em] text-black/50">Why this is yours</p>
-          <h2 className="mt-8 font-serif text-[clamp(2.3rem,5vw,5rem)] leading-[1.02] tracking-[-0.035em]">{trip.style}</h2>
-          <p className="mx-auto mt-8 max-w-2xl text-base font-light leading-8 text-black/60 sm:text-lg">{trip.why}</p>
-          <div className="mt-10 flex flex-wrap justify-center gap-x-10 gap-y-4 text-[10px] uppercase tracking-[0.2em] text-black/55">
+          <h2 className="mt-6 font-serif text-[clamp(2.2rem,4vw,4rem)] leading-[1.02] tracking-[-0.035em]">{trip.style}</h2>
+          <p className="mx-auto mt-6 max-w-2xl text-base font-light leading-7 text-black/60">{trip.why}</p>
+          <div className="mt-7 flex flex-wrap justify-center gap-x-8 gap-y-3 text-[10px] uppercase tracking-[0.2em] text-black/55">
             <span>{trip.nights}</span><span>{trip.season}</span><span>{trip.price}</span>
           </div>
         </div>
 
         <HotelShortlist destination={trip} quiz={quiz} />
 
-        {trip.plan && <section className="mt-28 border-t border-black/15 pt-10">
-          <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+        {trip.plan && <section className="mt-16 bg-[#171714] px-6 py-8 text-white sm:px-10 sm:py-10">
+          <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr]">
             <div>
-              <p className="text-[10px] uppercase tracking-[0.3em] text-black/45">Your trip, organized</p>
-              <h2 className="mt-6 max-w-xl font-serif text-[clamp(2.5rem,5vw,5rem)] leading-[0.95] tracking-[-0.04em]">{trip.plan.headline}</h2>
-              {trip.plan.arrivalWindow && <div className="mt-12 border-l border-black/20 pl-6"><p className="text-[10px] uppercase tracking-[0.2em] text-black/45">{trip.plan.arrivalWindow.title}</p><div className="mt-5 space-y-3 text-sm leading-6 text-black/60">{trip.plan.arrivalWindow.steps?.map((step) => <p key={step}>{step}</p>)}</div></div>}
+              <p className="text-[10px] uppercase tracking-[0.3em] text-white/45">Your trip, organized</p>
+              <h2 className="mt-5 max-w-xl font-serif text-[clamp(2.3rem,4vw,4rem)] leading-[0.95] tracking-[-0.04em]">{trip.plan.headline}</h2>
+              {trip.plan.arrivalWindow && <div className="mt-8 border-l border-white/20 pl-5"><p className="text-[9px] uppercase tracking-[0.2em] text-white/40">{trip.plan.arrivalWindow.title}</p><p className="mt-3 text-sm leading-6 text-white/65">{trip.plan.arrivalWindow.steps?.[0]}</p></div>}
             </div>
-            <div className="border-t border-black/15">
-              {trip.plan.days?.map((day) => <article key={`${day.day}-${day.title}`} className="grid gap-5 border-b border-black/15 py-7 sm:grid-cols-[5rem_1fr]">
-                <p className="text-[10px] uppercase tracking-[0.2em] text-black/40">{day.day}</p>
-                <div><h3 className="font-serif text-2xl">{day.title}</h3><div className="mt-5 grid gap-4 text-sm leading-6 text-black/55 sm:grid-cols-3"><p><span className="block text-[9px] uppercase tracking-[0.18em] text-black/35">Morning</span>{day.morning}</p><p><span className="block text-[9px] uppercase tracking-[0.18em] text-black/35">Afternoon</span>{day.afternoon}</p><p><span className="block text-[9px] uppercase tracking-[0.18em] text-black/35">Evening</span>{day.evening}</p></div></div>
+            <div className="border-t border-white/15">
+              {trip.plan.days?.slice(0, 3).map((day) => <article key={`${day.day}-${day.title}`} className="grid gap-3 border-b border-white/15 py-5 sm:grid-cols-[4rem_1fr]">
+                <p className="text-[9px] uppercase tracking-[0.2em] text-white/35">{day.day}</p>
+                <div><h3 className="font-serif text-xl">{day.title}</h3><p className="mt-2 text-xs leading-5 text-white/55">{day.morning} · {day.afternoon} · {day.evening}</p></div>
               </article>)}
             </div>
           </div>
-          {trip.plan.budget?.length > 0 && <div className="mt-16 grid border-l border-t border-black/15 sm:grid-cols-2 lg:grid-cols-4">{trip.plan.budget.map((item) => <div key={item.category} className="border-b border-r border-black/15 p-6"><p className="text-[9px] uppercase tracking-[0.2em] text-black/40">{item.category}</p><p className="mt-4 font-serif text-2xl">{item.share}</p><p className="mt-3 text-xs leading-5 text-black/45">{item.note}</p></div>)}</div>}
-          <p className="mt-5 text-[10px] leading-5 text-black/40">Planning guidance and budget allocations are typical estimates. Confirm schedules, prices, availability, and opening times with the provider.</p>
+          {trip.plan.budget?.length > 0 && <div className="mt-8 grid grid-cols-2 border-l border-t border-white/15 lg:grid-cols-4">{trip.plan.budget.slice(0, 4).map((item) => <div key={item.category} className="border-b border-r border-white/15 p-4"><p className="text-[8px] uppercase tracking-[0.18em] text-white/35">{item.category}</p><p className="mt-2 font-serif text-xl">{item.share}</p></div>)}</div>}
+          <p className="mt-4 text-[9px] leading-4 text-white/30">Typical planning estimates. Confirm schedules, prices, availability, and opening times.</p>
         </section>}
 
-        <div className="mt-24 border-y border-black/15">
+        <div className="mt-16 border-y border-black/15">
           {tools.map(([label, detail, href, sponsored]) => (
-            <a key={label} href={href} target="_blank" rel={sponsored ? "noopener sponsored" : "noopener"} className="group grid min-h-20 grid-cols-[4rem_1fr_auto] items-center border-b border-black/10 last:border-b-0 sm:grid-cols-[8rem_1fr_auto]">
+            <a key={label} href={href} target="_blank" rel={sponsored ? "noopener sponsored" : "noopener"} className="group grid min-h-16 grid-cols-[4rem_1fr_auto] items-center border-b border-black/10 last:border-b-0 sm:grid-cols-[8rem_1fr_auto]">
               <span className="text-[10px] uppercase tracking-[0.25em] text-black/45">{label}</span>
               <span className="font-serif text-xl sm:text-2xl">{detail}</span>
               <span className="text-xl transition-transform group-hover:translate-x-2">→</span>
@@ -206,7 +206,7 @@ export default function ResultsPage() {
         </div>
         <p className="mt-4 text-center text-[10px] leading-5 text-black/40">Booking.com links are sponsored affiliate links. Current prices, availability, and final terms are shown by the provider.</p>
 
-        <div className="mt-28 flex items-end justify-between border-b border-black/15 pb-7">
+        <div className="mt-20 flex items-end justify-between border-b border-black/15 pb-6">
           <h2 className="font-serif text-[clamp(2.4rem,5vw,4.8rem)] tracking-[-0.04em]">Other possibilities</h2>
           <Link href="/discover" className="hidden text-[10px] uppercase tracking-[0.22em] sm:block">Try again →</Link>
         </div>
