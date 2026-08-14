@@ -18,6 +18,10 @@ function formatDate(value) {
   return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" }).format(new Date(`${value}T00:00:00Z`));
 }
 
+function ArrowUpRight() {
+  return <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5 fill-none stroke-current" strokeWidth="1.4"><path d="M7 17 17 7M8 7h9v9" /></svg>;
+}
+
 function bookingHotelUrl(hotel, trip = {}) {
   if (!hotel?.bookingUrl) return null;
   const target = new URL(hotel.bookingUrl);
@@ -206,7 +210,7 @@ export default function ResultsPage() {
           {tools.map(([label, detail, href, sponsored]) => (
             <a key={label} href={href} target="_blank" rel={sponsored ? "noopener sponsored" : "noopener"} className="group flex min-h-36 flex-col justify-between bg-white p-5 shadow-[0_12px_40px_rgba(23,23,20,0.04)] transition hover:-translate-y-1 hover:shadow-[0_18px_55px_rgba(23,23,20,0.08)] sm:min-h-40 sm:p-6">
               <span className="text-[9px] uppercase tracking-[0.25em] text-black/40">{label}</span>
-              <span className="flex items-end justify-between gap-4"><span className="font-serif text-xl leading-tight">{detail}</span><span className="text-lg transition-transform group-hover:translate-x-1">↗</span></span>
+              <span className="flex items-end justify-between gap-4"><span className="font-serif text-[1.15rem] leading-tight sm:text-xl">{detail}</span><span className="shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"><ArrowUpRight /></span></span>
             </a>
           ))}
         </div>

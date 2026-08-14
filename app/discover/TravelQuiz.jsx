@@ -131,17 +131,17 @@ function VisualQuestion({ question, value, onChoose, step }) {
           <p className="mb-6 text-[10px] uppercase tracking-[0.23em] text-[#777]">The GlobTrek quiz</p>
           <h1 className="max-w-md text-[2.25rem] font-medium leading-[0.94] tracking-[-0.065em] sm:text-[clamp(2.7rem,5.2vw,5.6rem)]">{question.question}</h1>
         </div>
-        <div className="relative h-[42svh] min-h-[300px] overflow-hidden bg-[#e8e6e1] sm:aspect-[4/3] sm:h-auto sm:min-h-[360px] lg:aspect-auto lg:h-[min(69vh,760px)]">
+        <div className="relative aspect-[4/3] max-h-[300px] overflow-hidden bg-[#e8e6e1] sm:max-h-none sm:min-h-[360px] lg:aspect-auto lg:h-[min(69vh,760px)]">
           {question.options.map((option) => (
-            <Image key={option.label} src={option.image} alt={option.label === active.label ? option.alt : ""} fill priority={option.label === selected} className={`object-cover transition-[opacity,transform] duration-500 ease-[cubic-bezier(.22,.61,.36,1)] ${option.label === active.label ? "scale-100 opacity-100" : "pointer-events-none scale-[1.012] opacity-0"}`} sizes="(min-width:1024px) 70vw, 100vw" />
+            <Image key={option.label} src={option.image} alt={option.label === active.label ? option.alt : ""} fill priority={option.label === selected} className={`object-contain transition-[opacity,transform] duration-500 ease-[cubic-bezier(.22,.61,.36,1)] sm:object-cover ${option.label === active.label ? "scale-100 opacity-100" : "pointer-events-none scale-[1.012] opacity-0"}`} sizes="(min-width:1024px) 70vw, 100vw" />
           ))}
         </div>
       </div>
-      <div className="relative z-20 mx-auto -mt-5 w-full max-w-[1500px] bg-[#fbfaf7] lg:-mt-16">
-        <div className="flex snap-x overflow-x-auto border-y border-black/10 px-4 sm:justify-center sm:px-6">
+      <div className="relative z-20 mx-auto w-full max-w-[1500px] bg-[#fbfaf7] lg:-mt-16">
+        <div className="grid grid-cols-2 border-l border-t border-black/10 sm:flex sm:border-x-0 sm:border-y sm:px-6">
           {question.options.map((option) => {
             const isActive = selected === option.label;
-            return <button type="button" key={option.label} onMouseEnter={() => setPreview(option.label)} onMouseLeave={() => setPreview(selected)} onFocus={() => setPreview(option.label)} onBlur={() => setPreview(selected)} onClick={() => onChoose(option.label)} className={`relative min-h-20 shrink-0 snap-center px-6 text-[11px] uppercase tracking-[0.16em] transition-colors sm:min-h-24 sm:flex-1 sm:px-4 ${isActive ? "text-black" : "text-[#888] hover:text-black"}`}><span className={`absolute inset-x-6 top-0 h-px bg-black transition-transform duration-500 ${isActive ? "scale-x-100" : "scale-x-0"}`} />{option.display || option.label}</button>;
+            return <button type="button" key={option.label} onMouseEnter={() => setPreview(option.label)} onMouseLeave={() => setPreview(selected)} onFocus={() => setPreview(option.label)} onBlur={() => setPreview(selected)} onClick={() => onChoose(option.label)} className={`relative min-h-14 border-b border-r border-black/10 px-3 text-[9px] uppercase tracking-[0.13em] transition-colors sm:min-h-24 sm:flex-1 sm:border-0 sm:px-4 sm:text-[11px] sm:tracking-[0.16em] ${isActive ? "bg-[#171717] text-white sm:bg-transparent sm:text-black" : "text-[#888] hover:text-black"}`}><span className={`absolute inset-x-6 top-0 hidden h-px bg-black transition-transform duration-500 sm:block ${isActive ? "scale-x-100" : "scale-x-0"}`} />{option.display || option.label}</button>;
           })}
         </div>
       </div>
