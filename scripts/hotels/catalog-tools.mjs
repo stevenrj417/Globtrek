@@ -113,3 +113,30 @@ export function importBatch(records, destinations, existing = []) {
   }
   return { submitted: records.length, imported: imported.length, duplicates, invalid: rejected.length - duplicates, records: imported, rejected };
 }
+
+export function validatePriceObservation(record) {
+  const errors = [];
+  if (!record.hotelId) errors.push("missing_hotel_id");
+  try { const url = new URL(record.sourceUrl); if (url.protocol !== "https:") errors.push("invalid_source_url"); } catch { errors.push("invalid_source_url"); }
+  const observedAt = Date.parse(record.observedAt || "");
+  const checkIn = Date.parse(`${record.checkIn || ""}T00:00:00Z`);
+  const checkOut = Date.parse(`${record.checkOut || ""}T00:00:00Z`);
+  if (!Number.isFinite(observedAt)) errors.push("invalid_observed_at");
+  if (!Number.isFinite(checkIn) || !Number.isFinite(checkOut) || checkOut <= checkIn) errors.push("invalid_stay_dates");
+  if (!/^[A-Z]{3}$/.test(String(record.currency || ""))) errors.push("invalid_currency");
+  if (!Number.isFinite(Number(record.totalPrice)) || Number(record.totalPrice) <= 0) errors.push("invalid_total_price");
+  if (record.isLive !== true) errors.push("observation_not_live");
+  return [...new Set(errors)];
+}
+
+export function deriveTypicalPriceRange(observations, { minimumObservations = 3 } = {}) {
+  const valid = observations.filter((item) => validatePriceObservation(item).length === 0);
+  if (valid.length < minimumObservations) return { ready: false, reason: "insufficient_observations", observationCount: valid.length };
+  const currencies = new Set(valid.map((item) => item.currency));
+  if (currencies.size !== 1) return { ready: false, reason: "mixed_currencies", observationCount: valid.length };
+  const months = new Set(valid.map((item) => item.checkIn.slice(0, 7)));
+  if (months.size < 2) return { ready: false, reason: "insufficient_season_coverage", observationCount: valid.length };
+  const nightly = valid.map((item) => Number(item.totalPrice) / Math.max(1, Math.round((Date.parse(`${item.checkOut}T00:00:00Z`) - Date.parse(`${item.checkIn}T00:00:00Z`)) / 86400000))).sort((a, b) => a - b);
+  const percentile = (ratio, round) => nightly[Math.min(nightly.length - 1, Math.max(0, round((nightly.length - 1) * ratio)))];
+  return { ready: true, typicalNightlyLow: Math.round(percentile(0.25, Math.floor)), typicalNightlyHigh: Math.round(percentile(0.75, Math.ceil)), currency: valid[0].currency, priceSource: "observed_provider_rates", priceLastChecked: new Date(Math.max(...valid.map((item) => Date.parse(item.observedAt)))).toISOString(), priceConfidence: Math.min(0.85, 0.45 + valid.length * 0.05 + months.size * 0.03), observationCount: valid.length, observedMonths: [...months].sort(), isLive: false };
+}
