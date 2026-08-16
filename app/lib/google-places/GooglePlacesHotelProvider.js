@@ -15,6 +15,13 @@ export function normalizePlaceText(value) {
     .normalize("NFKD")
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
+    .replace(/\bbvlgari\b/g, "bulgari")
+    .replace(/\btwenty[ -]two\b/g, "22")
+    .replace(/\btwelve\b/g, "12")
+    .replace(/\bdrive\b/g, "dr")
+    .replace(/\bstreet\b/g, "st")
+    .replace(/\broad\b/g, "rd")
+    .replace(/\bavenue\b/g, "ave")
     .replace(/\b(the|hotel|resort|spa|and)\b/g, " ")
     .replace(/[^a-z0-9]+/g, " ")
     .trim();
@@ -29,6 +36,7 @@ export function nameSimilarity(expected, actual) {
   const right = normalizePlaceText(actual);
   if (!left || !right) return 0;
   if (left === right) return 1;
+  if (` ${right} `.includes(` ${left} `) || ` ${left} `.includes(` ${right} `)) return 1;
   const a = tokens(left);
   const b = tokens(right);
   const overlap = [...a].filter((token) => b.has(token)).length;
@@ -51,12 +59,20 @@ export function distanceMeters(a, b) {
 
 function localityScore(hotel, place) {
   const address = normalizePlaceText(place.formattedAddress);
-  const city = normalizePlaceText(hotel.city);
-  const region = normalizePlaceText(hotel.region);
-  const country = normalizePlaceText(hotel.country);
-  const signals = [city, region, country].filter(Boolean);
+  const variants = (value) => {
+    const normalized = normalizePlaceText(value);
+    const aliases = {
+      "new york city": ["new york"],
+      "united states": ["usa", "united states"],
+      "united kingdom": ["uk", "united kingdom", "england", "scotland", "wales"],
+      "south korea": ["south korea", "republic of korea", "korea"],
+      "argentina chile": ["argentina", "chile"],
+    };
+    return [...new Set([normalized, ...(aliases[normalized] || [])].filter(Boolean))];
+  };
+  const signals = [hotel.city, hotel.region, hotel.country].filter(Boolean).map(variants);
   if (!signals.length) return 0.5;
-  return signals.filter((signal) => address.includes(signal)).length / signals.length;
+  return signals.filter((alternatives) => alternatives.some((signal) => address.includes(signal))).length / signals.length;
 }
 
 export function scoreHotelPlaceMatch(hotel, place) {
@@ -64,14 +80,17 @@ export function scoreHotelPlaceMatch(hotel, place) {
   const nameScore = nameSimilarity(hotel.name, placeName);
   const typeVerified = (place.types || []).some((type) => HOTEL_TYPES.has(type));
   const locality = localityScore(hotel, place);
+  const addressScore = hotel.address ? nameSimilarity(hotel.address, place.formattedAddress) : null;
+  const addressVerified = addressScore != null && addressScore >= 0.92;
   const distance = distanceMeters(hotel, place.location);
   const coordinateScore = distance == null ? 0.5 : distance <= 2000 ? 1 : distance <= 10000 ? 0.7 : distance <= 30000 ? 0.3 : 0;
   const hardRejectReasons = [];
   if (!typeVerified) hardRejectReasons.push("wrong_business_type");
-  if (nameScore < 0.68) hardRejectReasons.push("name_mismatch");
+  if (nameScore < 0.68 && !(addressVerified && nameScore >= 0.5)) hardRejectReasons.push("name_mismatch");
   if (distance != null && distance > 50000) hardRejectReasons.push("coordinate_mismatch");
-  if (distance == null && locality === 0) hardRejectReasons.push("wrong_locality");
-  const confidence = Number((nameScore * 0.55 + locality * 0.2 + coordinateScore * 0.15 + (typeVerified ? 0.1 : 0)).toFixed(4));
+  if (distance == null && locality === 0 && !addressVerified) hardRejectReasons.push("wrong_locality");
+  const baseConfidence = nameScore * 0.55 + locality * 0.2 + coordinateScore * 0.15 + (typeVerified ? 0.1 : 0);
+  const confidence = Number(Math.max(baseConfidence, addressVerified && typeVerified && nameScore >= 0.5 ? 0.9 : 0).toFixed(4));
   return {
     confidence,
     verified: hardRejectReasons.length === 0 && confidence >= 0.82,
@@ -83,6 +102,8 @@ export function scoreHotelPlaceMatch(hotel, place) {
       coordinateScore,
       distanceMeters: distance == null ? null : Math.round(distance),
       typeVerified,
+      addressScore: addressScore == null ? null : Number(addressScore.toFixed(4)),
+      addressVerified,
     },
   };
 }
@@ -140,7 +161,7 @@ export class GooglePlacesHotelProvider {
       circle: { center: { latitude: Number(hotel.latitude), longitude: Number(hotel.longitude) }, radius: 30000 },
     } : undefined;
     const body = {
-      textQuery: [hotel.name, hotel.city, hotel.region, hotel.country].filter(Boolean).join(", "),
+      textQuery: [hotel.name, hotel.address, hotel.city, hotel.region, hotel.country].filter(Boolean).join(", "),
       includedType: "lodging",
       strictTypeFiltering: false,
       maxResultCount: 5,

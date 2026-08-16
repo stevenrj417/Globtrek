@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { GooglePlacesHotelProvider, distanceMeters, scoreHotelPlaceMatch } from "../app/lib/google-places/GooglePlacesHotelProvider.js";
+import { GooglePlacesHotelProvider, distanceMeters, nameSimilarity, scoreHotelPlaceMatch } from "../app/lib/google-places/GooglePlacesHotelProvider.js";
 import { processGooglePlacesBatch } from "../scripts/hotels/google-places-match.mjs";
 
 const kyotoHotel = { name: "Six Senses Kyoto", city: "Kyoto", country: "Japan", destinationId: "KIX", provider: "booking_com_cj", bookingComPropertyUrl: "https://www.booking.com/hotel/jp/six-senses-kyoto.html", cjTrackingUrl: "https://www.kqzyfj.com/click-101801755-17293132" };
@@ -36,6 +36,50 @@ test("similarly named property is rejected", () => {
   const scored = scoreHotelPlaceMatch(kyotoHotel, { ...correctPlace, displayName: { text: "Six Senses Rome" }, formattedAddress: "Rome, Italy" });
   assert.equal(scored.verified, false);
   assert.ok(scored.hardRejectReasons.includes("name_mismatch"));
+});
+
+test("official brand suffix does not reject the same hotel", () => {
+  const result = scoreHotelPlaceMatch(
+    { name: "Hotel de Crillon", city: "Paris", country: "France" },
+    { displayName: { text: "Hotel de Crillon, A Rosewood Hotel" }, formattedAddress: "Paris, France", types: ["hotel"] },
+  );
+  assert.equal(result.verified, true);
+});
+
+test("country aliases support exact US hotel identities", () => {
+  const result = scoreHotelPlaceMatch(
+    { name: "The Greenwich Hotel", city: "New York City", country: "United States" },
+    { displayName: { text: "The Greenwich Hotel" }, formattedAddress: "New York, NY, USA", types: ["hotel"] },
+  );
+  assert.equal(result.verified, true);
+});
+
+test("brand normalization supports official Bulgari spelling", () => {
+  assert.equal(nameSimilarity("Bulgari Hotel Roma", "Bvlgari Hotel Roma"), 1);
+});
+
+test("hotel address is included in the Google Text Search query", async () => {
+  const calls = [];
+  const provider = new GooglePlacesHotelProvider({ apiKey: "test", fetchImpl: queuedFetch([response({ places: [] })], calls) });
+  await provider.searchHotel({ ...kyotoHotel, address: "431 Myohoin Maekawacho" });
+  assert.match(JSON.parse(calls[0].options.body).textQuery, /431 Myohoin Maekawacho/);
+});
+
+test("trusted exact address can verify a renamed but related hotel listing", () => {
+  const result = scoreHotelPlaceMatch(
+    { name: "Montage Kapalua Bay", city: "Maui", country: "United States", address: "1 Bay Drive, Lahaina, HI 96761" },
+    { displayName: { text: "The Resort at Kapalua Bay, Maui" }, formattedAddress: "1 Bay Dr, Lahaina, HI 96761, USA", types: ["hotel"] },
+  );
+  assert.equal(result.verified, true);
+  assert.equal(result.evidence.addressVerified, true);
+});
+
+test("exact address does not verify an unrelated business name", () => {
+  const result = scoreHotelPlaceMatch(
+    { name: "Montage Kapalua Bay", city: "Maui", country: "United States", address: "1 Bay Drive, Lahaina, HI 96761" },
+    { displayName: { text: "Completely Different Property" }, formattedAddress: "1 Bay Dr, Lahaina, HI 96761, USA", types: ["hotel"] },
+  );
+  assert.equal(result.verified, false);
 });
 
 test("wrong business type is rejected", () => {

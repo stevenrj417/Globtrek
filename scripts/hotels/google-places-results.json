@@ -94,23 +94,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/jp/sowaka-jing-du-shi.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.7417,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJa0AGicQIAWARJIs0FhLMRyo",
+      "confidence": 0.925,
       "evidence": {
-        "nameScore": 0.6667,
+        "nameScore": 1,
         "localityScore": 1,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:23:40.296Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:46:39.241Z"
     },
     {
       "key": "HND|trunk hotel yoyogi park|booking_com_cj",
@@ -346,23 +346,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/kr/josun-palace-a-luxury-collection-seoul-gangnam.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.65,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJF2kvqxSlfDURa9WIjeksuac",
+      "confidence": 0.925,
       "evidence": {
-        "nameScore": 0.5,
+        "nameScore": 1,
         "localityScore": 1,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:23:47.741Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:46:40.219Z"
     },
     {
       "key": "ICN|signiel seoul|booking_com_cj",
@@ -570,23 +570,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/th/one-three-seven-pillars-house.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.7875,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJfRzfKbA62jAR_EzhsXTmMY4",
+      "confidence": 0.925,
       "evidence": {
-        "nameScore": 0.75,
+        "nameScore": 1,
         "localityScore": 1,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:23:54.406Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:46:40.906Z"
     },
     {
       "key": "CNX|anantara chiang mai resort|booking_com_cj",
@@ -766,23 +766,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/id/the-slow.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.65,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJKUITdqFH0i0RKrKE-4Ahc3U",
+      "confidence": 0.925,
       "evidence": {
-        "nameScore": 0.5,
+        "nameScore": 1,
         "localityScore": 1,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:23:58.835Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:46:41.560Z"
     },
     {
       "key": "SIN|raffles singapore|booking_com_cj",
@@ -1158,23 +1158,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/ae/one-only-the-palm-dubai.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.7464,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJ9c0WNcoUXz4RmIIVjEG9uqo",
+      "confidence": 0.825,
       "evidence": {
-        "nameScore": 0.8571,
+        "nameScore": 1,
         "localityScore": 0.5,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:24:12.256Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:46:42.152Z"
     },
     {
       "key": "DXB|the lana dorchester collection|booking_com_cj",
@@ -1326,23 +1326,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/za/twelve-apostles-spa.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.65,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJSQfrsjdmzB0R-XGTGAe06iI",
+      "confidence": 0.925,
       "evidence": {
-        "nameScore": 0.5,
+        "nameScore": 1,
         "localityScore": 1,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:24:15.410Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:46:42.763Z"
     },
     {
       "key": "RAK|royal mansour marrakech|booking_com_cj",
@@ -1382,23 +1382,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/ma/riad-el-fenn.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.5893,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJmeAAQF3urw0RVCvsTjPajEw",
+      "confidence": 0.825,
       "evidence": {
-        "nameScore": 0.5714,
+        "nameScore": 1,
         "localityScore": 0.5,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:24:16.290Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:46:43.367Z"
     },
     {
       "key": "RAK|les deux tours|booking_com_cj",
@@ -1578,23 +1578,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/fr/de-crillon-paris.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.815,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJC_jkvdJv5kcRqjbmf7Zql3s",
+      "confidence": 0.925,
       "evidence": {
-        "nameScore": 0.8,
+        "nameScore": 1,
         "localityScore": 1,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:24:29.974Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:46:43.901Z"
     },
     {
       "key": "CDG|cheval blanc paris|booking_com_cj",
@@ -1690,23 +1690,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/fr/crillon-le-brave.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.7464,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJf8fJgYZwyhIRC5kKvWwpYI8",
+      "confidence": 0.825,
       "evidence": {
-        "nameScore": 0.8571,
+        "nameScore": 1,
         "localityScore": 0.5,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:24:34.403Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:46:44.471Z"
     },
     {
       "key": "MRS|domaine de fontenille|booking_com_cj",
@@ -1914,23 +1914,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/it/de-russie.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.6417,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJ2Ti8x_hgLxMRXimOeq7uheo",
+      "confidence": 0.825,
       "evidence": {
-        "nameScore": 0.6667,
+        "nameScore": 1,
         "localityScore": 0.5,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:24:38.312Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:46:45.213Z"
     },
     {
       "key": "FCO|six senses rome|booking_com_cj",
@@ -1970,23 +1970,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/it/bulgari-roma.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.55,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJ-XKhYh9hLxMR6SM6GuN3HM4",
+      "confidence": 0.825,
       "evidence": {
-        "nameScore": 0.5,
+        "nameScore": 1,
         "localityScore": 0.5,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:24:41.900Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:46:54.290Z"
     },
     {
       "key": "FCO|hotel eden|booking_com_cj",
@@ -2026,23 +2026,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/it/savoy-firenze.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.55,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJ6zkxlgFUKhMRMRvVAockH0A",
+      "confidence": 0.825,
       "evidence": {
-        "nameScore": 0.5,
+        "nameScore": 1,
         "localityScore": 0.5,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:24:42.703Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:46:55.041Z"
     },
     {
       "key": "FLR|portrait firenze|booking_com_cj",
@@ -2166,23 +2166,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/gr/katikies.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.715,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJZfN8nIDMmRQRxE4k-4aOrXw",
+      "confidence": 0.825,
       "evidence": {
-        "nameScore": 0.8,
+        "nameScore": 1,
         "localityScore": 0.5,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:24:45.426Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:46:55.801Z"
     },
     {
       "key": "JTR|perivolas hotel|booking_com_cj",
@@ -2418,23 +2418,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/es/cotton-house-autograph-collection.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.7417,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJu6gINO6ipBIRG-Qp7wa_H0c",
+      "confidence": 0.925,
       "evidence": {
-        "nameScore": 0.6667,
+        "nameScore": 1,
         "localityScore": 1,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:24:52.112Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:46:56.413Z"
     },
     {
       "key": "BCN|almanac barcelona|booking_com_cj",
@@ -2502,23 +2502,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/is/fosshotel-hengill.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.5194,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJHRMkY1F91kgRdPvP1xPtnTo",
+      "confidence": 0.825,
       "evidence": {
-        "nameScore": 0.4444,
+        "nameScore": 1,
         "localityScore": 0.5,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:24:53.578Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:46:56.978Z"
     },
     {
       "key": "KEF|hotel ranga|booking_com_cj",
@@ -2530,23 +2530,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/is/ranga-hella.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.55,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJc06uU5fk1kgR_NgCxEZIBDs",
+      "confidence": 0.825,
       "evidence": {
-        "nameScore": 0.5,
+        "nameScore": 1,
         "localityScore": 0.5,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:24:56.707Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:46:57.561Z"
     },
     {
       "key": "KEF|fosshotel glacier lagoon|booking_com_cj",
@@ -2670,23 +2670,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/gb/the-twenty-two.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.715,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJjRa39r8FdkgRnqdFK-NBOa0",
+      "confidence": 0.925,
       "evidence": {
-        "nameScore": 0.8,
-        "localityScore": 0.5,
+        "nameScore": 1,
+        "localityScore": 1,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:24:59.526Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:46:58.394Z"
     },
     {
       "key": "JFK|the greenwich hotel|booking_com_cj",
@@ -2698,23 +2698,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/us/greenwich.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.725,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJTWkuhfVZwokRvaommqZ2oqA",
+      "confidence": 0.925,
       "evidence": {
         "nameScore": 1,
-        "localityScore": 0,
+        "localityScore": 1,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:24:59.835Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:46:58.971Z"
     },
     {
       "key": "JFK|the bowery hotel|booking_com_cj",
@@ -2726,23 +2726,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/us/the-bowery.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.725,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJqzkICohZwokR456MkSkZnLU",
+      "confidence": 0.925,
       "evidence": {
         "nameScore": 1,
-        "localityScore": 0,
+        "localityScore": 1,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:25:00.306Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:46:59.669Z"
     },
     {
       "key": "JFK|aman new york|booking_com_cj",
@@ -2754,23 +2754,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/us/aman-new-york.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.725,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJM-uWC9VZwokRMm_7bwjHFBg",
+      "confidence": 0.925,
       "evidence": {
         "nameScore": 1,
-        "localityScore": 0,
+        "localityScore": 1,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:25:00.726Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:47:00.444Z"
     },
     {
       "key": "JFK|the mercer|booking_com_cj",
@@ -2782,23 +2782,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/us/the-mercer.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.725,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJzyx3-o5ZwokR9DTHgZ521n8",
+      "confidence": 0.925,
       "evidence": {
         "nameScore": 1,
-        "localityScore": 0,
+        "localityScore": 1,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:25:01.103Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:47:11.181Z"
     },
     {
       "key": "MEX|casa polanco|booking_com_cj",
@@ -2866,23 +2866,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/mx/st-regis-mexico-city.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.6417,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJrR704kv_0YURl2pvM1WTF-c",
+      "confidence": 0.825,
       "evidence": {
-        "nameScore": 0.6667,
+        "nameScore": 1,
         "localityScore": 0.5,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:25:05.109Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:47:11.973Z"
     },
     {
       "key": "MEX|downtown mexico|booking_com_cj",
@@ -2950,23 +2950,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/mx/nomade-tulum.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.7417,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJxy0vmE3XT48R70LjKwXJElE",
+      "confidence": 0.925,
       "evidence": {
-        "nameScore": 0.6667,
+        "nameScore": 1,
         "localityScore": 1,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:25:06.662Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:47:13.202Z"
     },
     {
       "key": "TQO|hotel esencia|booking_com_cj",
@@ -3062,23 +3062,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/cr/four-seasons-resort-costa-rica-at-peninsula-papagayo.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.815,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJ4-8la0qHdY8RGP3Buof_FrE",
+      "confidence": 0.925,
       "evidence": {
-        "nameScore": 0.8,
+        "nameScore": 1,
         "localityScore": 1,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:25:08.523Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:47:13.755Z"
     },
     {
       "key": "SJO|hacienda altagracia|booking_com_cj",
@@ -3090,23 +3090,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/cr/altagracia-boutique-hacienda.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.7417,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJ7a45p8aypo8RDWZhtLI5T_M",
+      "confidence": 0.925,
       "evidence": {
-        "nameScore": 0.6667,
+        "nameScore": 1,
         "localityScore": 1,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:25:11.740Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:47:14.448Z"
     },
     {
       "key": "SJO|lapa rios lodge|booking_com_cj",
@@ -3146,23 +3146,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/br/emiliano-rio.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.7417,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJPRfpuT7VmwAR2l_60dDBDok",
+      "confidence": 0.925,
       "evidence": {
-        "nameScore": 0.6667,
+        "nameScore": 1,
         "localityScore": 1,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:25:12.537Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:47:14.959Z"
     },
     {
       "key": "GIG|hotel fasano rio de janeiro|booking_com_cj",
@@ -3202,23 +3202,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/br/copacabana-palace.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.7417,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJjZJPDlTVmwARroitzBhRLu8",
+      "confidence": 0.925,
       "evidence": {
-        "nameScore": 0.6667,
+        "nameScore": 1,
         "localityScore": 1,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:25:13.392Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:47:15.479Z"
     },
     {
       "key": "GIG|santa teresa hotel rj mgallery|booking_com_cj",
@@ -3342,23 +3342,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/ar/home.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.65,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJmfrt3JK1vJURcX3SLLqJ0sM",
+      "confidence": 0.925,
       "evidence": {
-        "nameScore": 0.5,
+        "nameScore": 1,
         "localityScore": 1,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:25:16.486Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:47:16.039Z"
     },
     {
       "key": "FTE|the singular patagonia|booking_com_cj",
@@ -3370,23 +3370,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/cl/the-singular-patagonia.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.5417,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJMaItXKbCr70Ro-LQyOpojBw",
+      "confidence": 0.825,
       "evidence": {
-        "nameScore": 0.6667,
-        "localityScore": 0,
+        "nameScore": 1,
+        "localityScore": 0.5,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:25:19.422Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:47:16.610Z"
     },
     {
       "key": "FTE|awasi patagonia|booking_com_cj",
@@ -3398,23 +3398,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/cl/awasi-patagonia-torres-del-paine.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.725,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJddGPIL_Nur0RSk1FKFPUThM",
+      "confidence": 0.825,
       "evidence": {
         "nameScore": 1,
-        "localityScore": 0,
+        "localityScore": 0.5,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:25:19.733Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:47:17.164Z"
     },
     {
       "key": "FTE|explora patagonia|booking_com_cj",
@@ -3426,23 +3426,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/cl/explora-patagonia.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.5417,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJq6qqqqoapb0R-Fk5_1YgkP4",
+      "confidence": 0.825,
       "evidence": {
-        "nameScore": 0.6667,
-        "localityScore": 0,
+        "nameScore": 1,
+        "localityScore": 0.5,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:25:20.055Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:47:23.982Z"
     },
     {
       "key": "FTE|eolo patagonia s spirit|booking_com_cj",
@@ -3454,23 +3454,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/ar/eolo-patagonias-spirit.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.725,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJ2-6hQb9qu70R9Snc0sZW4vU",
+      "confidence": 0.825,
       "evidence": {
         "nameScore": 1,
-        "localityScore": 0,
+        "localityScore": 0.5,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:25:20.359Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:47:24.729Z"
     },
     {
       "key": "YYC|fairmont banff springs|booking_com_cj",
@@ -3566,23 +3566,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/ca/the-rimrock-resort.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.7417,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJDyMJeiDKcFMR8kCLJME8Mmg",
+      "confidence": 0.925,
       "evidence": {
-        "nameScore": 0.6667,
+        "nameScore": 1,
         "localityScore": 1,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:25:22.914Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:47:25.951Z"
     },
     {
       "key": "YVR|rosewood hotel georgia|booking_com_cj",
@@ -3660,13 +3660,15 @@
         "localityScore": 1,
         "coordinateScore": 0.5,
         "distanceMeters": null,
-        "typeVerified": true
+        "typeVerified": true,
+        "addressScore": null,
+        "addressVerified": false
       },
       "photoStatus": "not_checked",
       "usablePhotoCount": 0,
       "attributionRequired": false,
       "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:25:27.134Z"
+      "checkedAt": "2026-08-16T02:02:26.811Z"
     },
     {
       "key": "YVR|wedgewood hotel spa|booking_com_cj",
@@ -3706,23 +3708,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/us/wailea.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.725,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJB22uNSrbVHkRM0RUeubJvPM",
+      "confidence": 0.825,
       "evidence": {
         "nameScore": 1,
-        "localityScore": 0,
+        "localityScore": 0.5,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:25:27.971Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:47:26.854Z"
     },
     {
       "key": "OGG|four seasons resort maui at wailea|booking_com_cj",
@@ -3734,23 +3736,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/us/four-seasons-resort-maui-at-wailea.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.725,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJW5YfgNjaVHkRqTZlw7xzdy0",
+      "confidence": 0.825,
       "evidence": {
         "nameScore": 1,
-        "localityScore": 0,
+        "localityScore": 0.5,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:25:28.422Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:47:27.558Z"
     },
     {
       "key": "OGG|montage kapalua bay|booking_com_cj",
@@ -3760,25 +3762,28 @@
         "city": "MAUI",
         "country": "UNITED STATES",
         "bookingComPropertyUrl": "https://www.booking.com/hotel/us/montage-kapalua-bay.html",
-        "provider": "booking_com_cj"
+        "provider": "booking_com_cj",
+        "address": "1 Bay Drive, Lahaina, HI 96761"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.4893,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJZzDTJrXVqn4RvHBR0pVcmWA",
+      "confidence": 0.9,
       "evidence": {
         "nameScore": 0.5714,
-        "localityScore": 0,
+        "localityScore": 0.5,
         "coordinateScore": 0.5,
         "distanceMeters": null,
-        "typeVerified": true
+        "typeVerified": true,
+        "addressScore": 1,
+        "addressVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:25:29.006Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T02:02:27.376Z"
     },
     {
       "key": "OGG|andaz maui at wailea resort|booking_com_cj",
@@ -3790,23 +3795,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/us/andaz-maui-at-wailea.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.615,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJ70ze3MTaVHkRN8uMUD3HfkU",
+      "confidence": 0.825,
       "evidence": {
-        "nameScore": 0.8,
-        "localityScore": 0,
+        "nameScore": 1,
+        "localityScore": 0.5,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:25:29.282Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:47:28.808Z"
     },
     {
       "key": "SYD|capella sydney|booking_com_cj",
@@ -3902,23 +3907,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/au/the-old-clare.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.5893,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJzVxCViauEmsRr9Sxhupszjw",
+      "confidence": 0.825,
       "evidence": {
-        "nameScore": 0.5714,
+        "nameScore": 1,
         "localityScore": 0.5,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:25:31.330Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:47:29.407Z"
     },
     {
       "key": "CHC|the lindis|booking_com_cj",
@@ -3930,23 +3935,23 @@
         "bookingComPropertyUrl": "https://www.booking.com/hotel/nz/the-lindis.html",
         "provider": "booking_com_cj"
       },
-      "status": "rejected",
-      "verified": false,
-      "needsReview": true,
-      "googlePlaceId": null,
-      "confidence": 0.6417,
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJY8aJm8vVKm0R-MU909zkPKo",
+      "confidence": 0.825,
       "evidence": {
-        "nameScore": 0.6667,
+        "nameScore": 1,
         "localityScore": 0.5,
         "coordinateScore": 0.5,
         "distanceMeters": null,
         "typeVerified": true
       },
-      "photoStatus": "not_checked",
-      "usablePhotoCount": 0,
-      "attributionRequired": false,
-      "errorCode": "rejected",
-      "checkedAt": "2026-08-16T01:25:33.792Z"
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:47:29.988Z"
     },
     {
       "key": "CHC|blanket bay|booking_com_cj",
@@ -4148,12 +4153,12 @@
   "summary": {
     "sourceHotels": 148,
     "processed": 148,
-    "matched": 108,
-    "rejectedOrLowConfidence": 40,
-    "withPhotos": 107,
-    "withThreePhotos": 107,
+    "matched": 147,
+    "rejectedOrLowConfidence": 1,
+    "withPhotos": 146,
+    "withThreePhotos": 146,
     "withoutPhotos": 1,
-    "requiringReview": 40,
+    "requiringReview": 1,
     "apiFailures": 0,
     "duplicatePlaceIds": 0
   }
