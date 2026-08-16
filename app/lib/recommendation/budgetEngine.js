@@ -39,7 +39,12 @@ export function buildBudgetPlan(profile, destination) {
     : profile.budgetMode === "closest"
       ? Math.max(0, Math.round(100 - Math.abs(1 - ratio) * 100))
       : ratio <= 1 ? 100 : Math.max(1, Math.round(100 / ratio));
-  const hotelBudget = includes.hotel ? Math.max(0, targetBudget - Object.entries(categories).filter(([key]) => key !== "hotel").reduce((sum, [, value]) => sum + (value.low + value.high) / 2, 0) - bufferHigh) : 0;
+  // Lodging is the residual hard allocation after airfare and the lowest grounded
+  // version of the included daily categories. Ranking then rejects properties
+  // whose complete stay exceeds this amount.
+  const nonHotelMinimum = Object.entries(categories).filter(([key]) => key !== "hotel").reduce((sum, [, value]) => sum + value.low, 0);
+  const hotelSafetyReserve = targetBudget > 0 ? Math.min(100, Math.round(targetBudget * 0.02)) : 0;
+  const hotelBudget = includes.hotel ? Math.max(0, targetBudget - nonHotelMinimum - hotelSafetyReserve) : 0;
   const optimization = ratio > 1 ? "reduce_cost" : ratio < 0.72 && profile.budgetMode === "closest" ? "consider_upgrade" : "balanced";
   const optimizationActions = optimization === "reduce_cost"
     ? [includes.hotel && "prefer_lower_cost_hotel", includes.activities && "reduce_optional_activities", includes.transportation && "use_lower_cost_local_transport", "consider_next_affordable_destination"].filter(Boolean)

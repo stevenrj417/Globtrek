@@ -3,11 +3,25 @@ const UPDATED = "2026-08-16";
 const AIRPORT_REGIONS = {
   PDX: "north_america_west", SEA: "north_america_west", SFO: "north_america_west", LAX: "north_america_west",
   OGG: "hawaii", HNL: "hawaii",
-  JFK: "north_america_east", EWR: "north_america_east", ATL: "north_america_east", ORD: "north_america_central", DEN: "north_america_central",
+  JFK: "north_america_east", EWR: "north_america_east", BOS: "north_america_east", IAD: "north_america_east", MIA: "north_america_east", YYZ: "north_america_east", YUL: "north_america_east", ATL: "north_america_east", ORD: "north_america_central", DEN: "north_america_central", DFW: "north_america_central", MEX: "north_america_central", CUN: "north_america_central", YVR: "north_america_west", YYC: "north_america_west", SJO: "north_america_central",
   LHR: "europe", LGW: "europe", MRS: "europe", CDG: "europe", NAP: "europe", FCO: "europe", FLR: "europe", JTR: "europe", LIS: "europe", BCN: "europe", KEF: "europe",
   HND: "east_asia", KIX: "east_asia", ICN: "east_asia", SIN: "southeast_asia", BKK: "southeast_asia", CNX: "southeast_asia", DPS: "southeast_asia", HAN: "southeast_asia",
   SYD: "oceania", CHC: "oceania", PPT: "south_pacific", MLE: "indian_ocean", CPT: "africa", NBO: "africa",
+  EZE: "south_america", LIM: "south_america", SCL: "south_america", GIG: "south_america", GRU: "south_america",
 };
+
+const COUNTRY_REGIONS = {
+  "united states": "north_america", canada: "north_america", mexico: "north_america", "costa rica": "north_america",
+  argentina: "south_america", brazil: "south_america", chile: "south_america", peru: "south_america", colombia: "south_america",
+  japan: "east_asia", china: "east_asia", "south korea": "east_asia", thailand: "southeast_asia", vietnam: "southeast_asia", indonesia: "southeast_asia", malaysia: "southeast_asia", singapore: "southeast_asia", cambodia: "southeast_asia", laos: "southeast_asia",
+  australia: "oceania", "new zealand": "oceania", morocco: "africa", kenya: "africa", egypt: "africa", "south africa": "africa",
+};
+const EUROPE_COUNTRIES = new Set(["france", "italy", "spain", "portugal", "united kingdom", "ireland", "iceland", "greece", "germany", "austria", "switzerland", "belgium", "netherlands", "denmark", "norway", "sweden", "finland", "poland", "estonia", "slovenia", "croatia", "bosnia and herzegovina", "montenegro", "albania", "north macedonia", "bulgaria", "romania", "hungary", "czech republic", "turkey", "georgia", "armenia", "monaco"]);
+
+function countryRegion(country) {
+  const normalized = String(country || "").toLowerCase();
+  return COUNTRY_REGIONS[normalized] || (EUROPE_COUNTRIES.has(normalized) ? "europe" : "unknown");
+}
 
 const ROUTE_OVERRIDES = {
   "PDX:OGG": { flightHours: 5.8, connections: 0, low: 360, high: 720, popularity: "established" },
@@ -19,11 +33,14 @@ function regionFor(code) {
   return AIRPORT_REGIONS[String(code || "").toUpperCase()] || "unknown";
 }
 
-function genericRoute(origin, destination) {
+function genericRoute(origin, destination, country) {
   const from = regionFor(origin);
-  const to = regionFor(destination);
+  const to = regionFor(destination) === "unknown" ? countryRegion(country) : regionFor(destination);
   if (origin === destination) return { flightHours: 0, connections: 0, low: 0, high: 0, popularity: "local" };
   if (from === to && from !== "unknown") return { flightHours: 2.5, connections: 0, low: 180, high: 520, popularity: "regional" };
+  if (from.startsWith("north_america") && to === "north_america") return { flightHours: 4.5, connections: 0, low: 260, high: 720, popularity: "regional" };
+  if (from.startsWith("north_america") && to.startsWith("north_america")) return { flightHours: 5, connections: 0, low: 280, high: 760, popularity: "established" };
+  if ([from, to].includes("south_america") && [from, to].some((region) => region.startsWith("north_america"))) return { flightHours: 12, connections: 1, low: 700, high: 1500, popularity: "connecting" };
   if ([from, to].includes("hawaii") && [from, to].some((region) => region.startsWith("north_america"))) return { flightHours: 6, connections: 0, low: 380, high: 800, popularity: "established" };
   if ([from, to].includes("europe") && [from, to].some((region) => region.startsWith("north_america"))) return { flightHours: from === "north_america_east" || to === "north_america_east" ? 8 : 12, connections: 1, low: 650, high: 1350, popularity: "connecting" };
   if ([from, to].some((region) => ["east_asia", "southeast_asia", "oceania", "south_pacific", "indian_ocean", "africa"].includes(region))) return { flightHours: 15, connections: 1, low: 850, high: 1850, popularity: "long_haul" };
@@ -41,7 +58,7 @@ export function estimateFlight(profile, destination) {
   const origin = String(profile?.origin || "").toUpperCase();
   const airport = String(destination?.airport || "").toUpperCase();
   if (!origin || !airport) return { low: 500, high: 1500, currency: "USD", priceSource: "route_market_estimate_without_origin", priceLastChecked: UPDATED, confidence: 0.25, isLive: false };
-  const route = ROUTE_OVERRIDES[`${origin}:${airport}`] || genericRoute(origin, airport);
+  const route = ROUTE_OVERRIDES[`${origin}:${airport}`] || genericRoute(origin, airport, destination?.country);
   const multiplier = seasonMultiplier(profile);
   return {
     low: Math.round(route.low * multiplier), high: Math.round(route.high * multiplier), currency: "USD",
@@ -54,7 +71,7 @@ export function assessTravelFeasibility(profile, destination) {
   const origin = String(profile?.origin || "").toUpperCase();
   const airport = String(destination?.airport || "").toUpperCase();
   if (!origin || !airport) return { score: 50, status: "unknown", reason: "Origin airport required for route feasibility", estimatedFlightDuration: null, estimatedConnections: null, airportBuffer: 4, timeZoneShift: null, estimatedDoorToDestinationTime: null, travelDayImpact: null, usableDestinationTime: null };
-  const route = ROUTE_OVERRIDES[`${origin}:${airport}`] || genericRoute(origin, airport);
+  const route = ROUTE_OVERRIDES[`${origin}:${airport}`] || genericRoute(origin, airport, destination?.country);
   const airportBuffer = route.flightHours === 0 ? 0 : 4 + route.connections * 1.5;
   const doorHoursEachWay = route.flightHours + airportBuffer;
   const tripHours = Math.max(24, Number(profile.tripLength || 1) * 24);

@@ -30,7 +30,7 @@ export function rankDestinations(destinations, profile) {
     const tripLengthFitScore = tripLengthScore(destination, profile.tripLength);
     const seasonMatchScore = budgetPlan.season.level === "peak" && budgetFeasibilityScore < 70 ? 45 : budgetPlan.season.level === "low" ? 90 : 80;
     const rawDestinationMatchScore = Math.round(
-      travelFeasibility.score * 0.34 + budgetFeasibilityScore * 0.27 + preferenceMatchScore * 0.2 + unknownnessMatchScore * 0.1 + seasonMatchScore * 0.05 + tripLengthFitScore * 0.04,
+      travelFeasibility.score * 0.3 + budgetFeasibilityScore * 0.23 + preferenceMatchScore * 0.18 + unknownnessMatchScore * 0.2 + seasonMatchScore * 0.05 + tripLengthFitScore * 0.04,
     );
     const destinationMatchScore = travelFeasibility.status === "unreasonable" ? Math.min(24, travelFeasibility.score) : destination.catalogStatus === "verified_destination_only" ? Math.min(28, rawDestinationMatchScore) : !budgetPlan.withinHardBudget ? Math.min(34, rawDestinationMatchScore) : rawDestinationMatchScore;
     return { ...destination, destinationMatchScore, rawDestinationMatchScore, travelTimeFeasibilityScore: travelFeasibility.score, travelFeasibility, preferenceMatchScore, budgetFeasibilityScore, unknownnessMatchScore, seasonMatchScore, tripLengthFitScore, budgetPlan };
