@@ -43,9 +43,10 @@ export default function FullTripPage({ params }) {
     if (!payload?.quiz || !payload?.trip || refining) return;
     setRefining(true);
     try {
-      const response = await fetch("/api/match", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...payload.quiz, tune, destination: payload.trip.airport }) });
+      const destinationKey = payload.trip.id || payload.trip.airport;
+      const response = await fetch("/api/match", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...payload.quiz, tune, destination: destinationKey }) });
       const data = await response.json();
-      const trip = data.matches?.find((item) => item.airport === payload.trip.airport) || data.matches?.[0];
+      const trip = data.matches?.find((item) => (item.id || item.airport) === destinationKey) || data.matches?.[0];
       if (trip) {
         const next = { ...payload, trip, savedTrip: { ...payload.savedTrip, itinerary: trip.plan, estimatedCosts: trip.budgetPlan } };
         setPayload(next);

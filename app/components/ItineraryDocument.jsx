@@ -27,9 +27,9 @@ export function ItineraryDocument({ trip, quiz, onRefine, refining, venueUrl, pr
   const plan = trip.plan;
   useEffect(() => {
     const controller = new AbortController();
-    fetch("/api/activities/recommend", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ destinationId: trip.airport, quiz }), signal: controller.signal }).then((response) => response.ok ? response.json() : null).then((payload) => setVerifiedActivities(payload?.activities || [])).catch((error) => { if (error.name !== "AbortError") setVerifiedActivities([]); });
+    fetch("/api/activities/recommend", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ destinationId: trip.id || trip.airport, quiz }), signal: controller.signal }).then((response) => response.ok ? response.json() : null).then((payload) => setVerifiedActivities(payload?.activities || [])).catch((error) => { if (error.name !== "AbortError") setVerifiedActivities([]); });
     return () => controller.abort();
-  }, [quiz, trip.airport]);
+  }, [quiz, trip.id, trip.airport]);
   if (!plan) return null;
   const days = plan.days || [];
   const visibleDays = previewDays ? itineraryPreviewDays(plan, previewDays) : days;

@@ -11,7 +11,7 @@ export const runtime = "nodejs";
 export async function POST(request) {
   try {
     const body = await request.json();
-    const destination = destinations.find((item) => item.airport === body.destinationId);
+    const destination = destinations.find((item) => (item.id || item.airport) === body.destinationId);
     if (!destination) return NextResponse.json({ error: "Unknown destination" }, { status: 400 });
     const profile = normalizeTravelerProfile(body.quiz || {});
     const budgetPlan = buildBudgetPlan(profile, destination);

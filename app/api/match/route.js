@@ -2,6 +2,7 @@ import { destinations } from "../../data/destinations";
 import { hotelsFor } from "../../data/hotels";
 import { itineraryDayCount, normalizeTravelerProfile } from "../../lib/recommendation/travelerProfile";
 import { rankDestinations } from "../../lib/recommendation/destinationEngine";
+import { validateTripRecommendation } from "../../lib/recommendation/finalTripValidator";
 
 const resultCache = new Map();
 const CACHE_TTL = 24 * 60 * 60 * 1000;
@@ -193,7 +194,11 @@ function fallbackPlan(destination, input) {
 }
 
 function withFallbackPlans(matches, input) {
-  return matches.map((destination) => ({ ...destination, plan: destination.plan || fallbackPlan(destination, input) }));
+  const travelerProfile = normalizeTravelerProfile(input);
+  return matches.map((destination) => {
+    const plan = destination.plan || fallbackPlan(destination, input);
+    return { ...destination, plan, validation: validateTripRecommendation({ destination, travelerProfile, budgetPlan: destination.budgetPlan, itinerary: plan }) };
+  });
 }
 
 function tripLength(body) {
@@ -252,14 +257,14 @@ export async function POST(request) {
   const answers = body.answers || {};
   const travelerProfile = normalizeTravelerProfile(body);
   const ranked = fallbackMatches(body);
-  const forcedDestination = typeof body.destination === "string" ? ranked.find((destination) => destination.airport === body.destination) : null;
-  const fallback = forcedDestination ? [forcedDestination, ...ranked.filter((destination) => destination.airport !== forcedDestination.airport)] : ranked;
+  const forcedDestination = typeof body.destination === "string" ? ranked.find((destination) => (destination.id || destination.airport) === body.destination) : null;
+  const fallback = forcedDestination ? [forcedDestination, ...ranked.filter((destination) => (destination.id || destination.airport) !== (forcedDestination.id || forcedDestination.airport))] : ranked;
   const primaryDestination = fallback[0];
   const stayOptions = hotelsFor(primaryDestination, body).map(({ name, tags }) => ({ name, tags }));
   const nights = tripLength(body);
   const planDays = nights ? Math.min(28, Math.max(1, nights)) : itineraryDayCount(body);
   const tune = typeof body.tune === "string" ? body.tune.slice(0, 40) : "original";
-  const cacheKey = JSON.stringify({ travelerProfile, destination: primaryDestination.airport, tune });
+  const cacheKey = JSON.stringify({ travelerProfile, destination: primaryDestination.id || primaryDestination.airport, tune });
   const cached = resultCache.get(cacheKey);
   if (cached && Date.now() - cached.createdAt < CACHE_TTL) {
     console.log(JSON.stringify({ level: "info", msg: "match_cache_hit", route: "/api/match", ms: Date.now() - startedAt }));
@@ -320,7 +325,7 @@ export async function POST(request) {
     const value = {
       source: "openai",
       travelerProfile,
-      matches: normalizeAiResult(aiResult, fallback),
+      matches: normalizeAiResult(aiResult, fallback).map((destination) => ({ ...destination, validation: validateTripRecommendation({ destination, travelerProfile, budgetPlan: destination.budgetPlan, itinerary: destination.plan }) })),
     };
     if (resultCache.size >= 100) resultCache.delete(resultCache.keys().next().value);
     resultCache.set(cacheKey, { createdAt: Date.now(), value });

@@ -7,7 +7,7 @@ export function serializeRecommendation({ travelerProfile, destination, budgetPl
   return {
     version: 2,
     travelerProfile,
-    destination: { id: destination.airport, city: destination.city, country: destination.country },
+    destination: { id: destination.id || destination.airport, airport: destination.airport, city: destination.city, country: destination.country },
     exactBudget: travelerProfile.exactBudget,
     includedBudgetCategories: travelerProfile.includedBudgetCategories,
     hotelSelection: selectedHotel,

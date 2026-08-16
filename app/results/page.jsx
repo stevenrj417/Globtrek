@@ -107,13 +107,13 @@ function HotelShortlist({ destination, quiz, budgetPlan }) {
     fetch("/api/hotels/recommend", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ destinationId: destination.airport, quiz }),
+      body: JSON.stringify({ destinationId: destination.id || destination.airport, quiz }),
       signal: controller.signal,
     }).then((response) => response.ok ? response.json() : null)
       .then((payload) => { if (payload?.hotels?.length) setCatalogHotels(payload.hotels); })
       .catch((error) => { if (error.name !== "AbortError") console.warn("Hotel catalog fallback active."); });
     return () => controller.abort();
-  }, [destination.airport, quiz]);
+  }, [destination.id, destination.airport, quiz]);
 
   function choose(stay) {
     setSelected(stay);
@@ -207,9 +207,9 @@ export default function ResultsPage() {
 
   const localMatches = useMemo(() => getMatches(quiz), [quiz]);
   const matches = remoteMatches || localMatches;
-  const chosenTrip = chosenAirport ? matches.find((destination) => destination.airport === chosenAirport) || destinations.find((destination) => destination.airport === chosenAirport) : null;
+  const chosenTrip = chosenAirport ? matches.find((destination) => (destination.id || destination.airport) === chosenAirport) || destinations.find((destination) => (destination.id || destination.airport) === chosenAirport) : null;
   const trip = chosenTrip || matches[0];
-  const alternatives = matches.filter((place) => place.airport !== trip?.airport).slice(0, 3);
+  const alternatives = matches.filter((place) => (place.id || place.airport) !== (trip?.id || trip?.airport)).slice(0, 3);
   if (!ready || !quiz || !trip) return <main className="min-h-screen bg-[#f3f0eb]" />;
 
   const dates = quiz?.isFlexible
@@ -226,11 +226,12 @@ export default function ResultsPage() {
   const travelerProfile = normalizeTravelerProfile(quiz);
   const money = (value) => `$${Math.round(value || 0).toLocaleString("en-US")}`;
   const estimatedTotal = budgetPlan?.targetBudget ? `${money(budgetPlan.estimatedTripLow)}–${money(budgetPlan.estimatedTripHigh)} estimated` : estimateTrip(quiz);
-  const sharedPayload = encodeTrip({ quiz, destination: trip.airport });
+  const destinationKey = trip.id || trip.airport;
+  const sharedPayload = encodeTrip({ quiz, destination: destinationKey });
   const savedTrip = {
-    clientTripKey: `${trip.airport}:${sharedPayload.slice(0, 120)}`,
+    clientTripKey: `${trip.id || trip.airport}:${sharedPayload.slice(0, 120)}`,
     sharePath: `/results?trip=${sharedPayload}`,
-    destination: { city: trip.city, country: trip.country, airport: trip.airport, image: trip.image, style: trip.style },
+    destination: { id: destinationKey, city: trip.city, country: trip.country, airport: trip.airport, image: trip.image, style: trip.style },
     trip: quiz,
     travelerProfile,
     exactBudget: travelerProfile.exactBudget,
@@ -253,7 +254,7 @@ export default function ResultsPage() {
     setRefining(true);
     track("trip_refined", { refinement: tune, destination: trip.city });
     try {
-      const response = await fetch("/api/match", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...quiz, tune, destination: trip.airport }) });
+      const response = await fetch("/api/match", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...quiz, tune, destination: destinationKey }) });
       const data = await response.json();
       if (Array.isArray(data.matches) && data.matches.length) setRemoteMatches(data.matches);
     } finally {
@@ -262,7 +263,7 @@ export default function ResultsPage() {
   }
 
   function tripLink() {
-    const payload = encodeTrip({ quiz, destination: trip.airport });
+    const payload = encodeTrip({ quiz, destination: destinationKey });
     return `${window.location.origin}/results?trip=${payload}`;
   }
 
@@ -324,7 +325,7 @@ export default function ResultsPage() {
           <SaveTripButton trip={savedTrip} className="min-h-20 bg-[#f3f0eb] px-7 text-[9px] uppercase tracking-[0.2em] transition hover:bg-white" />
           <EmailTripButton trip={savedTrip} viewUrl={tripLink()} className="min-h-20 bg-[#f3f0eb] px-7 text-[9px] uppercase tracking-[0.2em] transition hover:bg-white" />
         </div>
-        <div className="flex justify-end border-b border-black/10 py-4"><SaveItemButton item={{ type: "destination", key: trip.airport, title: trip.city, subtitle: trip.country, imageUrl: trip.image, data: { airport: trip.airport, style: trip.style } }} className="text-[9px] uppercase tracking-[0.2em] text-black/50 hover:text-black" /></div>
+        <div className="flex justify-end border-b border-black/10 py-4"><SaveItemButton item={{ type: "destination", key: destinationKey, title: trip.city, subtitle: trip.country, imageUrl: trip.image, data: { id: destinationKey, airport: trip.airport, style: trip.style } }} className="text-[9px] uppercase tracking-[0.2em] text-black/50 hover:text-black" /></div>
 
         {budgetPlan?.estimates ? <details className="group border-b border-black/10">
           <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between px-5 text-[9px] uppercase tracking-[0.2em] text-black/55 transition hover:bg-white/60 [&::-webkit-details-marker]:hidden"><span>View cost breakdown</span><ChevronDown /></summary>
@@ -391,7 +392,7 @@ export default function ResultsPage() {
         </div>
         <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 pt-8 md:mx-0 md:grid md:grid-cols-3 md:gap-10 md:overflow-visible md:px-0 md:pb-0 md:pt-10">
           {alternatives.map((place) => (
-            <Link key={place.name} href={`/results?destination=${encodeURIComponent(place.airport)}`} scroll onClick={() => setChosenAirport(place.airport)} className="group block w-[82vw] max-w-[330px] shrink-0 snap-center md:w-auto md:max-w-none" aria-label={`Plan a complete trip to ${place.city}`}>
+            <Link key={place.id || place.name} href={`/results?destination=${encodeURIComponent(place.id || place.airport)}`} scroll onClick={() => setChosenAirport(place.id || place.airport)} className="group block w-[82vw] max-w-[330px] shrink-0 snap-center md:w-auto md:max-w-none" aria-label={`Plan a complete trip to ${place.city}`}>
               <div className="relative aspect-[4/3] overflow-hidden bg-black/5"><Image src={place.image} alt={place.name} fill className="object-cover transition duration-700 group-hover:scale-[1.035]" sizes="(min-width:768px) 33vw,100vw" quality={82} /></div>
               <div className="flex items-end justify-between border-b border-black/10 px-1 py-6">
                 <div><h3 className="font-serif text-2xl">{place.city}</h3><p className="mt-2 text-[9px] uppercase tracking-[0.22em] text-black/45">{place.country} · {place.season}</p></div>

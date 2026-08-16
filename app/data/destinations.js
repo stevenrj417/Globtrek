@@ -101,7 +101,8 @@ function estimate(tags) {
   return "Flexible trip · compare live options";
 }
 
-export const destinations = catalog.map(([city, country, airport, photo, style, season, tags]) => ({
+const legacyDestinations = catalog.map(([city, country, airport, photo, style, season, tags]) => ({
+  id: airport,
   name: `${city}, ${country}`,
   city,
   country,
@@ -124,7 +125,30 @@ export const destinations = catalog.map(([city, country, airport, photo, style, 
     `Final day: One last walk, meal, and departure`,
   ],
   dining: ["A destination-defining local meal", "A neighborhood favorite", "One memorable reservation-worthy dinner"],
+  catalogStatus: "curated_runtime",
 }));
+
+function titleTag(value) { return String(value || "").replace(/(^|_)\w/g, (match) => match.replace("_", " ").toUpperCase()); }
+const verifiedExpansion = [...(verifiedBatch01.records || verifiedBatch01), ...(verifiedBatch02.records || verifiedBatch02)].map((item) => ({
+  id: item.id,
+  name: `${String(item.name).toUpperCase()}, ${String(item.country).toUpperCase()}`,
+  city: String(item.name).toUpperCase(), country: String(item.country).toUpperCase(), region: item.region || null,
+  airport: item.nearestAirport, recognition: item.knownnessScore ?? item.recognitionScore ?? 50,
+  image: item.primaryImageUrl || item.images?.find((image) => image.isHero)?.imageUrl,
+  price: "Destination verified · trip pricing estimated",
+  costs: ["Flights: estimated by route", "Stay: catalog depth in progress", "Dining: estimated", "Experiences: verified where available"],
+  nights: item.tripLengthFit ? `${item.tripLengthFit.minimumNights}–${item.tripLengthFit.maximumNights} nights` : "5–8 nights",
+  style: [...(item.interestTags || []), ...(item.travelerTypeTags || [])].slice(0, 3).map(titleTag).join(" / ") || "A considered escape",
+  season: "Seasonal guidance requires final editorial review",
+  tags: [...(item.interestTags || []), ...(item.travelerTypeTags || [])].map(titleTag),
+  aliases: [item.region, item.wikiTitle].filter(Boolean),
+  why: `${item.name} is a verified Globtrek destination. Its identity, location, imagery, and baseline cost profile are grounded; hotel and activity depth remain subject to readiness gates.`,
+  itinerary: [], dining: [], costProfile: item.costProfile, seasonality: item.seasonality,
+  recommendationReady: false, catalogStatus: "verified_destination_only", verificationSource: item.verificationSource,
+}));
+
+const legacyNames = new Set(legacyDestinations.map((item) => `${item.city}|${item.country}`));
+export const destinations = [...legacyDestinations, ...verifiedExpansion.filter((item) => !legacyNames.has(`${item.city}|${item.country}`))];
 
 export function scoreDestination(destination, answers) {
   const weights = { alive: 9, duration: 7, memory: 6, luxury: 6, hotel: 5, escape: 4, self: 3 };
@@ -205,3 +229,5 @@ export function bookingActivityUrl(destination) {
 export function diningSearchUrl(destination) {
   return `https://www.google.com/maps/search/${encodeURIComponent(`restaurants in ${destination.city}, ${destination.country}`)}`;
 }
+import verifiedBatch01 from "../../scripts/destinations/verified-batch-01.json" with { type: "json" };
+import verifiedBatch02 from "../../scripts/destinations/verified-batch-02.json" with { type: "json" };

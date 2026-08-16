@@ -51,7 +51,7 @@ export class SupabaseCuratedHotelProvider extends HotelInventoryProvider {
     const { data, error } = await this.supabase
       .from("hotel_catalog")
       .select("*")
-      .eq("destination_id", destination.airport)
+      .eq("destination_id", destination.id || destination.airport)
       .eq("active", true)
       .neq("review_status", "rejected")
       .limit(100);
