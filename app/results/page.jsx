@@ -209,7 +209,14 @@ export default function ResultsPage() {
   const matches = remoteMatches || localMatches;
   const chosenTrip = chosenAirport ? matches.find((destination) => (destination.id || destination.airport) === chosenAirport) || destinations.find((destination) => (destination.id || destination.airport) === chosenAirport) : null;
   const trip = chosenTrip || matches[0];
+  const destinationKey = trip?.id || trip?.airport;
   const alternatives = matches.filter((place) => (place.id || place.airport) !== (trip?.id || trip?.airport)).slice(0, 3);
+  useEffect(() => {
+    if (!destinationKey || !trip) return undefined;
+    const controller = new AbortController();
+    fetch("/api/recent", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ type: "destination", key: destinationKey, title: trip.city, subtitle: trip.country, imageUrl: trip.image, data: { id: destinationKey, airport: trip.airport } }), signal: controller.signal }).catch(() => {});
+    return () => controller.abort();
+  }, [destinationKey, trip]);
   if (!ready || !quiz || !trip) return <main className="min-h-screen bg-[#f3f0eb]" />;
 
   const dates = quiz?.isFlexible
@@ -226,7 +233,6 @@ export default function ResultsPage() {
   const travelerProfile = normalizeTravelerProfile(quiz);
   const money = (value) => `$${Math.round(value || 0).toLocaleString("en-US")}`;
   const estimatedTotal = budgetPlan?.targetBudget ? `${money(budgetPlan.estimatedTripLow)}–${money(budgetPlan.estimatedTripHigh)} estimated` : estimateTrip(quiz);
-  const destinationKey = trip.id || trip.airport;
   const sharedPayload = encodeTrip({ quiz, destination: destinationKey });
   const savedTrip = {
     clientTripKey: `${trip.id || trip.airport}:${sharedPayload.slice(0, 120)}`,
