@@ -29,9 +29,10 @@ export function rankDestinations(destinations, profile) {
     const unknownnessMatchScore = unknownnessScore(destination, profile.unknownness);
     const tripLengthFitScore = tripLengthScore(destination, profile.tripLength);
     const seasonMatchScore = budgetPlan.season.level === "peak" && budgetFeasibilityScore < 70 ? 45 : budgetPlan.season.level === "low" ? 90 : 80;
-    const destinationMatchScore = travelFeasibility.status === "unreasonable" ? Math.min(24, travelFeasibility.score) : Math.round(
+    const rawDestinationMatchScore = Math.round(
       travelFeasibility.score * 0.34 + budgetFeasibilityScore * 0.27 + preferenceMatchScore * 0.2 + unknownnessMatchScore * 0.1 + seasonMatchScore * 0.05 + tripLengthFitScore * 0.04,
     );
-    return { ...destination, destinationMatchScore, travelTimeFeasibilityScore: travelFeasibility.score, travelFeasibility, preferenceMatchScore, budgetFeasibilityScore, unknownnessMatchScore, seasonMatchScore, tripLengthFitScore, budgetPlan };
-  }).sort((a, b) => b.destinationMatchScore - a.destinationMatchScore || a.name.localeCompare(b.name));
+    const destinationMatchScore = travelFeasibility.status === "unreasonable" ? Math.min(24, travelFeasibility.score) : !budgetPlan.withinHardBudget ? Math.min(34, rawDestinationMatchScore) : rawDestinationMatchScore;
+    return { ...destination, destinationMatchScore, rawDestinationMatchScore, travelTimeFeasibilityScore: travelFeasibility.score, travelFeasibility, preferenceMatchScore, budgetFeasibilityScore, unknownnessMatchScore, seasonMatchScore, tripLengthFitScore, budgetPlan };
+  }).sort((a, b) => b.destinationMatchScore - a.destinationMatchScore || b.rawDestinationMatchScore - a.rawDestinationMatchScore || a.name.localeCompare(b.name));
 }

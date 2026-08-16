@@ -1,4 +1,5 @@
 import { createClient } from "../../lib/supabase/server";
+import { createAdminClient } from "../../lib/supabase/admin";
 
 const AIRPORT_RE = /^[A-Z]{3}$/;
 const CURRENCY_RE = /^[A-Z]{3}$/;
@@ -58,4 +59,20 @@ export async function PATCH(request) {
     updated_at: new Date().toISOString(),
   }, { onConflict: "id" }).select().single();
   return error ? Response.json({ error: error.message }, { status: 500 }) : Response.json({ profile: data });
+}
+
+export async function DELETE(request) {
+  const { user } = await authenticatedClient();
+  if (!user) return Response.json({ error: "Unauthorized" }, { status: 401 });
+  const body = await request.json().catch(() => ({}));
+  if (body.confirmation !== "DELETE MY ACCOUNT") return Response.json({ error: "Confirmation phrase required" }, { status: 400 });
+  try {
+    const admin = createAdminClient();
+    const { error } = await admin.auth.admin.deleteUser(user.id);
+    if (error) throw new Error(error.message);
+    return Response.json({ deleted: true });
+  } catch (error) {
+    console.error(JSON.stringify({ level: "error", msg: "account_delete_failed", error: error instanceof Error ? error.message : "unknown" }));
+    return Response.json({ error: "Account deletion is temporarily unavailable." }, { status: 503 });
+  }
 }

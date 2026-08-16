@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { itineraryPreviewDays } from "../lib/recommendation/tripSerializer";
 
 function ArrowUpRight() {
@@ -23,7 +23,13 @@ function daySequence(day) {
 
 export function ItineraryDocument({ trip, quiz, onRefine, refining, venueUrl, previewDays = null, onViewFull = null }) {
   const [showAllPlaces, setShowAllPlaces] = useState(false);
+  const [verifiedActivities, setVerifiedActivities] = useState([]);
   const plan = trip.plan;
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/api/activities/recommend", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ destinationId: trip.airport, quiz }), signal: controller.signal }).then((response) => response.ok ? response.json() : null).then((payload) => setVerifiedActivities(payload?.activities || [])).catch((error) => { if (error.name !== "AbortError") setVerifiedActivities([]); });
+    return () => controller.abort();
+  }, [quiz, trip.airport]);
   if (!plan) return null;
   const days = plan.days || [];
   const visibleDays = previewDays ? itineraryPreviewDays(plan, previewDays) : days;
@@ -31,6 +37,7 @@ export function ItineraryDocument({ trip, quiz, onRefine, refining, venueUrl, pr
   const places = [
     ...(plan.picks?.restaurants || []).map((place) => ({ ...place, type: "Eat" })),
     ...(plan.picks?.experiences || []).map((place) => ({ ...place, type: "See" })),
+    ...verifiedActivities.map((place) => ({ ...place, why: place.description || (place.priceKnown ? "Selected for your interests and activity budget." : "Verified place; confirm current details before visiting."), type: place.bookingUrl ? "Book" : "See" })),
   ];
   const visiblePlaces = showAllPlaces ? places : places.slice(0, 4);
   const attributes = [

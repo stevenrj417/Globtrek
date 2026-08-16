@@ -14,6 +14,7 @@ import { SaveTripButton } from "../components/SaveTripButton";
 import { HotelPropertyPhoto } from "../components/HotelPropertyPhoto";
 import { ItineraryDocument } from "../components/ItineraryDocument";
 import { EmailTripButton } from "../components/EmailTripButton";
+import { SaveItemButton } from "../components/SaveItemButton";
 
 function getMatches(quiz) {
   return rankDestinations(destinations, normalizeTravelerProfile(quiz || {}));
@@ -153,6 +154,7 @@ function HotelShortlist({ destination, quiz, budgetPlan }) {
             <div className="absolute inset-x-5 bottom-5 text-white"><h3 className="font-serif text-[1.35rem] leading-[1.05]">{hotel.name}</h3><p className="mt-2 text-[9px] uppercase tracking-[0.2em] text-white/65">{destination.city}, {destination.country}</p></div>
           </div>
           <p className="border-b border-black/10 px-5 py-3 text-[9px] uppercase tracking-[0.16em] text-black/40">{hotelReason(hotel, quiz, index)}</p>
+          <SaveItemButton item={{ type: "hotel", key: hotel.id, title: hotel.name, subtitle: `${destination.city}, ${destination.country}`, imageUrl: hotel.imageUrl || null, data: { destinationAirport: destination.airport, bookingUrl: hotel.bookingUrl || null } }} className="min-h-11 w-full border-b border-black/10 text-[9px] uppercase tracking-[0.18em] text-black/50 hover:text-black" />
           <div className="grid grid-cols-2 border-b border-black/10">
             <button type="button" onClick={() => choose({ ...hotel, type: "curated" })} className={`min-h-12 border-r border-black/10 text-[10px] uppercase tracking-[0.18em] transition ${isSelected ? "bg-black text-white" : "hover:bg-black hover:text-white"}`}>{isSelected ? "In your trip" : "Select stay"}</button>
             {hotel.bookingUrl ? <a href={bookingHotelUrl(hotel, quiz)} onClick={() => track("hotel_affiliate_clicked", { destination: destination.city, hotel: hotel.name })} target="_blank" rel="noopener sponsored" className="grid min-h-12 place-items-center text-[10px] uppercase tracking-[0.18em] transition hover:bg-black hover:text-white">Check live →</a> : <span className="grid min-h-12 place-items-center text-[10px] uppercase tracking-[0.18em] text-black/35">Link being verified</span>}
@@ -322,6 +324,7 @@ export default function ResultsPage() {
           <SaveTripButton trip={savedTrip} className="min-h-20 bg-[#f3f0eb] px-7 text-[9px] uppercase tracking-[0.2em] transition hover:bg-white" />
           <EmailTripButton trip={savedTrip} viewUrl={tripLink()} className="min-h-20 bg-[#f3f0eb] px-7 text-[9px] uppercase tracking-[0.2em] transition hover:bg-white" />
         </div>
+        <div className="flex justify-end border-b border-black/10 py-4"><SaveItemButton item={{ type: "destination", key: trip.airport, title: trip.city, subtitle: trip.country, imageUrl: trip.image, data: { airport: trip.airport, style: trip.style } }} className="text-[9px] uppercase tracking-[0.2em] text-black/50 hover:text-black" /></div>
 
         {budgetPlan?.estimates ? <details className="group border-b border-black/10">
           <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between px-5 text-[9px] uppercase tracking-[0.2em] text-black/55 transition hover:bg-white/60 [&::-webkit-details-marker]:hidden"><span>View cost breakdown</span><ChevronDown /></summary>
@@ -332,6 +335,7 @@ export default function ResultsPage() {
             })}
           </div>
         </details> : null}
+        {budgetPlan?.targetBudget && !budgetPlan.withinHardBudget ? <div role="status" className="border-b border-black/15 bg-[#eee8df] px-5 py-5 text-sm font-light leading-6 text-black/65"><strong className="mr-2 font-medium text-black">Closest honest estimate.</strong>This destination’s included-category high estimate exceeds your {money(budgetPlan.targetBudget)} target. Globtrek has not marked it as budget-safe; compare the lower-cost alternatives below or exclude a category from this budget.</div> : null}
 
         {planning && !trip.plan && <div className="mt-16 grid min-h-72 place-items-center border-y border-black/10 py-12 text-center"><div><span className="mx-auto grid h-14 w-14 animate-spin place-items-center rounded-full border border-black/15 border-t-black text-[8px] font-semibold uppercase tracking-[0.12em]">GT</span><p className="mt-7 font-serif text-3xl tracking-[-0.035em]">Custom itinerary loading…</p><p className="mt-3 text-xs font-light text-black/45">Building your trip around the way you travel.</p></div></div>}
 

@@ -29,6 +29,8 @@ export function buildBudgetPlan(profile, destination) {
   const miscBuffer = estimate("miscBuffer", 0, bufferHigh, "globtrek_budget_rule", 0.8);
   const estimatedTripLow = rawLow;
   const estimatedTripHigh = rawHigh + bufferHigh;
+  const permittedOverage = targetBudget > 0 ? Math.min(100, Math.round(targetBudget * 0.02)) : 0;
+  const withinHardBudget = targetBudget <= 0 || estimatedTripHigh <= targetBudget + permittedOverage;
   const midpoint = (estimatedTripLow + estimatedTripHigh) / 2;
   const remainingBudget = targetBudget - midpoint;
   const ratio = targetBudget > 0 ? midpoint / targetBudget : Infinity;
@@ -57,12 +59,14 @@ export function buildBudgetPlan(profile, destination) {
     miscBuffer,
     estimatedTripLow,
     estimatedTripHigh,
+    permittedOverage,
+    withinHardBudget,
     remainingBudget: Math.round(remainingBudget),
     budgetFeasibilityScore,
     season,
     confidence: Math.min(...active.map((key) => categories[key].confidence), 0.8),
     isLive: false,
-    optimization,
+    optimization: withinHardBudget ? optimization : "reduce_cost",
     optimizationActions,
   };
 }
