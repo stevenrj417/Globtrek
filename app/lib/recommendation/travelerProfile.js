@@ -21,6 +21,11 @@ export function normalizeBudget(value) {
   return Math.round(numeric);
 }
 
+export function discoverySliderToUnknownness(value) {
+  const slider = Number.isFinite(Number(value)) ? Number(value) : 50;
+  return 100 - Math.min(100, Math.max(0, slider));
+}
+
 function dateNights(start, end) {
   const startTime = Date.parse(`${start || ""}T00:00:00Z`);
   const endTime = Date.parse(`${end || ""}T00:00:00Z`);

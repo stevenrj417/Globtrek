@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const words = ["PLACE", "PACE", "LIGHT", "TASTE", "TIME"];
+const words = ["Finding the right places", "Building your days", "Refining your route", "Adding the finishing touches"];
 
 export default function ThinkingPage() {
   const [index, setIndex] = useState(0);
@@ -18,17 +18,14 @@ export default function ThinkingPage() {
   return (
     <main className={`relative grid min-h-svh overflow-hidden bg-[#f3f0eb] text-[#171714] transition duration-700 ${closing ? "scale-[1.025] opacity-0" : "scale-100 opacity-100"}`}>
       <div className="absolute left-6 top-7 text-[12px] font-semibold uppercase tracking-[0.32em] sm:left-12 sm:top-10">Globtrēk</div>
-      <div className="absolute right-6 top-7 text-[9px] uppercase tracking-[0.25em] text-black/45 sm:right-12 sm:top-10">Finding your place</div>
       <section className="grid place-items-center px-6 text-center">
         <div>
-          <p className="text-[9px] uppercase tracking-[0.35em] text-black/45">Reading the way you travel</p>
-          <div className="mt-10 h-[clamp(4rem,11vw,10rem)] overflow-hidden">
-            <p key={words[index]} className="result-word font-serif text-[clamp(4rem,11vw,10rem)] leading-none tracking-[-0.055em]">{words[index]}</p>
-          </div>
-          <div className="mx-auto mt-12 h-px w-52 overflow-hidden bg-black/10 sm:w-80"><span className="result-progress block h-full bg-black" /></div>
+          <span className="mx-auto grid h-16 w-16 animate-spin place-items-center rounded-full border border-black/15 border-t-black text-[9px] font-semibold uppercase tracking-[0.14em]">GT</span>
+          <h1 className="mt-9 font-serif text-[clamp(2.5rem,6vw,5rem)] tracking-[-0.045em]">Custom itinerary loading…</h1>
+          <p className="mt-4 text-xs font-light text-black/45">Building your trip around the way you travel.</p>
+          <p key={words[index]} className="result-word mt-10 text-[9px] uppercase tracking-[0.22em] text-black/35">{words[index]}</p>
         </div>
       </section>
-      <p className="absolute inset-x-0 bottom-8 text-center text-[9px] uppercase tracking-[0.25em] text-black/40">Your answer is almost here</p>
     </main>
   );
 }

@@ -231,7 +231,7 @@ export default function ResultsPage() {
       quizAnswers: quiz?.answers || {},
       budget: quiz?.answers?.memory || null,
       pace: quiz?.answers?.escape || null,
-      familiarity: quiz?.discoveryLevel ?? null,
+      familiarity: quiz?.answers?.discovery ?? null,
     },
     itinerary: trip.plan || null,
     estimatedCosts: budgetPlan || null,
@@ -289,7 +289,7 @@ export default function ResultsPage() {
     <main className={`min-h-screen bg-[#f3f0eb] text-[#171714] transition duration-1000 ${ready ? "opacity-100" : "opacity-0"}`}>
       <header className="absolute inset-x-0 top-0 z-30 flex items-center justify-between px-6 py-7 text-white sm:px-12 sm:py-10">
         <Link href="/" className="text-[13px] font-semibold uppercase tracking-[0.32em]">Globtrēk</Link>
-        <div className="flex items-center gap-5"><AccountEntry compact light /><Link href="/discover" className="group flex items-center gap-3 text-[10px] uppercase tracking-[0.2em]"><span className="hidden sm:inline">Retake quiz</span><span className="grid h-10 w-10 place-items-center rounded-full border border-white/55 transition group-hover:bg-white group-hover:text-black">↺</span></Link></div>
+        <div className="flex items-center gap-5"><AccountEntry compact light /><Link href="/discover" className="border-b border-white/55 pb-1 text-[9px] uppercase tracking-[0.2em] transition hover:border-white">Start over</Link></div>
       </header>
 
       <section className="relative min-h-svh overflow-hidden">
@@ -326,28 +326,28 @@ export default function ResultsPage() {
           })}
         </div> : null}
 
-        {planning && !trip.plan && <div className="mt-16 flex min-h-32 items-center justify-between border-y border-black/15 py-8"><div><p className="text-[9px] uppercase tracking-[0.25em] text-black/40">Building your edit</p><p className="mt-3 font-serif text-2xl">Finding the places that fit you.</p></div><span className="h-2 w-2 animate-pulse rounded-full bg-black" /></div>}
+        {planning && !trip.plan && <div className="mt-16 grid min-h-72 place-items-center border-y border-black/10 py-12 text-center"><div><span className="mx-auto grid h-14 w-14 animate-spin place-items-center rounded-full border border-black/15 border-t-black text-[8px] font-semibold uppercase tracking-[0.12em]">GT</span><p className="mt-7 font-serif text-3xl tracking-[-0.035em]">Custom itinerary loading…</p><p className="mt-3 text-xs font-light text-black/45">Building your trip around the way you travel.</p></div></div>}
 
-        {trip.plan && <section className="mt-16 bg-[#171714] px-6 py-8 text-white sm:px-10 sm:py-10">
+        {trip.plan && <section className="mt-16 border-y border-black/15 bg-[#f8f6f2] px-6 py-12 text-[#171714] sm:px-10 sm:py-16">
           <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr]">
             <div>
-              <p className="text-[10px] uppercase tracking-[0.3em] text-white/45">Your trip, organized</p>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-black/45">Your trip, organized</p>
               <h2 className="mt-5 max-w-xl font-serif text-[clamp(2.3rem,4vw,4rem)] leading-[0.95] tracking-[-0.04em]">{trip.plan.headline}</h2>
-              {trip.plan.airport && <p className="mt-5 text-[10px] uppercase tracking-[0.2em] text-white/45">Arrive via {trip.plan.airport.code} · {trip.plan.airport.note}</p>}
-              {trip.plan.arrivalWindow && <div className="mt-8 border-l border-white/20 pl-5"><p className="text-[9px] uppercase tracking-[0.2em] text-white/40">{trip.plan.arrivalWindow.title}</p><p className="mt-3 text-sm leading-6 text-white/65">{trip.plan.arrivalWindow.steps?.[0]}</p></div>}
+              {trip.plan.airport && <p className="mt-5 text-[10px] uppercase tracking-[0.2em] text-black/45">Arrive via {trip.plan.airport.code} · {trip.plan.airport.note}</p>}
+              {trip.plan.arrivalWindow && <div className="mt-8 border-l border-black/20 pl-5"><p className="text-[9px] uppercase tracking-[0.2em] text-black/40">{trip.plan.arrivalWindow.title}</p><p className="mt-3 text-sm leading-6 text-black/60">{trip.plan.arrivalWindow.steps?.[0]}</p></div>}
             </div>
-            <div className="border-t border-white/15">
-              {trip.plan.days?.slice(0, 3).map((day) => <article key={`${day.day}-${day.title}`} className="grid gap-3 border-b border-white/15 py-5 sm:grid-cols-[4rem_1fr]">
-                <p className="text-[9px] uppercase tracking-[0.2em] text-white/35">{day.day}</p>
-                <div><h3 className="font-serif text-xl">{day.title}</h3><p className="mt-2 text-xs leading-5 text-white/55">{day.morning} · {day.afternoon} · {day.evening}</p></div>
+            <div className="border-t border-black/15">
+              {trip.plan.days?.slice(0, 3).map((day) => <article key={`${day.day}-${day.title}`} className="grid gap-3 border-b border-black/15 py-6 sm:grid-cols-[4rem_1fr]">
+                <p className="text-[9px] uppercase tracking-[0.2em] text-black/35">{day.day}</p>
+                <div><h3 className="font-serif text-2xl">{day.title}</h3><div className="mt-4 grid gap-3 text-xs leading-5 text-black/55"><p><span className="mr-3 text-[8px] uppercase tracking-[0.16em] text-black/35">Morning</span>{day.morning}</p><p><span className="mr-3 text-[8px] uppercase tracking-[0.16em] text-black/35">Afternoon</span>{day.afternoon}</p><p><span className="mr-3 text-[8px] uppercase tracking-[0.16em] text-black/35">Evening</span>{day.evening}</p></div></div>
               </article>)}
             </div>
           </div>
-          <div className="mt-8 flex flex-wrap gap-2 border-t border-white/15 pt-6">
-            {["More affordable", "More local", "More relaxing", "More adventurous"].map((label) => <button disabled={refining} type="button" key={label} onClick={() => refine(label.toLowerCase())} className="border border-white/20 px-4 py-3 text-[9px] uppercase tracking-[0.16em] text-white/65 transition hover:border-white/60 hover:text-white disabled:opacity-35">{refining ? "Refining…" : label}</button>)}
-            <Link href="/discover" className="border border-white/20 px-4 py-3 text-[9px] uppercase tracking-[0.16em] text-white/65 transition hover:border-white/60 hover:text-white">Different destination</Link>
+          <div className="mt-8 flex flex-wrap gap-2 border-t border-black/15 pt-6">
+            {["More affordable", "More local", "More relaxing", "More adventurous"].map((label) => <button disabled={refining} type="button" key={label} onClick={() => refine(label.toLowerCase())} className="border border-black/20 px-4 py-3 text-[9px] uppercase tracking-[0.16em] text-black/60 transition hover:border-black hover:text-black disabled:opacity-35">{refining ? "Refining…" : label}</button>)}
+            <Link href="/discover" className="border border-black/20 px-4 py-3 text-[9px] uppercase tracking-[0.16em] text-black/60 transition hover:border-black hover:text-black">Different destination</Link>
           </div>
-          {trip.plan.picks && <div className="mt-8 grid border-l border-t border-white/15 md:grid-cols-2">
+          {trip.plan.picks && <div className="mt-8 grid border-l border-t border-black/15 md:grid-cols-2">
             {[["Eat", trip.plan.picks.restaurants], ["Experience", trip.plan.picks.experiences]].map(([label, picks]) => <div key={label} className="border-b border-r border-white/15 p-5 sm:p-6">
               <p className="text-[9px] uppercase tracking-[0.22em] text-white/40">{label}</p>
               <div className="mt-4 space-y-4">{picks?.slice(0, 3).map((pick) => <a href={venueUrl(pick.name, trip)} target="_blank" rel="noopener" onClick={() => track("recommendation_clicked", { type: label, destination: trip.city })} className="group block" key={pick.name}><h3 className="flex items-center gap-2 font-serif text-lg group-hover:underline">{pick.name}<span className="h-4 w-4 text-white/35"><ArrowUpRight /></span></h3><p className="mt-1 text-[11px] leading-4 text-white/45">{pick.why}</p></a>)}</div>

@@ -33,5 +33,15 @@ export async function POST(request) {
     updated_at: new Date().toISOString(),
   };
   const { data, error } = await supabase.from("saved_trips").upsert(record, { onConflict: "user_id,client_trip_key" }).select().single();
+  if (!error) {
+    await supabase.from("profiles").upsert({
+      id: user.id,
+      display_name: user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split("@")[0] || null,
+      avatar_url: user.user_metadata?.avatar_url || user.user_metadata?.picture || null,
+      home_airport: String(body.trip?.originAirport || "").slice(0, 3).toUpperCase() || null,
+      travel_preferences: body.preferences && typeof body.preferences === "object" ? body.preferences : {},
+      updated_at: new Date().toISOString(),
+    }, { onConflict: "id" });
+  }
   return error ? Response.json({ error: error.message }, { status: 500 }) : Response.json({ trip: data });
 }

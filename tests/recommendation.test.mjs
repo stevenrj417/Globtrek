@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { destinations } from "../app/data/destinations.js";
-import { normalizeBudget, normalizeTravelerProfile } from "../app/lib/recommendation/travelerProfile.js";
+import { discoverySliderToUnknownness, normalizeBudget, normalizeTravelerProfile } from "../app/lib/recommendation/travelerProfile.js";
 import { buildBudgetPlan } from "../app/lib/recommendation/budgetEngine.js";
 import { rankDestinations } from "../app/lib/recommendation/destinationEngine.js";
 import { hotelRecommendationGroup, rankHotels, shortlistHotels } from "../app/lib/recommendation/hotelEngine.js";
@@ -21,6 +21,7 @@ const base = { answers: { alive: "Cities", escape: "Slow mornings", self: "Coupl
 for (const amount of [1000, 2500, 4800, 10000, 100000]) test(`normalizes ${amount} budget`, () => assert.equal(normalizeTravelerProfile({ ...base, exactBudget: amount }).exactBudget, amount));
 test("rejects negative, NaN and absurd budgets", () => { assert.equal(normalizeBudget(-1), null); assert.equal(normalizeBudget("nope"), null); assert.equal(normalizeBudget(1000001), null); });
 test("parses normal currency formatting", () => assert.equal(normalizeBudget("$4,500"), 4500));
+test("discovery slider maps left to unknown and right to iconic", () => { assert.equal(discoverySliderToUnknownness(0), 100); assert.equal(discoverySliderToUnknownness(100), 0); });
 test("normalizes complete traveler profile", () => { const profile = normalizeTravelerProfile(base); assert.equal(profile.origin, "PDX"); assert.equal(profile.tripLength, 7); assert.equal(profile.travelers, 2); assert.equal(profile.unknownness, 72); });
 test("flights excluded allocate zero", () => { const input = structuredClone(base); input.includedBudgetCategories.flights = false; assert.equal(buildBudgetPlan(normalizeTravelerProfile(input), tokyo).flightEstimate.high, 0); });
 test("hotel excluded allocates zero", () => { const input = structuredClone(base); input.includedBudgetCategories.hotel = false; assert.equal(buildBudgetPlan(normalizeTravelerProfile(input), tokyo).estimates.hotel.high, 0); });

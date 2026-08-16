@@ -4,7 +4,7 @@ import Image from "next/image";
 import { track } from "@vercel/analytics";
 import { useEffect, useMemo, useRef, useState } from "react";
 import airports from "../data/airports.json";
-import { legacyBudgetLabel, normalizeBudget } from "../lib/recommendation/travelerProfile";
+import { discoverySliderToUnknownness, legacyBudgetLabel, normalizeBudget } from "../lib/recommendation/travelerProfile";
 
 const questions = [
   {
@@ -240,7 +240,7 @@ function AirportAutocomplete({ value, onChange }) {
 
 function DiscoveryQuestion({ value, onChange, onBack, onContinue }) {
   const level = Number.isFinite(value) ? value : 50;
-  const mood = level < 20 ? "The classics" : level < 40 ? "Well known" : level < 65 ? "A mix of both" : level < 85 ? "Less discovered" : "Off the radar";
+  const mood = level < 20 ? "Off the radar" : level < 40 ? "Less discovered" : level < 65 ? "A mix of both" : level < 85 ? "Well known" : "The classics";
 
   return <div className="quiz-stage flex min-h-[calc(100svh-5rem)] flex-col bg-[#f5f3ef] px-5 pb-8 pt-9 sm:px-8 lg:px-10">
     <div className="flex items-center justify-between"><span className="text-xl font-semibold tracking-[-0.055em]">GLOBTREK</span><Progress step={questions.length} /></div>
@@ -254,7 +254,7 @@ function DiscoveryQuestion({ value, onChange, onBack, onContinue }) {
           <div className="pointer-events-none absolute top-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border border-black bg-[#f5f3ef] shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-[left] duration-150 sm:h-20 sm:w-20" style={{ left: `${level}%` }}><span className="grid h-full place-items-center text-[10px] tabular-nums tracking-[0.15em]">{level}</span></div>
           <input aria-label="Destination familiarity" className="absolute inset-0 h-full w-full cursor-ew-resize opacity-0" type="range" min="0" max="100" step="1" value={level} onInput={(event) => onChange(Number(event.currentTarget.value))} onChange={(event) => onChange(Number(event.currentTarget.value))} />
         </div>
-        <div className="flex justify-between gap-8 border-t border-black/10 pt-5 text-[10px] uppercase tracking-[0.2em] text-[#666]"><span>Iconic places</span><span className="text-right">Hidden places</span></div>
+        <div className="flex justify-between gap-8 border-t border-black/10 pt-5 text-[10px] uppercase tracking-[0.2em] text-[#666]"><span>Hidden places</span><span className="text-right">Iconic places</span></div>
       </div>
     </div>
     <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-6 border-t border-black/10 pt-7">
@@ -347,7 +347,7 @@ export default function TravelQuiz() {
   function back() { if (step > 0) go(step - 1, "back"); }
 
   function continueDiscovery() {
-    setAnswers((value) => ({ ...value, discovery: discoveryLevel }));
+    setAnswers((value) => ({ ...value, discovery: discoverySliderToUnknownness(discoveryLevel) }));
     go(step + 1);
   }
 
