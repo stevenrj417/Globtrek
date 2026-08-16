@@ -22,7 +22,7 @@ const destinationPhotos = {
   "MARRAKECH": "https://images.unsplash.com/photo-1597212618440-806262de4f6b",
   "NAIROBI & THE MAASAI MARA": "https://images.unsplash.com/photo-1516426122078-c23e76319801",
   "PARIS": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34",
-  "PROVENCE": "https://images.unsplash.com/photo-1499002238440-d264edd596ec",
+  "PROVENCE": "/provence-hero-v2.jpg",
   "AMALFI COAST": "https://images.unsplash.com/photo-1533105079780-92b9be482077",
   "ROME": "https://images.unsplash.com/photo-1552832230-c0197dd311b5",
   "FLORENCE": "https://images.unsplash.com/photo-1543429258-c158a3b8d4e1",

@@ -26,6 +26,10 @@ function ArrowUpRight() {
   return <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5 fill-none stroke-current" strokeWidth="1.4"><path d="M7 17 17 7M8 7h9v9" /></svg>;
 }
 
+function ChevronDown() {
+  return <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4 fill-none stroke-current transition-transform duration-300 group-open:rotate-180" strokeWidth="1.4"><path d="m6 9 6 6 6-6" /></svg>;
+}
+
 function encodeTrip(trip) {
   const bytes = new TextEncoder().encode(JSON.stringify(trip));
   let binary = "";
@@ -199,7 +203,7 @@ export default function ResultsPage() {
 
   const localMatches = useMemo(() => getMatches(quiz), [quiz]);
   const matches = remoteMatches || localMatches;
-  const chosenTrip = chosenAirport ? destinations.find((destination) => destination.airport === chosenAirport) : null;
+  const chosenTrip = chosenAirport ? matches.find((destination) => destination.airport === chosenAirport) || destinations.find((destination) => destination.airport === chosenAirport) : null;
   const trip = chosenTrip || matches[0];
   const alternatives = matches.filter((place) => place.airport !== trip?.airport).slice(0, 3);
   if (!ready || !quiz || !trip) return <main className="min-h-screen bg-[#f3f0eb]" />;
@@ -319,12 +323,15 @@ export default function ResultsPage() {
           <button type="button" onClick={emailTrip} className="min-h-20 bg-[#f3f0eb] px-7 text-[9px] uppercase tracking-[0.2em] transition hover:bg-white">Email this trip</button>
         </div>
 
-        {budgetPlan?.estimates ? <div className="grid grid-cols-2 border-l border-t border-black/10 sm:grid-cols-3 lg:grid-cols-6">
-          {Object.entries(budgetPlan.estimates).map(([key, item]) => {
-            const included = key === "miscBuffer" || budgetPlan.includedBudgetCategories[key];
-            return <div key={key} className="border-b border-r border-black/10 px-4 py-5"><p className="text-[8px] uppercase tracking-[0.18em] text-black/40">{key === "transportation" ? "Transport" : key.replace(/([A-Z])/g, " $1")}</p><p className="mt-2 font-serif text-lg">{included ? `${money(item.low)}–${money(item.high)}` : "Not included"}</p></div>;
-          })}
-        </div> : null}
+        {budgetPlan?.estimates ? <details className="group border-b border-black/10">
+          <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between px-5 text-[9px] uppercase tracking-[0.2em] text-black/55 transition hover:bg-white/60 [&::-webkit-details-marker]:hidden"><span>View cost breakdown</span><ChevronDown /></summary>
+          <div className="grid grid-cols-2 border-l border-t border-black/10 sm:grid-cols-3 lg:grid-cols-6">
+            {Object.entries(budgetPlan.estimates).map(([key, item]) => {
+              const included = key === "miscBuffer" || budgetPlan.includedBudgetCategories[key];
+              return <div key={key} className="border-b border-r border-black/10 px-4 py-5"><p className="text-[8px] uppercase tracking-[0.18em] text-black/40">{key === "transportation" ? "Transport" : key.replace(/([A-Z])/g, " $1")}</p><p className="mt-2 font-serif text-lg">{included ? `${money(item.low)}–${money(item.high)}` : "Not included"}</p></div>;
+            })}
+          </div>
+        </details> : null}
 
         {planning && !trip.plan && <div className="mt-16 grid min-h-72 place-items-center border-y border-black/10 py-12 text-center"><div><span className="mx-auto grid h-14 w-14 animate-spin place-items-center rounded-full border border-black/15 border-t-black text-[8px] font-semibold uppercase tracking-[0.12em]">GT</span><p className="mt-7 font-serif text-3xl tracking-[-0.035em]">Custom itinerary loading…</p><p className="mt-3 text-xs font-light text-black/45">Building your trip around the way you travel.</p></div></div>}
 
@@ -353,8 +360,6 @@ export default function ResultsPage() {
               <div className="mt-4 space-y-4">{picks?.slice(0, 3).map((pick) => <a href={venueUrl(pick.name, trip)} target="_blank" rel="noopener" onClick={() => track("recommendation_clicked", { type: label, destination: trip.city })} className="group block" key={pick.name}><h3 className="flex items-center gap-2 font-serif text-lg group-hover:underline">{pick.name}<span className="h-4 w-4 text-white/35"><ArrowUpRight /></span></h3><p className="mt-1 text-[11px] leading-4 text-white/45">{pick.why}</p></a>)}</div>
             </div>)}
           </div>}
-          {trip.plan.budget?.length > 0 && <div className="mt-8 grid grid-cols-2 border-l border-t border-white/15 lg:grid-cols-4">{trip.plan.budget.slice(0, 4).map((item) => <div key={item.category} className="border-b border-r border-white/15 p-4"><p className="text-[8px] uppercase tracking-[0.18em] text-white/35">{item.category}</p><p className="mt-2 font-serif text-xl">{item.share}</p></div>)}</div>}
-          <p className="mt-4 text-[9px] leading-4 text-white/30">Typical planning estimates. Confirm schedules, prices, availability, and opening times.</p>
         </section>}
 
         <a href="#book" onClick={() => track("booking_checklist_started", { destination: trip.city })} className="mt-5 flex min-h-16 items-center justify-between border border-black px-6 text-[10px] uppercase tracking-[0.2em] transition hover:bg-black hover:text-white"><span>Start booking this trip</span><span>↓</span></a>
@@ -363,11 +368,11 @@ export default function ResultsPage() {
 
         <div id="book" className="mt-20 scroll-mt-6">
           <div className="mb-8 flex items-end justify-between border-b border-black/15 pb-6"><div><p className="text-[9px] uppercase tracking-[0.24em] text-black/40">Booking checklist</p><h2 className="mt-3 font-serif text-[clamp(2.2rem,4vw,4rem)] leading-none">One trip. Four decisions.</h2></div><p className="hidden max-w-xs text-right text-xs leading-5 text-black/45 sm:block">Open each provider with your destination and traveler details already carried through.</p></div>
-          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+          <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
           {tools.map(([label, detail, href, sponsored], index) => (
-            <a key={label} href={href} onClick={() => track(`${label.toLowerCase()}_clicked`, { destination: trip.city })} target="_blank" rel={sponsored ? "noopener sponsored" : "noopener"} className="group flex min-h-36 flex-col justify-between bg-white p-5 shadow-[0_12px_40px_rgba(23,23,20,0.04)] transition hover:-translate-y-1 hover:shadow-[0_18px_55px_rgba(23,23,20,0.08)] sm:min-h-40 sm:p-6">
-              <span className="flex items-center justify-between text-[9px] uppercase tracking-[0.25em] text-black/40"><span>{label}</span><span>0{index + 1}</span></span>
-              <span className="flex items-end justify-between gap-4"><span className="font-serif text-[1.15rem] leading-tight sm:text-xl">{detail}</span><span className="shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"><ArrowUpRight /></span></span>
+            <a key={label} href={href} onClick={() => track(`${label.toLowerCase()}_clicked`, { destination: trip.city })} target="_blank" rel={sponsored ? "noopener sponsored" : "noopener"} className="group flex min-h-40 flex-col justify-between overflow-hidden rounded-[1.5rem] border border-black/[.08] bg-white p-6 shadow-[0_16px_50px_rgba(23,23,20,0.035)] transition duration-300 hover:-translate-y-1 hover:border-black/20 hover:shadow-[0_24px_65px_rgba(23,23,20,0.075)] sm:min-h-48 sm:p-8">
+              <span className="flex items-center justify-between text-[9px] uppercase tracking-[0.25em] text-black/40"><span>{label}</span><span className="tabular-nums">0{index + 1}</span></span>
+              <span className="flex items-end justify-between gap-6"><span className="max-w-[16rem] font-serif text-[1.6rem] leading-[1.05] tracking-[-0.035em] sm:text-3xl">{detail}</span><span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-black/15 transition group-hover:bg-black group-hover:text-white"><ArrowUpRight /></span></span>
             </a>
           ))}
           </div>
