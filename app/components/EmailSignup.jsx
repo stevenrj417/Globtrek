@@ -5,9 +5,14 @@ import { useState } from "react";
 export function EmailSignup() {
   const [message, setMessage] = useState("");
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    setMessage("Email signup is being connected. No address was submitted.");
+    const email = new FormData(event.currentTarget).get("email");
+    setMessage("Joining…");
+    const response = await fetch("/api/email/subscribe", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, marketingConsent: true }) });
+    const data = await response.json().catch(() => ({}));
+    setMessage(response.ok ? "You’re in. Check your inbox." : data.error || "Signup is temporarily unavailable.");
+    if (response.ok) event.currentTarget.reset();
   }
 
   return (
@@ -19,6 +24,7 @@ export function EmailSignup() {
           <button type="submit" className="min-h-14 px-5 text-xs font-semibold uppercase tracking-[0.08em]">Join</button>
         </form>
         <p aria-live="polite" className="ml-auto mt-3 min-h-5 max-w-xl text-xs text-[#707070]">{message}</p>
+        <p className="ml-auto max-w-xl text-[10px] leading-4 text-[#888]">By joining, you explicitly agree to receive Globtrek’s monthly travel email. Unsubscribe anytime.</p>
       </div>
     </section>
   );

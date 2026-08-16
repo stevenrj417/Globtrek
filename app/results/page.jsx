@@ -13,6 +13,7 @@ import { AccountEntry } from "../components/AccountEntry";
 import { SaveTripButton } from "../components/SaveTripButton";
 import { HotelPropertyPhoto } from "../components/HotelPropertyPhoto";
 import { ItineraryDocument } from "../components/ItineraryDocument";
+import { EmailTripButton } from "../components/EmailTripButton";
 
 function getMatches(quiz) {
   return rankDestinations(destinations, normalizeTravelerProfile(quiz || {}));
@@ -283,13 +284,6 @@ export default function ResultsPage() {
     }
   }
 
-  function emailTrip() {
-    const subject = encodeURIComponent(`My GlobTrek trip to ${trip.city}`);
-    const body = encodeURIComponent(`Here is my personalized GlobTrek trip:\n\n${tripLink()}`);
-    track("trip_emailed", { destination: trip.city });
-    window.location.href = `mailto:?subject=${subject}&body=${body}`;
-  }
-
   function viewFullTrip() {
     window.sessionStorage.setItem("globtrekCurrentTrip", JSON.stringify({ trip, quiz, savedTrip }));
     window.location.assign("/trip/current");
@@ -326,7 +320,7 @@ export default function ResultsPage() {
           <div className="bg-[#f3f0eb] px-5 py-5"><p className="text-[8px] uppercase tracking-[0.2em] text-black/40">Estimated trip range</p><p className="mt-2 font-serif text-xl">{estimatedTotal}</p>{budgetPlan?.targetBudget ? <p className="mt-2 text-[9px] uppercase tracking-[0.14em] text-black/40">Target {money(budgetPlan.targetBudget)} · estimates, not live prices</p> : null}</div>
           <button type="button" onClick={shareTrip} className="min-h-20 bg-[#f3f0eb] px-7 text-[9px] uppercase tracking-[0.2em] transition hover:bg-white">{shareStatus || "Save / share"}</button>
           <SaveTripButton trip={savedTrip} className="min-h-20 bg-[#f3f0eb] px-7 text-[9px] uppercase tracking-[0.2em] transition hover:bg-white" />
-          <button type="button" onClick={emailTrip} className="min-h-20 bg-[#f3f0eb] px-7 text-[9px] uppercase tracking-[0.2em] transition hover:bg-white">Email this trip</button>
+          <EmailTripButton trip={savedTrip} viewUrl={tripLink()} className="min-h-20 bg-[#f3f0eb] px-7 text-[9px] uppercase tracking-[0.2em] transition hover:bg-white" />
         </div>
 
         {budgetPlan?.estimates ? <details className="group border-b border-black/10">
