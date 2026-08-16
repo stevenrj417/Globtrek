@@ -194,3 +194,10 @@ test("Google API key remains server-only", async () => {
   assert.equal(files.some((source) => source.includes("NEXT_PUBLIC_GOOGLE")), false);
   assert.equal(files[2].includes("GOOGLE_PLACES_API_KEY"), false);
 });
+
+test("licensed fallback photo attribution is rendered", async () => {
+  const component = await readFile(new URL("../app/components/HotelPropertyPhoto.jsx", import.meta.url), "utf8");
+  assert.match(component, /licensedAuthor/);
+  assert.match(component, /licensedName/);
+  assert.match(component, /sourcePageUrl/);
+});
