@@ -3,9 +3,12 @@ import { hotelCatalog } from "../app/data/hotels.js";
 import googlePayload from "./hotels/google-places-results.json" with { type: "json" };
 import kyotoActivities from "./activities/verified-kyoto-batch-01.json" with { type: "json" };
 
-const hotels = destinations.flatMap((destination) => (hotelCatalog[destination.city] || []).map((hotel) => ({ ...(typeof hotel === "string" ? { name: hotel } : hotel), destinationId: destination.airport })));
+const hotels = destinations.flatMap((destination) => (hotelCatalog[destination.city] || []).map((hotel) => ({ ...(typeof hotel === "string" ? { name: hotel } : hotel), destinationId: destination.id || destination.airport })));
 const activities = kyotoActivities.records || [];
-const byDestination = Object.fromEntries(destinations.map((destination) => [destination.airport, { destination: destination.city, hotels: hotels.filter((hotel) => hotel.destinationId === destination.airport).length, activities: activities.filter((activity) => activity.destinationId === destination.airport).length }]));
+const byDestination = Object.fromEntries(destinations.map((destination) => {
+  const key = destination.id || destination.airport;
+  return [key, { destinationId: key, destination: destination.city, hotels: hotels.filter((hotel) => hotel.destinationId === key).length, activities: activities.filter((activity) => activity.destinationId === key).length }];
+}));
 const google = googlePayload.summary || {};
 const pricedHotels = hotels.filter((hotel) => hotel.typicalNightlyLow != null && hotel.typicalNightlyHigh != null).length;
 const cjHotels = hotels.filter((hotel) => hotel.bookingUrl).length;
