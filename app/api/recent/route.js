@@ -1,6 +1,6 @@
 import { createClient } from "../../lib/supabase/server";
 
-const TYPES = new Set(["hotel", "destination"]);
+const TYPES = new Set(["hotel", "destination", "trip"]);
 
 export async function POST(request) {
   const supabase = await createClient();

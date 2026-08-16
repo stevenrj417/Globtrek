@@ -22,13 +22,14 @@ export async function GET() {
     updated_at: new Date().toISOString(),
   }, { onConflict: "id", ignoreDuplicates: true });
 
-  const [profileResult, tripsResult, savedResult, recentResult] = await Promise.all([
+  const [profileResult, tripsResult, savedResult, recentResult, searchesResult] = await Promise.all([
     supabase.from("profiles").select("*").eq("id", user.id).maybeSingle(),
     supabase.from("saved_trips").select("*").order("updated_at", { ascending: false }),
     supabase.from("saved_items").select("*").order("updated_at", { ascending: false }),
     supabase.from("recent_views").select("*").order("viewed_at", { ascending: false }).limit(12),
+    supabase.from("recent_searches").select("*").order("searched_at", { ascending: false }).limit(8),
   ]);
-  const error = profileResult.error || tripsResult.error || savedResult.error || recentResult.error;
+  const error = profileResult.error || tripsResult.error || savedResult.error || recentResult.error || searchesResult.error;
   if (error) return Response.json({ error: error.message }, { status: 500 });
   return Response.json({
     user: { email: user.email, provider: user.app_metadata?.provider || "email" },
@@ -36,6 +37,7 @@ export async function GET() {
     trips: tripsResult.data || [],
     saved: savedResult.data || [],
     recent: recentResult.data || [],
+    recentSearches: searchesResult.data || [],
   });
 }
 

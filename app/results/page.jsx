@@ -215,8 +215,9 @@ export default function ResultsPage() {
     if (!destinationKey || !trip) return undefined;
     const controller = new AbortController();
     fetch("/api/recent", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ type: "destination", key: destinationKey, title: trip.city, subtitle: trip.country, imageUrl: trip.image, data: { id: destinationKey, airport: trip.airport } }), signal: controller.signal }).catch(() => {});
+    fetch("/api/recent-searches", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ destinationId: destinationKey, title: `${trip.city}, ${trip.country}`, searchData: quiz }), signal: controller.signal }).catch(() => {});
     return () => controller.abort();
-  }, [destinationKey, trip]);
+  }, [destinationKey, trip, quiz]);
   if (!ready || !quiz || !trip) return <main className="min-h-screen bg-[#f3f0eb]" />;
 
   const dates = quiz?.isFlexible
