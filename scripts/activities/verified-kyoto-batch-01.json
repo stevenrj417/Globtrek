@@ -1,0 +1,16 @@
+{
+  "records": [
+    { "destinationId": "KIX", "name": "Kiyomizu-dera Temple", "category": "culture", "location": "Higashiyama, Kyoto", "verificationSource": "https://kyoto.travel/en/destinations/kiyomizudera-temple/", "verifiedAt": "2026-08-16T00:00:00Z" },
+    { "destinationId": "KIX", "name": "Fushimi Inari Taisha Shrine", "category": "culture", "location": "Fushimi, Kyoto", "verificationSource": "https://kyoto.travel/en/destinations/fushimi-inaritaisha-shrine/", "verifiedAt": "2026-08-16T00:00:00Z" },
+    { "destinationId": "KIX", "name": "Nijo-jo Castle", "category": "architecture", "location": "Central Kyoto", "verificationSource": "https://kyoto.travel/en/destinations/nijojo-castle/", "verifiedAt": "2026-08-16T00:00:00Z" },
+    { "destinationId": "KIX", "name": "Kyoto Imperial Palace", "category": "culture", "location": "Kyoto Gyoen, Kyoto", "verificationSource": "https://kyoto.travel/en/destinations/kyoto-imperial-palace/", "verifiedAt": "2026-08-16T00:00:00Z" },
+    { "destinationId": "KIX", "name": "Kyoto Nishiki Food Market", "category": "food", "location": "Central Kyoto", "verificationSource": "https://kyoto.travel/en/destinations/kyoto-nishiki-food-market/", "verifiedAt": "2026-08-16T00:00:00Z" },
+    { "destinationId": "KIX", "name": "Kyoto Trail: Higashiyama Course", "category": "nature", "location": "Eastern Kyoto", "verificationSource": "https://kyoto.travel/en/destinations/the-kyoto-trail-higashiyama-course/", "verifiedAt": "2026-08-16T00:00:00Z" },
+    { "destinationId": "KIX", "name": "Gion and Kiyomizu Walking District", "category": "local", "location": "Gion and Higashiyama, Kyoto", "verificationSource": "https://kyoto.travel/en/areas/gion-kiyomizu/", "verifiedAt": "2026-08-16T00:00:00Z" },
+    { "destinationId": "KIX", "name": "Saga and Arashiyama", "category": "nature", "location": "Western Kyoto", "verificationSource": "https://kyoto.travel/en/getting-around/", "verifiedAt": "2026-08-16T00:00:00Z" },
+    { "destinationId": "KIX", "name": "Kinkaku-ji and Kinugasa", "category": "architecture", "location": "Northern Kyoto", "verificationSource": "https://kyoto.travel/en/getting-around/", "verifiedAt": "2026-08-16T00:00:00Z" },
+    { "destinationId": "KIX", "name": "Ginkaku-ji and Philosopher's Path", "category": "culture", "location": "Eastern Kyoto", "verificationSource": "https://kyoto.travel/en/getting-around/", "verifiedAt": "2026-08-16T00:00:00Z" },
+    { "destinationId": "KIX", "name": "Kyoto Tea Ceremony Experience", "category": "food", "location": "Kyoto City", "verificationSource": "https://kyoto.travel/en/experiences/", "verifiedAt": "2026-08-16T00:00:00Z" },
+    { "destinationId": "KIX", "name": "Kyoto Culinary Experience", "category": "food", "location": "Kyoto City", "verificationSource": "https://kyoto.travel/en/food-and-drink/", "verifiedAt": "2026-08-16T00:00:00Z" }
+  ]
+}
