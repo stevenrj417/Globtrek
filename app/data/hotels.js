@@ -243,7 +243,7 @@ export function hotelsFor(destination, trip = {}, options = {}) {
       ...hotel,
       tags,
       score: hotelScore({ ...hotel, tags }, answers),
-      image: destination.image,
+      image: null,
     };
   }).sort((a, b) => b.score - a.score || a.name.localeCompare(b.name)).slice(0, options.limit ?? 4).map((hotel, index) => ({
     ...hotel,

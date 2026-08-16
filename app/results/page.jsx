@@ -11,6 +11,7 @@ import { rankDestinations } from "../lib/recommendation/destinationEngine";
 import { shortlistHotels } from "../lib/recommendation/hotelEngine";
 import { AccountEntry } from "../components/AccountEntry";
 import { SaveTripButton } from "../components/SaveTripButton";
+import { HotelPropertyPhoto } from "../components/HotelPropertyPhoto";
 
 function getMatches(quiz) {
   return rankDestinations(destinations, normalizeTravelerProfile(quiz || {}));
@@ -139,7 +140,7 @@ function HotelShortlist({ destination, quiz, budgetPlan }) {
         const isSelected = selected?.id === hotel.id;
         return <article key={hotel.id} className="group w-[82vw] max-w-[330px] shrink-0 snap-center overflow-hidden bg-white shadow-[0_12px_45px_rgba(23,23,20,0.055)] md:w-auto md:max-w-none">
           <div className="relative aspect-[4/5] overflow-hidden bg-black/5">
-            <Image src={hotel.image} alt={`${hotel.name} in ${destination.city}`} fill className={`object-cover transition duration-700 group-hover:scale-[1.025] ${index === 1 ? "object-[65%_center]" : index === 2 ? "object-[35%_center]" : index === 3 ? "object-bottom" : "object-center"}`} sizes="(min-width:1280px) 25vw,(min-width:768px) 50vw,100vw" quality={88} />
+            <HotelPropertyPhoto hotel={hotel} destination={destination} index={index} />
             <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
             <p className="absolute left-5 top-5 text-[9px] uppercase tracking-[0.25em] text-white/80">0{index + 1} · {hotel.descriptor}</p>
             {isSelected && <span className="absolute right-5 top-5 bg-white px-3 py-2 text-[9px] uppercase tracking-[0.2em] text-black">Selected</span>}

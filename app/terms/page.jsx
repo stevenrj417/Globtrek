@@ -26,6 +26,7 @@ export default function TermsPage() {
         <p>
           Final pricing, availability, taxes, fees, cancellation rules, and booking terms are determined by the external provider. A booking completed on another service is subject to that service’s terms and policies. The current GlobTrek product is not represented as the merchant of record and does not process reservation payments.
         </p>
+        <p>Some property identity and photography content is provided by Google Maps and is subject to the <a href="https://maps.google.com/help/terms_maps/" target="_blank" rel="noopener" className="underline">Google Maps/Google Earth Additional Terms of Service</a>.</p>
       </EditorialSection>
       <EditorialSection number="04" title="Early-access status">
         <p>

@@ -14,6 +14,8 @@
     "hotels:stats": "node scripts/hotels/catalog-stats.mjs",
     "hotels:seed-migration": "node scripts/hotels/generate-legacy-migration.mjs",
     "hotels:enrich": "node scripts/hotels/enrich-hotels.mjs",
+    "hotels:google-places": "node scripts/hotels/google-places-match.mjs",
+    "hotels:google-places-migration": "node scripts/hotels/generate-google-places-migration.mjs",
     "destinations:verify": "node scripts/destinations/verify-wikimedia.mjs",
     "destinations:migration": "node scripts/destinations/generate-migration.mjs",
     "destinations:coverage": "node scripts/destinations/coverage-report.mjs",

@@ -24,6 +24,8 @@ function mapHotel(row, destination) {
     image: row.image_url || null,
     imageSource: row.image_source,
     imageLicense: row.image_license_metadata,
+    googlePhotoManifestUrl: row.google_place_verified ? `/api/hotels/${row.id}/google-photos` : null,
+    googlePlaceVerified: Boolean(row.google_place_verified),
     luxuryScore: row.luxury_score,
     relaxationScore: row.relaxation_score,
     designScore: row.design_score,

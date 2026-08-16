@@ -33,7 +33,7 @@ export default function PrivacyPage() {
       </EditorialSection>
       <EditorialSection number="04" title="Technical information and external content">
         <p>
-          Hosting providers and services requested by your browser may receive standard technical information such as IP address, browser details, request time, and requested URL. Editorial photography is loaded from Unsplash.
+          Hosting providers and services requested by your browser may receive standard technical information such as IP address, browser details, request time, and requested URL. Editorial photography is loaded from Unsplash. Where a hotel is confidently matched, GlobTrek may request property information and photography from Google Maps Platform through GlobTrek’s server. Google processes those requests under the <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" className="underline">Google Privacy Policy</a>.
         </p>
       </EditorialSection>
       <EditorialSection number="05" title="External booking providers">

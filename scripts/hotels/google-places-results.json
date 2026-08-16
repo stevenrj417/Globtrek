@@ -1,0 +1,4160 @@
+{
+  "results": [
+    {
+      "key": "KIX|six senses kyoto|booking_com_cj",
+      "hotel": {
+        "destinationId": "KIX",
+        "name": "Six Senses Kyoto",
+        "city": "KYOTO",
+        "country": "JAPAN",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/jp/six-senses-kyoto.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJxw86kOEJAWARjz2nCSevbI8",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:23:37.592Z"
+    },
+    {
+      "key": "KIX|park hyatt kyoto|booking_com_cj",
+      "hotel": {
+        "destinationId": "KIX",
+        "name": "Park Hyatt Kyoto",
+        "city": "KYOTO",
+        "country": "JAPAN",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/jp/park-hyatt-kyoto.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJY1o_4kcJAWARy0VPcxQbz94",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:23:38.515Z"
+    },
+    {
+      "key": "KIX|four seasons hotel kyoto|booking_com_cj",
+      "hotel": {
+        "destinationId": "KIX",
+        "name": "Four Seasons Hotel Kyoto",
+        "city": "KYOTO",
+        "country": "JAPAN",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/jp/four-seasons-kyoto.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJXRfz8csIAWAR7R3vbOxO6J4",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:23:39.412Z"
+    },
+    {
+      "key": "KIX|sowaka|booking_com_cj",
+      "hotel": {
+        "destinationId": "KIX",
+        "name": "Sowaka",
+        "city": "KYOTO",
+        "country": "JAPAN",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/jp/sowaka-jing-du-shi.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.7417,
+      "evidence": {
+        "nameScore": 0.6667,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:23:40.296Z"
+    },
+    {
+      "key": "HND|trunk hotel yoyogi park|booking_com_cj",
+      "hotel": {
+        "destinationId": "HND",
+        "name": "TRUNK(HOTEL) YOYOGI PARK",
+        "city": "TOKYO",
+        "country": "JAPAN",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/jp/trunk-yoyogi-park.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJRVwkXF2NGGARf276xasJiF8",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:23:40.641Z"
+    },
+    {
+      "key": "HND|the tokyo edition toranomon|booking_com_cj",
+      "hotel": {
+        "destinationId": "HND",
+        "name": "The Tokyo EDITION, Toranomon",
+        "city": "TOKYO",
+        "country": "JAPAN",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/jp/the-tokyo-edition-toranomon.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJwxqh7qyLGGARp01W6wdogZI",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:23:41.274Z"
+    },
+    {
+      "key": "HND|palace hotel tokyo|booking_com_cj",
+      "hotel": {
+        "destinationId": "HND",
+        "name": "Palace Hotel Tokyo",
+        "city": "TOKYO",
+        "country": "JAPAN",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/jp/palace-tokyo.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJq0s44BuMGGARvBtm78mmRRg",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:23:41.872Z"
+    },
+    {
+      "key": "HND|mandarin oriental tokyo|booking_com_cj",
+      "hotel": {
+        "destinationId": "HND",
+        "name": "Mandarin Oriental, Tokyo",
+        "city": "TOKYO",
+        "country": "JAPAN",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/jp/mandarin-oriental-tokyo.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJ281VfFWJGGARYaR_hmZuo0I",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:23:42.482Z"
+    },
+    {
+      "key": "HND|muji hotel ginza|booking_com_cj",
+      "hotel": {
+        "destinationId": "HND",
+        "name": "MUJI HOTEL GINZA",
+        "city": "TOKYO",
+        "country": "JAPAN",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/jp/muji-ginza.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJUdq3uymLGGARO7hFrLUXZp4",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:23:43.078Z"
+    },
+    {
+      "key": "HND|sequence miyashita park shibuya|booking_com_cj",
+      "hotel": {
+        "destinationId": "HND",
+        "name": "sequence MIYASHITA PARK - Shibuya",
+        "city": "TOKYO",
+        "country": "JAPAN",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/jp/sequence-miyashita-park-tokyo.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJo4g0zfmNGGARKtV9Mw9T_YM",
+      "confidence": 0.8464,
+      "evidence": {
+        "nameScore": 0.8571,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:23:43.667Z"
+    },
+    {
+      "key": "HND|hotel k5|booking_com_cj",
+      "hotel": {
+        "destinationId": "HND",
+        "name": "Hotel K5",
+        "city": "TOKYO",
+        "country": "JAPAN",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/jp/k5.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJVdGMfCqJGGAR0y3OBauqW5c",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:23:46.438Z"
+    },
+    {
+      "key": "HND|omo5 tokyo otsuka by hoshino resorts|booking_com_cj",
+      "hotel": {
+        "destinationId": "HND",
+        "name": "OMO5 Tokyo Otsuka by Hoshino Resorts",
+        "city": "TOKYO",
+        "country": "JAPAN",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/jp/xing-ye-rizoto-omo5-da-zhong.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJ93Rr_HaNGGARL3MjBI5HZeo",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:23:47.157Z"
+    },
+    {
+      "key": "ICN|josun palace|booking_com_cj",
+      "hotel": {
+        "destinationId": "ICN",
+        "name": "Josun Palace",
+        "city": "SEOUL",
+        "country": "SOUTH KOREA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/kr/josun-palace-a-luxury-collection-seoul-gangnam.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.65,
+      "evidence": {
+        "nameScore": 0.5,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:23:47.741Z"
+    },
+    {
+      "key": "ICN|signiel seoul|booking_com_cj",
+      "hotel": {
+        "destinationId": "ICN",
+        "name": "Signiel Seoul",
+        "city": "SEOUL",
+        "country": "SOUTH KOREA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/kr/signiel-seoul.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJy7zIwQqlfDURT2im2oOhtL4",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:23:48.082Z"
+    },
+    {
+      "key": "ICN|four seasons hotel seoul|booking_com_cj",
+      "hotel": {
+        "destinationId": "ICN",
+        "name": "Four Seasons Hotel Seoul",
+        "city": "SEOUL",
+        "country": "SOUTH KOREA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/kr/four-seasons-seoul.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJ70ZLLpOifDUReqEQ7NGzGLw",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:23:48.607Z"
+    },
+    {
+      "key": "ICN|ryse autograph collection|booking_com_cj",
+      "hotel": {
+        "destinationId": "ICN",
+        "name": "RYSE, Autograph Collection",
+        "city": "SEOUL",
+        "country": "SOUTH KOREA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/kr/ryse-autograph-collection-korea.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJjRmjUNuYfDURT0N7yVkAjhI",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:23:49.414Z"
+    },
+    {
+      "key": "BKK|capella bangkok|booking_com_cj",
+      "hotel": {
+        "destinationId": "BKK",
+        "name": "Capella Bangkok",
+        "city": "BANGKOK",
+        "country": "THAILAND",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/th/capella-bangkok.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJqcNXkyaZ4jAR6PgpLK1RNzI",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:23:50.173Z"
+    },
+    {
+      "key": "BKK|the siam|booking_com_cj",
+      "hotel": {
+        "destinationId": "BKK",
+        "name": "The Siam",
+        "city": "BANGKOK",
+        "country": "THAILAND",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/th/the-siam.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJbw__g9-b4jAR3iYpzC9gRoI",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:23:50.704Z"
+    },
+    {
+      "key": "BKK|mandarin oriental bangkok|booking_com_cj",
+      "hotel": {
+        "destinationId": "BKK",
+        "name": "Mandarin Oriental, Bangkok",
+        "city": "BANGKOK",
+        "country": "THAILAND",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/th/mandarin-oriental-bangkok.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJs6CnycSY4jAR5cqJZjPOsgs",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:23:51.233Z"
+    },
+    {
+      "key": "BKK|the standard bangkok mahanakhon|booking_com_cj",
+      "hotel": {
+        "destinationId": "BKK",
+        "name": "The Standard, Bangkok Mahanakhon",
+        "city": "BANGKOK",
+        "country": "THAILAND",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/th/the-standard-bangkok-mahanakhon.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJNZjBvcCf4jARzphih4xO9jc",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:23:51.833Z"
+    },
+    {
+      "key": "CNX|137 pillars house|booking_com_cj",
+      "hotel": {
+        "destinationId": "CNX",
+        "name": "137 Pillars House",
+        "city": "CHIANG MAI",
+        "country": "THAILAND",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/th/one-three-seven-pillars-house.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.7875,
+      "evidence": {
+        "nameScore": 0.75,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:23:54.406Z"
+    },
+    {
+      "key": "CNX|anantara chiang mai resort|booking_com_cj",
+      "hotel": {
+        "destinationId": "CNX",
+        "name": "Anantara Chiang Mai Resort",
+        "city": "CHIANG MAI",
+        "country": "THAILAND",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/th/anantara-chiang-mai-resort-and-spa.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJT-F9SKg62jARLeYUQc3AwcE",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:23:54.731Z"
+    },
+    {
+      "key": "CNX|raya heritage|booking_com_cj",
+      "hotel": {
+        "destinationId": "CNX",
+        "name": "Raya Heritage",
+        "city": "CHIANG MAI",
+        "country": "THAILAND",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/th/raya-heritage.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJieYgBzM82jARGOIe2G6_Bbo",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:23:55.375Z"
+    },
+    {
+      "key": "CNX|four seasons resort chiang mai|booking_com_cj",
+      "hotel": {
+        "destinationId": "CNX",
+        "name": "Four Seasons Resort Chiang Mai",
+        "city": "CHIANG MAI",
+        "country": "THAILAND",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/th/four-seasons-resort-chiang-mai.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJtfd_KO862jARHpyH167m98M",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:23:55.900Z"
+    },
+    {
+      "key": "DPS|bvlgari resort bali|booking_com_cj",
+      "hotel": {
+        "destinationId": "DPS",
+        "name": "Bvlgari Resort Bali",
+        "city": "BALI",
+        "country": "INDONESIA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/id/bulgari-hotels-resorts-bali.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJD3KueOta0i0Rl2LFO5YakuE",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:23:56.706Z"
+    },
+    {
+      "key": "DPS|capella ubud bali|booking_com_cj",
+      "hotel": {
+        "destinationId": "DPS",
+        "name": "Capella Ubud, Bali",
+        "city": "BALI",
+        "country": "INDONESIA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/id/capella-ubud-bali-ubud-gianyar-bali.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJY0hnMyoj0i0RfAGZL_k-CSU",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:23:57.256Z"
+    },
+    {
+      "key": "DPS|mandapa a ritz carlton reserve|booking_com_cj",
+      "hotel": {
+        "destinationId": "DPS",
+        "name": "Mandapa, a Ritz-Carlton Reserve",
+        "city": "BALI",
+        "country": "INDONESIA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/id/mandapa-a-ritz-carlton-reserve.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJI_3sXcMi0i0RLXYUYYo7eT4",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:23:57.786Z"
+    },
+    {
+      "key": "DPS|the slow|booking_com_cj",
+      "hotel": {
+        "destinationId": "DPS",
+        "name": "The Slow",
+        "city": "BALI",
+        "country": "INDONESIA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/id/the-slow.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.65,
+      "evidence": {
+        "nameScore": 0.5,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:23:58.835Z"
+    },
+    {
+      "key": "SIN|raffles singapore|booking_com_cj",
+      "hotel": {
+        "destinationId": "SIN",
+        "name": "Raffles Singapore",
+        "city": "SINGAPORE",
+        "country": "SINGAPORE",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/sg/raffles.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJwUTKu6UZ2jERwt5ctkU4f2Q",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:23:59.162Z"
+    },
+    {
+      "key": "SIN|the singapore edition|booking_com_cj",
+      "hotel": {
+        "destinationId": "SIN",
+        "name": "The Singapore EDITION",
+        "city": "SINGAPORE",
+        "country": "SINGAPORE",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/sg/the-singapore-edition-sm.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJbam1KowZ2jERqTdPePssDzE",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:23:59.813Z"
+    },
+    {
+      "key": "SIN|capella singapore|booking_com_cj",
+      "hotel": {
+        "destinationId": "SIN",
+        "name": "Capella Singapore",
+        "city": "SINGAPORE",
+        "country": "SINGAPORE",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/sg/capella-singapore.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJF75fVaoe2jERZYVUuHEz-lQ",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:02.888Z"
+    },
+    {
+      "key": "SIN|the warehouse hotel|booking_com_cj",
+      "hotel": {
+        "destinationId": "SIN",
+        "name": "The Warehouse Hotel",
+        "city": "SINGAPORE",
+        "country": "SINGAPORE",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/sg/the-warehouse.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJ3x3BIHYZ2jERaKVKVHoczD8",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:03.518Z"
+    },
+    {
+      "key": "HAN|sofitel legend metropole hanoi|booking_com_cj",
+      "hotel": {
+        "destinationId": "HAN",
+        "name": "Sofitel Legend Metropole Hanoi",
+        "city": "HANOI",
+        "country": "VIETNAM",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/vn/sofitelmetropole.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJTbX4mOurNTERJV-mNCKY1pA",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:04.052Z"
+    },
+    {
+      "key": "HAN|capella hanoi|booking_com_cj",
+      "hotel": {
+        "destinationId": "HAN",
+        "name": "Capella Hanoi",
+        "city": "HANOI",
+        "country": "VIETNAM",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/vn/capella-hoan-kiem.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJeysLiz2rNTER3KKgUoOxxUQ",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:04.595Z"
+    },
+    {
+      "key": "HAN|peridot grand luxury boutique hotel|booking_com_cj",
+      "hotel": {
+        "destinationId": "HAN",
+        "name": "Peridot Grand Luxury Boutique Hotel",
+        "city": "HANOI",
+        "country": "VIETNAM",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/vn/peridot-grand-amp-spa-by-aira-hoan-kiem1.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJVQa1tWCrNTERp1ZgsDNLVPA",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:05.126Z"
+    },
+    {
+      "key": "HAN|hotel de l opera hanoi mgallery|booking_com_cj",
+      "hotel": {
+        "destinationId": "HAN",
+        "name": "Hotel de l'Opera Hanoi - MGallery",
+        "city": "HANOI",
+        "country": "VIETNAM",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/vn/de-l-opera-hanoi-mgallery.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJ__8jvJWrNTERoYMvS7zr7WI",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:05.683Z"
+    },
+    {
+      "key": "MLE|soneva jani|booking_com_cj",
+      "hotel": {
+        "destinationId": "MLE",
+        "name": "Soneva Jani",
+        "city": "MALDIVES",
+        "country": "MALDIVES",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/mv/soneva-jani.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJx_vrGKEzazsRTVck0_2lu2U",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:06.250Z"
+    },
+    {
+      "key": "MLE|the st regis maldives vommuli resort|booking_com_cj",
+      "hotel": {
+        "destinationId": "MLE",
+        "name": "The St. Regis Maldives Vommuli Resort",
+        "city": "MALDIVES",
+        "country": "MALDIVES",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/mv/the-st-regis-maldives-vommuli-resort.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJMYgTuO-oRzsRyQvlsT_ME-c",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:06.781Z"
+    },
+    {
+      "key": "MLE|patina maldives fari islands|booking_com_cj",
+      "hotel": {
+        "destinationId": "MLE",
+        "name": "Patina Maldives, Fari Islands",
+        "city": "MALDIVES",
+        "country": "MALDIVES",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/mv/patina-maldives-fari-islands-north-maldives.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJzWroqKbxPzsRNJEMBEslMtw",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:07.388Z"
+    },
+    {
+      "key": "MLE|six senses laamu|booking_com_cj",
+      "hotel": {
+        "destinationId": "MLE",
+        "name": "Six Senses Laamu",
+        "city": "MALDIVES",
+        "country": "MALDIVES",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/mv/six-senses-laamu.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJsZRy68UrSDsRWZVm3G4-ao0",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:07.909Z"
+    },
+    {
+      "key": "DXB|bvlgari resort dubai|booking_com_cj",
+      "hotel": {
+        "destinationId": "DXB",
+        "name": "Bvlgari Resort Dubai",
+        "city": "DUBAI",
+        "country": "UNITED ARAB EMIRATES",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/ae/bulgari-resorts-dubai.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJ8-LpJSNCXz4RSYU8D8qlVl4",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:11.587Z"
+    },
+    {
+      "key": "DXB|one only the palm dubai|booking_com_cj",
+      "hotel": {
+        "destinationId": "DXB",
+        "name": "One&Only The Palm Dubai",
+        "city": "DUBAI",
+        "country": "UNITED ARAB EMIRATES",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/ae/one-only-the-palm-dubai.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.7464,
+      "evidence": {
+        "nameScore": 0.8571,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:24:12.256Z"
+    },
+    {
+      "key": "DXB|the lana dorchester collection|booking_com_cj",
+      "hotel": {
+        "destinationId": "DXB",
+        "name": "The Lana - Dorchester Collection",
+        "city": "DUBAI",
+        "country": "UNITED ARAB EMIRATES",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/ae/the-lana-dorchester-collection-dubai.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJiyZtnNlpXz4Rmopi1CKIQR8",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:12.697Z"
+    },
+    {
+      "key": "DXB|atlantis the royal|booking_com_cj",
+      "hotel": {
+        "destinationId": "DXB",
+        "name": "Atlantis The Royal",
+        "city": "DUBAI",
+        "country": "UNITED ARAB EMIRATES",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/ae/the-royal-atlantis.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJyTL-aggVXz4R4cAwRc0Ydsw",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:13.235Z"
+    },
+    {
+      "key": "CPT|the silo hotel|booking_com_cj",
+      "hotel": {
+        "destinationId": "CPT",
+        "name": "The Silo Hotel",
+        "city": "CAPE TOWN",
+        "country": "SOUTH AFRICA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/za/the-silo.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJRTyvbllnzB0RfPQP1rhDgeg",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:13.779Z"
+    },
+    {
+      "key": "CPT|mount nelson a belmond hotel|booking_com_cj",
+      "hotel": {
+        "destinationId": "CPT",
+        "name": "Mount Nelson, A Belmond Hotel",
+        "city": "CAPE TOWN",
+        "country": "SOUTH AFRICA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/za/belmond-mount-nelson.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJXcdQTABpzB0RsH3kv79CYJ4",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "missing",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:14.381Z"
+    },
+    {
+      "key": "CPT|ellerman house|booking_com_cj",
+      "hotel": {
+        "destinationId": "CPT",
+        "name": "Ellerman House",
+        "city": "CAPE TOWN",
+        "country": "SOUTH AFRICA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/za/ellerman-house.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJqf6bNuJmzB0RwJQZ3fcWj1o",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:14.833Z"
+    },
+    {
+      "key": "CPT|twelve apostles hotel spa|booking_com_cj",
+      "hotel": {
+        "destinationId": "CPT",
+        "name": "Twelve Apostles Hotel & Spa",
+        "city": "CAPE TOWN",
+        "country": "SOUTH AFRICA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/za/twelve-apostles-spa.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.65,
+      "evidence": {
+        "nameScore": 0.5,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:24:15.410Z"
+    },
+    {
+      "key": "RAK|royal mansour marrakech|booking_com_cj",
+      "hotel": {
+        "destinationId": "RAK",
+        "name": "Royal Mansour Marrakech",
+        "city": "MARRAKECH",
+        "country": "MOROCCO",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/ma/royal-mansour-marrakech.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJyx6ijl7urw0RJmV3ZuinO5o",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:15.767Z"
+    },
+    {
+      "key": "RAK|el fenn|booking_com_cj",
+      "hotel": {
+        "destinationId": "RAK",
+        "name": "El Fenn",
+        "city": "MARRAKECH",
+        "country": "MOROCCO",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/ma/riad-el-fenn.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.5893,
+      "evidence": {
+        "nameScore": 0.5714,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:24:16.290Z"
+    },
+    {
+      "key": "RAK|les deux tours|booking_com_cj",
+      "hotel": {
+        "destinationId": "RAK",
+        "name": "Les Deux Tours",
+        "city": "MARRAKECH",
+        "country": "MOROCCO",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/ma/les-deux-tours.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJGzQlqwvyrw0RSRBhcQtyxCk",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:25.714Z"
+    },
+    {
+      "key": "RAK|la villa des orangers|booking_com_cj",
+      "hotel": {
+        "destinationId": "RAK",
+        "name": "La Villa des Orangers",
+        "city": "MARRAKECH",
+        "country": "MOROCCO",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/ma/villa-des-orangers.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJcROuUvjurw0R7iYmNFnJ9Yc",
+      "confidence": 0.8464,
+      "evidence": {
+        "nameScore": 0.8571,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:26.197Z"
+    },
+    {
+      "key": "NBO|hemingways nairobi|booking_com_cj",
+      "hotel": {
+        "destinationId": "NBO",
+        "name": "Hemingways Nairobi",
+        "city": "NAIROBI & THE MAASAI MARA",
+        "country": "KENYA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/ke/hemingways-nairobi.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJMVs55sEbLxgR96cxc6YzEgM",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:26.655Z"
+    },
+    {
+      "key": "NBO|jw marriott masai mara lodge|booking_com_cj",
+      "hotel": {
+        "destinationId": "NBO",
+        "name": "JW Marriott Masai Mara Lodge",
+        "city": "NAIROBI & THE MAASAI MARA",
+        "country": "KENYA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/ke/jw-marriott-masai-mara-lodge.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJAyEepqdVLBgREciNv97-cao",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:27.447Z"
+    },
+    {
+      "key": "NBO|mahali mzuri|booking_com_cj",
+      "hotel": {
+        "destinationId": "NBO",
+        "name": "Mahali Mzuri",
+        "city": "NAIROBI & THE MAASAI MARA",
+        "country": "KENYA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/ke/mahali-mzuri.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJxZ4T4IJfLBgRzVv8NzzI5t4",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:28.112Z"
+    },
+    {
+      "key": "NBO|fairmont mara safari club|booking_com_cj",
+      "hotel": {
+        "destinationId": "NBO",
+        "name": "Fairmont Mara Safari Club",
+        "city": "NAIROBI & THE MAASAI MARA",
+        "country": "KENYA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/ke/fairmont-mara-safari-club.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJl4RbeYWHLBgRzGbPfVzXA08",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:29.080Z"
+    },
+    {
+      "key": "CDG|hotel de crillon|booking_com_cj",
+      "hotel": {
+        "destinationId": "CDG",
+        "name": "Hotel de Crillon",
+        "city": "PARIS",
+        "country": "FRANCE",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/fr/de-crillon-paris.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.815,
+      "evidence": {
+        "nameScore": 0.8,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:24:29.974Z"
+    },
+    {
+      "key": "CDG|cheval blanc paris|booking_com_cj",
+      "hotel": {
+        "destinationId": "CDG",
+        "name": "Cheval Blanc Paris",
+        "city": "PARIS",
+        "country": "FRANCE",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/fr/cheval-blanc-paris.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJE6y1dkBv5kcRhZB0rsUidCQ",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:30.295Z"
+    },
+    {
+      "key": "CDG|hotel madame reve|booking_com_cj",
+      "hotel": {
+        "destinationId": "CDG",
+        "name": "Hôtel Madame Rêve",
+        "city": "PARIS",
+        "country": "FRANCE",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/fr/madame-reve-paris.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJyU8uPrdv5kcRGSZe9V1cMU8",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:30.807Z"
+    },
+    {
+      "key": "CDG|le bristol paris|booking_com_cj",
+      "hotel": {
+        "destinationId": "CDG",
+        "name": "Le Bristol Paris",
+        "city": "PARIS",
+        "country": "FRANCE",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/fr/le-bristol-paris.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJVeUHqupv5kcR4taEicvH7ww",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:31.458Z"
+    },
+    {
+      "key": "MRS|hotel crillon le brave|booking_com_cj",
+      "hotel": {
+        "destinationId": "MRS",
+        "name": "Hotel Crillon le Brave",
+        "city": "PROVENCE",
+        "country": "FRANCE",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/fr/crillon-le-brave.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.7464,
+      "evidence": {
+        "nameScore": 0.8571,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:24:34.403Z"
+    },
+    {
+      "key": "MRS|domaine de fontenille|booking_com_cj",
+      "hotel": {
+        "destinationId": "MRS",
+        "name": "Domaine de Fontenille",
+        "city": "PROVENCE",
+        "country": "FRANCE",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/fr/domaine-de-fontenille.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJR3PH6ucbyhIRgpST_FoTnd0",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:34.858Z"
+    },
+    {
+      "key": "MRS|coquillade provence|booking_com_cj",
+      "hotel": {
+        "destinationId": "MRS",
+        "name": "Coquillade Provence",
+        "city": "PROVENCE",
+        "country": "FRANCE",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/fr/la-coquillade.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJl4hzibYWyhIRmBaiScqvNdE",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:35.329Z"
+    },
+    {
+      "key": "MRS|airelles gordes la bastide|booking_com_cj",
+      "hotel": {
+        "destinationId": "MRS",
+        "name": "Airelles Gordes, La Bastide",
+        "city": "PROVENCE",
+        "country": "FRANCE",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/fr/la-bastide-de-gordes-spa.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJ2UuLUtsNyhIRyWiV_tmXcL4",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:35.823Z"
+    },
+    {
+      "key": "NAP|le sirenuse|booking_com_cj",
+      "hotel": {
+        "destinationId": "NAP",
+        "name": "Le Sirenuse",
+        "city": "AMALFI COAST",
+        "country": "ITALY",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/it/le-sirenuse.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJFUQrOm-XOxMREuopKSa5hgo",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:36.392Z"
+    },
+    {
+      "key": "NAP|villa treville|booking_com_cj",
+      "hotel": {
+        "destinationId": "NAP",
+        "name": "Villa Treville",
+        "city": "AMALFI COAST",
+        "country": "ITALY",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/it/villa-treville.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJi5eLcRaXOxMRqoj0BLPrGyE",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:36.849Z"
+    },
+    {
+      "key": "NAP|borgo santandrea|booking_com_cj",
+      "hotel": {
+        "destinationId": "NAP",
+        "name": "Borgo Santandrea",
+        "city": "AMALFI COAST",
+        "country": "ITALY",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/it/borgo-santandrea.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJTWWjar-VOxMRzRDEH_NRrrs",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:37.362Z"
+    },
+    {
+      "key": "NAP|hotel santa caterina|booking_com_cj",
+      "hotel": {
+        "destinationId": "NAP",
+        "name": "Hotel Santa Caterina",
+        "city": "AMALFI COAST",
+        "country": "ITALY",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/it/santa-caterina-amalfi.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJlWZ_kWiXOxMRbmB5HIkKCVg",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:37.807Z"
+    },
+    {
+      "key": "FCO|hotel de russie|booking_com_cj",
+      "hotel": {
+        "destinationId": "FCO",
+        "name": "Hotel de Russie",
+        "city": "ROME",
+        "country": "ITALY",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/it/de-russie.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.6417,
+      "evidence": {
+        "nameScore": 0.6667,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:24:38.312Z"
+    },
+    {
+      "key": "FCO|six senses rome|booking_com_cj",
+      "hotel": {
+        "destinationId": "FCO",
+        "name": "Six Senses Rome",
+        "city": "ROME",
+        "country": "ITALY",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/it/six-senses-rome.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJncpa_HVhLxMRf449Spz5kcE",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:38.627Z"
+    },
+    {
+      "key": "FCO|bulgari hotel roma|booking_com_cj",
+      "hotel": {
+        "destinationId": "FCO",
+        "name": "Bulgari Hotel Roma",
+        "city": "ROME",
+        "country": "ITALY",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/it/bulgari-roma.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.55,
+      "evidence": {
+        "nameScore": 0.5,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:24:41.900Z"
+    },
+    {
+      "key": "FCO|hotel eden|booking_com_cj",
+      "hotel": {
+        "destinationId": "FCO",
+        "name": "Hotel Eden",
+        "city": "ROME",
+        "country": "ITALY",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/it/eden-roma.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJpduOjKphLxMRm7MPRmuuuKo",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:42.212Z"
+    },
+    {
+      "key": "FLR|hotel savoy a rocco forte hotel|booking_com_cj",
+      "hotel": {
+        "destinationId": "FLR",
+        "name": "Hotel Savoy, a Rocco Forte Hotel",
+        "city": "FLORENCE",
+        "country": "ITALY",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/it/savoy-firenze.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.55,
+      "evidence": {
+        "nameScore": 0.5,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:24:42.703Z"
+    },
+    {
+      "key": "FLR|portrait firenze|booking_com_cj",
+      "hotel": {
+        "destinationId": "FLR",
+        "name": "Portrait Firenze",
+        "city": "FLORENCE",
+        "country": "ITALY",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/it/portrait-firenze.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJF7-wEQBUKhMRd9ErWGgSAPg",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:43.030Z"
+    },
+    {
+      "key": "FLR|four seasons hotel firenze|booking_com_cj",
+      "hotel": {
+        "destinationId": "FLR",
+        "name": "Four Seasons Hotel Firenze",
+        "city": "FLORENCE",
+        "country": "ITALY",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/it/four-seasons-firenze.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJeQnHJxBUKhMRqEIwEupVmuk",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:43.570Z"
+    },
+    {
+      "key": "FLR|the place firenze|booking_com_cj",
+      "hotel": {
+        "destinationId": "FLR",
+        "name": "The Place Firenze",
+        "city": "FLORENCE",
+        "country": "ITALY",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/it/the-place-firenze.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJI4A8galWKhMRMeMpaP5CV9M",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:44.430Z"
+    },
+    {
+      "key": "JTR|canaves oia suites|booking_com_cj",
+      "hotel": {
+        "destinationId": "JTR",
+        "name": "Canaves Oia Suites",
+        "city": "SANTORINI",
+        "country": "GREECE",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/gr/canaves-oia-suites.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJFQPn9-6VoRQRRwjF3grceTc",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:44.929Z"
+    },
+    {
+      "key": "JTR|katikies santorini|booking_com_cj",
+      "hotel": {
+        "destinationId": "JTR",
+        "name": "Katikies Santorini",
+        "city": "SANTORINI",
+        "country": "GREECE",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/gr/katikies.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.715,
+      "evidence": {
+        "nameScore": 0.8,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:24:45.426Z"
+    },
+    {
+      "key": "JTR|perivolas hotel|booking_com_cj",
+      "hotel": {
+        "destinationId": "JTR",
+        "name": "Perivolas Hotel",
+        "city": "SANTORINI",
+        "country": "GREECE",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/gr/peribolas.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJla6ox4fMmRQRmPBJs1xJHRg",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:45.727Z"
+    },
+    {
+      "key": "JTR|vora|booking_com_cj",
+      "hotel": {
+        "destinationId": "JTR",
+        "name": "Vora",
+        "city": "SANTORINI",
+        "country": "GREECE",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/gr/vora.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJ8TwPbqrNmRQRlXNM4BMTc24",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:46.324Z"
+    },
+    {
+      "key": "LIS|bairro alto hotel|booking_com_cj",
+      "hotel": {
+        "destinationId": "LIS",
+        "name": "Bairro Alto Hotel",
+        "city": "LISBON",
+        "country": "PORTUGAL",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/pt/bairro-alto.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJr78TU340GQ0RAEUOr_Glzgw",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:48.630Z"
+    },
+    {
+      "key": "LIS|memmo principe real|booking_com_cj",
+      "hotel": {
+        "destinationId": "LIS",
+        "name": "Memmo Príncipe Real",
+        "city": "LISBON",
+        "country": "PORTUGAL",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/pt/memmo-principe-real.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJ7_b3ZH8zGQ0R-bzsDQQ24YU",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:49.153Z"
+    },
+    {
+      "key": "LIS|palacio principe real|booking_com_cj",
+      "hotel": {
+        "destinationId": "LIS",
+        "name": "Palácio Príncipe Real",
+        "city": "LISBON",
+        "country": "PORTUGAL",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/pt/palacio-principe-real.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJp0ilx6wzGQ0RzgtiBr7bDpM",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:49.696Z"
+    },
+    {
+      "key": "LIS|four seasons hotel ritz lisbon|booking_com_cj",
+      "hotel": {
+        "destinationId": "LIS",
+        "name": "Four Seasons Hotel Ritz Lisbon",
+        "city": "LISBON",
+        "country": "PORTUGAL",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/pt/four-seasons-ritz-lisbon.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJ-x5EtnEzGQ0R8am5BtQUOLs",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:50.176Z"
+    },
+    {
+      "key": "BCN|the barcelona edition|booking_com_cj",
+      "hotel": {
+        "destinationId": "BCN",
+        "name": "The Barcelona EDITION",
+        "city": "BARCELONA",
+        "country": "SPAIN",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/es/the-barcelona-edition.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJr5TZ19yjpBIR2C87Xj2ByQE",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:51.073Z"
+    },
+    {
+      "key": "BCN|hotel arts barcelona|booking_com_cj",
+      "hotel": {
+        "destinationId": "BCN",
+        "name": "Hotel Arts Barcelona",
+        "city": "BARCELONA",
+        "country": "SPAIN",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/es/arts-barcelona.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJG11mEw-jpBIRVUCfp2u8Pv8",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:51.579Z"
+    },
+    {
+      "key": "BCN|cotton house hotel|booking_com_cj",
+      "hotel": {
+        "destinationId": "BCN",
+        "name": "Cotton House Hotel",
+        "city": "BARCELONA",
+        "country": "SPAIN",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/es/cotton-house-autograph-collection.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.7417,
+      "evidence": {
+        "nameScore": 0.6667,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:24:52.112Z"
+    },
+    {
+      "key": "BCN|almanac barcelona|booking_com_cj",
+      "hotel": {
+        "destinationId": "BCN",
+        "name": "Almanac Barcelona",
+        "city": "BARCELONA",
+        "country": "SPAIN",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/es/almanac-barcelona-barcelona.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJdfJXAfKipBIRdtISLg-8xkY",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:52.442Z"
+    },
+    {
+      "key": "KEF|the reykjavik edition|booking_com_cj",
+      "hotel": {
+        "destinationId": "KEF",
+        "name": "The Reykjavík EDITION",
+        "city": "ICELAND RING ROAD",
+        "country": "ICELAND",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/is/the-reykjavik-edition.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJL8uw1Px11kgRc7rx1AIfB6o",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:52.958Z"
+    },
+    {
+      "key": "KEF|ion adventure hotel|booking_com_cj",
+      "hotel": {
+        "destinationId": "KEF",
+        "name": "ION Adventure Hotel",
+        "city": "ICELAND RING ROAD",
+        "country": "ICELAND",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/is/fosshotel-hengill.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.5194,
+      "evidence": {
+        "nameScore": 0.4444,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:24:53.578Z"
+    },
+    {
+      "key": "KEF|hotel ranga|booking_com_cj",
+      "hotel": {
+        "destinationId": "KEF",
+        "name": "Hotel Rangá",
+        "city": "ICELAND RING ROAD",
+        "country": "ICELAND",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/is/ranga-hella.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.55,
+      "evidence": {
+        "nameScore": 0.5,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:24:56.707Z"
+    },
+    {
+      "key": "KEF|fosshotel glacier lagoon|booking_com_cj",
+      "hotel": {
+        "destinationId": "KEF",
+        "name": "Fosshotel Glacier Lagoon",
+        "city": "ICELAND RING ROAD",
+        "country": "ICELAND",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/is/fosshotel-glacier-lagoon.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJ5ZlHOeol0EgRPgUk3X39yU4",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:57.325Z"
+    },
+    {
+      "key": "LHR|claridge s|booking_com_cj",
+      "hotel": {
+        "destinationId": "LHR",
+        "name": "Claridge's",
+        "city": "LONDON",
+        "country": "UNITED KINGDOM",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/gb/claridges.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJcZY1XAAFdkgRieYQg6UqpzQ",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:57.792Z"
+    },
+    {
+      "key": "LHR|the connaught|booking_com_cj",
+      "hotel": {
+        "destinationId": "LHR",
+        "name": "The Connaught",
+        "city": "LONDON",
+        "country": "UNITED KINGDOM",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/gb/the-connaught.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJiTyvxdcEdkgRIE3fJmxwzVM",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:58.311Z"
+    },
+    {
+      "key": "LHR|the london edition|booking_com_cj",
+      "hotel": {
+        "destinationId": "LHR",
+        "name": "The London EDITION",
+        "city": "LONDON",
+        "country": "UNITED KINGDOM",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/gb/the-london-edition.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJpeLYbSsbdkgRONduZ20Z3sQ",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:24:59.006Z"
+    },
+    {
+      "key": "LHR|the twenty two|booking_com_cj",
+      "hotel": {
+        "destinationId": "LHR",
+        "name": "The Twenty Two",
+        "city": "LONDON",
+        "country": "UNITED KINGDOM",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/gb/the-twenty-two.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.715,
+      "evidence": {
+        "nameScore": 0.8,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:24:59.526Z"
+    },
+    {
+      "key": "JFK|the greenwich hotel|booking_com_cj",
+      "hotel": {
+        "destinationId": "JFK",
+        "name": "The Greenwich Hotel",
+        "city": "NEW YORK CITY",
+        "country": "UNITED STATES",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/us/greenwich.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.725,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:24:59.835Z"
+    },
+    {
+      "key": "JFK|the bowery hotel|booking_com_cj",
+      "hotel": {
+        "destinationId": "JFK",
+        "name": "The Bowery Hotel",
+        "city": "NEW YORK CITY",
+        "country": "UNITED STATES",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/us/the-bowery.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.725,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:25:00.306Z"
+    },
+    {
+      "key": "JFK|aman new york|booking_com_cj",
+      "hotel": {
+        "destinationId": "JFK",
+        "name": "Aman New York",
+        "city": "NEW YORK CITY",
+        "country": "UNITED STATES",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/us/aman-new-york.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.725,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:25:00.726Z"
+    },
+    {
+      "key": "JFK|the mercer|booking_com_cj",
+      "hotel": {
+        "destinationId": "JFK",
+        "name": "The Mercer",
+        "city": "NEW YORK CITY",
+        "country": "UNITED STATES",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/us/the-mercer.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.725,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:25:01.103Z"
+    },
+    {
+      "key": "MEX|casa polanco|booking_com_cj",
+      "hotel": {
+        "destinationId": "MEX",
+        "name": "Casa Polanco",
+        "city": "MEXICO CITY",
+        "country": "MEXICO",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/mx/casa-polanco.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJp8mtcqsB0oURzQ0XgNNG9Go",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:03.683Z"
+    },
+    {
+      "key": "MEX|octavia casa|booking_com_cj",
+      "hotel": {
+        "destinationId": "MEX",
+        "name": "Octavia Casa",
+        "city": "MEXICO CITY",
+        "country": "MEXICO",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/mx/octavia-casa.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJ07DB-0L_0YURuqqrA7nbuuk",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:04.627Z"
+    },
+    {
+      "key": "MEX|the st regis mexico city|booking_com_cj",
+      "hotel": {
+        "destinationId": "MEX",
+        "name": "The St. Regis Mexico City",
+        "city": "MEXICO CITY",
+        "country": "MEXICO",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/mx/st-regis-mexico-city.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.6417,
+      "evidence": {
+        "nameScore": 0.6667,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:25:05.109Z"
+    },
+    {
+      "key": "MEX|downtown mexico|booking_com_cj",
+      "hotel": {
+        "destinationId": "MEX",
+        "name": "Downtown Mexico",
+        "city": "MEXICO CITY",
+        "country": "MEXICO",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/mx/downtown.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJ9TvPydUczoURtD9zTqdTor8",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:05.657Z"
+    },
+    {
+      "key": "TQO|be tulum|booking_com_cj",
+      "hotel": {
+        "destinationId": "TQO",
+        "name": "Be Tulum",
+        "city": "TULUM",
+        "country": "MEXICO",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/mx/be-tulum.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJH7bDFcvQT48RVxD5N8sFqKc",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:06.138Z"
+    },
+    {
+      "key": "TQO|nomade tulum|booking_com_cj",
+      "hotel": {
+        "destinationId": "TQO",
+        "name": "Nomade Tulum",
+        "city": "TULUM",
+        "country": "MEXICO",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/mx/nomade-tulum.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.7417,
+      "evidence": {
+        "nameScore": 0.6667,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:25:06.662Z"
+    },
+    {
+      "key": "TQO|hotel esencia|booking_com_cj",
+      "hotel": {
+        "destinationId": "TQO",
+        "name": "Hotel Esencia",
+        "city": "TULUM",
+        "country": "MEXICO",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/mx/esencia.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJee1qZv8rTI8R-T_IOBbLXpI",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:06.944Z"
+    },
+    {
+      "key": "TQO|casa malca|booking_com_cj",
+      "hotel": {
+        "destinationId": "TQO",
+        "name": "Casa Malca",
+        "city": "TULUM",
+        "country": "MEXICO",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/mx/casa-malca.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJfT3PPlLXT48Riydr7voiLNw",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:07.431Z"
+    },
+    {
+      "key": "SJO|nayara springs|booking_com_cj",
+      "hotel": {
+        "destinationId": "SJO",
+        "name": "Nayara Springs",
+        "city": "COSTA RICA",
+        "country": "COSTA RICA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/cr/nayara-springs.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJhz017uELoI8ReBhBgO1bJek",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:07.901Z"
+    },
+    {
+      "key": "SJO|four seasons resort peninsula papagayo|booking_com_cj",
+      "hotel": {
+        "destinationId": "SJO",
+        "name": "Four Seasons Resort Peninsula Papagayo",
+        "city": "COSTA RICA",
+        "country": "COSTA RICA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/cr/four-seasons-resort-costa-rica-at-peninsula-papagayo.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.815,
+      "evidence": {
+        "nameScore": 0.8,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:25:08.523Z"
+    },
+    {
+      "key": "SJO|hacienda altagracia|booking_com_cj",
+      "hotel": {
+        "destinationId": "SJO",
+        "name": "Hacienda AltaGracia",
+        "city": "COSTA RICA",
+        "country": "COSTA RICA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/cr/altagracia-boutique-hacienda.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.7417,
+      "evidence": {
+        "nameScore": 0.6667,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:25:11.740Z"
+    },
+    {
+      "key": "SJO|lapa rios lodge|booking_com_cj",
+      "hotel": {
+        "destinationId": "SJO",
+        "name": "Lapa Rios Lodge",
+        "city": "COSTA RICA",
+        "country": "COSTA RICA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/cr/lapa-rios-ecolodge.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJca_8u1R9pI8RTrw0plfWimk",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:12.003Z"
+    },
+    {
+      "key": "GIG|emiliano rio|booking_com_cj",
+      "hotel": {
+        "destinationId": "GIG",
+        "name": "Emiliano Rio",
+        "city": "RIO DE JANEIRO",
+        "country": "BRAZIL",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/br/emiliano-rio.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.7417,
+      "evidence": {
+        "nameScore": 0.6667,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:25:12.537Z"
+    },
+    {
+      "key": "GIG|hotel fasano rio de janeiro|booking_com_cj",
+      "hotel": {
+        "destinationId": "GIG",
+        "name": "Hotel Fasano Rio de Janeiro",
+        "city": "RIO DE JANEIRO",
+        "country": "BRAZIL",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/br/fasano-rio-de-janeiro.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJNTWt6wTVmwARCOFLpbd5MsQ",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:12.852Z"
+    },
+    {
+      "key": "GIG|copacabana palace a belmond hotel|booking_com_cj",
+      "hotel": {
+        "destinationId": "GIG",
+        "name": "Copacabana Palace, A Belmond Hotel",
+        "city": "RIO DE JANEIRO",
+        "country": "BRAZIL",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/br/copacabana-palace.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.7417,
+      "evidence": {
+        "nameScore": 0.6667,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:25:13.392Z"
+    },
+    {
+      "key": "GIG|santa teresa hotel rj mgallery|booking_com_cj",
+      "hotel": {
+        "destinationId": "GIG",
+        "name": "Santa Teresa Hotel RJ - MGallery",
+        "city": "RIO DE JANEIRO",
+        "country": "BRAZIL",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/br/santa-teresa.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJVdYBSLx_mQAR11XeXinIdZY",
+      "confidence": 0.8464,
+      "evidence": {
+        "nameScore": 0.8571,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:13.777Z"
+    },
+    {
+      "key": "EZE|faena hotel buenos aires|booking_com_cj",
+      "hotel": {
+        "destinationId": "EZE",
+        "name": "Faena Hotel Buenos Aires",
+        "city": "BUENOS AIRES",
+        "country": "ARGENTINA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/ar/faena-buenos-aires.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJ3_YRvdc0o5URF426622Yfts",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:14.538Z"
+    },
+    {
+      "key": "EZE|four seasons hotel buenos aires|booking_com_cj",
+      "hotel": {
+        "destinationId": "EZE",
+        "name": "Four Seasons Hotel Buenos Aires",
+        "city": "BUENOS AIRES",
+        "country": "ARGENTINA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/ar/four-seasons-buenos-aires.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJN6Y6fbDKvJUR79f451VNI68",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:15.050Z"
+    },
+    {
+      "key": "EZE|palacio duhau park hyatt buenos aires|booking_com_cj",
+      "hotel": {
+        "destinationId": "EZE",
+        "name": "Palacio Duhau - Park Hyatt Buenos Aires",
+        "city": "BUENOS AIRES",
+        "country": "ARGENTINA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/ar/palacio-duhau-park-hyatt-buenos-aires.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJ-Xo_LrvKvJURcj-osegOgis",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:15.824Z"
+    },
+    {
+      "key": "EZE|home hotel buenos aires|booking_com_cj",
+      "hotel": {
+        "destinationId": "EZE",
+        "name": "Home Hotel Buenos Aires",
+        "city": "BUENOS AIRES",
+        "country": "ARGENTINA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/ar/home.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.65,
+      "evidence": {
+        "nameScore": 0.5,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:25:16.486Z"
+    },
+    {
+      "key": "FTE|the singular patagonia|booking_com_cj",
+      "hotel": {
+        "destinationId": "FTE",
+        "name": "The Singular Patagonia",
+        "city": "PATAGONIA",
+        "country": "ARGENTINA & CHILE",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/cl/the-singular-patagonia.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.5417,
+      "evidence": {
+        "nameScore": 0.6667,
+        "localityScore": 0,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:25:19.422Z"
+    },
+    {
+      "key": "FTE|awasi patagonia|booking_com_cj",
+      "hotel": {
+        "destinationId": "FTE",
+        "name": "Awasi Patagonia",
+        "city": "PATAGONIA",
+        "country": "ARGENTINA & CHILE",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/cl/awasi-patagonia-torres-del-paine.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.725,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:25:19.733Z"
+    },
+    {
+      "key": "FTE|explora patagonia|booking_com_cj",
+      "hotel": {
+        "destinationId": "FTE",
+        "name": "Explora Patagonia",
+        "city": "PATAGONIA",
+        "country": "ARGENTINA & CHILE",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/cl/explora-patagonia.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.5417,
+      "evidence": {
+        "nameScore": 0.6667,
+        "localityScore": 0,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:25:20.055Z"
+    },
+    {
+      "key": "FTE|eolo patagonia s spirit|booking_com_cj",
+      "hotel": {
+        "destinationId": "FTE",
+        "name": "EOLO - Patagonia's Spirit",
+        "city": "PATAGONIA",
+        "country": "ARGENTINA & CHILE",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/ar/eolo-patagonias-spirit.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.725,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:25:20.359Z"
+    },
+    {
+      "key": "YYC|fairmont banff springs|booking_com_cj",
+      "hotel": {
+        "destinationId": "YYC",
+        "name": "Fairmont Banff Springs",
+        "city": "BANFF",
+        "country": "CANADA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/ca/the-fairmont-banff-springs.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJv7gvLjvKcFMRzvb0LKnpmQA",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:21.231Z"
+    },
+    {
+      "key": "YYC|fairmont chateau lake louise|booking_com_cj",
+      "hotel": {
+        "destinationId": "YYC",
+        "name": "Fairmont Chateau Lake Louise",
+        "city": "BANFF",
+        "country": "CANADA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/ca/the-fairmont-chateau-lake-louise.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJNZqvCRJdd1MRBBS7Nem5IEQ",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:21.835Z"
+    },
+    {
+      "key": "YYC|moraine lake lodge|booking_com_cj",
+      "hotel": {
+        "destinationId": "YYC",
+        "name": "Moraine Lake Lodge",
+        "city": "BANFF",
+        "country": "CANADA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/ca/moraine-lake-lodge.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJbaXXFshbd1MREKh_rYQFS-g",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:22.450Z"
+    },
+    {
+      "key": "YYC|the rimrock resort hotel banff|booking_com_cj",
+      "hotel": {
+        "destinationId": "YYC",
+        "name": "The Rimrock Resort Hotel Banff",
+        "city": "BANFF",
+        "country": "CANADA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/ca/the-rimrock-resort.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.7417,
+      "evidence": {
+        "nameScore": 0.6667,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:25:22.914Z"
+    },
+    {
+      "key": "YVR|rosewood hotel georgia|booking_com_cj",
+      "hotel": {
+        "destinationId": "YVR",
+        "name": "Rosewood Hotel Georgia",
+        "city": "VANCOUVER",
+        "country": "CANADA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/ca/rosewood-georgia.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJgQmKXX9xhlQRXmNfRsbZ4w4",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:23.235Z"
+    },
+    {
+      "key": "YVR|fairmont pacific rim|booking_com_cj",
+      "hotel": {
+        "destinationId": "YVR",
+        "name": "Fairmont Pacific Rim",
+        "city": "VANCOUVER",
+        "country": "CANADA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/ca/fairmont-pacific-rim.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJgzLyCINxhlQRkHq8urzYQ2Y",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:23.842Z"
+    },
+    {
+      "key": "YVR|shangri la vancouver|booking_com_cj",
+      "hotel": {
+        "destinationId": "YVR",
+        "name": "Shangri-La Vancouver",
+        "city": "VANCOUVER",
+        "country": "CANADA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/ca/shangri-la-vancouver.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.595,
+      "evidence": {
+        "nameScore": 0.4,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:25:27.134Z"
+    },
+    {
+      "key": "YVR|wedgewood hotel spa|booking_com_cj",
+      "hotel": {
+        "destinationId": "YVR",
+        "name": "Wedgewood Hotel & Spa",
+        "city": "VANCOUVER",
+        "country": "CANADA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/ca/wedgewood.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJC-yI8X9xhlQRW_dizpXab-A",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:27.485Z"
+    },
+    {
+      "key": "OGG|hotel wailea|booking_com_cj",
+      "hotel": {
+        "destinationId": "OGG",
+        "name": "Hotel Wailea",
+        "city": "MAUI",
+        "country": "UNITED STATES",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/us/wailea.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.725,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:25:27.971Z"
+    },
+    {
+      "key": "OGG|four seasons resort maui at wailea|booking_com_cj",
+      "hotel": {
+        "destinationId": "OGG",
+        "name": "Four Seasons Resort Maui at Wailea",
+        "city": "MAUI",
+        "country": "UNITED STATES",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/us/four-seasons-resort-maui-at-wailea.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.725,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:25:28.422Z"
+    },
+    {
+      "key": "OGG|montage kapalua bay|booking_com_cj",
+      "hotel": {
+        "destinationId": "OGG",
+        "name": "Montage Kapalua Bay",
+        "city": "MAUI",
+        "country": "UNITED STATES",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/us/montage-kapalua-bay.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.4893,
+      "evidence": {
+        "nameScore": 0.5714,
+        "localityScore": 0,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:25:29.006Z"
+    },
+    {
+      "key": "OGG|andaz maui at wailea resort|booking_com_cj",
+      "hotel": {
+        "destinationId": "OGG",
+        "name": "Andaz Maui at Wailea Resort",
+        "city": "MAUI",
+        "country": "UNITED STATES",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/us/andaz-maui-at-wailea.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.615,
+      "evidence": {
+        "nameScore": 0.8,
+        "localityScore": 0,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:25:29.282Z"
+    },
+    {
+      "key": "SYD|capella sydney|booking_com_cj",
+      "hotel": {
+        "destinationId": "SYD",
+        "name": "Capella Sydney",
+        "city": "SYDNEY",
+        "country": "AUSTRALIA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/au/capella-sydney.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJ9Zcet0ivEmsRgInM0K7in-Q",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:29.632Z"
+    },
+    {
+      "key": "SYD|park hyatt sydney|booking_com_cj",
+      "hotel": {
+        "destinationId": "SYD",
+        "name": "Park Hyatt Sydney",
+        "city": "SYDNEY",
+        "country": "AUSTRALIA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/au/park-hyatt-sydney.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJIYDNhV2uEmsRu1Y4aDYD0Ys",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:30.101Z"
+    },
+    {
+      "key": "SYD|ace hotel sydney|booking_com_cj",
+      "hotel": {
+        "destinationId": "SYD",
+        "name": "Ace Hotel Sydney",
+        "city": "SYDNEY",
+        "country": "AUSTRALIA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/au/ace-sydney.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJP1rDGnavEmsRqE-oFRTLsqQ",
+      "confidence": 0.925,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 1,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:30.752Z"
+    },
+    {
+      "key": "SYD|the old clare hotel|booking_com_cj",
+      "hotel": {
+        "destinationId": "SYD",
+        "name": "The Old Clare Hotel",
+        "city": "SYDNEY",
+        "country": "AUSTRALIA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/au/the-old-clare.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.5893,
+      "evidence": {
+        "nameScore": 0.5714,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:25:31.330Z"
+    },
+    {
+      "key": "CHC|the lindis|booking_com_cj",
+      "hotel": {
+        "destinationId": "CHC",
+        "name": "The Lindis",
+        "city": "NEW ZEALAND SOUTH ISLAND",
+        "country": "NEW ZEALAND",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/nz/the-lindis.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "rejected",
+      "verified": false,
+      "needsReview": true,
+      "googlePlaceId": null,
+      "confidence": 0.6417,
+      "evidence": {
+        "nameScore": 0.6667,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "not_checked",
+      "usablePhotoCount": 0,
+      "attributionRequired": false,
+      "errorCode": "rejected",
+      "checkedAt": "2026-08-16T01:25:33.792Z"
+    },
+    {
+      "key": "CHC|blanket bay|booking_com_cj",
+      "hotel": {
+        "destinationId": "CHC",
+        "name": "Blanket Bay",
+        "city": "NEW ZEALAND SOUTH ISLAND",
+        "country": "NEW ZEALAND",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/nz/blanket-bay.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJrwSvL-9eP20RBLGktvGDKKc",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:34.434Z"
+    },
+    {
+      "key": "CHC|rosewood matakauri|booking_com_cj",
+      "hotel": {
+        "destinationId": "CHC",
+        "name": "Rosewood Matakauri",
+        "city": "NEW ZEALAND SOUTH ISLAND",
+        "country": "NEW ZEALAND",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/nz/matakauri-lodge-queenstown.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJAXBbBi_91KkRe6uWZ-JOC0U",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:35.048Z"
+    },
+    {
+      "key": "CHC|flockhill lodge|booking_com_cj",
+      "hotel": {
+        "destinationId": "CHC",
+        "name": "Flockhill Lodge",
+        "city": "NEW ZEALAND SOUTH ISLAND",
+        "country": "NEW ZEALAND",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/nz/flockhill-lodge.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJlfIl5C8HLm0R62M2CbGnr0I",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:35.530Z"
+    },
+    {
+      "key": "PPT|intercontinental tahiti resort spa|booking_com_cj",
+      "hotel": {
+        "destinationId": "PPT",
+        "name": "InterContinental Tahiti Resort & Spa",
+        "city": "TAHITI & MOOREA",
+        "country": "FRENCH POLYNESIA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/pf/intercontinental-tahiti-resort.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJfxtMSmQwmnYRuslC-HdTuSE",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:36.059Z"
+    },
+    {
+      "key": "PPT|sofitel kia ora moorea beach resort|booking_com_cj",
+      "hotel": {
+        "destinationId": "PPT",
+        "name": "Sofitel Kia Ora Moorea Beach Resort",
+        "city": "TAHITI & MOOREA",
+        "country": "FRENCH POLYNESIA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/pf/sofitel-moorea-beach-resort.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJ3VdN77MmmnYRmicCFJbVOyc",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:36.746Z"
+    },
+    {
+      "key": "PPT|hilton moorea lagoon resort spa|booking_com_cj",
+      "hotel": {
+        "destinationId": "PPT",
+        "name": "Hilton Moorea Lagoon Resort & Spa",
+        "city": "TAHITI & MOOREA",
+        "country": "FRENCH POLYNESIA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/pf/hilton-moorea-lagoon-resort-and-spa.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJkbraqnWKmXYR2nVFGdneXtI",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:37.350Z"
+    },
+    {
+      "key": "PPT|manava beach resort spa moorea|booking_com_cj",
+      "hotel": {
+        "destinationId": "PPT",
+        "name": "Manava Beach Resort & Spa Moorea",
+        "city": "TAHITI & MOOREA",
+        "country": "FRENCH POLYNESIA",
+        "bookingComPropertyUrl": "https://www.booking.com/hotel/pf/moorea-pearl-resort-and-spa.html",
+        "provider": "booking_com_cj"
+      },
+      "status": "matched",
+      "verified": true,
+      "needsReview": false,
+      "googlePlaceId": "ChIJi554CEsnmnYRjILuQMM1Yzc",
+      "confidence": 0.825,
+      "evidence": {
+        "nameScore": 1,
+        "localityScore": 0.5,
+        "coordinateScore": 0.5,
+        "distanceMeters": null,
+        "typeVerified": true
+      },
+      "photoStatus": "available",
+      "usablePhotoCount": 3,
+      "attributionRequired": true,
+      "errorCode": null,
+      "checkedAt": "2026-08-16T01:25:38.100Z"
+    }
+  ],
+  "summary": {
+    "sourceHotels": 148,
+    "processed": 148,
+    "matched": 108,
+    "rejectedOrLowConfidence": 40,
+    "withPhotos": 107,
+    "withThreePhotos": 107,
+    "withoutPhotos": 1,
+    "requiringReview": 40,
+    "apiFailures": 0,
+    "duplicatePlaceIds": 0
+  }
+}
