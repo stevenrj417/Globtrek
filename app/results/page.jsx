@@ -12,6 +12,7 @@ import { shortlistHotels } from "../lib/recommendation/hotelEngine";
 import { AccountEntry } from "../components/AccountEntry";
 import { SaveTripButton } from "../components/SaveTripButton";
 import { HotelPropertyPhoto } from "../components/HotelPropertyPhoto";
+import { ItineraryDocument } from "../components/ItineraryDocument";
 
 function getMatches(quiz) {
   return rankDestinations(destinations, normalizeTravelerProfile(quiz || {}));
@@ -335,7 +336,9 @@ export default function ResultsPage() {
 
         {planning && !trip.plan && <div className="mt-16 grid min-h-72 place-items-center border-y border-black/10 py-12 text-center"><div><span className="mx-auto grid h-14 w-14 animate-spin place-items-center rounded-full border border-black/15 border-t-black text-[8px] font-semibold uppercase tracking-[0.12em]">GT</span><p className="mt-7 font-serif text-3xl tracking-[-0.035em]">Custom itinerary loading…</p><p className="mt-3 text-xs font-light text-black/45">Building your trip around the way you travel.</p></div></div>}
 
-        {trip.plan && <section className="mt-16 border-y border-black/15 bg-[#f8f6f2] px-6 py-12 text-[#171714] sm:px-10 sm:py-16">
+        <ItineraryDocument trip={trip} quiz={quiz} onRefine={refine} refining={refining} venueUrl={venueUrl} />
+
+        {false && trip.plan && <section className="mt-16 border-y border-black/15 bg-[#f8f6f2] px-6 py-12 text-[#171714] sm:px-10 sm:py-16">
           <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr]">
             <div>
               <p className="text-[10px] uppercase tracking-[0.3em] text-black/45">Your trip, organized</p>
@@ -362,7 +365,7 @@ export default function ResultsPage() {
           </div>}
         </section>}
 
-        <a href="#book" onClick={() => track("booking_checklist_started", { destination: trip.city })} className="mt-5 flex min-h-16 items-center justify-between border border-black px-6 text-[10px] uppercase tracking-[0.2em] transition hover:bg-black hover:text-white"><span>Start booking this trip</span><span>↓</span></a>
+        <a href="#book" onClick={() => track("booking_checklist_started", { destination: trip.city })} className="mt-5 flex min-h-20 items-center justify-between border border-black px-6 text-[10px] uppercase tracking-[0.2em] transition hover:bg-black hover:text-white sm:px-10"><span><span className="mr-4 text-black/40 group-hover:text-white/50">Your trip is ready.</span> Start booking this trip</span><span>→</span></a>
 
         <HotelShortlist destination={trip} quiz={quiz} budgetPlan={budgetPlan} />
 

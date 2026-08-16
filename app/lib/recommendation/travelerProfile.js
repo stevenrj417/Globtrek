@@ -26,6 +26,10 @@ export function discoverySliderToUnknownness(value) {
   return 100 - Math.min(100, Math.max(0, slider));
 }
 
+export function itineraryDayCount(input = {}) {
+  return Math.min(14, Math.max(1, normalizeTravelerProfile(input).tripLength || 7));
+}
+
 function dateNights(start, end) {
   const startTime = Date.parse(`${start || ""}T00:00:00Z`);
   const endTime = Date.parse(`${end || ""}T00:00:00Z`);

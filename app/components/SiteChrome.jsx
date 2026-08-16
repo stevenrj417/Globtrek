@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BrandWordmark } from "./BrandMark";
 import { AccountEntry } from "./AccountEntry";
+import { DestinationSearch } from "./DestinationSearch";
 
 const navigation = [["Trips", "/#trips"], ["Quiz", "/discover"], ["How it works", "/how-it-works"], ["About", "/about"]];
 
@@ -28,7 +29,7 @@ export function SiteHeader({ actionHref = "/discover", actionLabel = "Find my tr
               </Link>
             ))}
           </div>
-          <div className="flex items-center gap-5"><AccountEntry /><Link
+          <div className="flex items-center gap-5"><DestinationSearch /><AccountEntry /><Link
             className="hidden min-h-11 shrink-0 items-center bg-[#171717] px-6 py-3 text-xs font-semibold uppercase tracking-[0.08em] text-white transition hover:bg-black sm:inline-flex"
             href={actionHref}
           >

@@ -11,7 +11,8 @@ export default function ThinkingPage() {
   useEffect(() => {
     const ticker = window.setInterval(() => setIndex((value) => (value + 1) % words.length), 520);
     const close = window.setTimeout(() => setClosing(true), 3000);
-    const redirect = window.setTimeout(() => window.location.assign("/results"), 3900);
+    const destination = new URLSearchParams(window.location.search).get("destination");
+    const redirect = window.setTimeout(() => window.location.assign(destination ? `/results?destination=${encodeURIComponent(destination)}` : "/results"), 3900);
     return () => { window.clearInterval(ticker); window.clearTimeout(close); window.clearTimeout(redirect); };
   }, []);
 
