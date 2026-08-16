@@ -1,4 +1,5 @@
 import { buildBudgetPlan } from "./budgetEngine.js";
+import { assessTravelFeasibility } from "./travelFeasibility.js";
 
 const ANSWER_WEIGHTS = { alive: 16, duration: 8, luxury: 10, hotel: 9, escape: 8, self: 5 };
 
@@ -22,14 +23,15 @@ function tripLengthScore(destination, nights) {
 export function rankDestinations(destinations, profile) {
   return destinations.map((destination) => {
     const budgetPlan = buildBudgetPlan(profile, destination);
+    const travelFeasibility = assessTravelFeasibility(profile, destination);
     const preferenceMatchScore = preferenceScore(destination, profile.otherExistingQuizPreferences);
     const budgetFeasibilityScore = budgetPlan.budgetFeasibilityScore;
     const unknownnessMatchScore = unknownnessScore(destination, profile.unknownness);
     const tripLengthFitScore = tripLengthScore(destination, profile.tripLength);
     const seasonMatchScore = budgetPlan.season.level === "peak" && budgetFeasibilityScore < 70 ? 45 : budgetPlan.season.level === "low" ? 90 : 80;
-    const destinationMatchScore = Math.round(
-      preferenceMatchScore * 0.38 + budgetFeasibilityScore * 0.32 + unknownnessMatchScore * 0.15 + seasonMatchScore * 0.08 + tripLengthFitScore * 0.07,
+    const destinationMatchScore = travelFeasibility.status === "unreasonable" ? Math.min(24, travelFeasibility.score) : Math.round(
+      travelFeasibility.score * 0.34 + budgetFeasibilityScore * 0.27 + preferenceMatchScore * 0.2 + unknownnessMatchScore * 0.1 + seasonMatchScore * 0.05 + tripLengthFitScore * 0.04,
     );
-    return { ...destination, destinationMatchScore, preferenceMatchScore, budgetFeasibilityScore, unknownnessMatchScore, seasonMatchScore, tripLengthFitScore, budgetPlan };
+    return { ...destination, destinationMatchScore, travelTimeFeasibilityScore: travelFeasibility.score, travelFeasibility, preferenceMatchScore, budgetFeasibilityScore, unknownnessMatchScore, seasonMatchScore, tripLengthFitScore, budgetPlan };
   }).sort((a, b) => b.destinationMatchScore - a.destinationMatchScore || a.name.localeCompare(b.name));
 }

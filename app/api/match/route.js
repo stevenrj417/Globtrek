@@ -257,7 +257,7 @@ export async function POST(request) {
   const primaryDestination = fallback[0];
   const stayOptions = hotelsFor(primaryDestination, body).map(({ name, tags }) => ({ name, tags }));
   const nights = tripLength(body);
-  const planDays = nights ? Math.min(14, Math.max(1, nights)) : itineraryDayCount(body);
+  const planDays = nights ? Math.min(28, Math.max(1, nights)) : itineraryDayCount(body);
   const tune = typeof body.tune === "string" ? body.tune.slice(0, 40) : "original";
   const cacheKey = JSON.stringify({ travelerProfile, destination: primaryDestination.airport, tune });
   const cached = resultCache.get(cacheKey);

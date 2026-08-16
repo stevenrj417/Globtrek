@@ -1,18 +1,10 @@
 import { destinationCostProfile, seasonFor } from "./costProfiles.js";
+import { estimateFlight } from "./travelFeasibility.js";
 
 const CATEGORY_KEYS = ["flights", "hotel", "food", "activities", "transportation"];
 
 function estimate(category, low, high, source, confidence, isLive = false) {
   return { category, low: Math.round(low), high: Math.round(high), source, confidence, lastUpdated: "2026-08-14", isLive };
-}
-
-function flightRange(profile, destination) {
-  if (!profile.origin) return [500, 1500];
-  if (profile.origin === destination.airport) return [0, 0];
-  const domestic = destination.country === "UNITED STATES" && ["PDX", "SEA", "SFO", "LAX", "JFK", "EWR", "ORD", "ATL", "DEN"].includes(profile.origin);
-  if (domestic) return [220, 650];
-  const longHaul = ["HND", "KIX", "ICN", "BKK", "DPS", "SIN", "HAN", "SYD", "CHC", "PPT", "CPT", "NBO", "MLE"].includes(destination.airport);
-  return longHaul ? [800, 1800] : [450, 1200];
 }
 
 export function buildBudgetPlan(profile, destination) {
@@ -22,9 +14,9 @@ export function buildBudgetPlan(profile, destination) {
   const travelers = profile.travelers;
   const cost = destinationCostProfile(destination);
   const season = seasonFor(destination, profile);
-  const [flightLow, flightHigh] = flightRange(profile, destination);
+  const flight = estimateFlight(profile, destination);
   const categories = {
-    flights: estimate("flights", includes.flights ? flightLow * travelers : 0, includes.flights ? flightHigh * travelers : 0, "route_market_estimate", profile.origin ? 0.5 : 0.3),
+    flights: { ...estimate("flights", includes.flights ? flight.low * travelers : 0, includes.flights ? flight.high * travelers : 0, flight.priceSource, flight.confidence, flight.isLive), currency: flight.currency, priceLastChecked: flight.priceLastChecked },
     hotel: estimate("hotel", includes.hotel ? cost.typicalHotelNightLow * nights * season.multiplier : 0, includes.hotel ? cost.typicalHotelNightHigh * nights * season.multiplier : 0, cost.source, cost.confidence),
     food: estimate("food", includes.food ? cost.foodDailyLow * nights * travelers : 0, includes.food ? cost.foodDailyHigh * nights * travelers : 0, cost.source, cost.confidence),
     activities: estimate("activities", includes.activities ? cost.activitiesDailyLow * nights * travelers : 0, includes.activities ? cost.activitiesDailyHigh * nights * travelers : 0, cost.source, cost.confidence),

@@ -27,7 +27,7 @@ export function discoverySliderToUnknownness(value) {
 }
 
 export function itineraryDayCount(input = {}) {
-  return Math.min(14, Math.max(1, normalizeTravelerProfile(input).tripLength || 7));
+  return Math.min(28, Math.max(1, normalizeTravelerProfile(input).tripLength || 7));
 }
 
 function dateNights(start, end) {
