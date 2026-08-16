@@ -1,3 +1,8 @@
+export function itineraryPreviewDays(itinerary, limit = 3) {
+  const days = Array.isArray(itinerary?.days) ? itinerary.days : [];
+  return days.slice(0, Math.max(0, limit));
+}
+
 export function serializeRecommendation({ travelerProfile, destination, budgetPlan, hotels = [], selectedHotel = null, itinerary = null, bookingLinks = {} }) {
   return {
     version: 2,

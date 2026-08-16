@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { itineraryPreviewDays } from "../lib/recommendation/tripSerializer";
 
 function ArrowUpRight() {
   return <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4 fill-none stroke-current" strokeWidth="1.4"><path d="M7 17 17 7M8 7h9v9" /></svg>;
@@ -20,11 +21,13 @@ function daySequence(day) {
   return [day?.morning, day?.afternoon, day?.evening].filter(Boolean).map((part) => String(part).split(/[,.]/)[0].trim()).join(" → ");
 }
 
-export function ItineraryDocument({ trip, quiz, onRefine, refining, venueUrl }) {
+export function ItineraryDocument({ trip, quiz, onRefine, refining, venueUrl, previewDays = null, onViewFull = null }) {
   const [showAllPlaces, setShowAllPlaces] = useState(false);
   const plan = trip.plan;
   if (!plan) return null;
   const days = plan.days || [];
+  const visibleDays = previewDays ? itineraryPreviewDays(plan, previewDays) : days;
+  const hasMoreDays = visibleDays.length < days.length;
   const places = [
     ...(plan.picks?.restaurants || []).map((place) => ({ ...place, type: "Eat" })),
     ...(plan.picks?.experiences || []).map((place) => ({ ...place, type: "See" })),
@@ -47,7 +50,7 @@ export function ItineraryDocument({ trip, quiz, onRefine, refining, venueUrl }) 
       </header>
 
       <div className="py-4 sm:py-8">
-        {days.map((day, index) => <details key={`${day.day}-${day.title}`} className="group border-b border-black/15">
+        {visibleDays.map((day, index) => <details key={`${day.day}-${day.title}`} className="group border-b border-black/15">
           <summary className="grid cursor-pointer list-none gap-5 py-7 sm:grid-cols-[4rem_1fr_auto] sm:items-start sm:py-9 [&::-webkit-details-marker]:hidden">
             <span className="font-serif text-3xl tracking-[-0.04em] text-black/30">{dayNumber(day, index)}</span>
             <span><strong className="block font-serif text-2xl font-normal tracking-[-0.035em] sm:text-3xl">{day.title}</strong><span className="mt-2 block text-[9px] uppercase tracking-[0.18em] text-black/42">{day.location || `${trip.city} · ${day.day}`}</span><span className="mt-4 block max-w-3xl text-sm font-light leading-6 text-black/60">{daySequence(day)}</span></span>
@@ -55,6 +58,7 @@ export function ItineraryDocument({ trip, quiz, onRefine, refining, venueUrl }) 
           </summary>
           <div className="grid gap-6 pb-9 pl-0 sm:grid-cols-3 sm:pl-20">{[["Morning", day.morning], ["Afternoon", day.afternoon], ["Evening", day.evening]].map(([label, detail]) => <div key={label} className="border-l border-black/15 pl-4"><p className="text-[8px] uppercase tracking-[0.2em] text-black/35">{label}</p><p className="mt-3 text-sm font-light leading-6 text-black/62">{detail}</p></div>)}</div>
         </details>)}
+        {hasMoreDays ? <button type="button" onClick={onViewFull} className="flex min-h-20 w-full items-center justify-between border-b border-black/15 py-6 text-left text-[9px] uppercase tracking-[0.22em] transition hover:px-2"><span>See full trip</span><span>{days.length - visibleDays.length} more days →</span></button> : null}
       </div>
 
       <section className="border-b border-black/15 py-12"><div className="flex flex-col gap-7 sm:flex-row sm:items-end sm:justify-between"><div><p className="text-[9px] uppercase tracking-[0.25em] text-black/40">Make it more you</p><h3 className="mt-3 font-serif text-3xl tracking-[-0.035em]">Adjust the rhythm.</h3></div><div className="flex flex-wrap gap-x-6 gap-y-4">{["More affordable", "More local", "More relaxing", "More adventurous"].map((label) => <button disabled={refining} type="button" key={label} onClick={() => onRefine(label.toLowerCase())} className="border-b border-black/25 pb-1 text-[8px] uppercase tracking-[0.18em] text-black/58 transition hover:border-black hover:text-black disabled:opacity-35">{refining ? "Refining…" : label}</button>)}<a href="/discover" className="border-b border-black/25 pb-1 text-[8px] uppercase tracking-[0.18em] text-black/58 transition hover:border-black hover:text-black">Different destination</a></div></div></section>

@@ -290,6 +290,11 @@ export default function ResultsPage() {
     window.location.href = `mailto:?subject=${subject}&body=${body}`;
   }
 
+  function viewFullTrip() {
+    window.sessionStorage.setItem("globtrekCurrentTrip", JSON.stringify({ trip, quiz, savedTrip }));
+    window.location.assign("/trip/current");
+  }
+
   return (
     <main className={`min-h-screen bg-[#f3f0eb] text-[#171714] transition duration-1000 ${ready ? "opacity-100" : "opacity-0"}`}>
       <header className="absolute inset-x-0 top-0 z-30 flex items-center justify-between px-6 py-7 text-white sm:px-12 sm:py-10">
@@ -336,7 +341,7 @@ export default function ResultsPage() {
 
         {planning && !trip.plan && <div className="mt-16 grid min-h-72 place-items-center border-y border-black/10 py-12 text-center"><div><span className="mx-auto grid h-14 w-14 animate-spin place-items-center rounded-full border border-black/15 border-t-black text-[8px] font-semibold uppercase tracking-[0.12em]">GT</span><p className="mt-7 font-serif text-3xl tracking-[-0.035em]">Custom itinerary loading…</p><p className="mt-3 text-xs font-light text-black/45">Building your trip around the way you travel.</p></div></div>}
 
-        <ItineraryDocument trip={trip} quiz={quiz} onRefine={refine} refining={refining} venueUrl={venueUrl} />
+        <ItineraryDocument trip={trip} quiz={quiz} onRefine={refine} refining={refining} venueUrl={venueUrl} previewDays={3} onViewFull={viewFullTrip} />
 
         {false && trip.plan && <section className="mt-16 border-y border-black/15 bg-[#f8f6f2] px-6 py-12 text-[#171714] sm:px-10 sm:py-16">
           <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr]">

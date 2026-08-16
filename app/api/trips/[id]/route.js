@@ -1,5 +1,14 @@
 import { createClient } from "../../../lib/supabase/server";
 
+export async function GET(_request, { params }) {
+  const { id } = await params;
+  const supabase = await createClient();
+  const { data: auth } = await supabase.auth.getUser();
+  if (!auth.user) return Response.json({ error: "Unauthorized" }, { status: 401 });
+  const { data, error } = await supabase.from("saved_trips").select("*").eq("id", id).eq("user_id", auth.user.id).single();
+  return error ? Response.json({ error: "Trip not found" }, { status: 404 }) : Response.json({ trip: data });
+}
+
 export async function PATCH(request, { params }) {
   const { id } = await params;
   const supabase = await createClient();
