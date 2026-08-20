@@ -29,6 +29,15 @@
   --font-mono: "SFMono-Regular", "SF Mono", Consolas, monospace;
 }
 
+@keyframes booking-return-reveal {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.booking-return-reveal { animation: booking-return-reveal 700ms cubic-bezier(.22,.61,.36,1) both; }
+.booking-return-delay-1 { animation-delay: 80ms; }
+.booking-return-delay-2 { animation-delay: 180ms; }
+.booking-return-delay-3 { animation-delay: 280ms; }
+
 body {
   background: var(--background);
   color: var(--foreground);
