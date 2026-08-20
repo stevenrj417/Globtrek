@@ -186,7 +186,8 @@ export function bookingStayUrl(destination, trip = {}) {
     params.set("checkout", trip.tripEnd);
   }
   params.set("group_adults", String(travelerCount(trip)));
-  params.set("no_rooms", "1");
+  const rooms = Number.parseInt(trip?.roomCount, 10);
+  params.set("no_rooms", String(Number.isFinite(rooms) && rooms > 0 ? Math.min(rooms, 30) : 1));
   params.set("group_children", "0");
   const target = `https://www.booking.com/searchresults.html?${params.toString()}`;
   return `${bookingLinks.stays}?url=${encodeURIComponent(target)}`;
@@ -207,7 +208,7 @@ export function bookingHotelUrl(destination, hotelName, trip = {}) {
 export function bookingFlightUrl(destination, trip = {}) {
   const params = new URLSearchParams({
     type: "ROUNDTRIP",
-    cabinClass: "ECONOMY",
+    cabinClass: ["ECONOMY", "PREMIUM_ECONOMY", "BUSINESS", "FIRST"].includes(trip?.cabinClass) ? trip.cabinClass : "ECONOMY",
     children: "0",
     adults: String(travelerCount(trip)),
     to: `${destination.airport}.AIRPORT`,
@@ -218,7 +219,10 @@ export function bookingFlightUrl(destination, trip = {}) {
     params.set("depart", trip.tripStart);
     params.set("return", trip.tripEnd);
   }
-  return trackedUrl(bookingLinks.flights, `https://www.booking.com/flights/index.html?${params.toString()}`);
+  const route = origin && /^[A-Z]{3}$/.test(origin)
+    ? `${origin}.AIRPORT-${destination.airport}.AIRPORT/`
+    : "index.html";
+  return trackedUrl(bookingLinks.flights, `https://flights.booking.com/flights/${route}?${params.toString()}`);
 }
 
 export function bookingActivityUrl(destination) {

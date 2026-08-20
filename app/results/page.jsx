@@ -15,6 +15,7 @@ import { HotelPropertyPhoto } from "../components/HotelPropertyPhoto";
 import { ItineraryDocument } from "../components/ItineraryDocument";
 import { EmailTripButton } from "../components/EmailTripButton";
 import { SaveItemButton } from "../components/SaveItemButton";
+import { FlightSearchSection } from "../components/FlightSearchSection";
 
 function getMatches(quiz) {
   return rankDestinations(destinations, normalizeTravelerProfile(quiz || {}));
@@ -55,6 +56,10 @@ function venueUrl(name, destination) {
   return `https://www.google.com/maps/search/${encodeURIComponent(`${name}, ${destination.city}, ${destination.country}`)}`;
 }
 
+function veganDiningUrl(destination) {
+  return `https://www.google.com/maps/search/${encodeURIComponent(`vegan restaurants in ${destination.city}, ${destination.country}`)}`;
+}
+
 function estimateTrip(quiz) {
   const ranges = { "Smart value": [0, 3000], Comfortable: [3000, 6000], Premium: [6000, 10000], Blowout: [10000, 15000] };
   const [low, high] = ranges[quiz?.answers?.memory] || [3000, 6000];
@@ -80,9 +85,10 @@ function bookingHotelUrl(hotel, trip = {}) {
   }
   const adults = Number.parseInt(trip?.guestCount, 10);
   target.searchParams.set("group_adults", String(Number.isFinite(adults) && adults > 0 ? Math.min(adults, 30) : 2));
-  target.searchParams.set("no_rooms", "1");
+  const rooms = Number.parseInt(trip?.roomCount, 10);
+  target.searchParams.set("no_rooms", String(Number.isFinite(rooms) && rooms > 0 ? Math.min(rooms, 30) : 1));
   target.searchParams.set("group_children", "0");
-  return `${bookingLinks.stays}?url=${encodeURIComponent(target.toString())}`;
+  return `${hotel.cjTrackingBaseUrl || bookingLinks.stays}?url=${encodeURIComponent(target.toString())}`;
 }
 
 function HotelShortlist({ destination, quiz, budgetPlan }) {
@@ -97,7 +103,10 @@ function HotelShortlist({ destination, quiz, budgetPlan }) {
   useEffect(() => {
     const raw = window.localStorage.getItem(`globtrekStay:${destination.city}`);
     const timer = window.setTimeout(() => {
-      if (raw) setSelected(JSON.parse(raw));
+      if (raw) {
+        const restored = JSON.parse(raw);
+        setSelected(restored);
+      }
     }, 0);
     return () => window.clearTimeout(timer);
   }, [destination.city]);
@@ -134,9 +143,7 @@ function HotelShortlist({ destination, quiz, budgetPlan }) {
     setEditingCustom(false);
   }
 
-  const selectedHotel = selected?.type !== "none" ? selected : null;
-
-  return <section className="mt-16">
+  return <section id="hotel-selection" className="mt-16 scroll-mt-6">
     <div className="flex flex-col gap-6 border-b border-black/15 pb-8 sm:flex-row sm:items-end sm:justify-between">
       <div><p className="text-[10px] uppercase tracking-[0.3em] text-black/45">Your stay</p><h2 className="mt-4 font-serif text-[clamp(2.2rem,4vw,3.8rem)] tracking-[-0.04em]">Three worth traveling for</h2></div>
       <p className="max-w-md text-sm font-light leading-6 text-black/50">An editorial shortlist for {destination.city}. Booking.com confirms live rooms, prices, and final terms.</p>
@@ -145,20 +152,22 @@ function HotelShortlist({ destination, quiz, budgetPlan }) {
     <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 md:mx-0 md:grid md:grid-cols-3 md:gap-5 md:overflow-visible md:px-0 md:pb-0">
       {hotels.map((hotel, index) => {
         const isSelected = selected?.id === hotel.id;
-        return <article key={hotel.id} className="group w-[82vw] max-w-[330px] shrink-0 snap-center overflow-hidden bg-white shadow-[0_12px_45px_rgba(23,23,20,0.055)] md:w-auto md:max-w-none">
-          <div className="relative aspect-[4/5] overflow-hidden bg-black/5">
+        const hotelUrl = bookingHotelUrl(hotel, quiz);
+        return <article key={hotel.id} className={`group w-[82vw] max-w-[330px] shrink-0 snap-center overflow-hidden bg-white shadow-[0_12px_45px_rgba(23,23,20,0.055)] transition md:w-auto md:max-w-none ${isSelected ? "ring-1 ring-black/45" : ""}`}>
+          {hotelUrl ? <a href={hotelUrl} target="_blank" rel="noopener sponsored" onClick={() => { choose({ ...hotel, type: "curated" }); track("hotel_affiliate_clicked", { destination: destination.city, hotel: hotel.name }); }} className="relative block aspect-[4/5] w-full overflow-hidden bg-black/5 text-left" aria-label={`Select ${hotel.name} and check live rooms`}>
             <HotelPropertyPhoto hotel={hotel} destination={destination} index={index} />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent transition group-hover:from-black/70" />
             <p className="absolute left-5 top-5 text-[9px] uppercase tracking-[0.25em] text-white/80">0{index + 1} · {hotel.descriptor}</p>
-            {isSelected && <span className="absolute right-5 top-5 bg-white px-3 py-2 text-[9px] uppercase tracking-[0.2em] text-black">Selected</span>}
-            <div className="absolute inset-x-5 bottom-5 text-white"><h3 className="font-serif text-[1.35rem] leading-[1.05]">{hotel.name}</h3><p className="mt-2 text-[9px] uppercase tracking-[0.2em] text-white/65">{destination.city}, {destination.country}</p></div>
-          </div>
+            {isSelected && <span className="absolute right-5 top-5 rounded-full bg-white/95 px-3 py-2 text-[8px] uppercase tracking-[0.18em] text-black">Selected ✓</span>}
+            <div className="absolute inset-x-5 bottom-5 text-white"><h3 className="font-serif text-[1.35rem] leading-[1.05]">{hotel.name}</h3><div className="mt-3 flex items-center justify-between gap-3"><p className="text-[9px] uppercase tracking-[0.2em] text-white/65">{destination.city}, {destination.country}</p><span className="text-[8px] uppercase tracking-[0.16em] text-white/80">{isSelected ? "Selected · open again ↗" : "Select & check rooms ↗"}</span></div></div>
+          </a> : <div className="relative block aspect-[4/5] w-full overflow-hidden bg-black/5 text-left" aria-label={`${hotel.name} booking link is being verified`}>
+            <HotelPropertyPhoto hotel={hotel} destination={destination} index={index} />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+            <p className="absolute left-5 top-5 text-[9px] uppercase tracking-[0.25em] text-white/80">0{index + 1} · {hotel.descriptor}</p>
+            <div className="absolute inset-x-5 bottom-5 text-white"><h3 className="font-serif text-[1.35rem] leading-[1.05]">{hotel.name}</h3><div className="mt-3 flex items-center justify-between gap-3"><p className="text-[9px] uppercase tracking-[0.2em] text-white/65">{destination.city}, {destination.country}</p><span className="text-[8px] uppercase tracking-[0.16em] text-white/60">Link being verified</span></div></div>
+          </div>}
           <p className="border-b border-black/10 px-5 py-3 text-[9px] uppercase tracking-[0.16em] text-black/40">{hotelReason(hotel, quiz, index)}</p>
           <SaveItemButton item={{ type: "hotel", key: hotel.id, title: hotel.name, subtitle: `${destination.city}, ${destination.country}`, imageUrl: hotel.imageUrl || null, data: { destinationAirport: destination.airport, bookingUrl: hotel.bookingUrl || null } }} className="min-h-11 w-full border-b border-black/10 text-[9px] uppercase tracking-[0.18em] text-black/50 hover:text-black" />
-          <div className="grid grid-cols-2 border-b border-black/10">
-            <button type="button" onClick={() => choose({ ...hotel, type: "curated" })} className={`min-h-12 border-r border-black/10 text-[10px] uppercase tracking-[0.18em] transition ${isSelected ? "bg-black text-white" : "hover:bg-black hover:text-white"}`}>{isSelected ? "In your trip" : "Select stay"}</button>
-            {hotel.bookingUrl ? <a href={bookingHotelUrl(hotel, quiz)} onClick={() => track("hotel_affiliate_clicked", { destination: destination.city, hotel: hotel.name })} target="_blank" rel="noopener sponsored" className="grid min-h-12 place-items-center text-[10px] uppercase tracking-[0.18em] transition hover:bg-black hover:text-white">Check live →</a> : <span className="grid min-h-12 place-items-center text-[10px] uppercase tracking-[0.18em] text-black/35">Link being verified</span>}
-          </div>
         </article>;
       })}
     </div>
@@ -169,8 +178,6 @@ function HotelShortlist({ destination, quiz, budgetPlan }) {
         <div className="flex flex-wrap gap-x-6 gap-y-3 text-[10px] uppercase tracking-[0.18em]"><button onClick={() => setEditingCustom(true)}>Add another hotel</button><button onClick={remove}>I already have a stay</button>{selected && <button onClick={() => { setSelected(null); window.localStorage.removeItem(`globtrekStay:${destination.city}`); }}>Clear</button>}</div>
       </div>}
     </div>
-
-    {selectedHotel?.bookingUrl && <a href={bookingHotelUrl(selectedHotel, quiz)} target="_blank" rel="noopener sponsored" className="mt-8 flex min-h-20 items-center justify-between bg-[#171714] px-7 text-white sm:px-10"><span><span className="block text-[9px] uppercase tracking-[0.24em] text-white/50">Selected stay</span><strong className="mt-2 block font-serif text-xl font-normal sm:text-2xl">{selectedHotel.name}</strong></span><span className="text-[10px] uppercase tracking-[0.2em]">Check rooms →</span></a>}
   </section>;
 }
 
@@ -210,7 +217,6 @@ export default function ResultsPage() {
   const chosenTrip = chosenAirport ? matches.find((destination) => (destination.id || destination.airport) === chosenAirport) || destinations.find((destination) => (destination.id || destination.airport) === chosenAirport) : null;
   const trip = chosenTrip || matches[0];
   const destinationKey = trip?.id || trip?.airport;
-  const alternatives = matches.filter((place) => (place.id || place.airport) !== (trip?.id || trip?.airport)).slice(0, 3);
   useEffect(() => {
     if (!destinationKey || !trip) return undefined;
     const controller = new AbortController();
@@ -332,7 +338,7 @@ export default function ResultsPage() {
           <SaveTripButton trip={savedTrip} className="min-h-20 bg-[#f3f0eb] px-7 text-[9px] uppercase tracking-[0.2em] transition hover:bg-white" />
           <EmailTripButton trip={savedTrip} viewUrl={tripLink()} className="min-h-20 bg-[#f3f0eb] px-7 text-[9px] uppercase tracking-[0.2em] transition hover:bg-white" />
         </div>
-        <div className="flex justify-end border-b border-black/10 py-4"><SaveItemButton item={{ type: "destination", key: destinationKey, title: trip.city, subtitle: trip.country, imageUrl: trip.image, data: { id: destinationKey, airport: trip.airport, style: trip.style } }} className="text-[9px] uppercase tracking-[0.2em] text-black/50 hover:text-black" /></div>
+        <div className="flex items-center justify-between border-b border-black/10 py-4"><Link href={`/alternatives?trip=${sharedPayload}`} className="text-[8px] uppercase tracking-[0.18em] text-black/40 underline decoration-black/20 underline-offset-4 transition hover:text-black">Doesn’t fit? See other destinations</Link><SaveItemButton item={{ type: "destination", key: destinationKey, title: trip.city, subtitle: trip.country, imageUrl: trip.image, data: { id: destinationKey, airport: trip.airport, style: trip.style } }} className="text-[9px] uppercase tracking-[0.2em] text-black/50 hover:text-black" /></div>
 
         {budgetPlan?.estimates ? <details className="group border-b border-black/10">
           <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between px-5 text-[9px] uppercase tracking-[0.2em] text-black/55 transition hover:bg-white/60 [&::-webkit-details-marker]:hidden"><span>View cost breakdown</span><ChevronDown /></summary>
@@ -343,13 +349,13 @@ export default function ResultsPage() {
             })}
           </div>
         </details> : null}
-        {budgetPlan?.targetBudget && !budgetPlan.withinHardBudget ? <div role="status" className="border-b border-black/15 bg-[#eee8df] px-5 py-5 text-sm font-light leading-6 text-black/65"><strong className="mr-2 font-medium text-black">Closest honest estimate.</strong>This destination’s included-category high estimate exceeds your {money(budgetPlan.targetBudget)} target. Globtrek has not marked it as budget-safe; compare the lower-cost alternatives below or exclude a category from this budget.</div> : null}
+        {budgetPlan?.targetBudget && !budgetPlan.withinHardBudget ? <div role="status" className="border-b border-black/15 bg-[#eee8df] px-5 py-5 text-sm font-light leading-6 text-black/65"><strong className="mr-2 font-medium text-black">Closest honest estimate.</strong>This destination’s included-category high estimate exceeds your {money(budgetPlan.targetBudget)} target. Globtrek has not marked it as budget-safe; use “Doesn’t fit?” to compare lower-cost destinations or exclude a category from this budget.</div> : null}
 
         {planning && !trip.plan && <div className="mt-16 grid min-h-72 place-items-center border-y border-black/10 py-12 text-center"><div><span className="mx-auto grid h-14 w-14 animate-spin place-items-center rounded-full border border-black/15 border-t-black text-[8px] font-semibold uppercase tracking-[0.12em]">GT</span><p className="mt-7 font-serif text-3xl tracking-[-0.035em]">Custom itinerary loading…</p><p className="mt-3 text-xs font-light text-black/45">Building your trip around the way you travel.</p></div></div>}
 
         <ItineraryDocument trip={trip} quiz={quiz} onRefine={refine} refining={refining} venueUrl={venueUrl} previewDays={3} onViewFull={viewFullTrip} />
 
-        {false && trip.plan && <section className="mt-16 border-y border-black/15 bg-[#f8f6f2] px-6 py-12 text-[#171714] sm:px-10 sm:py-16">
+        {trip.plan && <section className="mt-16 border-y border-black/15 bg-[#f8f6f2] px-6 py-12 text-[#171714] sm:px-10 sm:py-16">
           <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr]">
             <div>
               <p className="text-[10px] uppercase tracking-[0.3em] text-black/45">Your trip, organized</p>
@@ -370,44 +376,18 @@ export default function ResultsPage() {
           </div>
           {trip.plan.picks && <div className="mt-8 grid border-l border-t border-black/15 md:grid-cols-2">
             {[["Eat", trip.plan.picks.restaurants], ["Experience", trip.plan.picks.experiences]].map(([label, picks]) => <div key={label} className="border-b border-r border-white/15 p-5 sm:p-6">
-              <p className="text-[9px] uppercase tracking-[0.22em] text-white/40">{label}</p>
-              <div className="mt-4 space-y-4">{picks?.slice(0, 3).map((pick) => <a href={venueUrl(pick.name, trip)} target="_blank" rel="noopener" onClick={() => track("recommendation_clicked", { type: label, destination: trip.city })} className="group block" key={pick.name}><h3 className="flex items-center gap-2 font-serif text-lg group-hover:underline">{pick.name}<span className="h-4 w-4 text-white/35"><ArrowUpRight /></span></h3><p className="mt-1 text-[11px] leading-4 text-white/45">{pick.why}</p></a>)}</div>
+              <p className="text-[9px] uppercase tracking-[0.22em] text-black/40">{label}</p>
+              {label === "Eat" && <a href={veganDiningUrl(trip)} target="_blank" rel="noopener" onClick={() => track("vegan_restaurants_clicked", { destination: trip.city })} className="mt-4 flex min-h-11 items-center justify-between border border-black/25 px-4 text-[9px] uppercase tracking-[0.18em] text-black transition hover:bg-black hover:text-white"><span>Vegan options</span><span aria-hidden="true">↗</span></a>}
+              <div className="mt-4 space-y-4">{picks?.slice(0, 3).map((pick) => <a href={venueUrl(pick.name, trip)} target="_blank" rel="noopener" onClick={() => track("recommendation_clicked", { type: label, destination: trip.city })} className="group block" key={pick.name}><h3 className="flex items-center gap-2 font-serif text-lg group-hover:underline">{pick.name}<span className="h-4 w-4 text-black/35"><ArrowUpRight /></span></h3><p className="mt-1 text-[11px] leading-4 text-black/45">{pick.why}</p></a>)}</div>
             </div>)}
           </div>}
         </section>}
 
-        <a href="#book" onClick={() => track("booking_checklist_started", { destination: trip.city })} className="mt-5 flex min-h-20 items-center justify-between border border-black px-6 text-[10px] uppercase tracking-[0.2em] transition hover:bg-black hover:text-white sm:px-10"><span><span className="mr-4 text-black/40 group-hover:text-white/50">Your trip is ready.</span> Start booking this trip</span><span>→</span></a>
+        <a href="#hotel-selection" onClick={() => track("booking_checklist_started", { destination: trip.city })} className="mt-5 flex min-h-20 items-center justify-between border border-black px-6 text-[10px] uppercase tracking-[0.2em] transition hover:bg-black hover:text-white sm:px-10"><span><span className="mr-4 text-black/40">Your trip is ready.</span> Choose hotel and flight</span><span>↓</span></a>
 
         <HotelShortlist destination={trip} quiz={quiz} budgetPlan={budgetPlan} />
 
-        <div id="book" className="mt-20 scroll-mt-6">
-          <div className="mb-8 flex items-end justify-between border-b border-black/15 pb-6"><div><p className="text-[9px] uppercase tracking-[0.24em] text-black/40">Booking checklist</p><h2 className="mt-3 font-serif text-[clamp(2.2rem,4vw,4rem)] leading-none">One trip. Four decisions.</h2></div><p className="hidden max-w-xs text-right text-xs leading-5 text-black/45 sm:block">Open each provider with your destination and traveler details already carried through.</p></div>
-          <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
-          {tools.map(([label, detail, href, sponsored], index) => (
-            <a key={label} href={href} onClick={() => track(`${label.toLowerCase()}_clicked`, { destination: trip.city })} target="_blank" rel={sponsored ? "noopener sponsored" : "noopener"} className="group flex min-h-40 flex-col justify-between overflow-hidden rounded-[1.5rem] border border-black/[.08] bg-white p-6 shadow-[0_16px_50px_rgba(23,23,20,0.035)] transition duration-300 hover:-translate-y-1 hover:border-black/20 hover:shadow-[0_24px_65px_rgba(23,23,20,0.075)] sm:min-h-48 sm:p-8">
-              <span className="flex items-center justify-between text-[9px] uppercase tracking-[0.25em] text-black/40"><span>{label}</span><span className="tabular-nums">0{index + 1}</span></span>
-              <span className="flex items-end justify-between gap-6"><span className="max-w-[16rem] font-serif text-[1.6rem] leading-[1.05] tracking-[-0.035em] sm:text-3xl">{detail}</span><span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-black/15 transition group-hover:bg-black group-hover:text-white"><ArrowUpRight /></span></span>
-            </a>
-          ))}
-          </div>
-        </div>
-        <p className="mt-4 text-center text-[10px] leading-5 text-black/40">Booking.com links are sponsored affiliate links. Current prices, availability, and final terms are shown by the provider.</p>
-
-        <div className="mt-20 flex items-end justify-between border-b border-black/15 pb-6">
-          <h2 className="font-serif text-[clamp(2.4rem,5vw,4.8rem)] tracking-[-0.04em]">Other possibilities</h2>
-          <Link href="/discover" className="hidden text-[10px] uppercase tracking-[0.22em] sm:block">Try again →</Link>
-        </div>
-        <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 pt-8 md:mx-0 md:grid md:grid-cols-3 md:gap-10 md:overflow-visible md:px-0 md:pb-0 md:pt-10">
-          {alternatives.map((place) => (
-            <Link key={place.id || place.name} href={`/results?destination=${encodeURIComponent(place.id || place.airport)}`} scroll onClick={() => setChosenAirport(place.id || place.airport)} className="group block w-[82vw] max-w-[330px] shrink-0 snap-center md:w-auto md:max-w-none" aria-label={`Plan a complete trip to ${place.city}`}>
-              <div className="relative aspect-[4/3] overflow-hidden bg-black/5"><Image src={place.image} alt={place.name} fill className="object-cover transition duration-700 group-hover:scale-[1.035]" sizes="(min-width:768px) 33vw,100vw" quality={82} /></div>
-              <div className="flex items-end justify-between border-b border-black/10 px-1 py-6">
-                <div><h3 className="font-serif text-2xl">{place.city}</h3><p className="mt-2 text-[9px] uppercase tracking-[0.22em] text-black/45">{place.country} · {place.season}</p></div>
-                <span className="text-xl transition-transform group-hover:translate-x-2">→</span>
-              </div>
-            </Link>
-          ))}
-        </div>
+        <FlightSearchSection key={`flight-search-${destinationKey}`} destination={trip} trip={quiz} />
       </section>
     </main>
   );

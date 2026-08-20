@@ -285,7 +285,7 @@ function DateQuestion({ answers, setAnswers, tripStart, tripEnd, isFlexible, set
         <p className="mt-8 max-w-2xl border-l border-[#aaa39a] pl-6 text-[10px] uppercase leading-7 tracking-[0.18em] text-[#807970]">{summary}</p>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
-          <label><span className="text-[10px] uppercase tracking-[0.15em] text-[#555]">Flying from <span className="text-[#999]">· optional</span></span><AirportAutocomplete value={originAirport} onChange={setOriginAirport} /></label>
+          <label><span className="text-[10px] uppercase tracking-[0.15em] text-[#555]">Flying from <span className="text-[#999]">· required</span></span><AirportAutocomplete value={originAirport} onChange={setOriginAirport} /></label>
           <label><span className="text-[10px] uppercase tracking-[0.15em] text-[#555]">Travelers</span><input className="mt-3 w-full border border-black/20 bg-transparent px-5 py-4 text-base outline-none focus:border-black" type="number" min="1" max="30" value={guestCount} onChange={(event) => setGuestCount(event.target.value)} required /></label>
         </div>
 
@@ -331,7 +331,7 @@ export default function TravelQuiz() {
 
   const adaptiveQuestions = useMemo(() => questionsFor(answers), [answers]);
   const current = adaptiveQuestions[step];
-  const canSubmit = useMemo(() => normalizeBudget(exactBudget) !== null && Object.values(budgetIncludes).some(Boolean) && ((isFlexible && Boolean(answers.season)) || (!isFlexible && Boolean(tripStart) && Boolean(tripEnd))), [answers.season, budgetIncludes, exactBudget, isFlexible, tripStart, tripEnd]);
+  const canSubmit = useMemo(() => normalizeBudget(exactBudget) !== null && Object.values(budgetIncludes).some(Boolean) && /^[A-Z]{3}$/.test(originAirport) && ((isFlexible && Boolean(answers.season)) || (!isFlexible && Boolean(tripStart) && Boolean(tripEnd))), [answers.season, budgetIncludes, exactBudget, isFlexible, originAirport, tripStart, tripEnd]);
 
   function go(next, direction = "forward") {
     setPhase(direction === "back" ? "leaving-back" : "leaving");
