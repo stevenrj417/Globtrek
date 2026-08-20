@@ -16,7 +16,7 @@ export function DemoStay() {
   return (
     <div className="mx-auto max-w-[1600px] px-5 pb-24 sm:px-8 sm:pb-32">
       <div className="mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-black/10 pb-5">
-        <div className="min-w-0"><p className="text-xs font-semibold uppercase tracking-[0.1em] text-[#707070]">Your stay</p><h1 className="mt-3 max-w-full text-4xl font-semibold leading-[0.95] tracking-[-0.05em] [overflow-wrap:anywhere] sm:text-6xl">Sample Alpine House</h1></div>
+        <div className="min-w-0"><h1 className="max-w-full text-4xl font-semibold leading-[0.95] tracking-[-0.05em] [overflow-wrap:anywhere] sm:text-6xl">Sample Alpine House</h1></div>
         <p className="border border-black/15 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.1em]">Design demo · not bookable</p>
       </div>
 

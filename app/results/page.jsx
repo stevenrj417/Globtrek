@@ -144,13 +144,13 @@ function HotelShortlist({ destination, quiz, budgetPlan }) {
   }
 
   return <section id="hotel-selection" className="mt-16 scroll-mt-6">
-    <h2 className="border-b border-black/20 pb-6 font-serif text-[clamp(2.2rem,4vw,3.8rem)] tracking-[-0.04em]">Hotels in {destination.city}</h2>
+    <h2 className="border-b border-black pb-6 font-serif text-[clamp(2.2rem,4vw,3.8rem)] tracking-[-0.04em]">Hotels in {destination.city}</h2>
 
     <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 md:mx-0 md:grid md:grid-cols-3 md:gap-5 md:overflow-visible md:px-0 md:pb-0">
       {hotels.map((hotel, index) => {
         const isSelected = selected?.id === hotel.id;
         const hotelUrl = bookingHotelUrl(hotel, quiz);
-        return <article key={hotel.id} className={`group w-[82vw] max-w-[330px] shrink-0 snap-center overflow-hidden bg-white shadow-[0_12px_45px_rgba(23,23,20,0.055)] transition md:w-auto md:max-w-none ${isSelected ? "ring-1 ring-black/45" : ""}`}>
+        return <article key={hotel.id} className={`group w-[82vw] max-w-[330px] shrink-0 snap-center overflow-hidden bg-white shadow-[0_12px_45px_rgba(23,23,20,0.055)] transition md:w-auto md:max-w-none ${isSelected ? "ring-1 ring-black" : ""}`}>
           {hotelUrl ? <a href={hotelUrl} target="_blank" rel="noopener sponsored" onClick={() => { choose({ ...hotel, type: "curated" }); track("hotel_affiliate_clicked", { destination: destination.city, hotel: hotel.name }); }} className="relative block aspect-[4/5] w-full overflow-hidden bg-black/5 text-left" aria-label={`Select ${hotel.name} and check live rooms`}>
             <HotelPropertyPhoto hotel={hotel} destination={destination} index={index} />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent transition group-hover:from-black/70" />
@@ -163,14 +163,14 @@ function HotelShortlist({ destination, quiz, budgetPlan }) {
             <p className="absolute left-5 top-5 text-[9px] uppercase tracking-[0.25em] text-white/80">0{index + 1} · {hotel.descriptor}</p>
             <div className="absolute inset-x-5 bottom-5 text-white"><h3 className="font-serif text-[1.35rem] leading-[1.05]">{hotel.name}</h3><div className="mt-3 flex items-center justify-between gap-3"><p className="text-[9px] uppercase tracking-[0.2em] text-white/65">{destination.city}, {destination.country}</p><span className="text-[8px] uppercase tracking-[0.16em] text-white/60">Link being verified</span></div></div>
           </div>}
-          <p className="border-b border-black/10 px-5 py-3 text-[9px] uppercase tracking-[0.16em] text-black/70">{hotelReason(hotel, quiz, index)}</p>
-          <SaveItemButton item={{ type: "hotel", key: hotel.id, title: hotel.name, subtitle: `${destination.city}, ${destination.country}`, imageUrl: hotel.imageUrl || null, data: { destinationAirport: destination.airport, bookingUrl: hotel.bookingUrl || null } }} className="min-h-11 w-full border-b border-black/10 text-[9px] uppercase tracking-[0.18em] text-black/70 hover:text-black" />
+          <p className="border-b border-black px-5 py-3 text-[9px] uppercase tracking-[0.16em] text-black">{hotelReason(hotel, quiz, index)}</p>
+          <SaveItemButton item={{ type: "hotel", key: hotel.id, title: hotel.name, subtitle: `${destination.city}, ${destination.country}`, imageUrl: hotel.imageUrl || null, data: { destinationAirport: destination.airport, bookingUrl: hotel.bookingUrl || null } }} className="min-h-11 w-full border-b border-black text-[9px] uppercase tracking-[0.18em] text-black hover:text-black" />
         </article>;
       })}
     </div>
 
-    <div className="border-b border-black/15 py-5">
-      {editingCustom ? <form onSubmit={addCustom} className="flex flex-col gap-3 sm:flex-row"><input autoFocus value={customHotel} onChange={(event) => setCustomHotel(event.target.value)} placeholder="Hotel name" className="min-h-14 flex-1 border border-black/20 bg-transparent px-5 font-serif text-lg outline-none focus:border-black" /><button className="min-h-14 bg-black px-8 text-[10px] uppercase tracking-[0.18em] text-white">Add to trip</button><button type="button" onClick={() => setEditingCustom(false)} className="min-h-14 px-5 text-[10px] uppercase tracking-[0.18em]">Cancel</button></form> : <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+    <div className="border-b border-black py-5">
+      {editingCustom ? <form onSubmit={addCustom} className="flex flex-col gap-3 sm:flex-row"><input autoFocus value={customHotel} onChange={(event) => setCustomHotel(event.target.value)} placeholder="Hotel name" className="min-h-14 flex-1 border border-black bg-transparent px-5 font-serif text-lg outline-none focus:border-black" /><button className="min-h-14 bg-black px-8 text-[10px] uppercase tracking-[0.18em] text-white">Add to trip</button><button type="button" onClick={() => setEditingCustom(false)} className="min-h-14 px-5 text-[10px] uppercase tracking-[0.18em]">Cancel</button></form> : <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
         {selected && <p className="font-serif text-xl text-black">{selected.name}</p>}
         <div className="flex flex-wrap gap-x-6 gap-y-3 text-[10px] uppercase tracking-[0.18em]"><button onClick={() => setEditingCustom(true)}>Add another hotel</button><button onClick={remove}>I already have a stay</button>{selected && <button onClick={() => { setSelected(null); window.localStorage.removeItem(`globtrekStay:${destination.city}`); }}>Clear</button>}</div>
       </div>}
@@ -324,63 +324,63 @@ export default function ResultsPage() {
       </section>
 
       <section id="trip" className="mx-auto max-w-[1460px] px-6 py-20 sm:px-12 sm:py-28">
-        <div className="grid items-end gap-10 border-b border-black/15 pb-14 lg:grid-cols-[0.8fr_1.2fr] lg:pb-20">
-          <div><p className="text-[10px] uppercase tracking-[0.3em] text-black/70">Why here</p><h2 className="mt-5 max-w-xl font-serif text-[clamp(2.7rem,5vw,5.8rem)] leading-[0.88] tracking-[-0.05em]">{trip.style}</h2></div>
-          <div className="lg:pb-1"><p className="max-w-2xl text-[clamp(1.05rem,1.6vw,1.35rem)] font-light leading-[1.55] text-black/80">{trip.why}</p><div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-[9px] uppercase tracking-[0.2em] text-black/70"><span>{quiz?.answers?.duration || trip.nights}</span><span>{trip.season}</span><span>{trip.price}</span></div></div>
+        <div className="grid items-end gap-10 border-b border-black pb-14 lg:grid-cols-[0.8fr_1.2fr] lg:pb-20">
+          <div><p className="text-[10px] uppercase tracking-[0.3em] text-black">Why here</p><h2 className="mt-5 max-w-xl font-serif text-[clamp(2.7rem,5vw,5.8rem)] leading-[0.88] tracking-[-0.05em]">{trip.style}</h2></div>
+          <div className="lg:pb-1"><p className="max-w-2xl text-[clamp(1.05rem,1.6vw,1.35rem)] font-light leading-[1.55] text-black">{trip.why}</p><div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-[9px] uppercase tracking-[0.2em] text-black"><span>{quiz?.answers?.duration || trip.nights}</span><span>{trip.season}</span><span>{trip.price}</span></div></div>
         </div>
 
-        <div className="grid gap-px bg-black/10 sm:grid-cols-[1fr_auto_auto_auto]">
-          <div className="bg-[#f3f0eb] px-5 py-5"><p className="text-[8px] uppercase tracking-[0.2em] text-black/70">Estimated trip range</p><p className="mt-2 font-serif text-xl">{estimatedTotal}</p>{budgetPlan?.targetBudget ? <p className="mt-2 text-[9px] uppercase tracking-[0.14em] text-black/70">Target {money(budgetPlan.targetBudget)} · estimates, not live prices</p> : null}</div>
+        <div className="grid gap-px bg-black sm:grid-cols-[1fr_auto_auto_auto]">
+          <div className="bg-[#f3f0eb] px-5 py-5"><p className="text-[8px] uppercase tracking-[0.2em] text-black">Estimated trip range</p><p className="mt-2 font-serif text-xl">{estimatedTotal}</p>{budgetPlan?.targetBudget ? <p className="mt-2 text-[9px] uppercase tracking-[0.14em] text-black">Target {money(budgetPlan.targetBudget)}</p> : null}</div>
           <button type="button" onClick={shareTrip} className="min-h-20 bg-[#f3f0eb] px-7 text-[9px] uppercase tracking-[0.2em] transition hover:bg-white">{shareStatus || "Save / share"}</button>
           <SaveTripButton trip={savedTrip} className="min-h-20 bg-[#f3f0eb] px-7 text-[9px] uppercase tracking-[0.2em] transition hover:bg-white" />
           <EmailTripButton trip={savedTrip} viewUrl={tripLink()} className="min-h-20 bg-[#f3f0eb] px-7 text-[9px] uppercase tracking-[0.2em] transition hover:bg-white" />
         </div>
-        <div className="flex items-center justify-between border-b border-black/10 py-4"><Link href={`/alternatives?trip=${sharedPayload}`} className="text-[8px] uppercase tracking-[0.18em] text-black/70 underline decoration-black/20 underline-offset-4 transition hover:text-black">Doesn’t fit? See other destinations</Link><SaveItemButton item={{ type: "destination", key: destinationKey, title: trip.city, subtitle: trip.country, imageUrl: trip.image, data: { id: destinationKey, airport: trip.airport, style: trip.style } }} className="text-[9px] uppercase tracking-[0.2em] text-black/70 hover:text-black" /></div>
+        <div className="flex items-center justify-between border-b border-black py-4"><Link href={`/alternatives?trip=${sharedPayload}`} className="text-[8px] uppercase tracking-[0.18em] text-black underline decoration-black underline-offset-4 transition hover:text-black">Doesn’t fit? See other destinations</Link><SaveItemButton item={{ type: "destination", key: destinationKey, title: trip.city, subtitle: trip.country, imageUrl: trip.image, data: { id: destinationKey, airport: trip.airport, style: trip.style } }} className="text-[9px] uppercase tracking-[0.2em] text-black hover:text-black" /></div>
 
-        {budgetPlan?.estimates ? <details className="group border-b border-black/10">
-          <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between px-5 text-[9px] uppercase tracking-[0.2em] text-black/75 transition hover:bg-white/60 [&::-webkit-details-marker]:hidden"><span>View cost breakdown</span><ChevronDown /></summary>
-          <div className="grid grid-cols-2 border-l border-t border-black/10 sm:grid-cols-3 lg:grid-cols-6">
+        {budgetPlan?.estimates ? <details className="group border-b border-black">
+          <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between px-5 text-[9px] uppercase tracking-[0.2em] text-black transition hover:bg-white/60 [&::-webkit-details-marker]:hidden"><span>View cost breakdown</span><ChevronDown /></summary>
+          <div className="grid grid-cols-2 border-l border-t border-black sm:grid-cols-3 lg:grid-cols-6">
             {Object.entries(budgetPlan.estimates).map(([key, item]) => {
               const included = key === "miscBuffer" || budgetPlan.includedBudgetCategories[key];
-              return <div key={key} className="border-b border-r border-black/10 px-4 py-5"><p className="text-[8px] uppercase tracking-[0.18em] text-black/70">{key === "transportation" ? "Transport" : key.replace(/([A-Z])/g, " $1")}</p><p className="mt-2 font-serif text-lg">{included ? `${money(item.low)}–${money(item.high)}` : "Not included"}</p></div>;
+              return <div key={key} className="border-b border-r border-black px-4 py-5"><p className="text-[8px] uppercase tracking-[0.18em] text-black">{key === "transportation" ? "Transport" : key.replace(/([A-Z])/g, " $1")}</p><p className="mt-2 font-serif text-lg">{included ? `${money(item.low)}–${money(item.high)}` : "Not included"}</p></div>;
             })}
           </div>
         </details> : null}
-        {budgetPlan?.targetBudget && !budgetPlan.withinHardBudget ? <div role="status" className="border-b border-black/15 bg-[#eee8df] px-5 py-5 text-sm font-light leading-6 text-black/65"><strong className="mr-2 font-medium text-black">Closest honest estimate.</strong>This destination’s included-category high estimate exceeds your {money(budgetPlan.targetBudget)} target. Globtrek has not marked it as budget-safe; use “Doesn’t fit?” to compare lower-cost destinations or exclude a category from this budget.</div> : null}
+        {budgetPlan?.targetBudget && !budgetPlan.withinHardBudget ? <div role="status" className="border-b border-black bg-[#eee8df] px-5 py-5 text-sm font-light leading-6 text-black"><strong className="mr-2 font-medium text-black">Closest honest estimate.</strong>This destination’s included-category high estimate exceeds your {money(budgetPlan.targetBudget)} target. Globtrek has not marked it as budget-safe; use “Doesn’t fit?” to compare lower-cost destinations or exclude a category from this budget.</div> : null}
 
-        {planning && !trip.plan && <div className="mt-16 grid min-h-72 place-items-center border-y border-black/10 py-12 text-center"><div><span className="mx-auto grid h-14 w-14 animate-spin place-items-center rounded-full border border-black/15 border-t-black text-[8px] font-semibold uppercase tracking-[0.12em]">GT</span><p className="mt-7 font-serif text-3xl tracking-[-0.035em]">Custom itinerary loading…</p><p className="mt-3 text-xs font-light text-black/70">Building your trip around the way you travel.</p></div></div>}
+        {planning && !trip.plan && <div className="mt-16 grid min-h-72 place-items-center border-y border-black py-12 text-center"><div><span className="mx-auto grid h-14 w-14 animate-spin place-items-center rounded-full border border-black border-t-black text-[8px] font-semibold uppercase tracking-[0.12em]">GT</span><p className="mt-7 font-serif text-3xl tracking-[-0.035em]">Custom itinerary loading…</p><p className="mt-3 text-xs font-light text-black">Building your trip around the way you travel.</p></div></div>}
 
         <ItineraryDocument trip={trip} quiz={quiz} onRefine={refine} refining={refining} venueUrl={venueUrl} previewDays={3} onViewFull={viewFullTrip} />
 
-        {trip.plan && <section className="mt-16 border-y border-black/15 bg-[#f8f6f2] px-6 py-12 text-[#171714] sm:px-10 sm:py-16">
+        {trip.plan && <section className="mt-16 border-y border-black bg-[#f8f6f2] px-6 py-12 text-[#171714] sm:px-10 sm:py-16">
           <div className="grid gap-10 lg:grid-cols-[0.65fr_1.35fr]">
             <div>
-              <p className="text-[10px] uppercase tracking-[0.3em] text-black/70">Your trip, organized</p>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-black">Your trip, organized</p>
               <h2 className="mt-5 max-w-xl font-serif text-[clamp(2.3rem,4vw,4rem)] leading-[0.95] tracking-[-0.04em]">{trip.plan.headline}</h2>
-              {trip.plan.airport && <p className="mt-5 text-[10px] uppercase tracking-[0.2em] text-black/70">Arrive via {trip.plan.airport.code} · {trip.plan.airport.note}</p>}
-              {trip.plan.arrivalWindow && <div className="mt-8 border-l border-black/20 pl-5"><p className="text-[9px] uppercase tracking-[0.2em] text-black/70">{trip.plan.arrivalWindow.title}</p><p className="mt-3 text-sm leading-6 text-black/80">{trip.plan.arrivalWindow.steps?.[0]}</p></div>}
+              {trip.plan.airport && <p className="mt-5 text-[10px] uppercase tracking-[0.2em] text-black">Arrive via {trip.plan.airport.code} · {trip.plan.airport.note}</p>}
+              {trip.plan.arrivalWindow && <div className="mt-8 border-l border-black pl-5"><p className="text-[9px] uppercase tracking-[0.2em] text-black">{trip.plan.arrivalWindow.title}</p><p className="mt-3 text-sm leading-6 text-black">{trip.plan.arrivalWindow.steps?.[0]}</p></div>}
             </div>
-            <div className="border-t border-black/15">
-              {trip.plan.days?.slice(0, 3).map((day) => <article key={`${day.day}-${day.title}`} className="grid gap-3 border-b border-black/15 py-6 sm:grid-cols-[4rem_1fr]">
-                <p className="text-[9px] uppercase tracking-[0.2em] text-black/70">{day.day}</p>
-                <div><h3 className="font-serif text-2xl">{day.title}</h3><div className="mt-4 grid gap-3 text-xs leading-5 text-black/75"><p><span className="mr-3 text-[8px] uppercase tracking-[0.16em] text-black/70">Morning</span>{day.morning}</p><p><span className="mr-3 text-[8px] uppercase tracking-[0.16em] text-black/70">Afternoon</span>{day.afternoon}</p><p><span className="mr-3 text-[8px] uppercase tracking-[0.16em] text-black/70">Evening</span>{day.evening}</p></div></div>
+            <div className="border-t border-black">
+              {trip.plan.days?.slice(0, 3).map((day) => <article key={`${day.day}-${day.title}`} className="grid gap-3 border-b border-black py-6 sm:grid-cols-[4rem_1fr]">
+                <p className="text-[9px] uppercase tracking-[0.2em] text-black">{day.day}</p>
+                <div><h3 className="font-serif text-2xl">{day.title}</h3><div className="mt-4 grid gap-3 text-xs leading-5 text-black"><p><span className="mr-3 text-[8px] uppercase tracking-[0.16em] text-black">Morning</span>{day.morning}</p><p><span className="mr-3 text-[8px] uppercase tracking-[0.16em] text-black">Afternoon</span>{day.afternoon}</p><p><span className="mr-3 text-[8px] uppercase tracking-[0.16em] text-black">Evening</span>{day.evening}</p></div></div>
               </article>)}
             </div>
           </div>
-          <div className="mt-8 flex flex-wrap gap-2 border-t border-black/15 pt-6">
-            {["More affordable", "More local", "More relaxing", "More adventurous"].map((label) => <button disabled={refining} type="button" key={label} onClick={() => refine(label.toLowerCase())} className="border border-black/20 px-4 py-3 text-[9px] uppercase tracking-[0.16em] text-black/80 transition hover:border-black hover:text-black disabled:opacity-35">{refining ? "Refining…" : label}</button>)}
-            <Link href="/discover" className="border border-black/20 px-4 py-3 text-[9px] uppercase tracking-[0.16em] text-black/80 transition hover:border-black hover:text-black">Different destination</Link>
+          <div className="mt-8 flex flex-wrap gap-2 border-t border-black pt-6">
+            {["More affordable", "More local", "More relaxing", "More adventurous"].map((label) => <button disabled={refining} type="button" key={label} onClick={() => refine(label.toLowerCase())} className="border border-black px-4 py-3 text-[9px] uppercase tracking-[0.16em] text-black transition hover:border-black hover:text-black disabled:opacity-35">{refining ? "Refining…" : label}</button>)}
+            <Link href="/discover" className="border border-black px-4 py-3 text-[9px] uppercase tracking-[0.16em] text-black transition hover:border-black hover:text-black">Different destination</Link>
           </div>
-          {trip.plan.picks && <div className="mt-8 grid border-l border-t border-black/15 md:grid-cols-2">
-            {[["Eat", trip.plan.picks.restaurants], ["Experience", trip.plan.picks.experiences]].map(([label, picks]) => <div key={label} className="border-b border-r border-white/15 p-5 sm:p-6">
-              <p className="text-[9px] uppercase tracking-[0.22em] text-black/70">{label}</p>
-              {label === "Eat" && <a href={veganDiningUrl(trip)} target="_blank" rel="noopener" onClick={() => track("vegan_restaurants_clicked", { destination: trip.city })} className="mt-4 flex min-h-11 items-center justify-between border border-black/25 px-4 text-[9px] uppercase tracking-[0.18em] text-black transition hover:bg-black hover:text-white"><span>Vegan options</span><span aria-hidden="true">↗</span></a>}
-              <div className="mt-4 space-y-4">{picks?.slice(0, 3).map((pick) => <a href={venueUrl(pick.name, trip)} target="_blank" rel="noopener" onClick={() => track("recommendation_clicked", { type: label, destination: trip.city })} className="group block" key={pick.name}><h3 className="flex items-center gap-2 font-serif text-lg group-hover:underline">{pick.name}<span className="h-4 w-4 text-black/70"><ArrowUpRight /></span></h3><p className="mt-1 text-[11px] leading-4 text-black/70">{pick.why}</p></a>)}</div>
+          {trip.plan.picks && <div className="mt-8 grid border-l border-t border-black md:grid-cols-2">
+            {[["Eat", trip.plan.picks.restaurants], ["Experience", trip.plan.picks.experiences]].map(([label, picks]) => <div key={label} className="border-b border-r border-black p-5 sm:p-6">
+              <p className="text-[9px] uppercase tracking-[0.22em] text-black">{label}</p>
+              {label === "Eat" && <a href={veganDiningUrl(trip)} target="_blank" rel="noopener" onClick={() => track("vegan_restaurants_clicked", { destination: trip.city })} className="mt-4 flex min-h-11 items-center justify-between border border-black px-4 text-[9px] uppercase tracking-[0.18em] text-black transition hover:bg-black hover:text-white"><span>Vegan options</span><span aria-hidden="true">↗</span></a>}
+              <div className="mt-4 space-y-4">{picks?.slice(0, 3).map((pick) => <a href={venueUrl(pick.name, trip)} target="_blank" rel="noopener" onClick={() => track("recommendation_clicked", { type: label, destination: trip.city })} className="group block" key={pick.name}><h3 className="flex items-center gap-2 font-serif text-lg group-hover:underline">{pick.name}<span className="h-4 w-4 text-black"><ArrowUpRight /></span></h3><p className="mt-1 text-[11px] leading-4 text-black">{pick.why}</p></a>)}</div>
             </div>)}
           </div>}
         </section>}
 
-        <a href="#hotel-selection" onClick={() => track("booking_checklist_started", { destination: trip.city })} className="mt-5 flex min-h-20 items-center justify-between border border-black px-6 text-[10px] uppercase tracking-[0.2em] transition hover:bg-black hover:text-white sm:px-10"><span><span className="mr-4 text-black/70">Your trip is ready.</span> Choose hotel and flight</span><span>↓</span></a>
+        <a href="#hotel-selection" onClick={() => track("booking_checklist_started", { destination: trip.city })} className="mt-5 flex min-h-20 items-center justify-between border border-black px-6 text-[10px] uppercase tracking-[0.2em] transition hover:bg-black hover:text-white sm:px-10"><span><span className="mr-4 text-black">Your trip is ready.</span> Choose hotel and flight</span><span>↓</span></a>
 
         <HotelShortlist destination={trip} quiz={quiz} budgetPlan={budgetPlan} />
 

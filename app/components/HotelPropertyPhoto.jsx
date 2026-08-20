@@ -17,7 +17,7 @@ export function HotelPropertyPhoto({ hotel, destination, index }) {
   }, [hotel.googlePhotoManifestUrl]);
 
   if (!photo?.photoUri) {
-    return <div className="absolute inset-0 grid place-items-center bg-[#d8d5cf] px-8 text-center text-[10px] uppercase tracking-[0.2em] text-black/45">Property photography being verified</div>;
+    return <div className="absolute inset-0 grid place-items-center bg-[#d8d5cf] px-8 text-center text-[10px] uppercase tracking-[0.2em] text-black">Property photography being verified</div>;
   }
 
   const authors = photo.authorAttributions || [];
