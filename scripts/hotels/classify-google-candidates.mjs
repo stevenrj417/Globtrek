@@ -63,7 +63,9 @@ for (let index = 0; index < queue.length; index += batchSize) {
     try {
       const classified = await classify(evidence.map((item) => ({ googlePlaceId: item.googlePlaceId, name: item.name, destination: `${item.city}, ${item.country}`, searchCenter: item.searchCenter, propertyType: item.primaryType, officialEvidence: item.evidence })), { allowPaid });
       const sourceById = new Map(evidence.map((item) => [item.googlePlaceId, item]));
-      for (const result of classified) { const source = sourceById.get(result.googlePlaceId); if (source) report.records.push({ destinationId: source.destinationId, name: source.name, sourceUrl: source.sourceUrl, classifiedAt: new Date().toISOString(), ...result }); }
+      const returnedIds = new Set();
+      for (const result of classified) { const source = sourceById.get(result.googlePlaceId); if (source) { returnedIds.add(result.googlePlaceId); report.records.push({ destinationId: source.destinationId, name: source.name, sourceUrl: source.sourceUrl, classifiedAt: new Date().toISOString(), ...result }); } }
+      for (const item of evidence.filter((candidate) => !returnedIds.has(candidate.googlePlaceId))) report.failures.push({ googlePlaceId: item.googlePlaceId, destinationId: item.destinationId, name: item.name, error: "classification_identity_mismatch", terminal: true });
     } catch (error) {
       const capacityBlocked = /^classification_402(?::|$)/.test(error.message) || (!allowPaid && /^classification_429(?::|$)/.test(error.message)) || /credit card|top-up/i.test(error.message) || (!allowPaid && /paid credits/i.test(error.message));
       const failedItems = capacityBlocked ? evidence.slice(0, 1) : evidence;

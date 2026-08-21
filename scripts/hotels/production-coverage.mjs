@@ -28,7 +28,7 @@ async function rows(table, select, filters = "") {
 }
 
 const [hotels, restaurants, activities] = await Promise.all([
-  rows("hotel_catalog", "id,name,destination_id,active,review_status,recommendation_ready,price_tier,calm_score,energy_score,relaxation_score,identity_confidence,location_confidence,data_completeness_score,photo_count,provider_link_verified,google_place_verified,google_place_id,review_rating,review_count", "&active=eq.true"),
+  rows("hotel_catalog", "id,name,destination_id,provider,active,review_status,recommendation_ready,price_tier,calm_score,energy_score,relaxation_score,identity_confidence,location_confidence,data_completeness_score,photo_count,provider_link_verified,google_place_verified,google_place_id,review_rating,review_count", "&active=eq.true"),
   rows("restaurant_catalog", "id,destination_id,active", "&active=eq.true"),
   rows("activity_catalog", "id,destination_id,active,review_status", "&active=eq.true"),
 ]);
@@ -68,9 +68,16 @@ const report = {
     active: hotels.length, verified: verified.length, classified: verified.filter((hotel) => hotel.price_tier && hotel.calm_score != null && hotel.energy_score != null).length,
     recommendationReady: ready.length, averageReadyPerDestination: Number((ready.length / destinations.length).toFixed(2)),
     googleIdentityVerified: hotels.filter((hotel) => hotel.google_place_verified).length,
+    threePhotosActive: hotels.filter((hotel) => hotel.photo_count >= 3).length,
     fivePhotosActive: hotels.filter((hotel) => hotel.photo_count >= 5).length,
+    threePhotosRecommendationReady: ready.filter((hotel) => hotel.photo_count >= 3).length,
     fivePhotosRecommendationReady: ready.filter((hotel) => hotel.photo_count >= 5).length,
     providerLinksVerified: hotels.filter((hotel) => hotel.provider_link_verified).length,
+    providerCounts: Object.fromEntries([...new Set(hotels.map((hotel) => hotel.provider))].sort().map((provider) => [provider, hotels.filter((hotel) => hotel.provider === provider).length])),
+    readyPriceCoverage: Object.fromEntries(["value", "midrange", "premium"].map((tier) => [tier, ready.filter((hotel) => hotel.price_tier === tier).length])),
+    readyVibeCoverage: Object.fromEntries(["calm", "balanced", "energetic"].map((style) => [style, ready.filter((hotel) => vibe(hotel) === style).length])),
+    destinationsAtThreeOrMore: destinationRows.filter((item) => item.recommendationReadyHotels >= 3).length,
+    destinationsBelowThree: destinationRows.filter((item) => item.recommendationReadyHotels < 3).length,
     destinationsAtNineOrMore: destinationRows.filter((item) => item.recommendationReadyHotels >= 9).length,
     destinationsBelowNine: destinationRows.filter((item) => item.recommendationReadyHotels < 9).length,
     destinationsUnableToReturnThree: destinationRows.filter((item) => !item.canReturnThree).map((item) => item.destination),

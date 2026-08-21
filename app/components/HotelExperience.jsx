@@ -32,10 +32,9 @@ function PhotoCredit({ photo, hotel }) {
 
 function PropertyImage({ photo, hotel, destination, className = "", sizes = "100vw", priority = false }) {
   const src = photo?.photoUri || hotel.image;
-  const [failed, setFailed] = useState(false);
-  useEffect(() => setFailed(false), [src]);
-  if (!src || failed) return <div className={`grid place-items-center bg-[#d8d2c8] px-6 text-center text-[10px] tracking-[.12em] text-black/45 ${className}`}>PROPERTY PHOTOGRAPHY UNAVAILABLE</div>;
-  return <div className={`relative overflow-hidden bg-[#d8d2c8] ${className}`}><Image src={src} alt={`${hotel.name}, ${destination.city}`} fill priority={priority} unoptimized={Boolean(photo?.photoUri)} sizes={sizes} className="object-cover" onError={() => setFailed(true)} /><PhotoCredit photo={photo} hotel={hotel} /></div>;
+  const [failedSrc, setFailedSrc] = useState(null);
+  if (!src || failedSrc === src) return <div className={`grid place-items-center bg-[#d8d2c8] px-6 text-center text-[10px] tracking-[.12em] text-black/45 ${className}`}>PROPERTY PHOTOGRAPHY UNAVAILABLE</div>;
+  return <div className={`relative overflow-hidden bg-[#d8d2c8] ${className}`}><Image src={src} alt={`${hotel.name}, ${destination.city}`} fill priority={priority} unoptimized={Boolean(photo?.photoUri)} sizes={sizes} className="object-cover" onError={() => setFailedSrc(src)} /><PhotoCredit photo={photo} hotel={hotel} /></div>;
 }
 
 function useHotelMedia(hotel, limit = 1) {
@@ -102,7 +101,6 @@ export function HotelExperience({ destination, quiz, budgetPlan, onSelected }) {
   const hotels = catalogHotels || [];
   useEffect(() => {
     const controller = new AbortController();
-    setCatalogHotels(null); setCatalogError(false); setActiveIndex(0); setDrawer(null);
     fetch("/api/hotels/recommend", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ destinationId: destination.id || destination.airport, quiz }), signal: controller.signal })
       .then(async (response) => { if (!response.ok) throw new Error("catalog_unavailable"); return response.json(); })
       .then((payload) => setCatalogHotels(Array.isArray(payload?.hotels) ? payload.hotels : []))
