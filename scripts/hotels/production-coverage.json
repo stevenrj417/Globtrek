@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-08-21T20:33:42.190Z",
+  "generatedAt": "2026-08-21T21:00:22.808Z",
   "destinations": 300,
   "uniqueDestinations": 300,
   "hotels": {
     "active": 2635,
-    "verified": 219,
-    "classified": 81,
-    "recommendationReady": 219,
-    "averageReadyPerDestination": 0.73,
+    "verified": 229,
+    "classified": 91,
+    "recommendationReady": 229,
+    "averageReadyPerDestination": 0.76,
     "googleIdentityVerified": 2634,
     "fivePhotosActive": 2634,
-    "fivePhotosRecommendationReady": 219,
+    "fivePhotosRecommendationReady": 229,
     "providerLinksVerified": 148,
     "destinationsAtNineOrMore": 10,
     "destinationsBelowNine": 290,
@@ -280,7 +280,7 @@
       "NOSY BE",
       "WADI MUSA"
     ],
-    "totalMatrixCellShortfalls": 2658
+    "totalMatrixCellShortfalls": 2652
   },
   "restaurants": {
     "active": 0,
@@ -1844,43 +1844,40 @@
       "destinationId": "LHR",
       "destination": "LONDON",
       "activeHotels": 13,
-      "verifiedHotels": 4,
-      "classifiedHotels": 0,
-      "recommendationReadyHotels": 4,
+      "verifiedHotels": 8,
+      "classifiedHotels": 4,
+      "recommendationReadyHotels": 8,
       "priceCoverage": {
-        "value": 0,
-        "midrange": 0,
-        "premium": 0
+        "value": 1,
+        "midrange": 1,
+        "premium": 2
       },
       "vibeCoverage": {
-        "calm": 0,
-        "balanced": 4,
-        "energetic": 0
+        "calm": 2,
+        "balanced": 5,
+        "energetic": 1
       },
       "matrix": {
         "value.calm": 0,
-        "value.balanced": 0,
+        "value.balanced": 1,
         "value.energetic": 0,
         "midrange.calm": 0,
         "midrange.balanced": 0,
-        "midrange.energetic": 0,
-        "premium.calm": 0,
+        "midrange.energetic": 1,
+        "premium.calm": 2,
         "premium.balanced": 0,
         "premium.energetic": 0
       },
       "matrixCellShortfalls": {
         "value.calm": 1,
-        "value.balanced": 1,
         "value.energetic": 1,
         "midrange.calm": 1,
         "midrange.balanced": 1,
-        "midrange.energetic": 1,
-        "premium.calm": 1,
         "premium.balanced": 1,
         "premium.energetic": 1
       },
       "canReturnThree": true,
-      "fivePhotoHotels": 4,
+      "fivePhotoHotels": 8,
       "verifiedProviderLinks": 4,
       "restaurants": 0,
       "activities": 0
@@ -1889,18 +1886,18 @@
       "destinationId": "JFK",
       "destination": "NEW YORK CITY",
       "activeHotels": 13,
-      "verifiedHotels": 4,
-      "classifiedHotels": 0,
-      "recommendationReadyHotels": 4,
+      "verifiedHotels": 8,
+      "classifiedHotels": 4,
+      "recommendationReadyHotels": 8,
       "priceCoverage": {
         "value": 0,
         "midrange": 0,
-        "premium": 0
+        "premium": 4
       },
       "vibeCoverage": {
         "calm": 0,
         "balanced": 4,
-        "energetic": 0
+        "energetic": 4
       },
       "matrix": {
         "value.calm": 0,
@@ -1911,7 +1908,7 @@
         "midrange.energetic": 0,
         "premium.calm": 0,
         "premium.balanced": 0,
-        "premium.energetic": 0
+        "premium.energetic": 4
       },
       "matrixCellShortfalls": {
         "value.calm": 1,
@@ -1921,11 +1918,10 @@
         "midrange.balanced": 1,
         "midrange.energetic": 1,
         "premium.calm": 1,
-        "premium.balanced": 1,
-        "premium.energetic": 1
+        "premium.balanced": 1
       },
       "canReturnThree": true,
-      "fivePhotoHotels": 4,
+      "fivePhotoHotels": 8,
       "verifiedProviderLinks": 4,
       "restaurants": 0,
       "activities": 0
@@ -1934,17 +1930,17 @@
       "destinationId": "MEX",
       "destination": "MEXICO CITY",
       "activeHotels": 12,
-      "verifiedHotels": 4,
-      "classifiedHotels": 0,
-      "recommendationReadyHotels": 4,
+      "verifiedHotels": 6,
+      "classifiedHotels": 2,
+      "recommendationReadyHotels": 6,
       "priceCoverage": {
         "value": 0,
         "midrange": 0,
-        "premium": 0
+        "premium": 2
       },
       "vibeCoverage": {
-        "calm": 0,
-        "balanced": 4,
+        "calm": 1,
+        "balanced": 5,
         "energetic": 0
       },
       "matrix": {
@@ -1954,8 +1950,8 @@
         "midrange.calm": 0,
         "midrange.balanced": 0,
         "midrange.energetic": 0,
-        "premium.calm": 0,
-        "premium.balanced": 0,
+        "premium.calm": 1,
+        "premium.balanced": 1,
         "premium.energetic": 0
       },
       "matrixCellShortfalls": {
@@ -1965,12 +1961,10 @@
         "midrange.calm": 1,
         "midrange.balanced": 1,
         "midrange.energetic": 1,
-        "premium.calm": 1,
-        "premium.balanced": 1,
         "premium.energetic": 1
       },
       "canReturnThree": true,
-      "fivePhotoHotels": 4,
+      "fivePhotoHotels": 6,
       "verifiedProviderLinks": 4,
       "restaurants": 0,
       "activities": 0
