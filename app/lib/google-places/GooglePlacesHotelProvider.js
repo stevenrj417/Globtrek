@@ -149,7 +149,11 @@ export class GooglePlacesHotelProvider {
         await this.sleep(retryDelay(response, attempt));
         continue;
       }
-      if (!response.ok) throw new GooglePlacesError(response.status === 429 ? "google_places_rate_limited" : "google_places_api_error", `Google Places request failed (${response.status})`, response.status);
+      if (!response.ok) {
+        let detail = "";
+        try { detail = (await response.text()).slice(0, 500); } catch {}
+        throw new GooglePlacesError(response.status === 429 ? "google_places_rate_limited" : "google_places_api_error", `Google Places request failed (${response.status})${detail ? `: ${detail}` : ""}`, response.status);
+      }
       try { return await response.json(); }
       catch { throw new GooglePlacesError("google_places_invalid_response"); }
     }
@@ -189,6 +193,12 @@ export class GooglePlacesHotelProvider {
     if (!placeId || /[/?#]/.test(placeId)) throw new GooglePlacesError("invalid_google_place_id");
     const fields = ["id", "displayName", "formattedAddress", "location", "types", "businessStatus", "googleMapsUri", "attributions", "rating", "userRatingCount"];
     if (includePhotos) fields.push("photos");
+    return this.request(`/places/${encodeURIComponent(placeId)}`, { fieldMask: fields.join(",") });
+  }
+
+  async getPlaceIntelligence(placeId) {
+    if (!placeId || /[/?#]/.test(placeId)) throw new GooglePlacesError("invalid_google_place_id");
+    const fields = ["id", "formattedAddress", "location", "types", "googleMapsUri", "rating", "userRatingCount", "photos"];
     return this.request(`/places/${encodeURIComponent(placeId)}`, { fieldMask: fields.join(",") });
   }
 

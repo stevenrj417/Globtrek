@@ -9,7 +9,12 @@ const normalize = (value) => String(value || "").normalize("NFKD").replace(/[\u0
 const canonicalSpelling = (value) => normalize(value).replace(/marrakesh/g, "marrakech");
 const duplicates = (records, key) => [...records.reduce((map, item) => map.set(key(item), [...(map.get(key(item)) || []), item]), new Map())].filter(([, items]) => items.length > 1).map(([value, items]) => ({ value, count: items.length }));
 const destinationIds = new Set(destinations.map((item) => item.id || item.airport));
-const hotels = destinations.flatMap((destination) => (hotelCatalog[destination.city] || []).map((hotel) => ({ ...(typeof hotel === "string" ? { name: hotel } : hotel), destinationId: destination.id || destination.airport })));
+const googleByKey = new Map((googlePayload.results || []).map((item) => [item.key, item]));
+const hotels = destinations.flatMap((destination) => (hotelCatalog[destination.city] || []).map((hotel) => {
+  const record = { ...(typeof hotel === "string" ? { name: hotel } : hotel), destinationId: destination.id || destination.airport, provider: "booking_com_cj" };
+  const match = googleByKey.get(`${record.destinationId}|${normalizeName(record.name)}|${record.provider}`);
+  return { ...record, googlePlaceId: match?.verified ? match.googlePlaceId : null, identityConfidence: match?.confidence ?? null, photoCount: match?.usablePhotoCount || 0, providerLinkVerified: Boolean(record.bookingUrl), dataCompletenessScore: (match?.verified ? 20 : 0) + (record.bookingUrl ? 20 : 0) + (match?.usablePhotoCount >= 3 ? 15 : match?.usablePhotoCount ? 8 : 0), recommendationReady: false };
+}));
 const activities = kyotoActivities.records || [];
 const countBy = (records) => records.reduce((map, item) => map.set(item.destinationId, (map.get(item.destinationId) || 0) + 1), new Map());
 const hotelCounts = countBy(hotels);
@@ -43,10 +48,22 @@ const hotelMatrixCoverage = Object.fromEntries(destinations.map((destination) =>
   const cells = Object.fromEntries(priceBuckets.flatMap((price) => vibeBuckets.map((vibe) => [`${price}.${vibe}`, pool.filter((hotel) => { const cell = matrixCell(hotel); return cell.price === price && cell.vibe === vibe; }).length])));
   return [destination.id || destination.airport, { totalRecommendationReady: pool.length, cells }];
 }));
+const hotelQuality = {
+  recommendationReady: hotels.filter((item) => item.recommendationReady).length,
+  missingGooglePlaceId: hotels.filter((item) => !item.googlePlaceId).map((item) => item.name),
+  missingBookingOrCjLink: hotels.filter((item) => !item.providerLinkVerified).map((item) => item.name),
+  fewerThanThreePhotos: hotels.filter((item) => item.photoCount < 3).map((item) => item.name),
+  missingRating: hotels.filter((item) => item.rating == null).map((item) => item.name),
+  missingAmenities: hotels.filter((item) => !item.amenityTags?.length).map((item) => item.name),
+  lowDataCompleteness: hotels.filter((item) => item.dataCompletenessScore < 70).map((item) => item.name),
+  lowIdentityConfidence: hotels.filter((item) => Number(item.identityConfidence) < 0.8).map((item) => item.name),
+  notRecommendationReady: hotels.filter((item) => !item.recommendationReady).map((item) => item.name),
+};
 const report = {
   totals: { destinations: destinations.length, hotels: hotels.length, activities: activities.length, restaurants: 0 },
   integrity: { destinationDuplicates, duplicateAliases, coordinateDuplicates, missingHeroImages, invalidHotelRelationships, hotelDuplicates, brokenProviderLinks },
   destinationMetadata,
+  hotelQuality,
   coverage: { destinationsAt27Hotels: destinations.length - insufficientHotels.length, destinationsWithTwelveActivities: destinations.length - insufficientActivities.length, insufficientHotels, insufficientActivities, insufficientRestaurants: destinations.map((item) => ({ destinationId: item.id || item.airport, count: 0 })), hotelMatrixCoverage },
   hotelPhotos: { matched: googlePayload.summary?.matched || 0, withAnyPhoto: googlePayload.summary?.withPhotos || 0, withThreePhotos: googlePayload.summary?.withThreePhotos || 0, requiringReview: googlePayload.summary?.requiringReview || 0 },
 };
