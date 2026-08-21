@@ -2,7 +2,7 @@ import { destinations } from "../app/data/destinations.js";
 import { hotelCatalog } from "../app/data/hotels.js";
 import googlePayload from "./hotels/google-places-results.json" with { type: "json" };
 import kyotoActivities from "./activities/verified-kyoto-batch-01.json" with { type: "json" };
-import { normalizeName } from "./hotels/catalog-tools.mjs";
+import { hotelMatrixCoverage as matrixCoverage, normalizeName } from "./hotels/catalog-tools.mjs";
 import { DESTINATION_TYPES } from "../app/data/destinationIntelligence.js";
 
 const normalize = (value) => String(value || "").normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
@@ -40,13 +40,9 @@ const destinationMetadata = {
   costModelRequiresReview: destinations.filter((item) => item.costModelReviewStatus !== "verified_editorial").map((item) => item.city),
   notProductionReady: destinations.filter((item) => !item.productionReady).map((item) => item.city),
 };
-const priceBuckets = ["value", "midrange", "premium"];
-const vibeBuckets = ["calm", "balanced", "energetic"];
-const matrixCell = (hotel) => ({ price: hotel.priceTier || "unclassified", vibe: hotel.calmScore >= 70 ? "calm" : hotel.energyScore >= 70 || hotel.socialScore >= 70 ? "energetic" : "balanced" });
 const hotelMatrixCoverage = Object.fromEntries(destinations.map((destination) => {
   const pool = hotels.filter((hotel) => hotel.destinationId === (destination.id || destination.airport) && hotel.recommendationReady === true);
-  const cells = Object.fromEntries(priceBuckets.flatMap((price) => vibeBuckets.map((vibe) => [`${price}.${vibe}`, pool.filter((hotel) => { const cell = matrixCell(hotel); return cell.price === price && cell.vibe === vibe; }).length])));
-  return [destination.id || destination.airport, { totalRecommendationReady: pool.length, cells }];
+  return [destination.id || destination.airport, matrixCoverage(pool)];
 }));
 const hotelQuality = {
   recommendationReady: hotels.filter((item) => item.recommendationReady).length,

@@ -119,6 +119,26 @@ export function hotelReadiness(record) {
   return { ready: Object.values(checks).every(Boolean), checks, missing: Object.entries(checks).filter(([, value]) => !value).map(([key]) => key) };
 }
 
+export const HOTEL_PRICE_TIERS = Object.freeze(["value", "midrange", "premium"]);
+export const HOTEL_VIBE_TIERS = Object.freeze(["calm", "balanced", "energetic"]);
+
+export function hotelMatrixCell(record) {
+  const priceTier = HOTEL_PRICE_TIERS.includes(record.priceTier) ? record.priceTier : null;
+  const calm = Number(record.calmScore ?? record.relaxationScore);
+  const energetic = Math.max(Number(record.energyScore), Number(record.socialScore));
+  const vibeTier = Number.isFinite(calm) && calm >= 70 && calm > energetic ? "calm" : Number.isFinite(energetic) && energetic >= 70 && energetic > calm ? "energetic" : "balanced";
+  return { priceTier, vibeTier };
+}
+
+export function hotelMatrixCoverage(records, targetPerCell = 3) {
+  const ready = records.filter((record) => record.recommendationReady === true);
+  const cells = Object.fromEntries(HOTEL_PRICE_TIERS.flatMap((priceTier) => HOTEL_VIBE_TIERS.map((vibeTier) => {
+    const count = ready.filter((record) => { const cell = hotelMatrixCell(record); return cell.priceTier === priceTier && cell.vibeTier === vibeTier; }).length;
+    return [`${priceTier}.${vibeTier}`, { count, target: targetPerCell, shortfall: Math.max(0, targetPerCell - count) }];
+  })));
+  return { totalRecommendationReady: ready.length, targetTotal: HOTEL_PRICE_TIERS.length * HOTEL_VIBE_TIERS.length * targetPerCell, cells, complete: Object.values(cells).every((cell) => cell.shortfall === 0) };
+}
+
 export function importBatch(records, destinations, existing = []) {
   const destinationMap = new Map(destinations.map((item) => [item.airport || item.id, item]));
   const destinationIds = new Set(destinationMap.keys());
