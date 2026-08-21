@@ -17,7 +17,7 @@ async function officialEvidence(url) {
 
 const scoreFields = ["calmScore", "energyScore", "designScore", "romanceScore", "familyScore", "wellnessScore", "nightlifeScore", "locationScore", "socialScore", "businessScore", "luxuryScore", "valueScore"];
 const styleTags = ["boutique", "romantic", "wellness", "design", "family", "nightlife", "central", "resort", "historic", "business", "beach", "ski", "adults-oriented", "all-inclusive", "hostel", "airport", "nature"];
-const itemSchema = { type: "object", additionalProperties: false, required: ["googlePlaceId", "priceTier", "priceConfidence", ...scoreFields, "styleTags", "classificationConfidence", "rationale"], properties: { googlePlaceId: { type: "string" }, priceTier: { type: ["string", "null"], enum: ["value", "midrange", "premium", null] }, priceConfidence: { type: "number", minimum: 0, maximum: 1 }, ...Object.fromEntries(scoreFields.map((field) => [field, { type: "integer", minimum: 0, maximum: 100 }])), styleTags: { type: "array", items: { type: "string", enum: styleTags }, uniqueItems: true }, classificationConfidence: { type: "number", minimum: 0, maximum: 1 }, rationale: { type: "string", maxLength: 240 } } };
+const itemSchema = { type: "object", additionalProperties: false, required: ["googlePlaceId", "priceTier", "priceConfidence", ...scoreFields, "styleTags", "classificationConfidence", "rationale"], properties: { googlePlaceId: { type: "string" }, priceTier: { type: ["string", "null"], enum: ["value", "midrange", "premium", null] }, priceConfidence: { type: "number", minimum: 0, maximum: 1 }, ...Object.fromEntries(scoreFields.map((field) => [field, { type: "integer", minimum: 0, maximum: 100 }])), styleTags: { type: "array", items: { type: "string", enum: styleTags } }, classificationConfidence: { type: "number", minimum: 0, maximum: 1 }, rationale: { type: "string", maxLength: 240 } } };
 
 async function classify(items) {
   const gateway = Boolean(process.env.VERCEL_OIDC_TOKEN || process.env.AI_GATEWAY_API_KEY);
@@ -37,6 +37,7 @@ let report = { generatedAt: new Date().toISOString(), records: [], failures: [] 
 if (process.argv.includes("--resume")) { try { report = JSON.parse(await readFile(output, "utf8")); } catch {} }
 const completed = new Set([...report.records.map((item) => item.googlePlaceId), ...report.failures.filter((item) => item.terminal).map((item) => item.googlePlaceId)]);
 const queue = input.accepted.filter((item) => !completed.has(item.googlePlaceId)).slice(0, limit);
+let halted = false;
 for (let index = 0; index < queue.length; index += batchSize) {
   const candidates = queue.slice(index, index + batchSize);
   const evidence = (await Promise.all(candidates.map(async (item) => { try { const page = await officialEvidence(item.websiteUri); return page ? { ...item, ...page } : null; } catch { return null; } }))).filter(Boolean);
@@ -46,9 +47,15 @@ for (let index = 0; index < queue.length; index += batchSize) {
       const classified = await classify(evidence.map((item) => ({ googlePlaceId: item.googlePlaceId, name: item.name, destination: `${item.city}, ${item.country}`, searchCenter: item.searchCenter, propertyType: item.primaryType, officialEvidence: item.evidence })));
       const sourceById = new Map(evidence.map((item) => [item.googlePlaceId, item]));
       for (const result of classified) { const source = sourceById.get(result.googlePlaceId); if (source) report.records.push({ destinationId: source.destinationId, name: source.name, sourceUrl: source.sourceUrl, classifiedAt: new Date().toISOString(), ...result }); }
-    } catch (error) { for (const item of evidence) report.failures.push({ googlePlaceId: item.googlePlaceId, destinationId: item.destinationId, name: item.name, error: error.message, terminal: false }); }
+    } catch (error) {
+      const capacityBlocked = /^classification_(402|429):/.test(error.message) || /credit card|paid credits|top-up/i.test(error.message);
+      const failedItems = capacityBlocked ? evidence.slice(0, 1) : evidence;
+      for (const item of failedItems) report.failures.push({ googlePlaceId: item.googlePlaceId, destinationId: item.destinationId, name: item.name, error: error.message, terminal: false });
+      halted = capacityBlocked;
+    }
   }
   report.generatedAt = new Date().toISOString();
   await writeFile(output, `${JSON.stringify(report, null, 2)}\n`);
   console.log(`${Math.min(index + batchSize, queue.length)}/${queue.length} classified=${report.records.length} failures=${report.failures.length}`);
+  if (halted) { console.log("Classification paused before paid capacity."); break; }
 }
