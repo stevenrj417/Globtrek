@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-08-21T21:00:22.808Z",
+  "generatedAt": "2026-08-21T21:18:26.051Z",
   "destinations": 300,
   "uniqueDestinations": 300,
   "hotels": {
     "active": 2635,
-    "verified": 229,
-    "classified": 91,
-    "recommendationReady": 229,
-    "averageReadyPerDestination": 0.76,
+    "verified": 240,
+    "classified": 102,
+    "recommendationReady": 240,
+    "averageReadyPerDestination": 0.8,
     "googleIdentityVerified": 2634,
     "fivePhotosActive": 2634,
-    "fivePhotosRecommendationReady": 229,
+    "fivePhotosRecommendationReady": 240,
     "providerLinksVerified": 148,
     "destinationsAtNineOrMore": 10,
     "destinationsBelowNine": 290,
@@ -280,7 +280,7 @@
       "NOSY BE",
       "WADI MUSA"
     ],
-    "totalMatrixCellShortfalls": 2652
+    "totalMatrixCellShortfalls": 2647
   },
   "restaurants": {
     "active": 0,
@@ -1930,16 +1930,59 @@
       "destinationId": "MEX",
       "destination": "MEXICO CITY",
       "activeHotels": 12,
-      "verifiedHotels": 6,
-      "classifiedHotels": 2,
-      "recommendationReadyHotels": 6,
+      "verifiedHotels": 7,
+      "classifiedHotels": 3,
+      "recommendationReadyHotels": 7,
       "priceCoverage": {
         "value": 0,
         "midrange": 0,
-        "premium": 2
+        "premium": 3
       },
       "vibeCoverage": {
         "calm": 1,
+        "balanced": 6,
+        "energetic": 0
+      },
+      "matrix": {
+        "value.calm": 0,
+        "value.balanced": 0,
+        "value.energetic": 0,
+        "midrange.calm": 0,
+        "midrange.balanced": 0,
+        "midrange.energetic": 0,
+        "premium.calm": 1,
+        "premium.balanced": 2,
+        "premium.energetic": 0
+      },
+      "matrixCellShortfalls": {
+        "value.calm": 1,
+        "value.balanced": 1,
+        "value.energetic": 1,
+        "midrange.calm": 1,
+        "midrange.balanced": 1,
+        "midrange.energetic": 1,
+        "premium.energetic": 1
+      },
+      "canReturnThree": true,
+      "fivePhotoHotels": 7,
+      "verifiedProviderLinks": 4,
+      "restaurants": 0,
+      "activities": 0
+    },
+    {
+      "destinationId": "TQO",
+      "destination": "TULUM",
+      "activeHotels": 12,
+      "verifiedHotels": 5,
+      "classifiedHotels": 1,
+      "recommendationReadyHotels": 5,
+      "priceCoverage": {
+        "value": 0,
+        "midrange": 0,
+        "premium": 1
+      },
+      "vibeCoverage": {
+        "calm": 0,
         "balanced": 5,
         "energetic": 0
       },
@@ -1950,51 +1993,8 @@
         "midrange.calm": 0,
         "midrange.balanced": 0,
         "midrange.energetic": 0,
-        "premium.calm": 1,
-        "premium.balanced": 1,
-        "premium.energetic": 0
-      },
-      "matrixCellShortfalls": {
-        "value.calm": 1,
-        "value.balanced": 1,
-        "value.energetic": 1,
-        "midrange.calm": 1,
-        "midrange.balanced": 1,
-        "midrange.energetic": 1,
-        "premium.energetic": 1
-      },
-      "canReturnThree": true,
-      "fivePhotoHotels": 6,
-      "verifiedProviderLinks": 4,
-      "restaurants": 0,
-      "activities": 0
-    },
-    {
-      "destinationId": "TQO",
-      "destination": "TULUM",
-      "activeHotels": 12,
-      "verifiedHotels": 4,
-      "classifiedHotels": 0,
-      "recommendationReadyHotels": 4,
-      "priceCoverage": {
-        "value": 0,
-        "midrange": 0,
-        "premium": 0
-      },
-      "vibeCoverage": {
-        "calm": 0,
-        "balanced": 4,
-        "energetic": 0
-      },
-      "matrix": {
-        "value.calm": 0,
-        "value.balanced": 0,
-        "value.energetic": 0,
-        "midrange.calm": 0,
-        "midrange.balanced": 0,
-        "midrange.energetic": 0,
         "premium.calm": 0,
-        "premium.balanced": 0,
+        "premium.balanced": 1,
         "premium.energetic": 0
       },
       "matrixCellShortfalls": {
@@ -2005,11 +2005,10 @@
         "midrange.balanced": 1,
         "midrange.energetic": 1,
         "premium.calm": 1,
-        "premium.balanced": 1,
         "premium.energetic": 1
       },
       "canReturnThree": true,
-      "fivePhotoHotels": 4,
+      "fivePhotoHotels": 5,
       "verifiedProviderLinks": 4,
       "restaurants": 0,
       "activities": 0
@@ -2018,16 +2017,16 @@
       "destinationId": "SJO",
       "destination": "COSTA RICA",
       "activeHotels": 12,
-      "verifiedHotels": 4,
-      "classifiedHotels": 0,
-      "recommendationReadyHotels": 4,
+      "verifiedHotels": 8,
+      "classifiedHotels": 4,
+      "recommendationReadyHotels": 8,
       "priceCoverage": {
         "value": 0,
         "midrange": 0,
-        "premium": 0
+        "premium": 4
       },
       "vibeCoverage": {
-        "calm": 0,
+        "calm": 4,
         "balanced": 4,
         "energetic": 0
       },
@@ -2038,7 +2037,7 @@
         "midrange.calm": 0,
         "midrange.balanced": 0,
         "midrange.energetic": 0,
-        "premium.calm": 0,
+        "premium.calm": 4,
         "premium.balanced": 0,
         "premium.energetic": 0
       },
@@ -2049,12 +2048,11 @@
         "midrange.calm": 1,
         "midrange.balanced": 1,
         "midrange.energetic": 1,
-        "premium.calm": 1,
         "premium.balanced": 1,
         "premium.energetic": 1
       },
       "canReturnThree": true,
-      "fivePhotoHotels": 4,
+      "fivePhotoHotels": 8,
       "verifiedProviderLinks": 4,
       "restaurants": 0,
       "activities": 0
@@ -2063,17 +2061,17 @@
       "destinationId": "GIG",
       "destination": "RIO DE JANEIRO",
       "activeHotels": 12,
-      "verifiedHotels": 4,
-      "classifiedHotels": 0,
-      "recommendationReadyHotels": 4,
+      "verifiedHotels": 5,
+      "classifiedHotels": 1,
+      "recommendationReadyHotels": 5,
       "priceCoverage": {
         "value": 0,
         "midrange": 0,
-        "premium": 0
+        "premium": 1
       },
       "vibeCoverage": {
         "calm": 0,
-        "balanced": 4,
+        "balanced": 5,
         "energetic": 0
       },
       "matrix": {
@@ -2084,7 +2082,7 @@
         "midrange.balanced": 0,
         "midrange.energetic": 0,
         "premium.calm": 0,
-        "premium.balanced": 0,
+        "premium.balanced": 1,
         "premium.energetic": 0
       },
       "matrixCellShortfalls": {
@@ -2095,11 +2093,10 @@
         "midrange.balanced": 1,
         "midrange.energetic": 1,
         "premium.calm": 1,
-        "premium.balanced": 1,
         "premium.energetic": 1
       },
       "canReturnThree": true,
-      "fivePhotoHotels": 4,
+      "fivePhotoHotels": 5,
       "verifiedProviderLinks": 4,
       "restaurants": 0,
       "activities": 0
@@ -2108,17 +2105,17 @@
       "destinationId": "EZE",
       "destination": "BUENOS AIRES",
       "activeHotels": 10,
-      "verifiedHotels": 4,
-      "classifiedHotels": 0,
-      "recommendationReadyHotels": 4,
+      "verifiedHotels": 8,
+      "classifiedHotels": 4,
+      "recommendationReadyHotels": 8,
       "priceCoverage": {
         "value": 0,
         "midrange": 0,
-        "premium": 0
+        "premium": 4
       },
       "vibeCoverage": {
-        "calm": 0,
-        "balanced": 4,
+        "calm": 2,
+        "balanced": 6,
         "energetic": 0
       },
       "matrix": {
@@ -2128,8 +2125,8 @@
         "midrange.calm": 0,
         "midrange.balanced": 0,
         "midrange.energetic": 0,
-        "premium.calm": 0,
-        "premium.balanced": 0,
+        "premium.calm": 2,
+        "premium.balanced": 2,
         "premium.energetic": 0
       },
       "matrixCellShortfalls": {
@@ -2139,12 +2136,10 @@
         "midrange.calm": 1,
         "midrange.balanced": 1,
         "midrange.energetic": 1,
-        "premium.calm": 1,
-        "premium.balanced": 1,
         "premium.energetic": 1
       },
       "canReturnThree": true,
-      "fivePhotoHotels": 4,
+      "fivePhotoHotels": 8,
       "verifiedProviderLinks": 4,
       "restaurants": 0,
       "activities": 0
