@@ -23,7 +23,7 @@ async function classify(items) {
   const gateway = Boolean(process.env.VERCEL_OIDC_TOKEN || process.env.AI_GATEWAY_API_KEY);
   const token = process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_OIDC_TOKEN || process.env.OPENAI_API_KEY;
   const response = await fetch(gateway ? "https://ai-gateway.vercel.sh/v1/responses" : "https://api.openai.com/v1/responses", { method: "POST", signal: AbortSignal.timeout(90000), headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }, body: JSON.stringify({ model: process.env.OPENAI_MODEL || (gateway ? "openai/gpt-5.4-nano" : "gpt-5.4-nano"), input: [{ role: "system", content: "Classify only the supplied real hotels from their official/brand webpage title and metadata. Price tier means relative property positioning within its destination, not a live price. Derive style scores conservatively from explicit positioning; do not invent amenities, prices, ratings, or booking support. Use null priceTier and low confidence when evidence is insufficient. Return every supplied Google Place ID exactly once." }, { role: "user", content: JSON.stringify(items) }], text: { format: { type: "json_schema", name: "hotel_classification_batch", strict: true, schema: { type: "object", additionalProperties: false, required: ["hotels"], properties: { hotels: { type: "array", minItems: items.length, maxItems: items.length, items: itemSchema } } } } } }) });
-  if (!response.ok) throw new Error(`classification_${response.status}:${(await response.text()).slice(0, 200)}`);
+  if (!response.ok) throw new Error(`classification_${response.status}${response.headers.get("retry-after") ? `:retry-after=${response.headers.get("retry-after")}` : ""}:${(await response.text()).slice(0, 200)}`);
   const data = await response.json();
   return JSON.parse(data.output_text || data.output?.flatMap((item) => item.content || []).map((item) => item.text || "").join("") || "{}").hotels;
 }
@@ -48,7 +48,7 @@ for (let index = 0; index < queue.length; index += batchSize) {
       const sourceById = new Map(evidence.map((item) => [item.googlePlaceId, item]));
       for (const result of classified) { const source = sourceById.get(result.googlePlaceId); if (source) report.records.push({ destinationId: source.destinationId, name: source.name, sourceUrl: source.sourceUrl, classifiedAt: new Date().toISOString(), ...result }); }
     } catch (error) {
-      const capacityBlocked = /^classification_(402|429):/.test(error.message) || /credit card|paid credits|top-up/i.test(error.message);
+      const capacityBlocked = /^classification_(402|429)(?::|$)/.test(error.message) || /credit card|paid credits|top-up/i.test(error.message);
       const failedItems = capacityBlocked ? evidence.slice(0, 1) : evidence;
       for (const item of failedItems) report.failures.push({ googlePlaceId: item.googlePlaceId, destinationId: item.destinationId, name: item.name, error: error.message, terminal: false });
       halted = capacityBlocked;

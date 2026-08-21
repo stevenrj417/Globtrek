@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-21T20:13:39.687Z",
+  "generatedAt": "2026-08-21T20:15:08.794Z",
   "records": [
     {
       "destinationId": "KIX",
@@ -2030,6 +2030,20 @@
       "googlePlaceId": "ChIJqXIqR1R-PzsR6ltK3Qiq9n8",
       "destinationId": "MLE",
       "name": "Summer Island Maldives",
+      "error": "classification_429:{\"error\":{\"message\":\"Free tier requests on this model are rate-limited. Upgrade to paid credits at https://vercel.com/d?to=%2F%5Bteam%5D%2F%7E%2Fai%3Fmodal%3Dtop-up for unrestricted access.\",\"type\":\"r",
+      "terminal": false
+    },
+    {
+      "googlePlaceId": "ChIJa6MKTwgw2jAR87UK8NeGSPM",
+      "destinationId": "CNX",
+      "name": "Shangri-La Chiang Mai Hotel",
+      "error": "classification_429:{\"error\":{\"message\":\"Free tier requests on this model are rate-limited. Upgrade to paid credits at https://vercel.com/d?to=%2F%5Bteam%5D%2F%7E%2Fai%3Fmodal%3Dtop-up for unrestricted access.\",\"type\":\"r",
+      "terminal": false
+    },
+    {
+      "googlePlaceId": "ChIJa6MKTwgw2jAR87UK8NeGSPM",
+      "destinationId": "CNX",
+      "name": "Shangri-La Chiang Mai Hotel",
       "error": "classification_429:{\"error\":{\"message\":\"Free tier requests on this model are rate-limited. Upgrade to paid credits at https://vercel.com/d?to=%2F%5Bteam%5D%2F%7E%2Fai%3Fmodal%3Dtop-up for unrestricted access.\",\"type\":\"r",
       "terminal": false
     },
