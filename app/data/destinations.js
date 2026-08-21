@@ -129,7 +129,9 @@ const legacyDestinations = catalog.map(([city, country, airport, photo, style, s
 }));
 
 function titleTag(value) { return String(value || "").replace(/(^|_)\w/g, (match) => match.replace("_", " ").toUpperCase()); }
-const verifiedExpansion = [...(verifiedBatch01.records || verifiedBatch01), ...(verifiedBatch02.records || verifiedBatch02), ...(verifiedBatch03.records || verifiedBatch03)].map((item) => ({
+const verifiedExpansion = [...(verifiedBatch01.records || verifiedBatch01), ...(verifiedBatch02.records || verifiedBatch02), ...(verifiedBatch03.records || verifiedBatch03), ...(verifiedBatch04.records || verifiedBatch04)]
+  .filter((item) => !(item.name === "Marrakesh" && item.country === "Morocco"))
+  .map((item) => ({
   id: item.id,
   name: `${String(item.name).toUpperCase()}, ${String(item.country).toUpperCase()}`,
   city: String(item.name).toUpperCase(), country: String(item.country).toUpperCase(), region: item.region || null,
@@ -152,7 +154,7 @@ const verifiedExpansion = [...(verifiedBatch01.records || verifiedBatch01), ...(
 }));
 
 const legacyNames = new Set(legacyDestinations.map((item) => `${item.city}|${item.country}`));
-export const destinations = [...legacyDestinations, ...verifiedExpansion.filter((item) => !legacyNames.has(`${item.city}|${item.country}`))];
+export const destinations = [...legacyDestinations, ...verifiedExpansion.filter((item) => !legacyNames.has(`${item.city}|${item.country}`))].map(enrichDestinationIntelligence);
 
 export function scoreDestination(destination, answers) {
   const weights = { alive: 9, duration: 7, memory: 6, luxury: 6, hotel: 5, escape: 4, self: 3 };
@@ -274,3 +276,5 @@ export function placeProviderUrl(place, destination) {
 import verifiedBatch01 from "../../scripts/destinations/verified-batch-01.json" with { type: "json" };
 import verifiedBatch02 from "../../scripts/destinations/verified-batch-02.json" with { type: "json" };
 import verifiedBatch03 from "../../scripts/destinations/verified-batch-03.json" with { type: "json" };
+import verifiedBatch04 from "../../scripts/destinations/verified-batch-04.json" with { type: "json" };
+import { enrichDestinationIntelligence } from "./destinationIntelligence.js";

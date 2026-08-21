@@ -1,5 +1,5 @@
 import { HotelInventoryProvider } from "./HotelInventoryProvider.js";
-import { rankHotels } from "../recommendation/hotelEngine.js";
+import { shortlistHotels } from "../recommendation/hotelEngine.js";
 
 function mapHotel(row, destination) {
   return {
@@ -15,6 +15,9 @@ function mapHotel(row, destination) {
     starRating: row.star_rating,
     rating: row.review_rating,
     reviewCount: row.review_count ?? null,
+    neighborhood: row.neighborhood,
+    propertyType: row.property_type,
+    priceTier: row.price_tier,
     amenities: row.amenity_tags || [],
     currency: row.currency,
     typicalNightlyLow: row.typical_nightly_low,
@@ -39,6 +42,15 @@ function mapHotel(row, destination) {
     romanticScore: row.romantic_score,
     centralityScore: row.centrality_score,
     valueScore: row.value_score,
+    calmScore: row.calm_score,
+    socialScore: row.social_score,
+    businessScore: row.business_score,
+    identityConfidence: row.identity_confidence,
+    locationConfidence: row.location_confidence,
+    providerLinkVerified: Boolean(row.provider_link_verified),
+    photoCount: row.photo_count || 0,
+    dataCompletenessScore: row.data_completeness_score || 0,
+    recommendationReady: Boolean(row.recommendation_ready),
     verifiedAt: row.verified_at,
     verificationSource: row.verification_source,
   };
@@ -57,10 +69,11 @@ export class SupabaseCuratedHotelProvider extends HotelInventoryProvider {
       .eq("destination_id", destination.id || destination.airport)
       .eq("provider", "booking_com_cj")
       .eq("active", true)
-      .neq("review_status", "rejected")
+      .eq("review_status", "verified")
+      .eq("recommendation_ready", true)
       .limit(100);
     if (error) throw new Error(`curated_catalog_unavailable:${error.code || "query_failed"}`);
-    return rankHotels((data || []).map((row) => mapHotel(row, destination)), profile, budgetPlan).slice(0, limit);
+    return shortlistHotels((data || []).map((row) => mapHotel(row, destination)), profile, budgetPlan).slice(0, limit);
   }
 
   async getProperty({ id, destination }) {

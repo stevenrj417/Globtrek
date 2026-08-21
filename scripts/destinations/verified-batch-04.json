@@ -1,0 +1,111 @@
+{
+  "submitted": 1,
+  "verified": 1,
+  "rejected": 0,
+  "records": [
+    {
+      "name": "Wadi Musa",
+      "country": "Jordan",
+      "region": "Ma'an Governorate",
+      "nearestAirport": "AQJ",
+      "knownnessScore": 42,
+      "costLevel": "moderate",
+      "travelerTypeTags": [
+        "couple",
+        "family",
+        "solo"
+      ],
+      "interestTags": [
+        "culture",
+        "history",
+        "architecture",
+        "hiking"
+      ],
+      "aliases": [
+        "Wadi Mousa",
+        "Petra gateway"
+      ],
+      "searchTerms": [
+        "Wadi Musa",
+        "Petra",
+        "Ma'an Governorate",
+        "Jordan"
+      ],
+      "wikiTitle": "Wadi Musa",
+      "id": "wadi-musa-67402",
+      "latitude": 30.32,
+      "longitude": 35.47833333,
+      "recognitionScore": 42,
+      "unknownnessScore": 58,
+      "currency": "USD",
+      "costProfile": {
+        "typicalHotelNightLow": 110,
+        "typicalHotelNightHigh": 260,
+        "foodDailyLow": 45,
+        "foodDailyHigh": 100,
+        "activitiesDailyLow": 20,
+        "activitiesDailyHigh": 80,
+        "transportDailyLow": 12,
+        "transportDailyHigh": 45,
+        "source": "globtrek_editorial_cost_tier_v1",
+        "confidence": 0.3,
+        "lastUpdated": "2026-08-21"
+      },
+      "seasonality": {
+        "hemisphere": "northern",
+        "source": "hemisphere_baseline",
+        "confidence": 0.35,
+        "note": "Destination-specific weather and events require editorial review."
+      },
+      "climateProfile": {
+        "zone": "warm_temperate",
+        "source": "latitude_zone_model",
+        "confidence": 0.42
+      },
+      "tripLengthFit": {
+        "minimumNights": 3,
+        "typicalNights": 7,
+        "maximumNights": 14,
+        "confidence": 0.35
+      },
+      "accessibilityProfile": {
+        "nearestAirport": "AQJ",
+        "transferDetailsVerified": false
+      },
+      "images": [
+        {
+          "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/78/Wadi_Musa%2C_Jordan.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Wadi_Musa,_Jordan.jpg",
+          "sourceName": "Wikimedia Commons",
+          "author": "Bernard Gagnon",
+          "licenseName": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "attributionText": "Own work",
+          "width": 2442,
+          "height": 1587,
+          "verifiedAt": "2026-08-21T18:27:59.057Z",
+          "isHero": true
+        }
+      ],
+      "primaryImageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/78/Wadi_Musa%2C_Jordan.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "imageSource": "Wikimedia Commons",
+      "imageLicenseMetadata": {
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/78/Wadi_Musa%2C_Jordan.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Wadi_Musa,_Jordan.jpg",
+        "sourceName": "Wikimedia Commons",
+        "author": "Bernard Gagnon",
+        "licenseName": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "attributionText": "Own work",
+        "width": 2442,
+        "height": 1587,
+        "verifiedAt": "2026-08-21T18:27:59.057Z",
+        "isHero": true
+      },
+      "verifiedAt": "2026-08-21T18:27:59.057Z",
+      "verificationSource": "https://en.wikipedia.org/wiki/Wadi_Musa",
+      "active": true
+    }
+  ],
+  "failures": []
+}

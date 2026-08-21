@@ -59,6 +59,9 @@ export function normalizeHotel(record, destination) {
     destinationId: record.destinationId,
     city: record.city || destination?.city || null,
     region: record.region || null,
+    neighborhood: record.neighborhood || record.searchArea || null,
+    propertyType: record.propertyType || null,
+    priceTier: record.priceTier || null,
     country: record.country || destination?.country || null,
     latitude: record.latitude ?? null,
     longitude: record.longitude ?? null,
@@ -83,6 +86,9 @@ export function normalizeHotel(record, destination) {
     romanticScore: record.romanticScore ?? null,
     centralityScore: record.centralityScore ?? null,
     valueScore: record.valueScore ?? null,
+    calmScore: record.calmScore ?? record.relaxationScore ?? null,
+    socialScore: record.socialScore ?? null,
+    businessScore: record.businessScore ?? null,
     styleTags: [...new Set(record.styleTags || record.tags || [])],
     amenityTags: [...new Set(record.amenityTags || [])],
     imageUrl: record.imageUrl || null,
@@ -91,8 +97,26 @@ export function normalizeHotel(record, destination) {
     verifiedAt: record.verifiedAt || null,
     verificationSource: record.verificationSource || "legacy_curated_catalog",
     reviewStatus: record.reviewStatus || "needs_review",
+    googlePlaceId: record.googlePlaceId || null,
+    identityConfidence: record.identityConfidence ?? null,
+    locationConfidence: record.locationConfidence ?? null,
+    providerLinkVerified: record.providerLinkVerified === true,
+    photoCount: Number.isInteger(record.photoCount) ? record.photoCount : 0,
+    dataCompletenessScore: Number.isInteger(record.dataCompletenessScore) ? record.dataCompletenessScore : 0,
+    recommendationReady: record.recommendationReady === true,
     active: record.active !== false,
   };
+}
+
+export function hotelReadiness(record) {
+  const checks = {
+    verifiedIdentity: record.reviewStatus === "verified" && Number(record.identityConfidence) >= 0.8,
+    correctLocation: Number.isFinite(Number(record.latitude)) && Number.isFinite(Number(record.longitude)) && Number(record.locationConfidence) >= 0.8,
+    providerLink: record.providerLinkVerified === true && Boolean(record.bookingComPropertyUrl) && Boolean(record.cjTrackingUrl),
+    usablePhotos: Number(record.photoCount) >= 1,
+    sufficientData: Number(record.dataCompletenessScore) >= 70,
+  };
+  return { ready: Object.values(checks).every(Boolean), checks, missing: Object.entries(checks).filter(([, value]) => !value).map(([key]) => key) };
 }
 
 export function importBatch(records, destinations, existing = []) {
