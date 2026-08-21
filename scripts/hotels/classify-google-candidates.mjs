@@ -19,13 +19,29 @@ const scoreFields = ["calmScore", "energyScore", "designScore", "romanceScore", 
 const styleTags = ["boutique", "romantic", "wellness", "design", "family", "nightlife", "central", "resort", "historic", "business", "beach", "ski", "adults-oriented", "all-inclusive", "hostel", "airport", "nature"];
 const itemSchema = { type: "object", additionalProperties: false, required: ["googlePlaceId", "priceTier", "priceConfidence", ...scoreFields, "styleTags", "classificationConfidence", "rationale"], properties: { googlePlaceId: { type: "string" }, priceTier: { type: ["string", "null"], enum: ["value", "midrange", "premium", null] }, priceConfidence: { type: "number", minimum: 0, maximum: 1 }, ...Object.fromEntries(scoreFields.map((field) => [field, { type: "integer", minimum: 0, maximum: 100 }])), styleTags: { type: "array", items: { type: "string", enum: styleTags } }, classificationConfidence: { type: "number", minimum: 0, maximum: 1 }, rationale: { type: "string", maxLength: 240 } } };
 
-async function classify(items) {
+const wait = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
+
+async function classify(items, { allowPaid = false } = {}) {
   const gateway = Boolean(process.env.VERCEL_OIDC_TOKEN || process.env.AI_GATEWAY_API_KEY);
   const token = process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_OIDC_TOKEN || process.env.OPENAI_API_KEY;
-  const response = await fetch(gateway ? "https://ai-gateway.vercel.sh/v1/responses" : "https://api.openai.com/v1/responses", { method: "POST", signal: AbortSignal.timeout(90000), headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }, body: JSON.stringify({ model: process.env.OPENAI_MODEL || (gateway ? "openai/gpt-5.4-nano" : "gpt-5.4-nano"), input: [{ role: "system", content: "Classify only the supplied real hotels from their official/brand webpage title and metadata. Price tier means relative property positioning within its destination, not a live price. Derive style scores conservatively from explicit positioning; do not invent amenities, prices, ratings, or booking support. Use null priceTier and low confidence when evidence is insufficient. Return every supplied Google Place ID exactly once." }, { role: "user", content: JSON.stringify(items) }], text: { format: { type: "json_schema", name: "hotel_classification_batch", strict: true, schema: { type: "object", additionalProperties: false, required: ["hotels"], properties: { hotels: { type: "array", minItems: items.length, maxItems: items.length, items: itemSchema } } } } } }) });
-  if (!response.ok) throw new Error(`classification_${response.status}${response.headers.get("retry-after") ? `:retry-after=${response.headers.get("retry-after")}` : ""}:${(await response.text()).slice(0, 200)}`);
-  const data = await response.json();
-  return JSON.parse(data.output_text || data.output?.flatMap((item) => item.content || []).map((item) => item.text || "").join("") || "{}").hotels;
+  let attempt = 0;
+  while (true) {
+    const response = await fetch(gateway ? "https://ai-gateway.vercel.sh/v1/responses" : "https://api.openai.com/v1/responses", { method: "POST", signal: AbortSignal.timeout(90000), headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }, body: JSON.stringify({ model: process.env.OPENAI_MODEL || (gateway ? "openai/gpt-5.4-nano" : "gpt-5.4-nano"), input: [{ role: "system", content: "Classify only the supplied real hotels from their official/brand webpage title and metadata. Price tier means relative property positioning within its destination, not a live price. Derive style scores conservatively from explicit positioning; do not invent amenities, prices, ratings, or booking support. Use null priceTier and low confidence when evidence is insufficient. Return every supplied Google Place ID exactly once." }, { role: "user", content: JSON.stringify(items) }], text: { format: { type: "json_schema", name: "hotel_classification_batch", strict: true, schema: { type: "object", additionalProperties: false, required: ["hotels"], properties: { hotels: { type: "array", minItems: items.length, maxItems: items.length, items: itemSchema } } } } } }) });
+    if (response.ok) {
+      const data = await response.json();
+      return JSON.parse(data.output_text || data.output?.flatMap((item) => item.content || []).map((item) => item.text || "").join("") || "{}").hotels;
+    }
+    const retryAfter = Number(response.headers.get("retry-after"));
+    const detail = (await response.text()).slice(0, 200);
+    if (allowPaid && response.status === 429) {
+      attempt += 1;
+      const delaySeconds = Number.isFinite(retryAfter) ? Math.min(60, Math.max(1, retryAfter)) : Math.min(60, 2 ** Math.min(attempt, 6));
+      console.log(`Pro gateway rate-limited; retrying batch in ${delaySeconds}s (attempt ${attempt}).`);
+      await wait(delaySeconds * 1000);
+      continue;
+    }
+    throw new Error(`classification_${response.status}${response.headers.get("retry-after") ? `:retry-after=${response.headers.get("retry-after")}` : ""}:${detail}`);
+  }
 }
 
 await loadEnvironment(option("--env", ".env.production.local"));
@@ -33,6 +49,7 @@ const input = JSON.parse(await readFile(option("--input", "scripts/hotels/google
 const output = option("--output", "scripts/hotels/google-candidate-classifications.json");
 const batchSize = Math.min(10, Math.max(1, Number(option("--batch-size", 8))));
 const limit = Math.max(1, Number(option("--limit", input.accepted.length)));
+const allowPaid = process.argv.includes("--allow-paid");
 let report = { generatedAt: new Date().toISOString(), records: [], failures: [] };
 if (process.argv.includes("--resume")) { try { report = JSON.parse(await readFile(output, "utf8")); } catch {} }
 const completed = new Set([...report.records.map((item) => item.googlePlaceId), ...report.failures.filter((item) => item.terminal).map((item) => item.googlePlaceId)]);
@@ -44,11 +61,11 @@ for (let index = 0; index < queue.length; index += batchSize) {
   for (const item of candidates.filter((candidate) => !evidence.some((value) => value.googlePlaceId === candidate.googlePlaceId))) report.failures.push({ googlePlaceId: item.googlePlaceId, destinationId: item.destinationId, name: item.name, error: "official_evidence_unavailable", terminal: true });
   if (evidence.length) {
     try {
-      const classified = await classify(evidence.map((item) => ({ googlePlaceId: item.googlePlaceId, name: item.name, destination: `${item.city}, ${item.country}`, searchCenter: item.searchCenter, propertyType: item.primaryType, officialEvidence: item.evidence })));
+      const classified = await classify(evidence.map((item) => ({ googlePlaceId: item.googlePlaceId, name: item.name, destination: `${item.city}, ${item.country}`, searchCenter: item.searchCenter, propertyType: item.primaryType, officialEvidence: item.evidence })), { allowPaid });
       const sourceById = new Map(evidence.map((item) => [item.googlePlaceId, item]));
       for (const result of classified) { const source = sourceById.get(result.googlePlaceId); if (source) report.records.push({ destinationId: source.destinationId, name: source.name, sourceUrl: source.sourceUrl, classifiedAt: new Date().toISOString(), ...result }); }
     } catch (error) {
-      const capacityBlocked = /^classification_(402|429)(?::|$)/.test(error.message) || /credit card|paid credits|top-up/i.test(error.message);
+      const capacityBlocked = /^classification_402(?::|$)/.test(error.message) || (!allowPaid && /^classification_429(?::|$)/.test(error.message)) || /credit card|top-up/i.test(error.message) || (!allowPaid && /paid credits/i.test(error.message));
       const failedItems = capacityBlocked ? evidence.slice(0, 1) : evidence;
       for (const item of failedItems) report.failures.push({ googlePlaceId: item.googlePlaceId, destinationId: item.destinationId, name: item.name, error: error.message, terminal: false });
       halted = capacityBlocked;
@@ -57,5 +74,5 @@ for (let index = 0; index < queue.length; index += batchSize) {
   report.generatedAt = new Date().toISOString();
   await writeFile(output, `${JSON.stringify(report, null, 2)}\n`);
   console.log(`${Math.min(index + batchSize, queue.length)}/${queue.length} classified=${report.records.length} failures=${report.failures.length}`);
-  if (halted) { console.log("Classification paused before paid capacity."); break; }
+  if (halted) { console.log(allowPaid ? "Classification paused because paid capacity is unavailable." : "Classification paused before paid capacity."); break; }
 }
