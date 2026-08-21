@@ -30,6 +30,15 @@ test("restaurant discovery returns three real provider identities with attribute
   assert.ok(records.every((item) => item.bookingUrl === null));
 });
 
+test("hotel discovery stages nine identities but never invents Booking links", async () => {
+  const places = Array.from({ length: 10 }, (_, index) => ({ id: `hotel-${index}`, displayName: { text: `Hotel ${index}` }, formattedAddress: "Paris, France", location: { latitude: 48.8566, longitude: 2.3522 }, types: ["hotel", "lodging"], businessStatus: "OPERATIONAL", rating: 4.5, userRatingCount: 200 + index, googleMapsUri: `https://maps.google.com/?cid=hotel-${index}`, photos: [{ name: `places/hotel-${index}/photos/one`, authorAttributions: [{ displayName: "Contributor" }] }] }));
+  const provider = new GooglePlacesDiscoveryProvider({ apiKey: "test", fetchImpl: queuedFetch([response({ places })]) });
+  const records = await provider.discoverHotelCandidates({ id: "test-paris-hotels", city: "Paris", country: "France", latitude: 48.8566, longitude: 2.3522 });
+  assert.equal(records.length, 9);
+  assert.ok(records.every((item) => item.googlePlaceId && item.photoResources.length === 1));
+  assert.ok(records.every((item) => item.bookingComPropertyUrl === null && item.reviewStatus === "needs_booking_match"));
+});
+
 test("correct Google Place hotel match is accepted", () => {
   const scored = scoreHotelPlaceMatch(kyotoHotel, correctPlace);
   assert.equal(scored.verified, true);

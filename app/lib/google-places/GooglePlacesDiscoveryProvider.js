@@ -2,6 +2,7 @@ import { GooglePlacesHotelProvider, distanceMeters } from "./GooglePlacesHotelPr
 
 const RESTAURANT_TYPES = new Set(["restaurant", "cafe", "bakery", "bar", "meal_takeaway"]);
 const ACTIVITY_TYPES = new Set(["tourist_attraction", "museum", "art_gallery", "park", "national_park", "historical_landmark", "cultural_landmark", "beach", "hiking_area", "market"]);
+const HOTEL_TYPES = new Set(["hotel", "lodging", "resort_hotel", "motel", "bed_and_breakfast", "guest_house", "hostel"]);
 const cache = globalThis.__globtrekPlacesDiscoveryCache || new Map();
 globalThis.__globtrekPlacesDiscoveryCache = cache;
 
@@ -38,6 +39,13 @@ export class GooglePlacesDiscoveryProvider extends GooglePlacesHotelProvider {
     const key = cacheKey("activities", destination); const hit = cached(key); if (hit) return hit.slice(0, limit);
     const places = await this.searchNearby(destination, { textQuery: `top attractions and things to do in ${destination.city}, ${destination.country}`, includedType: "tourist_attraction", limit: Math.max(12, limit), allowedTypes: ACTIVITY_TYPES });
     const records = places.map((place) => ({ id: `google:${place.id}`, destinationId: destination.id || destination.airport, name: placeName(place), description: null, category: category(place, "local"), location: place.formattedAddress || null, latitude: place.location?.latitude ?? null, longitude: place.location?.longitude ?? null, provider: "google_places", providerId: place.id, bookingUrl: null, detailsUrl: place.googleMapsUri || place.websiteUri || null, rating: Number(place.rating) || null, reviewCount: Number(place.userRatingCount) || null, imageUrl: null, imageAttribution: [], verifiedAt: new Date().toISOString() }));
+    return remember(key, records).slice(0, limit);
+  }
+
+  async discoverHotelCandidates(destination, { limit = 9 } = {}) {
+    const key = cacheKey("hotel-candidates", destination); const hit = cached(key); if (hit) return hit.slice(0, limit);
+    const places = await this.searchNearby(destination, { textQuery: `hotels in ${destination.city}, ${destination.country}`, includedType: "lodging", limit: Math.max(9, limit), allowedTypes: HOTEL_TYPES });
+    const records = places.map((place) => ({ destinationId: destination.id || destination.airport, name: placeName(place), city: destination.city, country: destination.country, address: place.formattedAddress || null, latitude: place.location?.latitude ?? null, longitude: place.location?.longitude ?? null, googlePlaceId: place.id, googlePlaceVerified: true, rating: Number(place.rating) || null, reviewCount: Number(place.userRatingCount) || null, googleMapsUri: place.googleMapsUri || null, websiteUri: place.websiteUri || null, photoResources: (place.photos || []).slice(0, 5).map((photo) => ({ name: photo.name, widthPx: photo.widthPx || null, heightPx: photo.heightPx || null, authorAttributions: photo.authorAttributions || [], googleMapsUri: photo.googleMapsUri || place.googleMapsUri || null })), bookingComPropertyUrl: null, cjTrackingUrl: null, reviewStatus: "needs_booking_match", verifiedAt: new Date().toISOString(), verificationSource: place.googleMapsUri || null }));
     return remember(key, records).slice(0, limit);
   }
 }

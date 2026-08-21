@@ -18,7 +18,7 @@ export async function POST(request) {
       source = "google_places_verified";
     }
     const openTable = new OpenTableClient();
-    const canCheckAvailability = openTable.isConfigured() && body.startDateTime && body.partySize;
+    const canCheckAvailability = openTable.isConfigured() && body.startDateTime && body.partySize && restaurants.some((restaurant) => restaurant.openTableRestaurantId);
     const enriched = await Promise.all(restaurants.map(async (restaurant) => {
       if (!canCheckAvailability || !restaurant.openTableRestaurantId) return restaurant;
       try {
