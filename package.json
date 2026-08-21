@@ -19,6 +19,7 @@
     "hotels:prices": "node scripts/hotels/import-price-observations.mjs",
     "activities:import": "node scripts/activities/import-activities.mjs",
     "catalog:readiness": "node scripts/catalog-readiness.mjs",
+    "catalog:audit": "node scripts/catalog-audit.mjs",
     "destinations:verify": "node scripts/destinations/verify-wikimedia.mjs",
     "destinations:migration": "node scripts/destinations/generate-migration.mjs",
     "destinations:coverage": "node scripts/destinations/coverage-report.mjs",

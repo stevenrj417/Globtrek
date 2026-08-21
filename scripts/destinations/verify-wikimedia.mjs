@@ -65,12 +65,14 @@ export async function verifyCandidate(candidate, fetchImpl = fetch) {
   return result;
 }
 
-export async function verifyBatch(candidates, fetchImpl = fetch) {
+export async function verifyBatch(candidates, fetchImpl = fetch, maximumVerified = Number.POSITIVE_INFINITY, delayMs = 0) {
   const verified = [];
   const rejected = [];
   for (const candidate of candidates) {
+    if (verified.length >= maximumVerified) break;
     try { verified.push(await verifyCandidate(candidate, fetchImpl)); }
     catch (error) { rejected.push({ candidate, error: error.message }); }
+    if (delayMs > 0) await new Promise((resolve) => setTimeout(resolve, delayMs));
   }
   return { submitted: candidates.length, verified: verified.length, rejected: rejected.length, records: verified, failures: rejected };
 }
@@ -78,7 +80,17 @@ export async function verifyBatch(candidates, fetchImpl = fetch) {
 if (process.argv[1]?.endsWith("verify-wikimedia.mjs")) {
   const input = process.argv[2] || "scripts/destinations/seed-batch-01.json";
   const output = process.argv[3] || "scripts/destinations/verified-batch-01.json";
-  const report = await verifyBatch(JSON.parse(await readFile(input, "utf8")));
+  const limitIndex = process.argv.indexOf("--limit");
+  const maximumVerified = limitIndex >= 0 ? Number(process.argv[limitIndex + 1]) : Number.POSITIVE_INFINITY;
+  const delayIndex = process.argv.indexOf("--delay");
+  const delayMs = delayIndex >= 0 ? Number(process.argv[delayIndex + 1]) : 0;
+  const resume = process.argv.includes("--resume");
+  let prior = null;
+  if (resume) { try { prior = JSON.parse(await readFile(output, "utf8")); } catch {} }
+  const candidates = prior ? prior.failures.map((item) => item.candidate) : JSON.parse(await readFile(input, "utf8"));
+  const needed = Math.max(0, maximumVerified - (prior?.records.length || 0));
+  const next = await verifyBatch(candidates, fetch, needed, delayMs);
+  const report = prior ? { submitted: prior.submitted, verified: prior.records.length + next.records.length, rejected: next.failures.length, records: [...prior.records, ...next.records], failures: next.failures } : next;
   await writeFile(output, `${JSON.stringify(report, null, 2)}\n`);
   console.log(JSON.stringify({ submitted: report.submitted, verified: report.verified, rejected: report.rejected, output }, null, 2));
   if (report.rejected) console.error(JSON.stringify(report.failures, null, 2));

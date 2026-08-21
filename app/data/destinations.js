@@ -129,11 +129,13 @@ const legacyDestinations = catalog.map(([city, country, airport, photo, style, s
 }));
 
 function titleTag(value) { return String(value || "").replace(/(^|_)\w/g, (match) => match.replace("_", " ").toUpperCase()); }
-const verifiedExpansion = [...(verifiedBatch01.records || verifiedBatch01), ...(verifiedBatch02.records || verifiedBatch02)].map((item) => ({
+const verifiedExpansion = [...(verifiedBatch01.records || verifiedBatch01), ...(verifiedBatch02.records || verifiedBatch02), ...(verifiedBatch03.records || verifiedBatch03)].map((item) => ({
   id: item.id,
   name: `${String(item.name).toUpperCase()}, ${String(item.country).toUpperCase()}`,
   city: String(item.name).toUpperCase(), country: String(item.country).toUpperCase(), region: item.region || null,
   airport: item.nearestAirport, recognition: item.knownnessScore ?? item.recognitionScore ?? 50,
+  latitude: item.latitude, longitude: item.longitude, knownnessScore: item.knownnessScore,
+  unknownnessScore: item.unknownnessScore, costLevel: item.costLevel,
   image: item.primaryImageUrl || item.images?.find((image) => image.isHero)?.imageUrl,
   price: "Destination verified · trip pricing estimated",
   costs: ["Flights: estimated by route", "Stay: catalog depth in progress", "Dining: estimated", "Experiences: verified where available"],
@@ -141,9 +143,11 @@ const verifiedExpansion = [...(verifiedBatch01.records || verifiedBatch01), ...(
   style: [...(item.interestTags || []), ...(item.travelerTypeTags || [])].slice(0, 3).map(titleTag).join(" / ") || "A considered escape",
   season: "Seasonal guidance requires final editorial review",
   tags: [...(item.interestTags || []), ...(item.travelerTypeTags || [])].map(titleTag),
-  aliases: [item.region, item.wikiTitle].filter(Boolean),
+  aliases: [...(item.aliases || []), ...(item.searchTerms || []), item.region, item.wikiTitle].filter(Boolean),
   why: `${item.name} is a verified Globtrek destination. Its identity, location, imagery, and baseline cost profile are grounded; hotel and activity depth remain subject to readiness gates.`,
   itinerary: [], dining: [], costProfile: item.costProfile, seasonality: item.seasonality,
+  climateProfile: item.climateProfile, tripLengthFit: item.tripLengthFit,
+  accessibilityProfile: item.accessibilityProfile, imageLicenseMetadata: item.imageLicenseMetadata,
   recommendationReady: false, catalogStatus: "verified_destination_only", verificationSource: item.verificationSource,
 }));
 
@@ -268,3 +272,4 @@ export function placeProviderUrl(place, destination) {
 }
 import verifiedBatch01 from "../../scripts/destinations/verified-batch-01.json" with { type: "json" };
 import verifiedBatch02 from "../../scripts/destinations/verified-batch-02.json" with { type: "json" };
+import verifiedBatch03 from "../../scripts/destinations/verified-batch-03.json" with { type: "json" };

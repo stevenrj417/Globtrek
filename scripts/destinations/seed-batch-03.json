@@ -1,0 +1,5696 @@
+[
+  {
+    "name": "Portland",
+    "country": "United States",
+    "region": "Oregon",
+    "nearestAirport": "PDX",
+    "wikiTitle": "Portland, Oregon",
+    "interestTags": [
+      "city",
+      "nature",
+      "food"
+    ],
+    "knownnessScore": 10,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Portland"
+    ],
+    "searchTerms": [
+      "Portland",
+      "Oregon",
+      "United States"
+    ]
+  },
+  {
+    "name": "Savannah",
+    "country": "United States",
+    "region": "Georgia",
+    "nearestAirport": "SAV",
+    "wikiTitle": "Savannah, Georgia",
+    "interestTags": [
+      "history",
+      "food",
+      "architecture"
+    ],
+    "knownnessScore": 26,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Savannah"
+    ],
+    "searchTerms": [
+      "Savannah",
+      "Georgia",
+      "United States"
+    ]
+  },
+  {
+    "name": "Charleston",
+    "country": "United States",
+    "region": "South Carolina",
+    "nearestAirport": "CHS",
+    "wikiTitle": "Charleston, South Carolina",
+    "interestTags": [
+      "history",
+      "food",
+      "coast"
+    ],
+    "knownnessScore": 47,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Charleston"
+    ],
+    "searchTerms": [
+      "Charleston",
+      "South Carolina",
+      "United States"
+    ]
+  },
+  {
+    "name": "New Orleans",
+    "country": "United States",
+    "region": "Louisiana",
+    "nearestAirport": "MSY",
+    "wikiTitle": "New Orleans",
+    "interestTags": [
+      "food",
+      "music",
+      "nightlife"
+    ],
+    "knownnessScore": 68,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "New Orleans"
+    ],
+    "searchTerms": [
+      "New Orleans",
+      "Louisiana",
+      "United States"
+    ]
+  },
+  {
+    "name": "Austin",
+    "country": "United States",
+    "region": "Texas",
+    "nearestAirport": "AUS",
+    "wikiTitle": "Austin, Texas",
+    "interestTags": [
+      "food",
+      "music",
+      "nightlife"
+    ],
+    "knownnessScore": 89,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Austin"
+    ],
+    "searchTerms": [
+      "Austin",
+      "Texas",
+      "United States"
+    ]
+  },
+  {
+    "name": "Santa Fe",
+    "country": "United States",
+    "region": "New Mexico",
+    "nearestAirport": "SAF",
+    "wikiTitle": "Santa Fe, New Mexico",
+    "interestTags": [
+      "art",
+      "design",
+      "history"
+    ],
+    "knownnessScore": 15,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Santa Fe"
+    ],
+    "searchTerms": [
+      "Santa Fe",
+      "New Mexico",
+      "United States"
+    ]
+  },
+  {
+    "name": "Sedona",
+    "country": "United States",
+    "region": "Arizona",
+    "nearestAirport": "FLG",
+    "wikiTitle": "Sedona, Arizona",
+    "interestTags": [
+      "nature",
+      "wellness",
+      "hiking"
+    ],
+    "knownnessScore": 31,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Sedona"
+    ],
+    "searchTerms": [
+      "Sedona",
+      "Arizona",
+      "United States"
+    ]
+  },
+  {
+    "name": "Nashville",
+    "country": "United States",
+    "region": "Tennessee",
+    "nearestAirport": "BNA",
+    "wikiTitle": "Nashville, Tennessee",
+    "interestTags": [
+      "music",
+      "food",
+      "nightlife"
+    ],
+    "knownnessScore": 52,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Nashville"
+    ],
+    "searchTerms": [
+      "Nashville",
+      "Tennessee",
+      "United States"
+    ]
+  },
+  {
+    "name": "San Diego",
+    "country": "United States",
+    "region": "California",
+    "nearestAirport": "SAN",
+    "wikiTitle": "San Diego",
+    "interestTags": [
+      "beaches",
+      "food",
+      "family"
+    ],
+    "knownnessScore": 73,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "San Diego"
+    ],
+    "searchTerms": [
+      "San Diego",
+      "California",
+      "United States"
+    ]
+  },
+  {
+    "name": "Palm Springs",
+    "country": "United States",
+    "region": "California",
+    "nearestAirport": "PSP",
+    "wikiTitle": "Palm Springs, California",
+    "interestTags": [
+      "design",
+      "wellness",
+      "desert"
+    ],
+    "knownnessScore": 94,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Palm Springs"
+    ],
+    "searchTerms": [
+      "Palm Springs",
+      "California",
+      "United States"
+    ]
+  },
+  {
+    "name": "Anchorage",
+    "country": "United States",
+    "region": "Alaska",
+    "nearestAirport": "ANC",
+    "wikiTitle": "Anchorage, Alaska",
+    "interestTags": [
+      "nature",
+      "wildlife",
+      "hiking"
+    ],
+    "knownnessScore": 20,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Anchorage"
+    ],
+    "searchTerms": [
+      "Anchorage",
+      "Alaska",
+      "United States"
+    ]
+  },
+  {
+    "name": "Honolulu",
+    "country": "United States",
+    "region": "Hawaii",
+    "nearestAirport": "HNL",
+    "wikiTitle": "Honolulu",
+    "interestTags": [
+      "beaches",
+      "food",
+      "culture"
+    ],
+    "knownnessScore": 36,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Honolulu"
+    ],
+    "searchTerms": [
+      "Honolulu",
+      "Hawaii",
+      "United States"
+    ]
+  },
+  {
+    "name": "Quebec City",
+    "country": "Canada",
+    "region": "Quebec",
+    "nearestAirport": "YQB",
+    "wikiTitle": "Quebec City",
+    "interestTags": [
+      "culture",
+      "food",
+      "architecture"
+    ],
+    "knownnessScore": 57,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Quebec City"
+    ],
+    "searchTerms": [
+      "Quebec City",
+      "Quebec",
+      "Canada"
+    ]
+  },
+  {
+    "name": "Halifax",
+    "country": "Canada",
+    "region": "Nova Scotia",
+    "nearestAirport": "YHZ",
+    "wikiTitle": "Halifax, Nova Scotia",
+    "interestTags": [
+      "coast",
+      "food",
+      "history"
+    ],
+    "knownnessScore": 78,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Halifax"
+    ],
+    "searchTerms": [
+      "Halifax",
+      "Nova Scotia",
+      "Canada"
+    ]
+  },
+  {
+    "name": "Victoria",
+    "country": "Canada",
+    "region": "British Columbia",
+    "nearestAirport": "YYJ",
+    "wikiTitle": "Victoria, British Columbia",
+    "interestTags": [
+      "coast",
+      "gardens",
+      "food"
+    ],
+    "knownnessScore": 85,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Victoria"
+    ],
+    "searchTerms": [
+      "Victoria",
+      "British Columbia",
+      "Canada"
+    ]
+  },
+  {
+    "name": "Calgary",
+    "country": "Canada",
+    "region": "Alberta",
+    "nearestAirport": "YYC",
+    "wikiTitle": "Calgary",
+    "interestTags": [
+      "city",
+      "nature",
+      "food"
+    ],
+    "knownnessScore": 14,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Calgary"
+    ],
+    "searchTerms": [
+      "Calgary",
+      "Alberta",
+      "Canada"
+    ]
+  },
+  {
+    "name": "Ottawa",
+    "country": "Canada",
+    "region": "Ontario",
+    "nearestAirport": "YOW",
+    "wikiTitle": "Ottawa",
+    "interestTags": [
+      "museums",
+      "history",
+      "food"
+    ],
+    "knownnessScore": 25,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Ottawa"
+    ],
+    "searchTerms": [
+      "Ottawa",
+      "Ontario",
+      "Canada"
+    ]
+  },
+  {
+    "name": "Winnipeg",
+    "country": "Canada",
+    "region": "Manitoba",
+    "nearestAirport": "YWG",
+    "wikiTitle": "Winnipeg",
+    "interestTags": [
+      "culture",
+      "food",
+      "architecture"
+    ],
+    "knownnessScore": 46,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Winnipeg"
+    ],
+    "searchTerms": [
+      "Winnipeg",
+      "Manitoba",
+      "Canada"
+    ]
+  },
+  {
+    "name": "Merida",
+    "country": "Mexico",
+    "region": "Yucatán",
+    "nearestAirport": "MID",
+    "wikiTitle": "Mérida, Yucatán",
+    "interestTags": [
+      "food",
+      "culture",
+      "architecture"
+    ],
+    "knownnessScore": 67,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Merida"
+    ],
+    "searchTerms": [
+      "Merida",
+      "Yucatán",
+      "Mexico"
+    ]
+  },
+  {
+    "name": "San Miguel de Allende",
+    "country": "Mexico",
+    "region": "Guanajuato",
+    "nearestAirport": "BJX",
+    "wikiTitle": "San Miguel de Allende",
+    "interestTags": [
+      "art",
+      "food",
+      "architecture"
+    ],
+    "knownnessScore": 90,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "San Miguel de Allende"
+    ],
+    "searchTerms": [
+      "San Miguel de Allende",
+      "Guanajuato",
+      "Mexico"
+    ]
+  },
+  {
+    "name": "Guadalajara",
+    "country": "Mexico",
+    "region": "Jalisco",
+    "nearestAirport": "GDL",
+    "wikiTitle": "Guadalajara",
+    "interestTags": [
+      "food",
+      "culture",
+      "nightlife"
+    ],
+    "knownnessScore": 19,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Guadalajara"
+    ],
+    "searchTerms": [
+      "Guadalajara",
+      "Jalisco",
+      "Mexico"
+    ]
+  },
+  {
+    "name": "Puerto Vallarta",
+    "country": "Mexico",
+    "region": "Jalisco",
+    "nearestAirport": "PVR",
+    "wikiTitle": "Puerto Vallarta",
+    "interestTags": [
+      "beaches",
+      "food",
+      "nightlife"
+    ],
+    "knownnessScore": 30,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Puerto Vallarta"
+    ],
+    "searchTerms": [
+      "Puerto Vallarta",
+      "Jalisco",
+      "Mexico"
+    ]
+  },
+  {
+    "name": "La Paz",
+    "country": "Mexico",
+    "region": "Baja California Sur",
+    "nearestAirport": "LAP",
+    "wikiTitle": "La Paz, Baja California Sur",
+    "interestTags": [
+      "beaches",
+      "nature",
+      "water"
+    ],
+    "knownnessScore": 51,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "La Paz"
+    ],
+    "searchTerms": [
+      "La Paz",
+      "Baja California Sur",
+      "Mexico"
+    ]
+  },
+  {
+    "name": "Guanajuato City",
+    "country": "Mexico",
+    "region": "Guanajuato",
+    "nearestAirport": "BJX",
+    "wikiTitle": "Guanajuato City",
+    "interestTags": [
+      "culture",
+      "architecture",
+      "food"
+    ],
+    "knownnessScore": 72,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Guanajuato City"
+    ],
+    "searchTerms": [
+      "Guanajuato City",
+      "Guanajuato",
+      "Mexico"
+    ]
+  },
+  {
+    "name": "Antigua Guatemala",
+    "country": "Guatemala",
+    "region": "Sacatepéquez",
+    "nearestAirport": "GUA",
+    "wikiTitle": "Antigua Guatemala",
+    "interestTags": [
+      "culture",
+      "architecture",
+      "food"
+    ],
+    "knownnessScore": 95,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Antigua Guatemala"
+    ],
+    "searchTerms": [
+      "Antigua Guatemala",
+      "Sacatepéquez",
+      "Guatemala"
+    ]
+  },
+  {
+    "name": "Belize City",
+    "country": "Belize",
+    "region": "Belize District",
+    "nearestAirport": "BZE",
+    "wikiTitle": "Belize City",
+    "interestTags": [
+      "coast",
+      "culture",
+      "nature"
+    ],
+    "knownnessScore": 13,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Belize City"
+    ],
+    "searchTerms": [
+      "Belize City",
+      "Belize District",
+      "Belize"
+    ]
+  },
+  {
+    "name": "Panama City",
+    "country": "Panama",
+    "region": "Panamá Province",
+    "nearestAirport": "PTY",
+    "wikiTitle": "Panama City",
+    "interestTags": [
+      "city",
+      "food",
+      "architecture"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Panama City"
+    ],
+    "searchTerms": [
+      "Panama City",
+      "Panamá Province",
+      "Panama"
+    ]
+  },
+  {
+    "name": "Roatán",
+    "country": "Honduras",
+    "region": "Bay Islands",
+    "nearestAirport": "RTB",
+    "wikiTitle": "Roatán",
+    "interestTags": [
+      "beaches",
+      "diving",
+      "nature"
+    ],
+    "knownnessScore": 56,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Roatan"
+    ],
+    "searchTerms": [
+      "Roatán",
+      "Bay Islands",
+      "Honduras"
+    ]
+  },
+  {
+    "name": "Havana",
+    "country": "Cuba",
+    "region": "La Habana",
+    "nearestAirport": "HAV",
+    "wikiTitle": "Havana",
+    "interestTags": [
+      "culture",
+      "architecture",
+      "music"
+    ],
+    "knownnessScore": 77,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Havana"
+    ],
+    "searchTerms": [
+      "Havana",
+      "La Habana",
+      "Cuba"
+    ]
+  },
+  {
+    "name": "Santo Domingo",
+    "country": "Dominican Republic",
+    "region": "Distrito Nacional",
+    "nearestAirport": "SDQ",
+    "wikiTitle": "Santo Domingo",
+    "interestTags": [
+      "history",
+      "food",
+      "nightlife"
+    ],
+    "knownnessScore": 86,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Santo Domingo"
+    ],
+    "searchTerms": [
+      "Santo Domingo",
+      "Distrito Nacional",
+      "Dominican Republic"
+    ]
+  },
+  {
+    "name": "San Juan",
+    "country": "Puerto Rico",
+    "region": "Puerto Rico",
+    "nearestAirport": "SJU",
+    "wikiTitle": "San Juan, Puerto Rico",
+    "interestTags": [
+      "beaches",
+      "food",
+      "history"
+    ],
+    "knownnessScore": 18,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "San Juan"
+    ],
+    "searchTerms": [
+      "San Juan",
+      "Puerto Rico",
+      "Puerto Rico"
+    ]
+  },
+  {
+    "name": "Montego Bay",
+    "country": "Jamaica",
+    "region": "Saint James",
+    "nearestAirport": "MBJ",
+    "wikiTitle": "Montego Bay",
+    "interestTags": [
+      "beaches",
+      "music",
+      "relaxation"
+    ],
+    "knownnessScore": 40,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Montego Bay"
+    ],
+    "searchTerms": [
+      "Montego Bay",
+      "Saint James",
+      "Jamaica"
+    ]
+  },
+  {
+    "name": "Nassau",
+    "country": "Bahamas",
+    "region": "New Providence",
+    "nearestAirport": "NAS",
+    "wikiTitle": "Nassau, Bahamas",
+    "interestTags": [
+      "beaches",
+      "water",
+      "relaxation"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Nassau"
+    ],
+    "searchTerms": [
+      "Nassau",
+      "New Providence",
+      "Bahamas"
+    ]
+  },
+  {
+    "name": "Oranjestad",
+    "country": "Aruba",
+    "region": "Aruba",
+    "nearestAirport": "AUA",
+    "wikiTitle": "Oranjestad, Aruba",
+    "interestTags": [
+      "beaches",
+      "food",
+      "water"
+    ],
+    "knownnessScore": 66,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Oranjestad"
+    ],
+    "searchTerms": [
+      "Oranjestad",
+      "Aruba",
+      "Aruba"
+    ]
+  },
+  {
+    "name": "Willemstad",
+    "country": "Curaçao",
+    "region": "Curaçao",
+    "nearestAirport": "CUR",
+    "wikiTitle": "Willemstad",
+    "interestTags": [
+      "beaches",
+      "architecture",
+      "food"
+    ],
+    "knownnessScore": 91,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Willemstad"
+    ],
+    "searchTerms": [
+      "Willemstad",
+      "Curaçao",
+      "Curaçao"
+    ]
+  },
+  {
+    "name": "Bridgetown",
+    "country": "Barbados",
+    "region": "Saint Michael",
+    "nearestAirport": "BGI",
+    "wikiTitle": "Bridgetown",
+    "interestTags": [
+      "beaches",
+      "history",
+      "food"
+    ],
+    "knownnessScore": 12,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Bridgetown"
+    ],
+    "searchTerms": [
+      "Bridgetown",
+      "Saint Michael",
+      "Barbados"
+    ]
+  },
+  {
+    "name": "Bogotá",
+    "country": "Colombia",
+    "region": "Cundinamarca",
+    "nearestAirport": "BOG",
+    "wikiTitle": "Bogotá",
+    "interestTags": [
+      "food",
+      "art",
+      "culture"
+    ],
+    "knownnessScore": 29,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Bogota"
+    ],
+    "searchTerms": [
+      "Bogotá",
+      "Cundinamarca",
+      "Colombia"
+    ]
+  },
+  {
+    "name": "Santa Marta",
+    "country": "Colombia",
+    "region": "Magdalena",
+    "nearestAirport": "SMR",
+    "wikiTitle": "Santa Marta",
+    "interestTags": [
+      "beaches",
+      "nature",
+      "history"
+    ],
+    "knownnessScore": 50,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Santa Marta"
+    ],
+    "searchTerms": [
+      "Santa Marta",
+      "Magdalena",
+      "Colombia"
+    ]
+  },
+  {
+    "name": "Quito",
+    "country": "Ecuador",
+    "region": "Pichincha",
+    "nearestAirport": "UIO",
+    "wikiTitle": "Quito",
+    "interestTags": [
+      "culture",
+      "architecture",
+      "mountains"
+    ],
+    "knownnessScore": 71,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Quito"
+    ],
+    "searchTerms": [
+      "Quito",
+      "Pichincha",
+      "Ecuador"
+    ]
+  },
+  {
+    "name": "Galápagos Islands",
+    "country": "Ecuador",
+    "region": "Galápagos",
+    "nearestAirport": "GPS",
+    "wikiTitle": "Galápagos Islands",
+    "interestTags": [
+      "wildlife",
+      "nature",
+      "water"
+    ],
+    "knownnessScore": 96,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Galapagos Islands"
+    ],
+    "searchTerms": [
+      "Galápagos Islands",
+      "Galápagos",
+      "Ecuador"
+    ]
+  },
+  {
+    "name": "La Paz",
+    "country": "Bolivia",
+    "region": "La Paz Department",
+    "nearestAirport": "LPB",
+    "wikiTitle": "La Paz",
+    "interestTags": [
+      "culture",
+      "mountains",
+      "food"
+    ],
+    "knownnessScore": 17,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "La Paz"
+    ],
+    "searchTerms": [
+      "La Paz",
+      "La Paz Department",
+      "Bolivia"
+    ]
+  },
+  {
+    "name": "Uyuni",
+    "country": "Bolivia",
+    "region": "Potosí Department",
+    "nearestAirport": "UYU",
+    "wikiTitle": "Uyuni",
+    "interestTags": [
+      "nature",
+      "photography",
+      "adventure"
+    ],
+    "knownnessScore": 34,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Uyuni"
+    ],
+    "searchTerms": [
+      "Uyuni",
+      "Potosí Department",
+      "Bolivia"
+    ]
+  },
+  {
+    "name": "Santiago",
+    "country": "Chile",
+    "region": "Santiago Metropolitan Region",
+    "nearestAirport": "SCL",
+    "wikiTitle": "Santiago",
+    "interestTags": [
+      "food",
+      "culture",
+      "mountains"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Santiago"
+    ],
+    "searchTerms": [
+      "Santiago",
+      "Santiago Metropolitan Region",
+      "Chile"
+    ]
+  },
+  {
+    "name": "Valparaíso",
+    "country": "Chile",
+    "region": "Valparaíso Region",
+    "nearestAirport": "SCL",
+    "wikiTitle": "Valparaíso",
+    "interestTags": [
+      "art",
+      "coast",
+      "architecture"
+    ],
+    "knownnessScore": 76,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Valparaiso"
+    ],
+    "searchTerms": [
+      "Valparaíso",
+      "Valparaíso Region",
+      "Chile"
+    ]
+  },
+  {
+    "name": "Atacama Desert",
+    "country": "Chile",
+    "region": "Antofagasta Region",
+    "nearestAirport": "CJC",
+    "wikiTitle": "Atacama Desert",
+    "interestTags": [
+      "desert",
+      "stargazing",
+      "adventure"
+    ],
+    "knownnessScore": 87,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Atacama Desert"
+    ],
+    "searchTerms": [
+      "Atacama Desert",
+      "Antofagasta Region",
+      "Chile"
+    ]
+  },
+  {
+    "name": "Mendoza",
+    "country": "Argentina",
+    "region": "Mendoza Province",
+    "nearestAirport": "MDZ",
+    "wikiTitle": "Mendoza, Argentina",
+    "interestTags": [
+      "food",
+      "wine",
+      "mountains"
+    ],
+    "knownnessScore": 11,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Mendoza"
+    ],
+    "searchTerms": [
+      "Mendoza",
+      "Mendoza Province",
+      "Argentina"
+    ]
+  },
+  {
+    "name": "Bariloche",
+    "country": "Argentina",
+    "region": "Río Negro",
+    "nearestAirport": "BRC",
+    "wikiTitle": "Bariloche",
+    "interestTags": [
+      "mountains",
+      "lakes",
+      "food"
+    ],
+    "knownnessScore": 39,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Bariloche"
+    ],
+    "searchTerms": [
+      "Bariloche",
+      "Río Negro",
+      "Argentina"
+    ]
+  },
+  {
+    "name": "Montevideo",
+    "country": "Uruguay",
+    "region": "Montevideo Department",
+    "nearestAirport": "MVD",
+    "wikiTitle": "Montevideo",
+    "interestTags": [
+      "food",
+      "coast",
+      "culture"
+    ],
+    "knownnessScore": 60,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Montevideo"
+    ],
+    "searchTerms": [
+      "Montevideo",
+      "Montevideo Department",
+      "Uruguay"
+    ]
+  },
+  {
+    "name": "Punta del Este",
+    "country": "Uruguay",
+    "region": "Maldonado Department",
+    "nearestAirport": "PDP",
+    "wikiTitle": "Punta del Este",
+    "interestTags": [
+      "beaches",
+      "nightlife",
+      "design"
+    ],
+    "knownnessScore": 65,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Punta del Este"
+    ],
+    "searchTerms": [
+      "Punta del Este",
+      "Maldonado Department",
+      "Uruguay"
+    ]
+  },
+  {
+    "name": "São Paulo",
+    "country": "Brazil",
+    "region": "São Paulo",
+    "nearestAirport": "GRU",
+    "wikiTitle": "São Paulo",
+    "interestTags": [
+      "food",
+      "art",
+      "nightlife"
+    ],
+    "knownnessScore": 92,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Sao Paulo"
+    ],
+    "searchTerms": [
+      "São Paulo",
+      "São Paulo",
+      "Brazil"
+    ]
+  },
+  {
+    "name": "Salvador",
+    "country": "Brazil",
+    "region": "Bahia",
+    "nearestAirport": "SSA",
+    "wikiTitle": "Salvador, Bahia",
+    "interestTags": [
+      "culture",
+      "food",
+      "beaches"
+    ],
+    "knownnessScore": 16,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Salvador"
+    ],
+    "searchTerms": [
+      "Salvador",
+      "Bahia",
+      "Brazil"
+    ]
+  },
+  {
+    "name": "Florianópolis",
+    "country": "Brazil",
+    "region": "Santa Catarina",
+    "nearestAirport": "FLN",
+    "wikiTitle": "Florianópolis",
+    "interestTags": [
+      "beaches",
+      "nature",
+      "nightlife"
+    ],
+    "knownnessScore": 28,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Florianopolis"
+    ],
+    "searchTerms": [
+      "Florianópolis",
+      "Santa Catarina",
+      "Brazil"
+    ]
+  },
+  {
+    "name": "Manaus",
+    "country": "Brazil",
+    "region": "Amazonas",
+    "nearestAirport": "MAO",
+    "wikiTitle": "Manaus",
+    "interestTags": [
+      "nature",
+      "wildlife",
+      "culture"
+    ],
+    "knownnessScore": 49,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Manaus"
+    ],
+    "searchTerms": [
+      "Manaus",
+      "Amazonas",
+      "Brazil"
+    ]
+  },
+  {
+    "name": "Recife",
+    "country": "Brazil",
+    "region": "Pernambuco",
+    "nearestAirport": "REC",
+    "wikiTitle": "Recife",
+    "interestTags": [
+      "beaches",
+      "culture",
+      "food"
+    ],
+    "knownnessScore": 70,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Recife"
+    ],
+    "searchTerms": [
+      "Recife",
+      "Pernambuco",
+      "Brazil"
+    ]
+  },
+  {
+    "name": "Cartago",
+    "country": "Costa Rica",
+    "region": "Cartago Province",
+    "nearestAirport": "SJO",
+    "wikiTitle": "Cartago, Costa Rica",
+    "interestTags": [
+      "nature",
+      "history",
+      "mountains"
+    ],
+    "knownnessScore": 97,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Cartago"
+    ],
+    "searchTerms": [
+      "Cartago",
+      "Cartago Province",
+      "Costa Rica"
+    ]
+  },
+  {
+    "name": "Reykjavík",
+    "country": "Iceland",
+    "region": "Capital Region",
+    "nearestAirport": "KEF",
+    "wikiTitle": "Reykjavík",
+    "interestTags": [
+      "design",
+      "food",
+      "nature"
+    ],
+    "knownnessScore": 10,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Reykjavik"
+    ],
+    "searchTerms": [
+      "Reykjavík",
+      "Capital Region",
+      "Iceland"
+    ]
+  },
+  {
+    "name": "Oslo",
+    "country": "Norway",
+    "region": "Eastern Norway",
+    "nearestAirport": "OSL",
+    "wikiTitle": "Oslo",
+    "interestTags": [
+      "design",
+      "food",
+      "nature"
+    ],
+    "knownnessScore": 33,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Oslo"
+    ],
+    "searchTerms": [
+      "Oslo",
+      "Eastern Norway",
+      "Norway"
+    ]
+  },
+  {
+    "name": "Bergen",
+    "country": "Norway",
+    "region": "Vestland",
+    "nearestAirport": "BGO",
+    "wikiTitle": "Bergen",
+    "interestTags": [
+      "coast",
+      "nature",
+      "food"
+    ],
+    "knownnessScore": 54,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Bergen"
+    ],
+    "searchTerms": [
+      "Bergen",
+      "Vestland",
+      "Norway"
+    ]
+  },
+  {
+    "name": "Tromsø",
+    "country": "Norway",
+    "region": "Troms",
+    "nearestAirport": "TOS",
+    "wikiTitle": "Tromsø",
+    "interestTags": [
+      "winter",
+      "nature",
+      "adventure"
+    ],
+    "knownnessScore": 75,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Tromsø"
+    ],
+    "searchTerms": [
+      "Tromsø",
+      "Troms",
+      "Norway"
+    ]
+  },
+  {
+    "name": "Helsinki",
+    "country": "Finland",
+    "region": "Uusimaa",
+    "nearestAirport": "HEL",
+    "wikiTitle": "Helsinki",
+    "interestTags": [
+      "design",
+      "food",
+      "architecture"
+    ],
+    "knownnessScore": 88,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Helsinki"
+    ],
+    "searchTerms": [
+      "Helsinki",
+      "Uusimaa",
+      "Finland"
+    ]
+  },
+  {
+    "name": "Rovaniemi",
+    "country": "Finland",
+    "region": "Lapland",
+    "nearestAirport": "RVN",
+    "wikiTitle": "Rovaniemi",
+    "interestTags": [
+      "winter",
+      "nature",
+      "family"
+    ],
+    "knownnessScore": 15,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Rovaniemi"
+    ],
+    "searchTerms": [
+      "Rovaniemi",
+      "Lapland",
+      "Finland"
+    ]
+  },
+  {
+    "name": "Gothenburg",
+    "country": "Sweden",
+    "region": "Västra Götaland",
+    "nearestAirport": "GOT",
+    "wikiTitle": "Gothenburg",
+    "interestTags": [
+      "food",
+      "design",
+      "coast"
+    ],
+    "knownnessScore": 38,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Gothenburg"
+    ],
+    "searchTerms": [
+      "Gothenburg",
+      "Västra Götaland",
+      "Sweden"
+    ]
+  },
+  {
+    "name": "Aarhus",
+    "country": "Denmark",
+    "region": "Central Denmark",
+    "nearestAirport": "AAR",
+    "wikiTitle": "Aarhus",
+    "interestTags": [
+      "design",
+      "food",
+      "culture"
+    ],
+    "knownnessScore": 59,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Aarhus"
+    ],
+    "searchTerms": [
+      "Aarhus",
+      "Central Denmark",
+      "Denmark"
+    ]
+  },
+  {
+    "name": "Hamburg",
+    "country": "Germany",
+    "region": "Hamburg",
+    "nearestAirport": "HAM",
+    "wikiTitle": "Hamburg",
+    "interestTags": [
+      "food",
+      "architecture",
+      "nightlife"
+    ],
+    "knownnessScore": 80,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Hamburg"
+    ],
+    "searchTerms": [
+      "Hamburg",
+      "Hamburg",
+      "Germany"
+    ]
+  },
+  {
+    "name": "Cologne",
+    "country": "Germany",
+    "region": "North Rhine-Westphalia",
+    "nearestAirport": "CGN",
+    "wikiTitle": "Cologne",
+    "interestTags": [
+      "culture",
+      "food",
+      "architecture"
+    ],
+    "knownnessScore": 93,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Cologne"
+    ],
+    "searchTerms": [
+      "Cologne",
+      "North Rhine-Westphalia",
+      "Germany"
+    ]
+  },
+  {
+    "name": "Frankfurt",
+    "country": "Germany",
+    "region": "Hesse",
+    "nearestAirport": "FRA",
+    "wikiTitle": "Frankfurt",
+    "interestTags": [
+      "city",
+      "food",
+      "museums"
+    ],
+    "knownnessScore": 20,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Frankfurt"
+    ],
+    "searchTerms": [
+      "Frankfurt",
+      "Hesse",
+      "Germany"
+    ]
+  },
+  {
+    "name": "Leipzig",
+    "country": "Germany",
+    "region": "Saxony",
+    "nearestAirport": "LEJ",
+    "wikiTitle": "Leipzig",
+    "interestTags": [
+      "art",
+      "music",
+      "nightlife"
+    ],
+    "knownnessScore": 27,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Leipzig"
+    ],
+    "searchTerms": [
+      "Leipzig",
+      "Saxony",
+      "Germany"
+    ]
+  },
+  {
+    "name": "Dresden",
+    "country": "Germany",
+    "region": "Saxony",
+    "nearestAirport": "DRS",
+    "wikiTitle": "Dresden",
+    "interestTags": [
+      "art",
+      "architecture",
+      "history"
+    ],
+    "knownnessScore": 48,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Dresden"
+    ],
+    "searchTerms": [
+      "Dresden",
+      "Saxony",
+      "Germany"
+    ]
+  },
+  {
+    "name": "Bruges",
+    "country": "Belgium",
+    "region": "West Flanders",
+    "nearestAirport": "BRU",
+    "wikiTitle": "Bruges",
+    "interestTags": [
+      "architecture",
+      "food",
+      "romance"
+    ],
+    "knownnessScore": 69,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Bruges"
+    ],
+    "searchTerms": [
+      "Bruges",
+      "West Flanders",
+      "Belgium"
+    ]
+  },
+  {
+    "name": "Luxembourg City",
+    "country": "Luxembourg",
+    "region": "Luxembourg",
+    "nearestAirport": "LUX",
+    "wikiTitle": "Luxembourg City",
+    "interestTags": [
+      "architecture",
+      "food",
+      "history"
+    ],
+    "knownnessScore": 98,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Luxembourg City"
+    ],
+    "searchTerms": [
+      "Luxembourg City",
+      "Luxembourg",
+      "Luxembourg"
+    ]
+  },
+  {
+    "name": "Rotterdam",
+    "country": "Netherlands",
+    "region": "South Holland",
+    "nearestAirport": "RTM",
+    "wikiTitle": "Rotterdam",
+    "interestTags": [
+      "design",
+      "architecture",
+      "food"
+    ],
+    "knownnessScore": 14,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Rotterdam"
+    ],
+    "searchTerms": [
+      "Rotterdam",
+      "South Holland",
+      "Netherlands"
+    ]
+  },
+  {
+    "name": "The Hague",
+    "country": "Netherlands",
+    "region": "South Holland",
+    "nearestAirport": "AMS",
+    "wikiTitle": "The Hague",
+    "interestTags": [
+      "art",
+      "coast",
+      "architecture"
+    ],
+    "knownnessScore": 32,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "The Hague"
+    ],
+    "searchTerms": [
+      "The Hague",
+      "South Holland",
+      "Netherlands"
+    ]
+  },
+  {
+    "name": "Cork",
+    "country": "Ireland",
+    "region": "County Cork",
+    "nearestAirport": "ORK",
+    "wikiTitle": "Cork (city)",
+    "interestTags": [
+      "food",
+      "culture",
+      "coast"
+    ],
+    "knownnessScore": 53,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Cork"
+    ],
+    "searchTerms": [
+      "Cork",
+      "County Cork",
+      "Ireland"
+    ]
+  },
+  {
+    "name": "Galway",
+    "country": "Ireland",
+    "region": "County Galway",
+    "nearestAirport": "SNN",
+    "wikiTitle": "Galway",
+    "interestTags": [
+      "music",
+      "food",
+      "coast"
+    ],
+    "knownnessScore": 74,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Galway"
+    ],
+    "searchTerms": [
+      "Galway",
+      "County Galway",
+      "Ireland"
+    ]
+  },
+  {
+    "name": "Manchester",
+    "country": "United Kingdom",
+    "region": "England",
+    "nearestAirport": "MAN",
+    "wikiTitle": "Manchester",
+    "interestTags": [
+      "music",
+      "food",
+      "culture"
+    ],
+    "knownnessScore": 89,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Manchester"
+    ],
+    "searchTerms": [
+      "Manchester",
+      "England",
+      "United Kingdom"
+    ]
+  },
+  {
+    "name": "Liverpool",
+    "country": "United Kingdom",
+    "region": "England",
+    "nearestAirport": "LPL",
+    "wikiTitle": "Liverpool",
+    "interestTags": [
+      "music",
+      "culture",
+      "nightlife"
+    ],
+    "knownnessScore": 19,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Liverpool"
+    ],
+    "searchTerms": [
+      "Liverpool",
+      "England",
+      "United Kingdom"
+    ]
+  },
+  {
+    "name": "Bath",
+    "country": "United Kingdom",
+    "region": "England",
+    "nearestAirport": "BRS",
+    "wikiTitle": "Bath, Somerset",
+    "interestTags": [
+      "architecture",
+      "history",
+      "wellness"
+    ],
+    "knownnessScore": 37,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Bath"
+    ],
+    "searchTerms": [
+      "Bath",
+      "England",
+      "United Kingdom"
+    ]
+  },
+  {
+    "name": "Oxford",
+    "country": "United Kingdom",
+    "region": "England",
+    "nearestAirport": "LHR",
+    "wikiTitle": "Oxford",
+    "interestTags": [
+      "architecture",
+      "culture",
+      "history"
+    ],
+    "knownnessScore": 58,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Oxford"
+    ],
+    "searchTerms": [
+      "Oxford",
+      "England",
+      "United Kingdom"
+    ]
+  },
+  {
+    "name": "Cambridge",
+    "country": "United Kingdom",
+    "region": "England",
+    "nearestAirport": "STN",
+    "wikiTitle": "Cambridge",
+    "interestTags": [
+      "architecture",
+      "culture",
+      "history"
+    ],
+    "knownnessScore": 79,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Cambridge"
+    ],
+    "searchTerms": [
+      "Cambridge",
+      "England",
+      "United Kingdom"
+    ]
+  },
+  {
+    "name": "Brighton",
+    "country": "United Kingdom",
+    "region": "England",
+    "nearestAirport": "LGW",
+    "wikiTitle": "Brighton",
+    "interestTags": [
+      "coast",
+      "nightlife",
+      "food"
+    ],
+    "knownnessScore": 94,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Brighton"
+    ],
+    "searchTerms": [
+      "Brighton",
+      "England",
+      "United Kingdom"
+    ]
+  },
+  {
+    "name": "Porto Santo",
+    "country": "Portugal",
+    "region": "Madeira",
+    "nearestAirport": "PXO",
+    "wikiTitle": "Porto Santo Island",
+    "interestTags": [
+      "beaches",
+      "relaxation",
+      "nature"
+    ],
+    "knownnessScore": 13,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Porto Santo"
+    ],
+    "searchTerms": [
+      "Porto Santo",
+      "Madeira",
+      "Portugal"
+    ]
+  },
+  {
+    "name": "Faro",
+    "country": "Portugal",
+    "region": "Algarve",
+    "nearestAirport": "FAO",
+    "wikiTitle": "Faro, Portugal",
+    "interestTags": [
+      "coast",
+      "food",
+      "history"
+    ],
+    "knownnessScore": 26,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Faro"
+    ],
+    "searchTerms": [
+      "Faro",
+      "Algarve",
+      "Portugal"
+    ]
+  },
+  {
+    "name": "Coimbra",
+    "country": "Portugal",
+    "region": "Centro",
+    "nearestAirport": "OPO",
+    "wikiTitle": "Coimbra",
+    "interestTags": [
+      "history",
+      "culture",
+      "architecture"
+    ],
+    "knownnessScore": 47,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Coimbra"
+    ],
+    "searchTerms": [
+      "Coimbra",
+      "Centro",
+      "Portugal"
+    ]
+  },
+  {
+    "name": "Málaga",
+    "country": "Spain",
+    "region": "Andalusia",
+    "nearestAirport": "AGP",
+    "wikiTitle": "Málaga",
+    "interestTags": [
+      "beaches",
+      "art",
+      "food"
+    ],
+    "knownnessScore": 68,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Malaga"
+    ],
+    "searchTerms": [
+      "Málaga",
+      "Andalusia",
+      "Spain"
+    ]
+  },
+  {
+    "name": "Córdoba",
+    "country": "Spain",
+    "region": "Andalusia",
+    "nearestAirport": "SVQ",
+    "wikiTitle": "Córdoba, Spain",
+    "interestTags": [
+      "history",
+      "architecture",
+      "food"
+    ],
+    "knownnessScore": 85,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Cordoba"
+    ],
+    "searchTerms": [
+      "Córdoba",
+      "Andalusia",
+      "Spain"
+    ]
+  },
+  {
+    "name": "Ibiza",
+    "country": "Spain",
+    "region": "Balearic Islands",
+    "nearestAirport": "IBZ",
+    "wikiTitle": "Ibiza",
+    "interestTags": [
+      "beaches",
+      "nightlife",
+      "wellness"
+    ],
+    "knownnessScore": 18,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Ibiza"
+    ],
+    "searchTerms": [
+      "Ibiza",
+      "Balearic Islands",
+      "Spain"
+    ]
+  },
+  {
+    "name": "Tenerife",
+    "country": "Spain",
+    "region": "Canary Islands",
+    "nearestAirport": "TFS",
+    "wikiTitle": "Tenerife",
+    "interestTags": [
+      "beaches",
+      "nature",
+      "hiking"
+    ],
+    "knownnessScore": 31,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Tenerife"
+    ],
+    "searchTerms": [
+      "Tenerife",
+      "Canary Islands",
+      "Spain"
+    ]
+  },
+  {
+    "name": "Lanzarote",
+    "country": "Spain",
+    "region": "Canary Islands",
+    "nearestAirport": "ACE",
+    "wikiTitle": "Lanzarote",
+    "interestTags": [
+      "nature",
+      "design",
+      "beaches"
+    ],
+    "knownnessScore": 52,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Lanzarote"
+    ],
+    "searchTerms": [
+      "Lanzarote",
+      "Canary Islands",
+      "Spain"
+    ]
+  },
+  {
+    "name": "Nice",
+    "country": "France",
+    "region": "Provence-Alpes-Côte d’Azur",
+    "nearestAirport": "NCE",
+    "wikiTitle": "Nice",
+    "interestTags": [
+      "coast",
+      "food",
+      "art"
+    ],
+    "knownnessScore": 73,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Nice"
+    ],
+    "searchTerms": [
+      "Nice",
+      "Provence-Alpes-Côte d’Azur",
+      "France"
+    ]
+  },
+  {
+    "name": "Toulouse",
+    "country": "France",
+    "region": "Occitania",
+    "nearestAirport": "TLS",
+    "wikiTitle": "Toulouse",
+    "interestTags": [
+      "food",
+      "architecture",
+      "culture"
+    ],
+    "knownnessScore": 90,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Toulouse"
+    ],
+    "searchTerms": [
+      "Toulouse",
+      "Occitania",
+      "France"
+    ]
+  },
+  {
+    "name": "Montpellier",
+    "country": "France",
+    "region": "Occitania",
+    "nearestAirport": "MPL",
+    "wikiTitle": "Montpellier",
+    "interestTags": [
+      "food",
+      "architecture",
+      "coast"
+    ],
+    "knownnessScore": 12,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Montpellier"
+    ],
+    "searchTerms": [
+      "Montpellier",
+      "Occitania",
+      "France"
+    ]
+  },
+  {
+    "name": "Chamonix",
+    "country": "France",
+    "region": "Auvergne-Rhône-Alpes",
+    "nearestAirport": "GVA",
+    "wikiTitle": "Chamonix",
+    "interestTags": [
+      "mountains",
+      "hiking",
+      "winter"
+    ],
+    "knownnessScore": 36,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Chamonix"
+    ],
+    "searchTerms": [
+      "Chamonix",
+      "Auvergne-Rhône-Alpes",
+      "France"
+    ]
+  },
+  {
+    "name": "Normandy",
+    "country": "France",
+    "region": "Normandy",
+    "nearestAirport": "CDG",
+    "wikiTitle": "Normandy",
+    "interestTags": [
+      "history",
+      "food",
+      "coast"
+    ],
+    "knownnessScore": 57,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Normandy"
+    ],
+    "searchTerms": [
+      "Normandy",
+      "Normandy",
+      "France"
+    ]
+  },
+  {
+    "name": "Milan",
+    "country": "Italy",
+    "region": "Lombardy",
+    "nearestAirport": "MXP",
+    "wikiTitle": "Milan",
+    "interestTags": [
+      "design",
+      "food",
+      "shopping"
+    ],
+    "knownnessScore": 78,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Milan"
+    ],
+    "searchTerms": [
+      "Milan",
+      "Lombardy",
+      "Italy"
+    ]
+  },
+  {
+    "name": "Verona",
+    "country": "Italy",
+    "region": "Veneto",
+    "nearestAirport": "VRN",
+    "wikiTitle": "Verona",
+    "interestTags": [
+      "architecture",
+      "food",
+      "romance"
+    ],
+    "knownnessScore": 95,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Verona"
+    ],
+    "searchTerms": [
+      "Verona",
+      "Veneto",
+      "Italy"
+    ]
+  },
+  {
+    "name": "Siena",
+    "country": "Italy",
+    "region": "Tuscany",
+    "nearestAirport": "FLR",
+    "wikiTitle": "Siena",
+    "interestTags": [
+      "history",
+      "food",
+      "architecture"
+    ],
+    "knownnessScore": 17,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Siena"
+    ],
+    "searchTerms": [
+      "Siena",
+      "Tuscany",
+      "Italy"
+    ]
+  },
+  {
+    "name": "Matera",
+    "country": "Italy",
+    "region": "Basilicata",
+    "nearestAirport": "BRI",
+    "wikiTitle": "Matera",
+    "interestTags": [
+      "history",
+      "architecture",
+      "food"
+    ],
+    "knownnessScore": 25,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Matera"
+    ],
+    "searchTerms": [
+      "Matera",
+      "Basilicata",
+      "Italy"
+    ]
+  },
+  {
+    "name": "Catania",
+    "country": "Italy",
+    "region": "Sicily",
+    "nearestAirport": "CTA",
+    "wikiTitle": "Catania",
+    "interestTags": [
+      "food",
+      "culture",
+      "nature"
+    ],
+    "knownnessScore": 46,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Catania"
+    ],
+    "searchTerms": [
+      "Catania",
+      "Sicily",
+      "Italy"
+    ]
+  },
+  {
+    "name": "Sardinia",
+    "country": "Italy",
+    "region": "Sardinia",
+    "nearestAirport": "CAG",
+    "wikiTitle": "Sardinia",
+    "interestTags": [
+      "beaches",
+      "food",
+      "nature"
+    ],
+    "knownnessScore": 67,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Sardinia"
+    ],
+    "searchTerms": [
+      "Sardinia",
+      "Sardinia",
+      "Italy"
+    ]
+  },
+  {
+    "name": "Mykonos",
+    "country": "Greece",
+    "region": "Cyclades",
+    "nearestAirport": "JMK",
+    "wikiTitle": "Mykonos",
+    "interestTags": [
+      "beaches",
+      "nightlife",
+      "luxury"
+    ],
+    "knownnessScore": 86,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Mykonos"
+    ],
+    "searchTerms": [
+      "Mykonos",
+      "Cyclades",
+      "Greece"
+    ]
+  },
+  {
+    "name": "Crete",
+    "country": "Greece",
+    "region": "Crete",
+    "nearestAirport": "HER",
+    "wikiTitle": "Crete",
+    "interestTags": [
+      "beaches",
+      "food",
+      "history"
+    ],
+    "knownnessScore": 11,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Crete"
+    ],
+    "searchTerms": [
+      "Crete",
+      "Crete",
+      "Greece"
+    ]
+  },
+  {
+    "name": "Thessaloniki",
+    "country": "Greece",
+    "region": "Central Macedonia",
+    "nearestAirport": "SKG",
+    "wikiTitle": "Thessaloniki",
+    "interestTags": [
+      "food",
+      "history",
+      "nightlife"
+    ],
+    "knownnessScore": 30,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Thessaloniki"
+    ],
+    "searchTerms": [
+      "Thessaloniki",
+      "Central Macedonia",
+      "Greece"
+    ]
+  },
+  {
+    "name": "Meteora",
+    "country": "Greece",
+    "region": "Thessaly",
+    "nearestAirport": "SKG",
+    "wikiTitle": "Meteora",
+    "interestTags": [
+      "nature",
+      "history",
+      "hiking"
+    ],
+    "knownnessScore": 51,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Meteora"
+    ],
+    "searchTerms": [
+      "Meteora",
+      "Thessaly",
+      "Greece"
+    ]
+  },
+  {
+    "name": "Split",
+    "country": "Croatia",
+    "region": "Split-Dalmatia County",
+    "nearestAirport": "SPU",
+    "wikiTitle": "Split, Croatia",
+    "interestTags": [
+      "coast",
+      "history",
+      "nightlife"
+    ],
+    "knownnessScore": 72,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Split"
+    ],
+    "searchTerms": [
+      "Split",
+      "Split-Dalmatia County",
+      "Croatia"
+    ]
+  },
+  {
+    "name": "Hvar",
+    "country": "Croatia",
+    "region": "Split-Dalmatia County",
+    "nearestAirport": "SPU",
+    "wikiTitle": "Hvar",
+    "interestTags": [
+      "beaches",
+      "nightlife",
+      "food"
+    ],
+    "knownnessScore": 91,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Hvar"
+    ],
+    "searchTerms": [
+      "Hvar",
+      "Split-Dalmatia County",
+      "Croatia"
+    ]
+  },
+  {
+    "name": "Zagreb",
+    "country": "Croatia",
+    "region": "City of Zagreb",
+    "nearestAirport": "ZAG",
+    "wikiTitle": "Zagreb",
+    "interestTags": [
+      "food",
+      "culture",
+      "architecture"
+    ],
+    "knownnessScore": 16,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Zagreb"
+    ],
+    "searchTerms": [
+      "Zagreb",
+      "City of Zagreb",
+      "Croatia"
+    ]
+  },
+  {
+    "name": "Belgrade",
+    "country": "Serbia",
+    "region": "Belgrade",
+    "nearestAirport": "BEG",
+    "wikiTitle": "Belgrade",
+    "interestTags": [
+      "food",
+      "nightlife",
+      "culture"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Belgrade"
+    ],
+    "searchTerms": [
+      "Belgrade",
+      "Belgrade",
+      "Serbia"
+    ]
+  },
+  {
+    "name": "Sofia",
+    "country": "Bulgaria",
+    "region": "Sofia City",
+    "nearestAirport": "SOF",
+    "wikiTitle": "Sofia",
+    "interestTags": [
+      "food",
+      "history",
+      "mountains"
+    ],
+    "knownnessScore": 56,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Sofia"
+    ],
+    "searchTerms": [
+      "Sofia",
+      "Sofia City",
+      "Bulgaria"
+    ]
+  },
+  {
+    "name": "Bucharest",
+    "country": "Romania",
+    "region": "Bucharest",
+    "nearestAirport": "OTP",
+    "wikiTitle": "Bucharest",
+    "interestTags": [
+      "food",
+      "architecture",
+      "nightlife"
+    ],
+    "knownnessScore": 77,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Bucharest"
+    ],
+    "searchTerms": [
+      "Bucharest",
+      "Bucharest",
+      "Romania"
+    ]
+  },
+  {
+    "name": "Kraków",
+    "country": "Poland",
+    "region": "Lesser Poland",
+    "nearestAirport": "KRK",
+    "wikiTitle": "Kraków",
+    "interestTags": [
+      "history",
+      "food",
+      "architecture"
+    ],
+    "knownnessScore": 96,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Krakow"
+    ],
+    "searchTerms": [
+      "Kraków",
+      "Lesser Poland",
+      "Poland"
+    ]
+  },
+  {
+    "name": "Gdańsk",
+    "country": "Poland",
+    "region": "Pomeranian Voivodeship",
+    "nearestAirport": "GDN",
+    "wikiTitle": "Gdańsk",
+    "interestTags": [
+      "coast",
+      "history",
+      "architecture"
+    ],
+    "knownnessScore": 10,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Gdansk"
+    ],
+    "searchTerms": [
+      "Gdańsk",
+      "Pomeranian Voivodeship",
+      "Poland"
+    ]
+  },
+  {
+    "name": "Vilnius",
+    "country": "Lithuania",
+    "region": "Vilnius County",
+    "nearestAirport": "VNO",
+    "wikiTitle": "Vilnius",
+    "interestTags": [
+      "architecture",
+      "food",
+      "culture"
+    ],
+    "knownnessScore": 40,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Vilnius"
+    ],
+    "searchTerms": [
+      "Vilnius",
+      "Vilnius County",
+      "Lithuania"
+    ]
+  },
+  {
+    "name": "Geneva",
+    "country": "Switzerland",
+    "region": "Geneva",
+    "nearestAirport": "GVA",
+    "wikiTitle": "Geneva",
+    "interestTags": [
+      "food",
+      "lakes",
+      "luxury"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Geneva"
+    ],
+    "searchTerms": [
+      "Geneva",
+      "Geneva",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Lucerne",
+    "country": "Switzerland",
+    "region": "Lucerne",
+    "nearestAirport": "ZRH",
+    "wikiTitle": "Lucerne",
+    "interestTags": [
+      "lakes",
+      "mountains",
+      "architecture"
+    ],
+    "knownnessScore": 66,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Lucerne"
+    ],
+    "searchTerms": [
+      "Lucerne",
+      "Lucerne",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Interlaken",
+    "country": "Switzerland",
+    "region": "Bern",
+    "nearestAirport": "ZRH",
+    "wikiTitle": "Interlaken",
+    "interestTags": [
+      "mountains",
+      "adventure",
+      "nature"
+    ],
+    "knownnessScore": 87,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Interlaken"
+    ],
+    "searchTerms": [
+      "Interlaken",
+      "Bern",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Zermatt",
+    "country": "Switzerland",
+    "region": "Valais",
+    "nearestAirport": "GVA",
+    "wikiTitle": "Zermatt",
+    "interestTags": [
+      "mountains",
+      "winter",
+      "luxury"
+    ],
+    "knownnessScore": 15,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Zermatt"
+    ],
+    "searchTerms": [
+      "Zermatt",
+      "Valais",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Hallstatt",
+    "country": "Austria",
+    "region": "Upper Austria",
+    "nearestAirport": "SZG",
+    "wikiTitle": "Hallstatt",
+    "interestTags": [
+      "lakes",
+      "mountains",
+      "photography"
+    ],
+    "knownnessScore": 29,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Hallstatt"
+    ],
+    "searchTerms": [
+      "Hallstatt",
+      "Upper Austria",
+      "Austria"
+    ]
+  },
+  {
+    "name": "Bratislava",
+    "country": "Slovakia",
+    "region": "Bratislava Region",
+    "nearestAirport": "BTS",
+    "wikiTitle": "Bratislava",
+    "interestTags": [
+      "history",
+      "food",
+      "architecture"
+    ],
+    "knownnessScore": 50,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Bratislava"
+    ],
+    "searchTerms": [
+      "Bratislava",
+      "Bratislava Region",
+      "Slovakia"
+    ]
+  },
+  {
+    "name": "Eger",
+    "country": "Hungary",
+    "region": "Heves County",
+    "nearestAirport": "BUD",
+    "wikiTitle": "Eger",
+    "interestTags": [
+      "food",
+      "wine",
+      "history"
+    ],
+    "knownnessScore": 71,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Eger"
+    ],
+    "searchTerms": [
+      "Eger",
+      "Heves County",
+      "Hungary"
+    ]
+  },
+  {
+    "name": "Ankara",
+    "country": "Turkey",
+    "region": "Central Anatolia",
+    "nearestAirport": "ESB",
+    "wikiTitle": "Ankara",
+    "interestTags": [
+      "history",
+      "food",
+      "culture"
+    ],
+    "knownnessScore": 92,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Ankara"
+    ],
+    "searchTerms": [
+      "Ankara",
+      "Central Anatolia",
+      "Turkey"
+    ]
+  },
+  {
+    "name": "Cappadocia",
+    "country": "Turkey",
+    "region": "Central Anatolia",
+    "nearestAirport": "NAV",
+    "wikiTitle": "Cappadocia",
+    "interestTags": [
+      "nature",
+      "history",
+      "adventure"
+    ],
+    "knownnessScore": 20,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Cappadocia"
+    ],
+    "searchTerms": [
+      "Cappadocia",
+      "Central Anatolia",
+      "Turkey"
+    ]
+  },
+  {
+    "name": "Izmir",
+    "country": "Turkey",
+    "region": "Aegean Region",
+    "nearestAirport": "ADB",
+    "wikiTitle": "İzmir",
+    "interestTags": [
+      "coast",
+      "food",
+      "history"
+    ],
+    "knownnessScore": 34,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Izmir"
+    ],
+    "searchTerms": [
+      "Izmir",
+      "Aegean Region",
+      "Turkey"
+    ]
+  },
+  {
+    "name": "Beirut",
+    "country": "Lebanon",
+    "region": "Beirut",
+    "nearestAirport": "BEY",
+    "wikiTitle": "Beirut",
+    "interestTags": [
+      "food",
+      "history",
+      "nightlife"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Beirut"
+    ],
+    "searchTerms": [
+      "Beirut",
+      "Beirut",
+      "Lebanon"
+    ]
+  },
+  {
+    "name": "Amman",
+    "country": "Jordan",
+    "region": "Amman Governorate",
+    "nearestAirport": "AMM",
+    "wikiTitle": "Amman",
+    "interestTags": [
+      "food",
+      "history",
+      "culture"
+    ],
+    "knownnessScore": 76,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Amman"
+    ],
+    "searchTerms": [
+      "Amman",
+      "Amman Governorate",
+      "Jordan"
+    ]
+  },
+  {
+    "name": "Petra",
+    "country": "Jordan",
+    "region": "Ma'an Governorate",
+    "nearestAirport": "AQJ",
+    "wikiTitle": "Petra",
+    "interestTags": [
+      "history",
+      "adventure",
+      "photography"
+    ],
+    "knownnessScore": 97,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Petra"
+    ],
+    "searchTerms": [
+      "Petra",
+      "Ma'an Governorate",
+      "Jordan"
+    ]
+  },
+  {
+    "name": "Muscat",
+    "country": "Oman",
+    "region": "Muscat Governorate",
+    "nearestAirport": "MCT",
+    "wikiTitle": "Muscat",
+    "interestTags": [
+      "coast",
+      "culture",
+      "nature"
+    ],
+    "knownnessScore": 14,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Muscat"
+    ],
+    "searchTerms": [
+      "Muscat",
+      "Muscat Governorate",
+      "Oman"
+    ]
+  },
+  {
+    "name": "Tel Aviv",
+    "country": "Israel",
+    "region": "Tel Aviv District",
+    "nearestAirport": "TLV",
+    "wikiTitle": "Tel Aviv",
+    "interestTags": [
+      "beaches",
+      "food",
+      "nightlife"
+    ],
+    "knownnessScore": 39,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Tel Aviv"
+    ],
+    "searchTerms": [
+      "Tel Aviv",
+      "Tel Aviv District",
+      "Israel"
+    ]
+  },
+  {
+    "name": "AlUla",
+    "country": "Saudi Arabia",
+    "region": "Medina Province",
+    "nearestAirport": "ULH",
+    "wikiTitle": "Al-'Ula",
+    "interestTags": [
+      "history",
+      "desert",
+      "adventure"
+    ],
+    "knownnessScore": 60,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "AlUla"
+    ],
+    "searchTerms": [
+      "AlUla",
+      "Medina Province",
+      "Saudi Arabia"
+    ]
+  },
+  {
+    "name": "Marrakesh",
+    "country": "Morocco",
+    "region": "Marrakesh-Safi",
+    "nearestAirport": "RAK",
+    "wikiTitle": "Marrakesh",
+    "interestTags": [
+      "food",
+      "design",
+      "culture"
+    ],
+    "knownnessScore": 65,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Marrakesh"
+    ],
+    "searchTerms": [
+      "Marrakesh",
+      "Marrakesh-Safi",
+      "Morocco"
+    ]
+  },
+  {
+    "name": "Fes",
+    "country": "Morocco",
+    "region": "Fès-Meknès",
+    "nearestAirport": "FEZ",
+    "wikiTitle": "Fes",
+    "interestTags": [
+      "history",
+      "food",
+      "architecture"
+    ],
+    "knownnessScore": 88,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Fes"
+    ],
+    "searchTerms": [
+      "Fes",
+      "Fès-Meknès",
+      "Morocco"
+    ]
+  },
+  {
+    "name": "Chefchaouen",
+    "country": "Morocco",
+    "region": "Tanger-Tetouan-Al Hoceima",
+    "nearestAirport": "TNG",
+    "wikiTitle": "Chefchaouen",
+    "interestTags": [
+      "architecture",
+      "culture",
+      "photography"
+    ],
+    "knownnessScore": 19,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Chefchaouen"
+    ],
+    "searchTerms": [
+      "Chefchaouen",
+      "Tanger-Tetouan-Al Hoceima",
+      "Morocco"
+    ]
+  },
+  {
+    "name": "Tangier",
+    "country": "Morocco",
+    "region": "Tanger-Tetouan-Al Hoceima",
+    "nearestAirport": "TNG",
+    "wikiTitle": "Tangier",
+    "interestTags": [
+      "coast",
+      "culture",
+      "food"
+    ],
+    "knownnessScore": 28,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Tangier"
+    ],
+    "searchTerms": [
+      "Tangier",
+      "Tanger-Tetouan-Al Hoceima",
+      "Morocco"
+    ]
+  },
+  {
+    "name": "Tunis",
+    "country": "Tunisia",
+    "region": "Tunis Governorate",
+    "nearestAirport": "TUN",
+    "wikiTitle": "Tunis",
+    "interestTags": [
+      "history",
+      "food",
+      "architecture"
+    ],
+    "knownnessScore": 49,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Tunis"
+    ],
+    "searchTerms": [
+      "Tunis",
+      "Tunis Governorate",
+      "Tunisia"
+    ]
+  },
+  {
+    "name": "Luxor",
+    "country": "Egypt",
+    "region": "Luxor Governorate",
+    "nearestAirport": "LXR",
+    "wikiTitle": "Luxor",
+    "interestTags": [
+      "history",
+      "culture",
+      "adventure"
+    ],
+    "knownnessScore": 70,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Luxor"
+    ],
+    "searchTerms": [
+      "Luxor",
+      "Luxor Governorate",
+      "Egypt"
+    ]
+  },
+  {
+    "name": "Aswan",
+    "country": "Egypt",
+    "region": "Aswan Governorate",
+    "nearestAirport": "ASW",
+    "wikiTitle": "Aswan",
+    "interestTags": [
+      "history",
+      "nature",
+      "culture"
+    ],
+    "knownnessScore": 93,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Aswan"
+    ],
+    "searchTerms": [
+      "Aswan",
+      "Aswan Governorate",
+      "Egypt"
+    ]
+  },
+  {
+    "name": "Dakar",
+    "country": "Senegal",
+    "region": "Dakar Region",
+    "nearestAirport": "DSS",
+    "wikiTitle": "Dakar",
+    "interestTags": [
+      "food",
+      "music",
+      "coast"
+    ],
+    "knownnessScore": 13,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Dakar"
+    ],
+    "searchTerms": [
+      "Dakar",
+      "Dakar Region",
+      "Senegal"
+    ]
+  },
+  {
+    "name": "Accra",
+    "country": "Ghana",
+    "region": "Greater Accra",
+    "nearestAirport": "ACC",
+    "wikiTitle": "Accra",
+    "interestTags": [
+      "food",
+      "culture",
+      "nightlife"
+    ],
+    "knownnessScore": 33,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Accra"
+    ],
+    "searchTerms": [
+      "Accra",
+      "Greater Accra",
+      "Ghana"
+    ]
+  },
+  {
+    "name": "Lagos",
+    "country": "Nigeria",
+    "region": "Lagos State",
+    "nearestAirport": "LOS",
+    "wikiTitle": "Lagos",
+    "interestTags": [
+      "food",
+      "art",
+      "nightlife"
+    ],
+    "knownnessScore": 54,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Lagos"
+    ],
+    "searchTerms": [
+      "Lagos",
+      "Lagos State",
+      "Nigeria"
+    ]
+  },
+  {
+    "name": "Addis Ababa",
+    "country": "Ethiopia",
+    "region": "Addis Ababa",
+    "nearestAirport": "ADD",
+    "wikiTitle": "Addis Ababa",
+    "interestTags": [
+      "food",
+      "culture",
+      "history"
+    ],
+    "knownnessScore": 75,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Addis Ababa"
+    ],
+    "searchTerms": [
+      "Addis Ababa",
+      "Addis Ababa",
+      "Ethiopia"
+    ]
+  },
+  {
+    "name": "Zanzibar City",
+    "country": "Tanzania",
+    "region": "Zanzibar",
+    "nearestAirport": "ZNZ",
+    "wikiTitle": "Zanzibar City",
+    "interestTags": [
+      "beaches",
+      "history",
+      "food"
+    ],
+    "knownnessScore": 98,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Zanzibar City"
+    ],
+    "searchTerms": [
+      "Zanzibar City",
+      "Zanzibar",
+      "Tanzania"
+    ]
+  },
+  {
+    "name": "Serengeti National Park",
+    "country": "Tanzania",
+    "region": "Mara Region",
+    "nearestAirport": "JRO",
+    "wikiTitle": "Serengeti National Park",
+    "interestTags": [
+      "wildlife",
+      "nature",
+      "adventure"
+    ],
+    "knownnessScore": 18,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Serengeti National Park"
+    ],
+    "searchTerms": [
+      "Serengeti National Park",
+      "Mara Region",
+      "Tanzania"
+    ]
+  },
+  {
+    "name": "Kigali",
+    "country": "Rwanda",
+    "region": "Kigali",
+    "nearestAirport": "KGL",
+    "wikiTitle": "Kigali",
+    "interestTags": [
+      "food",
+      "culture",
+      "nature"
+    ],
+    "knownnessScore": 38,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Kigali"
+    ],
+    "searchTerms": [
+      "Kigali",
+      "Kigali",
+      "Rwanda"
+    ]
+  },
+  {
+    "name": "Victoria Falls",
+    "country": "Zimbabwe",
+    "region": "Matabeleland North",
+    "nearestAirport": "VFA",
+    "wikiTitle": "Victoria Falls",
+    "interestTags": [
+      "nature",
+      "adventure",
+      "wildlife"
+    ],
+    "knownnessScore": 59,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Victoria Falls"
+    ],
+    "searchTerms": [
+      "Victoria Falls",
+      "Matabeleland North",
+      "Zimbabwe"
+    ]
+  },
+  {
+    "name": "Windhoek",
+    "country": "Namibia",
+    "region": "Khomas Region",
+    "nearestAirport": "WDH",
+    "wikiTitle": "Windhoek",
+    "interestTags": [
+      "culture",
+      "nature",
+      "adventure"
+    ],
+    "knownnessScore": 80,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Windhoek"
+    ],
+    "searchTerms": [
+      "Windhoek",
+      "Khomas Region",
+      "Namibia"
+    ]
+  },
+  {
+    "name": "Sossusvlei",
+    "country": "Namibia",
+    "region": "Hardap Region",
+    "nearestAirport": "WDH",
+    "wikiTitle": "Sossusvlei",
+    "interestTags": [
+      "desert",
+      "photography",
+      "nature"
+    ],
+    "knownnessScore": 89,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Sossusvlei"
+    ],
+    "searchTerms": [
+      "Sossusvlei",
+      "Hardap Region",
+      "Namibia"
+    ]
+  },
+  {
+    "name": "Johannesburg",
+    "country": "South Africa",
+    "region": "Gauteng",
+    "nearestAirport": "JNB",
+    "wikiTitle": "Johannesburg",
+    "interestTags": [
+      "art",
+      "food",
+      "history"
+    ],
+    "knownnessScore": 12,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Johannesburg"
+    ],
+    "searchTerms": [
+      "Johannesburg",
+      "Gauteng",
+      "South Africa"
+    ]
+  },
+  {
+    "name": "Durban",
+    "country": "South Africa",
+    "region": "KwaZulu-Natal",
+    "nearestAirport": "DUR",
+    "wikiTitle": "Durban",
+    "interestTags": [
+      "beaches",
+      "food",
+      "culture"
+    ],
+    "knownnessScore": 27,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Durban"
+    ],
+    "searchTerms": [
+      "Durban",
+      "KwaZulu-Natal",
+      "South Africa"
+    ]
+  },
+  {
+    "name": "Gaborone",
+    "country": "Botswana",
+    "region": "South-East District",
+    "nearestAirport": "GBE",
+    "wikiTitle": "Gaborone",
+    "interestTags": [
+      "culture",
+      "nature",
+      "food"
+    ],
+    "knownnessScore": 48,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Gaborone"
+    ],
+    "searchTerms": [
+      "Gaborone",
+      "South-East District",
+      "Botswana"
+    ]
+  },
+  {
+    "name": "Mauritius",
+    "country": "Mauritius",
+    "region": "Indian Ocean",
+    "nearestAirport": "MRU",
+    "wikiTitle": "Mauritius",
+    "interestTags": [
+      "beaches",
+      "food",
+      "nature"
+    ],
+    "knownnessScore": 69,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Mauritius"
+    ],
+    "searchTerms": [
+      "Mauritius",
+      "Indian Ocean",
+      "Mauritius"
+    ]
+  },
+  {
+    "name": "Nosy Be",
+    "country": "Madagascar",
+    "region": "Diana Region",
+    "nearestAirport": "NOS",
+    "wikiTitle": "Nosy Be",
+    "interestTags": [
+      "beaches",
+      "nature",
+      "water"
+    ],
+    "knownnessScore": 94,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Nosy Be"
+    ],
+    "searchTerms": [
+      "Nosy Be",
+      "Diana Region",
+      "Madagascar"
+    ]
+  },
+  {
+    "name": "Jaipur",
+    "country": "India",
+    "region": "Rajasthan",
+    "nearestAirport": "JAI",
+    "wikiTitle": "Jaipur",
+    "interestTags": [
+      "history",
+      "design",
+      "food"
+    ],
+    "knownnessScore": 17,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Jaipur"
+    ],
+    "searchTerms": [
+      "Jaipur",
+      "Rajasthan",
+      "India"
+    ]
+  },
+  {
+    "name": "Udaipur",
+    "country": "India",
+    "region": "Rajasthan",
+    "nearestAirport": "UDR",
+    "wikiTitle": "Udaipur",
+    "interestTags": [
+      "lakes",
+      "history",
+      "romance"
+    ],
+    "knownnessScore": 32,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Udaipur"
+    ],
+    "searchTerms": [
+      "Udaipur",
+      "Rajasthan",
+      "India"
+    ]
+  },
+  {
+    "name": "Agra",
+    "country": "India",
+    "region": "Uttar Pradesh",
+    "nearestAirport": "AGR",
+    "wikiTitle": "Agra",
+    "interestTags": [
+      "history",
+      "architecture",
+      "culture"
+    ],
+    "knownnessScore": 53,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Agra"
+    ],
+    "searchTerms": [
+      "Agra",
+      "Uttar Pradesh",
+      "India"
+    ]
+  },
+  {
+    "name": "Goa",
+    "country": "India",
+    "region": "Goa",
+    "nearestAirport": "GOI",
+    "wikiTitle": "Goa",
+    "interestTags": [
+      "beaches",
+      "food",
+      "nightlife"
+    ],
+    "knownnessScore": 74,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Goa"
+    ],
+    "searchTerms": [
+      "Goa",
+      "Goa",
+      "India"
+    ]
+  },
+  {
+    "name": "Kochi",
+    "country": "India",
+    "region": "Kerala",
+    "nearestAirport": "COK",
+    "wikiTitle": "Kochi",
+    "interestTags": [
+      "food",
+      "history",
+      "water"
+    ],
+    "knownnessScore": 85,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Kochi"
+    ],
+    "searchTerms": [
+      "Kochi",
+      "Kerala",
+      "India"
+    ]
+  },
+  {
+    "name": "Varanasi",
+    "country": "India",
+    "region": "Uttar Pradesh",
+    "nearestAirport": "VNS",
+    "wikiTitle": "Varanasi",
+    "interestTags": [
+      "culture",
+      "history",
+      "photography"
+    ],
+    "knownnessScore": 11,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Varanasi"
+    ],
+    "searchTerms": [
+      "Varanasi",
+      "Uttar Pradesh",
+      "India"
+    ]
+  },
+  {
+    "name": "Kathmandu",
+    "country": "Nepal",
+    "region": "Bagmati Province",
+    "nearestAirport": "KTM",
+    "wikiTitle": "Kathmandu",
+    "interestTags": [
+      "culture",
+      "mountains",
+      "history"
+    ],
+    "knownnessScore": 37,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Kathmandu"
+    ],
+    "searchTerms": [
+      "Kathmandu",
+      "Bagmati Province",
+      "Nepal"
+    ]
+  },
+  {
+    "name": "Pokhara",
+    "country": "Nepal",
+    "region": "Gandaki Province",
+    "nearestAirport": "PKR",
+    "wikiTitle": "Pokhara",
+    "interestTags": [
+      "mountains",
+      "nature",
+      "adventure"
+    ],
+    "knownnessScore": 58,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Pokhara"
+    ],
+    "searchTerms": [
+      "Pokhara",
+      "Gandaki Province",
+      "Nepal"
+    ]
+  },
+  {
+    "name": "Thimphu",
+    "country": "Bhutan",
+    "region": "Thimphu District",
+    "nearestAirport": "PBH",
+    "wikiTitle": "Thimphu",
+    "interestTags": [
+      "culture",
+      "mountains",
+      "nature"
+    ],
+    "knownnessScore": 79,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Thimphu"
+    ],
+    "searchTerms": [
+      "Thimphu",
+      "Thimphu District",
+      "Bhutan"
+    ]
+  },
+  {
+    "name": "Colombo",
+    "country": "Sri Lanka",
+    "region": "Western Province",
+    "nearestAirport": "CMB",
+    "wikiTitle": "Colombo",
+    "interestTags": [
+      "food",
+      "culture",
+      "coast"
+    ],
+    "knownnessScore": 90,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Colombo"
+    ],
+    "searchTerms": [
+      "Colombo",
+      "Western Province",
+      "Sri Lanka"
+    ]
+  },
+  {
+    "name": "Galle",
+    "country": "Sri Lanka",
+    "region": "Southern Province",
+    "nearestAirport": "CMB",
+    "wikiTitle": "Galle",
+    "interestTags": [
+      "coast",
+      "history",
+      "food"
+    ],
+    "knownnessScore": 16,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Galle"
+    ],
+    "searchTerms": [
+      "Galle",
+      "Southern Province",
+      "Sri Lanka"
+    ]
+  },
+  {
+    "name": "Dhaka",
+    "country": "Bangladesh",
+    "region": "Dhaka Division",
+    "nearestAirport": "DAC",
+    "wikiTitle": "Dhaka",
+    "interestTags": [
+      "food",
+      "culture",
+      "history"
+    ],
+    "knownnessScore": 26,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Dhaka"
+    ],
+    "searchTerms": [
+      "Dhaka",
+      "Dhaka Division",
+      "Bangladesh"
+    ]
+  },
+  {
+    "name": "Karachi",
+    "country": "Pakistan",
+    "region": "Sindh",
+    "nearestAirport": "KHI",
+    "wikiTitle": "Karachi",
+    "interestTags": [
+      "food",
+      "culture",
+      "coast"
+    ],
+    "knownnessScore": 47,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Karachi"
+    ],
+    "searchTerms": [
+      "Karachi",
+      "Sindh",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Lahore",
+    "country": "Pakistan",
+    "region": "Punjab",
+    "nearestAirport": "LHE",
+    "wikiTitle": "Lahore",
+    "interestTags": [
+      "food",
+      "history",
+      "architecture"
+    ],
+    "knownnessScore": 68,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Lahore"
+    ],
+    "searchTerms": [
+      "Lahore",
+      "Punjab",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Samarkand",
+    "country": "Uzbekistan",
+    "region": "Samarqand Region",
+    "nearestAirport": "SKD",
+    "wikiTitle": "Samarkand",
+    "interestTags": [
+      "history",
+      "architecture",
+      "food"
+    ],
+    "knownnessScore": 95,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Samarkand"
+    ],
+    "searchTerms": [
+      "Samarkand",
+      "Samarqand Region",
+      "Uzbekistan"
+    ]
+  },
+  {
+    "name": "Bukhara",
+    "country": "Uzbekistan",
+    "region": "Bukhara Region",
+    "nearestAirport": "BHK",
+    "wikiTitle": "Bukhara",
+    "interestTags": [
+      "history",
+      "architecture",
+      "food"
+    ],
+    "knownnessScore": 10,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Bukhara"
+    ],
+    "searchTerms": [
+      "Bukhara",
+      "Bukhara Region",
+      "Uzbekistan"
+    ]
+  },
+  {
+    "name": "Almaty",
+    "country": "Kazakhstan",
+    "region": "Almaty",
+    "nearestAirport": "ALA",
+    "wikiTitle": "Almaty",
+    "interestTags": [
+      "food",
+      "mountains",
+      "culture"
+    ],
+    "knownnessScore": 31,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Almaty"
+    ],
+    "searchTerms": [
+      "Almaty",
+      "Almaty",
+      "Kazakhstan"
+    ]
+  },
+  {
+    "name": "Bishkek",
+    "country": "Kyrgyzstan",
+    "region": "Chüy Region",
+    "nearestAirport": "FRU",
+    "wikiTitle": "Bishkek",
+    "interestTags": [
+      "food",
+      "mountains",
+      "culture"
+    ],
+    "knownnessScore": 52,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Bishkek"
+    ],
+    "searchTerms": [
+      "Bishkek",
+      "Chüy Region",
+      "Kyrgyzstan"
+    ]
+  },
+  {
+    "name": "Ulaanbaatar",
+    "country": "Mongolia",
+    "region": "Ulaanbaatar",
+    "nearestAirport": "UBN",
+    "wikiTitle": "Ulaanbaatar",
+    "interestTags": [
+      "culture",
+      "food",
+      "adventure"
+    ],
+    "knownnessScore": 73,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Ulaanbaatar"
+    ],
+    "searchTerms": [
+      "Ulaanbaatar",
+      "Ulaanbaatar",
+      "Mongolia"
+    ]
+  },
+  {
+    "name": "Ho Chi Minh City",
+    "country": "Vietnam",
+    "region": "Southeast",
+    "nearestAirport": "SGN",
+    "wikiTitle": "Ho Chi Minh City",
+    "interestTags": [
+      "food",
+      "history",
+      "nightlife"
+    ],
+    "knownnessScore": 86,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Ho Chi Minh City"
+    ],
+    "searchTerms": [
+      "Ho Chi Minh City",
+      "Southeast",
+      "Vietnam"
+    ]
+  },
+  {
+    "name": "Hoi An",
+    "country": "Vietnam",
+    "region": "Quảng Nam",
+    "nearestAirport": "DAD",
+    "wikiTitle": "Hội An",
+    "interestTags": [
+      "food",
+      "architecture",
+      "beaches"
+    ],
+    "knownnessScore": 15,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Hoi An"
+    ],
+    "searchTerms": [
+      "Hoi An",
+      "Quảng Nam",
+      "Vietnam"
+    ]
+  },
+  {
+    "name": "Nha Trang",
+    "country": "Vietnam",
+    "region": "Khánh Hòa",
+    "nearestAirport": "CXR",
+    "wikiTitle": "Nha Trang",
+    "interestTags": [
+      "beaches",
+      "food",
+      "nightlife"
+    ],
+    "knownnessScore": 36,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Nha Trang"
+    ],
+    "searchTerms": [
+      "Nha Trang",
+      "Khánh Hòa",
+      "Vietnam"
+    ]
+  },
+  {
+    "name": "Phnom Penh",
+    "country": "Cambodia",
+    "region": "Phnom Penh",
+    "nearestAirport": "PNH",
+    "wikiTitle": "Phnom Penh",
+    "interestTags": [
+      "food",
+      "history",
+      "culture"
+    ],
+    "knownnessScore": 57,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Phnom Penh"
+    ],
+    "searchTerms": [
+      "Phnom Penh",
+      "Phnom Penh",
+      "Cambodia"
+    ]
+  },
+  {
+    "name": "Vientiane",
+    "country": "Laos",
+    "region": "Vientiane Prefecture",
+    "nearestAirport": "VTE",
+    "wikiTitle": "Vientiane",
+    "interestTags": [
+      "food",
+      "culture",
+      "history"
+    ],
+    "knownnessScore": 78,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Vientiane"
+    ],
+    "searchTerms": [
+      "Vientiane",
+      "Vientiane Prefecture",
+      "Laos"
+    ]
+  },
+  {
+    "name": "Koh Samui",
+    "country": "Thailand",
+    "region": "Surat Thani",
+    "nearestAirport": "USM",
+    "wikiTitle": "Ko Samui",
+    "interestTags": [
+      "beaches",
+      "wellness",
+      "food"
+    ],
+    "knownnessScore": 91,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Koh Samui"
+    ],
+    "searchTerms": [
+      "Koh Samui",
+      "Surat Thani",
+      "Thailand"
+    ]
+  },
+  {
+    "name": "Krabi",
+    "country": "Thailand",
+    "region": "Krabi Province",
+    "nearestAirport": "KBV",
+    "wikiTitle": "Krabi",
+    "interestTags": [
+      "beaches",
+      "nature",
+      "adventure"
+    ],
+    "knownnessScore": 20,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Krabi"
+    ],
+    "searchTerms": [
+      "Krabi",
+      "Krabi Province",
+      "Thailand"
+    ]
+  },
+  {
+    "name": "Yangon",
+    "country": "Myanmar",
+    "region": "Yangon Region",
+    "nearestAirport": "RGN",
+    "wikiTitle": "Yangon",
+    "interestTags": [
+      "food",
+      "history",
+      "culture"
+    ],
+    "knownnessScore": 25,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Yangon"
+    ],
+    "searchTerms": [
+      "Yangon",
+      "Yangon Region",
+      "Myanmar"
+    ]
+  },
+  {
+    "name": "Langkawi",
+    "country": "Malaysia",
+    "region": "Kedah",
+    "nearestAirport": "LGK",
+    "wikiTitle": "Langkawi",
+    "interestTags": [
+      "beaches",
+      "nature",
+      "relaxation"
+    ],
+    "knownnessScore": 46,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Langkawi"
+    ],
+    "searchTerms": [
+      "Langkawi",
+      "Kedah",
+      "Malaysia"
+    ]
+  },
+  {
+    "name": "Jakarta",
+    "country": "Indonesia",
+    "region": "Jakarta",
+    "nearestAirport": "CGK",
+    "wikiTitle": "Jakarta",
+    "interestTags": [
+      "food",
+      "nightlife",
+      "culture"
+    ],
+    "knownnessScore": 67,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Jakarta"
+    ],
+    "searchTerms": [
+      "Jakarta",
+      "Jakarta",
+      "Indonesia"
+    ]
+  },
+  {
+    "name": "Yogyakarta",
+    "country": "Indonesia",
+    "region": "Special Region of Yogyakarta",
+    "nearestAirport": "YIA",
+    "wikiTitle": "Yogyakarta",
+    "interestTags": [
+      "culture",
+      "food",
+      "history"
+    ],
+    "knownnessScore": 96,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Yogyakarta"
+    ],
+    "searchTerms": [
+      "Yogyakarta",
+      "Special Region of Yogyakarta",
+      "Indonesia"
+    ]
+  },
+  {
+    "name": "Lombok",
+    "country": "Indonesia",
+    "region": "West Nusa Tenggara",
+    "nearestAirport": "LOP",
+    "wikiTitle": "Lombok",
+    "interestTags": [
+      "beaches",
+      "nature",
+      "adventure"
+    ],
+    "knownnessScore": 14,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Lombok"
+    ],
+    "searchTerms": [
+      "Lombok",
+      "West Nusa Tenggara",
+      "Indonesia"
+    ]
+  },
+  {
+    "name": "Komodo National Park",
+    "country": "Indonesia",
+    "region": "East Nusa Tenggara",
+    "nearestAirport": "LBJ",
+    "wikiTitle": "Komodo National Park",
+    "interestTags": [
+      "wildlife",
+      "nature",
+      "adventure"
+    ],
+    "knownnessScore": 30,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Komodo National Park"
+    ],
+    "searchTerms": [
+      "Komodo National Park",
+      "East Nusa Tenggara",
+      "Indonesia"
+    ]
+  },
+  {
+    "name": "Manila",
+    "country": "Philippines",
+    "region": "Metro Manila",
+    "nearestAirport": "MNL",
+    "wikiTitle": "Manila",
+    "interestTags": [
+      "food",
+      "history",
+      "nightlife"
+    ],
+    "knownnessScore": 51,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Manila"
+    ],
+    "searchTerms": [
+      "Manila",
+      "Metro Manila",
+      "Philippines"
+    ]
+  },
+  {
+    "name": "Cebu City",
+    "country": "Philippines",
+    "region": "Central Visayas",
+    "nearestAirport": "CEB",
+    "wikiTitle": "Cebu City",
+    "interestTags": [
+      "food",
+      "history",
+      "beaches"
+    ],
+    "knownnessScore": 72,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Cebu City"
+    ],
+    "searchTerms": [
+      "Cebu City",
+      "Central Visayas",
+      "Philippines"
+    ]
+  },
+  {
+    "name": "Palawan",
+    "country": "Philippines",
+    "region": "Mimaropa",
+    "nearestAirport": "PPS",
+    "wikiTitle": "Palawan",
+    "interestTags": [
+      "beaches",
+      "nature",
+      "water"
+    ],
+    "knownnessScore": 87,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Palawan"
+    ],
+    "searchTerms": [
+      "Palawan",
+      "Mimaropa",
+      "Philippines"
+    ]
+  },
+  {
+    "name": "Kaohsiung",
+    "country": "Taiwan",
+    "region": "Kaohsiung",
+    "nearestAirport": "KHH",
+    "wikiTitle": "Kaohsiung",
+    "interestTags": [
+      "food",
+      "design",
+      "coast"
+    ],
+    "knownnessScore": 19,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Kaohsiung"
+    ],
+    "searchTerms": [
+      "Kaohsiung",
+      "Kaohsiung",
+      "Taiwan"
+    ]
+  },
+  {
+    "name": "Macau",
+    "country": "China",
+    "region": "Macau",
+    "nearestAirport": "MFM",
+    "wikiTitle": "Macau",
+    "interestTags": [
+      "food",
+      "history",
+      "nightlife"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Macau"
+    ],
+    "searchTerms": [
+      "Macau",
+      "Macau",
+      "China"
+    ]
+  },
+  {
+    "name": "Chengdu",
+    "country": "China",
+    "region": "Sichuan",
+    "nearestAirport": "CTU",
+    "wikiTitle": "Chengdu",
+    "interestTags": [
+      "food",
+      "culture",
+      "nature"
+    ],
+    "knownnessScore": 56,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Chengdu"
+    ],
+    "searchTerms": [
+      "Chengdu",
+      "Sichuan",
+      "China"
+    ]
+  },
+  {
+    "name": "Xi'an",
+    "country": "China",
+    "region": "Shaanxi",
+    "nearestAirport": "XIY",
+    "wikiTitle": "Xi'an",
+    "interestTags": [
+      "history",
+      "food",
+      "culture"
+    ],
+    "knownnessScore": 77,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Xi'an"
+    ],
+    "searchTerms": [
+      "Xi'an",
+      "Shaanxi",
+      "China"
+    ]
+  },
+  {
+    "name": "Guilin",
+    "country": "China",
+    "region": "Guangxi",
+    "nearestAirport": "KWL",
+    "wikiTitle": "Guilin",
+    "interestTags": [
+      "nature",
+      "photography",
+      "adventure"
+    ],
+    "knownnessScore": 92,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Guilin"
+    ],
+    "searchTerms": [
+      "Guilin",
+      "Guangxi",
+      "China"
+    ]
+  },
+  {
+    "name": "Hangzhou",
+    "country": "China",
+    "region": "Zhejiang",
+    "nearestAirport": "HGH",
+    "wikiTitle": "Hangzhou",
+    "interestTags": [
+      "lakes",
+      "food",
+      "culture"
+    ],
+    "knownnessScore": 13,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Hangzhou"
+    ],
+    "searchTerms": [
+      "Hangzhou",
+      "Zhejiang",
+      "China"
+    ]
+  },
+  {
+    "name": "Suzhou",
+    "country": "China",
+    "region": "Jiangsu",
+    "nearestAirport": "PVG",
+    "wikiTitle": "Suzhou",
+    "interestTags": [
+      "gardens",
+      "history",
+      "food"
+    ],
+    "knownnessScore": 40,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Suzhou"
+    ],
+    "searchTerms": [
+      "Suzhou",
+      "Jiangsu",
+      "China"
+    ]
+  },
+  {
+    "name": "Guangzhou",
+    "country": "China",
+    "region": "Guangdong",
+    "nearestAirport": "CAN",
+    "wikiTitle": "Guangzhou",
+    "interestTags": [
+      "food",
+      "design",
+      "culture"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Guangzhou"
+    ],
+    "searchTerms": [
+      "Guangzhou",
+      "Guangdong",
+      "China"
+    ]
+  },
+  {
+    "name": "Shenzhen",
+    "country": "China",
+    "region": "Guangdong",
+    "nearestAirport": "SZX",
+    "wikiTitle": "Shenzhen",
+    "interestTags": [
+      "design",
+      "food",
+      "nightlife"
+    ],
+    "knownnessScore": 66,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Shenzhen"
+    ],
+    "searchTerms": [
+      "Shenzhen",
+      "Guangdong",
+      "China"
+    ]
+  },
+  {
+    "name": "Hiroshima",
+    "country": "Japan",
+    "region": "Chūgoku",
+    "nearestAirport": "HIJ",
+    "wikiTitle": "Hiroshima",
+    "interestTags": [
+      "history",
+      "food",
+      "culture"
+    ],
+    "knownnessScore": 97,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Hiroshima"
+    ],
+    "searchTerms": [
+      "Hiroshima",
+      "Chūgoku",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Sapporo",
+    "country": "Japan",
+    "region": "Hokkaido",
+    "nearestAirport": "CTS",
+    "wikiTitle": "Sapporo",
+    "interestTags": [
+      "food",
+      "winter",
+      "nature"
+    ],
+    "knownnessScore": 18,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Sapporo"
+    ],
+    "searchTerms": [
+      "Sapporo",
+      "Hokkaido",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Fukuoka",
+    "country": "Japan",
+    "region": "Kyushu",
+    "nearestAirport": "FUK",
+    "wikiTitle": "Fukuoka",
+    "interestTags": [
+      "food",
+      "nightlife",
+      "culture"
+    ],
+    "knownnessScore": 29,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Fukuoka"
+    ],
+    "searchTerms": [
+      "Fukuoka",
+      "Kyushu",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Nikko",
+    "country": "Japan",
+    "region": "Tochigi",
+    "nearestAirport": "NRT",
+    "wikiTitle": "Nikkō",
+    "interestTags": [
+      "nature",
+      "history",
+      "hiking"
+    ],
+    "knownnessScore": 50,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Nikko"
+    ],
+    "searchTerms": [
+      "Nikko",
+      "Tochigi",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Hakone",
+    "country": "Japan",
+    "region": "Kanagawa",
+    "nearestAirport": "HND",
+    "wikiTitle": "Hakone",
+    "interestTags": [
+      "wellness",
+      "nature",
+      "mountains"
+    ],
+    "knownnessScore": 71,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Hakone"
+    ],
+    "searchTerms": [
+      "Hakone",
+      "Kanagawa",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Okinawa Island",
+    "country": "Japan",
+    "region": "Okinawa",
+    "nearestAirport": "OKA",
+    "wikiTitle": "Okinawa Island",
+    "interestTags": [
+      "beaches",
+      "food",
+      "culture"
+    ],
+    "knownnessScore": 88,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Okinawa Island"
+    ],
+    "searchTerms": [
+      "Okinawa Island",
+      "Okinawa",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Kobe",
+    "country": "Japan",
+    "region": "Kansai",
+    "nearestAirport": "UKB",
+    "wikiTitle": "Kobe",
+    "interestTags": [
+      "food",
+      "design",
+      "coast"
+    ],
+    "knownnessScore": 12,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Kobe"
+    ],
+    "searchTerms": [
+      "Kobe",
+      "Kansai",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Nagasaki",
+    "country": "Japan",
+    "region": "Kyushu",
+    "nearestAirport": "NGS",
+    "wikiTitle": "Nagasaki",
+    "interestTags": [
+      "history",
+      "food",
+      "coast"
+    ],
+    "knownnessScore": 34,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Nagasaki"
+    ],
+    "searchTerms": [
+      "Nagasaki",
+      "Kyushu",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Gyeongju",
+    "country": "South Korea",
+    "region": "North Gyeongsang",
+    "nearestAirport": "PUS",
+    "wikiTitle": "Gyeongju",
+    "interestTags": [
+      "history",
+      "culture",
+      "food"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Gyeongju"
+    ],
+    "searchTerms": [
+      "Gyeongju",
+      "North Gyeongsang",
+      "South Korea"
+    ]
+  },
+  {
+    "name": "Daegu",
+    "country": "South Korea",
+    "region": "Yeongnam",
+    "nearestAirport": "TAE",
+    "wikiTitle": "Daegu",
+    "interestTags": [
+      "food",
+      "culture",
+      "nightlife"
+    ],
+    "knownnessScore": 76,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Daegu"
+    ],
+    "searchTerms": [
+      "Daegu",
+      "Yeongnam",
+      "South Korea"
+    ]
+  },
+  {
+    "name": "Perth",
+    "country": "Australia",
+    "region": "Western Australia",
+    "nearestAirport": "PER",
+    "wikiTitle": "Perth",
+    "interestTags": [
+      "beaches",
+      "food",
+      "nature"
+    ],
+    "knownnessScore": 93,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Perth"
+    ],
+    "searchTerms": [
+      "Perth",
+      "Western Australia",
+      "Australia"
+    ]
+  },
+  {
+    "name": "Brisbane",
+    "country": "Australia",
+    "region": "Queensland",
+    "nearestAirport": "BNE",
+    "wikiTitle": "Brisbane",
+    "interestTags": [
+      "food",
+      "coast",
+      "nature"
+    ],
+    "knownnessScore": 17,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Brisbane"
+    ],
+    "searchTerms": [
+      "Brisbane",
+      "Queensland",
+      "Australia"
+    ]
+  },
+  {
+    "name": "Adelaide",
+    "country": "Australia",
+    "region": "South Australia",
+    "nearestAirport": "ADL",
+    "wikiTitle": "Adelaide",
+    "interestTags": [
+      "food",
+      "wine",
+      "coast"
+    ],
+    "knownnessScore": 39,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Adelaide"
+    ],
+    "searchTerms": [
+      "Adelaide",
+      "South Australia",
+      "Australia"
+    ]
+  },
+  {
+    "name": "Hobart",
+    "country": "Australia",
+    "region": "Tasmania",
+    "nearestAirport": "HBA",
+    "wikiTitle": "Hobart",
+    "interestTags": [
+      "food",
+      "nature",
+      "design"
+    ],
+    "knownnessScore": 60,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Hobart"
+    ],
+    "searchTerms": [
+      "Hobart",
+      "Tasmania",
+      "Australia"
+    ]
+  },
+  {
+    "name": "Cairns",
+    "country": "Australia",
+    "region": "Queensland",
+    "nearestAirport": "CNS",
+    "wikiTitle": "Cairns",
+    "interestTags": [
+      "nature",
+      "water",
+      "adventure"
+    ],
+    "knownnessScore": 65,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Cairns"
+    ],
+    "searchTerms": [
+      "Cairns",
+      "Queensland",
+      "Australia"
+    ]
+  },
+  {
+    "name": "Gold Coast",
+    "country": "Australia",
+    "region": "Queensland",
+    "nearestAirport": "OOL",
+    "wikiTitle": "Gold Coast, Queensland",
+    "interestTags": [
+      "beaches",
+      "nightlife",
+      "family"
+    ],
+    "knownnessScore": 98,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Gold Coast"
+    ],
+    "searchTerms": [
+      "Gold Coast",
+      "Queensland",
+      "Australia"
+    ]
+  },
+  {
+    "name": "Darwin",
+    "country": "Australia",
+    "region": "Northern Territory",
+    "nearestAirport": "DRW",
+    "wikiTitle": "Darwin, Northern Territory",
+    "interestTags": [
+      "nature",
+      "food",
+      "adventure"
+    ],
+    "knownnessScore": 11,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Darwin"
+    ],
+    "searchTerms": [
+      "Darwin",
+      "Northern Territory",
+      "Australia"
+    ]
+  },
+  {
+    "name": "Auckland",
+    "country": "New Zealand",
+    "region": "Auckland Region",
+    "nearestAirport": "AKL",
+    "wikiTitle": "Auckland",
+    "interestTags": [
+      "food",
+      "coast",
+      "nature"
+    ],
+    "knownnessScore": 28,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Auckland"
+    ],
+    "searchTerms": [
+      "Auckland",
+      "Auckland Region",
+      "New Zealand"
+    ]
+  },
+  {
+    "name": "Wellington",
+    "country": "New Zealand",
+    "region": "Wellington Region",
+    "nearestAirport": "WLG",
+    "wikiTitle": "Wellington",
+    "interestTags": [
+      "food",
+      "design",
+      "culture"
+    ],
+    "knownnessScore": 49,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Wellington"
+    ],
+    "searchTerms": [
+      "Wellington",
+      "Wellington Region",
+      "New Zealand"
+    ]
+  },
+  {
+    "name": "Rotorua",
+    "country": "New Zealand",
+    "region": "Bay of Plenty",
+    "nearestAirport": "ROT",
+    "wikiTitle": "Rotorua",
+    "interestTags": [
+      "nature",
+      "culture",
+      "wellness"
+    ],
+    "knownnessScore": 70,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Rotorua"
+    ],
+    "searchTerms": [
+      "Rotorua",
+      "Bay of Plenty",
+      "New Zealand"
+    ]
+  },
+  {
+    "name": "Fiji",
+    "country": "Fiji",
+    "region": "Melanesia",
+    "nearestAirport": "NAN",
+    "wikiTitle": "Fiji",
+    "interestTags": [
+      "beaches",
+      "water",
+      "relaxation"
+    ],
+    "knownnessScore": 89,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Fiji"
+    ],
+    "searchTerms": [
+      "Fiji",
+      "Melanesia",
+      "Fiji"
+    ]
+  },
+  {
+    "name": "Rarotonga",
+    "country": "Cook Islands",
+    "region": "Cook Islands",
+    "nearestAirport": "RAR",
+    "wikiTitle": "Rarotonga",
+    "interestTags": [
+      "beaches",
+      "nature",
+      "relaxation"
+    ],
+    "knownnessScore": 16,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Rarotonga"
+    ],
+    "searchTerms": [
+      "Rarotonga",
+      "Cook Islands",
+      "Cook Islands"
+    ]
+  },
+  {
+    "name": "Nouméa",
+    "country": "New Caledonia",
+    "region": "New Caledonia",
+    "nearestAirport": "NOU",
+    "wikiTitle": "Nouméa",
+    "interestTags": [
+      "beaches",
+      "food",
+      "culture"
+    ],
+    "knownnessScore": 33,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Noumea"
+    ],
+    "searchTerms": [
+      "Nouméa",
+      "New Caledonia",
+      "New Caledonia"
+    ]
+  },
+  {
+    "name": "Apia",
+    "country": "Samoa",
+    "region": "Tuamasaga",
+    "nearestAirport": "APW",
+    "wikiTitle": "Apia",
+    "interestTags": [
+      "beaches",
+      "culture",
+      "nature"
+    ],
+    "knownnessScore": 54,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "solo",
+      "couple"
+    ],
+    "aliases": [
+      "Apia"
+    ],
+    "searchTerms": [
+      "Apia",
+      "Tuamasaga",
+      "Samoa"
+    ]
+  },
+  {
+    "name": "Port Vila",
+    "country": "Vanuatu",
+    "region": "Shefa",
+    "nearestAirport": "VLI",
+    "wikiTitle": "Port Vila",
+    "interestTags": [
+      "beaches",
+      "nature",
+      "adventure"
+    ],
+    "knownnessScore": 75,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "family",
+      "friends"
+    ],
+    "aliases": [
+      "Port Vila"
+    ],
+    "searchTerms": [
+      "Port Vila",
+      "Shefa",
+      "Vanuatu"
+    ]
+  }
+]
