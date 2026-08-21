@@ -36,7 +36,7 @@ test("hotel discovery stages nine identities but never invents Booking links", a
   const records = await provider.discoverHotelCandidates({ id: "test-paris-hotels", city: "Paris", country: "France", latitude: 48.8566, longitude: 2.3522 });
   assert.equal(records.length, 9);
   assert.ok(records.every((item) => item.googlePlaceId && item.photoResources.length === 1));
-  assert.ok(records.every((item) => item.bookingComPropertyUrl === null && item.reviewStatus === "needs_booking_match"));
+  assert.ok(records.every((item) => item.bookingComPropertyUrl === null && item.reviewStatus === "needs_classification"));
 });
 
 test("correct Google Place hotel match is accepted", () => {

@@ -4,6 +4,10 @@ import { GooglePlacesDiscoveryProvider } from "../../app/lib/google-places/Googl
 
 function option(name, fallback = null) { const index = process.argv.indexOf(name); return index >= 0 ? process.argv[index + 1] : fallback; }
 async function loadEnvironment(path) { try { for (const line of (await readFile(path, "utf8")).split(/\r?\n/)) { const match = line.match(/^([A-Z0-9_]+)=(.*)$/); if (match && !process.env[match[1]]) process.env[match[1]] = match[2].trim().replace(/^['"]|['"]$/g, ""); } } catch {} }
+function durableRecord(record) {
+  const { photoResources = [], ...durable } = record;
+  return { ...durable, photoCount: Math.min(5, photoResources.length) };
+}
 
 await loadEnvironment(option("--env", ".env.production.local"));
 const output = option("--output", "scripts/hotels/google-discovered-candidates.json");
@@ -17,7 +21,7 @@ const queue = destinations.filter((item) => !completed.has(item.id || item.airpo
 const provider = new GooglePlacesDiscoveryProvider();
 for (const destination of queue) {
   const destinationId = destination.id || destination.airport;
-  try { const records = await provider.discoverHotelCandidates(destination, { limit: 9 }); report.records.push(...records); report.hotelsDiscovered += records.length; }
+  try { const records = await provider.discoverHotelCandidates(destination, { limit: 9 }); report.records.push(...records.map(durableRecord)); report.hotelsDiscovered += records.length; }
   catch (error) { report.failures.push({ destinationId, city: destination.city, error: error.code || error.message }); }
   report.destinationsProcessed += 1;
   report.generatedAt = new Date().toISOString();

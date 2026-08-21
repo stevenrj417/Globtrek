@@ -14,9 +14,10 @@ function score(place) { return (Number(place.rating) || 0) * 20 + Math.log10(Mat
 function category(place, fallback) { return (place.primaryType || place.types?.find((type) => !["point_of_interest", "establishment"].includes(type)) || fallback).replaceAll("_", " "); }
 
 export class GooglePlacesDiscoveryProvider extends GooglePlacesHotelProvider {
-  async searchNearby(destination, { textQuery, includedType, limit, allowedTypes }) {
-    const hasCoordinates = Number.isFinite(Number(destination.latitude)) && Number.isFinite(Number(destination.longitude));
-    const locationBias = hasCoordinates ? { circle: { center: { latitude: Number(destination.latitude), longitude: Number(destination.longitude) }, radius: 40000 } } : undefined;
+  async searchNearby(destination, { textQuery, includedType, limit, allowedTypes, useLocationBias = true }) {
+    const hasCoordinates = useLocationBias && Number.isFinite(Number(destination.latitude)) && Number.isFinite(Number(destination.longitude));
+    const radius = Math.min(50000, Math.max(5000, Number(destination.hotelSearchRadiusKm || 40) * 1000));
+    const locationBias = hasCoordinates ? { circle: { center: { latitude: Number(destination.latitude), longitude: Number(destination.longitude) }, radius } } : undefined;
     const payload = await this.request("/places:searchText", { method: "POST", body: { textQuery, includedType, strictTypeFiltering: false, maxResultCount: Math.min(20, Math.max(limit * 2, limit)), ...(locationBias ? { locationBias } : {}) }, fieldMask: "places.id,places.displayName,places.formattedAddress,places.location,places.types,places.primaryType,places.businessStatus,places.rating,places.userRatingCount,places.priceLevel,places.googleMapsUri,places.websiteUri,places.photos" });
     return (payload.places || []).filter((place) => placeName(place) && (!place.businessStatus || place.businessStatus === "OPERATIONAL") && (place.types || []).some((type) => allowedTypes.has(type)) && (!hasCoordinates || (distanceMeters(destination, place.location) ?? 0) <= 60000)).sort((a, b) => score(b) - score(a)).slice(0, limit);
   }
@@ -44,8 +45,15 @@ export class GooglePlacesDiscoveryProvider extends GooglePlacesHotelProvider {
 
   async discoverHotelCandidates(destination, { limit = 9 } = {}) {
     const key = cacheKey("hotel-candidates", destination); const hit = cached(key); if (hit) return hit.slice(0, limit);
-    const places = await this.searchNearby(destination, { textQuery: `hotels in ${destination.city}, ${destination.country}`, includedType: "lodging", limit: Math.max(9, limit), allowedTypes: HOTEL_TYPES });
-    const records = places.map((place) => ({ destinationId: destination.id || destination.airport, name: placeName(place), city: destination.city, country: destination.country, address: place.formattedAddress || null, latitude: place.location?.latitude ?? null, longitude: place.location?.longitude ?? null, googlePlaceId: place.id, googlePlaceVerified: true, rating: Number(place.rating) || null, reviewCount: Number(place.userRatingCount) || null, googleMapsUri: place.googleMapsUri || null, websiteUri: place.websiteUri || null, photoResources: (place.photos || []).slice(0, 5).map((photo) => ({ name: photo.name, widthPx: photo.widthPx || null, heightPx: photo.heightPx || null, authorAttributions: photo.authorAttributions || [], googleMapsUri: photo.googleMapsUri || place.googleMapsUri || null })), bookingComPropertyUrl: null, cjTrackingUrl: null, reviewStatus: "needs_booking_match", verifiedAt: new Date().toISOString(), verificationSource: place.googleMapsUri || null }));
+    const centers = [...new Set((destination.hotelSearchCenters?.length ? destination.hotelSearchCenters : [destination.city]).slice(0, 4))];
+    const discovered = [];
+    for (const center of centers) {
+      const perCenter = Math.max(3, Math.ceil(limit / centers.length) + 1);
+      const places = await this.searchNearby(destination, { textQuery: `hotels in ${center}, ${destination.country}`, includedType: "lodging", limit: perCenter, allowedTypes: HOTEL_TYPES, useLocationBias: centers.length === 1 && destination.destinationType === "city" });
+      discovered.push(...places.map((place) => ({ place, searchCenter: center })));
+    }
+    const unique = [...new Map(discovered.map((item) => [item.place.id, item])).values()].sort((a, b) => score(b.place) - score(a.place)).slice(0, limit);
+    const records = unique.map(({ place, searchCenter }) => ({ destinationId: destination.id || destination.airport, name: placeName(place), city: destination.city, country: destination.country, searchCenter, address: place.formattedAddress || null, latitude: place.location?.latitude ?? null, longitude: place.location?.longitude ?? null, googlePlaceId: place.id, googlePlaceVerified: true, primaryType: place.primaryType || null, priceLevel: place.priceLevel || null, rating: Number(place.rating) || null, reviewCount: Number(place.userRatingCount) || null, googleMapsUri: place.googleMapsUri || null, websiteUri: place.websiteUri || null, photoResources: (place.photos || []).slice(0, 5).map((photo) => ({ name: photo.name, widthPx: photo.widthPx || null, heightPx: photo.heightPx || null, authorAttributions: photo.authorAttributions || [], googleMapsUri: photo.googleMapsUri || place.googleMapsUri || null })), bookingComPropertyUrl: null, cjTrackingUrl: null, reviewStatus: "needs_classification", verifiedAt: new Date().toISOString(), verificationSource: place.googleMapsUri || null }));
     return remember(key, records).slice(0, limit);
   }
 }
