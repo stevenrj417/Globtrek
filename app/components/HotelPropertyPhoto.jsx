@@ -9,7 +9,8 @@ export function HotelPropertyPhoto({ hotel, destination, index }) {
   useEffect(() => {
     if (!hotel.googlePhotoManifestUrl) return undefined;
     const controller = new AbortController();
-    fetch(hotel.googlePhotoManifestUrl, { signal: controller.signal, cache: "no-store" })
+    const separator = hotel.googlePhotoManifestUrl.includes("?") ? "&" : "?";
+    fetch(`${hotel.googlePhotoManifestUrl}${separator}limit=1`, { signal: controller.signal, cache: "no-store" })
       .then((response) => response.ok ? response.json() : null)
       .then((manifest) => { if (manifest?.photos?.[0]?.photoUri) setPhoto(manifest.photos[0]); })
       .catch((error) => { if (error.name !== "AbortError") console.warn("Verified hotel photography is temporarily unavailable."); });

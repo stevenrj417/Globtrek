@@ -34,27 +34,32 @@ function PhotoCredit({ photo, hotel }) {
 
 function PropertyImage({ photo, hotel, destination, className = "", sizes = "100vw", priority = false }) {
   const src = photo?.photoUri || hotel.image;
-  if (!src) return <div className={`grid place-items-center bg-[#d8d2c8] px-6 text-center text-[10px] tracking-[.12em] text-black/45 ${className}`}>PROPERTY PHOTOGRAPHY UNAVAILABLE</div>;
-  return <div className={`relative overflow-hidden bg-[#d8d2c8] ${className}`}><Image src={src} alt={`${hotel.name}, ${destination.city}`} fill priority={priority} unoptimized={Boolean(photo?.photoUri)} sizes={sizes} className="object-cover" /><PhotoCredit photo={photo} hotel={hotel} /></div>;
+  const [failed, setFailed] = useState(false);
+  useEffect(() => setFailed(false), [src]);
+  if (!src || failed) return <div className={`grid place-items-center bg-[#d8d2c8] px-6 text-center text-[10px] tracking-[.12em] text-black/45 ${className}`}>PROPERTY PHOTOGRAPHY UNAVAILABLE</div>;
+  return <div className={`relative overflow-hidden bg-[#d8d2c8] ${className}`}><Image src={src} alt={`${hotel.name}, ${destination.city}`} fill priority={priority} unoptimized={Boolean(photo?.photoUri)} sizes={sizes} className="object-cover" onError={() => setFailed(true)} /><PhotoCredit photo={photo} hotel={hotel} /></div>;
 }
 
-function useHotelMedia(hotel) {
+function useHotelMedia(hotel, limit = 1) {
   const fallback = useMemo(() => hotel.image ? [{ photoUri: hotel.image, authorAttributions: [], googleMapsUri: null }] : [], [hotel.image]);
   const [verifiedPhotos, setVerifiedPhotos] = useState([]);
   const [place, setPlace] = useState(null);
   useEffect(() => {
     if (!hotel.googlePhotoManifestUrl) return undefined;
     const controller = new AbortController();
-    fetch(hotel.googlePhotoManifestUrl, { signal: controller.signal, cache: "no-store" }).then((response) => response.ok ? response.json() : null).then((manifest) => {
-      if (manifest?.photos?.length) setVerifiedPhotos(manifest.photos.slice(0, 5));
+    const separator = hotel.googlePhotoManifestUrl.includes("?") ? "&" : "?";
+    fetch(`${hotel.googlePhotoManifestUrl}${separator}limit=${limit}`, { signal: controller.signal, cache: "no-store" }).then((response) => response.ok ? response.json() : null).then((manifest) => {
+      if (manifest?.photos?.length) setVerifiedPhotos(manifest.photos.slice(0, limit));
       if (manifest?.place) setPlace(manifest.place);
     }).catch((error) => { if (error.name !== "AbortError") console.warn("Verified hotel photography is temporarily unavailable."); });
     return () => controller.abort();
-  }, [hotel.googlePhotoManifestUrl]);
+  }, [hotel.googlePhotoManifestUrl, limit]);
   return { photos: verifiedPhotos.length ? verifiedPhotos : fallback, place };
 }
 
 function HotelDrawer({ hotel, destination, trip, photos, onClose, onChoose }) {
+  const fullMedia = useHotelMedia(hotel, 5);
+  const gallery = fullMedia.photos.length > photos.length ? fullMedia.photos : photos;
   const closeRef = useRef(null);
   useEffect(() => {
     const onKeyDown = (event) => { if (event.key === "Escape") onClose(); };
@@ -66,9 +71,9 @@ function HotelDrawer({ hotel, destination, trip, photos, onClose, onChoose }) {
   return <div className="fixed inset-0 z-[70] flex items-end bg-black/55 sm:items-center sm:justify-center sm:p-6" role="dialog" aria-modal="true" aria-labelledby="hotel-detail-title" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
     <div className="max-h-[94svh] w-full overflow-y-auto bg-[#f4f0e8] sm:max-w-[1120px]">
       <div className="sticky top-0 z-10 flex justify-end p-3"><button ref={closeRef} type="button" onClick={onClose} aria-label="Close hotel details" className="grid h-11 w-11 place-items-center rounded-full bg-[#171714] text-xl text-white">×</button></div>
-      <div className={`-mt-14 grid h-[52svh] gap-1 ${photos.length === 1 ? "grid-cols-1" : photos.length === 2 ? "grid-cols-2" : photos.length === 3 ? "grid-cols-2 grid-rows-2" : "grid-cols-2 grid-rows-2 sm:grid-cols-3"}`}>
-        <PropertyImage photo={photos[0]} hotel={hotel} destination={destination} className={photos.length > 2 ? "row-span-2" : ""} sizes="(min-width:640px) 50vw,100vw" />
-        {photos.slice(1, 5).map((photo, index) => <PropertyImage key={photo.photoUri || index} photo={photo} hotel={hotel} destination={destination} className={`${photos.length > 3 && index > 1 ? "hidden sm:block" : ""} min-h-0`} sizes="(min-width:640px) 33vw,50vw" />)}
+      <div className={`-mt-14 grid h-[52svh] gap-1 ${gallery.length === 1 ? "grid-cols-1" : gallery.length === 2 ? "grid-cols-2" : gallery.length === 3 ? "grid-cols-2 grid-rows-2" : "grid-cols-2 grid-rows-2 sm:grid-cols-3"}`}>
+        <PropertyImage photo={gallery[0]} hotel={hotel} destination={destination} className={gallery.length > 2 ? "row-span-2" : ""} sizes="(min-width:640px) 50vw,100vw" />
+        {gallery.slice(1, 5).map((photo, index) => <PropertyImage key={photo.photoUri || index} photo={photo} hotel={hotel} destination={destination} className={`${gallery.length > 3 && index > 1 ? "hidden sm:block" : ""} min-h-0`} sizes="(min-width:640px) 33vw,50vw" />)}
       </div>
       <div className="grid gap-10 p-7 sm:p-12 lg:grid-cols-[1.25fr_.75fr]">
         <div><p className="text-xs text-black/48">{locationLabel(hotel, destination)}{hotel.starRating ? ` · ${hotel.starRating}-star` : ""}</p><h2 id="hotel-detail-title" className="mt-3 font-serif text-[clamp(2.7rem,5vw,5.2rem)] leading-[.9] tracking-[-.045em]">{hotel.name}</h2>{ratingLabel(hotel) ? <p className="mt-5 text-sm">{ratingLabel(hotel)}</p> : null}{amenities.length ? <ul className="mt-8 grid grid-cols-2 gap-x-8 gap-y-3 border-t border-black/12 pt-6 text-sm text-black/62">{amenities.map((amenity) => <li key={amenity}>{amenity}</li>)}</ul> : null}</div>

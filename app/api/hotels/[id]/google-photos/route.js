@@ -25,12 +25,14 @@ export async function GET(request, { params }) {
   if (rateLimited(ip)) return noStore({ error: "Too many photo requests" }, 429);
   if (!process.env.GOOGLE_PLACES_API_KEY) return noStore({ error: "Hotel photography is not configured" }, 503);
   const { id } = await params;
+  const requestedLimit = Number(new URL(request.url).searchParams.get("limit"));
+  const limit = Number.isInteger(requestedLimit) ? Math.min(5, Math.max(1, requestedLimit)) : 5;
   try {
     const supabase = await createClient();
     const { data: hotel, error } = await supabase.from("hotel_catalog").select("id,google_place_id,google_place_verified").eq("id", id).eq("active", true).maybeSingle();
     if (error) throw new Error(`hotel_lookup_failed:${error.code || "unknown"}`);
     if (!hotel?.google_place_verified || !hotel.google_place_id) return noStore({ error: "Verified property photography unavailable" }, 404);
-    const manifest = await new GooglePlacesHotelProvider().getPhotoManifest(hotel.google_place_id, { limit: 5, maxWidthPx: 1800 });
+    const manifest = await new GooglePlacesHotelProvider().getPhotoManifest(hotel.google_place_id, { limit, maxWidthPx: limit === 1 ? 1400 : 1800 });
     return noStore({ photos: manifest.photos, googleMapsUri: manifest.googleMapsUri, place: manifest.place });
   } catch (error) {
     const status = error?.code === "google_places_rate_limited" ? 429 : 502;

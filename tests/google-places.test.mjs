@@ -21,6 +21,11 @@ function queuedFetch(items, calls = []) {
   };
 }
 
+test("missing coordinates never become the Gulf of Guinea", () => {
+  assert.equal(distanceMeters({ latitude: null, longitude: null }, { latitude: 35.6762, longitude: 139.6503 }), null);
+  assert.equal(distanceMeters({ latitude: "", longitude: "" }, { latitude: 35.6762, longitude: 139.6503 }), null);
+});
+
 test("restaurant discovery returns three real provider identities with attributed photos", async () => {
   const place = (index) => ({ id: `restaurant-${index}`, displayName: { text: `Restaurant ${index}` }, formattedAddress: "Paris, France", location: { latitude: 48.8566, longitude: 2.3522 }, types: ["restaurant"], primaryType: "restaurant", businessStatus: "OPERATIONAL", rating: 4.8, userRatingCount: 100 + index, googleMapsUri: `https://maps.google.com/?cid=${index}`, photos: [{ name: `places/restaurant-${index}/photos/photo-${index}`, authorAttributions: [{ displayName: `Author ${index}`, uri: `https://maps.google.com/author/${index}` }] }] });
   const provider = new GooglePlacesDiscoveryProvider({ apiKey: "test", fetchImpl: queuedFetch([response({ places: [place(1), place(2), place(3), place(4)] }), response({ photoUri: "https://lh3.googleusercontent.com/1" }), response({ photoUri: "https://lh3.googleusercontent.com/2" }), response({ photoUri: "https://lh3.googleusercontent.com/3" })]) });

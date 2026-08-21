@@ -1,0 +1,118 @@
+{
+  "generatedAt": "2026-08-21T19:50:16.056Z",
+  "records": [],
+  "failures": [
+    {
+      "googlePlaceId": "ChIJ_7QKsOsJAWARXSp7CEweg4A",
+      "destinationId": "KIX",
+      "name": "HOTEL THE MITSUI KYOTO, a Luxury Collection Hotel & Spa",
+      "error": "official_evidence_unavailable",
+      "terminal": true
+    },
+    {
+      "googlePlaceId": "ChIJdzVoQSMJAWARt4sE5YH6jIU",
+      "destinationId": "KIX",
+      "name": "Sakura Cross Hotel Kyoto Kiyomizudera",
+      "error": "classification_401:{\n  \"error\": {\n    \"message\": \"Incorrect API key provided: [SENSITIVE]. You can find your API key at https://platform.openai.com/account/api-keys.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": n",
+      "terminal": false
+    },
+    {
+      "googlePlaceId": "ChIJM3-NCjQJAWAR6nDkr9O8wPo",
+      "destinationId": "KIX",
+      "name": "Cross Hotel Kyoto",
+      "error": "classification_401:{\n  \"error\": {\n    \"message\": \"Incorrect API key provided: [SENSITIVE]. You can find your API key at https://platform.openai.com/account/api-keys.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": n",
+      "terminal": false
+    },
+    {
+      "googlePlaceId": "ChIJE0AOM40IAWARZLJVJOYzw60",
+      "destinationId": "KIX",
+      "name": "The Ritz-Carlton, Kyoto",
+      "error": "classification_401:{\n  \"error\": {\n    \"message\": \"Incorrect API key provided: [SENSITIVE]. You can find your API key at https://platform.openai.com/account/api-keys.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": n",
+      "terminal": false
+    },
+    {
+      "googlePlaceId": "ChIJb7q7DYUIAWARCR5_SwDCLXQ",
+      "destinationId": "KIX",
+      "name": "Ace Hotel Kyoto",
+      "error": "classification_401:{\n  \"error\": {\n    \"message\": \"Incorrect API key provided: [SENSITIVE]. You can find your API key at https://platform.openai.com/account/api-keys.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": n",
+      "terminal": false
+    },
+    {
+      "googlePlaceId": "ChIJ7fG6ObAIAWARB740mrwDbj8",
+      "destinationId": "KIX",
+      "name": "Onyado Nono Kyotoshichijo",
+      "error": "classification_401:{\n  \"error\": {\n    \"message\": \"Incorrect API key provided: [SENSITIVE]. You can find your API key at https://platform.openai.com/account/api-keys.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": n",
+      "terminal": false
+    },
+    {
+      "googlePlaceId": "ChIJ493mM6MIAWARcgLmwPVqEMg",
+      "destinationId": "KIX",
+      "name": "THE BLOSSOM KYOTO",
+      "error": "classification_401:{\n  \"error\": {\n    \"message\": \"Incorrect API key provided: [SENSITIVE]. You can find your API key at https://platform.openai.com/account/api-keys.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": n",
+      "terminal": false
+    },
+    {
+      "googlePlaceId": "ChIJ59wRAf8JAWARfjbGRAT6iwI",
+      "destinationId": "KIX",
+      "name": "Nohga Hotel Kiyomizu Kyoto",
+      "error": "classification_401:{\n  \"error\": {\n    \"message\": \"Incorrect API key provided: [SENSITIVE]. You can find your API key at https://platform.openai.com/account/api-keys.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": n",
+      "terminal": false
+    },
+    {
+      "googlePlaceId": "ChIJdzVoQSMJAWARt4sE5YH6jIU",
+      "destinationId": "KIX",
+      "name": "Sakura Cross Hotel Kyoto Kiyomizudera",
+      "error": "classification_403:{\"error\":{\"message\":\"AI Gateway requires a valid credit card on file to service requests. Please visit https://vercel.com/d?to=%2F%5Bteam%5D%2F%7E%2Fai%3Fmodal%3Dadd-credit-card to add a card and unlo",
+      "terminal": false
+    },
+    {
+      "googlePlaceId": "ChIJM3-NCjQJAWAR6nDkr9O8wPo",
+      "destinationId": "KIX",
+      "name": "Cross Hotel Kyoto",
+      "error": "classification_403:{\"error\":{\"message\":\"AI Gateway requires a valid credit card on file to service requests. Please visit https://vercel.com/d?to=%2F%5Bteam%5D%2F%7E%2Fai%3Fmodal%3Dadd-credit-card to add a card and unlo",
+      "terminal": false
+    },
+    {
+      "googlePlaceId": "ChIJE0AOM40IAWARZLJVJOYzw60",
+      "destinationId": "KIX",
+      "name": "The Ritz-Carlton, Kyoto",
+      "error": "classification_403:{\"error\":{\"message\":\"AI Gateway requires a valid credit card on file to service requests. Please visit https://vercel.com/d?to=%2F%5Bteam%5D%2F%7E%2Fai%3Fmodal%3Dadd-credit-card to add a card and unlo",
+      "terminal": false
+    },
+    {
+      "googlePlaceId": "ChIJb7q7DYUIAWARCR5_SwDCLXQ",
+      "destinationId": "KIX",
+      "name": "Ace Hotel Kyoto",
+      "error": "classification_403:{\"error\":{\"message\":\"AI Gateway requires a valid credit card on file to service requests. Please visit https://vercel.com/d?to=%2F%5Bteam%5D%2F%7E%2Fai%3Fmodal%3Dadd-credit-card to add a card and unlo",
+      "terminal": false
+    },
+    {
+      "googlePlaceId": "ChIJ7fG6ObAIAWARB740mrwDbj8",
+      "destinationId": "KIX",
+      "name": "Onyado Nono Kyotoshichijo",
+      "error": "classification_403:{\"error\":{\"message\":\"AI Gateway requires a valid credit card on file to service requests. Please visit https://vercel.com/d?to=%2F%5Bteam%5D%2F%7E%2Fai%3Fmodal%3Dadd-credit-card to add a card and unlo",
+      "terminal": false
+    },
+    {
+      "googlePlaceId": "ChIJ493mM6MIAWARcgLmwPVqEMg",
+      "destinationId": "KIX",
+      "name": "THE BLOSSOM KYOTO",
+      "error": "classification_403:{\"error\":{\"message\":\"AI Gateway requires a valid credit card on file to service requests. Please visit https://vercel.com/d?to=%2F%5Bteam%5D%2F%7E%2Fai%3Fmodal%3Dadd-credit-card to add a card and unlo",
+      "terminal": false
+    },
+    {
+      "googlePlaceId": "ChIJ59wRAf8JAWARfjbGRAT6iwI",
+      "destinationId": "KIX",
+      "name": "Nohga Hotel Kiyomizu Kyoto",
+      "error": "classification_403:{\"error\":{\"message\":\"AI Gateway requires a valid credit card on file to service requests. Please visit https://vercel.com/d?to=%2F%5Bteam%5D%2F%7E%2Fai%3Fmodal%3Dadd-credit-card to add a card and unlo",
+      "terminal": false
+    },
+    {
+      "googlePlaceId": "ChIJLS3WZJIIAWARqQv8aoODVqs",
+      "destinationId": "KIX",
+      "name": "Hotel Okura Kyoto",
+      "error": "classification_403:{\"error\":{\"message\":\"AI Gateway requires a valid credit card on file to service requests. Please visit https://vercel.com/d?to=%2F%5Bteam%5D%2F%7E%2Fai%3Fmodal%3Dadd-credit-card to add a card and unlo",
+      "terminal": false
+    }
+  ]
+}

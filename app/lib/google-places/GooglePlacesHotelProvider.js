@@ -46,7 +46,8 @@ export function nameSimilarity(expected, actual) {
 }
 
 export function distanceMeters(a, b) {
-  if (![a?.latitude, a?.longitude, b?.latitude, b?.longitude].every((value) => Number.isFinite(Number(value)))) return null;
+  const coordinates = [a?.latitude, a?.longitude, b?.latitude, b?.longitude];
+  if (coordinates.some((value) => value == null || value === "") || !coordinates.every((value) => Number.isFinite(Number(value)))) return null;
   const radians = (degrees) => degrees * Math.PI / 180;
   const earth = 6371000;
   const lat1 = radians(Number(a.latitude));
