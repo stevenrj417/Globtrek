@@ -1,0 +1,111 @@
+"use client";
+
+import Image from "next/image";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { track } from "@vercel/analytics";
+import { bookingPropertyUrl } from "../data/destinations";
+import { hotelsFor } from "../data/hotels";
+import { normalizeTravelerProfile } from "../lib/recommendation/travelerProfile";
+import { shortlistHotels } from "../lib/recommendation/hotelEngine";
+import { SaveItemButton } from "./SaveItemButton";
+
+function money(value, currency = "USD") {
+  try { return new Intl.NumberFormat("en-US", { style: "currency", currency, maximumFractionDigits: 0 }).format(Math.round(value || 0)); }
+  catch { return `$${Math.round(value || 0).toLocaleString("en-US")}`; }
+}
+function dateLabel(value) { return value ? new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", timeZone: "UTC" }).format(new Date(`${value}T00:00:00Z`)) : null; }
+function locationLabel(hotel, destination) { return hotel.neighborhood || hotel.address?.split(",")?.[0] || destination.city; }
+function priceLabel(hotel) {
+  if (!hotel?.priceKnown) return "Current price shown by provider";
+  return `${money(hotel.estimatedStayLow, hotel.currency)}–${money(hotel.estimatedStayHigh, hotel.currency)} estimated${hotel.priceStale ? " · recheck rate" : ""}`;
+}
+function ratingLabel(hotel) {
+  if (hotel.rating == null) return null;
+  return `${hotel.rating} rating${hotel.reviewCount != null ? ` · ${Number(hotel.reviewCount).toLocaleString("en-US")} reviews` : ""}`;
+}
+
+function PhotoCredit({ photo, hotel }) {
+  const authors = photo?.authorAttributions || [];
+  const sourceUrl = authors[0]?.uri || photo?.googleMapsUri || hotel.imageLicense?.sourcePageUrl;
+  if (!sourceUrl) return null;
+  const label = authors.length ? `Photo: ${authors.map((author) => author.displayName || "Contributor").join(", ")}` : `Photo: ${hotel.imageLicense?.author || hotel.imageSource || "source"}`;
+  return <a href={sourceUrl} target="_blank" rel="noopener" className="absolute bottom-2 right-2 bg-black/60 px-2 py-1 text-[8px] text-white/90 backdrop-blur-sm">{label}</a>;
+}
+
+function PropertyImage({ photo, hotel, destination, className = "", sizes = "100vw", priority = false }) {
+  const src = photo?.photoUri || hotel.image;
+  if (!src) return <div className={`grid place-items-center bg-[#d8d2c8] px-6 text-center text-[10px] tracking-[.12em] text-black/45 ${className}`}>PROPERTY PHOTOGRAPHY UNAVAILABLE</div>;
+  return <div className={`relative overflow-hidden bg-[#d8d2c8] ${className}`}><Image src={src} alt={`${hotel.name}, ${destination.city}`} fill priority={priority} unoptimized={Boolean(photo?.photoUri)} sizes={sizes} className="object-cover" /><PhotoCredit photo={photo} hotel={hotel} /></div>;
+}
+
+function useHotelMedia(hotel) {
+  const fallback = useMemo(() => hotel.image ? [{ photoUri: hotel.image, authorAttributions: [], googleMapsUri: null }] : [], [hotel.image]);
+  const [verifiedPhotos, setVerifiedPhotos] = useState([]);
+  const [place, setPlace] = useState(null);
+  useEffect(() => {
+    if (!hotel.googlePhotoManifestUrl) return undefined;
+    const controller = new AbortController();
+    fetch(hotel.googlePhotoManifestUrl, { signal: controller.signal, cache: "no-store" }).then((response) => response.ok ? response.json() : null).then((manifest) => {
+      if (manifest?.photos?.length) setVerifiedPhotos(manifest.photos.slice(0, 5));
+      if (manifest?.place) setPlace(manifest.place);
+    }).catch((error) => { if (error.name !== "AbortError") console.warn("Verified hotel photography is temporarily unavailable."); });
+    return () => controller.abort();
+  }, [hotel.googlePhotoManifestUrl]);
+  return { photos: verifiedPhotos.length ? verifiedPhotos : fallback, place };
+}
+
+function HotelDrawer({ hotel, destination, trip, photos, onClose, onChoose }) {
+  const closeRef = useRef(null);
+  useEffect(() => {
+    const onKeyDown = (event) => { if (event.key === "Escape") onClose(); };
+    document.addEventListener("keydown", onKeyDown); document.body.style.overflow = "hidden"; closeRef.current?.focus();
+    return () => { document.removeEventListener("keydown", onKeyDown); document.body.style.overflow = ""; };
+  }, [onClose]);
+  const bookingUrl = bookingPropertyUrl(hotel, trip);
+  const amenities = (hotel.amenities || []).slice(0, 8);
+  return <div className="fixed inset-0 z-[70] flex items-end bg-black/55 sm:items-center sm:justify-center sm:p-6" role="dialog" aria-modal="true" aria-labelledby="hotel-detail-title" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
+    <div className="max-h-[94svh] w-full overflow-y-auto bg-[#f4f0e8] sm:max-w-[1120px]">
+      <div className="sticky top-0 z-10 flex justify-end p-3"><button ref={closeRef} type="button" onClick={onClose} aria-label="Close hotel details" className="grid h-11 w-11 place-items-center rounded-full bg-[#171714] text-xl text-white">×</button></div>
+      <div className={`-mt-14 grid h-[52svh] gap-1 ${photos.length === 1 ? "grid-cols-1" : photos.length === 2 ? "grid-cols-2" : photos.length === 3 ? "grid-cols-2 grid-rows-2" : "grid-cols-2 grid-rows-2 sm:grid-cols-3"}`}>
+        <PropertyImage photo={photos[0]} hotel={hotel} destination={destination} className={photos.length > 2 ? "row-span-2" : ""} sizes="(min-width:640px) 50vw,100vw" />
+        {photos.slice(1, 5).map((photo, index) => <PropertyImage key={photo.photoUri || index} photo={photo} hotel={hotel} destination={destination} className={`${photos.length > 3 && index > 1 ? "hidden sm:block" : ""} min-h-0`} sizes="(min-width:640px) 33vw,50vw" />)}
+      </div>
+      <div className="grid gap-10 p-7 sm:p-12 lg:grid-cols-[1.25fr_.75fr]">
+        <div><p className="text-xs text-black/48">{locationLabel(hotel, destination)}{hotel.starRating ? ` · ${hotel.starRating}-star` : ""}</p><h2 id="hotel-detail-title" className="mt-3 font-serif text-[clamp(2.7rem,5vw,5.2rem)] leading-[.9] tracking-[-.045em]">{hotel.name}</h2>{ratingLabel(hotel) ? <p className="mt-5 text-sm">{ratingLabel(hotel)}</p> : null}{amenities.length ? <ul className="mt-8 grid grid-cols-2 gap-x-8 gap-y-3 border-t border-black/12 pt-6 text-sm text-black/62">{amenities.map((amenity) => <li key={amenity}>{amenity}</li>)}</ul> : null}</div>
+        <div className="border-t border-black/15 pt-6 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0"><p className="text-xs text-black/45">Stay</p><p className="mt-2 text-sm">{dateLabel(trip.tripStart) && dateLabel(trip.tripEnd) ? `${dateLabel(trip.tripStart)} — ${dateLabel(trip.tripEnd)}` : `${normalizeTravelerProfile(trip).tripLength} nights`}</p><p className="mt-6 text-xs text-black/45">Price</p><p className="mt-2 font-serif text-2xl">{priceLabel(hotel)}</p>{bookingUrl ? <a href={bookingUrl} target="_blank" rel="noopener sponsored" onClick={() => onChoose(hotel)} className="mt-8 flex min-h-14 items-center justify-between bg-[#171714] px-6 text-xs text-white">Check rooms <span aria-hidden="true">↗</span></a> : <p className="mt-8 text-sm text-black/50">Booking link being verified</p>}</div>
+      </div>
+    </div>
+  </div>;
+}
+
+function HotelCard({ hotel, destination, trip, index, count, onChoose, onDetails, onPrevious, onNext, priority = false }) {
+  const { photos, place } = useHotelMedia(hotel);
+  const verifiedHotel = { ...hotel, address: place?.formattedAddress || hotel.address, rating: place?.rating ?? hotel.rating, reviewCount: place?.reviewCount ?? hotel.reviewCount };
+  const bookingUrl = bookingPropertyUrl(verifiedHotel, trip);
+  const profile = normalizeTravelerProfile(trip);
+  return <article className="grid min-w-full snap-center bg-[#e7e0d5] lg:grid-cols-[.72fr_1.28fr]" aria-label={`${hotel.name}, hotel ${index + 1} of ${count}`}>
+    <div className="flex flex-col justify-between p-7 sm:p-10 lg:order-1 lg:min-h-[650px] lg:p-12"><div><div className="flex justify-between gap-4 text-[10px] text-black/45"><span>{index === 0 ? "OUR RECOMMENDATION" : "ALTERNATIVE STAY"}</span><span className="font-serif text-base text-black">{String(index + 1).padStart(2, "0")} <i className="mx-1 not-italic text-black/25">/</i> {String(count).padStart(2, "0")}</span></div><button type="button" onClick={() => onDetails({ hotel: verifiedHotel, photos })} className="mt-8 block text-left"><h3 className="font-serif text-[clamp(2.7rem,5vw,5.4rem)] leading-[.88] tracking-[-.05em]">{verifiedHotel.name}</h3></button><p className="mt-6 text-sm text-black/58">{locationLabel(verifiedHotel, destination)}{verifiedHotel.starRating ? ` · ${verifiedHotel.starRating}-star` : ""} · {profile.tripLength} nights</p>{ratingLabel(verifiedHotel) ? <p className="mt-2 text-sm">{ratingLabel(verifiedHotel)}</p> : null}<p className="mt-3 text-sm font-medium">{priceLabel(verifiedHotel)}</p>{verifiedHotel.amenities?.length ? <p className="mt-8 text-sm leading-7 text-black/55">{verifiedHotel.amenities.slice(0, 5).join(" · ")}</p> : null}</div>
+      <div className="mt-10"><div className="flex gap-5 text-xs"><button type="button" onClick={() => onDetails({ hotel: verifiedHotel, photos })} className="border-b border-black/35 pb-1">View details</button><SaveItemButton item={{ type: "hotel", key: verifiedHotel.id, title: verifiedHotel.name, subtitle: `${destination.city}, ${destination.country}`, imageUrl: verifiedHotel.image || null, data: { destinationAirport: destination.airport, bookingUrl: verifiedHotel.bookingUrl || null } }} className="text-xs text-black/55" /></div>{bookingUrl ? <a href={bookingUrl} target="_blank" rel="noopener sponsored" onClick={() => onChoose(verifiedHotel)} className="mt-7 flex min-h-14 items-center justify-between bg-[#171714] px-6 text-xs text-white">Check rooms <span aria-hidden="true">↗</span></a> : <p className="mt-7 text-sm text-black/45">Booking link being verified</p>}</div></div>
+    <div onClick={(event) => { if (!event.target.closest("a,button")) onDetails({ hotel: verifiedHotel, photos }); }} className="group relative aspect-[4/5] cursor-pointer lg:order-2 lg:aspect-auto lg:min-h-[650px]"><PropertyImage photo={photos[0]} hotel={verifiedHotel} destination={destination} priority={priority} className="absolute inset-0" sizes="(min-width:1024px) 64vw,100vw" /><button type="button" onClick={(event) => { event.stopPropagation(); onPrevious(); }} aria-label="Previous hotel" className="absolute left-3 top-1/2 z-10 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full bg-[#f4f0e8]/90 text-lg text-black backdrop-blur-sm transition hover:bg-white sm:left-5">←</button><button type="button" onClick={(event) => { event.stopPropagation(); onNext(); }} aria-label="Next hotel" className="absolute right-3 top-1/2 z-10 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full bg-[#f4f0e8]/90 text-lg text-black backdrop-blur-sm transition hover:bg-white sm:right-5">→</button></div>
+  </article>;
+}
+
+export function HotelExperience({ destination, quiz, budgetPlan, onSelected }) {
+  const profile = useMemo(() => normalizeTravelerProfile(quiz), [quiz]);
+  const localHotels = useMemo(() => shortlistHotels(hotelsFor(destination, quiz, { limit: Number.MAX_SAFE_INTEGER }), profile, budgetPlan), [budgetPlan, destination, profile, quiz]);
+  const [catalogHotels, setCatalogHotels] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [drawer, setDrawer] = useState(null);
+  const railRef = useRef(null);
+  const hotels = catalogHotels?.length ? catalogHotels : localHotels;
+  useEffect(() => { const controller = new AbortController(); fetch("/api/hotels/recommend", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ destinationId: destination.id || destination.airport, quiz }), signal: controller.signal }).then((response) => response.ok ? response.json() : null).then((payload) => { if (payload?.hotels?.length) setCatalogHotels(payload.hotels); }).catch(() => {}); return () => controller.abort(); }, [destination.id, destination.airport, quiz]);
+  useEffect(() => { const raw = window.localStorage.getItem(`globtrekStay:${destination.city}`); if (!raw) return; try { onSelected?.(JSON.parse(raw)); } catch {} }, [destination.city, onSelected]);
+  function choose(hotel) { const choice = { ...hotel, type: hotel.type || "curated" }; window.localStorage.setItem(`globtrekStay:${destination.city}`, JSON.stringify(choice)); onSelected?.(choice); track("hotel_selected", { destination: destination.city, hotel: choice.name }); }
+  function goTo(index) { const next = (index + hotels.length) % hotels.length; setActiveIndex(next); railRef.current?.children[next]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" }); }
+  function syncMobileIndex(event) { const width = event.currentTarget.clientWidth; if (width) setActiveIndex(Math.round(event.currentTarget.scrollLeft / width)); }
+  if (!hotels.length) return null;
+  return <section id="hotel-selection" className="scroll-mt-20 px-4 py-20 sm:px-8 sm:py-28" aria-labelledby="stay-heading"><div className="mx-auto max-w-[1400px]"><header className="mb-10 flex items-end justify-between gap-8 sm:mb-14"><div><p className="text-xs text-black/42">01 — Stay</p><h2 id="stay-heading" className="mt-3 font-serif text-[clamp(3.2rem,7vw,7rem)] leading-[.85] tracking-[-.055em]">Your stay.</h2></div><p className="hidden max-w-xs text-right text-sm leading-6 text-black/48 sm:block">One recommendation first. Use the arrows to compare the shortlist.</p></header>
+    <div ref={railRef} onScroll={syncMobileIndex} className="flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:overflow-hidden">{hotels.map((hotel, index) => <div key={hotel.id || hotel.name} className={`min-w-full ${index === activeIndex ? "lg:block" : "lg:hidden"}`}><HotelCard hotel={hotel} destination={destination} trip={quiz} index={index} count={hotels.length} onChoose={choose} onDetails={setDrawer} onPrevious={() => goTo(activeIndex - 1)} onNext={() => goTo(activeIndex + 1)} priority={index === 0} /></div>)}</div>
+    <div className="mt-6 flex items-center justify-between"><p className="text-xs text-black/45 sm:hidden">Swipe to compare stays</p><p className="hidden text-xs text-black/45 sm:block">{activeIndex + 1} of {hotels.length}</p><button type="button" onClick={() => choose({ type: "none", name: "No hotel needed" })} className="text-xs text-black/48">I already have a stay</button></div>
+  </div>{drawer ? <HotelDrawer {...drawer} destination={destination} trip={quiz} onClose={() => setDrawer(null)} onChoose={choose} /> : null}</section>;
+}

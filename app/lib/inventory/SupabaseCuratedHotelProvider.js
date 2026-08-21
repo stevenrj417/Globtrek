@@ -13,6 +13,9 @@ function mapHotel(row, destination) {
     latitude: row.latitude,
     longitude: row.longitude,
     starRating: row.star_rating,
+    rating: row.review_rating,
+    reviewCount: row.review_count ?? null,
+    amenities: row.amenity_tags || [],
     currency: row.currency,
     typicalNightlyLow: row.typical_nightly_low,
     typicalNightlyHigh: row.typical_nightly_high,
@@ -52,6 +55,7 @@ export class SupabaseCuratedHotelProvider extends HotelInventoryProvider {
       .from("hotel_catalog")
       .select("*")
       .eq("destination_id", destination.id || destination.airport)
+      .eq("provider", "booking_com_cj")
       .eq("active", true)
       .neq("review_status", "rejected")
       .limit(100);
@@ -60,7 +64,7 @@ export class SupabaseCuratedHotelProvider extends HotelInventoryProvider {
   }
 
   async getProperty({ id, destination }) {
-    const { data, error } = await this.supabase.from("hotel_catalog").select("*").eq("id", id).maybeSingle();
+    const { data, error } = await this.supabase.from("hotel_catalog").select("*").eq("id", id).eq("provider", "booking_com_cj").maybeSingle();
     if (error) throw new Error(`curated_property_unavailable:${error.code || "query_failed"}`);
     return data ? mapHotel(data, destination) : null;
   }

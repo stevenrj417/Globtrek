@@ -94,6 +94,33 @@ button {
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes hotel-swap {
+  from { opacity: 0.35; transform: translateX(18px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes dock-arrive {
+  from { opacity: 0; transform: translateY(18px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.hotel-swap { animation: hotel-swap 420ms cubic-bezier(.2,.7,.2,1) both; }
+.trip-dock { animation: dock-arrive 560ms cubic-bezier(.2,.8,.2,1) 180ms both; }
+
+/* Quiet utility text remains readable at WCAG AA sizes on the results canvas. */
+.results-editorial .text-black\/30,
+.results-editorial .text-black\/35,
+.results-editorial .text-black\/36,
+.results-editorial .text-black\/38,
+.results-editorial .text-black\/40,
+.results-editorial .text-black\/42,
+.results-editorial .text-black\/45,
+.results-editorial .text-black\/48,
+.results-editorial .text-black\/55 { color: rgb(0 0 0 / .65); }
+.results-editorial .text-white\/35,
+.results-editorial .text-white\/42,
+.results-editorial .text-white\/45 { color: rgb(255 255 255 / .68); }
+
 @supports (animation-timeline: view()) {
   .reveal {
     animation: quiet-reveal both linear;

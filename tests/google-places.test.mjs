@@ -130,6 +130,14 @@ test("multiple available photos are capped at three", async () => {
   assert.equal(manifest.photos.length, 3);
 });
 
+test("hotel gallery can request five real photos and verified place facts", async () => {
+  const photos = Array.from({ length: 6 }, (_, index) => ({ name: `places/place-kyoto/photos/${index}`, authorAttributions: [] }));
+  const provider = new GooglePlacesHotelProvider({ apiKey: "test", fetchImpl: queuedFetch([response({ photos, rating: 4.8, userRatingCount: 321, formattedAddress: "Kyoto, Japan" }), ...photos.slice(0, 5).map((_, index) => response({ photoUri: `https://lh3.googleusercontent.com/five-${index}` }))]) });
+  const manifest = await provider.getPhotoManifest("place-kyoto", { limit: 5 });
+  assert.equal(manifest.photos.length, 5);
+  assert.deepEqual(manifest.place, { formattedAddress: "Kyoto, Japan", rating: 4.8, reviewCount: 321 });
+});
+
 test("Google API failure is surfaced", async () => {
   const provider = new GooglePlacesHotelProvider({ apiKey: "test", maxRetries: 0, fetchImpl: queuedFetch([response({}, 500)]) });
   await assert.rejects(() => provider.searchHotel(kyotoHotel), (error) => error.code === "google_places_api_error");

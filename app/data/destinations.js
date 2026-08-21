@@ -205,6 +205,31 @@ export function bookingHotelUrl(destination, hotelName, trip = {}) {
   return trackedUrl(bookingLinks.stays, `https://www.booking.com/searchresults.html?${params.toString()}`);
 }
 
+export function bookingPropertyUrl(hotel, trip = {}) {
+  if (!hotel?.bookingUrl) return null;
+  let target;
+  try { target = new URL(hotel.bookingUrl); }
+  catch { return null; }
+  if (target.protocol !== "https:" || !(target.hostname === "booking.com" || target.hostname.endsWith(".booking.com"))) return null;
+  if (!trip?.isFlexible && trip?.tripStart && trip?.tripEnd) {
+    target.searchParams.set("checkin", trip.tripStart);
+    target.searchParams.set("checkout", trip.tripEnd);
+  }
+  target.searchParams.set("group_adults", String(travelerCount(trip)));
+  const rooms = Number.parseInt(trip?.roomCount, 10);
+  target.searchParams.set("no_rooms", String(Number.isFinite(rooms) && rooms > 0 ? Math.min(rooms, 30) : 1));
+  target.searchParams.set("group_children", "0");
+  const currency = String(trip?.currency || hotel.currency || "").toUpperCase();
+  if (/^[A-Z]{3}$/.test(currency)) target.searchParams.set("selected_currency", currency);
+  let clickUrl = bookingLinks.stays;
+  try {
+    const candidate = new URL(hotel.cjTrackingBaseUrl || bookingLinks.stays);
+    const cjHosts = ["kqzyfj.com", "dpbolvw.net", "anrdoezrs.net", "jdoqocy.com", "tkqlhce.com", "qksrv.net"];
+    if (candidate.protocol === "https:" && cjHosts.some((host) => candidate.hostname === host || candidate.hostname.endsWith(`.${host}`))) clickUrl = candidate.toString().replace(/\/$/, "");
+  } catch {}
+  return trackedUrl(clickUrl, target.toString());
+}
+
 export function bookingFlightUrl(destination, trip = {}) {
   const params = new URLSearchParams({
     type: "ROUNDTRIP",
@@ -232,6 +257,14 @@ export function bookingActivityUrl(destination) {
 
 export function diningSearchUrl(destination) {
   return `https://www.google.com/maps/search/${encodeURIComponent(`restaurants in ${destination.city}, ${destination.country}`)}`;
+}
+
+// Keep outbound place providers behind one boundary so future restaurant and
+// activity partners can be introduced without changing the results UI.
+export function placeProviderUrl(place, destination) {
+  if (place?.bookingUrl) return place.bookingUrl;
+  if (place?.providerUrl) return place.providerUrl;
+  return `https://www.google.com/maps/search/${encodeURIComponent(`${place?.name || ""}, ${destination.city}, ${destination.country}`)}`;
 }
 import verifiedBatch01 from "../../scripts/destinations/verified-batch-01.json" with { type: "json" };
 import verifiedBatch02 from "../../scripts/destinations/verified-batch-02.json" with { type: "json" };

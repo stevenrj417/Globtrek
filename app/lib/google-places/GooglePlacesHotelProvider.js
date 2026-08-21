@@ -187,7 +187,7 @@ export class GooglePlacesHotelProvider {
 
   async getPlaceDetails(placeId, { includePhotos = true } = {}) {
     if (!placeId || /[/?#]/.test(placeId)) throw new GooglePlacesError("invalid_google_place_id");
-    const fields = ["id", "displayName", "formattedAddress", "location", "types", "businessStatus", "googleMapsUri", "attributions"];
+    const fields = ["id", "displayName", "formattedAddress", "location", "types", "businessStatus", "googleMapsUri", "attributions", "rating", "userRatingCount"];
     if (includePhotos) fields.push("photos");
     return this.request(`/places/${encodeURIComponent(placeId)}`, { fieldMask: fields.join(",") });
   }
@@ -216,6 +216,14 @@ export class GooglePlacesHotelProvider {
         if (error.code === "google_places_rate_limited") throw error;
       }
     }
-    return { photos: resolved, googleMapsUri: place.googleMapsUri || null };
+    return {
+      photos: resolved,
+      googleMapsUri: place.googleMapsUri || null,
+      place: {
+        formattedAddress: place.formattedAddress || null,
+        rating: Number.isFinite(Number(place.rating)) ? Number(place.rating) : null,
+        reviewCount: Number.isFinite(Number(place.userRatingCount)) ? Number(place.userRatingCount) : null,
+      },
+    };
   }
 }

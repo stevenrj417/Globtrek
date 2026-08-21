@@ -4,48 +4,40 @@ import { useState } from "react";
 import { track } from "@vercel/analytics";
 import { bookingFlightUrl } from "../data/destinations";
 
-const CABINS = [["ECONOMY", "Economy"], ["PREMIUM_ECONOMY", "Premium economy"], ["BUSINESS", "Business"], ["FIRST", "First"]];
+function shortDate(value) {
+  if (!value) return "Flexible";
+  return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", timeZone: "UTC" }).format(new Date(`${value}T00:00:00Z`));
+}
 
-export function FlightSearchSection({ destination, trip = {} }) {
-  const [origin, setOrigin] = useState(String(trip?.originAirport || "").trim().toUpperCase());
-  const [depart, setDepart] = useState(trip?.isFlexible ? "" : trip?.tripStart || "");
-  const [returnDate, setReturnDate] = useState(trip?.isFlexible ? "" : trip?.tripEnd || "");
-  const [adults, setAdults] = useState(String(Math.max(1, Number.parseInt(trip?.guestCount, 10) || 2)));
-  const [cabinClass, setCabinClass] = useState("ECONOMY");
+export function FlightSearchSection({ destination, trip = {}, onSearched }) {
   const [selected, setSelected] = useState(false);
+  const origin = String(trip?.originAirport || "").trim().toUpperCase();
+  const travelers = Math.max(1, Number.parseInt(trip?.guestCount, 10) || 2);
+  const cabinClass = ["ECONOMY", "PREMIUM_ECONOMY", "BUSINESS", "FIRST"].includes(trip?.cabinClass) ? trip.cabinClass : "ECONOMY";
+  const cabinLabel = cabinClass.toLowerCase().replace("_", " ").replace(/^./, (letter) => letter.toUpperCase());
+  const searchUrl = bookingFlightUrl(destination, { ...trip, cabinClass });
 
-  const searchUrl = bookingFlightUrl(destination, { ...trip, originAirport: origin, isFlexible: !depart || !returnDate, tripStart: depart, tripEnd: returnDate, guestCount: adults, cabinClass });
-  const searchReady = /^[A-Z]{3}$/.test(origin) && Boolean(depart) && Boolean(returnDate) && Number.parseInt(adults, 10) > 0;
-
-  function selectSearch() {
-    if (!searchReady) return;
+  function searchFlights() {
     setSelected(true);
-    track("flight_search_selected", { destination: destination.city, cabin: cabinClass.toLowerCase() });
-    window.open(searchUrl, "_blank", "noopener,noreferrer");
+    onSearched?.();
+    track("flight_search_selected", { destination: destination.city, cabin: cabinClass.toLowerCase(), context_complete: Boolean(origin && trip?.tripStart && trip?.tripEnd) });
   }
 
-  function change(setter) {
-    return (value) => {
-      setter(value);
-      setSelected(false);
-    };
-  }
-
-  return <section className="mt-20" aria-labelledby="flight-search-heading">
-    <h2 id="flight-search-heading" className="border-b border-black pb-6 font-serif text-[clamp(2.2rem,4vw,3.8rem)] tracking-[-0.04em]">Flights</h2>
-    <div className="border-x border-b border-black bg-[#f8f6f2] p-5 sm:p-7">
-      <div className="grid border-l border-t border-black sm:grid-cols-2 lg:grid-cols-[.8fr_.8fr_1fr_1fr_.6fr]">
-        <label className="border-b border-r border-black p-4"><span className="text-[8px] uppercase tracking-[0.18em] text-black">From</span><input required aria-label="Origin airport" value={origin} maxLength={3} placeholder="PDX" onChange={(event) => change(setOrigin)(event.target.value.toUpperCase().replace(/[^A-Z]/g, ""))} className="mt-2 block w-full bg-transparent font-serif text-xl uppercase text-black outline-none" /></label>
-        <div className="border-b border-r border-black p-4"><span className="text-[8px] uppercase tracking-[0.18em] text-black">To</span><strong className="mt-2 block font-serif text-xl font-normal text-black">{destination.airport}</strong></div>
-        <label className="border-b border-r border-black p-4"><span className="text-[8px] uppercase tracking-[0.18em] text-black">Depart</span><input type="date" value={depart} onChange={(event) => change(setDepart)(event.target.value)} className="mt-2 block w-full bg-transparent text-sm text-black outline-none" /></label>
-        <label className="border-b border-r border-black p-4"><span className="text-[8px] uppercase tracking-[0.18em] text-black">Return</span><input type="date" min={depart || undefined} value={returnDate} onChange={(event) => change(setReturnDate)(event.target.value)} className="mt-2 block w-full bg-transparent text-sm text-black outline-none" /></label>
-        <label className="border-b border-r border-black p-4"><span className="text-[8px] uppercase tracking-[0.18em] text-black">Adults</span><input type="number" min="1" max="30" value={adults} onChange={(event) => change(setAdults)(event.target.value)} className="mt-2 block w-full bg-transparent text-sm text-black outline-none" /></label>
-      </div>
-      <div className="mt-4 flex flex-wrap gap-2">
-        {CABINS.map(([value, label]) => <button key={value} type="button" onClick={() => change(setCabinClass)(value)} className={`min-h-11 border px-4 text-[9px] uppercase tracking-[0.14em] transition ${cabinClass === value ? "border-black bg-black text-white" : "border-black hover:border-black"}`}>{label}</button>)}
-      </div>
-      <div className="mt-5 flex justify-end border-t border-black pt-5">
-        <button disabled={!searchReady} type="button" onClick={selectSearch} className={`min-h-14 min-w-48 border px-6 text-[9px] uppercase tracking-[0.18em] transition disabled:cursor-not-allowed disabled:opacity-35 ${selected ? "border-black bg-black text-white" : "border-black hover:bg-black hover:text-white"}`}>{selected ? "Open flights again ↗" : "Select & search flights ↗"}</button>
+  return <section id="flights" className="scroll-mt-28 bg-[#e9e4dc] px-6 py-20 sm:px-12 sm:py-28" aria-labelledby="flight-search-heading">
+    <div className="mx-auto max-w-[1240px] lg:grid lg:grid-cols-[.72fr_1.28fr] lg:gap-24">
+      <div><p className="text-[10px] font-medium uppercase tracking-[0.18em] text-black/45">02 · Flight</p><h2 id="flight-search-heading" className="mt-5 font-serif text-[clamp(2.8rem,5vw,5.5rem)] leading-[.92] tracking-[-0.045em]">Get there.</h2></div>
+      <div className="mt-12 lg:mt-0">
+        <div className="grid grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-4">
+          <div><p className="text-xs text-black/45">Route</p><p className="mt-2 text-base">{origin || "Choose origin"} <span aria-hidden="true">→</span> {destination.airport}</p></div>
+          <div><p className="text-xs text-black/45">Dates</p><p className="mt-2 text-base">{shortDate(trip?.tripStart)} — {shortDate(trip?.tripEnd)}</p></div>
+          <div><p className="text-xs text-black/45">Travelers</p><p className="mt-2 text-base">{travelers}</p></div>
+          <div><p className="text-xs text-black/45">Cabin</p><p className="mt-2 text-base">{cabinLabel}</p></div>
+        </div>
+        <p className="mt-10 max-w-xl text-sm leading-6 text-black/55">Current fares and availability open with our flight partner. GlobTrek does not display a fare until it has been checked.</p>
+        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+          <a href={searchUrl} target="_blank" rel="noopener sponsored" onClick={searchFlights} className="inline-flex min-h-14 items-center justify-center bg-[#171714] px-8 text-[11px] font-medium text-white transition hover:bg-black focus-visible:outline-white">{selected ? "Open flights again" : "Search current flights"}<span className="ml-3" aria-hidden="true">↗</span></a>
+          <a href="/discover" className="inline-flex min-h-12 items-center justify-center px-5 text-xs text-black/55 underline decoration-black/25 hover:text-black">Change trip details</a>
+        </div>
       </div>
     </div>
   </section>;

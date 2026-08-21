@@ -56,7 +56,7 @@ export async function processGooglePlacesBatch({ records, provider, prior = [], 
         duplicatePlaceIds += 1;
         result = { key, hotel, status: "duplicate_place_id", verified: false, needsReview: true, googlePlaceId: null, confidence: match.confidence, evidence: match.evidence, photoStatus: "not_checked", usablePhotoCount: 0, attributionRequired: false, errorCode: "duplicate_google_place_id", checkedAt };
       } else if (match.verified) {
-        const manifest = await provider.getPhotoManifest(match.placeId, { limit: 3, maxWidthPx: 1400 });
+        const manifest = await provider.getPhotoManifest(match.placeId, { limit: 5, maxWidthPx: 1800 });
         usedPlaceIds.set(match.placeId, key);
         result = { key, hotel, status: "matched", verified: true, needsReview: false, googlePlaceId: match.placeId, confidence: match.confidence, evidence: match.evidence, photoStatus: manifest.photos.length ? "available" : "missing", usablePhotoCount: manifest.photos.length, attributionRequired: manifest.photos.some((photo) => photo.authorAttributions?.length), errorCode: null, checkedAt };
       } else {
