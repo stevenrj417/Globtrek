@@ -25,17 +25,14 @@ export function ItineraryDocument({ trip, quiz, previewDays = 3, fullTripHref = 
   useEffect(() => {
     const controller = new AbortController();
     fetch("/api/activities/recommend", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ destinationId: trip.id || trip.airport, quiz }), signal: controller.signal }).then((response) => response.ok ? response.json() : null).then((payload) => setVerifiedActivities(payload?.activities || [])).catch((error) => { if (error.name !== "AbortError") setVerifiedActivities([]); });
-    const names = (plan?.picks?.restaurants || []).map((restaurant) => restaurant.name).filter(Boolean);
-    fetch("/api/restaurants/recommend", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ destinationId: trip.id || trip.airport, names }), signal: controller.signal }).then((response) => response.ok ? response.json() : null).then((payload) => setVerifiedRestaurants(payload?.restaurants || [])).catch((error) => { if (error.name !== "AbortError") setVerifiedRestaurants([]); });
+    fetch("/api/restaurants/recommend", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ destinationId: trip.id || trip.airport }), signal: controller.signal }).then((response) => response.ok ? response.json() : null).then((payload) => setVerifiedRestaurants(payload?.restaurants || [])).catch((error) => { if (error.name !== "AbortError") setVerifiedRestaurants([]); });
     return () => controller.abort();
   }, [quiz, trip.id, trip.airport, plan]);
   if (!plan) return null;
   const days = plan.days || [];
   const factualDays = days.filter((day, index) => !GENERIC_PLAN_COPY.test(day?.title || "") || factualDetails(day).length > 0);
   const visibleDays = itineraryPreviewDays({ days: factualDays }, previewDays);
-  const restaurantByName = new Map(verifiedRestaurants.map((restaurant) => [restaurant.name, restaurant]));
-  const itineraryRestaurants = (plan.picks?.restaurants || []).map((place) => ({ ...place, ...restaurantByName.get(place.name), action: restaurantByName.get(place.name)?.bookingUrl ? "Reserve" : "View", kind: "Restaurant" }));
-  const places = [...itineraryRestaurants, ...verifiedRestaurants.map((place) => ({ ...place, action: place.bookingUrl ? "Reserve" : "View", kind: "Restaurant" })), ...(plan.picks?.experiences || []).map((place) => ({ ...place, action: "Details", kind: "Experience" })), ...verifiedActivities.map((place) => ({ ...place, action: place.bookingUrl ? "Tickets" : "Details", kind: "Experience" }))].filter((place, index, all) => all.findIndex((item) => item.name === place.name) === index).slice(0, 6);
+  const places = [...verifiedRestaurants.slice(0, 3).map((place) => ({ ...place, action: place.bookingUrl ? "Reserve" : "View", kind: "Restaurant" })), ...verifiedActivities.map((place) => ({ ...place, action: place.bookingUrl ? "Tickets" : "Details", kind: "Experience" }))].filter((place, index, all) => all.findIndex((item) => item.name === place.name) === index).slice(0, 6);
 
   return <>
     {visibleDays.length ? <section id="itinerary" className="scroll-mt-28 px-6 py-20 sm:px-12 sm:py-32" aria-labelledby="itinerary-heading"><div className="mx-auto max-w-[1240px]">
