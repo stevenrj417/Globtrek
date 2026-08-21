@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-21T20:30:22.953Z",
+  "generatedAt": "2026-08-21T20:33:42.190Z",
   "destinations": 300,
   "uniqueDestinations": 300,
   "hotels": {
@@ -8,8 +8,10 @@
     "classified": 81,
     "recommendationReady": 219,
     "averageReadyPerDestination": 0.73,
-    "fivePhotos": 219,
-    "providerLinksVerified": 146,
+    "googleIdentityVerified": 2634,
+    "fivePhotosActive": 2634,
+    "fivePhotosRecommendationReady": 219,
+    "providerLinksVerified": 148,
     "destinationsAtNineOrMore": 10,
     "destinationsBelowNine": 290,
     "destinationsUnableToReturnThree": [

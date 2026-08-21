@@ -67,7 +67,10 @@ const report = {
   hotels: {
     active: hotels.length, verified: verified.length, classified: verified.filter((hotel) => hotel.price_tier && hotel.calm_score != null && hotel.energy_score != null).length,
     recommendationReady: ready.length, averageReadyPerDestination: Number((ready.length / destinations.length).toFixed(2)),
-    fivePhotos: verified.filter((hotel) => hotel.photo_count >= 5).length, providerLinksVerified: verified.filter((hotel) => hotel.provider_link_verified).length,
+    googleIdentityVerified: hotels.filter((hotel) => hotel.google_place_verified).length,
+    fivePhotosActive: hotels.filter((hotel) => hotel.photo_count >= 5).length,
+    fivePhotosRecommendationReady: ready.filter((hotel) => hotel.photo_count >= 5).length,
+    providerLinksVerified: hotels.filter((hotel) => hotel.provider_link_verified).length,
     destinationsAtNineOrMore: destinationRows.filter((item) => item.recommendationReadyHotels >= 9).length,
     destinationsBelowNine: destinationRows.filter((item) => item.recommendationReadyHotels < 9).length,
     destinationsUnableToReturnThree: destinationRows.filter((item) => !item.canReturnThree).map((item) => item.destination),
