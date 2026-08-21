@@ -9,7 +9,6 @@ const routes = [
   "/privacy",
   "/terms",
   "/affiliate-disclosure",
-  "/demo-booking",
 ];
 
 export default function sitemap() {

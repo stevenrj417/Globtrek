@@ -1,13 +1,14 @@
 import { HotelInventoryProvider } from "./HotelInventoryProvider.js";
 import { shortlistHotels } from "../recommendation/hotelEngine.js";
 
-function mapHotel(row, destination) {
+export function mapHotel(row, destination) {
   return {
     id: row.id,
     name: row.name,
     destinationId: row.destination_id,
     provider: row.provider,
     providerPropertyId: row.provider_property_id,
+    googlePlaceId: row.google_place_id,
     bookingUrl: row.booking_com_property_url,
     cjTrackingBaseUrl: row.cj_tracking_url,
     latitude: row.latitude,

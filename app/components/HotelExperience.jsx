@@ -4,9 +4,7 @@ import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { track } from "@vercel/analytics";
 import { bookingPropertyUrl } from "../data/destinations";
-import { hotelsFor } from "../data/hotels";
 import { normalizeTravelerProfile } from "../lib/recommendation/travelerProfile";
-import { shortlistHotels } from "../lib/recommendation/hotelEngine";
 import { SaveItemButton } from "./SaveItemButton";
 
 function money(value, currency = "USD") {
@@ -96,21 +94,27 @@ function HotelCard({ hotel, destination, trip, index, count, onChoose, onDetails
 }
 
 export function HotelExperience({ destination, quiz, budgetPlan, onSelected }) {
-  const profile = useMemo(() => normalizeTravelerProfile(quiz), [quiz]);
-  const localHotels = useMemo(() => shortlistHotels(hotelsFor(destination, quiz, { limit: Number.MAX_SAFE_INTEGER }), profile, budgetPlan), [budgetPlan, destination, profile, quiz]);
   const [catalogHotels, setCatalogHotels] = useState(null);
+  const [catalogError, setCatalogError] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [drawer, setDrawer] = useState(null);
   const railRef = useRef(null);
-  const hotels = catalogHotels?.length ? catalogHotels : localHotels;
-  useEffect(() => { const controller = new AbortController(); fetch("/api/hotels/recommend", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ destinationId: destination.id || destination.airport, quiz }), signal: controller.signal }).then((response) => response.ok ? response.json() : null).then((payload) => { if (payload?.hotels?.length) setCatalogHotels(payload.hotels); }).catch(() => {}); return () => controller.abort(); }, [destination.id, destination.airport, quiz]);
+  const hotels = catalogHotels || [];
+  useEffect(() => {
+    const controller = new AbortController();
+    setCatalogHotels(null); setCatalogError(false); setActiveIndex(0); setDrawer(null);
+    fetch("/api/hotels/recommend", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ destinationId: destination.id || destination.airport, quiz }), signal: controller.signal })
+      .then(async (response) => { if (!response.ok) throw new Error("catalog_unavailable"); return response.json(); })
+      .then((payload) => setCatalogHotels(Array.isArray(payload?.hotels) ? payload.hotels : []))
+      .catch((error) => { if (error.name !== "AbortError") { setCatalogHotels([]); setCatalogError(true); } });
+    return () => controller.abort();
+  }, [destination.id, destination.airport, quiz]);
   useEffect(() => { const raw = window.localStorage.getItem(`globtrekStay:${destination.city}`); if (!raw) return; try { onSelected?.(JSON.parse(raw)); } catch {} }, [destination.city, onSelected]);
   function choose(hotel) { const choice = { ...hotel, type: hotel.type || "curated" }; window.localStorage.setItem(`globtrekStay:${destination.city}`, JSON.stringify(choice)); onSelected?.(choice); track("hotel_selected", { destination: destination.city, hotel: choice.name }); }
-  function goTo(index) { const next = (index + hotels.length) % hotels.length; setActiveIndex(next); railRef.current?.children[next]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" }); }
+  function goTo(index) { if (!hotels.length) return; const next = (index + hotels.length) % hotels.length; setActiveIndex(next); setDrawer(null); railRef.current?.children[next]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" }); }
   function syncMobileIndex(event) { const width = event.currentTarget.clientWidth; if (width) setActiveIndex(Math.round(event.currentTarget.scrollLeft / width)); }
-  if (!hotels.length) return null;
   return <section id="hotel-selection" className="scroll-mt-20 px-4 py-20 sm:px-8 sm:py-28" aria-labelledby="stay-heading"><div className="mx-auto max-w-[1400px]"><header className="mb-10 flex items-end justify-between gap-8 sm:mb-14"><div><p className="text-xs text-black/42">01 — Stay</p><h2 id="stay-heading" className="mt-3 font-serif text-[clamp(3.2rem,7vw,7rem)] leading-[.85] tracking-[-.055em]">Your stay.</h2></div><p className="hidden max-w-xs text-right text-sm leading-6 text-black/48 sm:block">One recommendation first. Use the arrows to compare the shortlist.</p></header>
-    <div ref={railRef} onScroll={syncMobileIndex} className="flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:overflow-hidden">{hotels.map((hotel, index) => <div key={hotel.id || hotel.name} className={`min-w-full ${index === activeIndex ? "lg:block" : "lg:hidden"}`}><HotelCard hotel={hotel} destination={destination} trip={quiz} index={index} count={hotels.length} onChoose={choose} onDetails={setDrawer} onPrevious={() => goTo(activeIndex - 1)} onNext={() => goTo(activeIndex + 1)} priority={index === 0} /></div>)}</div>
-    <div className="mt-6 flex items-center justify-between"><p className="text-xs text-black/45 sm:hidden">Swipe to compare stays</p><p className="hidden text-xs text-black/45 sm:block">{activeIndex + 1} of {hotels.length}</p><button type="button" onClick={() => choose({ type: "none", name: "No hotel needed" })} className="text-xs text-black/48">I already have a stay</button></div>
+    {catalogHotels === null ? <div className="grid min-h-[420px] place-items-center bg-[#e7e0d5] text-sm text-black/48">Matching verified stays…</div> : hotels.length ? <div ref={railRef} onScroll={syncMobileIndex} className="flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:overflow-hidden">{hotels.map((hotel, index) => <div key={hotel.id || hotel.name} className={`min-w-full ${index === activeIndex ? "lg:block" : "lg:hidden"}`}><HotelCard hotel={hotel} destination={destination} trip={quiz} index={index} count={hotels.length} onChoose={choose} onDetails={setDrawer} onPrevious={() => goTo(activeIndex - 1)} onNext={() => goTo(activeIndex + 1)} priority={index === 0} /></div>)}</div> : <div className="grid min-h-[420px] place-items-center bg-[#e7e0d5] px-8 text-center"><div><p className="font-serif text-3xl">Verified stays are still being prepared.</p><p className="mt-3 text-sm text-black/50">{catalogError ? "Recommendations are temporarily unavailable. Please try again shortly." : "This destination does not yet have a complete verified shortlist."}</p></div></div>}
+    <div className="mt-6 flex items-center justify-between"><p className="text-xs text-black/45 sm:hidden">{hotels.length ? "Swipe to compare stays" : "Verified inventory only"}</p><p className="hidden text-xs text-black/45 sm:block">{hotels.length ? `${activeIndex + 1} of ${hotels.length}` : "No unverified substitutes"}</p><button type="button" onClick={() => choose({ type: "none", name: "No hotel needed" })} className="text-xs text-black/48">I already have a stay</button></div>
   </div>{drawer ? <HotelDrawer {...drawer} destination={destination} trip={quiz} onClose={() => setDrawer(null)} onChoose={choose} /> : null}</section>;
 }

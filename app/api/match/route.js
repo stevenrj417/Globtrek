@@ -1,5 +1,4 @@
 import { destinations } from "../../data/destinations";
-import { hotelsFor } from "../../data/hotels";
 import { itineraryDayCount, normalizeTravelerProfile } from "../../lib/recommendation/travelerProfile";
 import { rankDestinations } from "../../lib/recommendation/destinationEngine";
 import { validateTripRecommendation } from "../../lib/recommendation/finalTripValidator";
@@ -260,7 +259,6 @@ export async function POST(request) {
   const forcedDestination = typeof body.destination === "string" ? ranked.find((destination) => (destination.id || destination.airport) === body.destination) : null;
   const fallback = forcedDestination ? [forcedDestination, ...ranked.filter((destination) => (destination.id || destination.airport) !== (forcedDestination.id || forcedDestination.airport))] : ranked;
   const primaryDestination = fallback[0];
-  const stayOptions = hotelsFor(primaryDestination, body).map(({ name, tags }) => ({ name, tags }));
   const nights = tripLength(body);
   const planDays = nights ? Math.min(28, Math.max(1, nights)) : itineraryDayCount(body);
   const tune = typeof body.tune === "string" ? body.tune.slice(0, 40) : "original";
@@ -292,7 +290,7 @@ export async function POST(request) {
           {
             role: "system",
             content:
-              `You are GlobTrek's invisible trip-planning engine. The destination is already selected by deterministic preference and budget scoring. Write like a sharp travel editor, never a chatbot. Personalize from every supplied quiz answer and requested trip length. The supplied deterministic budget plan is authoritative. Honor refinements requesting more affordable, local, relaxing, or adventurous choices. Use web search to verify every named restaurant and experience is a real, currently operating place in the supplied destination. Unknownness is 0 for iconic and 100 for obscure. Never invent a venue, airport, flight time, live price, availability, reservation, address, opening hour, or transfer duration. The airport code and hotel shortlist are supplied facts. Return only valid JSON matching the supplied schema. Constraints: why is one sentence; headline is an expressive trip summary under 8 words; airport note is under 12 words; arrivalWindow has exactly 1 step under 18 words; picks has exactly 3 verified restaurants and 3 verified experiences, each why under 12 words; budget has exactly 4 broad categories; days has exactly ${planDays} items. Every day needs a short expressive title, a truthful location or sub-location, a 3–5 item concise sequence, and useful morning, afternoon, and evening detail under 18 words each. Use actual verified venue names naturally where appropriate. No markdown.`,
+              `You are GlobTrek's invisible trip-planning engine. The destination is already selected by deterministic preference and budget scoring. Write like a sharp travel editor, never a chatbot. Personalize from every supplied quiz answer and requested trip length. The supplied deterministic budget plan is authoritative. Honor refinements requesting more affordable, local, relaxing, or adventurous choices. Use web search to verify every named restaurant and experience is a real, currently operating place in the supplied destination. Unknownness is 0 for iconic and 100 for obscure. Never invent a venue, airport, hotel, flight time, live price, availability, reservation, address, opening hour, or transfer duration. Return only valid JSON matching the supplied schema. Constraints: why is one sentence; headline is an expressive trip summary under 8 words; airport note is under 12 words; arrivalWindow has exactly 1 step under 18 words; picks has exactly 3 verified restaurants and 3 verified experiences, each why under 12 words; budget has exactly 4 broad categories; days has exactly ${planDays} items. Every day needs a short expressive title, a truthful location or sub-location, a 3–5 item concise sequence, and useful morning, afternoon, and evening detail under 18 words each. Use actual verified venue names naturally where appropriate. No markdown.`,
           },
           {
             role: "user",
@@ -308,7 +306,6 @@ export async function POST(request) {
               },
               refinement: tune,
               destination: (({ name, city, country, style, season, tags, price, nights: suggestedNights, recognition, airport }) => ({ name, city, country, style, season, tags, price, suggestedNights, recognition, airport }))(primaryDestination),
-              verifiedHotelShortlist: stayOptions,
             }),
           },
         ],
