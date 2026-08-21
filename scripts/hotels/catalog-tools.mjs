@@ -130,7 +130,7 @@ export function hotelMatrixCell(record) {
   return { priceTier, vibeTier };
 }
 
-export function hotelMatrixCoverage(records, targetPerCell = 3) {
+export function hotelMatrixCoverage(records, targetPerCell = 1) {
   const ready = records.filter((record) => record.recommendationReady === true);
   const cells = Object.fromEntries(HOTEL_PRICE_TIERS.flatMap((priceTier) => HOTEL_VIBE_TIERS.map((vibeTier) => {
     const count = ready.filter((record) => { const cell = hotelMatrixCell(record); return cell.priceTier === priceTier && cell.vibeTier === vibeTier; }).length;

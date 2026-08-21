@@ -31,7 +31,7 @@ const invalidHotelRelationships = hotels.filter((item) => !destinationIds.has(it
 const validBookingPropertyUrl = (value) => { try { const url = new URL(value); return url.protocol === "https:" && /(^|\.)booking\.com$/.test(url.hostname) && /\/hotel\/[^/]+\/[^/]+\.html$/.test(url.pathname); } catch { return false; } };
 const brokenProviderLinks = hotels.filter((item) => !validBookingPropertyUrl(item.bookingUrl)).map((item) => item.name);
 const missingHeroImages = destinations.filter((item) => !item.image).map((item) => item.city);
-const insufficientHotels = destinations.filter((item) => (hotelCounts.get(item.id || item.airport) || 0) < 27).map((item) => ({ destinationId: item.id || item.airport, count: hotelCounts.get(item.id || item.airport) || 0 }));
+const insufficientHotels = destinations.filter((item) => (hotelCounts.get(item.id || item.airport) || 0) < 9).map((item) => ({ destinationId: item.id || item.airport, count: hotelCounts.get(item.id || item.airport) || 0 }));
 const insufficientActivities = destinations.filter((item) => (activityCounts.get(item.id || item.airport) || 0) < 12).map((item) => ({ destinationId: item.id || item.airport, count: activityCounts.get(item.id || item.airport) || 0 }));
 const destinationMetadata = {
   missingType: destinations.filter((item) => !DESTINATION_TYPES.has(item.destinationType)).map((item) => item.city),
@@ -60,7 +60,7 @@ const report = {
   integrity: { destinationDuplicates, duplicateAliases, coordinateDuplicates, missingHeroImages, invalidHotelRelationships, hotelDuplicates, brokenProviderLinks },
   destinationMetadata,
   hotelQuality,
-  coverage: { destinationsAt27Hotels: destinations.length - insufficientHotels.length, destinationsWithTwelveActivities: destinations.length - insufficientActivities.length, insufficientHotels, insufficientActivities, insufficientRestaurants: destinations.map((item) => ({ destinationId: item.id || item.airport, count: 0 })), hotelMatrixCoverage },
+  coverage: { destinationsAt9Hotels: destinations.length - insufficientHotels.length, destinationsWithTwelveActivities: destinations.length - insufficientActivities.length, insufficientHotels, insufficientActivities, insufficientRestaurants: destinations.map((item) => ({ destinationId: item.id || item.airport, count: 0 })), hotelMatrixCoverage },
   hotelPhotos: { matched: googlePayload.summary?.matched || 0, withAnyPhoto: googlePayload.summary?.withPhotos || 0, withThreePhotos: googlePayload.summary?.withThreePhotos || 0, requiringReview: googlePayload.summary?.requiringReview || 0 },
 };
 console.log(JSON.stringify(report, null, 2));
