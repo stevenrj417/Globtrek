@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { GooglePlacesHotelProvider, distanceMeters, nameSimilarity, scoreHotelPlaceMatch } from "../app/lib/google-places/GooglePlacesHotelProvider.js";
+import { GooglePlacesDiscoveryProvider } from "../app/lib/google-places/GooglePlacesDiscoveryProvider.js";
 import { processGooglePlacesBatch } from "../scripts/hotels/google-places-match.mjs";
 
 const kyotoHotel = { name: "Six Senses Kyoto", city: "Kyoto", country: "Japan", destinationId: "KIX", provider: "booking_com_cj", bookingComPropertyUrl: "https://www.booking.com/hotel/jp/six-senses-kyoto.html", cjTrackingUrl: "https://www.kqzyfj.com/click-101801755-17293132" };
@@ -19,6 +20,15 @@ function queuedFetch(items, calls = []) {
     return item;
   };
 }
+
+test("restaurant discovery returns three real provider identities with attributed photos", async () => {
+  const place = (index) => ({ id: `restaurant-${index}`, displayName: { text: `Restaurant ${index}` }, formattedAddress: "Paris, France", location: { latitude: 48.8566, longitude: 2.3522 }, types: ["restaurant"], primaryType: "restaurant", businessStatus: "OPERATIONAL", rating: 4.8, userRatingCount: 100 + index, googleMapsUri: `https://maps.google.com/?cid=${index}`, photos: [{ name: `places/restaurant-${index}/photos/photo-${index}`, authorAttributions: [{ displayName: `Author ${index}`, uri: `https://maps.google.com/author/${index}` }] }] });
+  const provider = new GooglePlacesDiscoveryProvider({ apiKey: "test", fetchImpl: queuedFetch([response({ places: [place(1), place(2), place(3), place(4)] }), response({ photoUri: "https://lh3.googleusercontent.com/1" }), response({ photoUri: "https://lh3.googleusercontent.com/2" }), response({ photoUri: "https://lh3.googleusercontent.com/3" })]) });
+  const records = await provider.discoverRestaurants({ id: "test-paris", city: "Paris", country: "France", latitude: 48.8566, longitude: 2.3522 }, { limit: 3 });
+  assert.equal(records.length, 3);
+  assert.ok(records.every((item) => item.providerId && item.detailsUrl && item.imageAttribution.length === 1));
+  assert.ok(records.every((item) => item.bookingUrl === null));
+});
 
 test("correct Google Place hotel match is accepted", () => {
   const scored = scoreHotelPlaceMatch(kyotoHotel, correctPlace);

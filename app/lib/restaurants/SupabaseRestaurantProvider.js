@@ -7,7 +7,9 @@ function mapRestaurant(row) {
     cuisine: row.cuisine || [], neighborhood: row.neighborhood, priceLevel: row.price_level,
     latitude: row.latitude, longitude: row.longitude, imageUrl: row.image_url,
     provider: row.provider, providerId: row.provider_id, openTableRestaurantId: row.opentable_restaurant_id,
-    bookingUrl: createReservationLink(row.booking_url), verifiedAt: row.verified_at, active: row.active,
+    bookingUrl: createReservationLink(row.booking_url), detailsUrl: row.details_url || null,
+    rating: row.rating == null ? null : Number(row.rating), reviewCount: row.review_count == null ? null : Number(row.review_count),
+    imageAttribution: row.image_attribution || [], imageSourceUrl: row.image_source_url || null, verifiedAt: row.verified_at, active: row.active,
   };
 }
 

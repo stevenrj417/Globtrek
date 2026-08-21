@@ -267,6 +267,7 @@ export function diningSearchUrl(destination) {
 // activity partners can be introduced without changing the results UI.
 export function placeProviderUrl(place, destination) {
   if (place?.bookingUrl) return place.bookingUrl;
+  if (place?.detailsUrl) return place.detailsUrl;
   if (place?.providerUrl) return place.providerUrl;
   return `https://www.google.com/maps/search/${encodeURIComponent(`${place?.name || ""}, ${destination.city}, ${destination.country}`)}`;
 }
