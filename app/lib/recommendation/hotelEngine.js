@@ -45,7 +45,7 @@ export function rankHotels(hotels, profile, budgetPlan) {
     };
     const traitFit = SCORE_FIELDS.reduce((sum, field) => sum + (100 - Math.abs(inferredScore(hotel, field) - preferences[field])), 0) / SCORE_FIELDS.length;
     const tagMatches = hotel.tags?.filter((tag) => Object.values(profile.otherExistingQuizPreferences).includes(tag)).length || 0;
-    const hotelMatchScore = Math.round(budgetFit * 0.4 + traitFit * 0.4 + priceTierFit * 0.12 + Math.min(100, tagMatches * 25) * 0.08);
+    const hotelMatchScore = Math.round(budgetFit * 0.32 + traitFit * 0.35 + priceTierFit * 0.25 + Math.min(100, tagMatches * 25) * 0.08);
     return { ...hotel, hotelMatchScore, budgetFit, priceTierFit, priceKnown: hasPrice, priceStale, imageMissing: !hotel.image, estimatedStayLow: hasPrice ? Math.round(low * nights) : null, estimatedStayHigh: hasPrice ? Math.round(high * nights) : null };
   }).sort((a, b) => b.hotelMatchScore - a.hotelMatchScore || a.name.localeCompare(b.name));
 }

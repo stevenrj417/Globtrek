@@ -109,10 +109,11 @@ export function normalizeHotel(record, destination) {
 }
 
 export function hotelReadiness(record) {
+  const hasProviderMapping = Boolean(record.bookingComPropertyUrl || record.cjTrackingUrl || record.providerPropertyId);
   const checks = {
     verifiedIdentity: record.reviewStatus === "verified" && Number(record.identityConfidence) >= 0.8,
     correctLocation: Number.isFinite(Number(record.latitude)) && Number.isFinite(Number(record.longitude)) && Number(record.locationConfidence) >= 0.8,
-    providerLink: record.providerLinkVerified === true && Boolean(record.bookingComPropertyUrl) && Boolean(record.cjTrackingUrl),
+    providerMappingTruthful: !hasProviderMapping || (record.providerLinkVerified === true && Boolean(record.bookingComPropertyUrl) && Boolean(record.cjTrackingUrl)),
     usablePhotos: Number(record.photoCount) >= 1,
     sufficientData: Number(record.dataCompletenessScore) >= 70,
   };

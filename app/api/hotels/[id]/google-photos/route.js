@@ -27,7 +27,7 @@ export async function GET(request, { params }) {
   const { id } = await params;
   try {
     const supabase = await createClient();
-    const { data: hotel, error } = await supabase.from("hotel_catalog").select("id,google_place_id,google_place_verified").eq("id", id).eq("provider", "booking_com_cj").eq("active", true).maybeSingle();
+    const { data: hotel, error } = await supabase.from("hotel_catalog").select("id,google_place_id,google_place_verified").eq("id", id).eq("active", true).maybeSingle();
     if (error) throw new Error(`hotel_lookup_failed:${error.code || "unknown"}`);
     if (!hotel?.google_place_verified || !hotel.google_place_id) return noStore({ error: "Verified property photography unavailable" }, 404);
     const manifest = await new GooglePlacesHotelProvider().getPhotoManifest(hotel.google_place_id, { limit: 5, maxWidthPx: 1800 });

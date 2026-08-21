@@ -67,7 +67,6 @@ export class SupabaseCuratedHotelProvider extends HotelInventoryProvider {
       .from("hotel_catalog")
       .select("*")
       .eq("destination_id", destination.id || destination.airport)
-      .eq("provider", "booking_com_cj")
       .eq("active", true)
       .eq("review_status", "verified")
       .eq("recommendation_ready", true)
@@ -77,7 +76,7 @@ export class SupabaseCuratedHotelProvider extends HotelInventoryProvider {
   }
 
   async getProperty({ id, destination }) {
-    const { data, error } = await this.supabase.from("hotel_catalog").select("*").eq("id", id).eq("provider", "booking_com_cj").maybeSingle();
+    const { data, error } = await this.supabase.from("hotel_catalog").select("*").eq("id", id).eq("active", true).maybeSingle();
     if (error) throw new Error(`curated_property_unavailable:${error.code || "query_failed"}`);
     return data ? mapHotel(data, destination) : null;
   }
