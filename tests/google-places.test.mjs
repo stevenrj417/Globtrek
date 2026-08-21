@@ -89,6 +89,14 @@ test("hotel address is included in the Google Text Search query", async () => {
   assert.match(JSON.parse(calls[0].options.body).textQuery, /431 Myohoin Maekawacho/);
 });
 
+test("missing hotel coordinates do not create a zero-coordinate search bias", async () => {
+  const calls = [];
+  const provider = new GooglePlacesHotelProvider({ apiKey: "test", fetchImpl: queuedFetch([response({ places: [] })], calls) });
+  await provider.searchHotel({ name: "Hotel Example", city: "Cape Town", country: "South Africa", latitude: null, longitude: null });
+  const body = JSON.parse(calls[0].options.body);
+  assert.equal(body.locationBias, undefined);
+});
+
 test("trusted exact address can verify a renamed but related hotel listing", () => {
   const result = scoreHotelPlaceMatch(
     { name: "Montage Kapalua Bay", city: "Maui", country: "United States", address: "1 Bay Drive, Lahaina, HI 96761" },

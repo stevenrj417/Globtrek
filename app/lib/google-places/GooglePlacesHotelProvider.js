@@ -162,7 +162,8 @@ export class GooglePlacesHotelProvider {
   }
 
   async searchHotel(hotel) {
-    const locationBias = [hotel.latitude, hotel.longitude].every((value) => Number.isFinite(Number(value))) ? {
+    const coordinates = [hotel.latitude, hotel.longitude];
+    const locationBias = coordinates.every((value) => value != null && value !== "" && Number.isFinite(Number(value))) ? {
       circle: { center: { latitude: Number(hotel.latitude), longitude: Number(hotel.longitude) }, radius: 30000 },
     } : undefined;
     const body = {
