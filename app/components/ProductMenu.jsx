@@ -30,10 +30,10 @@ export function ProductMenu() {
   }, []);
 
   return <div className="relative z-50" ref={root}>
-    <button type="button" aria-expanded={open} aria-haspopup="menu" aria-controls="globtrek-product-menu" onClick={() => setOpen((value) => !value)} className="group inline-flex min-h-12 items-center gap-2.5 text-2xl font-bold tracking-[-0.06em] sm:text-3xl">
+    <button type="button" aria-expanded={open} aria-haspopup="menu" aria-controls="globtrek-product-menu" onClick={() => setOpen((value) => !value)} className="group inline-flex min-h-12 items-center gap-2 text-2xl font-bold tracking-[-0.06em] sm:text-3xl">
       <span>globtrek</span>
       <BrandMark className="transition-transform duration-500 ease-out group-hover:translate-x-0.5" />
-      <span className={`ml-0.5 text-[10px] font-medium tracking-normal transition-transform ${open ? "rotate-180" : ""}`} aria-hidden="true">⌄</span>
+      <svg viewBox="0 0 12 8" className={`ml-1 h-2 w-3 shrink-0 transition-transform ${open ? "rotate-180" : ""}`} fill="none" aria-hidden="true" focusable="false"><path d="m1 1.25 5 5 5-5" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" /></svg>
       <span className="sr-only">Choose a GlobTrek experience</span>
     </button>
     {open ? <div id="globtrek-product-menu" role="menu" className="absolute left-0 top-full mt-3 w-[min(22rem,calc(100vw-2.5rem))] border border-black/12 bg-[#f7f7f4] p-2 shadow-[0_24px_70px_rgba(0,0,0,.16)]">

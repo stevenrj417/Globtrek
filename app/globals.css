@@ -76,11 +76,6 @@ button {
   text-underline-offset: 0.25em;
 }
 
-.brand-mark {
-  filter: invert(1);
-  mix-blend-mode: multiply;
-}
-
 .image-calm {
   transition: transform 600ms cubic-bezier(.2,.7,.2,1);
 }
