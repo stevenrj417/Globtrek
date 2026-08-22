@@ -39,6 +39,16 @@ export function buildBudgetPlan(profile, destination) {
     : profile.budgetMode === "closest"
       ? Math.max(0, Math.round(100 - Math.abs(1 - ratio) * 100))
       : ratio <= 1 ? 100 : Math.max(1, Math.round(100 / ratio));
+  const budgetDifference = targetBudget > 0 ? Math.round(midpoint - targetBudget) : null;
+  const percentOverBudget = targetBudget > 0 ? Math.max(0, budgetDifference / targetBudget) : 0;
+  const budgetCompatibility = targetBudget <= 0
+    ? "unknown"
+    : withinHardBudget
+      ? "excellent"
+      : estimatedTripLow <= targetBudget * 1.15
+        ? "acceptable"
+        : "poor";
+  const budgetCompatibilityScore = budgetCompatibility === "excellent" ? 100 : budgetCompatibility === "acceptable" ? Math.max(50, Math.round(85 - percentOverBudget * 100)) : Math.max(0, Math.round(45 - percentOverBudget * 60));
   // Lodging is the residual hard allocation after airfare and the lowest grounded
   // version of the included daily categories. Ranking then rejects properties
   // whose complete stay exceeds this amount.
@@ -64,6 +74,11 @@ export function buildBudgetPlan(profile, destination) {
     miscBuffer,
     estimatedTripLow,
     estimatedTripHigh,
+    estimatedTotalCost: { low: estimatedTripLow, high: estimatedTripHigh, midpoint: Math.round(midpoint) },
+    budgetDifference,
+    percentOverBudget,
+    budgetCompatibility,
+    budgetCompatibilityScore,
     permittedOverage,
     withinHardBudget,
     remainingBudget: Math.round(remainingBudget),

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { BrandWordmark } from "./BrandMark";
 import { AccountEntry } from "./AccountEntry";
 import { DestinationSearch } from "./DestinationSearch";
+import { ProductMenu } from "./ProductMenu";
 
 const navigation = [["Trips", "/#trips"], ["Quiz", "/discover"], ["How it works", "/how-it-works"], ["About", "/about"]];
 
@@ -21,7 +22,7 @@ export function SiteHeader({ actionHref = "/discover", actionLabel = "Find my tr
     <header className="bg-[#f7f7f4] text-[#161616]">
       <nav aria-label="Primary navigation" className="border-b border-black/10">
         <div className="mx-auto flex min-h-20 max-w-[1900px] items-center justify-between gap-5 px-5 sm:px-8">
-          <BrandWordmark className="text-2xl font-bold tracking-[-0.06em] sm:text-3xl" />
+          <ProductMenu />
           <div className="hidden items-center gap-9 text-xs font-medium text-[#565656] lg:flex">
             {navigation.map(([label, href]) => (
               <Link className="transition hover:text-black focus-visible:text-black" href={href} key={label}>

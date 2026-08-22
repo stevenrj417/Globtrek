@@ -4,9 +4,9 @@ import { SiteFooter, SiteHeader } from "./components/SiteChrome";
 import { EmailSignup } from "./components/EmailSignup";
 
 const trips = [
-  { name: "Kyoto", country: "Japan", airport: "KIX", price: "Est. $4,850–$6,400", image: "/kyoto-feature.jpg", alt: "A quiet tree-lined street in Kyoto" },
-  { name: "Amalfi Coast", country: "Italy", airport: "NAP", price: "Est. $5,900–$8,200", image: "/amalfi-feature.jpg", alt: "Lemon trees overlooking the Amalfi Coast at sunset" },
-  { name: "Banff", country: "Canada", airport: "YYC", price: "Est. $3,750–$5,600", image: "/banff-feature.jpg", alt: "A grand hotel surrounded by forest and mountains in Banff" },
+  { id: "KIX", name: "Kyoto", country: "Japan", price: "Est. $4,850–$6,400", image: "/kyoto-feature.jpg", alt: "A quiet tree-lined street in Kyoto" },
+  { id: "NAP", name: "Amalfi Coast", country: "Italy", price: "Est. $5,900–$8,200", image: "/amalfi-feature.jpg", alt: "Lemon trees overlooking the Amalfi Coast at sunset" },
+  { id: "YYC", name: "Banff", country: "Canada", price: "Est. $3,750–$5,600", image: "/banff-feature.jpg", alt: "A grand hotel surrounded by forest and mountains in Banff" },
 ];
 
 export default function Home() {
@@ -32,7 +32,7 @@ export default function Home() {
           </div>
           <div className="grid gap-x-6 gap-y-12 md:grid-cols-3 lg:gap-x-8">
             {trips.map((trip) => (
-              <Link href={`/results?destination=${trip.airport}`} className="group block" key={trip.name} aria-label={`Open the complete ${trip.name} trip`}>
+              <Link href={`/discover?destination=${trip.id}&destinationName=${encodeURIComponent(trip.name)}&source=trending`} className="group block" key={trip.id} aria-label={`Plan a personalized ${trip.name} trip`}>
                 <div className="relative aspect-[4/5] overflow-hidden bg-[#dfdfda]">
                   <Image src={trip.image} alt={trip.alt} fill className="image-calm object-cover" sizes="(min-width: 768px) 33vw, 100vw" quality={80} />
                 </div>

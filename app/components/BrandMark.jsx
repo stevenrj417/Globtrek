@@ -1,8 +1,9 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export function BrandMark({ className = "" }) {
   return (
-    <img
+    <Image
       src="/globtrek-mark.png"
       alt=""
       width="70"

@@ -3,6 +3,8 @@ const siteUrl = "https://www.glob-trek.com";
 const routes = [
   "",
   "/discover",
+  "/cruises",
+  "/road-trips",
   "/about",
   "/how-it-works",
   "/contact",

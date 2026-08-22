@@ -336,8 +336,9 @@ export default function TravelQuiz() {
   const [budgetIncludes, setBudgetIncludes] = useState({ flights: true, hotel: true, food: true, activities: true, transportation: true });
   const [phase, setPhase] = useState("idle");
   const timer = useRef(null);
+  const [preferredDestination, setPreferredDestination] = useState(null);
 
-  useEffect(() => { const onPop = (event) => { if (typeof event.state?.quizStep === "number") setStep(event.state.quizStep); }; window.addEventListener("popstate", onPop); window.history.replaceState({ ...window.history.state, quizStep: 0 }, ""); return () => { window.removeEventListener("popstate", onPop); window.clearTimeout(timer.current); }; }, []);
+  useEffect(() => { const params = new URLSearchParams(window.location.search); const destinationId = params.get("destination"); const initializeDestination = window.setTimeout(() => { if (destinationId) setPreferredDestination({ id: destinationId, name: params.get("destinationName") || destinationId }); }, 0); const onPop = (event) => { if (typeof event.state?.quizStep === "number") setStep(event.state.quizStep); }; window.addEventListener("popstate", onPop); window.history.replaceState({ ...window.history.state, quizStep: 0 }, ""); return () => { window.removeEventListener("popstate", onPop); window.clearTimeout(initializeDestination); window.clearTimeout(timer.current); }; }, []);
 
   const adaptiveQuestions = useMemo(() => questionsFor(answers), [answers]);
   const current = adaptiveQuestions[step];
@@ -390,16 +391,19 @@ export default function TravelQuiz() {
       originCountryName: originDetails.countryName,
       travelAreaPreference,
       guestCount,
+      destination: preferredDestination?.id || null,
+      preferredDestination,
       createdAt: Date.now(),
     }));
     track("quiz_completed", { setting: answers.alive || "unknown", duration: answers.duration || "unknown" });
     setPhase("complete");
-    timer.current = window.setTimeout(() => window.location.assign("/thinking"), 850);
+    timer.current = window.setTimeout(() => window.location.assign(preferredDestination?.id ? `/thinking?destination=${encodeURIComponent(preferredDestination.id)}` : "/thinking"), 850);
   }
 
   if (phase === "complete") return <div className="grid min-h-[calc(100svh-5rem)] place-items-center bg-[#f5f3ef] px-5"><p className="text-[clamp(3.5rem,8vw,8rem)] font-medium tracking-[-0.07em]">We found it.</p></div>;
 
-  return <section id="quiz" className={`overflow-hidden bg-[#f5f3ef] text-[#171717] transition-[opacity,transform] duration-300 ease-out ${phase === "leaving" ? "-translate-y-2 opacity-0" : phase === "leaving-back" ? "translate-y-2 opacity-0" : phase === "entering" ? "translate-y-2 opacity-0" : "translate-y-0 opacity-100"}`}>
+  return <section id="quiz" className={`relative overflow-hidden bg-[#f5f3ef] text-[#171717] transition-[opacity,transform] duration-300 ease-out ${phase === "leaving" ? "-translate-y-2 opacity-0" : phase === "leaving-back" ? "translate-y-2 opacity-0" : phase === "entering" ? "translate-y-2 opacity-0" : "translate-y-0 opacity-100"}`}>
+    {preferredDestination ? <div className="pointer-events-none absolute inset-x-0 top-1 z-40 text-center"><span className="inline-flex border border-black/10 bg-[#f5f3ef]/90 px-3 py-1.5 text-[9px] uppercase tracking-[0.14em] text-black/55 backdrop-blur">Planning {preferredDestination.name}</span></div> : null}
     {step < adaptiveQuestions.length ? current.type === "budget" ? <BudgetQuestion value={exactBudget} includes={budgetIncludes} onValueChange={setExactBudget} onToggle={(key) => setBudgetIncludes((currentIncludes) => ({ ...currentIncludes, [key]: !currentIncludes[key] }))} onBack={back} onContinue={continueBudget} step={step} /> : <VisualQuestion question={current} value={answers[current.id]} onChoose={choose} step={step} /> : step === adaptiveQuestions.length ? <DiscoveryQuestion value={discoveryLevel} onChange={setDiscoveryLevel} onBack={back} onContinue={continueDiscovery} /> : <DateQuestion answers={answers} setAnswers={setAnswers} tripStart={tripStart} tripEnd={tripEnd} isFlexible={isFlexible} setTripStart={setTripStart} setTripEnd={setTripEnd} setIsFlexible={setIsFlexible} originDetails={originDetails} setOriginDetails={setOriginDetails} travelAreaPreference={travelAreaPreference} setTravelAreaPreference={setTravelAreaPreference} guestCount={guestCount} setGuestCount={setGuestCount} onBack={back} onSubmit={submit} canSubmit={canSubmit} />}
   </section>;
 }

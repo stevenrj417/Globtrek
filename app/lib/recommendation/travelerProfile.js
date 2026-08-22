@@ -79,6 +79,7 @@ export function normalizeTravelerProfile(input = {}) {
     budgetIncludesActivities: includedBudgetCategories.activities,
     budgetIncludesTransportation: includedBudgetCategories.transportation,
     budgetMode: input.budgetMode === "closest" ? "closest" : "under",
+    preferredDestinationId: input.destination || input.preferredDestination?.id || null,
     pace: answers.escape || null,
     relaxationPreference: ["Slow mornings", "Mostly relaxing"].includes(answers.escape) ? "high" : answers.escape === "Packed schedule" ? "low" : "medium",
     climatePreference: answers.alive || null,
