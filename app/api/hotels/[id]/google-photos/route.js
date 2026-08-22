@@ -20,6 +20,10 @@ function noStore(payload, status = 200) {
   return NextResponse.json(payload, { status, headers: { "Cache-Control": "private, no-store, max-age=0" } });
 }
 
+function shortPrivateCache(payload) {
+  return NextResponse.json(payload, { headers: { "Cache-Control": "private, max-age=60, stale-while-revalidate=120" } });
+}
+
 export async function GET(request, { params }) {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
   if (rateLimited(ip)) return noStore({ error: "Too many photo requests" }, 429);
@@ -32,8 +36,8 @@ export async function GET(request, { params }) {
     const { data: hotel, error } = await supabase.from("hotel_catalog").select("id,google_place_id,google_place_verified").eq("id", id).eq("active", true).maybeSingle();
     if (error) throw new Error(`hotel_lookup_failed:${error.code || "unknown"}`);
     if (!hotel?.google_place_verified || !hotel.google_place_id) return noStore({ error: "Verified property photography unavailable" }, 404);
-    const manifest = await new GooglePlacesHotelProvider().getPhotoManifest(hotel.google_place_id, { limit, maxWidthPx: limit === 1 ? 1400 : 1800 });
-    return noStore({ photos: manifest.photos, googleMapsUri: manifest.googleMapsUri, place: manifest.place });
+    const manifest = await new GooglePlacesHotelProvider().getPhotoManifest(hotel.google_place_id, { limit, maxWidthPx: limit <= 2 ? 1400 : 1800 });
+    return shortPrivateCache({ photos: manifest.photos, googleMapsUri: manifest.googleMapsUri, place: manifest.place });
   } catch (error) {
     const status = error?.code === "google_places_rate_limited" ? 429 : 502;
     return noStore({ error: status === 429 ? "Photography provider is busy" : "Hotel photography is temporarily unavailable" }, status);

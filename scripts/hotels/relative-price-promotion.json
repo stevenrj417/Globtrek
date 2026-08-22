@@ -1,0 +1,241 @@
+{
+  "generatedAt": "2026-08-22T00:15:59.022Z",
+  "dryRun": false,
+  "considered": 196,
+  "eligible": 164,
+  "rejectedBySanity": 32,
+  "updated": 162,
+  "skippedExistingReady": 1,
+  "missingStagedRecord": 1,
+  "tiers": {
+    "value": 15,
+    "midrange": 30,
+    "premium": 119
+  },
+  "rejections": [
+    {
+      "googlePlaceId": "ChIJK5Vbkw6CQDsR2jk3dojCS7o",
+      "name": "Adaaran Prestige Vadoo",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJVXegYUspRzsRFSlfoEkZBVQ",
+      "name": "Villa Park, Maldives",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJR9rfAfV9PzsRVfw0W6mLTD8",
+      "name": "SAii Lagoon Maldives, Curio Collection by Hilton",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJ3TQz4tyWOxMR9A-ZqgS_wLE",
+      "name": "Hotel Margherita",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJNwlfGNmWOxMRZHHzZxzyxqU",
+      "name": "Hotel Tramonto D'Oro",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJq4ZhXDeKMW0RQ4o2oEunz_I",
+      "name": "Sudima Christchurch City",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJf3Yn4HQmPTURXTh8e-SfZ4U",
+      "name": "samana hotel Yakushima",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJBftrupHAfEcRRV0PxHPTW_A",
+      "name": "Monte Mulini Adults Exclusive Hotel by Maistra Collection",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJc6mjSkEqLzERhsn06iuZKMk",
+      "name": "Le Sen Boutique Hotel",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJ7-RL38MJxkcRpCx1xAEjo5I",
+      "name": "Hotel Estherea",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJz30pGoV2nxQRn_b9CM9kchk",
+      "name": "Bellevalia Hydra | A Seaside Retreat",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJUwVzTvifjkgRAL1ViiQMua8",
+      "name": "Duisdale House Hotel",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJ1eMJfVmdX0YRcDd1tGoRP9E",
+      "name": "Bank Hotel",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJDSwwLVWhLYcRd-gDBqvov8o",
+      "name": "Arabella Hotel Sedona",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJK-lXMCKVuEwRxdKXMHpcFm4",
+      "name": "Hôtel Corbin",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJ9XZ3vIluQUYRi4dYAeqsd5U",
+      "name": "Citybox Oslo",
+      "failures": [
+        "value_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJGTyFVjz4pkcRt8FXhF9Y2Ow",
+      "name": "Pentahotel Leipzig",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJ36aD5O1Rw0cRFW26Y9OOgHk",
+      "name": "The Pand Hotel",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJ62T0rOiWW0gRvChZfVsVusc",
+      "name": "HYDE Hotel",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJf6vKBGTHdkgR1uN9vAFDN8E",
+      "name": "The Store Oxford",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJne6g8GG7rhIRJ5_XAOee1Ps",
+      "name": "ibis Styles Toulouse Centre Capitole",
+      "failures": [
+        "value_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJN6uWRp68rhIRC9VoO58Xhso",
+      "name": "Hotel Albert 1er Hotel Toulouse",
+      "failures": [
+        "value_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJZ2IbtLwsKhMR13Qe7JOtRZI",
+      "name": "Hotel Athena",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJw9AboLgsKhMRv5E42NtqTQQ",
+      "name": "Hotel NH Siena",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJzWF1Mhs05xIRuw7m3pKXDg0",
+      "name": "Hotel Villa Fanny",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJuRoQM59pKhURIHWJDb3akaY",
+      "name": "Zara Cave Hotel +10 | Cave Hotel in Cappadocia",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJg2V9IX9jNhQR940cRZ8B-SU",
+      "name": "Kato Dool Wellness Resort",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJ7VkovP6ESxYRQ_Be7c0R8II",
+      "name": "Ramada Addis Hotel",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJGe6DK0PaXBgRmSNWxTB266o",
+      "name": "Wellworth Zanzibar Beach Resort",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJ4-8Yl6IOlR4RISQxzXcedJc",
+      "name": "Reef Hotel",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJQRgMJ0qo9x4RAOf0KDBgmh0",
+      "name": "Garden Court South Beach",
+      "failures": [
+        "value_positioning_conflict"
+      ]
+    },
+    {
+      "googlePlaceId": "ChIJzy_R_cHnaY8RnY7GgdmDFPI",
+      "name": "Puerta Azul Boutique Hotel | Roatan",
+      "failures": [
+        "premium_positioning_conflict"
+      ]
+    }
+  ]
+}

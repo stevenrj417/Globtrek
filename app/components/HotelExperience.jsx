@@ -30,28 +30,32 @@ function PhotoCredit({ photo, hotel }) {
   return <a href={sourceUrl} target="_blank" rel="noopener" className="absolute bottom-2 right-2 bg-black/60 px-2 py-1 text-[8px] text-white/90 backdrop-blur-sm">{label}</a>;
 }
 
-function PropertyImage({ photo, hotel, destination, className = "", sizes = "100vw", priority = false }) {
-  const src = photo?.photoUri || hotel.image;
-  const [failedSrc, setFailedSrc] = useState(null);
-  if (!src || failedSrc === src) return <div className={`grid place-items-center bg-[#d8d2c8] px-6 text-center text-[10px] tracking-[.12em] text-black/45 ${className}`}>PROPERTY PHOTOGRAPHY UNAVAILABLE</div>;
-  return <div className={`relative overflow-hidden bg-[#d8d2c8] ${className}`}><Image src={src} alt={`${hotel.name}, ${destination.city}`} fill priority={priority} unoptimized={Boolean(photo?.photoUri)} sizes={sizes} className="object-cover" onError={() => setFailedSrc(src)} /><PhotoCredit photo={photo} hotel={hotel} /></div>;
+function PropertyImage({ photo, hotel, destination, className = "", sizes = "100vw", priority = false, loading = false }) {
+  const candidates = [...(Array.isArray(photo) ? photo : photo ? [photo] : []), ...(hotel.image ? [{ photoUri: hotel.image, authorAttributions: [], googleMapsUri: null }] : [])];
+  const [failedSources, setFailedSources] = useState([]);
+  const selected = candidates.find((candidate) => candidate?.photoUri && !failedSources.includes(candidate.photoUri));
+  const src = selected?.photoUri;
+  if (!src) return <div className={`grid place-items-center overflow-hidden bg-[#d8d2c8] px-6 text-center text-[10px] tracking-[.12em] text-black/45 ${loading ? "animate-pulse" : ""} ${className}`}>{loading ? "LOADING VERIFIED PROPERTY PHOTOGRAPHY" : "PROPERTY PHOTOGRAPHY UNAVAILABLE"}</div>;
+  return <div className={`relative overflow-hidden bg-[#d8d2c8] ${className}`}><Image src={src} alt={`${hotel.name}, ${destination.city}`} fill priority={priority} unoptimized={Boolean(hotel.googlePhotoManifestUrl && src !== hotel.image)} sizes={sizes} className="object-cover" onError={() => setFailedSources((current) => [...current, src])} /><PhotoCredit photo={selected} hotel={hotel} /></div>;
 }
 
-function useHotelMedia(hotel, limit = 1) {
+function useHotelMedia(hotel, limit = 2) {
   const fallback = useMemo(() => hotel.image ? [{ photoUri: hotel.image, authorAttributions: [], googleMapsUri: null }] : [], [hotel.image]);
   const [verifiedPhotos, setVerifiedPhotos] = useState([]);
   const [place, setPlace] = useState(null);
+  const [status, setStatus] = useState(hotel.googlePhotoManifestUrl ? "loading" : "settled");
   useEffect(() => {
     if (!hotel.googlePhotoManifestUrl) return undefined;
     const controller = new AbortController();
     const separator = hotel.googlePhotoManifestUrl.includes("?") ? "&" : "?";
-    fetch(`${hotel.googlePhotoManifestUrl}${separator}limit=${limit}`, { signal: controller.signal, cache: "no-store" }).then((response) => response.ok ? response.json() : null).then((manifest) => {
+    fetch(`${hotel.googlePhotoManifestUrl}${separator}limit=${limit}`, { signal: controller.signal }).then((response) => response.ok ? response.json() : null).then((manifest) => {
       if (manifest?.photos?.length) setVerifiedPhotos(manifest.photos.slice(0, limit));
       if (manifest?.place) setPlace(manifest.place);
-    }).catch((error) => { if (error.name !== "AbortError") console.warn("Verified hotel photography is temporarily unavailable."); });
+      setStatus("settled");
+    }).catch((error) => { if (error.name !== "AbortError") { setStatus("settled"); console.warn("Verified hotel photography is temporarily unavailable."); } });
     return () => controller.abort();
   }, [hotel.googlePhotoManifestUrl, limit]);
-  return { photos: verifiedPhotos.length ? verifiedPhotos : fallback, place };
+  return { photos: verifiedPhotos.length ? verifiedPhotos : fallback, place, loading: status === "loading" };
 }
 
 function HotelDrawer({ hotel, destination, trip, photos, onClose, onChoose }) {
@@ -69,7 +73,7 @@ function HotelDrawer({ hotel, destination, trip, photos, onClose, onChoose }) {
     <div className="max-h-[94svh] w-full overflow-y-auto bg-[#f4f0e8] sm:max-w-[1120px]">
       <div className="sticky top-0 z-10 flex justify-end p-3"><button ref={closeRef} type="button" onClick={onClose} aria-label="Close hotel details" className="grid h-11 w-11 place-items-center rounded-full bg-[#171714] text-xl text-white">×</button></div>
       <div className={`-mt-14 grid h-[52svh] gap-1 ${gallery.length === 1 ? "grid-cols-1" : gallery.length === 2 ? "grid-cols-2" : gallery.length === 3 ? "grid-cols-2 grid-rows-2" : "grid-cols-2 grid-rows-2 sm:grid-cols-3"}`}>
-        <PropertyImage photo={gallery[0]} hotel={hotel} destination={destination} className={gallery.length > 2 ? "row-span-2" : ""} sizes="(min-width:640px) 50vw,100vw" />
+        <PropertyImage photo={gallery} hotel={hotel} destination={destination} loading={fullMedia.loading} className={gallery.length > 2 ? "row-span-2" : ""} sizes="(min-width:640px) 50vw,100vw" />
         {gallery.slice(1, 5).map((photo, index) => <PropertyImage key={photo.photoUri || index} photo={photo} hotel={hotel} destination={destination} className={`${gallery.length > 3 && index > 1 ? "hidden sm:block" : ""} min-h-0`} sizes="(min-width:640px) 33vw,50vw" />)}
       </div>
       <div className="grid gap-10 p-7 sm:p-12 lg:grid-cols-[1.25fr_.75fr]">
@@ -81,14 +85,14 @@ function HotelDrawer({ hotel, destination, trip, photos, onClose, onChoose }) {
 }
 
 function HotelCard({ hotel, destination, trip, index, count, onChoose, onDetails, onPrevious, onNext, priority = false }) {
-  const { photos, place } = useHotelMedia(hotel);
+  const { photos, place, loading } = useHotelMedia(hotel);
   const verifiedHotel = { ...hotel, address: place?.formattedAddress || hotel.address, rating: place?.rating ?? hotel.rating, reviewCount: place?.reviewCount ?? hotel.reviewCount };
   const bookingUrl = bookingPropertyUrl(verifiedHotel, trip);
   const profile = normalizeTravelerProfile(trip);
   return <article className="grid min-w-full snap-center bg-[#e7e0d5] lg:grid-cols-[.72fr_1.28fr]" aria-label={`${hotel.name}, hotel ${index + 1} of ${count}`}>
     <div className="flex flex-col justify-between p-7 sm:p-10 lg:order-1 lg:min-h-[650px] lg:p-12"><div><div className="flex justify-between gap-4 text-[10px] text-black/45"><span>{index === 0 ? "OUR RECOMMENDATION" : "ALTERNATIVE STAY"}</span><span className="font-serif text-base text-black">{String(index + 1).padStart(2, "0")} <i className="mx-1 not-italic text-black/25">/</i> {String(count).padStart(2, "0")}</span></div><button type="button" onClick={() => onDetails({ hotel: verifiedHotel, photos })} className="mt-8 block text-left"><h3 className="font-serif text-[clamp(2.7rem,5vw,5.4rem)] leading-[.88] tracking-[-.05em]">{verifiedHotel.name}</h3></button><p className="mt-6 text-sm text-black/58">{locationLabel(verifiedHotel, destination)}{verifiedHotel.starRating ? ` · ${verifiedHotel.starRating}-star` : ""} · {profile.tripLength} nights</p>{ratingLabel(verifiedHotel) ? <p className="mt-2 text-sm">{ratingLabel(verifiedHotel)}</p> : null}<p className="mt-3 text-sm font-medium">{priceLabel(verifiedHotel)}</p>{verifiedHotel.amenities?.length ? <p className="mt-8 text-sm leading-7 text-black/55">{verifiedHotel.amenities.slice(0, 5).join(" · ")}</p> : null}</div>
       <div className="mt-10"><div className="flex gap-5 text-xs"><button type="button" onClick={() => onDetails({ hotel: verifiedHotel, photos })} className="border-b border-black/35 pb-1">View details</button><SaveItemButton item={{ type: "hotel", key: verifiedHotel.id, title: verifiedHotel.name, subtitle: `${destination.city}, ${destination.country}`, imageUrl: verifiedHotel.image || null, data: { destinationAirport: destination.airport, bookingUrl: verifiedHotel.bookingUrl || null } }} className="text-xs text-black/55" /></div>{bookingUrl ? <a href={bookingUrl} target="_blank" rel="noopener sponsored" onClick={() => onChoose(verifiedHotel)} className="mt-7 flex min-h-14 items-center justify-between bg-[#171714] px-6 text-xs text-white">Check rooms <span aria-hidden="true">↗</span></a> : <p className="mt-7 text-sm text-black/45">Booking link being verified</p>}</div></div>
-    <div onClick={(event) => { if (!event.target.closest("a,button")) onDetails({ hotel: verifiedHotel, photos }); }} className="group relative aspect-[4/5] cursor-pointer lg:order-2 lg:aspect-auto lg:min-h-[650px]"><PropertyImage photo={photos[0]} hotel={verifiedHotel} destination={destination} priority={priority} className="absolute inset-0" sizes="(min-width:1024px) 64vw,100vw" /><button type="button" onClick={(event) => { event.stopPropagation(); onPrevious(); }} aria-label="Previous hotel" className="absolute left-3 top-1/2 z-10 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full bg-[#f4f0e8]/90 text-lg text-black backdrop-blur-sm transition hover:bg-white sm:left-5">←</button><button type="button" onClick={(event) => { event.stopPropagation(); onNext(); }} aria-label="Next hotel" className="absolute right-3 top-1/2 z-10 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full bg-[#f4f0e8]/90 text-lg text-black backdrop-blur-sm transition hover:bg-white sm:right-5">→</button></div>
+    <div onClick={(event) => { if (!event.target.closest("a,button")) onDetails({ hotel: verifiedHotel, photos }); }} className="group relative aspect-[4/5] cursor-pointer lg:order-2 lg:aspect-auto lg:min-h-[650px]"><PropertyImage photo={photos} hotel={verifiedHotel} destination={destination} priority={priority} loading={loading} className="absolute inset-0" sizes="(min-width:1024px) 64vw,100vw" /><button type="button" onClick={(event) => { event.stopPropagation(); onPrevious(); }} aria-label="Previous hotel" className="absolute left-3 top-1/2 z-10 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full bg-[#f4f0e8]/90 text-lg text-black backdrop-blur-sm transition hover:bg-white sm:left-5">←</button><button type="button" onClick={(event) => { event.stopPropagation(); onNext(); }} aria-label="Next hotel" className="absolute right-3 top-1/2 z-10 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full bg-[#f4f0e8]/90 text-lg text-black backdrop-blur-sm transition hover:bg-white sm:right-5">→</button></div>
   </article>;
 }
 

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { AuthSheet } from "../components/AuthSheet";
 import { useAuth } from "../components/AuthProvider";
+import { HotelPropertyPhoto } from "../components/HotelPropertyPhoto";
 import { createClient } from "../lib/supabase/client";
 import { ShareTripButton } from "../components/ShareTripButton";
 import { ResumeSearchButton } from "../components/ResumeSearchButton";
@@ -25,7 +26,7 @@ function EmptyState({ title, copy, href, action }) {
 
 function SavedGrid({ items }) {
   return <div className="grid gap-px bg-black/10 sm:grid-cols-2 lg:grid-cols-3">{items.map((item) => <article key={item.id} className="bg-[#f7f7f4] p-5">
-    <div className="relative aspect-[4/3] overflow-hidden bg-black/[.04]">{item.image_url ? <Image src={item.image_url} alt="" fill unoptimized sizes="(max-width: 640px) 90vw, 32vw" className="object-cover" /> : <div className="grid h-full place-items-center text-[9px] uppercase tracking-[0.22em] text-black/30">Saved {item.item_type}</div>}</div>
+    <div className="group relative aspect-[4/3] overflow-hidden bg-black/[.04]">{item.item_type === "hotel" ? <HotelPropertyPhoto hotel={{ name: item.title, googlePhotoManifestUrl: `/api/hotels/${item.item_key}/google-photos` }} destination={{ city: item.subtitle || "saved destination" }} index={0} /> : item.image_url ? <Image src={item.image_url} alt="" fill unoptimized sizes="(max-width: 640px) 90vw, 32vw" className="object-cover" /> : <div className="grid h-full place-items-center text-[9px] uppercase tracking-[0.22em] text-black/30">Saved {item.item_type}</div>}</div>
     <p className="mt-5 text-[9px] uppercase tracking-[0.2em] text-black/38">{item.item_type}</p><h3 className="mt-2 font-serif text-2xl tracking-[-0.025em]">{item.title}</h3>{item.subtitle ? <p className="mt-2 text-xs text-black/45">{item.subtitle}</p> : null}
   </article>)}</div>;
 }

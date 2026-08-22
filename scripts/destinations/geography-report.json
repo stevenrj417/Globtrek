@@ -1,0 +1,229 @@
+{
+  "generatedAt": "2026-08-22T00:17:11.404Z",
+  "destinations": 300,
+  "macroregions": {
+    "North America": {
+      "count": 34,
+      "percentage": 11.3
+    },
+    "Latin America / Caribbean": {
+      "count": 51,
+      "percentage": 17
+    },
+    "Europe": {
+      "count": 135,
+      "percentage": 45
+    },
+    "Africa": {
+      "count": 27,
+      "percentage": 9
+    },
+    "Middle East": {
+      "count": 15,
+      "percentage": 5
+    },
+    "Asia": {
+      "count": 32,
+      "percentage": 10.7
+    },
+    "Oceania / Pacific": {
+      "count": 6,
+      "percentage": 2
+    }
+  },
+  "subregions": {
+    "North America — United States": {
+      "count": 24,
+      "percentage": 8,
+      "countryCount": 1
+    },
+    "North America — Canada": {
+      "count": 10,
+      "percentage": 3.3,
+      "countryCount": 1
+    },
+    "Latin America / Caribbean — Mexico": {
+      "count": 10,
+      "percentage": 3.3,
+      "countryCount": 1
+    },
+    "Latin America / Caribbean — Central America": {
+      "count": 6,
+      "percentage": 2,
+      "countryCount": 5
+    },
+    "Latin America / Caribbean — Caribbean": {
+      "count": 7,
+      "percentage": 2.3,
+      "countryCount": 7
+    },
+    "Latin America / Caribbean — Northern South America": {
+      "count": 4,
+      "percentage": 1.3,
+      "countryCount": 1
+    },
+    "Latin America / Caribbean — Andean South America": {
+      "count": 7,
+      "percentage": 2.3,
+      "countryCount": 3
+    },
+    "Latin America / Caribbean — Southern South America": {
+      "count": 11,
+      "percentage": 3.7,
+      "countryCount": 4
+    },
+    "Latin America / Caribbean — Brazil": {
+      "count": 6,
+      "percentage": 2,
+      "countryCount": 1
+    },
+    "Europe — Western Europe": {
+      "count": 22,
+      "percentage": 7.3,
+      "countryCount": 5
+    },
+    "Europe — Northern Europe": {
+      "count": 29,
+      "percentage": 9.7,
+      "countryCount": 9
+    },
+    "Europe — Southern Europe": {
+      "count": 56,
+      "percentage": 18.7,
+      "countryCount": 11
+    },
+    "Europe — Central Europe": {
+      "count": 23,
+      "percentage": 7.7,
+      "countryCount": 7
+    },
+    "Europe — Eastern Europe": {
+      "count": 5,
+      "percentage": 1.7,
+      "countryCount": 2
+    },
+    "Africa — North Africa": {
+      "count": 9,
+      "percentage": 3,
+      "countryCount": 3
+    },
+    "Africa — West Africa": {
+      "count": 3,
+      "percentage": 1,
+      "countryCount": 3
+    },
+    "Africa — East Africa": {
+      "count": 8,
+      "percentage": 2.7,
+      "countryCount": 7
+    },
+    "Africa — Central Africa": {
+      "count": 0,
+      "percentage": 0,
+      "countryCount": 0
+    },
+    "Africa — Southern Africa": {
+      "count": 7,
+      "percentage": 2.3,
+      "countryCount": 4
+    },
+    "Middle East — Eastern Mediterranean": {
+      "count": 10,
+      "percentage": 3.3,
+      "countryCount": 4
+    },
+    "Middle East — Arabian Peninsula": {
+      "count": 5,
+      "percentage": 1.7,
+      "countryCount": 4
+    },
+    "Asia — East Asia": {
+      "count": 14,
+      "percentage": 4.7,
+      "countryCount": 4
+    },
+    "Asia — Southeast Asia": {
+      "count": 12,
+      "percentage": 4,
+      "countryCount": 8
+    },
+    "Asia — South Asia": {
+      "count": 3,
+      "percentage": 1,
+      "countryCount": 2
+    },
+    "Asia — Central Asia / Caucasus": {
+      "count": 3,
+      "percentage": 1,
+      "countryCount": 2
+    },
+    "Oceania / Pacific — Australia": {
+      "count": 2,
+      "percentage": 0.7,
+      "countryCount": 1
+    },
+    "Oceania / Pacific — New Zealand": {
+      "count": 2,
+      "percentage": 0.7,
+      "countryCount": 1
+    },
+    "Oceania / Pacific — Pacific Islands": {
+      "count": 2,
+      "percentage": 0.7,
+      "countryCount": 1
+    }
+  },
+  "sameNormalizedNames": [
+    [
+      {
+        "destinationId": "la-paz-41937",
+        "name": "LA PAZ",
+        "country": "MEXICO"
+      },
+      {
+        "destinationId": "la-paz-a001a",
+        "name": "LA PAZ",
+        "country": "BOLIVIA"
+      }
+    ]
+  ],
+  "findings": {
+    "overrepresentation": [
+      "Europe"
+    ],
+    "underrepresentation": [
+      "Oceania / Pacific"
+    ],
+    "zeroSubregions": [
+      "Africa — Central Africa"
+    ],
+    "lowDiversitySubregions": [
+      {
+        "region": "Latin America / Caribbean — Northern South America",
+        "destinations": 4,
+        "countries": 1
+      },
+      {
+        "region": "Europe — Eastern Europe",
+        "destinations": 5,
+        "countries": 2
+      },
+      {
+        "region": "Asia — South Asia",
+        "destinations": 3,
+        "countries": 2
+      },
+      {
+        "region": "Asia — Central Asia / Caucasus",
+        "destinations": 3,
+        "countries": 2
+      },
+      {
+        "region": "Oceania / Pacific — Pacific Islands",
+        "destinations": 2,
+        "countries": 1
+      }
+    ],
+    "note": "Distribution findings are recommendations only; no destination membership was changed."
+  }
+}

@@ -241,3 +241,18 @@ test("licensed fallback photo attribution is rendered", async () => {
   assert.match(component, /licensedName/);
   assert.match(component, /sourcePageUrl/);
 });
+
+test("hotel photo surfaces use short caching and exact-property fallback photos", async () => {
+  const [route, experience, propertyPhoto, account] = await Promise.all([
+    "../app/api/hotels/[id]/google-photos/route.js",
+    "../app/components/HotelExperience.jsx",
+    "../app/components/HotelPropertyPhoto.jsx",
+    "../app/account/page.jsx",
+  ].map((path) => readFile(new URL(path, import.meta.url), "utf8")));
+  assert.match(route, /private, max-age=60/);
+  assert.match(experience, /useHotelMedia\(hotel, limit = 2\)/);
+  assert.match(experience, /failedSources/);
+  assert.match(propertyPhoto, /limit=2/);
+  assert.match(account, /HotelPropertyPhoto/);
+  assert.match(account, /item\.item_key.*google-photos/);
+});
