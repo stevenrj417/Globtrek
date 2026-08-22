@@ -252,6 +252,7 @@ test("hotel photo surfaces use short caching and exact-property fallback photos"
   assert.match(route, /private, max-age=60/);
   assert.match(experience, /useHotelMedia\(hotel, limit = 2\)/);
   assert.match(experience, /failedSources/);
+  assert.match(experience, /fillContainer \? "absolute inset-0" : "relative"/);
   assert.match(propertyPhoto, /limit=2/);
   assert.match(account, /HotelPropertyPhoto/);
   assert.match(account, /item\.item_key.*google-photos/);
