@@ -1,5 +1,6 @@
 import { buildBudgetPlan } from "./budgetEngine.js";
 import { assessTravelFeasibility } from "./travelFeasibility.js";
+import { destinationMatchesTravelArea } from "./travelArea.js";
 
 const ANSWER_WEIGHTS = { alive: 16, duration: 8, luxury: 10, hotel: 9, escape: 8, self: 5 };
 
@@ -21,7 +22,7 @@ function tripLengthScore(destination, nights) {
 }
 
 export function rankDestinations(destinations, profile) {
-  return destinations.map((destination) => {
+  return destinations.filter((destination) => destinationMatchesTravelArea(destination, profile)).map((destination) => {
     const budgetPlan = buildBudgetPlan(profile, destination);
     const travelFeasibility = assessTravelFeasibility(profile, destination);
     const preferenceMatchScore = preferenceScore(destination, profile.otherExistingQuizPreferences);

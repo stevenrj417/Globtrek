@@ -1,3 +1,5 @@
+import { normalizeTravelArea, originFromTrip } from "./travelArea.js";
+
 const DURATION_NIGHTS = {
   "Long Weekend": 3,
   "Five Nights": 5,
@@ -39,6 +41,7 @@ function dateNights(start, end) {
 
 export function normalizeTravelerProfile(input = {}) {
   const answers = input.answers || {};
+  const originDetails = originFromTrip(input);
   const exactBudget = normalizeBudget(input.exactBudget ?? answers.exactBudget);
   const suppliedCategories = input.includedBudgetCategories || answers.includedBudgetCategories || {
     flights: input.budgetIncludesFlights,
@@ -54,8 +57,12 @@ export function normalizeTravelerProfile(input = {}) {
   const tripLength = dateNights(input.tripStart, input.tripEnd) || DURATION_NIGHTS[answers.duration] || 7;
 
   return {
-    version: 1,
-    origin: String(input.originAirport || input.origin || "").trim().toUpperCase() || null,
+    version: 2,
+    origin: originDetails?.airportCode || null,
+    originDetails,
+    originCountryCode: originDetails?.countryCode || null,
+    originCountry: originDetails?.countryName || null,
+    travelAreaPreference: normalizeTravelArea(input.travelAreaPreference || answers.travelAreaPreference),
     dates: {
       start: input.tripStart || null,
       end: input.tripEnd || null,

@@ -36,7 +36,7 @@ export default function ResultsPage() {
   useEffect(() => { const params = new URLSearchParams(window.location.search); const shared = params.get("trip") ? decodeTrip(params.get("trip")) : null; const raw = window.localStorage.getItem("globtrekQuiz"); const stored = shared?.quiz || (raw ? JSON.parse(raw) : { answers: {} }); const initialize = window.setTimeout(() => { setChosenAirport(shared?.destination || params.get("destination")); setQuiz(stored); }, 0); fetch("/api/match", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...stored, destination: shared?.destination || params.get("destination") }) }).then((response) => response.json()).then((data) => Array.isArray(data.matches) && data.matches.length && setRemoteMatches(data.matches)).catch(() => {}).finally(() => setPlanning(false)); const timer = window.setTimeout(() => setReady(true), 100); track("result_viewed", { shared: Boolean(shared) }); return () => { window.clearTimeout(initialize); window.clearTimeout(timer); }; }, []);
   const localMatches = useMemo(() => getMatches(quiz), [quiz]);
   const matches = remoteMatches || localMatches;
-  const trip = (chosenAirport ? matches.find((destination) => (destination.id || destination.airport) === chosenAirport) || destinations.find((destination) => (destination.id || destination.airport) === chosenAirport) : null) || matches[0];
+  const trip = (chosenAirport ? matches.find((destination) => (destination.id || destination.airport) === chosenAirport) : null) || matches[0];
   const destinationKey = trip?.id || trip?.airport;
   useEffect(() => { if (!destinationKey || !trip) return; const controller = new AbortController(); fetch("/api/recent", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ type: "destination", key: destinationKey, title: trip.city, subtitle: trip.country, imageUrl: trip.image, data: { id: destinationKey, airport: trip.airport } }), signal: controller.signal }).catch(() => {}); return () => controller.abort(); }, [destinationKey, trip]);
   useEffect(() => {
@@ -48,6 +48,7 @@ export default function ResultsPage() {
       destination: { id: destinationKey, city: trip.city, country: trip.country, airport: trip.airport, image: trip.image },
       trip: quiz,
       travelerProfile: profile,
+      preferences: { pace: profile.pace, budget: profile.exactBudget, familiarity: profile.unknownness, travelAreaPreference: profile.travelAreaPreference, originCountryCode: profile.originCountryCode, quizAnswers: profile.otherExistingQuizPreferences },
       exactBudget: profile.exactBudget,
       includedBudgetCategories: profile.includedBudgetCategories,
       itinerary: trip.plan,
@@ -57,7 +58,8 @@ export default function ResultsPage() {
     };
     window.sessionStorage.setItem("globtrekCurrentTrip", JSON.stringify({ trip, quiz, savedTrip }));
   }, [destinationKey, quiz, selectedHotel, trip]);
-  if (!ready || !quiz || !trip) return <main className="min-h-screen bg-[#f3f0eb]" />;
+  if (!ready || !quiz) return <main className="min-h-screen bg-[#f3f0eb]" />;
+  if (!trip) return <main className="grid min-h-screen place-items-center bg-[#f3f0eb] px-6 text-center text-[#171714]"><div><p className="text-[10px] uppercase tracking-[0.2em] text-black/40">No eligible destination</p><h1 className="mt-5 font-serif text-5xl tracking-[-0.04em]">Try a wider travel area.</h1><Link href="/discover" className="mt-8 inline-flex min-h-12 items-center border-b border-black text-sm">Return to the quiz</Link></div></main>;
 
   const profile = normalizeTravelerProfile(quiz);
   const budgetPlan = trip.budgetPlan;
@@ -67,7 +69,7 @@ export default function ResultsPage() {
   const total = midpoint ? `${money(midpoint)} estimated` : "Estimate pending";
   const sharedPayload = encodeTrip({ quiz, destination: destinationKey });
   const flightUrl = `${bookingLinks.flights}`;
-  const savedTrip = { clientTripKey: `${trip.id || trip.airport}:${sharedPayload.slice(0, 120)}`, sharePath: `/results?trip=${sharedPayload}`, destination: { id: destinationKey, city: trip.city, country: trip.country, airport: trip.airport, image: trip.image }, trip: quiz, travelerProfile: profile, exactBudget: profile.exactBudget, includedBudgetCategories: profile.includedBudgetCategories, itinerary: trip.plan || null, estimatedCosts: budgetPlan || null, costConfidence: budgetPlan?.confidence ?? null, bookingLinks: { hotel: selectedHotel?.bookingUrl || null, flight: flightUrl }, selections: { hotel: selectedHotel, flight: null, activities: [] } };
+  const savedTrip = { clientTripKey: `${trip.id || trip.airport}:${sharedPayload.slice(0, 120)}`, sharePath: `/results?trip=${sharedPayload}`, destination: { id: destinationKey, city: trip.city, country: trip.country, airport: trip.airport, image: trip.image }, trip: quiz, travelerProfile: profile, preferences: { pace: profile.pace, budget: profile.exactBudget, familiarity: profile.unknownness, travelAreaPreference: profile.travelAreaPreference, originCountryCode: profile.originCountryCode, quizAnswers: profile.otherExistingQuizPreferences }, exactBudget: profile.exactBudget, includedBudgetCategories: profile.includedBudgetCategories, itinerary: trip.plan || null, estimatedCosts: budgetPlan || null, costConfidence: budgetPlan?.confidence ?? null, bookingLinks: { hotel: selectedHotel?.bookingUrl || null, flight: flightUrl }, selections: { hotel: selectedHotel, flight: null, activities: [] } };
   function tripLink() { return `${window.location.origin}/results?trip=${encodeTrip({ quiz, destination: destinationKey })}`; }
   async function shareTrip() { const url = tripLink(); track("trip_shared", { destination: trip.city }); if (navigator.share) { try { await navigator.share({ title: `My GlobTrek trip to ${trip.city}`, url }); setShareStatus("Shared"); return; } catch {} } try { await navigator.clipboard.writeText(url); setShareStatus("Link copied"); } catch { window.prompt("Copy your trip link", url); } }
   async function refineTrip(label) { if (refining) return; setRefining(true); track("trip_refined", { refinement: label, destination: trip.city }); try { const response = await fetch("/api/match", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...quiz, tune: label.toLowerCase(), destination: destinationKey }) }); const data = await response.json(); if (Array.isArray(data.matches) && data.matches.length) setRemoteMatches(data.matches); setAdjustOpen(false); } finally { setRefining(false); } }
@@ -90,7 +92,7 @@ export default function ResultsPage() {
     <footer className="bg-[#171714] px-6 py-20 text-white sm:px-12"><div className="mx-auto flex max-w-[1240px] flex-col gap-10 sm:flex-row sm:items-end sm:justify-between"><div><p className="text-xs text-white/45">{trip.city} · {profile.tripLength} days</p><p className="mt-3 font-serif text-4xl">{flightSearched ? "Your plan is ready to review." : selectedHotel ? "Next, your flight." : "Start with your stay."}</p></div><a href={nextHref} className="inline-flex min-h-14 items-center justify-center bg-white px-8 text-sm font-medium text-black">{nextLabel}<span className="ml-4" aria-hidden="true">→</span></a></div></footer>
 
     <aside className="trip-dock fixed inset-x-2 bottom-2 z-40 overflow-hidden border border-white/10 bg-[#151513]/95 text-white shadow-[0_24px_80px_rgba(0,0,0,.28)] backdrop-blur-xl sm:inset-x-6 sm:bottom-5" aria-label="Booking progress">
-      <div className="h-px bg-white/12"><div className="h-px bg-[#d9ff63] transition-[width] duration-700" style={{ width: flightSearched ? "100%" : selectedHotel ? "66%" : "33%" }} /></div>
+      <div className="h-px bg-white/12"><div className="h-px bg-[#b99a5f] transition-[width] duration-700" style={{ width: flightSearched ? "100%" : selectedHotel ? "66%" : "33%" }} /></div>
       <div className="flex items-center gap-3 p-2.5 sm:gap-8 sm:px-5 sm:py-3">
         <div className="min-w-0 flex-1 sm:flex sm:items-center sm:gap-8"><div><p className="truncate font-serif text-base leading-none sm:text-xl">{trip.city}</p><p className="mt-1.5 truncate text-[9px] text-white/42">{heroDates || "Flexible dates"} · {profile.travelers} travelers</p></div><ol className="mt-2 hidden gap-7 text-[10px] sm:flex"><li className={selectedHotel ? "text-white" : "text-white/95"}>HOTEL {selectedHotel ? "✓" : "○"}</li><li className={flightSearched ? "text-white" : selectedHotel ? "text-white/95" : "text-white/35"}>FLIGHT {flightSearched ? "✓" : "○"}</li><li className={flightSearched ? "text-white/95" : "text-white/35"}>PLANS ○</li></ol></div>
         <a href={flightSearched ? "#itinerary" : nextHref} aria-label={flightSearched ? "View itinerary" : nextLabel} className="group flex h-12 shrink-0 items-center gap-4 bg-[#f4f0e8] px-4 text-[10px] font-medium text-black transition hover:bg-white sm:px-6"><span>{flightSearched ? "Continue" : nextLabel}</span><span aria-hidden="true">→</span></a>

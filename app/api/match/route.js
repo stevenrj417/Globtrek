@@ -259,6 +259,9 @@ export async function POST(request) {
   const forcedDestination = typeof body.destination === "string" ? ranked.find((destination) => (destination.id || destination.airport) === body.destination) : null;
   const fallback = forcedDestination ? [forcedDestination, ...ranked.filter((destination) => (destination.id || destination.airport) !== (forcedDestination.id || forcedDestination.airport))] : ranked;
   const primaryDestination = fallback[0];
+  if (!primaryDestination) {
+    return Response.json({ source: "fallback", aiStatus: "no_eligible_destination", travelerProfile, matches: [] }, { status: 422 });
+  }
   const nights = tripLength(body);
   const planDays = nights ? Math.min(28, Math.max(1, nights)) : itineraryDayCount(body);
   const tune = typeof body.tune === "string" ? body.tune.slice(0, 40) : "original";

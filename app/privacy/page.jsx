@@ -14,7 +14,7 @@ export default function PrivacyPage() {
     >
       <EditorialSection number="01" title="Information you provide">
         <p>
-          The discovery quiz asks about travel setting, pace, companions, accommodation style, interests, budget preference, trip length, and optional travel dates or flexibility.
+          The discovery quiz asks about travel setting, pace, companions, accommodation style, interests, budget preference, trip length, travel dates or flexibility, departure airport, and preferred travel area.
         </p>
       </EditorialSection>
       <EditorialSection number="02" title="Quiz storage and recommendation processing">

@@ -5,6 +5,7 @@ import { track } from "@vercel/analytics";
 import { useEffect, useMemo, useRef, useState } from "react";
 import airports from "../data/airports.json";
 import { discoverySliderToUnknownness, legacyBudgetLabel, normalizeBudget } from "../lib/recommendation/travelerProfile";
+import { structuredOrigin, TRAVEL_AREA_OPTIONS } from "../lib/recommendation/travelArea";
 
 const questions = [
   {
@@ -76,6 +77,12 @@ const questions = [
 ];
 
 const preferenceSteps = questions.length + 1;
+const airportSearchIndex = airports.map((airport) => ({
+  airport,
+  code: airport.code.toLowerCase(),
+  city: airport.city.toLowerCase(),
+  name: airport.name.toLowerCase(),
+}));
 
 const stayOptionsBySetting = {
   Ocean: ["Beach resort", "Private villa", "Boutique hotel", "Design hotel"],
@@ -163,17 +170,14 @@ function BudgetQuestion({ value, includes, onValueChange, onToggle, onBack, onCo
 }
 
 function AirportAutocomplete({ value, onChange }) {
-  const [query, setQuery] = useState(value || "");
+  const [query, setQuery] = useState(value ? `${value.city || value.airportName} (${value.airportCode})` : "");
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const normalized = query.trim().toLowerCase();
   const matches = useMemo(() => {
     if (!normalized) return [];
-    const ranked = airports
-      .map((airport) => {
-        const code = airport.code.toLowerCase();
-        const city = airport.city.toLowerCase();
-        const name = airport.name.toLowerCase();
+    const ranked = airportSearchIndex
+      .map(({ airport, code, city, name }) => {
         let rank = 99;
         if (code === normalized) rank = 0;
         else if (city === normalized) rank = 1;
@@ -190,7 +194,7 @@ function AirportAutocomplete({ value, onChange }) {
 
   function choose(airport) {
     setQuery(`${airport.city || airport.name} (${airport.code})`);
-    onChange(airport.code);
+    onChange(structuredOrigin(airport.code));
     setOpen(false);
     setActiveIndex(0);
   }
@@ -205,7 +209,7 @@ function AirportAutocomplete({ value, onChange }) {
 
   return <div className="relative mt-3">
     <input
-      className="w-full border border-black/20 bg-transparent px-5 py-4 text-base outline-none focus:border-black"
+      className="w-full border-0 border-b border-black/25 bg-transparent px-0 py-4 text-lg tracking-[-0.02em] outline-none transition-colors placeholder:text-black/28 focus:border-black"
       type="text"
       inputMode="text"
       autoComplete="off"
@@ -213,12 +217,13 @@ function AirportAutocomplete({ value, onChange }) {
       aria-autocomplete="list"
       aria-expanded={open && matches.length > 0}
       aria-controls="airport-suggestions"
+      aria-required="true"
       placeholder="City, airport, or code"
       value={query}
       onFocus={() => setOpen(true)}
       onBlur={() => window.setTimeout(() => setOpen(false), 150)}
       onKeyDown={handleKeyDown}
-      onChange={(event) => { setQuery(event.target.value); onChange(""); setOpen(true); setActiveIndex(0); }}
+      onChange={(event) => { setQuery(event.target.value); onChange(null); setOpen(true); setActiveIndex(0); }}
     />
     {open && normalized && <div id="airport-suggestions" role="listbox" className="absolute inset-x-0 top-full z-50 max-h-80 overflow-y-auto border-x border-b border-black/20 bg-[#fbfaf7] shadow-[0_18px_35px_rgba(0,0,0,0.12)]">
       {matches.length ? matches.map((airport, index) => <button
@@ -264,9 +269,8 @@ function DiscoveryQuestion({ value, onChange, onBack, onContinue }) {
   </div>;
 }
 
-function DateQuestion({ answers, setAnswers, tripStart, tripEnd, isFlexible, setTripStart, setTripEnd, setIsFlexible, originAirport, setOriginAirport, guestCount, setGuestCount, onBack, onSubmit, canSubmit }) {
+function DateQuestion({ answers, setAnswers, tripStart, tripEnd, isFlexible, setTripStart, setTripEnd, setIsFlexible, originDetails, setOriginDetails, travelAreaPreference, setTravelAreaPreference, guestCount, setGuestCount, onBack, onSubmit, canSubmit }) {
   const [mode, setMode] = useState(isFlexible ? "flexible" : "dates");
-  const summary = questions.map((question) => question.options?.find((option) => option.label === answers[question.id])).filter(Boolean).map((option) => option.display || option.label).join(" / ");
   const seasons = [["Spring", "Mar – May", "Spring (Mar-May)"], ["Summer", "Jun – Aug", "Summer (Jun-Aug)"], ["Fall", "Sep – Nov", "Fall (Sep-Nov)"], ["Winter", "Dec – Feb", "Winter (Dec-Feb)"]];
 
   function selectMode(nextMode) {
@@ -278,28 +282,33 @@ function DateQuestion({ answers, setAnswers, tripStart, tripEnd, isFlexible, set
   return <form onSubmit={onSubmit} className="quiz-stage grid min-h-svh bg-[#f5f3ef] lg:grid-cols-2">
     <div className="flex min-h-svh flex-col px-5 pb-8 pt-8 sm:px-10 lg:px-14 lg:py-10">
       <div className="flex items-center justify-between"><span className="text-xl font-semibold tracking-[-0.055em]">GLOBTREK</span><p className="text-[10px] uppercase tracking-[0.2em] text-[#777]">Trip details</p></div>
-      <div className="flex flex-1 flex-col justify-center py-14 lg:py-10">
+      <div className="flex flex-1 flex-col justify-center py-10 sm:py-14 lg:py-8">
         <p className="text-[10px] uppercase tracking-[0.2em] text-[#777]">Final step</p>
-        <h1 className="mt-6 max-w-xl text-[clamp(3.25rem,5.8vw,6.3rem)] font-medium leading-[0.9] tracking-[-0.075em]">When are you leaving?</h1>
-        <p className="mt-5 text-lg text-[#8a847d]">Flexible dates are welcome.</p>
-        <p className="mt-8 max-w-2xl border-l border-[#aaa39a] pl-6 text-[10px] uppercase leading-7 tracking-[0.18em] text-[#807970]">{summary}</p>
+        <h1 className="mt-5 max-w-xl text-[clamp(3rem,5.4vw,5.8rem)] font-medium leading-[0.9] tracking-[-0.075em]">When and from where?</h1>
 
-        <div className="mt-8 grid gap-4 sm:grid-cols-2">
-          <label><span className="text-[10px] uppercase tracking-[0.15em] text-[#555]">Flying from <span className="text-[#999]">· required</span></span><AirportAutocomplete value={originAirport} onChange={setOriginAirport} /></label>
-          <label><span className="text-[10px] uppercase tracking-[0.15em] text-[#555]">Travelers</span><input className="mt-3 w-full border border-black/20 bg-transparent px-5 py-4 text-base outline-none focus:border-black" type="number" min="1" max="30" value={guestCount} onChange={(event) => setGuestCount(event.target.value)} required /></label>
+        <div className="mt-9 grid gap-8 sm:grid-cols-[1fr_7rem]">
+          <label><span className="text-[10px] uppercase tracking-[0.18em] text-[#555]">Leaving from</span><AirportAutocomplete value={originDetails} onChange={setOriginDetails} /></label>
+          <label><span className="text-[10px] uppercase tracking-[0.18em] text-[#555]">Travelers</span><input className="mt-3 w-full border-0 border-b border-black/25 bg-transparent px-0 py-4 text-lg outline-none focus:border-black" type="number" min="1" max="30" value={guestCount} onChange={(event) => setGuestCount(event.target.value)} required /></label>
         </div>
 
-        <div className="mt-10 grid grid-cols-2 gap-3">
-          <button type="button" onClick={() => selectMode("dates")} className={`min-h-16 border px-4 text-[11px] font-semibold uppercase tracking-[0.1em] transition-colors ${mode === "dates" ? "border-black bg-[#171717] text-white" : "border-black/20 text-[#555] hover:border-black"}`}>I know my dates</button>
-          <button type="button" onClick={() => selectMode("flexible")} className={`min-h-16 border px-4 text-[11px] font-semibold uppercase tracking-[0.1em] transition-colors ${mode === "flexible" ? "border-black bg-[#171717] text-white" : "border-black/20 text-[#555] hover:border-black"}`}>I’m flexible</button>
+        <fieldset className="mt-9">
+          <legend className="text-[10px] uppercase tracking-[0.18em] text-[#555]">Where would you like to go?</legend>
+          <div role="radiogroup" className="mt-3 grid grid-cols-3 border border-black/15">
+            {TRAVEL_AREA_OPTIONS.map((option) => <button type="button" role="radio" key={option.value} aria-checked={travelAreaPreference === option.value} onClick={() => setTravelAreaPreference(option.value)} className={`min-h-14 border-r border-black/15 px-2 text-[10px] leading-4 transition-colors last:border-r-0 sm:px-3 ${travelAreaPreference === option.value ? "bg-[#171717] text-white" : "text-black/52 hover:text-black"}`}>{option.label}</button>)}
+          </div>
+        </fieldset>
+
+        <div className="mt-9 grid grid-cols-2 border border-black/15">
+          <button type="button" onClick={() => selectMode("dates")} className={`min-h-14 border-r border-black/15 px-4 text-[10px] font-medium uppercase tracking-[0.1em] transition-colors ${mode === "dates" ? "bg-[#171717] text-white" : "text-[#555] hover:text-black"}`}>I know my dates</button>
+          <button type="button" onClick={() => selectMode("flexible")} className={`min-h-14 px-4 text-[10px] font-medium uppercase tracking-[0.1em] transition-colors ${mode === "flexible" ? "bg-[#171717] text-white" : "text-[#555] hover:text-black"}`}>I’m flexible</button>
         </div>
 
-        <div className="min-h-32">
-          {mode === "dates" ? <div className="mt-9 grid gap-5 sm:grid-cols-2">
-            <label><span className="text-[10px] uppercase tracking-[0.15em] text-[#555]">Depart</span><input className="mt-3 w-full border border-black/20 bg-transparent px-5 py-4 text-base outline-none focus:border-black" type="date" value={tripStart} onChange={(event) => setTripStart(event.target.value)} required /></label>
-            <label><span className="text-[10px] uppercase tracking-[0.15em] text-[#555]">Return</span><input className="mt-3 w-full border border-black/20 bg-transparent px-5 py-4 text-base outline-none focus:border-black" min={tripStart} type="date" value={tripEnd} onChange={(event) => setTripEnd(event.target.value)} required /></label>
-          </div> : <div className="mt-9 grid grid-cols-2 border-l border-t border-black/15">
-            {seasons.map(([name, months, value]) => <button type="button" key={name} onClick={() => setAnswers((current) => ({ ...current, season: value }))} className={`min-h-20 border-b border-r border-black/15 px-4 text-left transition-colors ${answers.season === value ? "bg-[#171717] text-white" : "text-[#555] hover:text-black"}`}><strong className="block text-xs font-semibold uppercase tracking-[0.12em]">{name}</strong><span className={`mt-2 block text-[10px] uppercase tracking-[0.1em] ${answers.season === value ? "text-white/60" : "text-[#999]"}`}>{months}</span></button>)}
+        <div className="min-h-28">
+          {mode === "dates" ? <div className="mt-8 grid gap-6 sm:grid-cols-2">
+            <label><span className="text-[10px] uppercase tracking-[0.18em] text-[#555]">Depart</span><input className="mt-2 w-full border-0 border-b border-black/25 bg-transparent px-0 py-4 text-base outline-none focus:border-black" type="date" value={tripStart} onChange={(event) => setTripStart(event.target.value)} required /></label>
+            <label><span className="text-[10px] uppercase tracking-[0.18em] text-[#555]">Return</span><input className="mt-2 w-full border-0 border-b border-black/25 bg-transparent px-0 py-4 text-base outline-none focus:border-black" min={tripStart} type="date" value={tripEnd} onChange={(event) => setTripEnd(event.target.value)} required /></label>
+          </div> : <div className="mt-8 grid grid-cols-4 border border-black/15">
+            {seasons.map(([name, months, value]) => <button type="button" key={name} onClick={() => setAnswers((current) => ({ ...current, season: value }))} className={`min-h-20 border-r border-black/15 px-2 text-left transition-colors last:border-r-0 sm:px-3 ${answers.season === value ? "bg-[#171717] text-white" : "text-[#555] hover:text-black"}`}><strong className="block text-[10px] font-medium uppercase tracking-[0.1em]">{name}</strong><span className={`mt-2 block text-[9px] ${answers.season === value ? "text-white/60" : "text-[#999]"}`}>{months}</span></button>)}
           </div>}
         </div>
 
@@ -319,7 +328,8 @@ export default function TravelQuiz() {
   const [tripStart, setTripStart] = useState("");
   const [tripEnd, setTripEnd] = useState("");
   const [isFlexible, setIsFlexible] = useState(false);
-  const [originAirport, setOriginAirport] = useState("");
+  const [originDetails, setOriginDetails] = useState(null);
+  const [travelAreaPreference, setTravelAreaPreference] = useState("anywhere");
   const [guestCount, setGuestCount] = useState("2");
   const [discoveryLevel, setDiscoveryLevel] = useState(50);
   const [exactBudget, setExactBudget] = useState("");
@@ -331,7 +341,8 @@ export default function TravelQuiz() {
 
   const adaptiveQuestions = useMemo(() => questionsFor(answers), [answers]);
   const current = adaptiveQuestions[step];
-  const canSubmit = useMemo(() => normalizeBudget(exactBudget) !== null && Object.values(budgetIncludes).some(Boolean) && /^[A-Z]{3}$/.test(originAirport) && ((isFlexible && Boolean(answers.season)) || (!isFlexible && Boolean(tripStart) && Boolean(tripEnd))), [answers.season, budgetIncludes, exactBudget, isFlexible, originAirport, tripStart, tripEnd]);
+  const hasTravelDates = isFlexible ? Boolean(answers.season) : Boolean(tripStart && tripEnd && tripEnd >= tripStart);
+  const canSubmit = normalizeBudget(exactBudget) !== null && Object.values(budgetIncludes).some(Boolean) && Boolean(originDetails?.airportCode && originDetails?.countryCode) && hasTravelDates;
 
   function go(next, direction = "forward") {
     setPhase(direction === "back" ? "leaving-back" : "leaving");
@@ -373,7 +384,11 @@ export default function TravelQuiz() {
       tripStart,
       tripEnd,
       isFlexible,
-      originAirport,
+      originAirport: originDetails.airportCode,
+      originDetails,
+      originCountryCode: originDetails.countryCode,
+      originCountryName: originDetails.countryName,
+      travelAreaPreference,
       guestCount,
       createdAt: Date.now(),
     }));
@@ -385,6 +400,6 @@ export default function TravelQuiz() {
   if (phase === "complete") return <div className="grid min-h-[calc(100svh-5rem)] place-items-center bg-[#f5f3ef] px-5"><p className="text-[clamp(3.5rem,8vw,8rem)] font-medium tracking-[-0.07em]">We found it.</p></div>;
 
   return <section id="quiz" className={`overflow-hidden bg-[#f5f3ef] text-[#171717] transition-[opacity,transform] duration-300 ease-out ${phase === "leaving" ? "-translate-y-2 opacity-0" : phase === "leaving-back" ? "translate-y-2 opacity-0" : phase === "entering" ? "translate-y-2 opacity-0" : "translate-y-0 opacity-100"}`}>
-    {step < adaptiveQuestions.length ? current.type === "budget" ? <BudgetQuestion value={exactBudget} includes={budgetIncludes} onValueChange={setExactBudget} onToggle={(key) => setBudgetIncludes((currentIncludes) => ({ ...currentIncludes, [key]: !currentIncludes[key] }))} onBack={back} onContinue={continueBudget} step={step} /> : <VisualQuestion question={current} value={answers[current.id]} onChoose={choose} step={step} /> : step === adaptiveQuestions.length ? <DiscoveryQuestion value={discoveryLevel} onChange={setDiscoveryLevel} onBack={back} onContinue={continueDiscovery} /> : <DateQuestion answers={answers} setAnswers={setAnswers} tripStart={tripStart} tripEnd={tripEnd} isFlexible={isFlexible} setTripStart={setTripStart} setTripEnd={setTripEnd} setIsFlexible={setIsFlexible} originAirport={originAirport} setOriginAirport={setOriginAirport} guestCount={guestCount} setGuestCount={setGuestCount} onBack={back} onSubmit={submit} canSubmit={canSubmit} />}
+    {step < adaptiveQuestions.length ? current.type === "budget" ? <BudgetQuestion value={exactBudget} includes={budgetIncludes} onValueChange={setExactBudget} onToggle={(key) => setBudgetIncludes((currentIncludes) => ({ ...currentIncludes, [key]: !currentIncludes[key] }))} onBack={back} onContinue={continueBudget} step={step} /> : <VisualQuestion question={current} value={answers[current.id]} onChoose={choose} step={step} /> : step === adaptiveQuestions.length ? <DiscoveryQuestion value={discoveryLevel} onChange={setDiscoveryLevel} onBack={back} onContinue={continueDiscovery} /> : <DateQuestion answers={answers} setAnswers={setAnswers} tripStart={tripStart} tripEnd={tripEnd} isFlexible={isFlexible} setTripStart={setTripStart} setTripEnd={setTripEnd} setIsFlexible={setIsFlexible} originDetails={originDetails} setOriginDetails={setOriginDetails} travelAreaPreference={travelAreaPreference} setTravelAreaPreference={setTravelAreaPreference} guestCount={guestCount} setGuestCount={setGuestCount} onBack={back} onSubmit={submit} canSubmit={canSubmit} />}
   </section>;
 }
