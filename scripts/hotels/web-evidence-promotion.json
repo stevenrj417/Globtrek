@@ -1,0 +1,15 @@
+{
+  "generatedAt": "2026-08-22T01:24:22.921Z",
+  "dryRun": false,
+  "researched": 1184,
+  "eligible": 32,
+  "updated": 29,
+  "skippedExistingReady": 3,
+  "missingStagedRecord": 0,
+  "failedQualityFloor": 0,
+  "tiers": {
+    "value": 1,
+    "midrange": 5,
+    "premium": 26
+  }
+}

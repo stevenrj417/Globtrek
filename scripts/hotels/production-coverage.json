@@ -1,35 +1,35 @@
 {
-  "generatedAt": "2026-08-22T00:17:13.378Z",
+  "generatedAt": "2026-08-22T01:26:47.834Z",
   "destinations": 300,
   "uniqueDestinations": 300,
   "hotels": {
     "active": 2635,
-    "verified": 843,
-    "classified": 705,
-    "recommendationReady": 843,
-    "averageReadyPerDestination": 2.81,
+    "verified": 875,
+    "classified": 737,
+    "recommendationReady": 875,
+    "averageReadyPerDestination": 2.92,
     "googleIdentityVerified": 2634,
-    "threePhotosActive": 2634,
-    "fivePhotosActive": 2634,
-    "threePhotosRecommendationReady": 843,
-    "fivePhotosRecommendationReady": 843,
+    "threePhotosActive": 2633,
+    "fivePhotosActive": 2633,
+    "threePhotosRecommendationReady": 874,
+    "fivePhotosRecommendationReady": 874,
     "providerLinksVerified": 148,
     "providerCounts": {
       "booking_com_cj": 148,
       "google_places": 2487
     },
     "readyPriceCoverage": {
-      "value": 81,
-      "midrange": 135,
-      "premium": 489
+      "value": 82,
+      "midrange": 140,
+      "premium": 515
     },
     "readyVibeCoverage": {
-      "calm": 356,
-      "balanced": 321,
-      "energetic": 166
+      "calm": 374,
+      "balanced": 327,
+      "energetic": 174
     },
-    "destinationsAtThreeOrMore": 144,
-    "destinationsBelowThree": 156,
+    "destinationsAtThreeOrMore": 148,
+    "destinationsBelowThree": 152,
     "destinationsAtNineOrMore": 10,
     "destinationsBelowNine": 290,
     "destinationsUnableToReturnThree": [
@@ -72,7 +72,6 @@
       "KAŞ",
       "OHRID",
       "ÅLESUND",
-      "KORČULA",
       "HYDRA",
       "YEREVAN",
       "SARAJEVO",
@@ -89,7 +88,6 @@
       "SEATTLE",
       "DOHA",
       "ABU DHABI",
-      "BORA BORA",
       "CHICAGO",
       "MIAMI",
       "TORONTO",
@@ -155,7 +153,6 @@
       "CORK",
       "OXFORD",
       "CAMBRIDGE",
-      "PORTO SANTO",
       "FARO",
       "COIMBRA",
       "MÁLAGA",
@@ -167,7 +164,6 @@
       "ZAGREB",
       "BELGRADE",
       "SOFIA",
-      "BUCHAREST",
       "GDAŃSK",
       "INTERLAKEN",
       "ZERMATT",
@@ -190,7 +186,7 @@
       "GABORONE",
       "WADI MUSA"
     ],
-    "totalMatrixCellShortfalls": 2232
+    "totalMatrixCellShortfalls": 2215
   },
   "restaurants": {
     "active": 0,
@@ -931,18 +927,18 @@
       "destinationId": "BKK",
       "destination": "BANGKOK",
       "activeHotels": 12,
-      "verifiedHotels": 6,
-      "classifiedHotels": 2,
-      "recommendationReadyHotels": 6,
+      "verifiedHotels": 7,
+      "classifiedHotels": 3,
+      "recommendationReadyHotels": 7,
       "priceCoverage": {
         "value": 0,
         "midrange": 0,
-        "premium": 2
+        "premium": 3
       },
       "vibeCoverage": {
         "calm": 2,
         "balanced": 4,
-        "energetic": 0
+        "energetic": 1
       },
       "matrix": {
         "value.calm": 0,
@@ -953,7 +949,7 @@
         "midrange.energetic": 0,
         "premium.calm": 2,
         "premium.balanced": 0,
-        "premium.energetic": 0
+        "premium.energetic": 1
       },
       "matrixCellShortfalls": {
         "value.calm": 1,
@@ -962,11 +958,10 @@
         "midrange.calm": 1,
         "midrange.balanced": 1,
         "midrange.energetic": 1,
-        "premium.balanced": 1,
-        "premium.energetic": 1
+        "premium.balanced": 1
       },
       "canReturnThree": true,
-      "fivePhotoHotels": 6,
+      "fivePhotoHotels": 7,
       "verifiedProviderLinks": 4,
       "restaurants": 0,
       "activities": 0
@@ -1144,16 +1139,16 @@
       "destinationId": "MLE",
       "destination": "MALDIVES",
       "activeHotels": 13,
-      "verifiedHotels": 6,
-      "classifiedHotels": 2,
-      "recommendationReadyHotels": 6,
+      "verifiedHotels": 7,
+      "classifiedHotels": 3,
+      "recommendationReadyHotels": 7,
       "priceCoverage": {
         "value": 0,
         "midrange": 0,
-        "premium": 2
+        "premium": 3
       },
       "vibeCoverage": {
-        "calm": 2,
+        "calm": 3,
         "balanced": 4,
         "energetic": 0
       },
@@ -1164,7 +1159,7 @@
         "midrange.calm": 0,
         "midrange.balanced": 0,
         "midrange.energetic": 0,
-        "premium.calm": 2,
+        "premium.calm": 3,
         "premium.balanced": 0,
         "premium.energetic": 0
       },
@@ -1179,7 +1174,7 @@
         "premium.energetic": 1
       },
       "canReturnThree": true,
-      "fivePhotoHotels": 6,
+      "fivePhotoHotels": 7,
       "verifiedProviderLinks": 4,
       "restaurants": 0,
       "activities": 0
@@ -2272,17 +2267,17 @@
       "destinationId": "CHC",
       "destination": "NEW ZEALAND SOUTH ISLAND",
       "activeHotels": 11,
-      "verifiedHotels": 4,
-      "classifiedHotels": 0,
-      "recommendationReadyHotels": 4,
+      "verifiedHotels": 5,
+      "classifiedHotels": 1,
+      "recommendationReadyHotels": 5,
       "priceCoverage": {
         "value": 0,
         "midrange": 0,
-        "premium": 0
+        "premium": 1
       },
       "vibeCoverage": {
         "calm": 0,
-        "balanced": 4,
+        "balanced": 5,
         "energetic": 0
       },
       "matrix": {
@@ -2293,7 +2288,7 @@
         "midrange.balanced": 0,
         "midrange.energetic": 0,
         "premium.calm": 0,
-        "premium.balanced": 0,
+        "premium.balanced": 1,
         "premium.energetic": 0
       },
       "matrixCellShortfalls": {
@@ -2304,11 +2299,10 @@
         "midrange.balanced": 1,
         "midrange.energetic": 1,
         "premium.calm": 1,
-        "premium.balanced": 1,
         "premium.energetic": 1
       },
       "canReturnThree": true,
-      "fivePhotoHotels": 4,
+      "fivePhotoHotels": 5,
       "verifiedProviderLinks": 4,
       "restaurants": 0,
       "activities": 0
@@ -2495,16 +2489,16 @@
       "destinationId": "sao-miguel-island-a4951",
       "destination": "SÃO MIGUEL ISLAND",
       "activeHotels": 9,
-      "verifiedHotels": 3,
-      "classifiedHotels": 3,
-      "recommendationReadyHotels": 3,
+      "verifiedHotels": 4,
+      "classifiedHotels": 4,
+      "recommendationReadyHotels": 4,
       "priceCoverage": {
         "value": 0,
         "midrange": 1,
-        "premium": 2
+        "premium": 3
       },
       "vibeCoverage": {
-        "calm": 1,
+        "calm": 2,
         "balanced": 2,
         "energetic": 0
       },
@@ -2515,7 +2509,7 @@
         "midrange.calm": 0,
         "midrange.balanced": 1,
         "midrange.energetic": 0,
-        "premium.calm": 1,
+        "premium.calm": 2,
         "premium.balanced": 1,
         "premium.energetic": 0
       },
@@ -2528,7 +2522,7 @@
         "premium.energetic": 1
       },
       "canReturnThree": true,
-      "fivePhotoHotels": 3,
+      "fivePhotoHotels": 4,
       "verifiedProviderLinks": 0,
       "restaurants": 0,
       "activities": 0
@@ -2891,16 +2885,16 @@
       "destinationId": "rovinj-d7e04",
       "destination": "ROVINJ",
       "activeHotels": 9,
-      "verifiedHotels": 1,
-      "classifiedHotels": 1,
-      "recommendationReadyHotels": 1,
+      "verifiedHotels": 2,
+      "classifiedHotels": 2,
+      "recommendationReadyHotels": 2,
       "priceCoverage": {
         "value": 0,
         "midrange": 0,
-        "premium": 1
+        "premium": 2
       },
       "vibeCoverage": {
-        "calm": 1,
+        "calm": 2,
         "balanced": 0,
         "energetic": 0
       },
@@ -2911,7 +2905,7 @@
         "midrange.calm": 0,
         "midrange.balanced": 0,
         "midrange.energetic": 0,
-        "premium.calm": 1,
+        "premium.calm": 2,
         "premium.balanced": 0,
         "premium.energetic": 0
       },
@@ -2926,7 +2920,7 @@
         "premium.energetic": 1
       },
       "canReturnThree": false,
-      "fivePhotoHotels": 1,
+      "fivePhotoHotels": 2,
       "verifiedProviderLinks": 0,
       "restaurants": 0,
       "activities": 0
@@ -4709,17 +4703,17 @@
       "destinationId": "los-angeles-76868",
       "destination": "LOS ANGELES",
       "activeHotels": 9,
-      "verifiedHotels": 1,
-      "classifiedHotels": 1,
-      "recommendationReadyHotels": 1,
+      "verifiedHotels": 2,
+      "classifiedHotels": 2,
+      "recommendationReadyHotels": 2,
       "priceCoverage": {
         "value": 0,
         "midrange": 0,
-        "premium": 1
+        "premium": 2
       },
       "vibeCoverage": {
         "calm": 0,
-        "balanced": 1,
+        "balanced": 2,
         "energetic": 0
       },
       "matrix": {
@@ -4730,7 +4724,7 @@
         "midrange.balanced": 0,
         "midrange.energetic": 0,
         "premium.calm": 0,
-        "premium.balanced": 1,
+        "premium.balanced": 2,
         "premium.energetic": 0
       },
       "matrixCellShortfalls": {
@@ -4744,7 +4738,7 @@
         "premium.energetic": 1
       },
       "canReturnThree": false,
-      "fivePhotoHotels": 1,
+      "fivePhotoHotels": 2,
       "verifiedProviderLinks": 0,
       "restaurants": 0,
       "activities": 0
@@ -4882,17 +4876,17 @@
       "destinationId": "berlin-17d53",
       "destination": "BERLIN",
       "activeHotels": 9,
-      "verifiedHotels": 1,
-      "classifiedHotels": 1,
-      "recommendationReadyHotels": 1,
+      "verifiedHotels": 2,
+      "classifiedHotels": 2,
+      "recommendationReadyHotels": 2,
       "priceCoverage": {
         "value": 0,
-        "midrange": 1,
+        "midrange": 2,
         "premium": 0
       },
       "vibeCoverage": {
         "calm": 0,
-        "balanced": 0,
+        "balanced": 1,
         "energetic": 1
       },
       "matrix": {
@@ -4900,7 +4894,7 @@
         "value.balanced": 0,
         "value.energetic": 0,
         "midrange.calm": 0,
-        "midrange.balanced": 0,
+        "midrange.balanced": 1,
         "midrange.energetic": 1,
         "premium.calm": 0,
         "premium.balanced": 0,
@@ -4911,13 +4905,12 @@
         "value.balanced": 1,
         "value.energetic": 1,
         "midrange.calm": 1,
-        "midrange.balanced": 1,
         "premium.calm": 1,
         "premium.balanced": 1,
         "premium.energetic": 1
       },
       "canReturnThree": false,
-      "fivePhotoHotels": 1,
+      "fivePhotoHotels": 2,
       "verifiedProviderLinks": 0,
       "restaurants": 0,
       "activities": 0
@@ -5280,16 +5273,16 @@
       "destinationId": "funchal-a4951",
       "destination": "FUNCHAL",
       "activeHotels": 8,
-      "verifiedHotels": 3,
-      "classifiedHotels": 3,
-      "recommendationReadyHotels": 3,
+      "verifiedHotels": 4,
+      "classifiedHotels": 4,
+      "recommendationReadyHotels": 4,
       "priceCoverage": {
         "value": 0,
         "midrange": 0,
-        "premium": 3
+        "premium": 4
       },
       "vibeCoverage": {
-        "calm": 3,
+        "calm": 4,
         "balanced": 0,
         "energetic": 0
       },
@@ -5300,7 +5293,7 @@
         "midrange.calm": 0,
         "midrange.balanced": 0,
         "midrange.energetic": 0,
-        "premium.calm": 3,
+        "premium.calm": 4,
         "premium.balanced": 0,
         "premium.energetic": 0
       },
@@ -5315,7 +5308,7 @@
         "premium.energetic": 1
       },
       "canReturnThree": true,
-      "fivePhotoHotels": 3,
+      "fivePhotoHotels": 4,
       "verifiedProviderLinks": 0,
       "restaurants": 0,
       "activities": 0
@@ -5324,16 +5317,16 @@
       "destinationId": "korcula-d7e04",
       "destination": "KORČULA",
       "activeHotels": 8,
-      "verifiedHotels": 2,
-      "classifiedHotels": 2,
-      "recommendationReadyHotels": 2,
+      "verifiedHotels": 3,
+      "classifiedHotels": 3,
+      "recommendationReadyHotels": 3,
       "priceCoverage": {
         "value": 0,
         "midrange": 1,
-        "premium": 1
+        "premium": 2
       },
       "vibeCoverage": {
-        "calm": 1,
+        "calm": 2,
         "balanced": 1,
         "energetic": 0
       },
@@ -5344,7 +5337,7 @@
         "midrange.calm": 0,
         "midrange.balanced": 1,
         "midrange.energetic": 0,
-        "premium.calm": 1,
+        "premium.calm": 2,
         "premium.balanced": 0,
         "premium.energetic": 0
       },
@@ -5357,8 +5350,8 @@
         "premium.balanced": 1,
         "premium.energetic": 1
       },
-      "canReturnThree": false,
-      "fivePhotoHotels": 2,
+      "canReturnThree": true,
+      "fivePhotoHotels": 3,
       "verifiedProviderLinks": 0,
       "restaurants": 0,
       "activities": 0
@@ -6223,16 +6216,16 @@
       "destinationId": "da-nang-68110",
       "destination": "DA NANG",
       "activeHotels": 9,
-      "verifiedHotels": 0,
-      "classifiedHotels": 0,
-      "recommendationReadyHotels": 0,
+      "verifiedHotels": 1,
+      "classifiedHotels": 1,
+      "recommendationReadyHotels": 1,
       "priceCoverage": {
         "value": 0,
         "midrange": 0,
-        "premium": 0
+        "premium": 1
       },
       "vibeCoverage": {
-        "calm": 0,
+        "calm": 1,
         "balanced": 0,
         "energetic": 0
       },
@@ -6243,7 +6236,7 @@
         "midrange.calm": 0,
         "midrange.balanced": 0,
         "midrange.energetic": 0,
-        "premium.calm": 0,
+        "premium.calm": 1,
         "premium.balanced": 0,
         "premium.energetic": 0
       },
@@ -6254,12 +6247,11 @@
         "midrange.calm": 1,
         "midrange.balanced": 1,
         "midrange.energetic": 1,
-        "premium.calm": 1,
         "premium.balanced": 1,
         "premium.energetic": 1
       },
       "canReturnThree": false,
-      "fivePhotoHotels": 0,
+      "fivePhotoHotels": 1,
       "verifiedProviderLinks": 0,
       "restaurants": 0,
       "activities": 0
@@ -6478,16 +6470,16 @@
       "destinationId": "aspen-76868",
       "destination": "ASPEN",
       "activeHotels": 9,
-      "verifiedHotels": 1,
-      "classifiedHotels": 1,
-      "recommendationReadyHotels": 1,
+      "verifiedHotels": 2,
+      "classifiedHotels": 2,
+      "recommendationReadyHotels": 2,
       "priceCoverage": {
         "value": 0,
         "midrange": 0,
-        "premium": 1
+        "premium": 2
       },
       "vibeCoverage": {
-        "calm": 1,
+        "calm": 2,
         "balanced": 0,
         "energetic": 0
       },
@@ -6498,7 +6490,7 @@
         "midrange.calm": 0,
         "midrange.balanced": 0,
         "midrange.energetic": 0,
-        "premium.calm": 1,
+        "premium.calm": 2,
         "premium.balanced": 0,
         "premium.energetic": 0
       },
@@ -6513,7 +6505,7 @@
         "premium.energetic": 1
       },
       "canReturnThree": false,
-      "fivePhotoHotels": 1,
+      "fivePhotoHotels": 2,
       "verifiedProviderLinks": 0,
       "restaurants": 0,
       "activities": 0
@@ -7001,16 +6993,16 @@
       "destinationId": "bora-bora-40f39",
       "destination": "BORA BORA",
       "activeHotels": 9,
-      "verifiedHotels": 2,
-      "classifiedHotels": 2,
-      "recommendationReadyHotels": 2,
+      "verifiedHotels": 3,
+      "classifiedHotels": 3,
+      "recommendationReadyHotels": 3,
       "priceCoverage": {
         "value": 0,
         "midrange": 0,
-        "premium": 2
+        "premium": 3
       },
       "vibeCoverage": {
-        "calm": 2,
+        "calm": 3,
         "balanced": 0,
         "energetic": 0
       },
@@ -7021,7 +7013,7 @@
         "midrange.calm": 0,
         "midrange.balanced": 0,
         "midrange.energetic": 0,
-        "premium.calm": 2,
+        "premium.calm": 3,
         "premium.balanced": 0,
         "premium.energetic": 0
       },
@@ -7035,8 +7027,8 @@
         "premium.balanced": 1,
         "premium.energetic": 1
       },
-      "canReturnThree": false,
-      "fivePhotoHotels": 2,
+      "canReturnThree": true,
+      "fivePhotoHotels": 3,
       "verifiedProviderLinks": 0,
       "restaurants": 0,
       "activities": 0
@@ -7131,18 +7123,18 @@
       "destinationId": "mumbai-967ce",
       "destination": "MUMBAI",
       "activeHotels": 9,
-      "verifiedHotels": 4,
-      "classifiedHotels": 4,
-      "recommendationReadyHotels": 4,
+      "verifiedHotels": 5,
+      "classifiedHotels": 5,
+      "recommendationReadyHotels": 5,
       "priceCoverage": {
         "value": 0,
         "midrange": 0,
-        "premium": 4
+        "premium": 5
       },
       "vibeCoverage": {
         "calm": 1,
         "balanced": 1,
-        "energetic": 2
+        "energetic": 3
       },
       "matrix": {
         "value.calm": 0,
@@ -7153,7 +7145,7 @@
         "midrange.energetic": 0,
         "premium.calm": 1,
         "premium.balanced": 1,
-        "premium.energetic": 2
+        "premium.energetic": 3
       },
       "matrixCellShortfalls": {
         "value.calm": 1,
@@ -7164,7 +7156,7 @@
         "midrange.energetic": 1
       },
       "canReturnThree": true,
-      "fivePhotoHotels": 4,
+      "fivePhotoHotels": 5,
       "verifiedProviderLinks": 0,
       "restaurants": 0,
       "activities": 0
@@ -7658,18 +7650,18 @@
       "destinationId": "charleston-76868",
       "destination": "CHARLESTON",
       "activeHotels": 9,
-      "verifiedHotels": 0,
-      "classifiedHotels": 0,
-      "recommendationReadyHotels": 0,
+      "verifiedHotels": 2,
+      "classifiedHotels": 2,
+      "recommendationReadyHotels": 2,
       "priceCoverage": {
         "value": 0,
         "midrange": 0,
-        "premium": 0
+        "premium": 2
       },
       "vibeCoverage": {
-        "calm": 0,
+        "calm": 1,
         "balanced": 0,
-        "energetic": 0
+        "energetic": 1
       },
       "matrix": {
         "value.calm": 0,
@@ -7678,9 +7670,9 @@
         "midrange.calm": 0,
         "midrange.balanced": 0,
         "midrange.energetic": 0,
-        "premium.calm": 0,
+        "premium.calm": 1,
         "premium.balanced": 0,
-        "premium.energetic": 0
+        "premium.energetic": 1
       },
       "matrixCellShortfalls": {
         "value.calm": 1,
@@ -7689,12 +7681,10 @@
         "midrange.calm": 1,
         "midrange.balanced": 1,
         "midrange.energetic": 1,
-        "premium.calm": 1,
-        "premium.balanced": 1,
-        "premium.energetic": 1
+        "premium.balanced": 1
       },
       "canReturnThree": false,
-      "fivePhotoHotels": 0,
+      "fivePhotoHotels": 2,
       "verifiedProviderLinks": 0,
       "restaurants": 0,
       "activities": 0
@@ -8055,23 +8045,23 @@
       "destinationId": "honolulu-76868",
       "destination": "HONOLULU",
       "activeHotels": 9,
-      "verifiedHotels": 1,
-      "classifiedHotels": 1,
-      "recommendationReadyHotels": 1,
+      "verifiedHotels": 2,
+      "classifiedHotels": 2,
+      "recommendationReadyHotels": 2,
       "priceCoverage": {
-        "value": 0,
+        "value": 1,
         "midrange": 0,
         "premium": 1
       },
       "vibeCoverage": {
         "calm": 1,
         "balanced": 0,
-        "energetic": 0
+        "energetic": 1
       },
       "matrix": {
         "value.calm": 0,
         "value.balanced": 0,
-        "value.energetic": 0,
+        "value.energetic": 1,
         "midrange.calm": 0,
         "midrange.balanced": 0,
         "midrange.energetic": 0,
@@ -8082,7 +8072,6 @@
       "matrixCellShortfalls": {
         "value.calm": 1,
         "value.balanced": 1,
-        "value.energetic": 1,
         "midrange.calm": 1,
         "midrange.balanced": 1,
         "midrange.energetic": 1,
@@ -8090,7 +8079,7 @@
         "premium.energetic": 1
       },
       "canReturnThree": false,
-      "fivePhotoHotels": 1,
+      "fivePhotoHotels": 2,
       "verifiedProviderLinks": 0,
       "restaurants": 0,
       "activities": 0
@@ -8142,16 +8131,16 @@
       "destinationId": "halifax-cd6a7",
       "destination": "HALIFAX",
       "activeHotels": 9,
-      "verifiedHotels": 1,
-      "classifiedHotels": 1,
-      "recommendationReadyHotels": 1,
+      "verifiedHotels": 2,
+      "classifiedHotels": 2,
+      "recommendationReadyHotels": 2,
       "priceCoverage": {
         "value": 0,
         "midrange": 0,
-        "premium": 1
+        "premium": 2
       },
       "vibeCoverage": {
-        "calm": 0,
+        "calm": 1,
         "balanced": 1,
         "energetic": 0
       },
@@ -8162,7 +8151,7 @@
         "midrange.calm": 0,
         "midrange.balanced": 0,
         "midrange.energetic": 0,
-        "premium.calm": 0,
+        "premium.calm": 1,
         "premium.balanced": 1,
         "premium.energetic": 0
       },
@@ -8173,11 +8162,10 @@
         "midrange.calm": 1,
         "midrange.balanced": 1,
         "midrange.energetic": 1,
-        "premium.calm": 1,
         "premium.energetic": 1
       },
       "canReturnThree": false,
-      "fivePhotoHotels": 1,
+      "fivePhotoHotels": 2,
       "verifiedProviderLinks": 0,
       "restaurants": 0,
       "activities": 0
@@ -8843,18 +8831,18 @@
       "destinationId": "santo-domingo-8a4bf",
       "destination": "SANTO DOMINGO",
       "activeHotels": 9,
-      "verifiedHotels": 0,
-      "classifiedHotels": 0,
-      "recommendationReadyHotels": 0,
+      "verifiedHotels": 2,
+      "classifiedHotels": 2,
+      "recommendationReadyHotels": 2,
       "priceCoverage": {
         "value": 0,
         "midrange": 0,
-        "premium": 0
+        "premium": 2
       },
       "vibeCoverage": {
-        "calm": 0,
+        "calm": 1,
         "balanced": 0,
-        "energetic": 0
+        "energetic": 1
       },
       "matrix": {
         "value.calm": 0,
@@ -8863,9 +8851,9 @@
         "midrange.calm": 0,
         "midrange.balanced": 0,
         "midrange.energetic": 0,
-        "premium.calm": 0,
+        "premium.calm": 1,
         "premium.balanced": 0,
-        "premium.energetic": 0
+        "premium.energetic": 1
       },
       "matrixCellShortfalls": {
         "value.calm": 1,
@@ -8874,12 +8862,10 @@
         "midrange.calm": 1,
         "midrange.balanced": 1,
         "midrange.energetic": 1,
-        "premium.calm": 1,
-        "premium.balanced": 1,
-        "premium.energetic": 1
+        "premium.balanced": 1
       },
       "canReturnThree": false,
-      "fivePhotoHotels": 0,
+      "fivePhotoHotels": 1,
       "verifiedProviderLinks": 0,
       "restaurants": 0,
       "activities": 0
@@ -8888,18 +8874,18 @@
       "destinationId": "san-juan-fe23c",
       "destination": "SAN JUAN",
       "activeHotels": 9,
-      "verifiedHotels": 0,
-      "classifiedHotels": 0,
-      "recommendationReadyHotels": 0,
+      "verifiedHotels": 2,
+      "classifiedHotels": 2,
+      "recommendationReadyHotels": 2,
       "priceCoverage": {
         "value": 0,
         "midrange": 0,
-        "premium": 0
+        "premium": 2
       },
       "vibeCoverage": {
-        "calm": 0,
+        "calm": 1,
         "balanced": 0,
-        "energetic": 0
+        "energetic": 1
       },
       "matrix": {
         "value.calm": 0,
@@ -8908,9 +8894,9 @@
         "midrange.calm": 0,
         "midrange.balanced": 0,
         "midrange.energetic": 0,
-        "premium.calm": 0,
+        "premium.calm": 1,
         "premium.balanced": 0,
-        "premium.energetic": 0
+        "premium.energetic": 1
       },
       "matrixCellShortfalls": {
         "value.calm": 1,
@@ -8919,12 +8905,10 @@
         "midrange.calm": 1,
         "midrange.balanced": 1,
         "midrange.energetic": 1,
-        "premium.calm": 1,
-        "premium.balanced": 1,
-        "premium.energetic": 1
+        "premium.balanced": 1
       },
       "canReturnThree": false,
-      "fivePhotoHotels": 0,
+      "fivePhotoHotels": 2,
       "verifiedProviderLinks": 0,
       "restaurants": 0,
       "activities": 0
@@ -10897,17 +10881,17 @@
       "destinationId": "oxford-97691",
       "destination": "OXFORD",
       "activeHotels": 9,
-      "verifiedHotels": 1,
-      "classifiedHotels": 1,
-      "recommendationReadyHotels": 1,
+      "verifiedHotels": 2,
+      "classifiedHotels": 2,
+      "recommendationReadyHotels": 2,
       "priceCoverage": {
         "value": 0,
         "midrange": 0,
-        "premium": 1
+        "premium": 2
       },
       "vibeCoverage": {
         "calm": 0,
-        "balanced": 1,
+        "balanced": 2,
         "energetic": 0
       },
       "matrix": {
@@ -10918,7 +10902,7 @@
         "midrange.balanced": 0,
         "midrange.energetic": 0,
         "premium.calm": 0,
-        "premium.balanced": 1,
+        "premium.balanced": 2,
         "premium.energetic": 0
       },
       "matrixCellShortfalls": {
@@ -10932,7 +10916,7 @@
         "premium.energetic": 1
       },
       "canReturnThree": false,
-      "fivePhotoHotels": 1,
+      "fivePhotoHotels": 2,
       "verifiedProviderLinks": 0,
       "restaurants": 0,
       "activities": 0
@@ -10941,18 +10925,18 @@
       "destinationId": "cambridge-97691",
       "destination": "CAMBRIDGE",
       "activeHotels": 9,
-      "verifiedHotels": 1,
-      "classifiedHotels": 1,
-      "recommendationReadyHotels": 1,
+      "verifiedHotels": 2,
+      "classifiedHotels": 2,
+      "recommendationReadyHotels": 2,
       "priceCoverage": {
         "value": 0,
-        "midrange": 0,
+        "midrange": 1,
         "premium": 1
       },
       "vibeCoverage": {
         "calm": 1,
         "balanced": 0,
-        "energetic": 0
+        "energetic": 1
       },
       "matrix": {
         "value.calm": 0,
@@ -10960,7 +10944,7 @@
         "value.energetic": 0,
         "midrange.calm": 0,
         "midrange.balanced": 0,
-        "midrange.energetic": 0,
+        "midrange.energetic": 1,
         "premium.calm": 1,
         "premium.balanced": 0,
         "premium.energetic": 0
@@ -10971,12 +10955,11 @@
         "value.energetic": 1,
         "midrange.calm": 1,
         "midrange.balanced": 1,
-        "midrange.energetic": 1,
         "premium.balanced": 1,
         "premium.energetic": 1
       },
       "canReturnThree": false,
-      "fivePhotoHotels": 1,
+      "fivePhotoHotels": 2,
       "verifiedProviderLinks": 0,
       "restaurants": 0,
       "activities": 0
@@ -11026,16 +11009,16 @@
       "destinationId": "porto-santo-a4951",
       "destination": "PORTO SANTO",
       "activeHotels": 9,
-      "verifiedHotels": 2,
-      "classifiedHotels": 2,
-      "recommendationReadyHotels": 2,
+      "verifiedHotels": 3,
+      "classifiedHotels": 3,
+      "recommendationReadyHotels": 3,
       "priceCoverage": {
         "value": 0,
         "midrange": 0,
-        "premium": 2
+        "premium": 3
       },
       "vibeCoverage": {
-        "calm": 0,
+        "calm": 1,
         "balanced": 2,
         "energetic": 0
       },
@@ -11046,7 +11029,7 @@
         "midrange.calm": 0,
         "midrange.balanced": 0,
         "midrange.energetic": 0,
-        "premium.calm": 0,
+        "premium.calm": 1,
         "premium.balanced": 2,
         "premium.energetic": 0
       },
@@ -11057,11 +11040,10 @@
         "midrange.calm": 1,
         "midrange.balanced": 1,
         "midrange.energetic": 1,
-        "premium.calm": 1,
         "premium.energetic": 1
       },
-      "canReturnThree": false,
-      "fivePhotoHotels": 2,
+      "canReturnThree": true,
+      "fivePhotoHotels": 3,
       "verifiedProviderLinks": 0,
       "restaurants": 0,
       "activities": 0
@@ -11543,16 +11525,16 @@
       "destinationId": "milan-ad79e",
       "destination": "MILAN",
       "activeHotels": 9,
-      "verifiedHotels": 4,
-      "classifiedHotels": 4,
-      "recommendationReadyHotels": 4,
+      "verifiedHotels": 5,
+      "classifiedHotels": 5,
+      "recommendationReadyHotels": 5,
       "priceCoverage": {
         "value": 0,
         "midrange": 1,
-        "premium": 3
+        "premium": 4
       },
       "vibeCoverage": {
-        "calm": 1,
+        "calm": 2,
         "balanced": 1,
         "energetic": 2
       },
@@ -11563,7 +11545,7 @@
         "midrange.calm": 0,
         "midrange.balanced": 0,
         "midrange.energetic": 1,
-        "premium.calm": 1,
+        "premium.calm": 2,
         "premium.balanced": 1,
         "premium.energetic": 1
       },
@@ -11575,7 +11557,7 @@
         "midrange.balanced": 1
       },
       "canReturnThree": true,
-      "fivePhotoHotels": 4,
+      "fivePhotoHotels": 5,
       "verifiedProviderLinks": 0,
       "restaurants": 0,
       "activities": 0
@@ -11753,16 +11735,16 @@
       "destinationId": "mykonos-4902a",
       "destination": "MYKONOS",
       "activeHotels": 9,
-      "verifiedHotels": 3,
-      "classifiedHotels": 3,
-      "recommendationReadyHotels": 3,
+      "verifiedHotels": 4,
+      "classifiedHotels": 4,
+      "recommendationReadyHotels": 4,
       "priceCoverage": {
         "value": 0,
         "midrange": 0,
-        "premium": 3
+        "premium": 4
       },
       "vibeCoverage": {
-        "calm": 2,
+        "calm": 3,
         "balanced": 1,
         "energetic": 0
       },
@@ -11773,7 +11755,7 @@
         "midrange.calm": 0,
         "midrange.balanced": 0,
         "midrange.energetic": 0,
-        "premium.calm": 2,
+        "premium.calm": 3,
         "premium.balanced": 1,
         "premium.energetic": 0
       },
@@ -11787,7 +11769,7 @@
         "premium.energetic": 1
       },
       "canReturnThree": true,
-      "fivePhotoHotels": 3,
+      "fivePhotoHotels": 4,
       "verifiedProviderLinks": 0,
       "restaurants": 0,
       "activities": 0
@@ -11838,18 +11820,18 @@
       "destinationId": "thessaloniki-4902a",
       "destination": "THESSALONIKI",
       "activeHotels": 9,
-      "verifiedHotels": 3,
-      "classifiedHotels": 3,
-      "recommendationReadyHotels": 3,
+      "verifiedHotels": 4,
+      "classifiedHotels": 4,
+      "recommendationReadyHotels": 4,
       "priceCoverage": {
         "value": 0,
         "midrange": 0,
-        "premium": 3
+        "premium": 4
       },
       "vibeCoverage": {
         "calm": 0,
         "balanced": 1,
-        "energetic": 2
+        "energetic": 3
       },
       "matrix": {
         "value.calm": 0,
@@ -11860,7 +11842,7 @@
         "midrange.energetic": 0,
         "premium.calm": 0,
         "premium.balanced": 1,
-        "premium.energetic": 2
+        "premium.energetic": 3
       },
       "matrixCellShortfalls": {
         "value.calm": 1,
@@ -11872,7 +11854,7 @@
         "premium.calm": 1
       },
       "canReturnThree": true,
-      "fivePhotoHotels": 3,
+      "fivePhotoHotels": 4,
       "verifiedProviderLinks": 0,
       "restaurants": 0,
       "activities": 0
@@ -11969,16 +11951,16 @@
       "destinationId": "hvar-d7e04",
       "destination": "HVAR",
       "activeHotels": 9,
-      "verifiedHotels": 3,
-      "classifiedHotels": 3,
-      "recommendationReadyHotels": 3,
+      "verifiedHotels": 4,
+      "classifiedHotels": 4,
+      "recommendationReadyHotels": 4,
       "priceCoverage": {
         "value": 0,
         "midrange": 0,
-        "premium": 3
+        "premium": 4
       },
       "vibeCoverage": {
-        "calm": 1,
+        "calm": 2,
         "balanced": 1,
         "energetic": 1
       },
@@ -11989,7 +11971,7 @@
         "midrange.calm": 0,
         "midrange.balanced": 0,
         "midrange.energetic": 0,
-        "premium.calm": 1,
+        "premium.calm": 2,
         "premium.balanced": 1,
         "premium.energetic": 1
       },
@@ -12002,7 +11984,7 @@
         "midrange.energetic": 1
       },
       "canReturnThree": true,
-      "fivePhotoHotels": 3,
+      "fivePhotoHotels": 4,
       "verifiedProviderLinks": 0,
       "restaurants": 0,
       "activities": 0
@@ -12143,17 +12125,17 @@
       "destinationId": "bucharest-d6b89",
       "destination": "BUCHAREST",
       "activeHotels": 9,
-      "verifiedHotels": 2,
-      "classifiedHotels": 2,
-      "recommendationReadyHotels": 2,
+      "verifiedHotels": 4,
+      "classifiedHotels": 4,
+      "recommendationReadyHotels": 4,
       "priceCoverage": {
         "value": 0,
-        "midrange": 0,
-        "premium": 2
+        "midrange": 1,
+        "premium": 3
       },
       "vibeCoverage": {
-        "calm": 0,
-        "balanced": 2,
+        "calm": 1,
+        "balanced": 3,
         "energetic": 0
       },
       "matrix": {
@@ -12161,9 +12143,9 @@
         "value.balanced": 0,
         "value.energetic": 0,
         "midrange.calm": 0,
-        "midrange.balanced": 0,
+        "midrange.balanced": 1,
         "midrange.energetic": 0,
-        "premium.calm": 0,
+        "premium.calm": 1,
         "premium.balanced": 2,
         "premium.energetic": 0
       },
@@ -12172,13 +12154,11 @@
         "value.balanced": 1,
         "value.energetic": 1,
         "midrange.calm": 1,
-        "midrange.balanced": 1,
         "midrange.energetic": 1,
-        "premium.calm": 1,
         "premium.energetic": 1
       },
-      "canReturnThree": false,
-      "fivePhotoHotels": 2,
+      "canReturnThree": true,
+      "fivePhotoHotels": 4,
       "verifiedProviderLinks": 0,
       "restaurants": 0,
       "activities": 0
@@ -12271,16 +12251,16 @@
       "destinationId": "lucerne-77dcd",
       "destination": "LUCERNE",
       "activeHotels": 9,
-      "verifiedHotels": 4,
-      "classifiedHotels": 4,
-      "recommendationReadyHotels": 4,
+      "verifiedHotels": 5,
+      "classifiedHotels": 5,
+      "recommendationReadyHotels": 5,
       "priceCoverage": {
         "value": 2,
-        "midrange": 1,
+        "midrange": 2,
         "premium": 1
       },
       "vibeCoverage": {
-        "calm": 2,
+        "calm": 3,
         "balanced": 0,
         "energetic": 2
       },
@@ -12288,7 +12268,7 @@
         "value.calm": 0,
         "value.balanced": 0,
         "value.energetic": 2,
-        "midrange.calm": 1,
+        "midrange.calm": 2,
         "midrange.balanced": 0,
         "midrange.energetic": 0,
         "premium.calm": 1,
@@ -12304,7 +12284,7 @@
         "premium.energetic": 1
       },
       "canReturnThree": true,
-      "fivePhotoHotels": 4,
+      "fivePhotoHotels": 5,
       "verifiedProviderLinks": 0,
       "restaurants": 0,
       "activities": 0
@@ -13663,17 +13643,17 @@
       "destinationId": "gaborone-180c8",
       "destination": "GABORONE",
       "activeHotels": 9,
-      "verifiedHotels": 1,
-      "classifiedHotels": 1,
-      "recommendationReadyHotels": 1,
+      "verifiedHotels": 2,
+      "classifiedHotels": 2,
+      "recommendationReadyHotels": 2,
       "priceCoverage": {
         "value": 0,
-        "midrange": 1,
+        "midrange": 2,
         "premium": 0
       },
       "vibeCoverage": {
         "calm": 0,
-        "balanced": 0,
+        "balanced": 1,
         "energetic": 1
       },
       "matrix": {
@@ -13681,7 +13661,7 @@
         "value.balanced": 0,
         "value.energetic": 0,
         "midrange.calm": 0,
-        "midrange.balanced": 0,
+        "midrange.balanced": 1,
         "midrange.energetic": 1,
         "premium.calm": 0,
         "premium.balanced": 0,
@@ -13692,13 +13672,12 @@
         "value.balanced": 1,
         "value.energetic": 1,
         "midrange.calm": 1,
-        "midrange.balanced": 1,
         "premium.calm": 1,
         "premium.balanced": 1,
         "premium.energetic": 1
       },
       "canReturnThree": false,
-      "fivePhotoHotels": 1,
+      "fivePhotoHotels": 2,
       "verifiedProviderLinks": 0,
       "restaurants": 0,
       "activities": 0
