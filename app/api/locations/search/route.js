@@ -25,7 +25,7 @@ export async function GET(request) {
   try {
     const provider = new GooglePlacesHotelProvider({ maxRetries: 1 });
     const payload = await provider.request("/places:searchText", { method: "POST", body: { textQuery, maxResultCount: knownAirport ? 1 : 6 }, fieldMask: "places.id,places.displayName,places.formattedAddress,places.location,places.types,places.addressComponents,places.googleMapsUri" });
-    const allowed = new Set(["airport", "locality", "postal_town", "administrative_area_level_1", "administrative_area_level_2"]);
+    const allowed = new Set(["airport", "locality", "postal_town", "administrative_area_level_1", "administrative_area_level_2", "street_address", "premise", "route", "postal_code"]);
     const locations = (payload.places || []).filter((place) => knownAirport || place.types?.some((type) => allowed.has(type))).map((place) => normalizeLocationPlace(place, { airportCode: knownAirport?.code || null })).filter((place) => place?.countryCode).slice(0, 6);
     cache.set(key, { locations, expiresAt: Date.now() + 24 * 60 * 60 * 1000 });
     return Response.json({ locations });

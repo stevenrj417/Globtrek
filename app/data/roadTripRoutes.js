@@ -42,7 +42,7 @@ const routeDefinitions = [
   {
     id: "desert-and-red-rock",
     title: "Desert & Red Rock",
-    dek: "Wide horizons, high-desert towns, and a changing palette after every long bend.",
+    dek: "A desert route through red rock and mountain towns.",
     stopIds: ["las-vegas-76868", "sedona-76868", "santa-fe-76868"],
     distanceMiles: 860,
     days: 8,
@@ -108,7 +108,7 @@ function routeWithDestinations(definition) {
 
 export const roadTripRoutes = Object.freeze(routeDefinitions.map(routeWithDestinations));
 
-const desiredMiles = { "Weekend escape": 280, "500 miles": 500, "1,000 miles": 1_000, "2,000+ miles": 2_000 };
+const desiredMiles = { "Weekend Escape": 280, "Regional Adventure": 500, "Big Journey": 1_100, "Cross Country": 2_200 };
 const requestedDays = { "3–5 days": 4, "6–8 days": 7, "9–14 days": 10, "15+ days": 16 };
 
 export function estimateRoadTrip(route, answers = {}) {

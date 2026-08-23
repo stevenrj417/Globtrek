@@ -1,6 +1,6 @@
 export const roadTripQuestions = Object.freeze([
   { id: "landscape", eyebrow: "The view", title: "What landscape calls to you?", options: ["Coastline", "Forest", "Mountains", "Desert", "Countryside", "Lakes", "Cities"] },
-  { id: "distance", eyebrow: "The distance", title: "How far do you want to wander?", options: ["Weekend escape", "500 miles", "1,000 miles", "2,000+ miles", "Custom distance"] },
+  { id: "distance", eyebrow: "The distance", title: "How far do you want to go?", options: ["Weekend Escape", "Regional Adventure", "Big Journey", "Cross Country"] },
   { id: "kind", eyebrow: "The journey", title: "What kind of road trip?", options: ["Slow scenic journey", "Adventure route", "Food and culture", "National parks", "Luxury escape", "Hidden places"] },
   { id: "driving", eyebrow: "The rhythm", title: "How do you like to drive?", options: ["Short drives, more stops", "Balanced", "Long driving days"] },
   { id: "travelers", eyebrow: "The company", title: "Who is coming along?", options: ["Solo", "Couple", "Friends", "Family"] },

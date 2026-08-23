@@ -3,7 +3,7 @@ import test from "node:test";
 import { readFile } from "node:fs/promises";
 import { matchRoadTrips, roadTripQuestions, roadTripRoutes, selectRoadTrip } from "../app/data/roadTripRoutes.js";
 
-const profile = { landscape: "Coastline", distance: "500 miles", kind: "Slow scenic journey", driving: "Balanced", travelers: "Couple", budget: 3_000 };
+const profile = { landscape: "Coastline", distance: "Regional Adventure", kind: "Slow scenic journey", driving: "Balanced", travelers: "Couple", budget: 3_000 };
 
 test("road-trip quiz is a distinct six-question discovery flow", () => {
   assert.deepEqual(roadTripQuestions.map((question) => question.id), ["landscape", "distance", "kind", "driving", "travelers", "budget"]);
@@ -30,7 +30,7 @@ test("budget protection keeps a viable route above an over-budget preference mat
 
 test("different landscapes can produce different primary journeys", () => {
   const coast = selectRoadTrip({ ...profile, budget: 8_000 });
-  const desert = selectRoadTrip({ ...profile, landscape: "Desert", kind: "Adventure route", distance: "1,000 miles", budget: 8_000 });
+  const desert = selectRoadTrip({ ...profile, landscape: "Desert", kind: "Adventure route", distance: "Big Journey", budget: 8_000 });
   assert.notEqual(coast.id, desert.id);
 });
 
@@ -38,4 +38,24 @@ test("road-trip landing no longer renders the route-planner form", async () => {
   const page = await readFile(new URL("../app/road-trips/page.jsx", import.meta.url), "utf8");
   assert.doesNotMatch(page, /ProductPlanner|fuel tank|fuelEfficiency|vehicleType/);
   assert.match(page, /Create my route/);
+});
+
+test("road-trip quiz auto-advances editorial choices without a continue button", async () => {
+  const quiz = await readFile(new URL("../app/road-trips/quiz/RoadTripQuiz.jsx", import.meta.url), "utf8");
+  assert.match(quiz, /advance\(nextAnswers\)/);
+  assert.match(quiz, /City, address, or region/);
+  assert.doesNotMatch(quiz, />Continue</);
+  assert.match(quiz, /Weekend Escape/);
+  assert.match(quiz, /Cross Country/);
+});
+
+test("road-trip results keep the map optional and selections unified", async () => {
+  const results = await readFile(new URL("../app/road-trips/results/RoadTripResults.jsx", import.meta.url), "utf8");
+  assert.match(results, /showMap \? <div/);
+  assert.match(results, /proposalMode selectedHotelId/);
+  assert.match(results, /EmailTripButton/);
+  assert.match(results, />Book now</);
+  assert.match(results, />Food</);
+  assert.match(results, />Experiences</);
+  assert.doesNotMatch(results, /bg-\[#171714\]/);
 });

@@ -16,10 +16,10 @@ export default function RoadTripsPage() {
       <div className="relative mx-auto min-h-[calc(100svh-7.25rem)] max-w-[1880px] overflow-hidden bg-[#b9a992]">
         <ExactPlacePhoto placeId="ChIJJ5-mLBm3k4ARoG5CSirSx80" alt="California State Route 1 on the Pacific coast" priority className="h-full w-full object-cover image-calm" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/5 to-black/68" />
-        <div className="absolute inset-x-0 bottom-0 px-6 pb-10 text-white sm:px-12 sm:pb-14 lg:px-16 lg:pb-16">
+        <div className="absolute inset-x-0 bottom-0 px-6 pb-10 text-center text-white sm:px-12 sm:pb-14 lg:px-16 lg:pb-16">
           <p className="text-[10px] uppercase tracking-[0.24em] text-white/75">GlobTrek Road Trips</p>
-          <div className="mt-5 flex flex-col items-start justify-between gap-9 md:flex-row md:items-end">
-            <h1 className="max-w-5xl font-serif text-[clamp(4.2rem,10vw,10rem)] font-normal leading-[.78] tracking-[-0.065em]">Take the<br />long way.</h1>
+          <div className="mt-5 flex flex-col items-center gap-9">
+            <h1 className="max-w-5xl font-serif text-[clamp(4.2rem,10vw,10rem)] font-normal leading-[.78] tracking-[-0.065em]">Take the long way.</h1>
             <Link href="/road-trips/quiz" className="inline-flex min-h-14 items-center justify-between gap-12 bg-white px-6 text-xs font-semibold uppercase tracking-[0.09em] text-black transition hover:bg-[#eee9df]">Create my route <span aria-hidden="true">→</span></Link>
           </div>
         </div>
