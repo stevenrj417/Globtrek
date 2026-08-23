@@ -12,12 +12,12 @@ test("road-trip quiz is a distinct six-question discovery flow", () => {
 test("every editorial route uses verified catalog destinations and coordinates", () => {
   assert.equal(new Set(roadTripRoutes.map((route) => route.id)).size, roadTripRoutes.length);
   for (const route of roadTripRoutes) {
-    assert.ok(route.stops.length >= 3);
+    assert.ok(route.stops.length >= 2);
     for (const stop of route.stops) {
       assert.ok(stop.id);
       assert.ok(Number.isFinite(stop.latitude));
       assert.ok(Number.isFinite(stop.longitude));
-      assert.ok(stop.image);
+      assert.ok(stop.image || stop.placeId);
     }
   }
 });

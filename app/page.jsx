@@ -32,7 +32,7 @@ export default function Home() {
           </div>
           <div className="grid gap-x-6 gap-y-12 md:grid-cols-3 lg:gap-x-8">
             {trips.map((trip) => (
-              <Link href={`/discover?destination=${trip.id}&destinationName=${encodeURIComponent(trip.name)}&source=trending`} className="group block" key={trip.id} aria-label={`Plan a personalized ${trip.name} trip`}>
+              <Link href={`/discover/quick?destination=${trip.id}&destinationName=${encodeURIComponent(trip.name)}&source=trending`} className="group block" key={trip.id} aria-label={`Plan a personalized ${trip.name} trip`}>
                 <div className="relative aspect-[4/5] overflow-hidden bg-[#dfdfda]">
                   <Image src={trip.image} alt={trip.alt} fill className="image-calm object-cover" sizes="(min-width: 768px) 33vw, 100vw" quality={80} />
                 </div>

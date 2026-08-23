@@ -34,6 +34,19 @@ export function structuredOrigin(value) {
 }
 
 export function originFromTrip(input = {}) {
+  if (input.originDetails?.city && input.originDetails?.countryCode) return {
+    type: input.originDetails.type || (input.originDetails.airportCode ? "airport" : "city"),
+    placeId: input.originDetails.placeId || null,
+    airportCode: input.originDetails.airportCode || null,
+    airportName: input.originDetails.airportName || null,
+    city: input.originDetails.city,
+    countryCode: input.originDetails.countryCode,
+    countryName: input.originDetails.countryName || regionNames.of(input.originDetails.countryCode) || input.originDetails.countryCode,
+    latitude: Number.isFinite(Number(input.originDetails.latitude)) ? Number(input.originDetails.latitude) : null,
+    longitude: Number.isFinite(Number(input.originDetails.longitude)) ? Number(input.originDetails.longitude) : null,
+    formattedAddress: input.originDetails.formattedAddress || null,
+    verificationSource: input.originDetails.verificationSource || null,
+  };
   return structuredOrigin(input.originDetails || input.originAirport || input.origin);
 }
 
