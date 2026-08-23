@@ -25,7 +25,11 @@ export function buildTripEmailModel(savedTrip) {
   return {
     destination: savedTrip.destination,
     dates: savedTrip.travelerProfile?.dates || null,
-    hotel: savedTrip.hotelSelection || null,
+    travelers: savedTrip.travelerProfile?.travelers || null,
+    exactBudget: savedTrip.exactBudget || savedTrip.travelerProfile?.exactBudget || null,
+    hotel: savedTrip.selections?.hotel || savedTrip.hotelSelection || null,
+    restaurants: savedTrip.selections?.restaurants || [],
+    activities: savedTrip.selections?.activities || [],
     estimatedCostBreakdown: savedTrip.estimatedCosts || null,
     itinerary: savedTrip.itinerary || null,
     bookingLinks: savedTrip.bookingLinks || {},
