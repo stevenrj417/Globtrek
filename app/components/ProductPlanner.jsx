@@ -25,29 +25,11 @@ const productConfig = {
       ["onboardPreferences", "Onboard preferences", "text", "Wellness, dining, entertainment…"],
     ],
   },
-  road: {
-    submit: "Shape my route",
-    title: "Your road trip, in outline.",
-    fields: [
-      ["origin", "Starting location", "text", "City, address, or landmark"],
-      ["destination", "Destination", "text", "A final stop or open region"],
-      ["startDate", "Departure", "date"],
-      ["endDate", "Return", "date"],
-      ["travelers", "Travelers", "number", "2"],
-      ["budget", "Total budget", "number", "3500"],
-      ["style", "Travel style", "select", ["Scenic and unhurried", "Balanced discovery", "Active and energetic"]],
-      ["vehicleType", "Vehicle type", "select", ["Gas", "Hybrid", "Electric", "Rental / not sure"]],
-      ["fuelEfficiency", "Fuel efficiency", "text", "MPG, L/100 km, or unknown"],
-      ["fuelTankSize", "Fuel tank size", "text", "Gallons, litres, or unknown"],
-      ["evRange", "EV range", "text", "Miles, kilometres, or not applicable"],
-      ["preferredDrivingDistance", "Preferred daily drive", "text", "Miles, kilometres, or hours"],
-    ],
-  },
 };
 
 function Field({ definition }) {
   const [name, label, type, detail] = definition;
-  if (type === "select") { const required = ["style", "vehicleType"].includes(name); return <label className={labelClass}>{label}<select name={name} required={required} className={fieldClass} defaultValue=""><option value="" disabled>Select</option>{detail.map((option) => <option key={option}>{option}</option>)}</select></label>; }
+  if (type === "select") { const required = name === "style"; return <label className={labelClass}>{label}<select name={name} required={required} className={fieldClass} defaultValue=""><option value="" disabled>Select</option>{detail.map((option) => <option key={option}>{option}</option>)}</select></label>; }
   return <label className={labelClass}>{label}<input className={fieldClass} name={name} type={type} placeholder={detail || undefined} min={type === "number" ? "1" : undefined} required={["origin", "destination", "startDate", "endDate", "travelers", "budget"].includes(name)} /></label>;
 }
 

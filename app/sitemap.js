@@ -5,6 +5,7 @@ const routes = [
   "/discover",
   "/cruises",
   "/road-trips",
+  "/road-trips/quiz",
   "/about",
   "/how-it-works",
   "/contact",
