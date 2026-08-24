@@ -19,7 +19,7 @@ const cruiseMiniQuestions = [
   { id: "duration", eyebrow: "Time at sea", title: "How long?", options: ["3–5 nights", "6–8 nights", "9–14 nights", "15+ nights"] },
   { id: "style", eyebrow: "The rhythm", title: "How should the cruise feel?", options: ["Relaxing", "Adventure", "Luxury", "Family"] },
 ];
-const presets = { "caribbean-island-passage": { experience: "Tropical islands", priority: "Beautiful beaches" }, "adriatic-cities": { experience: "Coastal cities", priority: "Historic cities" }, "alaska-inside-passage": { experience: "Dramatic landscapes", priority: "Nature and wildlife" }, "japan-coast": { experience: "Coastal cities", priority: "Amazing food" } };
+const presets = { "caribbean-island-passage": { experience: "Tropical islands", priority: "Beautiful beaches", region: "Caribbean" }, "adriatic-cities": { experience: "Coastal cities", priority: "Historic cities", region: "Mediterranean" }, "alaska-inside-passage": { experience: "Dramatic landscapes", priority: "Nature and wildlife", region: "Alaska" }, "japan-coast": { experience: "Coastal cities", priority: "Amazing food", region: "Asia Pacific" } };
 
 function Choice({ option, selected, onClick, image, note }) {
   if (image) return <button type="button" aria-pressed={selected} onClick={onClick} className={`group relative min-h-64 overflow-hidden text-left sm:min-h-80 ${selected ? "ring-2 ring-[#9b7b43] ring-offset-4 ring-offset-[#f4f1eb]" : ""}`}><Image src={image} alt="" fill sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw" className="object-cover transition duration-700 group-hover:scale-[1.025]" /><span className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" /><span className="absolute inset-x-0 bottom-0 p-5 text-white"><strong className="block text-sm font-medium">{option}</strong>{note ? <span className="mt-2 block text-[10px] uppercase tracking-[0.1em] text-white/65">{note}</span> : null}</span></button>;
@@ -41,7 +41,7 @@ export function CruiseQuiz() {
 
   function finish(finalAnswers) {
     const style = finalAnswers.style;
-    const payload = { ...finalAnswers, ...(presets[journeyId] || {}), ...(style ? { mood: style === "Relaxing" ? "Relaxed and slow" : style === "Adventure" ? "Adventure every day" : style === "Luxury" ? "Luxury escape" : "Balanced exploring and relaxing", priority: style === "Family" ? "Family experiences" : (presets[journeyId]?.priority || "Nature and wildlife") } : {}), requestedRouteId: selectedJourney?.id || null, version: 2, createdAt: new Date().toISOString() };
+    const payload = { ...finalAnswers, ...(presets[journeyId] || {}), ...(style ? { mood: style === "Relaxing" ? "Relaxed and slow" : style === "Adventure" ? "Adventure every day" : style === "Luxury" ? "Luxury escape" : "Balanced exploring and relaxing", priority: style === "Family" ? "Family experiences" : (presets[journeyId]?.priority || "Nature and wildlife") } : {}), waterType: finalAnswers.waterType || "Ocean", season: finalAnswers.season || "Flexible", region: finalAnswers.region || presets[journeyId]?.region || "No preference", requestedRouteId: selectedJourney?.id || null, version: 3, createdAt: new Date().toISOString() };
     window.localStorage.setItem("globtrekCruiseQuiz", JSON.stringify(payload));
     track("cruise_quiz_completed", { experience: payload.experience, duration: payload.duration, budget: Number(payload.budget), origin: payload.originDetails.airportCode || payload.originDetails.city, selectedJourney: selectedJourney?.id || "discovery" });
     router.push("/cruises/results");

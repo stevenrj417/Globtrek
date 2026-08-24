@@ -17,7 +17,7 @@ export function CruiseMap({ route, onReveal }) {
       try {
         const maps = await loadGoogleMaps();
         if (cancelled || !containerRef.current) return;
-        const journey = [...route.ports, route.ports[0]];
+        const journey = route.closedLoop === false ? route.ports : [...route.ports, route.ports[0]];
         const positions = journey.map((port) => ({ lat: port.latitude, lng: port.longitude }));
         const map = new maps.Map(containerRef.current, { center: positions[0], zoom: 4, disableDefaultUI: true, zoomControl: true, gestureHandling: "cooperative", styles: globTrekMapStyles, backgroundColor: "#bfcdd1" });
         fitMapToPositions(map, maps, positions);

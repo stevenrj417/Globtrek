@@ -26,6 +26,8 @@
     "hotels:promote-relative-prices": "node scripts/hotels/promote-relative-price-evidence.mjs",
     "hotels:price-benchmarks": "node scripts/hotels/persist-destination-price-benchmarks.mjs",
     "activities:import": "node scripts/activities/import-activities.mjs",
+    "cruises:import": "node scripts/cruises/import-catalog.mjs",
+    "cruises:conversions": "node scripts/cruises/import-cj-conversions.mjs",
     "catalog:readiness": "node scripts/catalog-readiness.mjs",
     "catalog:audit": "node scripts/catalog-audit.mjs",
     "destinations:verify": "node scripts/destinations/verify-wikimedia.mjs",

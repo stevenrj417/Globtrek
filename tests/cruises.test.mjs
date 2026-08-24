@@ -3,14 +3,26 @@ import test from "node:test";
 import { readFile } from "node:fs/promises";
 import { cruiseQuestions } from "../app/data/cruiseQuiz.js";
 import { cruiseRoutes, selectCruise } from "../app/data/cruiseRoutes.js";
+import { normalizeCruiseRecord, rankCruises } from "../app/lib/cruises/catalog.js";
 import { matchAirportPlaces } from "../app/lib/recommendation/nearestAirport.js";
 import { buildTripEmailModel } from "../app/lib/recommendation/tripSerializer.js";
 import { tripEmail } from "../app/lib/email/templates.js";
 
 const profile = { experience: "Tropical islands", mood: "Relaxed and slow", priority: "Beautiful beaches", duration: "6–8 nights", budget: 2_500, travelers: "Couple", originDetails: { airportCode: "PDX" } };
+const verifiedSailingRow = {
+  id: "00000000-0000-4000-8000-000000000001", provider: "cruisedirect_cj", provider_cruise_id: "verified-provider-id", name: "Provider Sailing", cruise_line: "Verified Line", ship_name: "Verified Ship", cruise_type: "ocean", region: "Caribbean", duration_nights: 7,
+  departure_date: "2026-12-01", return_date: "2026-12-08", departure_port: { name: "Miami", country: "United States", latitude: 25.778, longitude: -80.177, placeId: "verified-miami" }, arrival_port: { name: "Miami", country: "United States", latitude: 25.778, longitude: -80.177, placeId: "verified-miami" }, sea_days: 2,
+  starting_price: 1200, currency: "USD", price_basis: "per_person_double_occupancy", price_is_live: true, price_verified_at: "2026-08-24T00:00:00Z", cabin_information: [{ type: "Balcony", status: "provider supplied" }], description: "Provider supplied description.", image_urls: ["https://images.unsplash.com/photo-verified"], match_tags: ["Caribbean", "beaches"], style_scores: { luxury: 75, relaxation: 92, food: 70 }, provider_url: "https://www.cruisedirect.com/exact-sailing", affiliate_url: "https://www.kqzyfj.com/click-verified", affiliate_url_verified: true, identity_verified: true, itinerary_verified: true, recommendation_ready: true, active: true,
+  cruise_itinerary_stops: [
+    { day_number: 1, sequence_number: 1, stop_type: "port", port_name: "Miami", country: "United States", latitude: 25.778, longitude: -80.177, place_id: "verified-miami" },
+    { day_number: 2, sequence_number: 2, stop_type: "sea_day" },
+    { day_number: 3, sequence_number: 3, stop_type: "port", port_name: "Nassau", country: "Bahamas", latitude: 25.044, longitude: -77.35, place_id: "verified-nassau" },
+    { day_number: 7, sequence_number: 4, stop_type: "port", port_name: "Miami", country: "United States", latitude: 25.778, longitude: -80.177, place_id: "verified-miami" },
+  ],
+};
 
-test("cruise quiz is an ocean-first seven-question flow with origin last", () => {
-  assert.deepEqual(cruiseQuestions.map((question) => question.id), ["experience", "mood", "priority", "duration", "budget", "travelers", "origin"]);
+test("cruise quiz captures style, region, water type, season, and origin last", () => {
+  assert.deepEqual(cruiseQuestions.map((question) => question.id), ["experience", "mood", "priority", "region", "waterType", "season", "duration", "budget", "travelers", "origin"]);
 });
 
 test("cruise concepts use only verified destination identities and coordinates", () => {
@@ -65,4 +77,29 @@ test("cruise proposal email preserves ports, duration, flight state, and truthfu
   assert.doesNotMatch(html, /1 days in Caribbean/);
   assert.match(html, /Pending verified sailing inventory/);
   assert.match(html, /Portland → Miami/);
+});
+
+test("only complete provider-backed sailings normalize into recommendation inventory", () => {
+  const sailing = normalizeCruiseRecord(verifiedSailingRow);
+  assert.equal(sailing.shipName, "Verified Ship");
+  assert.equal(sailing.stops.length, 4);
+  assert.match(sailing.affiliatePath, /^\/api\/cruises\/outbound\//);
+  assert.equal(normalizeCruiseRecord({ ...verifiedSailingRow, affiliate_url_verified: false }), null);
+  assert.equal(normalizeCruiseRecord({ ...verifiedSailingRow, starting_price: null }), null);
+  assert.equal(normalizeCruiseRecord({ ...verifiedSailingRow, cruise_itinerary_stops: [] }), null);
+});
+
+test("cruise matching protects budget and responds to traveler style", () => {
+  const relaxed = normalizeCruiseRecord(verifiedSailingRow);
+  const adventure = { ...relaxed, id: "00000000-0000-4000-8000-000000000002", name: "Adventure Sailing", styleScores: { adventure: 100, relaxation: 10, nature: 90 }, startingPrice: 1300 };
+  const answers = { ...profile, region: "Caribbean", waterType: "Ocean", season: "Winter", budget: 5_000 };
+  assert.equal(rankCruises([adventure, relaxed], answers, () => 600)[0].id, relaxed.id);
+  assert.equal(rankCruises([relaxed], { ...answers, budget: 1_500 }, () => 600).length, 0);
+});
+
+test("the cruise schema contains no fabricated sailing seeds", async () => {
+  const migration = await readFile(new URL("../supabase/migrations/202608240001_cruise_inventory.sql", import.meta.url), "utf8");
+  assert.match(migration, /recommendation_ready/);
+  assert.match(migration, /affiliate_url_verified/);
+  assert.doesNotMatch(migration, /insert into public\.cruise_catalog/i);
 });
