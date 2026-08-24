@@ -1,0 +1,4 @@
+outputs/
+coverage/
+.env*
+!.env.example

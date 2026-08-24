@@ -12,6 +12,13 @@ function remember(key, value) { cache.set(key, { value, expiresAt: Date.now() + 
 function placeName(place) { return place.displayName?.text?.trim() || ""; }
 function score(place) { return (Number(place.rating) || 0) * 20 + Math.log10(Math.max(1, Number(place.userRatingCount) || 0)) * 8; }
 function category(place, fallback) { return (place.primaryType || place.types?.find((type) => !["point_of_interest", "establishment"].includes(type)) || fallback).replaceAll("_", " "); }
+function normalized(value) { return String(value || "").normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim(); }
+function matchesCityWithoutCoordinates(destination, place) {
+  if (destination.destinationType !== "city") return true;
+  const address = normalized(place.formattedAddress);
+  const localities = [destination.city, ...(destination.hotelSearchAliases || []), ...(destination.nearbyHotelAreas || [])].map(normalized).filter((value) => value.length >= 3);
+  return localities.some((locality) => address.includes(locality));
+}
 
 export class GooglePlacesDiscoveryProvider extends GooglePlacesHotelProvider {
   async searchNearby(destination, { textQuery, includedType, limit, allowedTypes, useLocationBias = true }) {
@@ -19,7 +26,7 @@ export class GooglePlacesDiscoveryProvider extends GooglePlacesHotelProvider {
     const radius = Math.min(50000, Math.max(5000, Number(destination.hotelSearchRadiusKm || 40) * 1000));
     const locationBias = hasCoordinates ? { circle: { center: { latitude: Number(destination.latitude), longitude: Number(destination.longitude) }, radius } } : undefined;
     const payload = await this.request("/places:searchText", { method: "POST", body: { textQuery, includedType, strictTypeFiltering: false, maxResultCount: Math.min(20, Math.max(limit * 2, limit)), ...(locationBias ? { locationBias } : {}) }, fieldMask: "places.id,places.displayName,places.formattedAddress,places.location,places.types,places.primaryType,places.businessStatus,places.rating,places.userRatingCount,places.priceLevel,places.googleMapsUri,places.websiteUri,places.photos" });
-    return (payload.places || []).filter((place) => placeName(place) && (!place.businessStatus || place.businessStatus === "OPERATIONAL") && (place.types || []).some((type) => allowedTypes.has(type)) && (!hasCoordinates || (distanceMeters(destination, place.location) ?? 0) <= 60000)).sort((a, b) => score(b) - score(a)).slice(0, limit);
+    return (payload.places || []).filter((place) => placeName(place) && (!place.businessStatus || place.businessStatus === "OPERATIONAL") && (place.types || []).some((type) => allowedTypes.has(type)) && (hasCoordinates ? (distanceMeters(destination, place.location) ?? 0) <= 60000 : matchesCityWithoutCoordinates(destination, place))).sort((a, b) => score(b) - score(a)).slice(0, limit);
   }
 
   async firstPhoto(place) {
@@ -39,7 +46,7 @@ export class GooglePlacesDiscoveryProvider extends GooglePlacesHotelProvider {
   async discoverActivities(destination, { limit = 12 } = {}) {
     const key = cacheKey("activities", destination); const hit = cached(key); if (hit) return hit.slice(0, limit);
     const places = await this.searchNearby(destination, { textQuery: `top attractions and things to do in ${destination.city}, ${destination.country}`, includedType: "tourist_attraction", limit: Math.max(12, limit), allowedTypes: ACTIVITY_TYPES });
-    const records = places.map((place) => ({ id: `google:${place.id}`, destinationId: destination.id || destination.airport, name: placeName(place), description: null, category: category(place, "local"), location: place.formattedAddress || null, latitude: place.location?.latitude ?? null, longitude: place.location?.longitude ?? null, provider: "google_places", providerId: place.id, bookingUrl: null, detailsUrl: place.googleMapsUri || place.websiteUri || null, rating: Number(place.rating) || null, reviewCount: Number(place.userRatingCount) || null, imageUrl: null, imageAttribution: [], verifiedAt: new Date().toISOString() }));
+    const records = await Promise.all(places.map(async (place, index) => ({ id: `google:${place.id}`, destinationId: destination.id || destination.airport, name: placeName(place), description: null, category: category(place, "local"), location: place.formattedAddress || null, latitude: place.location?.latitude ?? null, longitude: place.location?.longitude ?? null, provider: "google_places", providerId: place.id, bookingUrl: null, detailsUrl: place.googleMapsUri || place.websiteUri || null, rating: Number(place.rating) || null, reviewCount: Number(place.userRatingCount) || null, ...(index < 6 ? await this.firstPhoto(place) : { imageUrl: null, imageAttribution: [], imageSourceUrl: place.googleMapsUri || null }), verifiedAt: new Date().toISOString() })));
     return remember(key, records).slice(0, limit);
   }
 

@@ -35,6 +35,23 @@ test("restaurant discovery returns three real provider identities with attribute
   assert.ok(records.every((item) => item.bookingUrl === null));
 });
 
+test("featured activity discovery includes exact-place photography", async () => {
+  const place = (index) => ({ id: `activity-${index}`, displayName: { text: `Attraction ${index}` }, formattedAddress: "Paris, France", location: { latitude: 48.8566, longitude: 2.3522 }, types: ["tourist_attraction"], primaryType: "tourist_attraction", businessStatus: "OPERATIONAL", rating: 4.7, userRatingCount: 200 + index, googleMapsUri: `https://maps.google.com/?cid=activity-${index}`, photos: [{ name: `places/activity-${index}/photos/photo-${index}`, authorAttributions: [{ displayName: `Author ${index}` }] }] });
+  const provider = new GooglePlacesDiscoveryProvider({ apiKey: "test", fetchImpl: queuedFetch([response({ places: [place(1), place(2), place(3)] }), response({ photoUri: "https://lh3.googleusercontent.com/activity-1" }), response({ photoUri: "https://lh3.googleusercontent.com/activity-2" }), response({ photoUri: "https://lh3.googleusercontent.com/activity-3" })]) });
+  const records = await provider.discoverActivities({ id: "test-paris-activities", city: "Paris", country: "France", latitude: 48.8566, longitude: 2.3522 }, { limit: 3 });
+  assert.equal(records.length, 3);
+  assert.ok(records.every((item) => item.imageUrl?.includes("googleusercontent.com") && item.imageSourceUrl));
+});
+
+test("city discovery without coordinates rejects wrong-city attractions", async () => {
+  const tokyo = { id: "tokyo-no-center", city: "Tokyo", country: "Japan", destinationType: "city", hotelSearchAliases: ["Tokyo"] };
+  const local = { id: "tokyo-attraction", displayName: { text: "Tokyo Landmark" }, formattedAddress: "Chiyoda City, Tokyo, Japan", types: ["tourist_attraction"], businessStatus: "OPERATIONAL", rating: 4.7, userRatingCount: 200, googleMapsUri: "https://maps.google.com/tokyo", photos: [] };
+  const wrong = { ...local, id: "kyoto-attraction", displayName: { text: "Kyoto Landmark" }, formattedAddress: "Kyoto, Japan", googleMapsUri: "https://maps.google.com/kyoto" };
+  const provider = new GooglePlacesDiscoveryProvider({ apiKey: "test", fetchImpl: queuedFetch([response({ places: [wrong, local] })]) });
+  const records = await provider.discoverActivities(tokyo, { limit: 3 });
+  assert.deepEqual(records.map((item) => item.providerId), ["tokyo-attraction"]);
+});
+
 test("hotel discovery stages nine identities but never invents Booking links", async () => {
   const places = Array.from({ length: 10 }, (_, index) => ({ id: `hotel-${index}`, displayName: { text: `Hotel ${index}` }, formattedAddress: "Paris, France", location: { latitude: 48.8566, longitude: 2.3522 }, types: ["hotel", "lodging"], businessStatus: "OPERATIONAL", rating: 4.5, userRatingCount: 200 + index, googleMapsUri: `https://maps.google.com/?cid=hotel-${index}`, photos: [{ name: `places/hotel-${index}/photos/one`, authorAttributions: [{ displayName: "Contributor" }] }] }));
   const provider = new GooglePlacesDiscoveryProvider({ apiKey: "test", fetchImpl: queuedFetch([response({ places })]) });
@@ -190,7 +207,7 @@ test("invalid API response is rejected", async () => {
 
 test("missing server environment variable is rejected", async () => {
   const provider = new GooglePlacesHotelProvider({ apiKey: "", fetchImpl: queuedFetch([]) });
-  await assert.rejects(() => provider.searchHotel(kyotoHotel), (error) => error.code === "google_places_api_key_missing");
+  await assert.rejects(() => provider.searchHotel(kyotoHotel), (error) => error.code === "google_maps_api_key_missing");
 });
 
 test("duplicate Place IDs are flagged and do not stop the batch", async () => {
@@ -229,10 +246,13 @@ test("batch preserves Booking.com and CJ booking fields", async () => {
   assert.equal(report.results[0].hotel.cjTrackingUrl, kyotoHotel.cjTrackingUrl);
 });
 
-test("Google API key remains server-only", async () => {
-  const files = await Promise.all(["../app/lib/google-places/GooglePlacesHotelProvider.js", "../app/api/hotels/[id]/google-photos/route.js", "../app/components/HotelPropertyPhoto.jsx"].map((path) => readFile(new URL(path, import.meta.url), "utf8")));
-  assert.equal(files.some((source) => source.includes("NEXT_PUBLIC_GOOGLE")), false);
-  assert.equal(files[2].includes("GOOGLE_PLACES_API_KEY"), false);
+test("all Google Maps Platform integrations share the consolidated variable", async () => {
+  const paths = ["../app/lib/google-places/GooglePlacesHotelProvider.js", "../app/api/hotels/[id]/google-photos/route.js", "../app/api/activities/recommend/route.js", "../app/api/restaurants/recommend/route.js", "../app/api/road-trips/route/route.js", "../app/lib/google-maps/client.js"];
+  const files = await Promise.all(paths.map((path) => readFile(new URL(path, import.meta.url), "utf8")));
+  assert.equal(files.every((source) => source.includes("NEXT_PUBLIC_GOOGLE_MAPS_API_KEY")), true);
+  assert.equal(files.some((source) => /(?:^|[^A-Z0-9_])GOOGLE_(PLACES|MAPS)_API_KEY/.test(source)), false);
+  assert.match(files.at(-1), /maps\.googleapis\.com\/maps\/api\/js/);
+  assert.match(files.at(-2), /routes\.googleapis\.com\/directions\/v2:computeRoutes/);
 });
 
 test("licensed fallback photo attribution is rendered", async () => {

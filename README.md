@@ -16,6 +16,16 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Google Maps Platform
+
+GlobTrek Trips, Road Trips, and Cruises share one Google Maps Platform configuration:
+
+```bash
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=
+```
+
+The key must be restricted in Google Cloud to GlobTrek's approved web origins and only the enabled Maps Platform APIs: Places API (New), Maps JavaScript API, Routes API, Geocoding API, Distance Matrix API, Maps Elevation API, and Roads API. Do not add service-specific Google key variables. Location search, exact-place photography, discovery, and interactive route maps all use this shared variable.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

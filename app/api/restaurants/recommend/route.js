@@ -13,7 +13,7 @@ export async function POST(request) {
     let source = "supabase_verified";
     try { restaurants = await new SupabaseRestaurantProvider(await createClient()).searchRestaurants({ destinationId: destination.id || destination.airport, names: Array.isArray(body.names) ? body.names.filter((name) => typeof name === "string") : [], limit: 3 }); }
     catch (error) { console.warn("Restaurant catalog unavailable; using verified place discovery.", error instanceof Error ? error.message : "unknown"); }
-    if (!restaurants.length && process.env.GOOGLE_PLACES_API_KEY) {
+    if (!restaurants.length && process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY) {
       restaurants = await new GooglePlacesDiscoveryProvider().discoverRestaurants(destination, { limit: 3 });
       source = "google_places_verified";
     }

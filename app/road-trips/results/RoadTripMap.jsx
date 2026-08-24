@@ -1,62 +1,57 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { fitMapToPositions, globTrekMapStyles, loadGoogleMaps } from "../../lib/google-maps/client";
+
+function markerLabel(index) { return { text: String(index + 1).padStart(2, "0"), color: "#f7f2e8", fontSize: "10px", fontWeight: "600" }; }
 
 export function RoadTripMap({ route, onReveal }) {
   const containerRef = useRef(null);
   const revealRef = useRef(onReveal);
+  const [error, setError] = useState("");
   useEffect(() => { revealRef.current = onReveal; }, [onReveal]);
-
   useEffect(() => {
-    let map;
+    let line;
     let frame;
     let cancelled = false;
     const markers = [];
-
     async function mount() {
-      const L = await import("leaflet");
-      if (cancelled || !containerRef.current) return;
-      const fallback = route.stops.map((stop) => [stop.longitude, stop.latitude]);
-      const response = await fetch(`/api/road-trips/route?id=${encodeURIComponent(route.id)}`).catch(() => null);
-      const payload = response?.ok ? await response.json().catch(() => null) : null;
-      const coordinates = Array.isArray(payload?.coordinates) && payload.coordinates.length > 1 ? payload.coordinates : fallback;
-      if (cancelled) return;
-
-      map = L.map(containerRef.current, { zoomControl: false, attributionControl: true, scrollWheelZoom: false });
-      L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png", { subdomains: "abc", maxZoom: 19, attribution: "© OpenStreetMap contributors © CARTO" }).addTo(map);
-      L.control.zoom({ position: "bottomright" }).addTo(map);
-      const latLngs = coordinates.map(([longitude, latitude]) => [latitude, longitude]);
-      const leftPadding = window.innerWidth >= 768 ? Math.min(window.innerWidth * 0.43, 620) : 45;
-      map.fitBounds(L.latLngBounds(latLngs), { paddingTopLeft: [leftPadding, 75], paddingBottomRight: [55, 90], maxZoom: 8, animate: false });
-      const shadow = L.polyline([latLngs[0], latLngs[0]], { color: "#f7f2e8", weight: 8, opacity: 0.88, lineCap: "round" }).addTo(map);
-      const line = L.polyline([latLngs[0], latLngs[0]], { color: "#9b7b43", weight: 3.5, opacity: 1, lineCap: "round" }).addTo(map);
-      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const startedAt = performance.now();
-      const duration = reduced ? 1 : 4_200;
-      let shownStops = 0;
-
-      function addStop(stop, index) {
-        const icon = L.divIcon({ className: "road-map-icon", iconAnchor: [60, 42], iconSize: [120, 42], html: `<div class="road-map-marker" aria-label="${index + 1}. ${stop.city}"><span>${String(index + 1).padStart(2, "0")}</span><strong>${stop.city}</strong></div>` });
-        markers.push(L.marker([stop.latitude, stop.longitude], { icon, interactive: false, zIndexOffset: 500 }).addTo(map));
-      }
-
-      function animate(now) {
+      try {
+        const maps = await loadGoogleMaps();
+        if (cancelled || !containerRef.current) return;
+        const fallback = route.stops.map((stop) => [stop.longitude, stop.latitude]);
+        const response = await fetch(`/api/road-trips/route?id=${encodeURIComponent(route.id)}`).catch(() => null);
+        const payload = response?.ok ? await response.json().catch(() => null) : null;
+        const coordinates = Array.isArray(payload?.coordinates) && payload.coordinates.length > 1 ? payload.coordinates : fallback;
         if (cancelled) return;
-        const progress = Math.min(1, (now - startedAt) / duration);
-        const count = Math.max(2, Math.ceil(progress * latLngs.length));
-        const partial = latLngs.slice(0, count);
-        shadow.setLatLngs(partial);
-        line.setLatLngs(partial);
-        const desiredStops = Math.min(route.stops.length, Math.floor(progress * route.stops.length + 0.15));
-        while (shownStops < desiredStops) { addStop(route.stops[shownStops], shownStops); shownStops += 1; }
-        if (progress < 1) frame = requestAnimationFrame(animate);
-        else { while (shownStops < route.stops.length) { addStop(route.stops[shownStops], shownStops); shownStops += 1; } revealRef.current?.(); }
-      }
-      frame = requestAnimationFrame(animate);
+        const positions = coordinates.map(([longitude, latitude]) => ({ lat: latitude, lng: longitude }));
+        const map = new maps.Map(containerRef.current, { center: positions[0], zoom: 6, disableDefaultUI: true, zoomControl: true, gestureHandling: "cooperative", styles: globTrekMapStyles, backgroundColor: "#c9c3b9" });
+        fitMapToPositions(map, maps, positions);
+        const shadow = new maps.Polyline({ map, path: [positions[0]], strokeColor: "#f7f2e8", strokeWeight: 8, strokeOpacity: 0.88, clickable: false });
+        line = new maps.Polyline({ map, path: [positions[0]], strokeColor: "#9b7b43", strokeWeight: 4, strokeOpacity: 1, clickable: false });
+        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const startedAt = performance.now();
+        const duration = reduced ? 1 : 4_200;
+        let shownStops = 0;
+        function addStop(stop, index) { markers.push(new maps.Marker({ map, position: { lat: stop.latitude, lng: stop.longitude }, label: markerLabel(index), title: `${index + 1}. ${stop.city}`, clickable: false, zIndex: 500 + index })); }
+        function animate(now) {
+          if (cancelled) return;
+          const progress = Math.max(0, Math.min(1, (now - startedAt) / duration));
+          const segment = progress * (positions.length - 1);
+          const whole = Math.floor(segment);
+          const path = positions.slice(0, whole + 1);
+          if (whole < positions.length - 1) { const local = segment - whole; const a = positions[whole]; const b = positions[whole + 1]; path.push({ lat: a.lat + (b.lat - a.lat) * local, lng: a.lng + (b.lng - a.lng) * local }); }
+          shadow.setPath(path); line.setPath(path);
+          const wanted = Math.min(route.stops.length, Math.floor(progress * route.stops.length + 0.15));
+          while (shownStops < wanted) { addStop(route.stops[shownStops], shownStops); shownStops += 1; }
+          if (progress < 1) frame = requestAnimationFrame(animate);
+          else { while (shownStops < route.stops.length) { addStop(route.stops[shownStops], shownStops); shownStops += 1; } revealRef.current?.(); }
+        }
+        frame = requestAnimationFrame(animate);
+      } catch { if (!cancelled) { setError("The route map is temporarily unavailable."); revealRef.current?.(); } }
     }
     mount();
-    return () => { cancelled = true; cancelAnimationFrame(frame); markers.forEach((marker) => marker.remove()); map?.remove(); };
+    return () => { cancelled = true; cancelAnimationFrame(frame); markers.forEach((marker) => marker.setMap(null)); line?.setMap(null); };
   }, [route]);
-
-  return <div ref={containerRef} className="absolute inset-0 z-0 bg-[#c9c3b9]" role="region" aria-label={`Animated map for ${route.title}`} />;
+  return <div ref={containerRef} className="absolute inset-0 z-0 bg-[#c9c3b9]" role="region" aria-label={`Animated Google map for ${route.title}`}>{error ? <p className="absolute inset-0 grid place-items-center text-xs uppercase tracking-[0.12em] text-black/45">{error}</p> : null}</div>;
 }

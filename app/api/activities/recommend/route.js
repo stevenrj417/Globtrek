@@ -16,7 +16,7 @@ export async function POST(request) {
     let source = "supabase_verified";
     try { activities = await new SupabaseActivityProvider(await createClient()).searchActivities({ destinationId: destination.id || destination.airport, profile, budgetPlan, context: {}, limit: 12 }); }
     catch (error) { console.warn("Activity catalog unavailable; using verified place discovery.", error instanceof Error ? error.message : "unknown"); }
-    if (!activities.length && process.env.GOOGLE_PLACES_API_KEY) {
+    if (!activities.length && process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY) {
       activities = await new GooglePlacesDiscoveryProvider().discoverActivities(destination, { limit: 12 });
       source = "google_places_verified";
     }

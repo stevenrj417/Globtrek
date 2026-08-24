@@ -1,38 +1,51 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { fitMapToPositions, globTrekMapStyles, loadGoogleMaps } from "../../lib/google-maps/client";
 
 export function CruiseMap({ route, onReveal }) {
   const containerRef = useRef(null);
   const revealRef = useRef(onReveal);
+  const [error, setError] = useState("");
   useEffect(() => { revealRef.current = onReveal; }, [onReveal]);
   useEffect(() => {
-    let map;
     let frame;
+    let line;
     let cancelled = false;
     const markers = [];
     async function mount() {
-      const L = await import("leaflet");
-      if (cancelled || !containerRef.current) return;
-      map = L.map(containerRef.current, { zoomControl: false, attributionControl: true, scrollWheelZoom: false });
-      L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png", { subdomains: "abc", maxZoom: 19, attribution: "© OpenStreetMap contributors © CARTO" }).addTo(map);
-      L.control.zoom({ position: "bottomright" }).addTo(map);
-      const journey = [...route.ports, route.ports[0]];
-      const latLngs = journey.map((port) => [port.latitude, port.longitude]);
-      const leftPadding = window.innerWidth >= 768 ? Math.min(window.innerWidth * 0.42, 600) : 45;
-      map.fitBounds(L.latLngBounds(latLngs), { paddingTopLeft: [leftPadding, 75], paddingBottomRight: [55, 90], maxZoom: 6, animate: false });
-      const glow = L.polyline([latLngs[0], latLngs[0]], { color: "#f5ead0", weight: 9, opacity: 0.9, lineCap: "round", dashArray: "1 12" }).addTo(map);
-      const line = L.polyline([latLngs[0], latLngs[0]], { color: "#356e7c", weight: 3.5, opacity: 1, lineCap: "round" }).addTo(map);
-      function marker(port, index) { const icon = L.divIcon({ className: "road-map-icon", iconAnchor: [60, 42], iconSize: [120, 42], html: `<div class="road-map-marker"><span>${String(index + 1).padStart(2, "0")}</span><strong>${port.city}</strong></div>` }); markers.push(L.marker([port.latitude, port.longitude], { icon, interactive: false, zIndexOffset: 500 }).addTo(map)); }
-      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const started = performance.now();
-      const duration = reduced ? 1 : 4600;
-      let shown = 0;
-      function animate(now) { if (cancelled) return; const progress = Math.max(0, Math.min(1, (now - started) / duration)); const segment = progress * (latLngs.length - 1); const whole = Math.floor(segment); const partial = latLngs.slice(0, whole + 1); if (whole < latLngs.length - 1) { const local = segment - whole; const [aLat, aLng] = latLngs[whole]; const [bLat, bLng] = latLngs[whole + 1]; partial.push([aLat + (bLat - aLat) * local, aLng + (bLng - aLng) * local]); } glow.setLatLngs(partial); line.setLatLngs(partial); const wanted = Math.min(route.ports.length, Math.floor(progress * route.ports.length + 0.25)); while (shown < wanted) { marker(route.ports[shown], shown); shown += 1; } if (progress < 1) frame = requestAnimationFrame(animate); else { while (shown < route.ports.length) { marker(route.ports[shown], shown); shown += 1; } markers.forEach((item) => item.remove()); markers.length = 0; route.ports.forEach((port) => markers.push(L.circleMarker([port.latitude, port.longitude], { radius: 4, color: "#f5ead0", fillColor: "#356e7c", fillOpacity: 1, weight: 2, interactive: false }).addTo(map))); revealRef.current?.(); } }
-      frame = requestAnimationFrame(animate);
+      try {
+        const maps = await loadGoogleMaps();
+        if (cancelled || !containerRef.current) return;
+        const journey = [...route.ports, route.ports[0]];
+        const positions = journey.map((port) => ({ lat: port.latitude, lng: port.longitude }));
+        const map = new maps.Map(containerRef.current, { center: positions[0], zoom: 4, disableDefaultUI: true, zoomControl: true, gestureHandling: "cooperative", styles: globTrekMapStyles, backgroundColor: "#bfcdd1" });
+        fitMapToPositions(map, maps, positions);
+        const glow = new maps.Polyline({ map, path: [positions[0]], strokeColor: "#f5ead0", strokeWeight: 9, strokeOpacity: 0.9, clickable: false });
+        line = new maps.Polyline({ map, path: [positions[0]], strokeColor: "#356e7c", strokeWeight: 4, strokeOpacity: 1, clickable: false });
+        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const started = performance.now();
+        const duration = reduced ? 1 : 4_600;
+        let shown = 0;
+        function addMarker(port, index) { markers.push(new maps.Marker({ map, position: { lat: port.latitude, lng: port.longitude }, label: { text: String(index + 1).padStart(2, "0"), color: "#f7f2e8", fontSize: "10px", fontWeight: "600" }, title: `${index + 1}. ${port.city}`, clickable: false, zIndex: 500 + index })); }
+        function animate(now) {
+          if (cancelled) return;
+          const progress = Math.max(0, Math.min(1, (now - started) / duration));
+          const segment = progress * (positions.length - 1);
+          const whole = Math.floor(segment);
+          const path = positions.slice(0, whole + 1);
+          if (whole < positions.length - 1) { const local = segment - whole; const a = positions[whole]; const b = positions[whole + 1]; path.push({ lat: a.lat + (b.lat - a.lat) * local, lng: a.lng + (b.lng - a.lng) * local }); }
+          glow.setPath(path); line.setPath(path);
+          const wanted = Math.min(route.ports.length, Math.floor(progress * route.ports.length + 0.25));
+          while (shown < wanted) { addMarker(route.ports[shown], shown); shown += 1; }
+          if (progress < 1) frame = requestAnimationFrame(animate);
+          else { while (shown < route.ports.length) { addMarker(route.ports[shown], shown); shown += 1; } revealRef.current?.(); }
+        }
+        frame = requestAnimationFrame(animate);
+      } catch { if (!cancelled) { setError("The ocean map is temporarily unavailable."); revealRef.current?.(); } }
     }
     mount();
-    return () => { cancelled = true; cancelAnimationFrame(frame); markers.forEach((item) => item.remove()); map?.remove(); };
+    return () => { cancelled = true; cancelAnimationFrame(frame); markers.forEach((marker) => marker.setMap(null)); line?.setMap(null); };
   }, [route]);
-  return <div ref={containerRef} className="absolute inset-0 z-0 bg-[#bfcdd1]" role="region" aria-label={`Animated ocean map for ${route.title}`} />;
+  return <div ref={containerRef} className="absolute inset-0 z-0 bg-[#bfcdd1]" role="region" aria-label={`Animated Google map for ${route.title}`}>{error ? <p className="absolute inset-0 grid place-items-center text-xs uppercase tracking-[0.12em] text-black/45">{error}</p> : null}</div>;
 }

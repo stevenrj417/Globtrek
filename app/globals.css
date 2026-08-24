@@ -90,65 +90,6 @@ button {
   transform: scale(1.018);
 }
 
-.road-map-marker {
-  position: relative;
-  display: grid;
-  min-width: 7.5rem;
-  grid-template-columns: auto 1fr;
-  align-items: center;
-  gap: .55rem;
-  border: 1px solid rgb(255 255 255 / .8);
-  background: rgb(23 23 20 / .9);
-  padding: .45rem .6rem;
-  color: white;
-  box-shadow: 0 8px 24px rgb(0 0 0 / .2);
-  backdrop-filter: blur(8px);
-}
-
-.road-map-marker::after {
-  content: "";
-  position: absolute;
-  bottom: -.42rem;
-  left: 50%;
-  width: .75rem;
-  height: .75rem;
-  transform: translateX(-50%) rotate(45deg);
-  background: rgb(23 23 20 / .9);
-}
-
-.road-map-marker span { color: #c0a66d; font-size: .55rem; letter-spacing: .1em; }
-.road-map-marker strong { overflow: hidden; font-size: .58rem; font-weight: 500; letter-spacing: .08em; text-overflow: ellipsis; white-space: nowrap; }
-.leaflet-control-attribution { font-size: 9px !important; }
-.leaflet-tile-pane { filter: grayscale(.78) contrast(.92) brightness(.92); }
-.road-map-icon { background: transparent; border: 0; }
-
-.road-revealed .road-map-marker {
-  opacity: 0;
-  width: 2rem;
-  min-width: 2rem;
-  height: 2rem;
-  margin-left: 2.75rem;
-  grid-template-columns: 1fr;
-  justify-items: center;
-  border-radius: 999px;
-  padding: 0;
-  transition: opacity 400ms ease;
-}
-.road-revealed .road-map-marker strong { display: none; }
-
-@media (max-width: 639px) {
-  .road-map-marker {
-    width: 2rem;
-    min-width: 2rem;
-    height: 2rem;
-    margin-left: 2.75rem;
-    grid-template-columns: 1fr;
-    justify-items: center;
-    border-radius: 999px;
-    padding: 0;
-  }
-  .road-map-marker strong { display: none; }
-}
 
 @keyframes quiet-reveal {
   from { opacity: 0; transform: translateY(22px); }

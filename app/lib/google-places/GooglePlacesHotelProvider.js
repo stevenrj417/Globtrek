@@ -115,7 +115,7 @@ function retryDelay(response, attempt) {
 }
 
 export class GooglePlacesHotelProvider {
-  constructor({ apiKey = process.env.GOOGLE_PLACES_API_KEY, fetchImpl = fetch, sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms)), maxRetries = 3 } = {}) {
+  constructor({ apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY, fetchImpl = fetch, sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms)), maxRetries = 3 } = {}) {
     this.apiKey = apiKey;
     this.fetchImpl = fetchImpl;
     this.sleep = sleep;
@@ -123,7 +123,7 @@ export class GooglePlacesHotelProvider {
   }
 
   requireApiKey() {
-    if (!this.apiKey) throw new GooglePlacesError("google_places_api_key_missing");
+    if (!this.apiKey) throw new GooglePlacesError("google_maps_api_key_missing");
   }
 
   async request(path, { method = "GET", body, fieldMask } = {}) {
@@ -137,6 +137,7 @@ export class GooglePlacesHotelProvider {
           headers: {
             "Content-Type": "application/json",
             "X-Goog-Api-Key": this.apiKey,
+            Referer: process.env.NEXT_PUBLIC_SITE_URL || "https://www.glob-trek.com/",
             ...(fieldMask ? { "X-Goog-FieldMask": fieldMask } : {}),
           },
           ...(body ? { body: JSON.stringify(body) } : {}),

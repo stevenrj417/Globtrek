@@ -27,7 +27,7 @@ function shortPrivateCache(payload) {
 export async function GET(request, { params }) {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
   if (rateLimited(ip)) return noStore({ error: "Too many photo requests" }, 429);
-  if (!process.env.GOOGLE_PLACES_API_KEY) return noStore({ error: "Hotel photography is not configured" }, 503);
+  if (!process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY) return noStore({ error: "Hotel photography is not configured" }, 503);
   const { id } = await params;
   const requestedLimit = Number(new URL(request.url).searchParams.get("limit"));
   const limit = Number.isInteger(requestedLimit) ? Math.min(5, Math.max(1, requestedLimit)) : 5;
