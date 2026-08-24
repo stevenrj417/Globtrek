@@ -47,6 +47,10 @@ test("road-trip quiz auto-advances editorial choices without a continue button",
   assert.doesNotMatch(quiz, />Continue</);
   assert.match(quiz, /Weekend Escape/);
   assert.match(quiz, /Cross Country/);
+  assert.match(quiz, /max-w-\[1100px\].*text-center/);
+  assert.match(quiz, /StartingLocationField centered/);
+  assert.match(quiz, /Building your journey/);
+  assert.doesNotMatch(quiz, /text-\[#8a6b36\]/);
 });
 
 test("road-trip results reveal the journey map before photography and keep selections unified", async () => {

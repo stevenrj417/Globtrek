@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { track } from "@vercel/analytics";
 import { roadTripQuestions } from "../../data/roadTripQuiz";
 import { roadTripDiscovery } from "../../data/journeyDiscovery";
@@ -23,12 +23,11 @@ const distanceNotes = {
 };
 
 function Choice({ option, selected, onClick, image, note }) {
-  if (image) return <button type="button" aria-pressed={selected} onClick={onClick} className={`group relative min-h-48 overflow-hidden text-left sm:min-h-60 ${selected ? "ring-2 ring-[#9b7b43] ring-offset-4 ring-offset-[#f4f1eb]" : ""}`}>
-    <Image src={image} alt="" fill sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw" className="object-cover transition duration-700 group-hover:scale-[1.025]" />
-    <span className="absolute inset-0 bg-gradient-to-t from-black/68 via-transparent to-transparent" />
-    <span className="absolute inset-x-0 bottom-0 flex items-center justify-between p-5 text-sm text-white"><span>{option}</span><span aria-hidden="true">{selected ? "●" : "○"}</span></span>
+  if (image) return <button type="button" aria-pressed={selected} onClick={onClick} className={`group overflow-hidden border bg-[#f4f1eb] text-center transition ${selected ? "border-black" : "border-black/14 hover:border-black/45"}`}>
+    <span className="relative block aspect-[5/3] overflow-hidden bg-black/5"><Image src={image} alt="" fill sizes="(min-width:1024px) 28vw, (min-width:640px) 46vw, 100vw" className="object-cover transition duration-700 group-hover:scale-[1.025]" /></span>
+    <span className="flex min-h-16 items-center justify-center gap-3 px-4 py-4 text-sm text-black"><span>{option}</span><span className="text-[10px]" aria-hidden="true">{selected ? "●" : "○"}</span></span>
   </button>;
-  return <button type="button" aria-pressed={selected} onClick={onClick} className={`flex min-h-20 items-center justify-between border-b px-1 py-4 text-left transition sm:min-h-24 ${selected ? "border-[#9b7b43] text-black" : "border-black/16 text-black/58 hover:border-black/50 hover:text-black"}`}><span><span className="block text-lg sm:text-xl">{option}</span>{note ? <span className="mt-1 block text-xs text-black/42">{note}</span> : null}</span><span className="text-sm" aria-hidden="true">{selected ? "●" : "○"}</span></button>;
+  return <button type="button" aria-pressed={selected} onClick={onClick} className={`grid min-h-24 place-items-center border px-5 py-5 text-center transition ${selected ? "border-black bg-black text-white" : "border-black/14 text-black hover:border-black/50"}`}><span><span className="block text-lg sm:text-xl">{option}</span>{note ? <span className={`mt-2 block text-xs ${selected ? "text-white/70" : "text-black/48"}`}>{note}</span> : null}</span></button>;
 }
 
 export function RoadTripQuiz() {
@@ -48,14 +47,18 @@ export function RoadTripQuiz() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({});
   const [transitioning, setTransitioning] = useState(false);
+  const [finishing, setFinishing] = useState(false);
   const transitionTimer = useRef(null);
   const question = questions[step];
+  useEffect(() => () => window.clearTimeout(transitionTimer.current), []);
 
   function finish(finalAnswers) {
     const payload = { ...finalAnswers, ...(finalAnswers.style ? { kind: finalAnswers.style === "Scenic and slow" ? "Slow scenic journey" : finalAnswers.style === "Maximum exploring" ? "Adventure route" : "Food and culture" } : {}), requestedRouteId: selectedJourney?.id || null, version: 2, createdAt: new Date().toISOString() };
     window.localStorage.setItem("globtrekRoadTripQuiz", JSON.stringify(payload));
     track("road_trip_quiz_completed", { landscape: payload.landscape, distance: payload.distance, kind: payload.kind, budget: Number(payload.budget) });
-    router.push("/road-trips/results");
+    setFinishing(true);
+    window.clearTimeout(transitionTimer.current);
+    transitionTimer.current = window.setTimeout(() => router.push("/road-trips/results"), 650);
   }
   function advance(finalAnswers) {
     if (transitioning) return;
@@ -92,17 +95,18 @@ export function RoadTripQuiz() {
 
   const selected = answers[question.id];
   const visual = question.id === "landscape" || question.id === "kind";
+  if (finishing) return <section className="grid min-h-[calc(100svh-8rem)] place-items-center px-6 text-center" aria-live="polite"><div className="mx-auto max-w-xl"><p className="text-[10px] uppercase tracking-[0.2em] text-black/50">Road discovery</p><h1 className="mt-6 font-serif text-[clamp(2.9rem,5.5vw,5.4rem)] leading-[.9] tracking-[-0.05em]">Building your journey.</h1><div role="progressbar" aria-label="Building your road-trip results" className="mx-auto mt-10 h-px w-36 overflow-hidden bg-black/15"><span className="block h-full w-1/2 animate-pulse bg-black" /></div></div></section>;
   return <section className="min-h-[calc(100svh-8rem)] px-5 py-10 sm:px-8 sm:py-16">
     <div className="mx-auto max-w-[1320px]">
-      <div className="flex items-center justify-between border-b border-black/12 pb-5 text-[10px] uppercase tracking-[0.18em] text-black/45"><button type="button" onClick={goBack} className="text-black/65">← Back</button><span>{selectedJourney ? selectedJourney.name : "Road discovery"} · {String(step + 1).padStart(2, "0")} / {String(questions.length).padStart(2, "0")}</span></div>
-      <div className={`pt-12 transition duration-300 sm:pt-16 ${transitioning ? "translate-y-1 opacity-55" : "opacity-100"}`}>
-        <p className="text-[10px] uppercase tracking-[0.22em] text-[#8a6b36]">{question.eyebrow}</p>
-        <h1 className="mt-5 max-w-5xl font-serif text-[clamp(3.2rem,6.2vw,7rem)] leading-[.87] tracking-[-0.055em]">{question.title}</h1>
-        {question.id === "budget" ? <form onSubmit={submitBudget} className="mt-14 max-w-2xl sm:mt-20">
-          <label className="block text-[10px] uppercase tracking-[0.18em] text-black/45" htmlFor="road-budget">Total trip budget · USD</label>
-          <div className="mt-4 flex items-baseline border-b border-black/35 pb-4"><span className="font-serif text-4xl text-black/40 sm:text-6xl">$</span><input id="road-budget" type="number" inputMode="numeric" min="500" max="250000" step="100" autoFocus value={answers.budget || ""} onChange={(event) => setAnswers((current) => ({ ...current, budget: event.target.value }))} placeholder="4,000" className="min-w-0 flex-1 bg-transparent px-3 font-serif text-5xl tracking-[-0.05em] outline-none placeholder:text-black/18 sm:text-8xl" /></div>
-          <div className="mt-5 flex items-center justify-between gap-6 text-xs text-black/45"><span>Stays, food, experiences, and the road. Estimates are not live prices.</span><button type="submit" disabled={Number(answers.budget) < 500 || transitioning} className="shrink-0 uppercase tracking-[0.12em] text-black disabled:opacity-25">Reveal route →</button></div>
-        </form> : question.id === "origin" ? <div className="mt-14 max-w-2xl sm:mt-20"><p className="text-[10px] uppercase tracking-[0.18em] text-black/45">Starting point</p><StartingLocationField id="road-origin" value={answers.originDetails} onChange={chooseOrigin} placeholder="City, address, or region" /><p className="mt-5 text-xs text-black/42">Choose a result to continue.</p></div> : <div className={`mt-12 sm:mt-16 ${visual ? "grid gap-3 sm:grid-cols-2 lg:grid-cols-3" : "grid max-w-4xl gap-x-10 sm:grid-cols-2"}`}>
+      <div className="relative grid min-h-10 place-items-center border-b border-black/12 pb-5 text-[10px] uppercase tracking-[0.18em] text-black/50"><button type="button" onClick={goBack} aria-label="Go back" className="absolute left-0 top-0 text-black">← Back</button><span className="text-center">{selectedJourney ? selectedJourney.name : "Road discovery"} · {String(step + 1).padStart(2, "0")} / {String(questions.length).padStart(2, "0")}</span></div>
+      <div className={`mx-auto max-w-[1100px] pt-12 text-center transition duration-300 sm:pt-16 ${transitioning ? "translate-y-1 opacity-55" : "opacity-100"}`}>
+        <p className="text-[10px] uppercase tracking-[0.22em] text-black/50">{question.eyebrow}</p>
+        <h1 className="mx-auto mt-5 max-w-4xl font-serif text-[clamp(2.9rem,5.4vw,5.8rem)] leading-[.9] tracking-[-0.05em]">{question.title}</h1>
+        {question.id === "budget" ? <form onSubmit={submitBudget} className="mx-auto mt-12 max-w-2xl text-center sm:mt-16">
+          <label className="block text-[10px] uppercase tracking-[0.18em] text-black/50" htmlFor="road-budget">Total trip budget · USD</label>
+          <div className="mx-auto mt-5 flex max-w-xl items-baseline justify-center border-b border-black/35 pb-4"><span className="font-serif text-4xl text-black/45 sm:text-5xl">$</span><input id="road-budget" type="text" inputMode="numeric" pattern="[0-9]*" autoFocus value={answers.budget || ""} onChange={(event) => setAnswers((current) => ({ ...current, budget: event.target.value.replace(/\D/g, "").slice(0, 6) }))} placeholder="4,000" className="min-w-0 max-w-[12rem] appearance-none border-0 bg-transparent px-3 text-center font-serif text-5xl tracking-[-0.05em] outline-none ring-0 placeholder:text-black/20 focus:outline-none focus:ring-0 sm:max-w-xs sm:text-7xl" /></div>
+          <p className="mx-auto mt-5 max-w-md text-xs leading-6 text-black/50">Stays, food, experiences, and the road. Estimates are not live prices.</p><button type="submit" disabled={Number(answers.budget) < 500 || transitioning} className="mt-7 min-h-12 bg-black px-7 text-[10px] uppercase tracking-[0.12em] text-white disabled:opacity-25">Reveal route →</button>
+        </form> : question.id === "origin" ? <div className="mx-auto mt-12 max-w-2xl text-center sm:mt-16"><p className="text-[10px] uppercase tracking-[0.18em] text-black/50">Starting point</p><div className="mt-3"><StartingLocationField centered id="road-origin" value={answers.originDetails} onChange={chooseOrigin} placeholder="City, address, or region" /></div><p className="mt-5 text-xs text-black/50">Choose a result to continue.</p></div> : <div className={`mx-auto mt-12 sm:mt-16 ${visual ? "grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-3" : "grid max-w-3xl gap-3 sm:grid-cols-2"}`}>
           {question.options.map((option) => <Choice key={option} option={option} selected={selected === option} onClick={() => choose(option)} image={question.id === "landscape" ? landscapeImages[option] : question.id === "kind" ? journeyImages[option] : null} note={question.id === "distance" ? distanceNotes[option] : null} />)}
         </div>}
       </div>
