@@ -34,7 +34,7 @@ export function ProposalItinerary({ trip, images = [] }) {
 }
 
 function safeImage(item) {
-  const value = item?.imageUrl || item?.image;
+  const value = item?.imageUrl || item?.image || item?.photoUri;
   if (!value) return null;
   if (value.startsWith("/")) return value;
   try {
