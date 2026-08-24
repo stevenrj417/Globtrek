@@ -26,8 +26,8 @@ function SelectableExperience({ item, selected, onSelect }) {
 }
 
 export function CruiseResults() {
-  const [revealed, setRevealed] = useState(false);
-  const [mapReady, setMapReady] = useState(false);
+  const [journeyRevealed, setJourneyRevealed] = useState(false);
+  const [introMapMounted, setIntroMapMounted] = useState(true);
   const [recommendation, setRecommendation] = useState(undefined);
   const [selectedHotel, setSelectedHotel] = useState(null);
   const [activities, setActivities] = useState([]);
@@ -39,10 +39,19 @@ export function CruiseResults() {
   const stored = useSyncExternalStore(() => () => {}, () => window.localStorage.getItem("globtrekCruiseQuiz") || "", () => "");
   const answers = useMemo(() => { try { return JSON.parse(stored || "null"); } catch { return null; } }, [stored]);
 
-  useEffect(() => { const timer = window.setTimeout(() => setRevealed(true), 1400); return () => window.clearTimeout(timer); }, []);
   useEffect(() => { if (!stored) return undefined; const controller = new AbortController(); fetch("/api/cruises/recommend", { method: "POST", headers: { "Content-Type": "application/json" }, body: stored, signal: controller.signal }).then((response) => response.ok ? response.json() : null).then((payload) => setRecommendation(payload?.route ? payload : null)).catch((error) => { if (error.name !== "AbortError") setRecommendation(null); }); return () => controller.abort(); }, [stored]);
   const route = recommendation?.route;
   const quiz = recommendation?.quiz;
+  useEffect(() => {
+    if (!route?.id) return undefined;
+    const fallback = window.setTimeout(() => setJourneyRevealed(true), 6_500);
+    return () => window.clearTimeout(fallback);
+  }, [route?.id]);
+  useEffect(() => {
+    if (!journeyRevealed) return undefined;
+    const handoff = window.setTimeout(() => setIntroMapMounted(false), 1_100);
+    return () => window.clearTimeout(handoff);
+  }, [journeyRevealed]);
   useEffect(() => {
     if (!route?.hotelDestination?.id || !quiz) return undefined;
     const controller = new AbortController();
@@ -66,7 +75,12 @@ export function CruiseResults() {
   function bookJourney() { if (!bookingUrls.length) { setBookingStatus("Verified flight, hotel, and experience links are still being prepared. A cruise provider is not yet connected."); return; } bookingUrls.forEach((url) => window.open(url, "_blank", "noopener,noreferrer")); setBookingStatus(`${bookingUrls.length} verified provider ${bookingUrls.length === 1 ? "link" : "links"} opened. The cruise sailing link remains pending verified inventory.`); }
 
   return <>
-    <section className="relative min-h-[92svh] overflow-hidden bg-[#bfcdd1]"><CruiseMap route={route} onReveal={() => { setMapReady(true); setRevealed(true); }} /><div className={`pointer-events-none absolute inset-0 z-[5] bg-[#63777c] transition-opacity duration-700 ${mapReady ? "opacity-0" : "opacity-100"}`}>{route.embarkation.placeId ? <ExactPlacePhoto placeId={route.embarkation.placeId} alt="" priority className="h-full w-full object-cover opacity-75" /> : <Image src="/cruise-hero-v2.jpg" alt="" fill priority sizes="100vw" className="object-cover opacity-75" />}</div><div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-[#17363e]/80 via-transparent to-black/5" /><div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 px-6 pb-10 text-white sm:px-12 sm:pb-14 lg:px-16"><p className="text-[10px] uppercase tracking-[0.22em] text-white/70">{revealed ? "Your ocean journey" : "Charting the route"}</p><h1 className={`mt-4 max-w-6xl font-serif text-[clamp(3.5rem,7.4vw,8rem)] leading-[.8] tracking-[-0.06em] transition duration-700 ${revealed ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}>{route.title}</h1><p className={`mt-6 max-w-xl text-sm text-white/76 transition duration-500 ${revealed ? "opacity-100" : "opacity-0"}`}>{route.ports.map((port) => port.city).join(" → ")} → {route.ports[0].city}</p></div></section>
+    <section className="relative min-h-[92svh] overflow-hidden bg-[#bfcdd1]">
+      {introMapMounted ? <CruiseMap route={route} onReveal={() => setJourneyRevealed(true)} /> : null}
+      <div className={`pointer-events-none absolute inset-0 z-[5] bg-[#63777c] transition-opacity duration-1000 ease-out ${journeyRevealed ? "opacity-100" : "opacity-0"}`}>{route.embarkation.placeId ? <ExactPlacePhoto placeId={route.embarkation.placeId} alt={`${route.title} coastline`} priority className="h-full w-full object-cover" /> : <Image src="/cruise-hero-v2.jpg" alt={`${route.title} ocean journey`} fill priority sizes="100vw" className="object-cover" />}</div>
+      <div className={`pointer-events-none absolute inset-0 z-10 transition-colors duration-1000 ${journeyRevealed ? "bg-gradient-to-t from-[#17363e]/80 via-transparent to-black/5" : "bg-gradient-to-t from-[#17363e]/48 via-transparent to-black/5"}`} />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 px-6 pb-10 text-white sm:px-12 sm:pb-14 lg:px-16" aria-live="polite"><p className="text-[10px] uppercase tracking-[0.22em] text-white/70">{journeyRevealed ? "Your ocean journey" : "Charting your journey"}</p><h1 className={`mt-4 max-w-6xl font-serif text-[clamp(3.5rem,7.4vw,8rem)] leading-[.8] tracking-[-0.06em] transition duration-700 ${journeyRevealed ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}>{route.title}</h1><p className={`mt-6 max-w-xl text-sm text-white/76 transition duration-700 ${journeyRevealed ? "opacity-100" : "opacity-0"}`}>{route.ports.map((port) => port.city).join(" → ")} → {route.ports[0].city}</p><p className={`mt-4 text-xs text-white/76 transition-opacity duration-500 ${journeyRevealed ? "opacity-0" : "opacity-100"}`}>{route.ports.map((port) => port.city).join("  ·  ")}</p></div>
+    </section>
 
     <section className="bg-[#f4f1eb] px-6 py-16 sm:px-10 sm:py-24"><div className="mx-auto grid max-w-[1280px] gap-10 lg:grid-cols-[1.12fr_.88fr] lg:gap-20"><div><p className="text-[10px] uppercase tracking-[0.2em] text-[#8a6b36]">Your ocean journey</p><h2 className="mt-5 font-serif text-[clamp(3.2rem,6vw,6.3rem)] leading-[.87] tracking-[-0.055em]">{route.dek}</h2></div><div className="self-end border-t border-black/15 pt-6 text-sm leading-7 text-black/56"><p>{answers.experience} · {answers.mood} · {answers.duration}</p><p className="mt-4">Complete-trip budget: {money(Number(answers.budget))}</p><p className={`mt-6 text-xs ${logistics.compatibility.level === "poor" ? "text-[#8a4c37]" : "text-black/46"}`}>{logistics.compatibility.level === "excellent" ? "Known travel logistics preserve room for the cruise fare." : logistics.compatibility.level === "acceptable" ? "The lower end of access costs protects a practical cruise allowance." : "A verified sailing fare is still needed before this journey can be confirmed within budget."}</p></div></div>
       <div className="mx-auto mt-16 grid max-w-[1450px] gap-4 sm:grid-cols-2 lg:grid-cols-4">{route.ports.map((port, index) => <article key={port.id} className="group"><div className="relative aspect-[4/3] overflow-hidden bg-[#d4d0c7]">{port.placeId ? <ExactPlacePhoto placeId={port.placeId} alt={`${port.city}, ${port.country}`} className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.02]" /> : port.image ? <Image src={port.image} alt={`${port.city}, ${port.country}`} fill unoptimized sizes="(min-width:1024px) 25vw, 50vw" className="object-cover" /> : <div className="h-full w-full" />}</div><p className="mt-4 text-[9px] uppercase tracking-[0.18em] text-[#8a6b36]">Port {String(index + 1).padStart(2, "0")}</p><h3 className="mt-2 font-serif text-3xl tracking-[-0.04em]">{port.city}</h3><p className="mt-2 text-xs text-black/45">{port.country}</p></article>)}</div>

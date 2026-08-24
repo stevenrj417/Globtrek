@@ -58,6 +58,8 @@ export function RoadTripResults() {
   const [openStop, setOpenStop] = useState(null);
   const [openDay, setOpenDay] = useState(null);
   const [showMap, setShowMap] = useState(false);
+  const [journeyRevealed, setJourneyRevealed] = useState(false);
+  const [introMapMounted, setIntroMapMounted] = useState(true);
   const [vehicle, setVehicle] = useState("");
   const [bookingStatus, setBookingStatus] = useState("");
   const storedAnswers = useSyncExternalStore(() => () => {}, () => window.localStorage.getItem("globtrekRoadTripQuiz") || "", () => "");
@@ -65,6 +67,18 @@ export function RoadTripResults() {
   const route = recommendation?.route;
   const quiz = recommendation?.quiz;
   const primaryDestination = route?.stops.find((stop) => stop.id === route.hotelDestinationId) || route?.stops[0];
+
+  useEffect(() => {
+    if (!route?.id) return undefined;
+    const fallback = window.setTimeout(() => setJourneyRevealed(true), 6_500);
+    return () => window.clearTimeout(fallback);
+  }, [route?.id]);
+
+  useEffect(() => {
+    if (!journeyRevealed) return undefined;
+    const handoff = window.setTimeout(() => setIntroMapMounted(false), 1_100);
+    return () => window.clearTimeout(handoff);
+  }, [journeyRevealed]);
 
   useEffect(() => {
     if (!storedAnswers) return undefined;
@@ -112,10 +126,19 @@ export function RoadTripResults() {
   }
 
   return <>
-    <section className="relative min-h-[78svh] overflow-hidden bg-[#d7d0c4]">
-      {primaryDestination.placeId ? <ExactPlacePhoto placeId={primaryDestination.placeId} alt={`${route.title} landscape`} className="absolute inset-0 h-full w-full object-cover" /> : route.heroImage ? <Image src={route.heroImage} alt={`${route.title} landscape`} fill priority sizes="100vw" className="object-cover" /> : <div className="absolute inset-0 bg-[#c9c3b9]" />}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-black/5 to-black/12" />
-      <div className="absolute inset-x-0 bottom-0 px-6 pb-10 text-white sm:px-12 sm:pb-14 lg:px-16"><p className="text-[10px] uppercase tracking-[0.22em] text-white/72">Your road trip</p><h1 className="mt-4 max-w-6xl font-serif text-[clamp(3.5rem,7vw,7.7rem)] leading-[.82] tracking-[-0.06em]">{route.title}</h1><p className="mt-5 max-w-xl text-sm leading-6 text-white/78">{route.dek}</p><div className="mt-7 flex flex-wrap gap-x-7 gap-y-2 text-xs text-white/80"><span>{route.distanceMiles.toLocaleString("en-US")} miles</span><span>{route.days} days</span><span>{answers.kind || answers.style || route.kinds[0]}</span><span>{money(Number(answers.budget))} budget</span></div></div>
+    <section className="relative min-h-[92svh] overflow-hidden bg-[#c9c3b9]">
+      {introMapMounted ? <RoadTripMap route={route} onReveal={() => setJourneyRevealed(true)} /> : null}
+      <div className={`pointer-events-none absolute inset-0 z-[5] bg-[#d7d0c4] transition-opacity duration-1000 ease-out ${journeyRevealed ? "opacity-100" : "opacity-0"}`}>
+        {primaryDestination.placeId ? <ExactPlacePhoto placeId={primaryDestination.placeId} alt={`${route.title} landscape`} priority className="absolute inset-0 h-full w-full object-cover" /> : route.heroImage ? <Image src={route.heroImage} alt={`${route.title} landscape`} fill priority sizes="100vw" className="object-cover" /> : <div className="absolute inset-0 bg-[#c9c3b9]" />}
+      </div>
+      <div className={`pointer-events-none absolute inset-0 z-10 transition-colors duration-1000 ${journeyRevealed ? "bg-gradient-to-t from-black/72 via-black/5 to-black/12" : "bg-gradient-to-t from-black/45 via-transparent to-black/5"}`} />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 px-6 pb-10 text-white sm:px-12 sm:pb-14 lg:px-16" aria-live="polite">
+        <p className="text-[10px] uppercase tracking-[0.22em] text-white/72">{journeyRevealed ? "Your road trip" : "Building your journey"}</p>
+        <h1 className={`mt-4 max-w-6xl font-serif text-[clamp(3.5rem,7vw,7.7rem)] leading-[.82] tracking-[-0.06em] transition duration-700 ${journeyRevealed ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}>{route.title}</h1>
+        <p className={`mt-5 max-w-xl text-sm leading-6 text-white/78 transition duration-700 ${journeyRevealed ? "opacity-100" : "opacity-0"}`}>{route.dek}</p>
+        <div className={`mt-7 flex flex-wrap gap-x-7 gap-y-2 text-xs text-white/80 transition duration-700 ${journeyRevealed ? "opacity-100" : "opacity-0"}`}><span>{route.distanceMiles.toLocaleString("en-US")} miles</span><span>{route.days} days</span><span>{answers.kind || answers.style || route.kinds[0]}</span><span>{money(Number(answers.budget))} budget</span></div>
+        <p className={`mt-4 text-xs text-white/76 transition-opacity duration-500 ${journeyRevealed ? "opacity-0" : "opacity-100"}`}>{route.stops.map((stop) => stop.city).join("  ·  ")}</p>
+      </div>
     </section>
 
     <section className="bg-[#f4f1eb] px-6 py-16 sm:px-10 sm:py-24">

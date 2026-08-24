@@ -47,6 +47,9 @@ test("cruise pages disclose unverified sailing data instead of rendering the old
   assert.doesNotMatch(quiz, />Continue</);
   assert.match(quiz, /\$2K–\$4K/);
   assert.match(results, /Ship selection pending|Verified sailing fare required/);
+  assert.match(results, /introMapMounted \? <CruiseMap/);
+  assert.match(results, /Charting your journey/);
+  assert.match(results, /journeyRevealed \? "opacity-100" : "opacity-0"/);
   assert.match(results, /Book your journey/);
   assert.match(results, /EmailTripButton/);
   assert.doesNotMatch(results, /bg-\[#171714\]/);

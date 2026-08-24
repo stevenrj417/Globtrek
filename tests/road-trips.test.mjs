@@ -49,8 +49,11 @@ test("road-trip quiz auto-advances editorial choices without a continue button",
   assert.match(quiz, /Cross Country/);
 });
 
-test("road-trip results keep the map optional and selections unified", async () => {
+test("road-trip results reveal the journey map before photography and keep selections unified", async () => {
   const results = await readFile(new URL("../app/road-trips/results/RoadTripResults.jsx", import.meta.url), "utf8");
+  assert.match(results, /introMapMounted \? <RoadTripMap/);
+  assert.match(results, /Building your journey/);
+  assert.match(results, /journeyRevealed \? "opacity-100" : "opacity-0"/);
   assert.match(results, /showMap \? <div/);
   assert.match(results, /proposalMode selectedHotelId/);
   assert.match(results, /EmailTripButton/);
