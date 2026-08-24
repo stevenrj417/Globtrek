@@ -32,6 +32,7 @@ export function buildTripEmailModel(savedTrip) {
     activities: savedTrip.selections?.activities || [],
     estimatedCostBreakdown: savedTrip.estimatedCosts || null,
     itinerary: savedTrip.itinerary || null,
+    journey: savedTrip.journey || null,
     bookingLinks: savedTrip.bookingLinks || {},
     disclaimer: "Prices shown are estimates unless a provider explicitly marks them live. Confirm final prices and availability with the provider.",
   };

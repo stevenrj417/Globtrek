@@ -56,8 +56,9 @@ test("landing searches, trending cards, and homepage shortcuts open destination-
   for (const page of [roadPage, cruisePage]) {
     assert.match(page, /JourneySearch/);
     assert.match(page, /JourneyCards/);
-    assert.match(page, /ExactPlacePhoto/);
   }
+  assert.match(roadPage, /ExactPlacePhoto/);
+  assert.match(cruisePage, /cruise-hero-v2\.jpg/);
   assert.match(homePage, /\/discover\/quick\?destination=/);
   for (const quiz of [roadQuiz, cruiseQuiz]) {
     assert.match(quiz, /StartingLocationField/);
