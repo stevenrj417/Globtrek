@@ -50,3 +50,17 @@ test("experience edit is curated to three cards with visual fallbacks", () => {
   assert.match(sections, /destination\.image/);
   assert.match(sections, /Destination view/);
 });
+
+test("final visual refinement keeps a cinematic hero and removes the redundant closing panel", () => {
+  assert.match(page, /min-h-\[92svh\]/);
+  assert.match(page, /top-1\/2/);
+  assert.doesNotMatch(page, /Ready when you are/);
+  assert.match(page, /<CostSection[^>]+onBook=\{bookNow\}/);
+});
+
+test("itinerary preview uses three distinct grounded presentation slots", () => {
+  assert.match(sections, /Arrival & settle/);
+  assert.match(sections, /Historic neighborhoods/);
+  assert.match(sections, /Local experiences/);
+  assert.match(sections, /verifiedImages\[index\] \|\| trip\.image/);
+});

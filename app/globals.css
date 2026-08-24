@@ -118,7 +118,11 @@ button {
 .results-editorial .text-black\/42,
 .results-editorial .text-black\/45,
 .results-editorial .text-black\/48,
-.results-editorial .text-black\/55 { color: rgb(0 0 0 / .65); }
+.results-editorial .text-black\/50,
+.results-editorial .text-black\/52,
+.results-editorial .text-black\/55,
+.results-editorial .text-black\/58,
+.results-editorial .text-black\/62 { color: #171714; }
 .results-editorial .text-white\/35,
 .results-editorial .text-white\/42,
 .results-editorial .text-white\/45 { color: rgb(255 255 255 / .68); }
