@@ -237,11 +237,15 @@ export function bookingPropertyUrl(hotel, trip = {}) {
 }
 
 export function bookingFlightUrl(destination, trip = {}) {
+  const requestedChildren = Number.parseInt(trip?.children, 10);
+  const children = Number.isFinite(requestedChildren) ? Math.min(20, Math.max(0, requestedChildren)) : 0;
+  const requestedAdults = Number.parseInt(trip?.adults, 10);
+  const adults = Number.isFinite(requestedAdults) ? Math.min(30, Math.max(1, requestedAdults)) : Math.max(1, travelerCount(trip) - children);
   const params = new URLSearchParams({
     type: "ROUNDTRIP",
     cabinClass: ["ECONOMY", "PREMIUM_ECONOMY", "BUSINESS", "FIRST"].includes(trip?.cabinClass) ? trip.cabinClass : "ECONOMY",
-    children: "0",
-    adults: String(travelerCount(trip)),
+    children: String(children),
+    adults: String(adults),
     to: `${destination.airport}.AIRPORT`,
   });
   const origin = String(trip?.originAirport || "").trim().toUpperCase();

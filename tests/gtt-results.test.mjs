@@ -11,6 +11,20 @@ test("GTT results use a single proposal booking action instead of search section
   assert.match(page, /bookingPropertyUrl\(selectedHotel/);
 });
 
+test("sticky trip action always reflects current selections and flight logistics", () => {
+  assert.match(page, /aria-label="Trip action"/);
+  assert.match(page, /selectedHotel\?\.name/);
+  assert.match(page, /selectedRestaurants\.length/);
+  assert.match(page, /selectedActivities\.length/);
+  assert.match(page, /activeDates/);
+  assert.match(page, /activeTravelers/);
+  assert.match(page, /buildBudgetPlan\(activeProfile, flightDestination\)/);
+  assert.match(page, /tripContext=\{flightContext\}/);
+  assert.match(page, /key=\{`flight-\$\{destinationKey\}`\}/);
+  assert.match(page, /key=\{`hotel-\$\{destinationKey\}`\}/);
+  assert.doesNotMatch(page, /finalActionsVisible|aria-hidden={finalActionsVisible}/);
+});
+
 test("itinerary is collapsed and dining and experiences are separate selectable edits", () => {
   assert.match(sections, /hidden={!isOpen}/);
   assert.match(sections, /id="dining"/);
@@ -22,5 +36,16 @@ test("itinerary is collapsed and dining and experiences are separate selectable 
 
 test("flight proposal states when live itinerary data is not connected", () => {
   assert.match(page, /live itinerary not connected/);
+  assert.match(page, /Update flight options/);
+  assert.match(page, /Departure airport/);
+  assert.match(page, /Preferred departure/);
+  assert.match(page, /flightTimingPreference/);
   assert.doesNotMatch(page, /flight number|airline/i);
+});
+
+test("experience edit is curated to three cards with visual fallbacks", () => {
+  assert.match(sections, /initialLimit=\{3\}/);
+  assert.match(sections, /View more experiences/);
+  assert.match(sections, /destination\.image/);
+  assert.match(sections, /Destination view/);
 });
