@@ -22,9 +22,9 @@ const distanceNotes = {
   "Big Journey": "1,000+ miles", "Cross Country": "2,000+ miles",
 };
 
-function Choice({ option, selected, onClick, image, note }) {
+function Choice({ option, selected, onClick, image, note, eager = false }) {
   if (image) return <button type="button" aria-pressed={selected} onClick={onClick} className={`group overflow-hidden border bg-[#f4f1eb] text-center transition ${selected ? "border-black" : "border-black/14 hover:border-black/45"}`}>
-    <span className="relative block aspect-[5/3] overflow-hidden bg-black/5"><Image src={image} alt="" fill sizes="(min-width:1024px) 28vw, (min-width:640px) 46vw, 100vw" className="object-cover transition duration-700 group-hover:scale-[1.025]" /></span>
+    <span className="relative block aspect-[5/3] overflow-hidden bg-black/5"><Image src={image} alt="" fill loading={eager ? "eager" : "lazy"} sizes="(min-width:1024px) 28vw, (min-width:640px) 46vw, 100vw" className="object-cover transition duration-700 group-hover:scale-[1.025]" /></span>
     <span className="flex min-h-16 items-center justify-center gap-3 px-4 py-4 text-sm text-black"><span>{option}</span><span className="text-[10px]" aria-hidden="true">{selected ? "●" : "○"}</span></span>
   </button>;
   return <button type="button" aria-pressed={selected} onClick={onClick} className={`grid min-h-24 place-items-center border px-5 py-5 text-center transition ${selected ? "border-black bg-black text-white" : "border-black/14 text-black hover:border-black/50"}`}><span><span className="block text-lg sm:text-xl">{option}</span>{note ? <span className={`mt-2 block text-xs ${selected ? "text-white/70" : "text-black/48"}`}>{note}</span> : null}</span></button>;
@@ -107,7 +107,7 @@ export function RoadTripQuiz() {
           <div className="mx-auto mt-5 flex max-w-xl items-baseline justify-center border-b border-black/35 pb-4"><span className="font-serif text-4xl text-black/45 sm:text-5xl">$</span><input id="road-budget" type="text" inputMode="numeric" pattern="[0-9]*" autoFocus value={answers.budget || ""} onChange={(event) => setAnswers((current) => ({ ...current, budget: event.target.value.replace(/\D/g, "").slice(0, 6) }))} placeholder="4,000" className="min-w-0 max-w-[12rem] appearance-none border-0 bg-transparent px-3 text-center font-serif text-5xl tracking-[-0.05em] outline-none ring-0 placeholder:text-black/20 focus:outline-none focus:ring-0 sm:max-w-xs sm:text-7xl" /></div>
           <p className="mx-auto mt-5 max-w-md text-xs leading-6 text-black/50">Stays, food, experiences, and the road. Estimates are not live prices.</p><button type="submit" disabled={Number(answers.budget) < 500 || transitioning} className="mt-7 min-h-12 bg-black px-7 text-[10px] uppercase tracking-[0.12em] text-white disabled:opacity-25">Reveal route →</button>
         </form> : question.id === "origin" ? <div className="mx-auto mt-12 max-w-2xl text-center sm:mt-16"><p className="text-[10px] uppercase tracking-[0.18em] text-black/50">Starting point</p><div className="mt-3"><StartingLocationField centered id="road-origin" value={answers.originDetails} onChange={chooseOrigin} placeholder="City, address, or region" /></div><p className="mt-5 text-xs text-black/50">Choose a result to continue.</p></div> : <div className={`mx-auto mt-12 sm:mt-16 ${visual ? "grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-3" : "grid max-w-3xl gap-3 sm:grid-cols-2"}`}>
-          {question.options.map((option) => <Choice key={option} option={option} selected={selected === option} onClick={() => choose(option)} image={question.id === "landscape" ? landscapeImages[option] : question.id === "kind" ? journeyImages[option] : null} note={question.id === "distance" ? distanceNotes[option] : null} />)}
+          {question.options.map((option, index) => <Choice key={option} option={option} selected={selected === option} onClick={() => choose(option)} image={question.id === "landscape" ? landscapeImages[option] : question.id === "kind" ? journeyImages[option] : null} note={question.id === "distance" ? distanceNotes[option] : null} eager={visual && index < 3} />)}
         </div>}
       </div>
     </div>
