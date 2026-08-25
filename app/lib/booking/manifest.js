@@ -18,13 +18,16 @@ function exactGoogleMapsUrl(item) {
 }
 
 export function restaurantBookingUrl(item) {
-  return httpsUrl(item?.officialWebsiteUrl || item?.websiteUri || item?.websiteUrl)
-    || httpsUrl(item?.reservationUrl || item?.bookingUrl)
+  return httpsUrl(item?.officialReservationUrl || item?.reservationUrl)
+    || httpsUrl(item?.officialWebsiteUrl || item?.websiteUri || item?.websiteUrl)
+    || httpsUrl(item?.openTableUrl || item?.bookingUrl)
     || exactGoogleMapsUrl(item);
 }
 
 export function experienceBookingUrl(item) {
-  return httpsUrl(item?.bookingUrl || item?.providerUrl)
+  return httpsUrl(item?.viatorAffiliateUrl || item?.affiliateUrl)
+    || httpsUrl(item?.providerBookingUrl || item?.bookingUrl || item?.providerUrl)
+    || httpsUrl(item?.officialWebsiteUrl || item?.websiteUri || item?.websiteUrl)
     || exactGoogleMapsUrl(item);
 }
 
@@ -103,12 +106,11 @@ export function bookingManifestEntries(manifest) {
     ...(manifest?.flightBooking ? [manifest.flightBooking] : []),
   ];
   const seen = new Set();
-  return entries.filter((entry) => {
+  return entries.flatMap((entry) => {
     const url = httpsUrl(entry.exactUrl || entry.deepLink);
-    if (!url || seen.has(url)) return false;
+    if (!url || seen.has(url)) return [];
     seen.add(url);
-    entry.exactUrl = url;
-    return true;
+    return [{ ...entry, exactUrl: url }];
   });
 }
 

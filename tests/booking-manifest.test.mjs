@@ -5,6 +5,7 @@ import {
   bookingManifestEntries,
   launchBookingManifest,
   restaurantBookingUrl,
+  experienceBookingUrl,
 } from "../app/lib/booking/manifest.js";
 
 const destination = { city: "Mexico City", country: "Mexico", airport: "MEX" };
@@ -33,10 +34,17 @@ test("an unselected flight never leaks into restaurant-only booking", () => {
   assert.deepEqual(bookingManifestEntries(result).map((item) => item.type), ["restaurant"]);
 });
 
-test("restaurant precedence is official site, verified reservation, then exact Google place", () => {
+test("restaurant precedence is official reservation, official site, verified OpenTable, then exact Google place", () => {
+  assert.equal(restaurantBookingUrl({ officialReservationUrl: "https://reservations.example/pujol", officialWebsiteUrl: "https://pujol.com.mx/", bookingUrl: "https://www.opentable.com/r/pujol" }), "https://reservations.example/pujol");
   assert.equal(restaurantBookingUrl({ officialWebsiteUrl: "https://pujol.com.mx/", bookingUrl: "https://www.opentable.com/r/pujol" }), "https://pujol.com.mx/");
   assert.equal(restaurantBookingUrl({ bookingUrl: "https://www.opentable.com/r/pujol" }), "https://www.opentable.com/r/pujol");
   assert.match(restaurantBookingUrl({ provider: "google_places", providerId: "ChIJexact" }), /query_place_id=ChIJexact/);
+});
+
+test("experience precedence is affiliate, provider booking, official site, then exact Google place", () => {
+  assert.equal(experienceBookingUrl({ affiliateUrl: "https://www.viator.com/tours/austin/exact", providerBookingUrl: "https://provider.example/exact", officialWebsiteUrl: "https://official.example/experience" }), "https://www.viator.com/tours/austin/exact");
+  assert.equal(experienceBookingUrl({ providerBookingUrl: "https://provider.example/exact", officialWebsiteUrl: "https://official.example/experience" }), "https://provider.example/exact");
+  assert.equal(experienceBookingUrl({ officialWebsiteUrl: "https://official.example/experience" }), "https://official.example/experience");
 });
 
 test("hotel plus two restaurants plus flight yields four exact actions", () => {
@@ -79,4 +87,33 @@ test("rebuilding after a selection change cannot retain stale items", () => {
   const second = manifest({ restaurants: [{ name: "Rosetta", bookingUrl: "https://www.opentable.com/r/rosetta" }] });
   assert.deepEqual(bookingManifestEntries(first).map((item) => item.name), ["Pujol"]);
   assert.deepEqual(bookingManifestEntries(second).map((item) => item.name), ["Rosetta"]);
+});
+
+test("Austin acceptance opens hotel, Caroline, Zilker, and flight synchronously while retaining GlobTrek", () => {
+  const austin = buildBookingManifest({
+    tripId: "austin:acceptance",
+    destination: { city: "Austin", country: "United States", airport: "AUS" },
+    dates: { start: "2026-10-10", end: "2026-10-14" },
+    travelers: { adults: 2, children: 0, total: 2 },
+    hotels: [{ name: "Austin Proper Hotel" }],
+    hotelExactUrls: ["https://www.booking.com/hotel/us/austin-proper.html"],
+    restaurants: [{ name: "Caroline", officialReservationUrl: "https://www.opentable.com/r/caroline-reservations-austin?restref=732061", officialWebsiteUrl: "https://www.carolinerestaurant.com/caroline" }],
+    experiences: [{ name: "Zilker Metropolitan Park", officialWebsiteUrl: "https://www.austintexas.gov/department/zilker-metropolitan-park", provider: "official" }],
+    flight: { selected: true, origin: "PDX", destination: "AUS", departureDate: "2026-10-10", returnDate: "2026-10-14", adults: 2, children: 0, cabin: "ECONOMY", preferredDeparture: "morning" },
+    flightDeepLink: "https://flights.booking.com/flights/PDX.AIRPORT-AUS.AIRPORT/?type=ROUNDTRIP&cabinClass=ECONOMY&adults=2&children=0&depart=2026-10-10&return=2026-10-14",
+  });
+  const destinations = [];
+  const originalGlobTrekLocation = "https://www.glob-trek.com/results";
+  const launched = launchBookingManifest(austin, (url, target) => {
+    assert.equal(url, "about:blank");
+    assert.equal(target, "_blank");
+    return { opener: {}, location: { replace(value) { destinations.push(value); } } };
+  });
+  assert.equal(launched.opened.length, 4);
+  assert.deepEqual(launched.blocked, []);
+  assert.equal(originalGlobTrekLocation, "https://www.glob-trek.com/results");
+  assert.match(destinations[0], /booking\.com\/hotel\/us\/austin-proper/);
+  assert.match(destinations[1], /opentable\.com\/r\/caroline-reservations-austin/);
+  assert.match(destinations[2], /austintexas\.gov\/department\/zilker-metropolitan-park/);
+  assert.match(destinations[3], /PDX\.AIRPORT-AUS\.AIRPORT/);
 });

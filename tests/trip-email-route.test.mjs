@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import { tripEmail } from "../app/lib/email/templates.js";
 import { sendEmail } from "../app/lib/email/resend.js";
 import { confirmEmailAccepted, tripEmailIdempotencyKey } from "../app/lib/email/tripDelivery.js";
@@ -60,4 +61,15 @@ test("selection changes produce a new email idempotency key", async (t) => {
   const keyOne = tripEmailIdempotencyKey("traveler@example.com", pujol);
   const keyTwo = tripEmailIdempotencyKey("traveler@example.com", rosetta);
   assert.notEqual(keyOne, keyTwo);
+});
+
+test("logged-out email UX asks for an address and closes only after confirmed success", async () => {
+  const source = await readFile(new URL("../app/components/EmailTripButton.jsx", import.meta.url), "utf8");
+  assert.match(source, /Where should we send your trip\?/);
+  assert.match(source, /Send my trip/);
+  assert.match(source, /if \(!response\.ok \|\| !data\.sent\) throw/);
+  assert.match(source, /setStatus\("Trip sent"\);[\s\S]*setSentFingerprint\(selectionFingerprint\);\s*setOpen\(false\)/);
+  assert.match(source, /const accountEmail = user\?\.email \|\| null/);
+  assert.doesNotMatch(source, /email_confirmed_at/);
+  assert.match(source, /sendingRef\.current/);
 });
