@@ -111,7 +111,7 @@ function PlannerHotelDrawer({ hotel, destination, trip, photos, onClose, onChoos
 
 function HotelCard({ hotel, destination, trip, index, count, onChoose, onDetails, onPrevious, onNext, onMedia, priority = false, proposalMode = false, selected = false, compact = false, dense = false }) {
   const { photos, place, loading } = useHotelMedia(hotel, dense ? 5 : 2);
-  const verifiedHotel = { ...hotel, address: place?.formattedAddress || hotel.address, rating: place?.rating ?? hotel.rating, reviewCount: place?.reviewCount ?? hotel.reviewCount };
+  const verifiedHotel = { ...hotel, address: place?.formattedAddress || hotel.address, rating: place?.rating ?? hotel.rating, reviewCount: place?.reviewCount ?? hotel.reviewCount, googleMapsUri: place?.googleMapsUri || hotel.googleMapsUri };
   const bookingUrl = bookingPropertyUrl(verifiedHotel, trip);
   const profile = normalizeTravelerProfile(trip);
   useEffect(() => { if (selected && photos.length) onMedia?.(photos); }, [onMedia, photos, selected]);

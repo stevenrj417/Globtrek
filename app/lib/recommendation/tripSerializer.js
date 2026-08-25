@@ -22,17 +22,21 @@ export function serializeRecommendation({ travelerProfile, destination, budgetPl
 }
 
 export function buildTripEmailModel(savedTrip) {
+  const manifest = savedTrip.bookingManifest || null;
   return {
     destination: savedTrip.destination,
-    dates: savedTrip.travelerProfile?.dates || null,
-    travelers: savedTrip.travelerProfile?.travelers || null,
+    destinationImage: savedTrip.destination?.image || null,
+    dates: manifest?.dates || savedTrip.travelerProfile?.dates || { start: savedTrip.trip?.tripStart || null, end: savedTrip.trip?.tripEnd || null },
+    travelers: manifest?.travelers || savedTrip.travelerProfile?.travelers || null,
     exactBudget: savedTrip.exactBudget || savedTrip.travelerProfile?.exactBudget || null,
     hotel: savedTrip.selections?.hotel || savedTrip.hotelSelection || null,
+    flight: manifest?.flightBooking || savedTrip.selections?.flight || null,
     restaurants: savedTrip.selections?.restaurants || [],
     activities: savedTrip.selections?.activities || [],
     estimatedCostBreakdown: savedTrip.estimatedCosts || null,
     itinerary: savedTrip.itinerary || null,
     journey: savedTrip.journey || null,
+    bookingManifest: manifest,
     bookingLinks: savedTrip.bookingLinks || {},
     disclaimer: "Prices shown are estimates unless a provider explicitly marks them live. Confirm final prices and availability with the provider.",
   };

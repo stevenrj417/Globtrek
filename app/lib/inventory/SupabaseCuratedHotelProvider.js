@@ -9,6 +9,8 @@ export function mapHotel(row, destination) {
     provider: row.provider,
     providerPropertyId: row.provider_property_id,
     googlePlaceId: row.google_place_id,
+    googleMapsUri: row.google_maps_uri || (/^https:\/\/(www\.)?google\./i.test(row.verification_source || "") ? row.verification_source : null),
+    providerUrl: row.provider_url || null,
     bookingUrl: row.booking_com_property_url,
     cjTrackingBaseUrl: row.cj_tracking_url,
     latitude: row.latitude,

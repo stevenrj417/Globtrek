@@ -1,7 +1,7 @@
-import crypto from "node:crypto";
 import { createAdminClient } from "../../../lib/supabase/admin";
 import { sendEmail } from "../../../lib/email/resend";
 import { tripEmail } from "../../../lib/email/templates";
+import { confirmEmailAccepted, tripEmailIdempotencyKey } from "../../../lib/email/tripDelivery";
 import { normalizeEmail } from "../../../lib/email/subscriptions";
 import { buildTripEmailModel } from "../../../lib/recommendation/tripSerializer";
 
@@ -17,9 +17,9 @@ export async function POST(request) {
   const trip = body.trip;
   if (!email || !trip?.destination || !trip?.itinerary?.days?.length || JSON.stringify(body).length > 120000) return Response.json({ error: "A valid email and complete trip are required." }, { status: 400 });
   const model = buildTripEmailModel({ ...trip, travelerProfile: trip.travelerProfile || trip.trip, hotelSelection: trip.selections?.hotel || trip.hotelSelection });
-  const key = `trip-${crypto.createHash("sha256").update(`${email}:${trip.clientTripKey || JSON.stringify(model.destination)}:${trip.itinerary.days.length}`).digest("hex").slice(0, 40)}`;
+  const key = tripEmailIdempotencyKey(email, model);
   try {
-    const provider = await sendEmail({ from: "Globtrek Trips <trips@glob-trek.com>", to: [email], subject: `Your ${model.itinerary.days.length}-day trip to ${model.destination.city || model.destination.name}`, html: tripEmail({ model, viewUrl: safeViewUrl(body.viewUrl) }) }, { idempotencyKey: key });
+    const provider = confirmEmailAccepted(await sendEmail({ from: "Globtrek Trips <trips@glob-trek.com>", to: [email], subject: `Your GlobTrek journey to ${model.destination.city || model.destination.name}`, html: tripEmail({ model, viewUrl: safeViewUrl(body.viewUrl) }) }, { idempotencyKey: key }));
     try { const supabase = createAdminClient(); await supabase.from("email_sends").upsert({ recipient_email: email, email_type: "trip", provider_message_id: provider.id || null, idempotency_key: key }, { onConflict: "idempotency_key" }); } catch {}
     return Response.json({ sent: true });
   } catch (error) {
