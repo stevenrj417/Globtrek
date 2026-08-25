@@ -18,6 +18,8 @@ function trip(restaurant = "Pujol") {
 test("trip email renders exact selections, verified images, flight, and individual links", () => {
   const value = trip();
   const html = tripEmail({ model: { destination: value.destination, destinationImage: value.destination.image, dates: value.bookingManifest.dates, travelers: value.bookingManifest.travelers, hotel: value.selections.hotel, flight: value.bookingManifest.flightBooking, restaurants: value.selections.restaurants, activities: [], itinerary: value.itinerary, bookingManifest: value.bookingManifest, bookingLinks: {} }, viewUrl: "https://glob-trek.com/results" });
+  assert.match(html, /GLOBTREK/);
+  assert.match(html, /One tab travel/i);
   assert.match(html, /Casa Polanco/);
   assert.match(html, /PDX → MEX/);
   assert.match(html, /Pujol/);

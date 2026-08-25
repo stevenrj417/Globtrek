@@ -118,12 +118,18 @@ export function launchBookingManifest(manifest, openWindow = (url, target) => wi
   const entries = bookingManifestEntries(manifest);
   const opened = [];
   const blocked = [];
-  entries.forEach((entry) => {
-    const tab = openWindow("about:blank", "_blank");
+  const contexts = entries.map((entry, index) => {
+    let tab = null;
+    try { tab = openWindow("about:blank", `globtrek-booking-${index + 1}`); }
+    catch { tab = null; }
     if (!tab) {
       blocked.push(entry);
-      return;
+      return null;
     }
+    return { entry, tab };
+  }).filter(Boolean);
+
+  contexts.forEach(({ entry, tab }) => {
     try {
       tab.opener = null;
       if (tab.location?.replace) tab.location.replace(entry.exactUrl);
@@ -134,7 +140,7 @@ export function launchBookingManifest(manifest, openWindow = (url, target) => wi
       blocked.push(entry);
     }
   });
-  return { entries, opened, blocked };
+  return { requested: entries.length, entries, opened, blocked };
 }
 
 export { exactGoogleMapsUrl, httpsUrl };

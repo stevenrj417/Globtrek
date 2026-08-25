@@ -36,9 +36,9 @@ export class GooglePlacesDiscoveryProvider extends GooglePlacesHotelProvider {
     catch { return { imageUrl: null, imageAttribution: [], imageSourceUrl: place.googleMapsUri || null }; }
   }
 
-  async discoverRestaurants(destination, { limit = 3 } = {}) {
+  async discoverRestaurants(destination, { limit = 4 } = {}) {
     const key = cacheKey("restaurants", destination); const hit = cached(key); if (hit) return hit.slice(0, limit);
-    const places = await this.searchNearby(destination, { textQuery: `restaurants in ${destination.city}, ${destination.country}`, includedType: "restaurant", limit: Math.max(3, limit), allowedTypes: RESTAURANT_TYPES });
+    const places = await this.searchNearby(destination, { textQuery: `restaurants in ${destination.city}, ${destination.country}`, includedType: "restaurant", limit: Math.max(4, limit), allowedTypes: RESTAURANT_TYPES });
     const records = await Promise.all(places.map(async (place) => ({ id: `google:${place.id}`, destinationId: destination.id || destination.airport, name: placeName(place), description: null, cuisine: [], neighborhood: place.formattedAddress || null, priceLevel: place.priceLevel || null, latitude: place.location?.latitude ?? null, longitude: place.location?.longitude ?? null, provider: "google_places", providerId: place.id, googlePlaceId: place.id, bookingUrl: null, officialWebsiteUrl: place.websiteUri || null, websiteUri: place.websiteUri || null, googleMapsUrl: place.googleMapsUri || null, googleMapsUri: place.googleMapsUri || null, detailsUrl: place.googleMapsUri || null, rating: Number(place.rating) || null, reviewCount: Number(place.userRatingCount) || null, category: category(place, "restaurant"), verifiedAt: new Date().toISOString(), ...(await this.firstPhoto(place)) })));
     return remember(key, records).slice(0, limit);
   }

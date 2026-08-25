@@ -79,7 +79,62 @@ test("popup blocker returns individual fallback actions", () => {
   const launched = launchBookingManifest(result, () => (++calls === 1 ? { opener: {}, location: { replace() {} } } : null));
   assert.equal(launched.opened.length, 1);
   assert.equal(launched.blocked.length, 1);
+  assert.equal(launched.requested, 2);
   assert.equal(launched.blocked[0].name, "Rosetta");
+});
+
+test("all blank browsing contexts are created before any booking navigation", () => {
+  const result = manifest({
+    restaurants: [
+      { name: "Pujol", officialWebsiteUrl: "https://pujol.com.mx/" },
+      { name: "Rosetta", bookingUrl: "https://www.opentable.com/r/rosetta" },
+      { name: "Quintonil", officialWebsiteUrl: "https://quintonil.com/" },
+    ],
+  });
+  const events = [];
+  const launched = launchBookingManifest(result, (url, target) => {
+    events.push(`open:${url}:${target}`);
+    return { opener: {}, location: { replace(value) { events.push(`navigate:${value}`); } } };
+  });
+  assert.equal(launched.requested, 3);
+  assert.deepEqual(events.slice(0, 3), [
+    "open:about:blank:globtrek-booking-1",
+    "open:about:blank:globtrek-booking-2",
+    "open:about:blank:globtrek-booking-3",
+  ]);
+  assert.ok(events.slice(3).every((event) => event.startsWith("navigate:https://")));
+});
+
+test("one hotel, four restaurants, four experiences, and a flight produce ten exact attempts", () => {
+  const restaurants = Array.from({ length: 4 }, (_, index) => ({ name: `Restaurant ${index + 1}`, officialWebsiteUrl: `https://restaurant${index + 1}.example/reserve` }));
+  const experiences = Array.from({ length: 4 }, (_, index) => ({ name: `Experience ${index + 1}`, officialWebsiteUrl: `https://experience${index + 1}.example/book` }));
+  const result = manifest({
+    hotels: [{ name: "Casa Polanco" }],
+    hotelExactUrls: ["https://www.booking.com/hotel/mx/casa-polanco.html"],
+    restaurants,
+    experiences,
+    flight,
+    flightDeepLink: "https://flights.booking.com/flights/PDX.AIRPORT-MEX.AIRPORT/?depart=2026-03-14&return=2026-03-23&adults=2&children=1&cabinClass=ECONOMY",
+  });
+  const launched = launchBookingManifest(result, () => ({ opener: {}, location: { replace() {} } }));
+  assert.equal(launched.requested, 10);
+  assert.equal(launched.opened.length, 10);
+  assert.equal(launched.blocked.length, 0);
+});
+
+test("final acceptance selection produces six exact booking attempts", () => {
+  const result = manifest({
+    hotels: [{ name: "Casa Polanco" }],
+    hotelExactUrls: ["https://www.booking.com/hotel/mx/casa-polanco.html"],
+    restaurants: [{ name: "Pujol", officialWebsiteUrl: "https://pujol.com.mx/" }, { name: "Rosetta", bookingUrl: "https://www.opentable.com/r/rosetta" }],
+    experiences: [{ name: "Museo Frida Kahlo", officialWebsiteUrl: "https://www.museofridakahlo.org.mx/" }, { name: "Museo Nacional de Antropología", officialWebsiteUrl: "https://www.mna.inah.gob.mx/" }],
+    flight,
+    flightDeepLink: "https://flights.booking.com/flights/PDX.AIRPORT-MEX.AIRPORT/?depart=2026-03-14&return=2026-03-23&adults=2&children=1&cabinClass=ECONOMY",
+  });
+  const launched = launchBookingManifest(result, () => ({ opener: {}, location: { replace() {} } }));
+  assert.equal(launched.requested, 6);
+  assert.equal(launched.opened.length, 6);
+  assert.deepEqual(launched.blocked, []);
 });
 
 test("rebuilding after a selection change cannot retain stale items", () => {
@@ -104,9 +159,11 @@ test("Austin acceptance opens hotel, Caroline, Zilker, and flight synchronously 
   });
   const destinations = [];
   const originalGlobTrekLocation = "https://www.glob-trek.com/results";
+  let openIndex = 0;
   const launched = launchBookingManifest(austin, (url, target) => {
     assert.equal(url, "about:blank");
-    assert.equal(target, "_blank");
+    openIndex += 1;
+    assert.equal(target, `globtrek-booking-${openIndex}`);
     return { opener: {}, location: { replace(value) { destinations.push(value); } } };
   });
   assert.equal(launched.opened.length, 4);

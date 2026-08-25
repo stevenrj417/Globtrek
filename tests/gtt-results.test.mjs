@@ -4,6 +4,7 @@ import { readFile } from "node:fs/promises";
 
 const page = await readFile(new URL("../app/results/page.jsx", import.meta.url), "utf8");
 const sections = await readFile(new URL("../app/components/TripProposalSections.jsx", import.meta.url), "utf8");
+const restaurantRoute = await readFile(new URL("../app/api/restaurants/recommend/route.js", import.meta.url), "utf8");
 
 test("GTT results use a single proposal booking action instead of search sections", () => {
   assert.match(page, /BOOK NOW/);
@@ -44,8 +45,10 @@ test("flight proposal states when live itinerary data is not connected", () => {
   assert.doesNotMatch(page, /flight number|airline/i);
 });
 
-test("experience edit is curated to three cards with visual fallbacks", () => {
-  assert.match(sections, /initialLimit=\{3\}/);
+test("dining and experience edits each surface four verified choices with visual fallbacks", () => {
+  assert.equal((sections.match(/initialLimit=\{4\}/g) || []).length, 2);
+  assert.match(restaurantRoute, /limit: 4/);
+  assert.match(restaurantRoute, /slice\(0, 4\)/);
   assert.match(sections, /View all.*experiences/);
   assert.match(sections, /destination\.image/);
   assert.match(sections, /Destination view/);

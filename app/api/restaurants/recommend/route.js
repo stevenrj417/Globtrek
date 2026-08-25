@@ -11,10 +11,10 @@ export async function POST(request) {
   try {
     let restaurants = [];
     let source = "supabase_verified";
-    try { restaurants = await new SupabaseRestaurantProvider(await createClient()).searchRestaurants({ destinationId: destination.id || destination.airport, names: Array.isArray(body.names) ? body.names.filter((name) => typeof name === "string") : [], limit: 3 }); }
+    try { restaurants = await new SupabaseRestaurantProvider(await createClient()).searchRestaurants({ destinationId: destination.id || destination.airport, names: Array.isArray(body.names) ? body.names.filter((name) => typeof name === "string") : [], limit: 4 }); }
     catch (error) { console.warn("Restaurant catalog unavailable; using verified place discovery.", error instanceof Error ? error.message : "unknown"); }
     if (!restaurants.length && process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY) {
-      restaurants = await new GooglePlacesDiscoveryProvider().discoverRestaurants(destination, { limit: 3 });
+      restaurants = await new GooglePlacesDiscoveryProvider().discoverRestaurants(destination, { limit: 4 });
       source = "google_places_verified";
     }
     const openTable = new OpenTableClient();
@@ -29,7 +29,7 @@ export async function POST(request) {
         return restaurant;
       }
     }));
-    return Response.json({ restaurants: enriched.slice(0, 3), source, availabilitySource: canCheckAvailability ? "opentable" : "not_requested" });
+    return Response.json({ restaurants: enriched.slice(0, 4), source, availabilitySource: canCheckAvailability ? "opentable" : "not_requested" });
   } catch (error) {
     console.warn("Verified restaurant catalog unavailable.", error instanceof Error ? error.message : "unknown");
     return Response.json({ restaurants: [], source: "unavailable", availabilitySource: "unavailable" });
