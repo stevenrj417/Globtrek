@@ -1,3 +1,5 @@
+import { buildDestinationPlanningAverages } from "./destinationPlanningAverages.js";
+
 const DESTINATION_TYPES = new Set(["city", "island", "region", "country", "route", "nature_area", "resort_area", "multi_stop"]);
 
 const typeMembers = {
@@ -39,7 +41,7 @@ export function enrichDestinationIntelligence(destination) {
   const sourceCostLevel = destination.costLevel || legacyCostLevels[destination.id || destination.airport] || null;
   const typical = typicalCostLevel[sourceCostLevel] || null;
   const aliases = [...new Set([...(destination.aliases || []), destination.city])];
-  return {
+  const enriched = {
     ...destination,
     canonicalName: destination.city,
     destinationType,
@@ -59,6 +61,7 @@ export function enrichDestinationIntelligence(destination) {
     costModelReviewStatus: "baseline_requires_editorial_review",
     productionReady: Boolean(destination.image && destination.airport && DESTINATION_TYPES.has(destinationType)),
   };
+  return { ...enriched, planningAverages: buildDestinationPlanningAverages(enriched) };
 }
 
 export { DESTINATION_TYPES };

@@ -3,8 +3,9 @@ import { estimateFlight } from "./travelFeasibility.js";
 
 const CATEGORY_KEYS = ["flights", "hotel", "food", "activities", "transportation"];
 
-function estimate(category, low, high, source, confidence, isLive = false) {
-  return { category, low: Math.round(low), high: Math.round(high), source, confidence, lastUpdated: "2026-08-14", isLive };
+function estimate(category, average, source, confidence, isLive = false, spread = 0.15) {
+  const roundedAverage = Math.round(average);
+  return { category, low: Math.round(average * (1 - spread)), high: Math.round(average * (1 + spread)), average: roundedAverage, source, confidence, lastUpdated: "2026-08-14", isLive };
 }
 
 export function buildBudgetPlan(profile, destination) {
@@ -15,33 +16,41 @@ export function buildBudgetPlan(profile, destination) {
   const cost = destinationCostProfile(destination);
   const season = seasonFor(destination, profile);
   const flight = estimateFlight(profile, destination);
+  const month = profile?.dates?.start ? new Date(`${profile.dates.start}T00:00:00Z`).getUTCMonth() + 1 : 5;
+  const cityAverage = destination.planningAverages?.monthly?.find((item) => item.month === month) || {
+    hotelNight: cost.typicalHotelNightLow,
+    foodPerPersonDay: cost.foodDailyLow,
+    activitiesPerPersonDay: cost.activitiesDailyLow,
+    localTransportDay: cost.transportDailyLow,
+  };
   const categories = {
-    flights: { ...estimate("flights", includes.flights ? flight.low * travelers : 0, includes.flights ? flight.high * travelers : 0, flight.priceSource, flight.confidence, flight.isLive), currency: flight.currency, priceLastChecked: flight.priceLastChecked },
-    hotel: estimate("hotel", includes.hotel ? cost.typicalHotelNightLow * nights * season.multiplier : 0, includes.hotel ? cost.typicalHotelNightHigh * nights * season.multiplier : 0, cost.source, cost.confidence),
-    food: estimate("food", includes.food ? cost.foodDailyLow * nights * travelers : 0, includes.food ? cost.foodDailyHigh * nights * travelers : 0, cost.source, cost.confidence),
-    activities: estimate("activities", includes.activities ? cost.activitiesDailyLow * nights * travelers : 0, includes.activities ? cost.activitiesDailyHigh * nights * travelers : 0, cost.source, cost.confidence),
-    transportation: estimate("transportation", includes.transportation ? cost.transportDailyLow * nights : 0, includes.transportation ? cost.transportDailyHigh * nights : 0, cost.source, cost.confidence),
+    flights: { ...estimate("flights", includes.flights ? flight.average * travelers : 0, flight.priceSource, flight.confidence, flight.isLive, 0.12), currency: flight.currency, priceLastChecked: flight.priceLastChecked, cabinClass: flight.cabinClass, tripType: flight.tripType, monthlyAverageEconomyRoundTrip: flight.monthlyAverageEconomyRoundTrip },
+    hotel: estimate("hotel", includes.hotel ? cityAverage.hotelNight * nights : 0, destination.planningAverages?.source || cost.source, destination.planningAverages?.confidence || cost.confidence, false, 0.15),
+    food: estimate("food", includes.food ? cityAverage.foodPerPersonDay * nights * travelers : 0, destination.planningAverages?.source || cost.source, destination.planningAverages?.confidence || cost.confidence, false, 0.15),
+    activities: estimate("activities", includes.activities ? cityAverage.activitiesPerPersonDay * nights * travelers : 0, destination.planningAverages?.source || cost.source, destination.planningAverages?.confidence || cost.confidence, false, 0.15),
+    transportation: estimate("transportation", includes.transportation ? cityAverage.localTransportDay * nights : 0, destination.planningAverages?.source || cost.source, destination.planningAverages?.confidence || cost.confidence, false, 0.15),
   };
   const active = CATEGORY_KEYS.filter((key) => includes[key]);
   const rawLow = active.reduce((sum, key) => sum + categories[key].low, 0);
   const rawHigh = active.reduce((sum, key) => sum + categories[key].high, 0);
   const bufferHigh = Math.round(Math.min(targetBudget * 0.06, Math.max(0, targetBudget - rawLow)));
-  const miscBuffer = estimate("miscBuffer", 0, bufferHigh, "globtrek_budget_rule", 0.8);
+  const miscBuffer = { ...estimate("miscBuffer", bufferHigh, "globtrek_budget_rule", 0.8, false, 0), low: 0 };
   const estimatedTripLow = rawLow;
   const estimatedTripHigh = rawHigh + bufferHigh;
+  const estimatedTripAverage = Math.round(active.reduce((sum, key) => sum + categories[key].average, 0) + bufferHigh);
   // The stated budget is an exact ceiling. Keep this field for serialized-trip
   // compatibility, but never permit an estimated overage.
   const permittedOverage = 0;
   const withinHardBudget = targetBudget <= 0 || estimatedTripHigh <= targetBudget;
   const midpoint = (estimatedTripLow + estimatedTripHigh) / 2;
-  const remainingBudget = targetBudget - midpoint;
-  const ratio = targetBudget > 0 ? midpoint / targetBudget : Infinity;
+  const remainingBudget = targetBudget - estimatedTripAverage;
+  const ratio = targetBudget > 0 ? estimatedTripAverage / targetBudget : Infinity;
   const budgetFeasibilityScore = targetBudget <= 0
     ? 50
     : profile.budgetMode === "closest"
       ? Math.max(0, Math.round(100 - Math.abs(1 - ratio) * 100))
       : ratio <= 1 ? 100 : Math.max(1, Math.round(100 / ratio));
-  const budgetDifference = targetBudget > 0 ? Math.round(midpoint - targetBudget) : null;
+  const budgetDifference = targetBudget > 0 ? Math.round(estimatedTripAverage - targetBudget) : null;
   const percentOverBudget = targetBudget > 0 ? Math.max(0, budgetDifference / targetBudget) : 0;
   const budgetCompatibility = targetBudget <= 0
     ? "unknown"
@@ -76,13 +85,16 @@ export function buildBudgetPlan(profile, destination) {
     miscBuffer,
     estimatedTripLow,
     estimatedTripHigh,
-    estimatedTotalCost: { low: estimatedTripLow, high: estimatedTripHigh, midpoint: Math.round(midpoint) },
+    estimatedTripAverage,
+    estimatedTotalCost: { low: estimatedTripLow, high: estimatedTripHigh, midpoint: Math.round(midpoint), average: estimatedTripAverage },
     budgetDifference,
     percentOverBudget,
     budgetCompatibility,
     budgetCompatibilityScore,
     permittedOverage,
     withinHardBudget,
+    budgetBasis: "good_value_monthly_average_with_uncertainty_buffer",
+    cityPlanningAverage: cityAverage,
     remainingBudget: Math.round(remainingBudget),
     budgetFeasibilityScore,
     season,

@@ -1,4 +1,5 @@
 const UPDATED = "2026-08-16";
+const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 const AIRPORT_REGIONS = {
   PDX: "north_america_west", SEA: "north_america_west", SFO: "north_america_west", LAX: "north_america_west",
@@ -47,23 +48,41 @@ function genericRoute(origin, destination, country) {
   return { flightHours: 7, connections: 1, low: 450, high: 1200, popularity: "estimated" };
 }
 
-function seasonMultiplier(profile) {
-  const month = profile?.dates?.start ? new Date(`${profile.dates.start}T00:00:00Z`).getUTCMonth() + 1 : null;
+function monthMultiplier(month) {
   if ([6, 7, 12].includes(month)) return 1.22;
   if ([1, 2, 9, 10, 11].includes(month)) return 0.92;
   return 1;
 }
 
+function profileMonth(profile) {
+  return profile?.dates?.start ? new Date(`${profile.dates.start}T00:00:00Z`).getUTCMonth() + 1 : null;
+}
+
+function routeAverage(route) {
+  return Math.round((route.low + (route.high - route.low) * 0.25) / 10) * 10;
+}
+
 export function estimateFlight(profile, destination) {
   const origin = String(profile?.origin || "").toUpperCase();
   const airport = String(destination?.airport || "").toUpperCase();
-  if (!origin || !airport) return { low: 500, high: 1500, currency: "USD", priceSource: "route_market_estimate_without_origin", priceLastChecked: UPDATED, confidence: 0.25, isLive: false };
+  if (!origin || !airport) {
+    const average = 850;
+    return {
+      low: Math.round(average * 0.88), high: Math.round(average * 1.12), average, currency: "USD",
+      priceSource: "route_market_estimate_without_origin", priceLastChecked: UPDATED, confidence: 0.25, isLive: false,
+      cabinClass: "economy", tripType: "round_trip", basis: "Modeled monthly planning average; origin required for a route-specific estimate",
+      monthlyAverageEconomyRoundTrip: MONTH_NAMES.map((monthName, index) => ({ month: index + 1, monthName, average: Math.round(average * monthMultiplier(index + 1)) })),
+    };
+  }
   const route = ROUTE_OVERRIDES[`${origin}:${airport}`] || genericRoute(origin, airport, destination?.country);
-  const multiplier = seasonMultiplier(profile);
+  const multiplier = monthMultiplier(profileMonth(profile));
+  const average = Math.round(routeAverage(route) * multiplier);
   return {
-    low: Math.round(route.low * multiplier), high: Math.round(route.high * multiplier), currency: "USD",
+    low: Math.round(average * 0.88), high: Math.round(average * 1.12), average, currency: "USD",
     priceSource: "deterministic_route_market_estimate", priceLastChecked: UPDATED,
     confidence: ROUTE_OVERRIDES[`${origin}:${airport}`] ? 0.62 : regionFor(origin) === "unknown" ? 0.3 : 0.45, isLive: false,
+    cabinClass: "economy", tripType: "round_trip", basis: "Modeled monthly planning average; confirm a live fare before booking",
+    monthlyAverageEconomyRoundTrip: MONTH_NAMES.map((monthName, index) => ({ month: index + 1, monthName, average: Math.round(routeAverage(route) * monthMultiplier(index + 1)) })),
   };
 }
 

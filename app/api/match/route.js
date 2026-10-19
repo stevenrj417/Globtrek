@@ -171,8 +171,8 @@ function fallbackPlan(destination, input) {
   const money = (value) => `$${Math.round(value || 0).toLocaleString("en-US")}`;
   const budget = budgetPlan?.estimates ? Object.entries(budgetPlan.estimates).filter(([key]) => key !== "miscBuffer").map(([key, item]) => ({
     category: key === "transportation" ? "Transport" : `${key[0].toUpperCase()}${key.slice(1)}`,
-    share: budgetPlan.includedBudgetCategories[key] ? `${money(item.low)}–${money(item.high)}` : "Outside budget",
-    note: item.isLive ? "Live provider price" : "Estimated range",
+    share: budgetPlan.includedBudgetCategories[key] ? `${money(item.average)} average` : "Outside budget",
+    note: item.isLive ? "Live provider price" : key === "flights" ? "Monthly economy planning average" : "Good-value planning average",
   })) : [
     { category: "Stay", share: "Estimate unavailable", note: "Compare provider options" },
     { category: "Flights", share: "Estimate unavailable", note: "Compare provider fares" },
