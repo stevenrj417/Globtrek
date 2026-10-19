@@ -29,8 +29,10 @@ export function buildBudgetPlan(profile, destination) {
   const miscBuffer = estimate("miscBuffer", 0, bufferHigh, "globtrek_budget_rule", 0.8);
   const estimatedTripLow = rawLow;
   const estimatedTripHigh = rawHigh + bufferHigh;
-  const permittedOverage = targetBudget > 0 ? Math.min(100, Math.round(targetBudget * 0.02)) : 0;
-  const withinHardBudget = targetBudget <= 0 || estimatedTripHigh <= targetBudget + permittedOverage;
+  // The stated budget is an exact ceiling. Keep this field for serialized-trip
+  // compatibility, but never permit an estimated overage.
+  const permittedOverage = 0;
+  const withinHardBudget = targetBudget <= 0 || estimatedTripHigh <= targetBudget;
   const midpoint = (estimatedTripLow + estimatedTripHigh) / 2;
   const remainingBudget = targetBudget - midpoint;
   const ratio = targetBudget > 0 ? midpoint / targetBudget : Infinity;

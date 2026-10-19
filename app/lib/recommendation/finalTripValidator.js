@@ -1,6 +1,9 @@
+import { destinationUsesOriginAirport } from "./travelArea.js";
+
 export function validateTripRecommendation({ destination, travelerProfile, budgetPlan, itinerary, selectedHotel = null }) {
   const issues = [];
   if (!destination?.airport || !destination?.city || !destination?.country) issues.push({ code: "invalid_destination", severity: "error" });
+  if (destinationUsesOriginAirport(destination, travelerProfile)) issues.push({ code: "same_origin_destination", severity: "error", airport: destination?.airport });
   if (travelerProfile?.origin && destination?.travelFeasibility?.status === "unreasonable") issues.push({ code: "unreasonable_travel_time", severity: "error" });
   if (travelerProfile?.includedBudgetCategories?.flights && !budgetPlan?.flightEstimate) issues.push({ code: "missing_flight_estimate", severity: "error" });
   if (budgetPlan?.targetBudget > 0 && budgetPlan.withinHardBudget === false) issues.push({ code: "over_exact_budget", severity: "error", target: budgetPlan.targetBudget, estimatedHigh: budgetPlan.estimatedTripHigh });

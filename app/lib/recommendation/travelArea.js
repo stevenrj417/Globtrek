@@ -58,7 +58,17 @@ export function destinationCountryCodes(destination = {}) {
     .filter(Boolean))];
 }
 
+export function destinationUsesOriginAirport(destination = {}, profile = {}) {
+  const originAirport = String(profile.originDetails?.airportCode || profile.origin || "").trim().toUpperCase();
+  if (!originAirport) return false;
+  const destinationAirports = new Set([destination.airport, ...(destination.primaryAirportCodes || [])]
+    .map((code) => String(code || "").trim().toUpperCase())
+    .filter(Boolean));
+  return destinationAirports.has(originAirport);
+}
+
 export function destinationMatchesTravelArea(destination, profile = {}) {
+  if (destinationUsesOriginAirport(destination, profile)) return false;
   const preference = normalizeTravelArea(profile.travelAreaPreference);
   if (preference === "anywhere" || !profile.originCountryCode) return true;
   const isDomestic = destinationCountryCodes(destination).includes(profile.originCountryCode);
