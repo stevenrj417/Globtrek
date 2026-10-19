@@ -155,7 +155,7 @@ function BudgetQuestion({ value, includes, onValueChange, onToggle, onBack, onCo
       <h1 className="mx-auto mt-7 max-w-4xl text-[clamp(2.8rem,6vw,6.5rem)] font-medium leading-[0.9] tracking-[-0.07em]">How much do you want to spend?</h1>
       <label className="mx-auto mt-12 flex max-w-3xl items-center justify-center border-b border-black pb-5">
         <span className="mr-3 font-serif text-[clamp(3rem,7vw,7rem)] font-light">$</span>
-        <input aria-label="Exact trip budget" inputMode="numeric" autoComplete="off" value={formatted} onChange={(event) => onValueChange(event.target.value.replace(/\D/g, "").slice(0, 7))} placeholder="1,500" className="min-w-0 w-[7ch] bg-transparent text-center font-serif text-[clamp(3rem,7vw,7rem)] font-light tracking-[-0.055em] outline-none placeholder:text-black/18" />
+        <input aria-label="Exact trip budget" inputMode="numeric" autoComplete="off" value={formatted} onChange={(event) => onValueChange(event.target.value.replace(/\D/g, "").slice(0, 7))} placeholder="800" className="min-w-0 w-[7ch] bg-transparent text-center font-serif text-[clamp(3rem,7vw,7rem)] font-light tracking-[-0.055em] outline-none placeholder:text-black/18" />
       </label>
       <p className="mt-12 text-[10px] uppercase tracking-[0.24em] text-[#777]">What should that include?</p>
       <div className="mx-auto mt-6 flex max-w-4xl flex-wrap justify-center gap-2">

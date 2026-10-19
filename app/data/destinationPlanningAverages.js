@@ -28,7 +28,9 @@ function goodValueAverage(low, high, fallback) {
   const minimum = Number(low);
   const maximum = Number(high);
   if (!Number.isFinite(minimum) || !Number.isFinite(maximum) || maximum < minimum) return fallback;
-  return roundMoney(minimum + (maximum - minimum) * 0.15);
+  // Stay close to the grounded low end: the product is modeling a clean,
+  // well-reviewed budget choice, not the midpoint of the whole hotel market.
+  return roundMoney(minimum + (maximum - minimum) * 0.05);
 }
 
 function monthFactors(destination) {

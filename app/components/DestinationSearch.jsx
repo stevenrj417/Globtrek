@@ -8,7 +8,7 @@ import { useAuth } from "./AuthProvider";
 
 const VIBES = ["Food", "Culture", "Nature", "Nightlife"];
 const PACES = ["Slow mornings", "Balanced days", "Packed schedule"];
-const BUDGETS = [2500, 4500, 7500, 12000];
+const BUDGETS = [750, 1000, 1500, 2500];
 
 function titleCase(value) {
   return String(value).toLowerCase().replace(/(^|[\s&-])\S/g, (letter) => letter.toUpperCase());
@@ -18,7 +18,7 @@ export function DestinationSearch() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [destination, setDestination] = useState(null);
-  const [budget, setBudget] = useState(4500);
+  const [budget, setBudget] = useState(1500);
   const [vibe, setVibe] = useState("Food");
   const [pace, setPace] = useState("Balanced days");
   const [knownness, setKnownness] = useState(50);

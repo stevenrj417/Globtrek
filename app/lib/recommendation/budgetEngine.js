@@ -33,15 +33,20 @@ export function buildBudgetPlan(profile, destination) {
   const active = CATEGORY_KEYS.filter((key) => includes[key]);
   const rawLow = active.reduce((sum, key) => sum + categories[key].low, 0);
   const rawHigh = active.reduce((sum, key) => sum + categories[key].high, 0);
-  const bufferHigh = Math.round(Math.min(targetBudget * 0.06, Math.max(0, targetBudget - rawLow)));
-  const miscBuffer = { ...estimate("miscBuffer", bufferHigh, "globtrek_budget_rule", 0.8, false, 0), low: 0 };
+  const rawAverage = active.reduce((sum, key) => sum + categories[key].average, 0);
+  // Affordability is checked against one realistic, bookable good-value plan—not
+  // the simultaneous worst case for every category. A small reserve remains part
+  // of that plan, and the result must still stay entirely under the stated budget.
+  const planningReserve = rawAverage > 0 ? Math.round(Math.min(75, Math.max(15, rawAverage * 0.03))) : 0;
+  const miscBuffer = { ...estimate("miscBuffer", planningReserve, "globtrek_budget_rule", 0.8, false, 0), low: 0 };
   const estimatedTripLow = rawLow;
-  const estimatedTripHigh = rawHigh + bufferHigh;
-  const estimatedTripAverage = Math.round(active.reduce((sum, key) => sum + categories[key].average, 0) + bufferHigh);
+  const estimatedTripHigh = rawHigh + planningReserve;
+  const budgetCheckTotal = Math.round(rawAverage + planningReserve);
+  const estimatedTripAverage = budgetCheckTotal;
   // The stated budget is an exact ceiling. Keep this field for serialized-trip
   // compatibility, but never permit an estimated overage.
   const permittedOverage = 0;
-  const withinHardBudget = targetBudget <= 0 || estimatedTripHigh <= targetBudget;
+  const withinHardBudget = targetBudget <= 0 || budgetCheckTotal <= targetBudget;
   const midpoint = (estimatedTripLow + estimatedTripHigh) / 2;
   const remainingBudget = targetBudget - estimatedTripAverage;
   const ratio = targetBudget > 0 ? estimatedTripAverage / targetBudget : Infinity;
@@ -63,9 +68,8 @@ export function buildBudgetPlan(profile, destination) {
   // Lodging is the residual hard allocation after airfare and the lowest grounded
   // version of the included daily categories. Ranking then rejects properties
   // whose complete stay exceeds this amount.
-  const nonHotelMinimum = Object.entries(categories).filter(([key]) => key !== "hotel").reduce((sum, [, value]) => sum + value.low, 0);
-  const hotelSafetyReserve = targetBudget > 0 ? Math.min(100, Math.round(targetBudget * 0.02)) : 0;
-  const hotelBudget = includes.hotel ? Math.max(0, targetBudget - nonHotelMinimum - hotelSafetyReserve) : 0;
+  const nonHotelPlan = Object.entries(categories).filter(([key]) => key !== "hotel").reduce((sum, [, value]) => sum + value.average, 0);
+  const hotelBudget = includes.hotel ? Math.max(0, targetBudget - nonHotelPlan - planningReserve) : 0;
   const optimization = ratio > 1 ? "reduce_cost" : ratio < 0.72 && profile.budgetMode === "closest" ? "consider_upgrade" : "balanced";
   const optimizationActions = optimization === "reduce_cost"
     ? [includes.hotel && "prefer_lower_cost_hotel", includes.activities && "reduce_optional_activities", includes.transportation && "use_lower_cost_local_transport", "consider_next_affordable_destination"].filter(Boolean)
@@ -86,6 +90,7 @@ export function buildBudgetPlan(profile, destination) {
     estimatedTripLow,
     estimatedTripHigh,
     estimatedTripAverage,
+    budgetCheckTotal,
     estimatedTotalCost: { low: estimatedTripLow, high: estimatedTripHigh, midpoint: Math.round(midpoint), average: estimatedTripAverage },
     budgetDifference,
     percentOverBudget,
@@ -93,7 +98,7 @@ export function buildBudgetPlan(profile, destination) {
     budgetCompatibilityScore,
     permittedOverage,
     withinHardBudget,
-    budgetBasis: "good_value_monthly_average_with_uncertainty_buffer",
+    budgetBasis: "good_value_monthly_plan_with_reserve",
     cityPlanningAverage: cityAverage,
     remainingBudget: Math.round(remainingBudget),
     budgetFeasibilityScore,

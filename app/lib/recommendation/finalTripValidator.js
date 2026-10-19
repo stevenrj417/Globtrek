@@ -6,7 +6,7 @@ export function validateTripRecommendation({ destination, travelerProfile, budge
   if (destinationUsesOriginAirport(destination, travelerProfile)) issues.push({ code: "same_origin_destination", severity: "error", airport: destination?.airport });
   if (travelerProfile?.origin && destination?.travelFeasibility?.status === "unreasonable") issues.push({ code: "unreasonable_travel_time", severity: "error" });
   if (travelerProfile?.includedBudgetCategories?.flights && !budgetPlan?.flightEstimate) issues.push({ code: "missing_flight_estimate", severity: "error" });
-  if (budgetPlan?.targetBudget > 0 && budgetPlan.withinHardBudget === false) issues.push({ code: "over_exact_budget", severity: "error", target: budgetPlan.targetBudget, estimatedHigh: budgetPlan.estimatedTripHigh });
+  if (budgetPlan?.targetBudget > 0 && budgetPlan.withinHardBudget === false) issues.push({ code: "over_exact_budget", severity: "error", target: budgetPlan.targetBudget, budgetCheckTotal: budgetPlan.budgetCheckTotal });
   if (selectedHotel && !selectedHotel.name) issues.push({ code: "invalid_hotel", severity: "error" });
   if (selectedHotel?.bookingUrl && !/^https:\/\//.test(selectedHotel.bookingUrl)) issues.push({ code: "invalid_hotel_booking_link", severity: "error" });
   const days = itinerary?.days;
