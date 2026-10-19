@@ -3,9 +3,10 @@ const siteUrl = "https://www.glob-trek.com";
 const routes = [
   "",
   "/discover",
-  "/cruises",
-  "/road-trips",
-  "/road-trips/quiz",
+  // Uncomment these routes when Cruises and Road Trips return to navigation.
+  // "/cruises",
+  // "/road-trips",
+  // "/road-trips/quiz",
   "/about",
   "/how-it-works",
   "/contact",

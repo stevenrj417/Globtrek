@@ -4,9 +4,9 @@ import { SiteFooter, SiteHeader } from "./components/SiteChrome";
 import { EmailSignup } from "./components/EmailSignup";
 
 const trips = [
-  { id: "KIX", name: "Kyoto", country: "Japan", price: "Est. $4,850–$6,400", image: "/kyoto-feature.jpg", alt: "A quiet tree-lined street in Kyoto" },
-  { id: "NAP", name: "Amalfi Coast", country: "Italy", price: "Est. $5,900–$8,200", image: "/amalfi-feature.jpg", alt: "Lemon trees overlooking the Amalfi Coast at sunset" },
-  { id: "YYC", name: "Banff", country: "Canada", price: "Est. $3,750–$5,600", image: "/banff-feature.jpg", alt: "A grand hotel surrounded by forest and mountains in Banff" },
+  { id: "MEX", name: "Mexico City", country: "Mexico", stay: "1 week", price: "Est. $1,000–$2,300", image: "https://images.unsplash.com/photo-1518659526054-190340b32735", alt: "Mexico City seen from above" },
+  { id: "HAN", name: "Hanoi", country: "Vietnam", stay: "5 nights", price: "Est. $700–$1,600", image: "https://images.unsplash.com/photo-1509030450996-dd1a26dda07a", alt: "A street scene in Hanoi" },
+  { id: "LIS", name: "Lisbon", country: "Portugal", stay: "5 nights", price: "Est. $1,200–$2,600", image: "https://images.unsplash.com/photo-1555881400-74d7acaacd8b", alt: "Lisbon rooftops in warm light" },
 ];
 
 export default function Home() {
@@ -20,6 +20,7 @@ export default function Home() {
           <div className="absolute inset-x-0 bottom-0 flex flex-col items-center px-5 pb-10 text-center sm:pb-14 lg:pb-16">
             <h1 className="whitespace-nowrap text-[clamp(1.65rem,5vw,5.25rem)] font-extralight uppercase leading-[0.9] tracking-[-0.045em] text-white [text-shadow:0_1px_18px_rgba(0,0,0,0.28)]">One Tab Travel</h1>
             <Link href="/discover" className="mt-6 inline-flex min-h-12 items-center bg-[#171717] px-6 text-xs font-semibold uppercase tracking-[0.08em] text-white transition hover:bg-black">Find your trip <span className="ml-3" aria-hidden="true">→</span></Link>
+            <p className="mt-3 text-xs text-white [text-shadow:0_1px_18px_rgba(0,0,0,0.28)]">A few quick questions. One affordable trip.</p>
           </div>
         </div>
       </section>
@@ -27,8 +28,8 @@ export default function Home() {
       <section id="trips" className="reveal border-t border-black/10 py-20 sm:py-28">
         <div className="mx-auto max-w-[1520px] px-5 sm:px-8">
           <div className="mb-12 text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#707070]">Trending now</p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-[-0.045em] sm:text-5xl">Trips worth leaving for.</h2>
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#707070]">Easy on the wallet</p>
+            <h2 className="mt-3 text-3xl font-semibold tracking-[-0.045em] sm:text-5xl">Good trips that don&apos;t cost a fortune.</h2>
           </div>
           <div className="grid gap-x-6 gap-y-12 md:grid-cols-3 lg:gap-x-8">
             {trips.map((trip) => (
@@ -40,6 +41,7 @@ export default function Home() {
                   <h3 className="text-xl font-medium tracking-[-0.03em] sm:text-2xl">{trip.name}</h3>
                   <p className="mt-1 text-xs text-[#707070]">{trip.country}</p>
                   <p className="mt-3 text-sm font-medium">{trip.price}</p>
+                  <p className="mt-1 text-xs text-[#707070]">{trip.stay} · before flights</p>
                 </div>
               </Link>
             ))}
@@ -47,7 +49,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="luxury" aria-label="Luxury travel inspiration" className="reveal border-t border-black/10 bg-[#efefeb] py-20 sm:py-32">
+      {/* Set this condition to true to restore the fashion-photo inspiration strip. */}
+      {false && <section id="luxury" aria-label="Luxury travel inspiration" className="reveal border-t border-black/10 bg-[#efefeb] py-20 sm:py-32">
         <div className="mx-auto grid max-w-[1460px] gap-5 px-5 sm:px-8 md:grid-cols-3 md:gap-7 lg:gap-9">
           {[
             ["/luxury-snow.jpg", "A fashion portrait in a snowy alpine landscape"],
@@ -59,7 +62,7 @@ export default function Home() {
             </div>
           ))}
         </div>
-      </section>
+      </section>}
       <EmailSignup />
       <SiteFooter />
     </main>

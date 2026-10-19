@@ -16,10 +16,11 @@ const questions = [
       { label: "Ocean", display: "Coast", image: "/quiz/ocean.jpg", alt: "A woman overlooking a bright Mediterranean sea" },
       { label: "Mountains", image: "/quiz/mountains.jpg", alt: "A fashion portrait in a snowy mountain landscape" },
       { label: "Cities", display: "City", image: "/quiz/cities.jpg", alt: "A black-and-white fashion portrait in Paris" },
-      { label: "Road Trips", display: "Road trip", image: "/quiz/road-trips.jpg", alt: "An open road through a dramatic desert landscape" },
+      // Set hidden to false to restore Road Trips to the setting question.
+      { label: "Road Trips", display: "Road trip", image: "/quiz/road-trips.jpg", alt: "An open road through a dramatic desert landscape", hidden: true },
       { label: "Culture", display: "History & culture", image: "/quiz/culture.jpg", alt: "A quiet tree-lined street in Kyoto" },
       { label: "Surprise Me", display: "No preference", image: "/quiz/surprise-me.jpg", alt: "Rio de Janeiro seen from above" },
-    ],
+    ].filter((option) => !option.hidden),
   },
   {
     id: "escape",
@@ -65,7 +66,7 @@ const questions = [
     question: "What matters most on this trip?",
     type: "visual",
     options: [
-      { label: "Food", image: "/quiz/food.jpg", alt: "A considered restaurant table" },
+      { label: "Food", image: "/quiz/food.jpg", alt: "A welcoming restaurant table" },
       { label: "Nature", image: "/quiz/nature.jpg", alt: "Snowy mountains in clear light" },
       { label: "Culture", image: "/quiz/culture-priority.jpg", alt: "A quiet Kyoto street" },
       { label: "Nightlife", image: "/quiz/nightlife.jpg", alt: "A crowd beneath city lights" },
@@ -154,7 +155,7 @@ function BudgetQuestion({ value, includes, onValueChange, onToggle, onBack, onCo
       <h1 className="mx-auto mt-7 max-w-4xl text-[clamp(2.8rem,6vw,6.5rem)] font-medium leading-[0.9] tracking-[-0.07em]">How much do you want to spend?</h1>
       <label className="mx-auto mt-12 flex max-w-3xl items-center justify-center border-b border-black pb-5">
         <span className="mr-3 font-serif text-[clamp(3rem,7vw,7rem)] font-light">$</span>
-        <input aria-label="Exact trip budget" inputMode="numeric" autoComplete="off" value={formatted} onChange={(event) => onValueChange(event.target.value.replace(/\D/g, "").slice(0, 7))} placeholder="4,500" className="min-w-0 w-[7ch] bg-transparent text-center font-serif text-[clamp(3rem,7vw,7rem)] font-light tracking-[-0.055em] outline-none placeholder:text-black/18" />
+        <input aria-label="Exact trip budget" inputMode="numeric" autoComplete="off" value={formatted} onChange={(event) => onValueChange(event.target.value.replace(/\D/g, "").slice(0, 7))} placeholder="1,500" className="min-w-0 w-[7ch] bg-transparent text-center font-serif text-[clamp(3rem,7vw,7rem)] font-light tracking-[-0.055em] outline-none placeholder:text-black/18" />
       </label>
       <p className="mt-12 text-[10px] uppercase tracking-[0.24em] text-[#777]">What should that include?</p>
       <div className="mx-auto mt-6 flex max-w-4xl flex-wrap justify-center gap-2">

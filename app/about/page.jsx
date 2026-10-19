@@ -2,7 +2,7 @@ import { EditorialPage, EditorialSection } from "../components/EditorialPage";
 
 export const metadata = {
   title: "About | GlobTrek",
-  description: "Why GlobTrek is building a more considered way to discover and organize travel.",
+  description: "Why GlobTrek is building a simpler way to discover and organize travel.",
 };
 
 export default function AboutPage() {
@@ -12,7 +12,7 @@ export default function AboutPage() {
       title="Start with the traveler."
       intro="Travel planning has become a collection of tabs. Flights in one place. Hotels in another. Saved restaurants somewhere else. Experiences buried in screenshots."
     >
-      <EditorialSection number="01" title="A more considered starting point">
+      <EditorialSection number="01" title="A simpler starting point">
         <p>
           GlobTrek is being built around a simpler idea: understand how someone wants to travel, then bring the relevant pieces of the trip together in one coherent recommendation.
         </p>

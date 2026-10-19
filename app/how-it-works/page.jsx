@@ -3,7 +3,7 @@ import { EditorialPage, EditorialSection } from "../components/EditorialPage";
 
 export const metadata = {
   title: "How It Works | GlobTrek",
-  description: "How GlobTrek turns traveler preferences into considered trip recommendations.",
+  description: "How GlobTrek turns traveler preferences into practical trip recommendations.",
 };
 
 const steps = [
@@ -29,7 +29,7 @@ export default function HowItWorksPage() {
     <EditorialPage
       eyebrow="The process"
       title="How it works"
-      intro="A considered route from personal preferences to a trip that makes sense."
+      intro="A few quick questions, one affordable trip, no pile of tabs."
     >
       {steps.map((step) => (
         <EditorialSection number={step.number} title={step.title} key={step.number}>

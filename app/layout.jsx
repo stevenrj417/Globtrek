@@ -5,7 +5,7 @@ import { AuthProvider } from "./components/AuthProvider";
 export const metadata = {
   title: "globtrek - One Tab Travel",
   description:
-    "A premium travel discovery and planning experience for one trip in one place.",
+    "Simple, affordable trip planning. Answer a few quick questions and get one trip that fits your budget.",
 };
 
 export default function RootLayout({ children }) {

@@ -11,7 +11,7 @@ function button(label, href) {
 }
 
 export function welcomeEmail({ unsubscribeUrl, siteUrl }) {
-  return shell({ preheader: "A quieter way to find your next trip.", eyebrow: "Welcome", title: "Travel ideas, considered.", body: `<p style="font-family:Georgia,serif;font-size:22px;line-height:1.5">A small monthly edit of places worth leaving for—selected with the same restraint Globtrek brings to every trip.</p>${button("Find your trip", siteUrl)}`, footer: `You opted in to Globtrek travel emails. <a href="${escapeHtml(unsubscribeUrl)}" style="color:#171714">Unsubscribe</a>.` });
+  return shell({ preheader: "A quieter way to find your next trip.", eyebrow: "Welcome", title: "Travel ideas, simply planned.", body: `<p style="font-family:Georgia,serif;font-size:22px;line-height:1.5">A small monthly edit of places worth leaving for—selected with the same restraint Globtrek brings to every trip.</p>${button("Find your trip", siteUrl)}`, footer: `You opted in to Globtrek travel emails. <a href="${escapeHtml(unsubscribeUrl)}" style="color:#171714">Unsubscribe</a>.` });
 }
 
 function money(value) { return Number.isFinite(Number(value)) ? `$${Math.round(Number(value)).toLocaleString("en-US")}` : "Unknown"; }
