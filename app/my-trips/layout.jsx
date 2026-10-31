@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "My Trips | GlobTrek",
+  title: "My Trips",
   robots: { index: false, follow: false },
 };
 

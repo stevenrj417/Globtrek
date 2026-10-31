@@ -1,13 +1,13 @@
 import { EditorialPage, EditorialSection } from "../components/EditorialPage";
 
 export const metadata = {
-  title: "Affiliate Disclosure | GlobTrek",
+  title: "Affiliate disclosure",
   description: "How affiliate links may support GlobTrek.",
 };
 
 export default function AffiliateDisclosurePage() {
   return (
-    <EditorialPage
+    <EditorialPage updated="2026-08-12"
       eyebrow="Affiliate disclosure"
       title="A clear route to booking."
       intro="Some links on GlobTrek may be affiliate links. That relationship should be understandable before you leave the site."

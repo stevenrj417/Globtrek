@@ -1,8 +1,9 @@
 import { EditorialPage, EditorialSection } from "../components/EditorialPage";
 
 export const metadata = {
-  title: "About | GlobTrek",
-  description: "Why GlobTrek is building a simpler way to discover and organize travel.",
+  title: "About",
+  description: "Why GlobTrek gives you one affordable trip instead of a pile of tabs.",
+  alternates: { canonical: "/about" },
 };
 
 export default function AboutPage() {
@@ -10,22 +11,16 @@ export default function AboutPage() {
     <EditorialPage
       eyebrow="About GlobTrek"
       title="Start with the traveler."
-      intro="Travel planning has become a collection of tabs. Flights in one place. Hotels in another. Saved restaurants somewhere else. Experiences buried in screenshots."
+      intro="Planning a trip has turned into a pile of tabs. Flights in one, hotels in another, restaurants saved somewhere else."
     >
       <EditorialSection number="01" title="A simpler starting point">
-        <p>
-          GlobTrek is being built around a simpler idea: understand how someone wants to travel, then bring the relevant pieces of the trip together in one coherent recommendation.
-        </p>
+        <p>GlobTrek starts with how you want to travel, then brings the trip together in one recommendation.</p>
       </EditorialSection>
-      <EditorialSection number="02" title="Discovery before inventory">
-        <p>
-          Preferences such as pace, setting, stay style, interests, timing, and budget help organize destination, accommodation, and experience options around fit rather than volume.
-        </p>
+      <EditorialSection number="02" title="Fit before volume">
+        <p>Your pace, setting, stay style, interests, timing and budget decide what you see. You get the trip that fits, not the longest list.</p>
       </EditorialSection>
-      <EditorialSection number="03" title="Clear handoff to booking services">
-        <p>
-          GlobTrek is a discovery and curation layer. When an option can be booked through an external travel provider, final pricing, availability, terms, payment, and the reservation are handled on that provider’s service.
-        </p>
+      <EditorialSection number="03" title="A clear handoff to booking">
+        <p>GlobTrek picks the trip. Partners like Booking.com handle the booking: final price, availability, payment and the reservation itself.</p>
       </EditorialSection>
     </EditorialPage>
   );

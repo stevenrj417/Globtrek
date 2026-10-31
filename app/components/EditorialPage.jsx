@@ -1,6 +1,10 @@
 import { SiteFooter, SiteHeader } from "./SiteChrome";
 
-export function EditorialPage({ eyebrow, title, intro, children }) {
+function formatUpdated(value) {
+  return new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" }).format(new Date(`${value}T00:00:00Z`));
+}
+
+export function EditorialPage({ eyebrow, title, intro, updated, children }) {
   return (
     <main className="min-h-screen bg-bg text-ink">
       <SiteHeader />
@@ -15,6 +19,7 @@ export function EditorialPage({ eyebrow, title, intro, children }) {
               {intro}
             </p>
           ) : null}
+          {updated ? <p className="mt-6 text-sm text-subtle">Last updated <time dateTime={updated}>{formatUpdated(updated)}</time></p> : null}
         </header>
         <div className="legal-copy py-14 sm:py-20">{children}</div>
       </article>

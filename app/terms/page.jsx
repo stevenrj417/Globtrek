@@ -1,13 +1,13 @@
 import { EditorialPage, EditorialSection } from "../components/EditorialPage";
 
 export const metadata = {
-  title: "Terms | GlobTrek",
+  title: "Terms",
   description: "Practical terms for the current GlobTrek travel discovery product.",
 };
 
 export default function TermsPage() {
   return (
-    <EditorialPage
+    <EditorialPage updated="2026-08-15"
       eyebrow="Terms"
       title="Using GlobTrek."
       intro="These practical early-access terms describe the current product. They should be reviewed by qualified counsel before commercial booking functionality launches."

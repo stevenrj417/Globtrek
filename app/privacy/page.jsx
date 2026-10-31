@@ -1,13 +1,13 @@
 import { EditorialPage, EditorialSection } from "../components/EditorialPage";
 
 export const metadata = {
-  title: "Privacy | GlobTrek",
+  title: "Privacy",
   description: "How the current GlobTrek product handles quiz preferences and third-party services.",
 };
 
 export default function PrivacyPage() {
   return (
-    <EditorialPage
+    <EditorialPage updated="2026-10-31"
       eyebrow="Privacy"
       title="What the current product handles."
       intro="This notice describes the code and services used by the current early-access version of GlobTrek. It avoids promises the product is not yet equipped to make."
@@ -19,7 +19,7 @@ export default function PrivacyPage() {
       </EditorialSection>
       <EditorialSection number="02" title="Quiz storage and recommendation processing">
         <p>
-          Quiz answers and dates are stored in your browser using localStorage so the results page can read them. They remain there until browser storage is cleared or overwritten by a later quiz.
+          Quiz answers and dates are stored in your browser using localStorage so the results page can read them. They remain there until browser storage is cleared or overwritten by a later quiz. While you are taking the quiz, your answers so far are also kept in this browser tab&apos;s sessionStorage so a refresh doesn&apos;t lose them; that copy is removed when you finish the quiz or close the tab.
           When you create a share link, the trip preferences needed to reproduce that result are encoded in the link itself. Anyone with that link can view those preferences. GlobTrek also uses privacy-friendly first-party analytics to understand page visits and actions such as quiz completion and provider-link clicks; payment details are never collected by GlobTrek.
         </p>
         <p>
