@@ -101,7 +101,7 @@ function questionsFor(answers) {
 }
 
 function Progress({ step }) {
-  return <p className="text-[10px] font-medium tabular-nums tracking-[0.2em] text-[#777]">{String(step + 1).padStart(2, "0")} / {String(preferenceSteps).padStart(2, "0")}</p>;
+  return <p className="text-micro font-medium tabular-nums tracking-editorial text-subtle">{String(step + 1).padStart(2, "0")} / {String(preferenceSteps).padStart(2, "0")}</p>;
 }
 
 function VisualQuestion({ question, value, onChoose, step }) {
@@ -112,23 +112,23 @@ function VisualQuestion({ question, value, onChoose, step }) {
 
   return (
     <div className="quiz-stage grid min-h-[calc(100svh-5rem)] grid-rows-[auto_1fr_auto] px-5 pb-6 pt-9 sm:px-8 lg:px-10">
-      <div className="flex items-center justify-between"><span className="text-xl font-semibold tracking-[-0.055em]">GLOBTREK</span><Progress step={step} /></div>
+      <div className="flex items-center justify-between"><span className="text-xl font-semibold uppercase tracking-tight-3">GlobTrek</span><Progress step={step} /></div>
       <div className="grid items-center gap-9 py-8 lg:grid-cols-[30%_70%] lg:gap-0 lg:py-8">
         <div className="relative z-10 lg:pr-12">
-          <p className="mb-6 text-[10px] uppercase tracking-[0.23em] text-[#777]">The GlobTrek quiz</p>
-          <h1 className="max-w-md text-[2.25rem] font-medium leading-[0.94] tracking-[-0.065em] sm:text-[clamp(2.7rem,5.2vw,5.6rem)]">{question.question}</h1>
+          <p className="mb-6 text-micro uppercase tracking-editorial text-subtle">The GlobTrek quiz</p>
+          <h1 className="max-w-md text-[2.25rem] font-medium leading-[0.94] tracking-tight-4 sm:text-[clamp(2.7rem,5.2vw,5.6rem)]">{question.question}</h1>
         </div>
-        <div className="relative aspect-[4/3] max-h-[300px] overflow-hidden bg-[#e8e6e1] sm:max-h-none sm:min-h-[360px] lg:aspect-auto lg:h-[min(69vh,760px)]">
+        <div className="relative aspect-[4/3] max-h-[300px] overflow-hidden bg-placeholder sm:max-h-none sm:min-h-[360px] lg:aspect-auto lg:h-[min(69vh,760px)]">
           {question.options.map((option) => (
             <Image key={option.label} src={option.image} alt={option.label === active.label ? option.alt : ""} fill priority={option.label === selected} className={`object-contain transition-[opacity,transform] duration-500 ease-[cubic-bezier(.22,.61,.36,1)] sm:object-cover ${option.label === active.label ? "scale-100 opacity-100" : "pointer-events-none scale-[1.012] opacity-0"}`} sizes="(min-width:1024px) 70vw, 100vw" />
           ))}
         </div>
       </div>
-      <div className="relative z-20 mx-auto w-full max-w-[1500px] bg-[#fbfaf7] lg:-mt-16">
+      <div className="relative z-20 mx-auto w-full max-w-[1500px] bg-surface lg:-mt-16">
         <div className="grid grid-cols-2 border-l border-t border-black/10 sm:flex sm:border-x-0 sm:border-y sm:px-6">
           {question.options.map((option) => {
             const isActive = selected === option.label;
-            return <button type="button" key={option.label} onMouseEnter={() => setPreview(option.label)} onMouseLeave={() => setPreview(selected)} onFocus={() => setPreview(option.label)} onBlur={() => setPreview(selected)} onClick={() => onChoose(option.label)} className={`relative min-h-14 border-b border-r border-black/10 px-3 text-[9px] uppercase tracking-[0.13em] transition-colors sm:min-h-24 sm:flex-1 sm:border-0 sm:px-4 sm:text-[11px] sm:tracking-[0.16em] ${isActive ? "bg-[#171717] text-white sm:bg-transparent sm:text-black" : "text-[#888] hover:text-black"}`}><span className={`absolute inset-x-6 top-0 hidden h-px bg-black transition-transform duration-500 sm:block ${isActive ? "scale-x-100" : "scale-x-0"}`} />{option.display || option.label}</button>;
+            return <button type="button" key={option.label} onMouseEnter={() => setPreview(option.label)} onMouseLeave={() => setPreview(selected)} onFocus={() => setPreview(option.label)} onBlur={() => setPreview(selected)} onClick={() => onChoose(option.label)} className={`relative min-h-14 border-b border-r border-black/10 px-3 text-micro uppercase tracking-label transition-colors sm:min-h-24 sm:flex-1 sm:border-0 sm:px-4 sm:text-eyebrow sm:tracking-label ${isActive ? "bg-ink text-white sm:bg-transparent sm:text-black" : "text-subtle hover:text-black"}`}><span className={`absolute inset-x-6 top-0 hidden h-px bg-black transition-transform duration-500 sm:block ${isActive ? "scale-x-100" : "scale-x-0"}`} />{option.display || option.label}</button>;
           })}
         </div>
       </div>
@@ -148,24 +148,24 @@ function BudgetQuestion({ value, includes, onValueChange, onToggle, onBack, onCo
   const budget = normalizeBudget(value);
   const valid = budget !== null && Object.values(includes).some(Boolean);
   const formatted = value ? Number(String(value).replace(/\D/g, "")).toLocaleString("en-US") : "";
-  return <div className="quiz-stage flex min-h-[calc(100svh-5rem)] flex-col bg-[#f5f3ef] px-5 pb-8 pt-9 sm:px-8 lg:px-10">
-    <div className="flex items-center justify-between"><span className="text-xl font-semibold tracking-[-0.055em]">GLOBTREK</span><Progress step={step} /></div>
+  return <div className="quiz-stage flex min-h-[calc(100svh-5rem)] flex-col bg-canvas px-5 pb-8 pt-9 sm:px-8 lg:px-10">
+    <div className="flex items-center justify-between"><span className="text-xl font-semibold uppercase tracking-tight-3">GlobTrek</span><Progress step={step} /></div>
     <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col justify-center py-12 text-center">
-      <p className="text-[10px] uppercase tracking-[0.24em] text-[#777]">Your total trip budget</p>
-      <h1 className="mx-auto mt-7 max-w-4xl text-[clamp(2.8rem,6vw,6.5rem)] font-medium leading-[0.9] tracking-[-0.07em]">How much do you want to spend?</h1>
+      <p className="text-micro uppercase tracking-editorial text-subtle">Your total trip budget</p>
+      <h1 className="mx-auto mt-7 max-w-4xl text-[clamp(2.8rem,6vw,6.5rem)] font-medium leading-[0.9] tracking-tight-4">How much do you want to spend?</h1>
       <label className="mx-auto mt-12 flex max-w-3xl items-center justify-center border-b border-black pb-5">
         <span className="mr-3 font-serif text-[clamp(3rem,7vw,7rem)] font-light">$</span>
-        <input aria-label="Exact trip budget" inputMode="numeric" autoComplete="off" value={formatted} onChange={(event) => onValueChange(event.target.value.replace(/\D/g, "").slice(0, 7))} placeholder="800" className="min-w-0 w-[7ch] bg-transparent text-center font-serif text-[clamp(3rem,7vw,7rem)] font-light tracking-[-0.055em] outline-none placeholder:text-black/18" />
+        <input aria-label="Exact trip budget" inputMode="numeric" autoComplete="off" value={formatted} onChange={(event) => onValueChange(event.target.value.replace(/\D/g, "").slice(0, 7))} placeholder="800" className="min-w-0 w-[7ch] bg-transparent text-center font-serif text-[clamp(3rem,7vw,7rem)] font-light tracking-tight-3 outline-none placeholder:text-black/18" />
       </label>
-      <p className="mt-12 text-[10px] uppercase tracking-[0.24em] text-[#777]">What should that include?</p>
+      <p className="mt-12 text-micro uppercase tracking-editorial text-subtle">What should that include?</p>
       <div className="mx-auto mt-6 flex max-w-4xl flex-wrap justify-center gap-2">
-        {Object.entries(budgetCategoryLabels).map(([key, label]) => <button type="button" key={key} aria-pressed={includes[key]} onClick={() => onToggle(key)} className={`min-h-12 border px-5 text-[9px] uppercase tracking-[0.17em] transition ${includes[key] ? "border-black bg-black text-white" : "border-black/20 bg-white/40 text-black/50 hover:border-black"}`}>{label}</button>)}
+        {Object.entries(budgetCategoryLabels).map(([key, label]) => <button type="button" key={key} aria-pressed={includes[key]} onClick={() => onToggle(key)} className={`min-h-12 border px-5 text-micro uppercase tracking-label transition ${includes[key] ? "border-black bg-black text-white" : "border-black/20 bg-white/40 text-black/50 hover:border-black"}`}>{label}</button>)}
       </div>
       <p className="mt-5 text-xs text-black/40">Excluded items can still appear in your plan, but they will not count toward this budget.</p>
     </div>
     <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-6 border-t border-black/10 pt-7">
-      <button type="button" onClick={onBack} className="min-h-12 text-xs uppercase tracking-[0.12em] text-[#666]">← Back</button>
-      <button type="button" disabled={!valid} onClick={() => onContinue(budget)} className="min-h-14 bg-black px-8 text-xs font-semibold uppercase tracking-[0.12em] text-white disabled:opacity-25">Continue →</button>
+      <button type="button" onClick={onBack} className="min-h-12 text-xs uppercase tracking-label text-muted">← Back</button>
+      <button type="button" disabled={!valid} onClick={() => onContinue(budget)} className="min-h-14 bg-black px-8 text-xs font-semibold uppercase tracking-label text-white disabled:opacity-25">Continue →</button>
     </div>
   </div>;
 }
@@ -210,7 +210,7 @@ function AirportAutocomplete({ value, onChange }) {
 
   return <div className="relative mt-3">
     <input
-      className="w-full border-0 border-b border-black/25 bg-transparent px-0 py-4 text-lg tracking-[-0.02em] outline-none transition-colors placeholder:text-black/28 focus:border-black"
+      className="w-full border-0 border-b border-black/25 bg-transparent px-0 py-4 text-lg tracking-tight-1 outline-none transition-colors placeholder:text-black/28 focus:border-black"
       type="text"
       inputMode="text"
       autoComplete="off"
@@ -226,7 +226,7 @@ function AirportAutocomplete({ value, onChange }) {
       onKeyDown={handleKeyDown}
       onChange={(event) => { setQuery(event.target.value); onChange(null); setOpen(true); setActiveIndex(0); }}
     />
-    {open && normalized && <div id="airport-suggestions" role="listbox" className="absolute inset-x-0 top-full z-50 max-h-80 overflow-y-auto border-x border-b border-black/20 bg-[#fbfaf7] shadow-[0_18px_35px_rgba(0,0,0,0.12)]">
+    {open && normalized && <div id="airport-suggestions" role="listbox" className="absolute inset-x-0 top-full z-50 max-h-80 overflow-y-auto border-x border-b border-black/20 bg-surface shadow-overlay">
       {matches.length ? matches.map((airport, index) => <button
         key={`${airport.code}-${airport.name}`}
         type="button"
@@ -235,11 +235,11 @@ function AirportAutocomplete({ value, onChange }) {
         onMouseDown={(event) => event.preventDefault()}
         onMouseEnter={() => setActiveIndex(index)}
         onClick={() => choose(airport)}
-        className={`flex w-full items-center justify-between gap-5 border-t border-black/10 px-5 py-3 text-left transition-colors first:border-t-0 ${index === activeIndex ? "bg-[#ebe8e2]" : "hover:bg-[#f2f0eb]"}`}
+        className={`flex w-full items-center justify-between gap-5 border-t border-black/10 px-5 py-3 text-left transition-colors first:border-t-0 ${index === activeIndex ? "bg-surface-sunken" : "hover:bg-canvas"}`}
       >
-        <span className="min-w-0"><strong className="block truncate text-sm font-medium text-black">{airport.city || airport.name}</strong><span className="mt-1 block truncate text-[10px] uppercase tracking-[0.1em] text-[#777]">{airport.name}{airport.country ? ` · ${airport.country}` : ""}</span></span>
-        <span className="shrink-0 text-xs font-semibold tracking-[0.14em]">{airport.code}</span>
-      </button>) : <p className="px-5 py-4 text-xs text-[#777]">No matching airport found.</p>}
+        <span className="min-w-0"><strong className="block truncate text-sm font-medium text-black">{airport.city || airport.name}</strong><span className="mt-1 block truncate text-micro uppercase tracking-caps text-subtle">{airport.name}{airport.country ? ` · ${airport.country}` : ""}</span></span>
+        <span className="shrink-0 text-xs font-semibold tracking-label">{airport.code}</span>
+      </button>) : <p className="px-5 py-4 text-xs text-subtle">No matching airport found.</p>}
     </div>}
   </div>;
 }
@@ -248,24 +248,24 @@ function DiscoveryQuestion({ value, onChange, onBack, onContinue }) {
   const level = Number.isFinite(value) ? value : 50;
   const mood = level < 20 ? "Off the radar" : level < 40 ? "Less discovered" : level < 65 ? "A mix of both" : level < 85 ? "Well known" : "The classics";
 
-  return <div className="quiz-stage flex min-h-[calc(100svh-5rem)] flex-col bg-[#f5f3ef] px-5 pb-8 pt-9 sm:px-8 lg:px-10">
-    <div className="flex items-center justify-between"><span className="text-xl font-semibold tracking-[-0.055em]">GLOBTREK</span><Progress step={questions.length} /></div>
+  return <div className="quiz-stage flex min-h-[calc(100svh-5rem)] flex-col bg-canvas px-5 pb-8 pt-9 sm:px-8 lg:px-10">
+    <div className="flex items-center justify-between"><span className="text-xl font-semibold uppercase tracking-tight-3">GlobTrek</span><Progress step={questions.length} /></div>
     <div className="mx-auto flex w-full max-w-[1450px] flex-1 flex-col justify-center py-14">
-      <p className="text-center text-[10px] uppercase tracking-[0.23em] text-[#777]">How well known should it be?</p>
-      <h1 className="mx-auto mt-8 max-w-5xl text-center text-[clamp(3.2rem,7.5vw,8.5rem)] font-medium leading-[0.86] tracking-[-0.075em]">{mood}</h1>
+      <p className="text-center text-micro uppercase tracking-editorial text-subtle">How well known should it be?</p>
+      <h1 className="mx-auto mt-8 max-w-5xl text-center text-[clamp(3.2rem,7.5vw,8.5rem)] font-medium leading-[0.86] tracking-tight-4">{mood}</h1>
       <div className="mx-auto mt-16 w-full max-w-5xl sm:mt-24">
         <div className="relative h-24 sm:h-32">
           <div className="absolute inset-x-0 top-1/2 h-px bg-black/25" />
           <div className="absolute left-0 top-1/2 h-px bg-black transition-[width] duration-300" style={{ width: `${level}%` }} />
-          <div className="pointer-events-none absolute top-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border border-black bg-[#f5f3ef] shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-[left] duration-150 sm:h-20 sm:w-20" style={{ left: `${level}%` }}><span className="grid h-full place-items-center text-[10px] tabular-nums tracking-[0.15em]">{level}</span></div>
+          <div className="pointer-events-none absolute top-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border border-black bg-canvas shadow-hover transition-[left] duration-150 sm:h-20 sm:w-20" style={{ left: `${level}%` }}><span className="grid h-full place-items-center text-micro tabular-nums tracking-label">{level}</span></div>
           <input aria-label="Destination familiarity" className="absolute inset-0 h-full w-full cursor-ew-resize opacity-0" type="range" min="0" max="100" step="1" value={level} onInput={(event) => onChange(Number(event.currentTarget.value))} onChange={(event) => onChange(Number(event.currentTarget.value))} />
         </div>
-        <div className="flex justify-between gap-8 border-t border-black/10 pt-5 text-[10px] uppercase tracking-[0.2em] text-[#666]"><span>Hidden places</span><span className="text-right">Iconic places</span></div>
+        <div className="flex justify-between gap-8 border-t border-black/10 pt-5 text-micro uppercase tracking-editorial text-muted"><span>Hidden places</span><span className="text-right">Iconic places</span></div>
       </div>
     </div>
     <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-6 border-t border-black/10 pt-7">
-      <button type="button" onClick={onBack} className="min-h-12 text-xs uppercase tracking-[0.12em] text-[#666] hover:text-black">← Back</button>
-      <button type="button" onClick={onContinue} className="min-h-14 bg-[#171717] px-8 text-xs font-semibold uppercase tracking-[0.12em] text-white">Set the course →</button>
+      <button type="button" onClick={onBack} className="min-h-12 text-xs uppercase tracking-label text-muted hover:text-black">← Back</button>
+      <button type="button" onClick={onContinue} className="min-h-14 bg-ink px-8 text-xs font-semibold uppercase tracking-label text-white">Set the course →</button>
     </div>
   </div>;
 }
@@ -280,46 +280,46 @@ function DateQuestion({ answers, setAnswers, tripStart, tripEnd, isFlexible, set
     if (nextMode === "flexible") { setTripStart(""); setTripEnd(""); }
   }
 
-  return <form onSubmit={onSubmit} className="quiz-stage grid min-h-svh bg-[#f5f3ef] lg:grid-cols-2">
+  return <form onSubmit={onSubmit} className="quiz-stage grid min-h-svh bg-canvas lg:grid-cols-2">
     <div className="flex min-h-svh flex-col px-5 pb-8 pt-8 sm:px-10 lg:px-14 lg:py-10">
-      <div className="flex items-center justify-between"><span className="text-xl font-semibold tracking-[-0.055em]">GLOBTREK</span><p className="text-[10px] uppercase tracking-[0.2em] text-[#777]">Trip details</p></div>
+      <div className="flex items-center justify-between"><span className="text-xl font-semibold uppercase tracking-tight-3">GlobTrek</span><p className="text-micro uppercase tracking-editorial text-subtle">Trip details</p></div>
       <div className="flex flex-1 flex-col justify-center py-10 sm:py-14 lg:py-8">
-        <p className="text-[10px] uppercase tracking-[0.2em] text-[#777]">Final step</p>
-        <h1 className="mt-5 max-w-xl text-[clamp(3rem,5.4vw,5.8rem)] font-medium leading-[0.9] tracking-[-0.075em]">When and from where?</h1>
+        <p className="text-micro uppercase tracking-editorial text-subtle">Final step</p>
+        <h1 className="mt-5 max-w-xl text-[clamp(3rem,5.4vw,5.8rem)] font-medium leading-[0.9] tracking-tight-4">When and from where?</h1>
 
         <div className="mt-9 grid gap-8 sm:grid-cols-[1fr_7rem]">
-          <label><span className="text-[10px] uppercase tracking-[0.18em] text-[#555]">Leaving from</span><AirportAutocomplete value={originDetails} onChange={setOriginDetails} /></label>
-          <label><span className="text-[10px] uppercase tracking-[0.18em] text-[#555]">Travelers</span><input className="mt-3 w-full border-0 border-b border-black/25 bg-transparent px-0 py-4 text-lg outline-none focus:border-black" type="number" min="1" max="30" value={guestCount} onChange={(event) => setGuestCount(event.target.value)} required /></label>
+          <label><span className="text-micro uppercase tracking-editorial text-muted">Leaving from</span><AirportAutocomplete value={originDetails} onChange={setOriginDetails} /></label>
+          <label><span className="text-micro uppercase tracking-editorial text-muted">Travelers</span><input className="mt-3 w-full border-0 border-b border-black/25 bg-transparent px-0 py-4 text-lg outline-none focus:border-black" type="number" min="1" max="30" value={guestCount} onChange={(event) => setGuestCount(event.target.value)} required /></label>
         </div>
 
         <fieldset className="mt-9">
-          <legend className="text-[10px] uppercase tracking-[0.18em] text-[#555]">Where would you like to go?</legend>
+          <legend className="text-micro uppercase tracking-editorial text-muted">Where would you like to go?</legend>
           <div role="radiogroup" className="mt-3 grid grid-cols-3 border border-black/15">
-            {TRAVEL_AREA_OPTIONS.map((option) => <button type="button" role="radio" key={option.value} aria-checked={travelAreaPreference === option.value} onClick={() => setTravelAreaPreference(option.value)} className={`min-h-14 border-r border-black/15 px-2 text-[10px] leading-4 transition-colors last:border-r-0 sm:px-3 ${travelAreaPreference === option.value ? "bg-[#171717] text-white" : "text-black/52 hover:text-black"}`}>{option.label}</button>)}
+            {TRAVEL_AREA_OPTIONS.map((option) => <button type="button" role="radio" key={option.value} aria-checked={travelAreaPreference === option.value} onClick={() => setTravelAreaPreference(option.value)} className={`min-h-14 border-r border-black/15 px-2 text-micro leading-4 transition-colors last:border-r-0 sm:px-3 ${travelAreaPreference === option.value ? "bg-ink text-white" : "text-black/52 hover:text-black"}`}>{option.label}</button>)}
           </div>
         </fieldset>
 
         <div className="mt-9 grid grid-cols-2 border border-black/15">
-          <button type="button" onClick={() => selectMode("dates")} className={`min-h-14 border-r border-black/15 px-4 text-[10px] font-medium uppercase tracking-[0.1em] transition-colors ${mode === "dates" ? "bg-[#171717] text-white" : "text-[#555] hover:text-black"}`}>I know my dates</button>
-          <button type="button" onClick={() => selectMode("flexible")} className={`min-h-14 px-4 text-[10px] font-medium uppercase tracking-[0.1em] transition-colors ${mode === "flexible" ? "bg-[#171717] text-white" : "text-[#555] hover:text-black"}`}>I’m flexible</button>
+          <button type="button" onClick={() => selectMode("dates")} className={`min-h-14 border-r border-black/15 px-4 text-micro font-medium uppercase tracking-caps transition-colors ${mode === "dates" ? "bg-ink text-white" : "text-muted hover:text-black"}`}>I know my dates</button>
+          <button type="button" onClick={() => selectMode("flexible")} className={`min-h-14 px-4 text-micro font-medium uppercase tracking-caps transition-colors ${mode === "flexible" ? "bg-ink text-white" : "text-muted hover:text-black"}`}>I’m flexible</button>
         </div>
 
         <div className="min-h-28">
           {mode === "dates" ? <div className="mt-8 grid gap-6 sm:grid-cols-2">
-            <label><span className="text-[10px] uppercase tracking-[0.18em] text-[#555]">Depart</span><input className="mt-2 w-full border-0 border-b border-black/25 bg-transparent px-0 py-4 text-base outline-none focus:border-black" type="date" value={tripStart} onChange={(event) => setTripStart(event.target.value)} required /></label>
-            <label><span className="text-[10px] uppercase tracking-[0.18em] text-[#555]">Return</span><input className="mt-2 w-full border-0 border-b border-black/25 bg-transparent px-0 py-4 text-base outline-none focus:border-black" min={tripStart} type="date" value={tripEnd} onChange={(event) => setTripEnd(event.target.value)} required /></label>
+            <label><span className="text-micro uppercase tracking-editorial text-muted">Depart</span><input className="mt-2 w-full border-0 border-b border-black/25 bg-transparent px-0 py-4 text-base outline-none focus:border-black" type="date" value={tripStart} onChange={(event) => setTripStart(event.target.value)} required /></label>
+            <label><span className="text-micro uppercase tracking-editorial text-muted">Return</span><input className="mt-2 w-full border-0 border-b border-black/25 bg-transparent px-0 py-4 text-base outline-none focus:border-black" min={tripStart} type="date" value={tripEnd} onChange={(event) => setTripEnd(event.target.value)} required /></label>
           </div> : <div className="mt-8 grid grid-cols-4 border border-black/15">
-            {seasons.map(([name, months, value]) => <button type="button" key={name} onClick={() => setAnswers((current) => ({ ...current, season: value }))} className={`min-h-20 border-r border-black/15 px-2 text-left transition-colors last:border-r-0 sm:px-3 ${answers.season === value ? "bg-[#171717] text-white" : "text-[#555] hover:text-black"}`}><strong className="block text-[10px] font-medium uppercase tracking-[0.1em]">{name}</strong><span className={`mt-2 block text-[9px] ${answers.season === value ? "text-white/60" : "text-[#999]"}`}>{months}</span></button>)}
+            {seasons.map(([name, months, value]) => <button type="button" key={name} onClick={() => setAnswers((current) => ({ ...current, season: value }))} className={`min-h-20 border-r border-black/15 px-2 text-left transition-colors last:border-r-0 sm:px-3 ${answers.season === value ? "bg-ink text-white" : "text-muted hover:text-black"}`}><strong className="block text-micro font-medium uppercase tracking-caps">{name}</strong><span className={`mt-2 block text-micro ${answers.season === value ? "text-white/60" : "text-subtle"}`}>{months}</span></button>)}
           </div>}
         </div>
 
         <div className="mt-10 flex items-center justify-between gap-6">
-          <button type="button" onClick={onBack} className="min-h-12 text-xs uppercase tracking-[0.12em] text-[#666] hover:text-black">← Back</button>
-          <button disabled={!canSubmit} type="submit" className="min-h-14 bg-[#171717] px-8 text-xs font-semibold uppercase tracking-[0.12em] text-white disabled:opacity-30">Reveal my trip</button>
+          <button type="button" onClick={onBack} className="min-h-12 text-xs uppercase tracking-label text-muted hover:text-black">← Back</button>
+          <button disabled={!canSubmit} type="submit" className="min-h-14 bg-ink px-8 text-xs font-semibold uppercase tracking-label text-white disabled:opacity-30">Reveal my trip</button>
         </div>
       </div>
     </div>
-    <div className="relative hidden min-h-svh bg-[#ddd8d0] lg:block"><Image src="/results-feature.jpg" alt="A coastal villa beside clear blue water" fill priority className="object-cover" sizes="50vw" /></div>
+    <div className="relative hidden min-h-svh bg-placeholder lg:block"><Image src="/results-feature.jpg" alt="A coastal villa beside clear blue water" fill priority className="object-cover" sizes="50vw" /></div>
   </form>;
 }
 
@@ -401,10 +401,10 @@ export default function TravelQuiz() {
     timer.current = window.setTimeout(() => window.location.assign(preferredDestination?.id ? `/thinking?destination=${encodeURIComponent(preferredDestination.id)}` : "/thinking"), 850);
   }
 
-  if (phase === "complete") return <div className="grid min-h-[calc(100svh-5rem)] place-items-center bg-[#f5f3ef] px-5"><p className="text-[clamp(3.5rem,8vw,8rem)] font-medium tracking-[-0.07em]">We found it.</p></div>;
+  if (phase === "complete") return <div className="grid min-h-[calc(100svh-5rem)] place-items-center bg-canvas px-5"><p className="text-[clamp(3.5rem,8vw,8rem)] font-medium tracking-tight-4">We found it.</p></div>;
 
-  return <section id="quiz" className={`relative overflow-hidden bg-[#f5f3ef] text-[#171717] transition-[opacity,transform] duration-300 ease-out ${phase === "leaving" ? "-translate-y-2 opacity-0" : phase === "leaving-back" ? "translate-y-2 opacity-0" : phase === "entering" ? "translate-y-2 opacity-0" : "translate-y-0 opacity-100"}`}>
-    {preferredDestination ? <div className="pointer-events-none absolute inset-x-0 top-1 z-40 text-center"><span className="inline-flex border border-black/10 bg-[#f5f3ef]/90 px-3 py-1.5 text-[9px] uppercase tracking-[0.14em] text-black/55 backdrop-blur">Planning {preferredDestination.name}</span></div> : null}
+  return <section id="quiz" className={`relative overflow-hidden bg-canvas text-ink transition-[opacity,transform] duration-300 ease-out ${phase === "leaving" ? "-translate-y-2 opacity-0" : phase === "leaving-back" ? "translate-y-2 opacity-0" : phase === "entering" ? "translate-y-2 opacity-0" : "translate-y-0 opacity-100"}`}>
+    {preferredDestination ? <div className="pointer-events-none absolute inset-x-0 top-1 z-40 text-center"><span className="inline-flex border border-black/10 bg-canvas/90 px-3 py-1.5 text-micro uppercase tracking-label text-black/55 backdrop-blur">Planning {preferredDestination.name}</span></div> : null}
     {step < adaptiveQuestions.length ? current.type === "budget" ? <BudgetQuestion value={exactBudget} includes={budgetIncludes} onValueChange={setExactBudget} onToggle={(key) => setBudgetIncludes((currentIncludes) => ({ ...currentIncludes, [key]: !currentIncludes[key] }))} onBack={back} onContinue={continueBudget} step={step} /> : <VisualQuestion question={current} value={answers[current.id]} onChoose={choose} step={step} /> : step === adaptiveQuestions.length ? <DiscoveryQuestion value={discoveryLevel} onChange={setDiscoveryLevel} onBack={back} onContinue={continueDiscovery} /> : <DateQuestion answers={answers} setAnswers={setAnswers} tripStart={tripStart} tripEnd={tripEnd} isFlexible={isFlexible} setTripStart={setTripStart} setTripEnd={setTripEnd} setIsFlexible={setIsFlexible} originDetails={originDetails} setOriginDetails={setOriginDetails} travelAreaPreference={travelAreaPreference} setTravelAreaPreference={setTravelAreaPreference} guestCount={guestCount} setGuestCount={setGuestCount} onBack={back} onSubmit={submit} canSubmit={canSubmit} />}
   </section>;
 }

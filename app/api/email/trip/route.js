@@ -19,7 +19,7 @@ export async function POST(request) {
   const model = buildTripEmailModel({ ...trip, travelerProfile: trip.travelerProfile || trip.trip, hotelSelection: trip.selections?.hotel || trip.hotelSelection });
   const key = tripEmailIdempotencyKey(email, model);
   try {
-    const provider = confirmEmailAccepted(await sendEmail({ from: "Globtrek Trips <trips@glob-trek.com>", to: [email], subject: `Your GlobTrek journey to ${model.destination.city || model.destination.name}`, html: tripEmail({ model, viewUrl: safeViewUrl(body.viewUrl) }) }, { idempotencyKey: key }));
+    const provider = confirmEmailAccepted(await sendEmail({ from: "GlobTrek Trips <trips@glob-trek.com>", to: [email], subject: `Your GlobTrek journey to ${model.destination.city || model.destination.name}`, html: tripEmail({ model, viewUrl: safeViewUrl(body.viewUrl) }) }, { idempotencyKey: key }));
     try { const supabase = createAdminClient(); await supabase.from("email_sends").upsert({ recipient_email: email, email_type: "trip", provider_message_id: provider.id || null, idempotency_key: key }, { onConflict: "idempotency_key" }); } catch {}
     return Response.json({ sent: true });
   } catch (error) {

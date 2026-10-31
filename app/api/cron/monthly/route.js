@@ -14,7 +14,7 @@ export async function GET(request) {
     for (const subscriber of subscribers || []) {
       const token = createUnsubscribeToken();
       await supabase.from("email_subscribers").update({ unsubscribe_token_hash: hashUnsubscribeToken(token), updated_at: new Date().toISOString() }).eq("id", subscriber.id);
-      messages.push({ from: "Globtrek <hello@glob-trek.com>", to: [subscriber.email], subject: "The Globtrek monthly edit", html: monthlyEmail({ siteUrl, unsubscribeUrl: `${siteUrl}/unsubscribe?token=${encodeURIComponent(token)}` }) });
+      messages.push({ from: "GlobTrek <hello@glob-trek.com>", to: [subscriber.email], subject: "The GlobTrek monthly edit", html: monthlyEmail({ siteUrl, unsubscribeUrl: `${siteUrl}/unsubscribe?token=${encodeURIComponent(token)}` }) });
     }
     if (messages.length) await sendBatchEmails(messages);
     return Response.json({ sent: messages.length });

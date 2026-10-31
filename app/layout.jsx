@@ -3,7 +3,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { AuthProvider } from "./components/AuthProvider";
 
 export const metadata = {
-  title: "globtrek - One Tab Travel",
+  title: "GlobTrek · One Tab Travel",
   description:
     "Simple, affordable trip planning. Answer a few quick questions and get one trip that fits your budget.",
 };

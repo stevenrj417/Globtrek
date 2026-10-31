@@ -2,8 +2,8 @@ function escapeHtml(value) {
   return String(value ?? "").replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" })[character]);
 }
 
-function shell({ preheader, eyebrow, title, body, footer = "Globtrek · One tab travel" }) {
-  return `<!doctype html><html><head><meta name="viewport" content="width=device-width"><meta charset="utf-8"><title>${escapeHtml(title)}</title></head><body style="margin:0;background:#f3f0eb;color:#171714;font-family:Arial,sans-serif"><div style="display:none;max-height:0;overflow:hidden">${escapeHtml(preheader)}</div><main style="max-width:680px;margin:0 auto;padding:48px 24px 64px"><p style="font-size:12px;font-weight:700;letter-spacing:.28em;text-transform:uppercase">GLOBTREK</p><div style="margin-top:54px;border-top:1px solid #cbc7c0;padding-top:28px"><p style="font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:#777">${escapeHtml(eyebrow)}</p><h1 style="margin:18px 0 30px;font-family:Georgia,serif;font-size:48px;line-height:.95;font-weight:400;letter-spacing:-.04em">${escapeHtml(title)}</h1>${body}</div><p style="margin-top:60px;border-top:1px solid #cbc7c0;padding-top:20px;font-size:10px;line-height:1.7;color:#777">${footer}</p></main></body></html>`;
+function shell({ preheader, eyebrow, title, body, footer = "GlobTrek · One tab travel" }) {
+  return `<!doctype html><html><head><meta name="viewport" content="width=device-width"><meta charset="utf-8"><title>${escapeHtml(title)}</title></head><body style="margin:0;background:#f3f0eb;color:#171714;font-family:Arial,sans-serif"><div style="display:none;max-height:0;overflow:hidden">${escapeHtml(preheader)}</div><main style="max-width:680px;margin:0 auto;padding:48px 24px 64px"><p style="font-size:12px;font-weight:700;letter-spacing:.28em;text-transform:uppercase">GlobTrek</p><div style="margin-top:54px;border-top:1px solid #cbc7c0;padding-top:28px"><p style="font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:#777">${escapeHtml(eyebrow)}</p><h1 style="margin:18px 0 30px;font-family:Georgia,serif;font-size:48px;line-height:.95;font-weight:400;letter-spacing:-.04em">${escapeHtml(title)}</h1>${body}</div><p style="margin-top:60px;border-top:1px solid #cbc7c0;padding-top:20px;font-size:10px;line-height:1.7;color:#777">${footer}</p></main></body></html>`;
 }
 
 function button(label, href) {
@@ -11,7 +11,7 @@ function button(label, href) {
 }
 
 export function welcomeEmail({ unsubscribeUrl, siteUrl }) {
-  return shell({ preheader: "A quieter way to find your next trip.", eyebrow: "Welcome", title: "Travel ideas, simply planned.", body: `<p style="font-family:Georgia,serif;font-size:22px;line-height:1.5">A small monthly edit of places worth leaving for—selected with the same restraint Globtrek brings to every trip.</p>${button("Find your trip", siteUrl)}`, footer: `You opted in to Globtrek travel emails. <a href="${escapeHtml(unsubscribeUrl)}" style="color:#171714">Unsubscribe</a>.` });
+  return shell({ preheader: "A quieter way to find your next trip.", eyebrow: "Welcome", title: "Travel ideas, simply planned.", body: `<p style="font-family:Georgia,serif;font-size:22px;line-height:1.5">A small monthly edit of places worth leaving for—selected with the same restraint GlobTrek brings to every trip.</p>${button("Find your trip", siteUrl)}`, footer: `You opted in to GlobTrek travel emails. <a href="${escapeHtml(unsubscribeUrl)}" style="color:#171714">Unsubscribe</a>.` });
 }
 
 function money(value) { return Number.isFinite(Number(value)) ? `$${Math.round(Number(value)).toLocaleString("en-US")}` : "Unknown"; }
@@ -59,7 +59,7 @@ export function tripEmail({ model, viewUrl }) {
   const ports = Array.isArray(journey?.ports) ? journey.ports.map((port) => `${escapeHtml(port.name)}${port.country ? `, ${escapeHtml(port.country)}` : ""}`).join(" → ") : "";
   const journeyHtml = journey?.type === "cruise" ? `<div style="margin-top:38px;border-top:1px solid #d8d4ce;padding-top:22px"><p style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#777">Ocean journey</p><h2 style="font-family:Georgia,serif;font-size:27px;font-weight:400;margin:10px 0 14px">${escapeHtml(journey.title)}</h2>${ports ? `<p style="font-size:12px;line-height:1.8;color:#555">${ports}</p>` : ""}<p style="font-size:12px;line-height:1.8;color:#555">Ship: ${journey.ship?.name ? escapeHtml(journey.ship.name) : "Pending verified sailing inventory"}<br>Flights: ${escapeHtml(journey.flight?.origin || "Origin pending")} → ${escapeHtml(journey.flight?.destination || "port")}${journey.flight?.departureDate ? ` · ${escapeHtml(journey.flight.departureDate)}` : " · dates flexible"}<br>${escapeHtml(journey.flight?.providerStatus || "Live itinerary not connected")}<br>Cruise: ${escapeHtml(journey.cruiseProviderStatus || "Provider link pending")}</p></div>` : "";
   const title = journey?.type === "cruise" ? journey.title : `${days.length} days in ${model.destination?.city || model.destination?.name || "your destination"}`;
-  const preheader = journey?.type === "cruise" ? `Your ${journey.duration || "ocean"} Globtrek journey.` : `Your complete ${days.length}-day Globtrek itinerary.`;
+  const preheader = journey?.type === "cruise" ? `Your ${journey.duration || "ocean"} GlobTrek journey.` : `Your complete ${days.length}-day GlobTrek itinerary.`;
   const hero = emailImage(model.destinationImage, model.destination?.city || model.destination?.name || "Destination");
   return shell({ preheader, eyebrow: "One tab travel", title, body: `${hero}${logistics}${hotelHtml}${flightHtml}<div style="margin-top:42px"><p style="font-size:9px;letter-spacing:.2em;text-transform:uppercase">Your itinerary</p>${dayHtml}</div>${diningHtml}${experienceHtml}${costHtml}${journeyHtml}${viewUrl ? button("View trip", viewUrl) : ""}`, footer: "This transactional trip email does not subscribe you to marketing. Confirm final prices and availability with each provider." });
 }
@@ -67,7 +67,7 @@ export function tripEmail({ model, viewUrl }) {
 export function monthlyEmail({ unsubscribeUrl, siteUrl }) {
   const ideas = [["Provence", "Markets, village roads, and a slower rhythm."], ["Kyoto", "Ritual, food, and quiet depth."], ["Maui", "A warm-weather reset shaped around a real budget."]];
   const rows = ideas.map(([name, note]) => `<div style="border-top:1px solid #d8d4ce;padding:22px 0"><h2 style="font-family:Georgia,serif;font-size:27px;font-weight:400;margin:0 0 8px">${name}</h2><p style="font-size:13px;line-height:1.6;color:#555">${note}</p></div>`).join("");
-  return shell({ preheader: "Three places worth considering this month.", eyebrow: "The monthly edit", title: "Where the season leads.", body: `${rows}${button("Build a trip", siteUrl)}`, footer: `You receive this because you opted in to Globtrek travel emails. <a href="${escapeHtml(unsubscribeUrl)}" style="color:#171714">Unsubscribe</a>.` });
+  return shell({ preheader: "Three places worth considering this month.", eyebrow: "The monthly edit", title: "Where the season leads.", body: `${rows}${button("Build a trip", siteUrl)}`, footer: `You receive this because you opted in to GlobTrek travel emails. <a href="${escapeHtml(unsubscribeUrl)}" style="color:#171714">Unsubscribe</a>.` });
 }
 
 export { escapeHtml };

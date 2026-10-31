@@ -16,15 +16,15 @@ export function EmailSignup() {
   }
 
   return (
-    <section className="border-t border-black/10 bg-[#f7f7f4] px-5 py-10 sm:px-8 sm:py-12">
+    <section className="border-t border-black/10 bg-bg px-5 py-10 sm:px-8 sm:py-12">
       <div className="mx-auto max-w-[1700px]">
         <form className="ml-auto flex max-w-xl border-b border-black" onSubmit={handleSubmit}>
           <label className="sr-only" htmlFor="signup-email">Email address</label>
-          <input id="signup-email" name="email" type="email" required placeholder="Email address" className="min-h-14 min-w-0 flex-1 border-0 bg-transparent px-1 text-base outline-none placeholder:text-[#777]" />
-          <button type="submit" className="min-h-14 px-5 text-xs font-semibold uppercase tracking-[0.08em]">Join</button>
+          <input id="signup-email" name="email" type="email" required placeholder="Email address" className="min-h-14 min-w-0 flex-1 border-0 bg-transparent px-1 text-base outline-none placeholder:text-subtle" />
+          <button type="submit" className="min-h-14 px-5 text-xs font-semibold uppercase tracking-caps">Join</button>
         </form>
-        <p aria-live="polite" className="ml-auto mt-3 min-h-5 max-w-xl text-xs text-[#707070]">{message}</p>
-        <p className="ml-auto max-w-xl text-[10px] leading-4 text-[#888]">By joining, you explicitly agree to receive Globtrek’s monthly travel email. Unsubscribe anytime.</p>
+        <p aria-live="polite" className="ml-auto mt-3 min-h-5 max-w-xl text-xs text-subtle">{message}</p>
+        <p className="ml-auto max-w-xl text-micro leading-4 text-subtle">By joining, you explicitly agree to receive GlobTrek’s monthly travel email. Unsubscribe anytime.</p>
       </div>
     </section>
   );

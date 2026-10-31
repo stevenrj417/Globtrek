@@ -6,7 +6,7 @@
  */
 export function PartnerAttribution({ providerDisplayName }) {
   return (
-    <p className="mt-3 text-xs leading-5 text-[#707070]">
+    <p className="mt-3 text-xs leading-5 text-subtle">
       {providerDisplayName
         ? `You’ll continue to ${providerDisplayName} to review final pricing, availability, and terms.`
         : "You’ll continue to the booking provider to review final pricing, availability, and terms."}
@@ -32,7 +32,7 @@ export function ExternalBookingButton({ affiliateUrl, label, providerDisplayName
   return (
     <div className="mt-6">
       <a
-        className="inline-flex min-h-12 items-center bg-[#171717] px-6 py-3 text-xs font-semibold uppercase tracking-[0.08em] text-white transition hover:bg-black"
+        className="inline-flex min-h-12 items-center bg-ink px-6 py-3 text-xs font-semibold uppercase tracking-caps text-white transition hover:bg-black"
         href={safeUrl}
         rel="noopener sponsored"
         target="_blank"
@@ -47,33 +47,33 @@ export function ExternalBookingButton({ affiliateUrl, label, providerDisplayName
 export function RecommendationSection({ eyebrow, title, items = [], emptyMessage }) {
   return (
     <section className="border-t border-black/10 py-10">
-      <p className="text-xs font-semibold uppercase tracking-[0.1em] text-[#707070]">{eyebrow}</p>
-      <h2 className="mt-4 text-3xl font-semibold tracking-[-0.04em] sm:text-4xl">{title}</h2>
+      <p className="text-xs font-semibold uppercase tracking-caps text-subtle">{eyebrow}</p>
+      <h2 className="mt-4 text-3xl font-semibold tracking-tight-2 sm:text-4xl">{title}</h2>
       {items.length ? (
         <div className="mt-8 divide-y divide-black/10 border-y border-black/10">
           {items.map((item) => (
             <article className="py-8" key={`${item.provider || "provider"}-${item.name}`}>
-              <h3 className="text-2xl font-semibold tracking-[-0.03em]">{item.name}</h3>
-              {item.location ? <p className="mt-2 text-sm text-[#707070]">{item.location}</p> : null}
+              <h3 className="text-2xl font-semibold tracking-tight-2">{item.name}</h3>
+              {item.location ? <p className="mt-2 text-sm text-subtle">{item.location}</p> : null}
               {item.price != null && item.currency ? (
-                <p className="mt-3 text-sm text-[#171717]">
+                <p className="mt-3 text-sm text-ink">
                   {item.priceType === "estimated" ? "Est. " : ""}
                   {new Intl.NumberFormat("en-US", { style: "currency", currency: item.currency }).format(item.price)}
                 </p>
               ) : null}
               {item.rating != null ? (
-                <p className="mt-3 text-xs text-[#707070]">
+                <p className="mt-3 text-xs text-subtle">
                   {item.rating} rating{item.reviewCount != null ? ` · ${item.reviewCount} reviews` : ""}
                   {item.providerDisplayName ? ` · Supplied by ${item.providerDisplayName}` : ""}
                 </p>
               ) : null}
               {item.amenities?.length || item.categories?.length ? (
-                <p className="mt-4 text-sm leading-6 text-[#666]">
+                <p className="mt-4 text-sm leading-6 text-muted">
                   {[...(item.amenities || []), ...(item.categories || [])].join(" · ")}
                 </p>
               ) : null}
               {item.matchReasons?.length ? (
-                <p className="mt-4 max-w-2xl text-base leading-7 text-[#444]">
+                <p className="mt-4 max-w-2xl text-base leading-7 text-muted">
                   {item.matchReasons.join(" · ")}
                 </p>
               ) : null}
@@ -87,8 +87,8 @@ export function RecommendationSection({ eyebrow, title, items = [], emptyMessage
         </div>
       ) : (
         <div className="mt-8 border-y border-black/10 py-8">
-          <p className="max-w-2xl text-base leading-7 text-[#555]">{emptyMessage}</p>
-          <p className="mt-3 max-w-2xl text-xs leading-5 text-[#777]">
+          <p className="max-w-2xl text-base leading-7 text-muted">{emptyMessage}</p>
+          <p className="mt-3 max-w-2xl text-xs leading-5 text-subtle">
             No live price, rating, availability, or booking relationship is implied.
           </p>
         </div>

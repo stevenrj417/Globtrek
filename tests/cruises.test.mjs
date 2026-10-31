@@ -72,7 +72,7 @@ test("cruise proposal email preserves ports, duration, flight state, and truthfu
   const saved = { destination: { city: "Caribbean Island Passage" }, travelerProfile: { travelers: 2 }, itinerary: { days: [{ location: "Miami", title: "Begin in Miami", morning: "Arrive.", afternoon: "Explore.", evening: "Stay near port." }] }, journey: { type: "cruise", title: "Caribbean Island Passage", duration: "6–8 nights", ports: [{ name: "Miami", country: "United States" }, { name: "Nassau", country: "Bahamas" }], ship: null, flight: { origin: "Portland", destination: "Miami", providerStatus: "Live itinerary not connected" }, cruiseProviderStatus: "Verified sailing provider not connected" } };
   const html = tripEmail({ model: buildTripEmailModel(saved), viewUrl: null });
   assert.match(html, /Miami, United States → Nassau, Bahamas/);
-  assert.match(html, /Your 6–8 nights Globtrek journey/);
+  assert.match(html, /Your 6–8 nights GlobTrek journey/);
   assert.match(html, /Port 01 · Miami/);
   assert.doesNotMatch(html, /1 days in Caribbean/);
   assert.match(html, /Pending verified sailing inventory/);

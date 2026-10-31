@@ -37,7 +37,7 @@ export default function HowItWorksPage() {
         </EditorialSection>
       ))}
       <div className="pt-12">
-        <Link className="inline-flex min-h-12 items-center bg-[#171717] px-7 py-4 text-xs font-semibold uppercase tracking-[0.08em] text-white transition hover:bg-black" href="/discover">
+        <Link className="inline-flex min-h-12 items-center bg-ink px-7 py-4 text-xs font-semibold uppercase tracking-caps text-white transition hover:bg-black" href="/discover">
           Start your match
         </Link>
       </div>

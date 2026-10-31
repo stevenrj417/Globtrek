@@ -146,7 +146,7 @@ const verifiedExpansion = [...(verifiedBatch01.records || verifiedBatch01), ...(
   season: "Seasonal guidance requires final editorial review",
   tags: [...(item.interestTags || []), ...(item.travelerTypeTags || [])].map(titleTag),
   aliases: [...(item.aliases || []), ...(item.searchTerms || []), item.region, item.wikiTitle].filter(Boolean),
-  why: `${item.name} is a verified Globtrek destination. Its identity, location, imagery, and baseline cost profile are grounded; hotel and activity depth remain subject to readiness gates.`,
+  why: `${item.name} is a verified GlobTrek destination. Its identity, location, imagery, and baseline cost profile are grounded; hotel and activity depth remain subject to readiness gates.`,
   itinerary: [], dining: [], costProfile: item.costProfile, seasonality: item.seasonality,
   climateProfile: item.climateProfile, tripLengthFit: item.tripLengthFit,
   accessibilityProfile: item.accessibilityProfile, imageLicenseMetadata: item.imageLicenseMetadata,
