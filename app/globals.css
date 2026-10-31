@@ -229,6 +229,7 @@ h1, h2, h3, h4 { text-wrap: balance; }
 p, li, dd { text-wrap: pretty; }
 .tabular, time, data { font-variant-numeric: tabular-nums; }
 
+@layer components {
 /* Primary action. Matches the existing black, uppercase GlobTrek button. */
 .btn {
   display: inline-flex;
@@ -257,6 +258,7 @@ p, li, dd { text-wrap: pretty; }
   letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
   color: var(--text-subtle);
+}
 }
 
 /* Skeletons: slow, steady shimmer; static under reduced motion. */
@@ -287,3 +289,14 @@ p, li, dd { text-wrap: pretty; }
   text-transform: uppercase;
 }
 .skip-link:focus { top: 1rem; }
+
+@keyframes sheet-up {
+  from { transform: translateY(16px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.mobile-sheet { animation: sheet-up var(--duration-base) var(--ease-enter) both; }
+
+/* Scroll reveals are decoration: skip them entirely for reduced-motion users. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { animation: none !important; }
+}
