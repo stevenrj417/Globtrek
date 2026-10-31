@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { track } from "@vercel/analytics";
+import { track } from "../lib/analytics";
 import { useEffect, useMemo, useRef, useState } from "react";
 import airports from "../data/airports.json";
 import { discoverySliderToUnknownness, legacyBudgetLabel, normalizeBudget } from "../lib/recommendation/travelerProfile";
@@ -78,6 +78,7 @@ const questions = [
 ];
 
 const preferenceSteps = questions.length + 1;
+const DRAFT_KEY = "globtrekQuizDraft";
 const airportSearchIndex = airports.map((airport) => ({
   airport,
   code: airport.code.toLowerCase(),
@@ -101,7 +102,10 @@ function questionsFor(answers) {
 }
 
 function Progress({ step }) {
-  return <p className="text-micro font-medium tabular-nums tracking-editorial text-subtle">{String(step + 1).padStart(2, "0")} / {String(preferenceSteps).padStart(2, "0")}</p>;
+  return <div className="flex items-center gap-4">
+    <div className="hidden h-px w-24 bg-black/15 sm:block" aria-hidden="true"><div className="h-px bg-ink transition-[width] duration-200 ease-[cubic-bezier(.2,0,0,1)]" style={{ width: `${((step + 1) / preferenceSteps) * 100}%` }} /></div>
+    <p className="text-micro font-medium tabular-nums tracking-editorial text-subtle"><span className="sr-only">Step </span>{String(step + 1).padStart(2, "0")}<span aria-hidden="true"> / </span><span className="sr-only"> of </span>{String(preferenceSteps).padStart(2, "0")}</p>
+  </div>;
 }
 
 function VisualQuestion({ question, value, onChoose, step }) {
@@ -109,6 +113,24 @@ function VisualQuestion({ question, value, onChoose, step }) {
   const [preview, setPreview] = useState(selected);
 
   const active = question.options.find((option) => option.label === preview) || question.options[0];
+  const tiles = useRef([]);
+
+  useEffect(() => {
+    function onKey(event) {
+      if (event.metaKey || event.ctrlKey || event.altKey || event.target?.tagName === "INPUT") return;
+      const index = Number(event.key) - 1;
+      if (Number.isInteger(index) && index >= 0 && index < question.options.length) { event.preventDefault(); onChoose(question.options[index].label); }
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [question, onChoose]);
+
+  function moveFocus(event, index) {
+    const delta = event.key === "ArrowRight" || event.key === "ArrowDown" ? 1 : event.key === "ArrowLeft" || event.key === "ArrowUp" ? -1 : 0;
+    if (!delta) return;
+    event.preventDefault();
+    tiles.current[(index + delta + question.options.length) % question.options.length]?.focus();
+  }
 
   return (
     <div className="quiz-stage grid min-h-[calc(100svh-5rem)] grid-rows-[auto_1fr_auto] px-5 pb-6 pt-9 sm:px-8 lg:px-10">
@@ -126,9 +148,9 @@ function VisualQuestion({ question, value, onChoose, step }) {
       </div>
       <div className="relative z-20 mx-auto w-full max-w-[1500px] bg-surface lg:-mt-16">
         <div className="grid grid-cols-2 border-l border-t border-black/10 sm:flex sm:border-x-0 sm:border-y sm:px-6">
-          {question.options.map((option) => {
+          {question.options.map((option, index) => {
             const isActive = selected === option.label;
-            return <button type="button" key={option.label} onMouseEnter={() => setPreview(option.label)} onMouseLeave={() => setPreview(selected)} onFocus={() => setPreview(option.label)} onBlur={() => setPreview(selected)} onClick={() => onChoose(option.label)} className={`relative min-h-14 border-b border-r border-black/10 px-3 text-micro uppercase tracking-label transition-colors sm:min-h-24 sm:flex-1 sm:border-0 sm:px-4 sm:text-eyebrow sm:tracking-label ${isActive ? "bg-ink text-white sm:bg-transparent sm:text-black" : "text-subtle hover:text-black"}`}><span className={`absolute inset-x-6 top-0 hidden h-px bg-black transition-transform duration-500 sm:block ${isActive ? "scale-x-100" : "scale-x-0"}`} />{option.display || option.label}</button>;
+            return <button type="button" key={option.label} ref={(node) => { tiles.current[index] = node; }} onKeyDown={(event) => moveFocus(event, index)} aria-pressed={value === option.label} aria-keyshortcuts={String(index + 1)} onMouseEnter={() => setPreview(option.label)} onMouseLeave={() => setPreview(selected)} onFocus={() => setPreview(option.label)} onBlur={() => setPreview(selected)} onClick={() => onChoose(option.label)} className={`relative min-h-14 border-b border-r border-black/10 px-3 text-micro uppercase tracking-label transition-colors sm:min-h-24 sm:flex-1 sm:border-0 sm:px-4 sm:text-eyebrow sm:tracking-label ${isActive ? "bg-ink text-white sm:bg-transparent sm:text-black" : "text-subtle hover:text-black"}`}><span className={`absolute inset-x-6 top-0 hidden h-px bg-black transition-transform duration-500 sm:block ${isActive ? "scale-x-100" : "scale-x-0"}`} />{option.display || option.label}</button>;
           })}
         </div>
       </div>
@@ -338,8 +360,47 @@ export default function TravelQuiz() {
   const [phase, setPhase] = useState("idle");
   const timer = useRef(null);
   const [preferredDestination, setPreferredDestination] = useState(null);
+  const [restored, setRestored] = useState(false);
 
-  useEffect(() => { const params = new URLSearchParams(window.location.search); const destinationId = params.get("destination"); const initializeDestination = window.setTimeout(() => { if (destinationId) setPreferredDestination({ id: destinationId, name: params.get("destinationName") || destinationId }); }, 0); const onPop = (event) => { if (typeof event.state?.quizStep === "number") setStep(event.state.quizStep); }; window.addEventListener("popstate", onPop); window.history.replaceState({ ...window.history.state, quizStep: 0 }, ""); return () => { window.removeEventListener("popstate", onPop); window.clearTimeout(initializeDestination); window.clearTimeout(timer.current); }; }, []);
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const destinationId = params.get("destination");
+    const setting = params.get("setting");
+    let draft = null;
+    try { draft = JSON.parse(window.sessionStorage.getItem(DRAFT_KEY) || "null"); } catch {}
+    const restoredStep = draft && !setting ? Math.max(0, Math.min(Number(draft.step) || 0, preferenceSteps)) : 0;
+    const initialize = window.setTimeout(() => {
+      if (destinationId) setPreferredDestination({ id: destinationId, name: params.get("destinationName") || destinationId });
+      if (draft && !setting) {
+        setAnswers(draft.answers || {});
+        setDiscoveryLevel(Number.isFinite(draft.discoveryLevel) ? draft.discoveryLevel : 50);
+        setExactBudget(draft.exactBudget || "");
+        if (draft.budgetIncludes) setBudgetIncludes(draft.budgetIncludes);
+        setTripStart(draft.tripStart || ""); setTripEnd(draft.tripEnd || ""); setIsFlexible(Boolean(draft.isFlexible));
+        setOriginDetails(draft.originDetails || null);
+        setTravelAreaPreference(draft.travelAreaPreference || "anywhere");
+        setGuestCount(draft.guestCount || "2");
+        setStep(restoredStep);
+      } else if (setting && questions[0].options.some((option) => option.label === setting)) {
+        setAnswers({ alive: setting });
+        setStep(1);
+        params.delete("setting");
+        window.history.replaceState({ ...window.history.state, quizStep: 1 }, "", `${window.location.pathname}${params.size ? `?${params}` : ""}`);
+        track("quiz_started", { source: "vibe", setting });
+      }
+      setRestored(true);
+    }, 0);
+    const onPop = (event) => { if (typeof event.state?.quizStep === "number") setStep(event.state.quizStep); };
+    window.addEventListener("popstate", onPop);
+    window.history.replaceState({ ...window.history.state, quizStep: setting ? 1 : restoredStep }, "");
+    return () => { window.removeEventListener("popstate", onPop); window.clearTimeout(initialize); window.clearTimeout(timer.current); };
+  }, []);
+
+  // Keep answers through refreshes and back-navigation for this tab.
+  useEffect(() => {
+    if (!restored) return;
+    try { window.sessionStorage.setItem(DRAFT_KEY, JSON.stringify({ step, answers, discoveryLevel, exactBudget, budgetIncludes, tripStart, tripEnd, isFlexible, originDetails, travelAreaPreference, guestCount })); } catch {}
+  }, [restored, step, answers, discoveryLevel, exactBudget, budgetIncludes, tripStart, tripEnd, isFlexible, originDetails, travelAreaPreference, guestCount]);
 
   const adaptiveQuestions = useMemo(() => questionsFor(answers), [answers]);
   const current = adaptiveQuestions[step];
@@ -354,7 +415,8 @@ export default function TravelQuiz() {
   function choose(label) {
     if (step === 0) track("quiz_started");
     setAnswers((value) => ({ ...value, [current.id]: label }));
-    timer.current = window.setTimeout(() => go(step + 1), 360);
+    track("quiz_step_completed", { step: step + 1, question: current.id });
+    timer.current = window.setTimeout(() => go(step + 1), 250);
   }
 
   function back() { if (step > 0) go(step - 1, "back"); }
@@ -396,12 +458,13 @@ export default function TravelQuiz() {
       preferredDestination,
       createdAt: Date.now(),
     }));
+    try { window.sessionStorage.removeItem(DRAFT_KEY); } catch {}
     track("quiz_completed", { setting: answers.alive || "unknown", duration: answers.duration || "unknown" });
     setPhase("complete");
-    timer.current = window.setTimeout(() => window.location.assign(preferredDestination?.id ? `/thinking?destination=${encodeURIComponent(preferredDestination.id)}` : "/thinking"), 850);
+    timer.current = window.setTimeout(() => window.location.assign(preferredDestination?.id ? `/thinking?destination=${encodeURIComponent(preferredDestination.id)}` : "/thinking"), 150);
   }
 
-  if (phase === "complete") return <div className="grid min-h-[calc(100svh-5rem)] place-items-center bg-canvas px-5"><p className="text-[clamp(3.5rem,8vw,8rem)] font-medium tracking-tight-4">We found it.</p></div>;
+  if (phase === "complete") return <div className="grid min-h-[calc(100svh-5rem)] place-items-center bg-canvas px-5"><p className="font-serif text-[clamp(2.25rem,6vw,3.5rem)] tracking-tight-3">Building your trip</p></div>;
 
   return <section id="quiz" className={`relative overflow-hidden bg-canvas text-ink transition-[opacity,transform] duration-300 ease-out ${phase === "leaving" ? "-translate-y-2 opacity-0" : phase === "leaving-back" ? "translate-y-2 opacity-0" : phase === "entering" ? "translate-y-2 opacity-0" : "translate-y-0 opacity-100"}`}>
     {preferredDestination ? <div className="pointer-events-none absolute inset-x-0 top-1 z-40 text-center"><span className="inline-flex border border-black/10 bg-canvas/90 px-3 py-1.5 text-micro uppercase tracking-label text-black/55 backdrop-blur">Planning {preferredDestination.name}</span></div> : null}

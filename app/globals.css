@@ -300,3 +300,6 @@ p, li, dd { text-wrap: pretty; }
 @media (prefers-reduced-motion: reduce) {
   .reveal { animation: none !important; }
 }
+
+@keyframes handoff-progress { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+.handoff-bar { animation: handoff-progress 850ms var(--ease-enter) both; }
