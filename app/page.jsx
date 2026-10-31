@@ -2,50 +2,124 @@ import Image from "next/image";
 import Link from "next/link";
 import { SiteFooter, SiteHeader } from "./components/SiteChrome";
 import { EmailSignup } from "./components/EmailSignup";
+import { TripCard } from "./components/TripCard";
+import { trendingTrips } from "./data/trending";
+import { formatMoney } from "./lib/recommendation/tripEstimate";
 
-const trips = [
-  { id: "MEX", name: "Mexico City", country: "Mexico", stay: "1 week", price: "Est. $1,000–$2,300", image: "https://images.unsplash.com/photo-1518659526054-190340b32735", alt: "Mexico City seen from above" },
-  { id: "HAN", name: "Hanoi", country: "Vietnam", stay: "5 nights", price: "Est. $700–$1,600", image: "https://images.unsplash.com/photo-1509030450996-dd1a26dda07a", alt: "A street scene in Hanoi" },
-  { id: "LIS", name: "Lisbon", country: "Portugal", stay: "5 nights", price: "Est. $1,200–$2,600", image: "https://images.unsplash.com/photo-1555881400-74d7acaacd8b", alt: "Lisbon rooftops in warm light" },
+const steps = [
+  ["01", "Answer 7 quick questions", "Setting, pace, budget and when you can go."],
+  ["02", "Get one trip that fits", "A destination, stays and things to do, inside your budget."],
+  ["03", "Book on partner sites", "Stays on Booking.com and other partners. Your price doesn't change."],
 ];
+
+const vibes = [
+  ["Coast", "Ocean", "/quiz/ocean.jpg", "A bright Mediterranean coastline"],
+  ["Mountains", "Mountains", "/quiz/mountains.jpg", "A snowy mountain landscape"],
+  ["City", "Cities", "/quiz/cities.jpg", "A city street in Paris"],
+  ["History & culture", "Culture", "/quiz/culture.jpg", "A quiet tree-lined street in Kyoto"],
+  ["Surprise me", "Surprise Me", "/quiz/surprise-me.jpg", "Rio de Janeiro seen from above"],
+];
+
+function budgetFacts() {
+  const [mexico, hanoi, lisbon] = trendingTrips;
+  return [
+    hanoi.planning && { trip: hanoi, text: `Food from ~${formatMoney(hanoi.planning.foodPerPersonDay)} a day per person` },
+    mexico.planning && { trip: mexico, text: `A well-reviewed room from ~${formatMoney(mexico.planning.hotelNight)} a night` },
+    lisbon.planning && { trip: lisbon, text: `Getting around from ~${formatMoney(lisbon.planning.localTransportDay)} a day` },
+  ].filter(Boolean);
+}
+
+const tripHref = (trip) => `/discover/quick?destination=${trip.id}&destinationName=${encodeURIComponent(trip.name)}&source=trending`;
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-bg text-ink">
       <SiteHeader />
 
-      <section id="discover" className="px-4 pb-20 pt-4 sm:px-6 sm:pb-28">
+      <section id="discover" className="px-4 pb-16 pt-4 sm:px-6 sm:pb-24">
         <div className="group relative mx-auto min-h-[72vh] max-w-[1880px] overflow-hidden bg-placeholder sm:min-h-[78vh]">
           <Image src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1" alt="A bright alpine lake and green mountains" fill preload className="image-calm object-cover" sizes="100vw" quality={82} />
+          <div className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/55 via-black/20 to-transparent" aria-hidden="true" />
           <div className="absolute inset-x-0 bottom-0 flex flex-col items-center px-5 pb-10 text-center sm:pb-14 lg:pb-16">
-            <h1 className="whitespace-nowrap text-[clamp(1.65rem,5vw,5.25rem)] font-extralight uppercase leading-[0.9] tracking-tight-3 text-white [text-shadow:0_1px_18px_rgba(0,0,0,0.28)]">One Tab Travel</h1>
-            <Link href="/discover" className="mt-6 inline-flex min-h-12 items-center bg-ink px-6 text-xs font-semibold uppercase tracking-caps text-white transition hover:bg-black">Find your trip <span className="ml-3" aria-hidden="true">→</span></Link>
-            <p className="mt-3 text-xs text-white [text-shadow:0_1px_18px_rgba(0,0,0,0.28)]">A few quick questions. One affordable trip.</p>
+            <h1 className="whitespace-nowrap text-[clamp(1.65rem,5vw,5.25rem)] font-extralight uppercase leading-[0.9] tracking-tight-3 text-white">One Tab Travel</h1>
+            <Link href="/discover" className="btn btn-primary mt-6">Find your trip <span aria-hidden="true">→</span></Link>
+            <p className="mt-3 text-xs text-white/90">A few quick questions. One affordable trip.</p>
           </div>
         </div>
       </section>
 
-      <section id="trips" className="reveal border-t border-black/10 py-20 sm:py-28">
+      <section aria-labelledby="how-heading" className="border-t border-black/10 py-12 sm:py-16">
+        <div className="mx-auto max-w-[1520px] px-5 sm:px-8">
+          <h2 id="how-heading" className="sr-only">How it works</h2>
+          <ol className="grid gap-8 sm:grid-cols-3 sm:gap-10">
+            {steps.map(([number, title, body]) => (
+              <li key={number} className="flex gap-5 sm:block">
+                <span className="tabular text-xs font-semibold tracking-caps text-brass">{number}</span>
+                <div className="sm:mt-3">
+                  <p className="text-lg font-medium tracking-tight-1">{title}</p>
+                  <p className="mt-1 text-sm leading-6 text-muted">{body}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section id="trips" className="reveal scroll-mt-24 border-t border-black/10 py-[var(--section-space)]">
         <div className="mx-auto max-w-[1520px] px-5 sm:px-8">
           <div className="mb-12 text-center">
-            <p className="text-xs font-semibold uppercase tracking-label text-subtle">Easy on the wallet</p>
+            <p className="eyebrow">Easy on the wallet</p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight-3 sm:text-5xl">Good trips that don&apos;t cost a fortune.</h2>
           </div>
-          <div className="grid gap-x-6 gap-y-12 md:grid-cols-3 lg:gap-x-8">
-            {trips.map((trip) => (
-              <Link href={`/discover/quick?destination=${trip.id}&destinationName=${encodeURIComponent(trip.name)}&source=trending`} className="group block" key={trip.id} aria-label={`Plan a personalized ${trip.name} trip`}>
-                <div className="relative aspect-[4/5] overflow-hidden bg-placeholder">
-                  <Image src={trip.image} alt={trip.alt} fill className="image-calm object-cover" sizes="(min-width: 768px) 33vw, 100vw" quality={80} />
+          <div className="-mx-5 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-2 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-3 md:gap-x-6 md:overflow-visible md:px-0 lg:gap-x-8">
+            {trendingTrips.map((trip) => (
+              <div key={trip.id} className="w-[82%] shrink-0 snap-start md:w-auto">
+                <TripCard trip={trip} href={tripHref(trip)} />
+              </div>
+            ))}
+          </div>
+          <ul className="mx-auto mt-14 grid max-w-5xl gap-px border border-black/10 bg-black/10 sm:grid-cols-3">
+            {budgetFacts().map(({ trip, text }) => (
+              <li key={trip.id} className="bg-bg">
+                <Link href={tripHref(trip)} className="block h-full p-5 transition-colors duration-150 hover:bg-surface">
+                  <span className="eyebrow">{trip.name}</span>
+                  <span className="tabular mt-2 block text-sm font-medium">{text}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-3 text-center text-xs text-subtle">GlobTrek planning averages for May. Not live prices.</p>
+        </div>
+      </section>
+
+      <section aria-labelledby="vibe-heading" className="reveal border-t border-black/10 py-[var(--section-space)]">
+        <div className="mx-auto max-w-[1520px] px-5 sm:px-8">
+          <div className="mb-10 flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
+            <div>
+              <p className="eyebrow">Browse by vibe</p>
+              <h2 id="vibe-heading" className="mt-3 text-3xl font-semibold tracking-tight-3 sm:text-4xl">Start with a setting.</h2>
+            </div>
+            <Link href="/destinations" className="text-sm text-muted underline decoration-black/25 underline-offset-4 hover:text-ink">All destinations</Link>
+          </div>
+          <div className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-5 md:overflow-visible md:px-0">
+            {vibes.map(([label, setting, image, alt]) => (
+              <Link key={setting} href={`/discover?setting=${encodeURIComponent(setting)}`} className="group w-[44%] shrink-0 snap-start md:w-auto">
+                <div className="relative aspect-[3/4] overflow-hidden bg-placeholder">
+                  <Image src={image} alt={alt} fill className="image-calm object-cover" sizes="(min-width: 768px) 20vw, 44vw" />
                 </div>
-                <div className="mt-4 border-b border-black/10 pb-4 text-center">
-                  <h3 className="text-xl font-medium tracking-tight-2 sm:text-2xl">{trip.name}</h3>
-                  <p className="mt-1 text-xs text-subtle">{trip.country}</p>
-                  <p className="mt-3 text-sm font-medium">{trip.price}</p>
-                  <p className="mt-1 text-xs text-subtle">{trip.stay} · before flights</p>
-                </div>
+                <p className="mt-3 text-sm font-medium">{label} <span aria-hidden="true" className="text-subtle">→</span></p>
               </Link>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="why-heading" className="border-t border-black/10 py-[var(--section-space)]">
+        <div className="mx-auto max-w-[var(--width-reading)] px-5 text-center">
+          <p className="eyebrow">Why one trip?</p>
+          <h2 id="why-heading" className="mt-3 text-2xl font-semibold tracking-tight-2 sm:text-3xl">Choosing is the hard part. We do it for you.</h2>
+          <p className="mt-4 text-base leading-7 text-muted">Most travel sites show hundreds of options and leave the choosing to you. GlobTrek weighs your budget, pace and timing, then shows the one trip that fits best.</p>
+          <Link href="/how-it-works#method" className="mt-6 inline-flex min-h-11 items-center text-sm font-medium underline decoration-black/25 underline-offset-4 hover:decoration-black">How we pick trips</Link>
         </div>
       </section>
 
