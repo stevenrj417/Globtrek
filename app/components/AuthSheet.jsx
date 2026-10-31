@@ -17,7 +17,7 @@ export function AuthSheet({ open, onClose, returnTo = "/" }) {
   }
 
   async function continueWith(provider) {
-    setStatus("Opening secure sign in…");
+    setStatus("Opening sign-in…");
     const supabase = createClient();
     const next = returnTo.startsWith("/") ? returnTo : "/";
     const redirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`;
@@ -32,7 +32,7 @@ export function AuthSheet({ open, onClose, returnTo = "/" }) {
     const next = returnTo.startsWith("/") ? returnTo : "/";
     const emailRedirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`;
     const { error } = await supabase.auth.signInWithOtp({ email: email.trim(), options: { emailRedirectTo } });
-    setStatus(error ? error.message : "Check your email. Your secure sign-in link is on its way.");
+    setStatus(error ? "We couldn't send the link. Check the address and try again." : "Check your email. Your sign-in link is on its way.");
   }
 
   return <div className="fixed inset-0 z-[100] grid place-items-center overflow-y-auto bg-black/30 px-4 py-6 backdrop-blur-[3px] sm:px-6" role="presentation" onMouseDown={close}>
@@ -45,7 +45,7 @@ export function AuthSheet({ open, onClose, returnTo = "/" }) {
       </div> : <form onSubmit={continueWithEmail} className="mt-8">
         <label htmlFor="account-email" className="text-micro uppercase tracking-editorial text-black/45">Email address</label>
         <input id="account-email" required type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} className="mt-3 min-h-14 w-full border border-black/20 bg-white px-4 outline-none focus:border-black" placeholder="you@example.com" />
-        <button className="mt-3 min-h-14 w-full bg-black px-5 text-micro uppercase tracking-editorial text-white">Send secure link</button>
+        <button className="mt-3 min-h-14 w-full bg-black px-5 text-micro uppercase tracking-editorial text-white">Email me a sign-in link</button>
         <button type="button" onClick={() => setEmailMode(false)} className="mt-4 text-micro uppercase tracking-editorial text-black/50">Back</button>
       </form>}
       {status && <p role="status" className="mt-5 text-xs leading-5 text-black/55">{status}</p>}
