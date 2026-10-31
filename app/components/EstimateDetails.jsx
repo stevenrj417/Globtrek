@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import { formatNights, formatRange } from "../lib/recommendation/tripEstimate";
+import { formatNights, formatRange } from "../lib/format";
 
 // "What's included" popover for any non-live trip estimate.
 export function EstimateDetails({ estimate, light = false, align = "center" }) {
