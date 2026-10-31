@@ -65,7 +65,7 @@ export default function ThinkingPage() {
           {STEPS.map((label, index) => {
             const state = index < done ? "done" : index === done ? "active" : "pending";
             return <li key={label} className={`flex items-center gap-3 text-sm transition-colors duration-200 ${state === "pending" ? "text-subtle" : "text-ink"}`} aria-current={state === "active" ? "step" : undefined}>
-              <span aria-hidden="true" className={`grid h-4 w-4 shrink-0 place-items-center rounded-full border text-[9px] leading-none ${state === "done" ? "border-ink bg-ink text-white" : "border-black/25"}`}>{state === "done" ? "✓" : ""}</span>
+              <span aria-hidden="true" className={`grid h-4 w-4 shrink-0 place-items-center rounded-full border text-micro leading-none ${state === "done" ? "border-ink bg-ink text-white" : "border-black/25"}`}>{state === "done" ? "✓" : ""}</span>
               {label}{state === "done" ? <span className="sr-only"> (done)</span> : null}
             </li>;
           })}
