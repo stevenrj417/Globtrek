@@ -35,7 +35,8 @@
     "destinations:coverage": "node scripts/destinations/coverage-report.mjs",
     "destinations:geography": "node scripts/destinations/geography-report.mjs",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "check:data": "node scripts/check-data.mjs --out audit/data-report.md"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.4",

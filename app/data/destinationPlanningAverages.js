@@ -54,6 +54,9 @@ export function buildDestinationPlanningAverages(destination = {}) {
     currency: "USD",
     hotelStandard: "Clean, well-reviewed budget hotel or simple three-star",
     basis: "Modeled good-value planning average; not a live quote or guaranteed price",
+    // "city" when a city-specific baseline exists, otherwise a price-tier default.
+    model: CITY_OVERRIDES[destination.city] ? "city" : "tier",
+    costLevel: level,
     source: profile.source || "globtrek_city_budget_baseline_v1",
     confidence: Math.max(0.3, Number(profile.confidence) || 0.4),
     monthly: MONTH_NAMES.map((monthName, index) => ({
