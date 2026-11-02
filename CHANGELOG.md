@@ -8,6 +8,10 @@
 
 Live Lighthouse before this follow-up (production, Lighthouse 13.6, mobile): home 75, quiz 84, destination 96, help 99; desktop 96–100; accessibility, best practices and SEO 100 everywhere.
 
+Live Lighthouse after deploy (2026-11-02, production, mobile, two warm runs each): home 91 / 97, quiz 96 / 100, destination pages 95–98 (Lisbon 98, Paris 98, Hanoi 95); desktop 98–100. Accessibility, best practices and SEO 100 on every page. Total blocking time on the homepage fell from 578 ms to 74–81 ms. First runs right after a deploy score lower (Paris 79 cold, 98 warm) while Vercel's cache fills.
+
+axe-core on production with real hotel data: results page, quiz steps and building screen pass, confirming the hotel thumbnail fix.
+
 ## Household-name upgrade (branch `household-name-upgrade`, 2026-10-31)
 
 Same look, more finished. Nothing on the site claims trust; it shows its sources, adds up its numbers and never dead-ends. Details: `AUDIT.md` (what was wrong), `DECISIONS.md` (why), `COPY.md` (every string that changed).
