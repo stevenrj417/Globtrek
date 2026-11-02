@@ -186,7 +186,7 @@ function BudgetQuestion({ value, includes, onValueChange, onToggle, onBack, onCo
       <div className="mx-auto mt-6 flex max-w-4xl flex-wrap justify-center gap-2">
         {Object.entries(budgetCategoryLabels).map(([key, label]) => <button type="button" key={key} aria-pressed={includes[key]} onClick={() => onToggle(key)} className={`min-h-12 border px-5 text-micro uppercase tracking-label transition ${includes[key] ? "border-black bg-black text-white" : "border-black/20 bg-white/40 text-black/50 hover:border-black"}`}>{label}</button>)}
       </div>
-      <p className="mt-5 text-xs text-black/40">Excluded items can still appear in your plan, but they will not count toward this budget.</p>
+      <p className="mt-5 text-xs text-subtle">Excluded items can still appear in your plan, but they will not count toward this budget.</p>
     </div>
     <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-6 border-t border-black/10 pt-7">
       <button type="button" onClick={onBack} className="min-h-12 text-xs uppercase tracking-label text-muted">← Back</button>
