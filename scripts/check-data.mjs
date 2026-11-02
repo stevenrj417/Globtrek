@@ -44,6 +44,15 @@ for (const item of publishedDestinations) {
   slugs.set(item.slug, item.id);
 }
 
+// --check-images: confirm every published destination photo still loads (needs network).
+if (process.argv.includes("--check-images")) {
+  for (const item of publishedDestinations) {
+    if (!item.image.startsWith("http")) continue;
+    const status = await fetch(item.image, { method: "HEAD" }).then((response) => response.status).catch(() => "network error");
+    if (status !== 200) rows.find((row) => row.d.id === item.id).errors.push(`image returns ${status}`);
+  }
+}
+
 const gaps = {};
 for (const row of rows) for (const field of row.missing) gaps[field] = (gaps[field] || 0) + 1;
 const broken = rows.filter((row) => row.errors.length);

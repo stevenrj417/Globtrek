@@ -36,7 +36,8 @@
     "destinations:geography": "node scripts/destinations/geography-report.mjs",
     "start": "next start",
     "lint": "eslint",
-    "check:data": "node scripts/check-data.mjs --out audit/data-report.md"
+    "check:data": "node scripts/check-data.mjs --out audit/data-report.md",
+    "check:images": "node scripts/check-data.mjs --check-images --out audit/data-report.md"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.4",
