@@ -4,7 +4,7 @@
 
 - Booking.com logo beside Booking.com mentions (owner-confirmed permission).
 - Legal name GlobTrek in the footer, Privacy, Terms and Organization JSON-LD; Instagram (@globtrekonetabtravel) in the footer, Contact and JSON-LD `sameAs`.
-- contact@glob-trek.com shown in the footer, Contact, Privacy and Terms once `CONTACT_EMAIL` is set; forwarded by Porkbun to the team Gmail.
+- contact.globtrek.com@gmail.com shown in the footer, Contact, Privacy and Terms (via `CONTACT_EMAIL`).
 - Removed two owner TODOs that were visible on the live Privacy and Terms pages.
 
 ## Photos, performance and accessibility follow-up (branch `photo-and-polish`, 2026-11-02)
@@ -76,7 +76,7 @@ Results page: not scored. It needs a quiz in localStorage, and locally it lacks 
 ### Needs the owner
 
 1. ~~Replace the Lisbon photo~~ Done 2026-11-02.
-2. ~~Contact address~~ contact@glob-trek.com (2026-11-02). Optional: a reply-time promise via `CONTACT_REPLY_TIME`.
+2. ~~Contact address~~ contact.globtrek.com@gmail.com (2026-11-02). Optional: a reply-time promise via `CONTACT_REPLY_TIME`.
 3. ~~Legal name~~ GlobTrek. Still needed: governing law, notice address and dispute process for Terms and Privacy.
 4. ~~Booking.com logo~~ Done.
 5. ~~Social accounts~~ Instagram linked.
