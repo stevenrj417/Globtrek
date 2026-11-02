@@ -1,5 +1,13 @@
 # Changelog
 
+## Photos, performance and accessibility follow-up (branch `photo-and-polish`, 2026-11-02)
+
+- **Destination photos.** A contact-sheet review of all 35 published destinations found 5 wrong photos (Lisbon showed Porto, Costa Rica an African savanna, Barcelona Madrid, Amalfi a Greek island, Tahiti a US desert road), 1 broken (Florence returned 404) and 3 unidentifiable (Hanoi, Kyoto, Banff). All replaced with free Unsplash License photos whose pages name the location, each checked by eye. `npm run check:images` now fails if any published destination photo stops loading.
+- **Performance.** Every page that linked to the quiz prefetched the worldwide airport list (twice, ~900 KB each uncompressed), blocking the main thread for 578 ms on the live homepage. It now loads only when the quiz's last step opens. Homepage weight 1,137 KB → 745 KB; local total blocking time 69–141 ms.
+- **Accessibility.** axe-core (WCAG 2.2 AA) passes on all 11 public routes, quiz budget and final steps, building screen and results (local). Fixed: budget helper contrast (2.79:1), malformed cost-list `dl`, and buttons nesting photo-credit links. Keyboard checks pass: skip link, popover Escape, mobile menu focus trap and return focus, quiz arrow/Enter, destination filters.
+
+Live Lighthouse before this follow-up (production, Lighthouse 13.6, mobile): home 75, quiz 84, destination 96, help 99; desktop 96–100; accessibility, best practices and SEO 100 everywhere.
+
 ## Household-name upgrade (branch `household-name-upgrade`, 2026-10-31)
 
 Same look, more finished. Nothing on the site claims trust; it shows its sources, adds up its numbers and never dead-ends. Details: `AUDIT.md` (what was wrong), `DECISIONS.md` (why), `COPY.md` (every string that changed).
@@ -56,7 +64,7 @@ Results page: not scored. It needs a quiz in localStorage, and locally it lacks 
 
 ### Needs the owner
 
-1. Replace the Lisbon photo (it's Porto) and check the Hanoi photo.
+1. ~~Replace the Lisbon photo~~ Done 2026-11-02.
 2. Confirm a monitored contact address (and reply time), then set `CONTACT_EMAIL` / `CONTACT_REPLY_TIME` in Vercel.
 3. Legal business name for the footer.
 4. Booking.com logo usage rights (text-only for now).

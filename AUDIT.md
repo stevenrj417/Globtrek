@@ -11,8 +11,8 @@ Each item notes its status on the `household-name-upgrade` branch.
 |---|---|
 | Contact page showed visitors "Product owner TODO: provide the public support email and responsible business identity." | Fixed. Owner TODO removed; email shown only when `CONTACT_EMAIL` is set. |
 | Homepage trip prices ("Hanoi $700–$1,600") were hand-written and didn't match the app's own cost model ($510–$700 for 2 travelers, 5 nights). | Fixed. Every card uses `estimateTrip()`. |
-| The "Lisbon" photo shows Porto (the Ribeira riverfront with rabelo boats). Used on the homepage, destination data and share images. | **Open: needs a correct Lisbon photo.** |
-| The "Hanoi" photo is a generic modern skyline; its alt text says "a street scene". | **Open: needs a correct photo or alt text.** |
+| The "Lisbon" photo shows Porto (the Ribeira riverfront with rabelo boats). Used on the homepage, destination data and share images. | Fixed 2026-11-02 (with 7 other photos; see CHANGELOG). |
+| The "Hanoi" photo is a generic modern skyline; its alt text says "a street scene". | Fixed 2026-11-02. |
 | The quiz showed "We found it." before any matching had run. | Fixed. |
 | The loading screen waited a fixed 3.9 s with a spinner, then results fetched the match again. | Fixed. Real work, 1.2–2.5 s, single fetch. |
 | Results hero said "5 days" for a 5-night trip. | Fixed. |
