@@ -45,7 +45,7 @@ export default function PrivacyPage() {
       </EditorialSection>
       <EditorialSection number="06" title="Who runs GlobTrek">
         <p>
-          This site is operated by {LEGAL_NAME}.{CONTACT_EMAIL ? <> Questions about this page: <a className="text-ink underline decoration-black/25 underline-offset-4" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</> : <> Questions about this page: see <Link className="text-ink underline decoration-black/25 underline-offset-4" href="/contact">Contact</Link>.</>}
+          This site is operated by {LEGAL_NAME}, based in Oregon, United States.{CONTACT_EMAIL ? <> Questions about this page: <a className="text-ink underline decoration-black/25 underline-offset-4" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</> : <> Questions about this page: see <Link className="text-ink underline decoration-black/25 underline-offset-4" href="/contact">Contact</Link>.</>}
         </p>
       </EditorialSection>
     </EditorialPage>

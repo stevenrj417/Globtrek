@@ -24,7 +24,7 @@ Choices made during the household-name upgrade, with the reason. When the spec w
 - **No cookie notice.** The site sets no non-essential cookies (auth cookies are essential; flag cookies only exist when a flag is turned on).
 - **Neutral 404 heading.** "Good-value trips to start from", not "Trips people are planning", which would imply activity we can't show.
 
-- **Legal name** is GlobTrek. Privacy and Terms say who operates the site; governing law, notice address and dispute process are left out until the owner supplies them, rather than shown as a TODO.
+- **Legal name** is GlobTrek. Privacy and Terms say who operates the site and that it is based in Oregon, United States (owner, 2026-11-02); governing law, notice address and dispute process are left out until the owner supplies them, rather than shown as a TODO.
 
 ## Destination pages
 
