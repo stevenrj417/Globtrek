@@ -1,14 +1,12 @@
 import airports from "../../data/airports.json" with { type: "json" };
 
+import { TRAVEL_AREA_OPTIONS } from "./travelAreaOptions.js";
+
 const airportByCode = new Map(airports.map((airport) => [airport.code, airport]));
 const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
 const destinationCountryOverrides = new Map([["PATAGONIA", ["AR", "CL"]]]);
 
-export const TRAVEL_AREA_OPTIONS = Object.freeze([
-  { value: "anywhere", label: "Anywhere" },
-  { value: "domestic", label: "Stay in my country" },
-  { value: "international", label: "International only" },
-]);
+export { TRAVEL_AREA_OPTIONS };
 
 export function normalizeTravelArea(value) {
   return TRAVEL_AREA_OPTIONS.some((option) => option.value === value) ? value : "anywhere";

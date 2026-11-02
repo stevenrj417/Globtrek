@@ -38,7 +38,7 @@ export default function Home() {
 
       <section id="discover" className="px-4 pb-16 pt-4 sm:px-6 sm:pb-24">
         <div className="group relative mx-auto min-h-[72vh] max-w-[1880px] overflow-hidden bg-placeholder sm:min-h-[78vh]">
-          <Image src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1" alt="A bright alpine lake and green mountains" fill preload className="image-calm object-cover" sizes="100vw" quality={82} />
+          <Image src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1" alt="A bright alpine lake and green mountains" fill preload className="image-calm object-cover" sizes="(min-width: 1880px) 1880px, 100vw" quality={75} />
           <div className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/55 via-black/20 to-transparent" aria-hidden="true" />
           <div className="absolute inset-x-0 bottom-0 flex flex-col items-center px-5 pb-10 text-center sm:pb-14 lg:pb-16">
             <h1 className="whitespace-nowrap text-[clamp(1.65rem,5vw,5.25rem)] font-extralight uppercase leading-[0.9] tracking-tight-3 text-white">One Tab Travel</h1>

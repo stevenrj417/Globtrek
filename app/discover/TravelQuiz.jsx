@@ -3,9 +3,8 @@
 import Image from "next/image";
 import { track } from "../lib/analytics";
 import { useEffect, useMemo, useRef, useState } from "react";
-import airports from "../data/airports.json";
-import { discoverySliderToUnknownness, legacyBudgetLabel, normalizeBudget } from "../lib/recommendation/travelerProfile";
-import { structuredOrigin, TRAVEL_AREA_OPTIONS } from "../lib/recommendation/travelArea";
+import { discoverySliderToUnknownness, legacyBudgetLabel, normalizeBudget } from "../lib/recommendation/budgetInput";
+import { TRAVEL_AREA_OPTIONS } from "../lib/recommendation/travelAreaOptions";
 
 const questions = [
   {
@@ -79,12 +78,13 @@ const questions = [
 
 const preferenceSteps = questions.length + 1;
 const DRAFT_KEY = "globtrekQuizDraft";
-const airportSearchIndex = airports.map((airport) => ({
-  airport,
-  code: airport.code.toLowerCase(),
-  city: airport.city.toLowerCase(),
-  name: airport.name.toLowerCase(),
-}));
+// The worldwide airport list is large, so it loads only when the final step's field mounts.
+function loadAirportSearch() {
+  return Promise.all([import("../data/airports.json"), import("../lib/recommendation/travelArea")]).then(([data, travelArea]) => ({
+    structuredOrigin: travelArea.structuredOrigin,
+    index: (data.default || data).map((airport) => ({ airport, code: airport.code.toLowerCase(), city: airport.city.toLowerCase(), name: airport.name.toLowerCase() })),
+  }));
+}
 
 const stayOptionsBySetting = {
   Ocean: ["Beach resort", "Private villa", "Boutique hotel", "Design hotel"],
@@ -114,6 +114,9 @@ function VisualQuestion({ question, value, onChoose, step }) {
 
   const active = question.options.find((option) => option.label === preview) || question.options[0];
   const tiles = useRef([]);
+  // Let the first photo win the network race; the other previews load just after it.
+  const [warm, setWarm] = useState(false);
+  useEffect(() => { const timer = window.setTimeout(() => setWarm(true), 900); return () => window.clearTimeout(timer); }, []);
 
   useEffect(() => {
     function onKey(event) {
@@ -141,7 +144,7 @@ function VisualQuestion({ question, value, onChoose, step }) {
           <h1 className="max-w-md text-[2.25rem] font-medium leading-[0.94] tracking-tight-4 sm:text-[clamp(2.7rem,5.2vw,5.6rem)]">{question.question}</h1>
         </div>
         <div className="relative aspect-[4/3] max-h-[300px] overflow-hidden bg-placeholder sm:max-h-none sm:min-h-[360px] lg:aspect-auto lg:h-[min(69vh,760px)]">
-          {question.options.map((option) => (
+          {question.options.filter((option) => warm || option.label === selected || option.label === active.label).map((option) => (
             <Image key={option.label} src={option.image} alt={option.label === active.label ? option.alt : ""} fill priority={option.label === selected} className={`object-contain transition-[opacity,transform] duration-500 ease-[cubic-bezier(.22,.61,.36,1)] sm:object-cover ${option.label === active.label ? "scale-100 opacity-100" : "pointer-events-none scale-[1.012] opacity-0"}`} sizes="(min-width:1024px) 70vw, 100vw" />
           ))}
         </div>
@@ -196,10 +199,12 @@ function AirportAutocomplete({ value, onChange }) {
   const [query, setQuery] = useState(value ? `${value.city || value.airportName} (${value.airportCode})` : "");
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [search, setSearch] = useState(null);
+  useEffect(() => { let live = true; loadAirportSearch().then((loaded) => { if (live) setSearch(loaded); }).catch(() => {}); return () => { live = false; }; }, []);
   const normalized = query.trim().toLowerCase();
   const matches = useMemo(() => {
-    if (!normalized) return [];
-    const ranked = airportSearchIndex
+    if (!normalized || !search) return [];
+    const ranked = search.index
       .map(({ airport, code, city, name }) => {
         let rank = 99;
         if (code === normalized) rank = 0;
@@ -213,11 +218,11 @@ function AirportAutocomplete({ value, onChange }) {
       .filter(({ rank }) => rank < 99)
       .sort((a, b) => a.rank - b.rank || Number(b.airport.scheduled) - Number(a.airport.scheduled) || a.airport.city.localeCompare(b.airport.city));
     return ranked.slice(0, 8).map(({ airport }) => airport);
-  }, [normalized]);
+  }, [normalized, search]);
 
   function choose(airport) {
     setQuery(`${airport.city || airport.name} (${airport.code})`);
-    onChange(structuredOrigin(airport.code));
+    onChange(search.structuredOrigin(airport.code));
     setOpen(false);
     setActiveIndex(0);
   }
@@ -261,7 +266,7 @@ function AirportAutocomplete({ value, onChange }) {
       >
         <span className="min-w-0"><strong className="block truncate text-sm font-medium text-black">{airport.city || airport.name}</strong><span className="mt-1 block truncate text-micro uppercase tracking-caps text-subtle">{airport.name}{airport.country ? ` · ${airport.country}` : ""}</span></span>
         <span className="shrink-0 text-xs font-semibold tracking-label">{airport.code}</span>
-      </button>) : <p className="px-5 py-4 text-xs text-subtle">No matching airport found.</p>}
+      </button>) : <p className="px-5 py-4 text-xs text-subtle">{search ? "No matching airport found." : "Loading airports…"}</p>}
     </div>}
   </div>;
 }

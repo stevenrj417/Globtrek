@@ -1,4 +1,7 @@
 import { normalizeTravelArea, originFromTrip } from "./travelArea.js";
+import { discoverySliderToUnknownness, legacyBudgetLabel, normalizeBudget } from "./budgetInput.js";
+
+export { discoverySliderToUnknownness, legacyBudgetLabel, normalizeBudget };
 
 const DURATION_NIGHTS = {
   "Long Weekend": 3,
@@ -16,17 +19,6 @@ export const DEFAULT_BUDGET_CATEGORIES = Object.freeze({
   activities: true,
   transportation: true,
 });
-
-export function normalizeBudget(value) {
-  const numeric = typeof value === "string" ? Number(value.replace(/[$,\s]/g, "")) : Number(value);
-  if (!Number.isFinite(numeric) || numeric < 100 || numeric > 1_000_000) return null;
-  return Math.round(numeric);
-}
-
-export function discoverySliderToUnknownness(value) {
-  const slider = Number.isFinite(Number(value)) ? Number(value) : 50;
-  return 100 - Math.min(100, Math.max(0, slider));
-}
 
 export function itineraryDayCount(input = {}) {
   return Math.min(28, Math.max(1, normalizeTravelerProfile(input).tripLength || 7));
@@ -91,9 +83,3 @@ export function normalizeTravelerProfile(input = {}) {
   };
 }
 
-export function legacyBudgetLabel(exactBudget) {
-  if (exactBudget < 3000) return "Smart value";
-  if (exactBudget < 6000) return "Comfortable";
-  if (exactBudget < 10000) return "Premium";
-  return "Blowout";
-}
