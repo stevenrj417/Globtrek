@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { EditorialPage, EditorialSection } from "../components/EditorialPage";
+import { CONTACT_EMAIL, LEGAL_NAME } from "../lib/site";
 
 export const metadata = {
   title: "Terms",
@@ -7,7 +9,7 @@ export const metadata = {
 
 export default function TermsPage() {
   return (
-    <EditorialPage updated="2026-08-15"
+    <EditorialPage updated="2026-11-02"
       eyebrow="Terms"
       title="Using GlobTrek."
       intro="These practical early-access terms describe the current product. They should be reviewed by qualified counsel before commercial booking functionality launches."
@@ -33,9 +35,9 @@ export default function TermsPage() {
           Features and recommendation logic may evolve. Do not use GlobTrek as the sole source for visa, health, safety, accessibility, insurance, or other high-stakes travel decisions.
         </p>
       </EditorialSection>
-      <EditorialSection number="05" title="Business details to complete">
+      <EditorialSection number="05" title="Who runs GlobTrek">
         <p>
-          Product owner TODO: insert the responsible business entity, notice address, governing law, dispute process, and counsel-approved effective date before commercial launch.
+          This site is operated by {LEGAL_NAME}.{CONTACT_EMAIL ? <> Questions about this page: <a className="text-ink underline decoration-black/25 underline-offset-4" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</> : <> Questions about this page: see <Link className="text-ink underline decoration-black/25 underline-offset-4" href="/contact">Contact</Link>.</>}
         </p>
       </EditorialSection>
     </EditorialPage>

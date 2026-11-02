@@ -1,5 +1,12 @@
 # Changelog
 
+## Brand, contact and legal details (2026-11-02)
+
+- Booking.com logo beside Booking.com mentions (owner-confirmed permission).
+- Legal name GlobTrek in the footer, Privacy, Terms and Organization JSON-LD; Instagram (@globtrekonetabtravel) in the footer, Contact and JSON-LD `sameAs`.
+- contact@glob-trek.com shown in the footer, Contact, Privacy and Terms once `CONTACT_EMAIL` is set; forwarded by Porkbun to the team Gmail.
+- Removed two owner TODOs that were visible on the live Privacy and Terms pages.
+
 ## Photos, performance and accessibility follow-up (branch `photo-and-polish`, 2026-11-02)
 
 - **Destination photos.** A contact-sheet review of all 35 published destinations found 5 wrong photos (Lisbon showed Porto, Costa Rica an African savanna, Barcelona Madrid, Amalfi a Greek island, Tahiti a US desert road), 1 broken (Florence returned 404) and 3 unidentifiable (Hanoi, Kyoto, Banff). All replaced with free Unsplash License photos whose pages name the location, each checked by eye. `npm run check:images` now fails if any published destination photo stops loading.
@@ -69,9 +76,9 @@ Results page: not scored. It needs a quiz in localStorage, and locally it lacks 
 ### Needs the owner
 
 1. ~~Replace the Lisbon photo~~ Done 2026-11-02.
-2. Confirm a monitored contact address (and reply time), then set `CONTACT_EMAIL` / `CONTACT_REPLY_TIME` in Vercel.
-3. Legal business name for the footer.
-4. Booking.com logo usage rights (text-only for now).
-5. Which social accounts exist (none linked for now).
+2. ~~Contact address~~ contact@glob-trek.com (2026-11-02). Optional: a reply-time promise via `CONTACT_REPLY_TIME`.
+3. ~~Legal name~~ GlobTrek. Still needed: governing law, notice address and dispute process for Terms and Privacy.
+4. ~~Booking.com logo~~ Done.
+5. ~~Social accounts~~ Instagram linked.
 6. City-specific cost models for the 29 destinations using price-tier defaults.
 7. Editorial review of seasonal guidance to publish more of the 264 unpublished destinations.

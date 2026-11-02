@@ -16,12 +16,15 @@ Choices made during the household-name upgrade, with the reason. When the spec w
 - **Estimates come from one function.** `estimateTrip()` builds on the existing budget engine. Categories are rounded to $10 first and totals are their sum, so the breakdown always adds up. Homepage and destination estimates assume 2 travelers, 5 nights (Mexico City 7), no dates (the engine's May default), before flights.
 - **Cost model labels.** Every cost model is still `baseline_requires_editorial_review`. Pages say "cost model, dated August 2026", never "reviewed". Tier-default destinations say so explicitly.
 - **Rating source.** Ratings name a source only when it's known: "Google" when the live Google Places match supplies the rating. Curated catalog ratings have no recorded source, so they're shown without one.
-- **No Booking.com logo.** Brand-usage terms weren't in the repo, so Booking.com is named in text only.
+- **Booking.com logo.** The owner confirmed permission on 2026-11-02. The official wordmark (`public/partners/booking-com.svg`, from Wikimedia Commons) appears small and only beside a mention of Booking.com: homepage step 3, the results disclosure and the hand-off page.
 - **"Why this fits you"** mentions only answers the trip's tags actually match, and mentions the budget only when the typical estimate is inside it.
 - **Handoff.** Booking anchors keep their real affiliate `href` (middle-click, no-JS and blocked pop-ups still work). A normal click opens `/go` in a new tab, which shows partner, hotel, dates and travelers for 850 ms, then forwards. `/go` only forwards to Booking.com and CJ hosts.
+- **Contact address is contact@glob-trek.com**, forwarded by Porkbun (the domain's DNS host) to the team Gmail. The owner asked for contact.globtrek@globtrek.com, but globtrek.com belongs to an unrelated company with its own mail server, so the address uses the owner's domain. Vercel doesn't forward email.
 - **Contact email is opt-in.** The domain sends from `hello@glob-trek.com`, but nothing confirms that inbox is monitored, so the page shows an address only when `CONTACT_EMAIL` is set, plus a reply time only if `CONTACT_REPLY_TIME` is set.
 - **No cookie notice.** The site sets no non-essential cookies (auth cookies are essential; flag cookies only exist when a flag is turned on).
 - **Neutral 404 heading.** "Good-value trips to start from", not "Trips people are planning", which would imply activity we can't show.
+
+- **Legal name** is GlobTrek. Privacy and Terms say who operates the site; governing law, notice address and dispute process are left out until the owner supplies them, rather than shown as a TODO.
 
 ## Destination pages
 

@@ -7,9 +7,11 @@ export const metadata = {
   alternates: { canonical: "/contact" },
 };
 
-// Set CONTACT_EMAIL (and optionally CONTACT_REPLY_TIME, e.g. "within 2 business days")
-// in Vercel once the inbox is monitored. Nothing is shown until then.
-const email = process.env.CONTACT_EMAIL || "";
+import { CONTACT_EMAIL, INSTAGRAM_URL } from "../lib/site";
+
+// CONTACT_EMAIL (and optionally CONTACT_REPLY_TIME, e.g. "within 2 business days")
+// are set in Vercel. Nothing is shown until the inbox is configured.
+const email = CONTACT_EMAIL;
 const replyTime = process.env.CONTACT_REPLY_TIME || "";
 
 export default function ContactPage() {
@@ -27,6 +29,9 @@ export default function ContactPage() {
         {email ? <p>
           Anything else: <a className="text-ink underline decoration-black/25 underline-offset-4" href={`mailto:${email}`}>{email}</a>.{replyTime ? ` We reply ${replyTime}.` : ""}
         </p> : null}
+        <p>
+          You can also find us on <a className="text-ink underline decoration-black/25 underline-offset-4" href={INSTAGRAM_URL} rel="me noopener">Instagram</a>.
+        </p>
       </EditorialSection>
       <div className="pt-12">
         <Link className="btn btn-primary" href="/discover">Find my trip</Link>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { handoffContext, isPartnerUrl } from "../lib/handoff";
+import { BookingLogo } from "../components/PartnerLogo";
 
 const HANDOFF_MS = 850;
 
@@ -42,6 +43,7 @@ export default function HandoffPage() {
     <main className="grid min-h-svh place-items-center bg-canvas px-6 text-center text-ink">
       <div className="max-w-lg" aria-live="polite">
         <p className="text-eyebrow font-semibold uppercase tracking-editorial">GlobTrek</p>
+        {handoff.partner === "Booking.com" ? <BookingLogo className="mx-auto mt-8 block h-6 w-auto" /> : null}
         <h1 className="mt-8 text-[clamp(1.75rem,4vw,2.5rem)] font-semibold leading-[1.15] tracking-tight-2">Taking you to {handoff.partner} to check live prices</h1>
         {details ? <p className="tabular mt-3 text-base text-muted">{details}</p> : null}
         <div className="mx-auto mt-8 h-px w-40 overflow-hidden bg-black/15" aria-hidden="true"><div className="handoff-bar h-px bg-ink" /></div>

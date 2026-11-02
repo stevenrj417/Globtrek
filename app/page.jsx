@@ -5,11 +5,12 @@ import { EmailSignup } from "./components/EmailSignup";
 import { TripCard } from "./components/TripCard";
 import { trendingTrips } from "./data/trending";
 import { formatMoney } from "./lib/recommendation/tripEstimate";
+import { BookingLogo } from "./components/PartnerLogo";
 
 const steps = [
   ["01", "Answer 7 quick questions", "Setting, pace, budget and when you can go."],
   ["02", "Get one trip that fits", "A destination, stays and things to do, inside your budget."],
-  ["03", "Book on partner sites", "Stays on Booking.com and other partners. Your price doesn't change."],
+  ["03", "Book on partner sites", <>Stays on <BookingLogo className="mx-0.5 h-3 w-auto" /> and other partners. Your price doesn&apos;t change.</>],
 ];
 
 const vibes = [

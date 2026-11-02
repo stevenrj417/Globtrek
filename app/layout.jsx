@@ -2,7 +2,7 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { AuthProvider } from "./components/AuthProvider";
 import { OfflineNotice } from "./components/OfflineNotice";
-import { SITE_URL } from "./lib/site";
+import { CONTACT_EMAIL, INSTAGRAM_URL, LEGAL_NAME, SITE_URL } from "./lib/site";
 
 const description = "Simple, affordable trip planning. Answer a few quick questions and get one trip that fits your budget.";
 
@@ -22,7 +22,7 @@ export const viewport = {
 const organization = {
   "@context": "https://schema.org",
   "@graph": [
-    { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: "GlobTrek", url: SITE_URL, logo: `${SITE_URL}/icon.png` },
+    { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: "GlobTrek", legalName: LEGAL_NAME, url: SITE_URL, logo: `${SITE_URL}/icon.png`, sameAs: [INSTAGRAM_URL], ...(CONTACT_EMAIL ? { email: CONTACT_EMAIL, contactPoint: { "@type": "ContactPoint", contactType: "customer support", email: CONTACT_EMAIL } } : {}) },
     { "@type": "WebSite", "@id": `${SITE_URL}/#website`, name: "GlobTrek", url: SITE_URL, publisher: { "@id": `${SITE_URL}/#organization` } },
   ],
 };
