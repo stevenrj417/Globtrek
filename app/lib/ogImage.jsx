@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { sizedPhoto } from "./format";
 
 export const OG_SIZE = { width: 1200, height: 630 };
 
@@ -26,5 +27,5 @@ export function ogPhoto(url) {
   if (!url) return null;
   if (url.startsWith("/")) return null;
   if (url.includes("images.unsplash.com")) return `${url.split("?")[0]}?w=1200&h=630&fit=crop&fm=jpg&q=70`;
-  return url;
+  return sizedPhoto(url, 1280);
 }

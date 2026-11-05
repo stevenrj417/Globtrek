@@ -51,3 +51,15 @@ Choices made during the household-name upgrade, with the reason. When the spec w
 | GlobTrek | Globtrek, globTrek, GLOBTREK (logo wordmark is lowercase "globtrek") |
 | Find my trip | Start your match |
 | before flights / flights included | excl. airfare |
+
+## Budget-first update (2026-11-04)
+
+- **Budget cities.** 19 verified catalog cities (Las Vegas, Honolulu, San Diego, Palm Springs, Los Angeles, San Francisco, Seattle, Chicago, Austin, New Orleans, Nashville, Miami, Orlando, Santa Fe, Anchorage, Guadalajara, Oaxaca, Mérida, Puerto Vallarta) get a budget editorial layer in `app/data/budgetDestinations.js`: room for two, food, activities, transit, airport transfer and lodging tax. Their old tier costs ($320–900 a night for Honolulu, LA and Puerto Vallarta) made budget trips impossible.
+- **Researched Portland fares** (`ROUTE_OVERRIDES` in `travelFeasibility.js`), November 2026 public snapshots: LAS $160–350 ([Orbitz](https://www.orbitz.com/es/lp/vuelos/pdx/las/portland-a-las-vegas), [Cheapflights](https://www.cheapflights.ca/flights-to-Las-Vegas/Portland-OR/), [FareCompare](https://www.farecompare.com/flights/Portland-PDX/Las_Vegas-LAS/market.html)); HNL $350–450 ([American](https://www.aa.com/en-us/flights-from-portland-to-honolulu), [United](https://www.united.com/en-us/flights-from-portland-or-to-honolulu)); LAX/BUR/SAN/PSP/PHX $106–200 ([Kayak](https://www.kayak.com/flight-routes/Portland-PDX/California-USCA), [Alaska](https://www.alaskaair.com/en/flights-from-portland)); MEX $255–365 ([Travelocity](https://www.travelocity.com/lp/flight-routes/frontier-airlines-from-portland-intl-to-mexico-city-intl/f9/pdx/mex)). Other origins still use the distance model.
+- **Lodging benchmarks:** Las Vegas motels $50–65 ([Vegas Food & Fun](https://vegasfoodandfun.com/cheap-motels-in-las-vegas/), [Momondo](https://global.momondo.com/hotels/las-vegas/Motel-6-Las-Vegas---I-15.mhd114983.ksp)); Waikiki hostels $39–46 a bed, budget hotels ~$102 ([HotelsCombined](https://www.hotelscombined.in/Hotel/Waikiki_Beachside_Hostel.htm), [GetCostIdea](https://getcostidea.com/?p=17801)). Other cities' budget values are GlobTrek editorial estimates; lodging tax rates are approximate.
+- **Budget modes:** "cheapest" plans around the deal fare, rooms −15%, food −20%, activities −50%; "comfortable" rooms +30%, food +20%. Default is best value.
+- **True total** now includes lodging tax on the room rate and round-trip airport transfers per traveler.
+- **Home city is never recommended** (Portland is in the catalog).
+- **No dead ends.** The results page explains which constraint failed and offers only fixes that were re-run through the matcher.
+- **No "GlobTrek × Booking.com" lockup.** GlobTrek is a CJ affiliate; a co-branded partnership mark needs Booking.com's written approval. The logo appears beside "Book on Booking.com"-style lines instead.
+- **Not built yet (needs live flight data, e.g. Duffel):** baggage totals, layover/self-transfer/airport-change warnings, nearby-airport price comparison, flexible-date savings and price alerts. Today's warning covers arrival airports 15+ miles from the city center.

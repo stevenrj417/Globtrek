@@ -3,6 +3,14 @@ import { estimateFlight } from "./travelFeasibility.js";
 
 const CATEGORY_KEYS = ["flights", "hotel", "food", "activities", "transportation"];
 
+// Budget modes. "cheapest" assumes the cheapest decent room, cheap eats and mostly
+// free things to do; "comfortable" assumes a nicer room and more sit-down meals.
+const SPEND_STYLE_FACTORS = {
+  cheapest: { hotel: 0.85, food: 0.8, activities: 0.5 },
+  value: { hotel: 1, food: 1, activities: 1 },
+  comfortable: { hotel: 1.3, food: 1.2, activities: 1 },
+};
+
 function estimate(category, average, source, confidence, isLive = false, spread = 0.15) {
   const roundedAverage = Math.round(average);
   return { category, low: Math.round(average * (1 - spread)), high: Math.round(average * (1 + spread)), average: roundedAverage, source, confidence, lastUpdated: "2026-08-14", isLive };
@@ -17,18 +25,29 @@ export function buildBudgetPlan(profile, destination) {
   const season = seasonFor(destination, profile);
   const flight = estimateFlight(profile, destination);
   const month = profile?.dates?.start ? new Date(`${profile.dates.start}T00:00:00Z`).getUTCMonth() + 1 : 5;
-  const cityAverage = destination.planningAverages?.monthly?.find((item) => item.month === month) || {
+  const baseCityAverage = destination.planningAverages?.monthly?.find((item) => item.month === month) || {
     hotelNight: cost.typicalHotelNightLow,
     foodPerPersonDay: cost.foodDailyLow,
     activitiesPerPersonDay: cost.activitiesDailyLow,
     localTransportDay: cost.transportDailyLow,
   };
+  // True trip total: lodging tax rides on the room rate, and a round-trip airport
+  // transfer for every traveler rides on local transportation.
+  const style = SPEND_STYLE_FACTORS[profile.spendStyle] || SPEND_STYLE_FACTORS.value;
+  const cityAverage = {
+    ...baseCityAverage,
+    hotelNight: baseCityAverage.hotelNight * style.hotel,
+    foodPerPersonDay: baseCityAverage.foodPerPersonDay * style.food,
+    activitiesPerPersonDay: baseCityAverage.activitiesPerPersonDay * style.activities,
+  };
+  const lodgingTaxRate = Number(destination.planningAverages?.lodgingTaxRate) || 0;
+  const airportTransfers = (Number(destination.planningAverages?.airportTransferPerPerson) || 0) * 2 * travelers;
   const categories = {
     flights: { ...estimate("flights", includes.flights ? flight.average * travelers : 0, flight.priceSource, flight.confidence, flight.isLive, 0.12), currency: flight.currency, priceLastChecked: flight.priceLastChecked, cabinClass: flight.cabinClass, tripType: flight.tripType, monthlyAverageEconomyRoundTrip: flight.monthlyAverageEconomyRoundTrip },
-    hotel: estimate("hotel", includes.hotel ? cityAverage.hotelNight * nights : 0, destination.planningAverages?.source || cost.source, destination.planningAverages?.confidence || cost.confidence, false, 0.15),
+    hotel: estimate("hotel", includes.hotel ? cityAverage.hotelNight * nights * (1 + lodgingTaxRate) : 0, destination.planningAverages?.source || cost.source, destination.planningAverages?.confidence || cost.confidence, false, 0.15),
     food: estimate("food", includes.food ? cityAverage.foodPerPersonDay * nights * travelers : 0, destination.planningAverages?.source || cost.source, destination.planningAverages?.confidence || cost.confidence, false, 0.15),
     activities: estimate("activities", includes.activities ? cityAverage.activitiesPerPersonDay * nights * travelers : 0, destination.planningAverages?.source || cost.source, destination.planningAverages?.confidence || cost.confidence, false, 0.15),
-    transportation: estimate("transportation", includes.transportation ? cityAverage.localTransportDay * nights : 0, destination.planningAverages?.source || cost.source, destination.planningAverages?.confidence || cost.confidence, false, 0.15),
+    transportation: estimate("transportation", includes.transportation ? cityAverage.localTransportDay * nights + airportTransfers : 0, destination.planningAverages?.source || cost.source, destination.planningAverages?.confidence || cost.confidence, false, 0.15),
   };
   const active = CATEGORY_KEYS.filter((key) => includes[key]);
   const rawLow = active.reduce((sum, key) => sum + categories[key].low, 0);
@@ -100,6 +119,10 @@ export function buildBudgetPlan(profile, destination) {
     withinHardBudget,
     budgetBasis: "good_value_monthly_plan_with_reserve",
     cityPlanningAverage: cityAverage,
+    spendStyle: profile.spendStyle || "value",
+    lodgingTax: includes.hotel ? Math.round(cityAverage.hotelNight * nights * lodgingTaxRate) : 0,
+    lodgingTaxRate,
+    airportTransfers: includes.transportation ? Math.round(airportTransfers) : 0,
     remainingBudget: Math.round(remainingBudget),
     budgetFeasibilityScore,
     season,

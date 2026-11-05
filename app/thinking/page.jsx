@@ -4,9 +4,10 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PREFETCH_KEY } from "../lib/matchPrefetch";
 
-const STEPS = ["Matching your answers", "Finding stays under your budget", "Picking dinners and things to do", "Putting your trip together"];
-const MIN_MS = 1200;
-const MAX_MS = 2500;
+// Each line corresponds to work the matcher really does for every candidate trip.
+const STEPS = ["Reading your answers", "Pricing round-trip flights", "Finding stays under your budget", "Adding food, transit and taxes", "Picking free and cheap things to do", "Checking the total against your budget", "Putting your trip together"];
+const MIN_MS = 2200;
+const MAX_MS = 3500;
 
 export default function ThinkingPage() {
   const [done, setDone] = useState(0);
@@ -22,7 +23,7 @@ export default function ThinkingPage() {
     if (!quiz) { window.location.replace("/discover"); return () => {}; }
 
     started.current = performance.now();
-    const ticks = [1, 2, 3].map((count, index) => window.setTimeout(() => setDone((value) => Math.max(value, count)), ((index + 1) * MIN_MS) / 4));
+    const ticks = STEPS.slice(1).map((_, index) => window.setTimeout(() => setDone((value) => Math.max(value, index + 1)), ((index + 1) * MIN_MS) / STEPS.length));
     let finished = false;
     const go = () => { if (finished) return; finished = true; setDone(STEPS.length); window.setTimeout(() => window.location.assign(target), 180); };
     const cap = window.setTimeout(go, MAX_MS);

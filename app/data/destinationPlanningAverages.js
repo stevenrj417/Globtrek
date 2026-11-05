@@ -42,7 +42,7 @@ export function buildDestinationPlanningAverages(destination = {}) {
   const level = destination.typicalCostLevel || "moderate";
   const fallback = COST_LEVELS[level] || COST_LEVELS.moderate;
   const profile = destination.costProfile || {};
-  const city = CITY_OVERRIDES[destination.city] || {};
+  const city = destination.budgetEditorial?.planning || CITY_OVERRIDES[destination.city] || {};
   const baseline = {
     hotelNight: city.hotelNight ?? goodValueAverage(profile.typicalHotelNightLow, profile.typicalHotelNightHigh, fallback.hotelNight),
     foodDay: city.foodDay ?? goodValueAverage(profile.foodDailyLow, profile.foodDailyHigh, fallback.foodDay),
@@ -55,7 +55,9 @@ export function buildDestinationPlanningAverages(destination = {}) {
     hotelStandard: "Clean, well-reviewed budget hotel or simple three-star",
     basis: "Modeled good-value planning average; not a live quote or guaranteed price",
     // "city" when a city-specific baseline exists, otherwise a price-tier default.
-    model: CITY_OVERRIDES[destination.city] ? "city" : "tier",
+    model: destination.budgetEditorial || CITY_OVERRIDES[destination.city] ? "city" : "tier",
+    airportTransferPerPerson: Number(city.airportTransferPerPerson) || 0,
+    lodgingTaxRate: Number(city.lodgingTaxRate) || 0,
     costLevel: level,
     source: profile.source || "globtrek_city_budget_baseline_v1",
     confidence: Math.max(0.3, Number(profile.confidence) || 0.4),

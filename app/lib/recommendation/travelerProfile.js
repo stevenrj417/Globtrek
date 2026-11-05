@@ -3,6 +3,9 @@ import { discoverySliderToUnknownness, legacyBudgetLabel, normalizeBudget } from
 
 export { discoverySliderToUnknownness, legacyBudgetLabel, normalizeBudget };
 
+// Budget modes: "cheapest" (absolute cheapest), "value" (best value, default), "comfortable".
+export const SPEND_STYLES = ["cheapest", "value", "comfortable"];
+
 const DURATION_NIGHTS = {
   "Long Weekend": 3,
   "Five Nights": 5,
@@ -46,7 +49,8 @@ export function normalizeTravelerProfile(input = {}) {
     Object.keys(DEFAULT_BUDGET_CATEGORIES).map((key) => [key, suppliedCategories[key] ?? DEFAULT_BUDGET_CATEGORIES[key]]),
   );
   const travelers = Math.min(30, Math.max(1, Number.parseInt(input.guestCount ?? input.travelers, 10) || 1));
-  const tripLength = dateNights(input.tripStart, input.tripEnd) || DURATION_NIGHTS[answers.duration] || 7;
+  const requestedNights = Number.parseInt(input.tripNights, 10);
+  const tripLength = dateNights(input.tripStart, input.tripEnd) || (Number.isFinite(requestedNights) && requestedNights > 0 ? Math.min(28, requestedNights) : null) || DURATION_NIGHTS[answers.duration] || 7;
 
   return {
     version: 2,
@@ -71,6 +75,7 @@ export function normalizeTravelerProfile(input = {}) {
     budgetIncludesActivities: includedBudgetCategories.activities,
     budgetIncludesTransportation: includedBudgetCategories.transportation,
     budgetMode: input.budgetMode === "closest" ? "closest" : "under",
+    spendStyle: SPEND_STYLES.includes(input.spendStyle || input.answers?.spendStyle) ? (input.spendStyle || input.answers?.spendStyle) : "value",
     preferredDestinationId: input.destination || input.preferredDestination?.id || null,
     pace: answers.escape || null,
     relaxationPreference: ["Slow mornings", "Mostly relaxing"].includes(answers.escape) ? "high" : answers.escape === "Packed schedule" ? "low" : "medium",

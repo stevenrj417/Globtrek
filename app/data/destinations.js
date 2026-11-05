@@ -154,7 +154,7 @@ const verifiedExpansion = [...(verifiedBatch01.records || verifiedBatch01), ...(
 }));
 
 const legacyNames = new Set(legacyDestinations.map((item) => `${item.city}|${item.country}`));
-export const destinations = [...legacyDestinations, ...verifiedExpansion.filter((item) => !legacyNames.has(`${item.city}|${item.country}`))].map(enrichDestinationIntelligence);
+export const destinations = [...legacyDestinations, ...verifiedExpansion.filter((item) => !legacyNames.has(`${item.city}|${item.country}`))].map(applyBudgetEditorial).map(enrichDestinationIntelligence);
 
 export function scoreDestination(destination, answers) {
   const weights = { alive: 9, duration: 7, memory: 6, luxury: 6, hotel: 5, escape: 4, self: 3 };
@@ -273,4 +273,5 @@ import verifiedBatch02 from "../../scripts/destinations/verified-batch-02.json" 
 import verifiedBatch03 from "../../scripts/destinations/verified-batch-03.json" with { type: "json" };
 import verifiedBatch04 from "../../scripts/destinations/verified-batch-04.json" with { type: "json" };
 import { enrichDestinationIntelligence } from "./destinationIntelligence.js";
+import { applyBudgetEditorial } from "./budgetDestinations.js";
 import { CJ_HOSTS, CJ_LINKS, cjTracked } from "../lib/booking/cj.js";

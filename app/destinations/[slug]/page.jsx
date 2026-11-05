@@ -6,6 +6,7 @@ import { EstimateDetails } from "../../components/EstimateDetails";
 import { destinationBySlug, publishedDestinations } from "../../data/destinationCatalog";
 import { estimateLine, formatMoney, formatRange } from "../../lib/recommendation/tripEstimate";
 import { SITE_URL } from "../../lib/site";
+import { BookingLogo } from "../../components/PartnerLogo";
 
 export const dynamicParams = false;
 
@@ -83,7 +84,10 @@ export default async function DestinationPage({ params }) {
             <p className="mt-3 text-lg text-muted">Known for {item.knownFor}.</p>
             <p className="tabular mt-4 text-sm">{estimateLine(item.estimate)} <EstimateDetails estimate={item.estimate} align="left" /></p>
           </div>
-          <Link href={planHref} className="btn btn-primary">Make this my trip</Link>
+          <div className="flex flex-col items-start gap-2 lg:items-end">
+            <Link href={planHref} className="btn btn-primary">Make this my trip</Link>
+            <p className="text-xs text-subtle">Stays, flights and attractions on <BookingLogo className="h-3 w-auto" /></p>
+          </div>
         </div>
       </section>
 

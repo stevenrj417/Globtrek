@@ -1,3 +1,5 @@
+import { sentencePhrase } from "../format.js";
+
 // One or two sentences explaining a result, built only from the traveler's own
 // answers and tags the trip already carries. Only answers the trip actually
 // matches are mentioned, and nothing is said about a place that isn't in its data.
@@ -42,7 +44,7 @@ export function whyThisFits({ answers = {}, exactBudget, budgetPlan, trip }) {
     ? `${city} matches ${list(matched)}${budget ? `, with ${budget}` : ""}.`
     : budget ? `${city} is the closest fit to your answers, with ${budget}.` : `${city} is the closest fit to your answers.`;
   const known = trip.style && !/considered escape/i.test(trip.style)
-    ? `Known for ${list(trip.style.split(" / ").map((part) => (part.includes(" ") ? part : part.toLowerCase())))}.`
+    ? `Known for ${list(trip.style.split(" / ").map(sentencePhrase))}.`
     : "";
   return [first, known].filter(Boolean).join(" ");
 }

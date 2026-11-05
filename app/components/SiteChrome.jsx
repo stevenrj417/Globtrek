@@ -5,6 +5,7 @@ import { DestinationSearch } from "./DestinationSearch";
 import { ProductMenu } from "./ProductMenu";
 import { CurrentYear, MobileMenu, NavLinks, StickyHeader } from "./HeaderClient";
 import { CONTACT_EMAIL, INSTAGRAM_URL, LEGAL_NAME } from "../lib/site";
+import { BookingLogo } from "./PartnerLogo";
 import { BookingPartnerBadge } from "./PartnerLogo";
 
 const navigation = [["Trips", "/#trips"], ["Quiz", "/discover"], ["Destinations", "/destinations"], ["How it works", "/how-it-works"], ["About", "/about"]];
@@ -46,6 +47,7 @@ export function SiteFooter() {
           <div>
             <BrandWordmark className="text-3xl font-bold tracking-tight-4 sm:text-4xl" />
             <p className="mt-5 max-w-md text-sm leading-6 text-muted">A few quick questions. One affordable trip.</p>
+            <p className="mt-3 text-sm text-muted">Stays, flights and attractions booked on <BookingLogo className="h-3.5 w-auto" /></p>
             <BookingPartnerBadge className="mt-5" />
             <ul className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted">
               <li><a href={INSTAGRAM_URL} rel="me noopener" className="inline-flex min-h-11 items-center gap-2 transition-colors duration-150 hover:text-ink"><svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4 fill-none stroke-current" strokeWidth="1.6"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" /></svg>Instagram</a></li>

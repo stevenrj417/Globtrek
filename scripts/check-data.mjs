@@ -46,10 +46,19 @@ for (const item of publishedDestinations) {
 
 // --check-images: confirm every published destination photo still loads (needs network).
 if (process.argv.includes("--check-images")) {
+  const headers = { "User-Agent": "GlobTrekImageCheck/1.0 (+https://www.glob-trek.com)" };
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   for (const item of publishedDestinations) {
     if (!item.image.startsWith("http")) continue;
-    const status = await fetch(item.image, { method: "HEAD" }).then((response) => response.status).catch(() => "network error");
+    let status = null;
+    // Wikimedia rate-limits bursts (429); pace requests and retry before calling a photo broken.
+    for (let attempt = 0; attempt < 4; attempt += 1) {
+      status = await fetch(item.image, { method: "HEAD", headers }).then((response) => response.status).catch(() => "network error");
+      if (status !== 429) break;
+      await sleep(1500 * (attempt + 1));
+    }
     if (status !== 200) rows.find((row) => row.d.id === item.id).errors.push(`image returns ${status}`);
+    if (item.image.includes("wikimedia.org")) await sleep(400);
   }
 }
 

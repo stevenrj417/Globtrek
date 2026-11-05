@@ -1,5 +1,15 @@
 # Changelog
 
+## Budget-first trips (2026-11-04)
+
+- 19 budget cities published (54 destinations total), priced with a budget editorial layer and researched Portland fares. Cheapest from Portland in absolute-cheapest mode, 1 traveler, 3 nights: Las Vegas ~$483, Oaxaca ~$491, Guadalajara ~$504.
+- Budget modes on the quiz: absolute cheapest, best value, cheap but comfortable.
+- True trip total includes lodging tax and airport transfers; results show per day, per person, a far-airport warning and free things to do.
+- No-results dead end replaced by "what's wrong", one-click fixes that are proven to work, and a live trip editor.
+- Building screen: seven real steps, 2.2–3.5 seconds.
+- Booking.com logo beside booking lines on hotel cards, destination pages, the destinations index, results and the footer.
+- Homepage features Las Vegas, Oaxaca and Hanoi.
+
 ## Book everything with CJ tracking (2026-11-04)
 
 - Every Booking.com link (hotels, flights, attractions) now leaves through GlobTrek's CJ click URL, enforced in one module (`app/lib/booking/cj.js`) and re-checked for the trip email and `/book`.

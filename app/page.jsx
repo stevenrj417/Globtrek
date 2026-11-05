@@ -22,11 +22,11 @@ const vibes = [
 ];
 
 function budgetFacts() {
-  const [mexico, hanoi, lisbon] = trendingTrips;
+  const [vegas, oaxaca, hanoi] = trendingTrips;
   return [
-    hanoi.planning && { trip: hanoi, text: `Food from ~${formatMoney(hanoi.planning.foodPerPersonDay)} a day per person` },
-    mexico.planning && { trip: mexico, text: `A well-reviewed room from ~${formatMoney(mexico.planning.hotelNight)} a night` },
-    lisbon.planning && { trip: lisbon, text: `Getting around from ~${formatMoney(lisbon.planning.localTransportDay)} a day` },
+    vegas.planning && { trip: vegas, text: `A simple room from ~${formatMoney(vegas.planning.hotelNight)} a night` },
+    oaxaca.planning && { trip: oaxaca, text: `Food from ~${formatMoney(oaxaca.planning.foodPerPersonDay)} a day per person` },
+    hanoi.planning && { trip: hanoi, text: `Getting around from ~${formatMoney(hanoi.planning.localTransportDay)} a day` },
   ].filter(Boolean);
 }
 

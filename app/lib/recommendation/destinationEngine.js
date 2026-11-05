@@ -22,7 +22,9 @@ function tripLengthScore(destination, nights) {
 }
 
 export function rankDestinations(destinations, profile) {
-  return destinations.filter((destination) => destinationMatchesTravelArea(destination, profile)).map((destination) => {
+  const home = String(profile.origin || "").toUpperCase();
+  // Never recommend the traveler's own city.
+  return destinations.filter((destination) => destinationMatchesTravelArea(destination, profile) && !(home && String(destination.airport || "").toUpperCase() === home)).map((destination) => {
     const budgetPlan = buildBudgetPlan(profile, destination);
     const travelFeasibility = assessTravelFeasibility(profile, destination);
     const preferenceMatchScore = preferenceScore(destination, profile.otherExistingQuizPreferences);

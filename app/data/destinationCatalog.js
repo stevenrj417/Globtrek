@@ -1,6 +1,7 @@
 import { destinations } from "./destinations.js";
 import { displayName } from "./trending.js";
 import { estimateTrip } from "../lib/recommendation/tripEstimate.js";
+import { sentencePhrase, sizedPhoto } from "../lib/format.js";
 
 // Publishing gate for /destinations. A destination gets a public, indexable page
 // only when every field the page shows comes from reviewed data. See DECISIONS.md.
@@ -37,7 +38,7 @@ const SETTINGS = [
 
 // "Hills / Food / Atlantic light" -> "hills, food and Atlantic light"
 export function knownFor(style) {
-  const parts = String(style || "").split(" / ").filter(Boolean).map((part) => (part.includes(" ") ? part : part.toLowerCase()));
+  const parts = String(style || "").split(" / ").filter(Boolean).map(sentencePhrase);
   return parts.length < 2 ? parts.join("") : `${parts.slice(0, -1).join(", ")} and ${parts[parts.length - 1]}`;
 }
 
@@ -67,7 +68,7 @@ function toPage(destination) {
     season: destination.season,
     airport: destination.airport,
     knownness: Number.isFinite(destination.recognition) ? destination.recognition : null,
-    image: destination.image,
+    image: sizedPhoto(destination.image, 1920),
     alt: `${displayName(destination.city)}, ${displayName(destination.country)}`,
     estimate,
     planning: destination.planningAverages,

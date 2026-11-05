@@ -37,8 +37,18 @@ function countryRegion(country) {
   return COUNTRY_REGIONS[normalized] || (EUROPE_COUNTRIES.has(normalized) ? "europe" : "unknown");
 }
 
+// Researched economy round-trip benchmarks (November 2026 public fare snapshots):
+// low = a well-timed deal, high = a typical fare. See DECISIONS.md for sources.
 const ROUTE_OVERRIDES = {
   "PDX:OGG": { flightHours: 5.8, connections: 0, low: 360, high: 720, popularity: "established" },
+  "PDX:LAS": { flightHours: 2.2, connections: 0, low: 160, high: 350, popularity: "established" },
+  "PDX:HNL": { flightHours: 5.8, connections: 0, low: 350, high: 450, popularity: "established" },
+  "PDX:LAX": { flightHours: 2.4, connections: 0, low: 110, high: 180, popularity: "established" },
+  "PDX:BUR": { flightHours: 2.3, connections: 0, low: 120, high: 190, popularity: "established" },
+  "PDX:SAN": { flightHours: 2.5, connections: 0, low: 150, high: 200, popularity: "established" },
+  "PDX:PSP": { flightHours: 2.4, connections: 0, low: 145, high: 200, popularity: "established" },
+  "PDX:PHX": { flightHours: 2.6, connections: 0, low: 106, high: 200, popularity: "established" },
+  "PDX:MEX": { flightHours: 5.5, connections: 0, low: 255, high: 365, popularity: "established" },
   "PDX:MRS": { flightHours: 14.5, connections: 1, low: 850, high: 1450, popularity: "connecting" },
   "LHR:MRS": { flightHours: 2, connections: 0, low: 110, high: 360, popularity: "established" },
 };
@@ -150,7 +160,9 @@ export function estimateFlight(profile, destination) {
   }
   const route = routeFor(profile, destination);
   const multiplier = monthMultiplier(profileMonth(profile));
-  const average = Math.round(routeAverage(route) * multiplier);
+  // "Absolute cheapest" plans around a well-timed deal fare rather than a typical one.
+  const base = profile?.spendStyle === "cheapest" && Number.isFinite(route.low) ? route.low : routeAverage(route);
+  const average = Math.round(base * multiplier);
   return {
     low: Math.round(average * 0.88), high: Math.round(average * 1.12), average, currency: "USD",
     priceSource: "deterministic_route_market_estimate", priceLastChecked: UPDATED,

@@ -169,7 +169,9 @@ const budgetCategoryLabels = {
   transportation: "Transportation",
 };
 
-function BudgetQuestion({ value, includes, onValueChange, onToggle, onBack, onContinue, step }) {
+const SPEND_OPTIONS = [["cheapest", "Absolute cheapest", "Deal fares, simple rooms, mostly free days"], ["value", "Best value", "The smartest spend for the money"], ["comfortable", "Cheap but comfortable", "A nicer room and more sit-down meals"]];
+
+function BudgetQuestion({ value, includes, spendStyle, onSpendStyle, onValueChange, onToggle, onBack, onContinue, step }) {
   const budget = normalizeBudget(value);
   const valid = budget !== null && Object.values(includes).some(Boolean);
   const formatted = value ? Number(String(value).replace(/\D/g, "")).toLocaleString("en-US") : "";
@@ -187,6 +189,12 @@ function BudgetQuestion({ value, includes, onValueChange, onToggle, onBack, onCo
         {Object.entries(budgetCategoryLabels).map(([key, label]) => <button type="button" key={key} aria-pressed={includes[key]} onClick={() => onToggle(key)} className={`min-h-12 border px-5 text-micro uppercase tracking-label transition ${includes[key] ? "border-black bg-black text-white" : "border-black/20 bg-white/40 text-black/50 hover:border-black"}`}>{label}</button>)}
       </div>
       <p className="mt-5 text-xs text-subtle">Excluded items can still appear in your plan, but they will not count toward this budget.</p>
+      <fieldset className="mx-auto mt-10 w-full max-w-3xl">
+        <legend className="mx-auto text-micro uppercase tracking-editorial text-subtle">How do you want to spend it?</legend>
+        <div role="radiogroup" className="mt-4 grid gap-2 sm:grid-cols-3">
+          {SPEND_OPTIONS.map(([key, label, note]) => <button type="button" role="radio" key={key} aria-checked={spendStyle === key} onClick={() => onSpendStyle(key)} className={`min-h-16 border px-4 py-3 text-left transition-colors ${spendStyle === key ? "border-black bg-black text-white" : "border-black/20 bg-white/40 hover:border-black"}`}><span className="block text-xs font-semibold uppercase tracking-caps">{label}</span><span className={`mt-1 block text-micro ${spendStyle === key ? "text-white/75" : "text-subtle"}`}>{note}</span></button>)}
+        </div>
+      </fieldset>
     </div>
     <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-6 border-t border-black/10 pt-7">
       <button type="button" onClick={onBack} className="min-h-12 text-xs uppercase tracking-label text-muted">← Back</button>
@@ -473,6 +481,6 @@ export default function TravelQuiz() {
 
   return <section id="quiz" className={`relative overflow-hidden bg-canvas text-ink transition-[opacity,transform] duration-300 ease-out ${phase === "leaving" ? "-translate-y-2 opacity-0" : phase === "leaving-back" ? "translate-y-2 opacity-0" : phase === "entering" ? "translate-y-2 opacity-0" : "translate-y-0 opacity-100"}`}>
     {preferredDestination ? <div className="pointer-events-none absolute inset-x-0 top-1 z-40 text-center"><span className="inline-flex border border-black/10 bg-canvas/90 px-3 py-1.5 text-micro uppercase tracking-label text-black/55 backdrop-blur">Planning {preferredDestination.name}</span></div> : null}
-    {step < adaptiveQuestions.length ? current.type === "budget" ? <BudgetQuestion value={exactBudget} includes={budgetIncludes} onValueChange={setExactBudget} onToggle={(key) => setBudgetIncludes((currentIncludes) => ({ ...currentIncludes, [key]: !currentIncludes[key] }))} onBack={back} onContinue={continueBudget} step={step} /> : <VisualQuestion question={current} value={answers[current.id]} onChoose={choose} step={step} /> : step === adaptiveQuestions.length ? <DiscoveryQuestion value={discoveryLevel} onChange={setDiscoveryLevel} onBack={back} onContinue={continueDiscovery} /> : <DateQuestion answers={answers} setAnswers={setAnswers} tripStart={tripStart} tripEnd={tripEnd} isFlexible={isFlexible} setTripStart={setTripStart} setTripEnd={setTripEnd} setIsFlexible={setIsFlexible} originDetails={originDetails} setOriginDetails={setOriginDetails} travelAreaPreference={travelAreaPreference} setTravelAreaPreference={setTravelAreaPreference} guestCount={guestCount} setGuestCount={setGuestCount} onBack={back} onSubmit={submit} canSubmit={canSubmit} />}
+    {step < adaptiveQuestions.length ? current.type === "budget" ? <BudgetQuestion value={exactBudget} includes={budgetIncludes} spendStyle={answers.spendStyle || "value"} onSpendStyle={(style) => setAnswers((value) => ({ ...value, spendStyle: style }))} onValueChange={setExactBudget} onToggle={(key) => setBudgetIncludes((currentIncludes) => ({ ...currentIncludes, [key]: !currentIncludes[key] }))} onBack={back} onContinue={continueBudget} step={step} /> : <VisualQuestion question={current} value={answers[current.id]} onChoose={choose} step={step} /> : step === adaptiveQuestions.length ? <DiscoveryQuestion value={discoveryLevel} onChange={setDiscoveryLevel} onBack={back} onContinue={continueDiscovery} /> : <DateQuestion answers={answers} setAnswers={setAnswers} tripStart={tripStart} tripEnd={tripEnd} isFlexible={isFlexible} setTripStart={setTripStart} setTripEnd={setTripEnd} setIsFlexible={setIsFlexible} originDetails={originDetails} setOriginDetails={setOriginDetails} travelAreaPreference={travelAreaPreference} setTravelAreaPreference={setTravelAreaPreference} guestCount={guestCount} setGuestCount={setGuestCount} onBack={back} onSubmit={submit} canSubmit={canSubmit} />}
   </section>;
 }
