@@ -1,3 +1,6 @@
+import { normalizeManifestLinks } from "../booking/cj.js";
+import { bookingPageUrl } from "../booking/bookPage.js";
+
 function escapeHtml(value) {
   return String(value ?? "").replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" })[character]);
 }
@@ -39,7 +42,9 @@ export function tripEmail({ model, viewUrl }) {
   const sequenceLabel = journey?.type === "cruise" ? "Port" : "Day";
   const dayHtml = days.map((day, index) => `<section style="border-top:1px solid #d8d4ce;padding:22px 0"><p style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#777">${sequenceLabel} ${String(index + 1).padStart(2, "0")} · ${escapeHtml(day.location || "")}</p><h2 style="font-family:Georgia,serif;font-size:25px;font-weight:400;margin:8px 0 14px">${escapeHtml(day.title)}</h2><p style="font-size:13px;line-height:1.7;color:#555"><b>Morning</b> ${escapeHtml(day.morning)}<br><b>Afternoon</b> ${escapeHtml(day.afternoon)}<br><b>Evening</b> ${escapeHtml(day.evening)}</p></section>`).join("");
   const costs = model.estimatedCostBreakdown;
-  const manifest = model.bookingManifest || {};
+  const manifest = normalizeManifestLinks(model.bookingManifest || {});
+  const bookAllUrl = bookingPageUrl({ ...manifest, destination: manifest.destination || model.destination, dates: manifest.dates || model.dates, travelers: manifest.travelers || (typeof model.travelers === "object" ? model.travelers : { total: model.travelers }) }, "https://www.glob-trek.com");
+  const bookAll = bookAllUrl ? `<div style="margin:28px 0 8px;padding:22px;border:1px solid #171714;background:#fbfaf7"><p style="margin:0;font-size:13px;line-height:1.7">Book everything at once: one button opens your stay, flight, activities and dinners in their own tabs with your dates and travelers filled in.</p>${button("Book everything", bookAllUrl)}<p style="margin:14px 0 0;font-size:11px;line-height:1.6;color:#6b6b6b">Tip: if only one tab opens, allow pop-ups for glob-trek.com and press the button again. You pay each partner directly. GlobTrek may earn a commission; your price doesn&#039;t change.</p></div>` : "";
   const travelerTotal = typeof model.travelers === "object" ? model.travelers.total : model.travelers;
   const logistics = `<p style="font-size:12px;line-height:1.8">${model.dates?.start ? `${escapeHtml(model.dates.start)} – ${escapeHtml(model.dates.end || "")}` : "Flexible dates"}${travelerTotal ? ` · ${escapeHtml(travelerTotal)} travelers` : ""}${model.exactBudget ? ` · ${money(model.exactBudget)} budget` : ""}</p>`;
   const hotelBooking = manifest.hotelBookings?.[0];
@@ -61,7 +66,7 @@ export function tripEmail({ model, viewUrl }) {
   const title = journey?.type === "cruise" ? journey.title : `${days.length} days in ${model.destination?.city || model.destination?.name || "your destination"}`;
   const preheader = journey?.type === "cruise" ? `Your ${journey.duration || "ocean"} GlobTrek journey.` : `Your complete ${days.length}-day GlobTrek itinerary.`;
   const hero = emailImage(model.destinationImage, model.destination?.city || model.destination?.name || "Destination");
-  return shell({ preheader, eyebrow: "One tab travel", title, body: `${hero}${logistics}${hotelHtml}${flightHtml}<div style="margin-top:42px"><p style="font-size:9px;letter-spacing:.2em;text-transform:uppercase">Your itinerary</p>${dayHtml}</div>${diningHtml}${experienceHtml}${costHtml}${journeyHtml}${viewUrl ? button("View trip", viewUrl) : ""}`, footer: "This transactional trip email does not subscribe you to marketing. Confirm final prices and availability with each provider." });
+  return shell({ preheader, eyebrow: "One tab travel", title, body: `${hero}${logistics}${bookAll}${hotelHtml}${flightHtml}<div style="margin-top:42px"><p style="font-size:9px;letter-spacing:.2em;text-transform:uppercase">Your itinerary</p>${dayHtml}</div>${diningHtml}${experienceHtml}${costHtml}${journeyHtml}${bookAllUrl ? button("Book everything", bookAllUrl) : ""}${viewUrl ? button("View trip", viewUrl) : ""}`, footer: "This transactional trip email does not subscribe you to marketing. Confirm final prices and availability with each provider." });
 }
 
 export function monthlyEmail({ unsubscribeUrl, siteUrl }) {

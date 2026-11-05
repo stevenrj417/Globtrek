@@ -1,5 +1,14 @@
 # Changelog
 
+## Book everything with CJ tracking (2026-11-04)
+
+- Every Booking.com link (hotels, flights, attractions) now leaves through GlobTrek's CJ click URL, enforced in one module (`app/lib/booking/cj.js`) and re-checked for the trip email and `/book`.
+- Hotels without an exact Booking.com page fall back to a CJ Booking.com search for that hotel, pre-filled with dates and party; bare property links get dates and party added.
+- Paid activities go to CJ Booking.com Attractions (exact page when known, otherwise a search for the activity in the trip's city). Free places keep their own page. Each keeps its official link.
+- Dinners open the restaurant's own booking page; OpenTable gets the party size. CJ has no restaurant program in this account, so dinners carry no commission.
+- New `/book` page ("Book everything"): one button opens every booking in its own tab; links travel in the URL and are re-validated. The trip email links to it at the top and bottom.
+- Blocked-tab guidance on results and `/book` explains how to allow pop-ups so one click opens everything.
+
 ## Brand, contact and legal details (2026-11-02)
 
 - Booking.com logo beside Booking.com mentions (owner-confirmed permission).

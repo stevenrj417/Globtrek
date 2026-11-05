@@ -5,12 +5,12 @@ import { EmailSignup } from "./components/EmailSignup";
 import { TripCard } from "./components/TripCard";
 import { trendingTrips } from "./data/trending";
 import { formatMoney } from "./lib/recommendation/tripEstimate";
-import { BookingLogo } from "./components/PartnerLogo";
+import { BookingLogo, BookingPartnerBadge } from "./components/PartnerLogo";
 
 const steps = [
   ["01", "Answer 7 quick questions", "Setting, pace, budget and when you can go."],
   ["02", "Get one trip that fits", "A destination, stays and things to do, inside your budget."],
-  ["03", "Book on partner sites", <>Stays on <BookingLogo className="mx-0.5 h-3 w-auto" /> and other partners. Your price doesn&apos;t change.</>],
+  ["03", "Book with our travel partners", <>GlobTrek is a <BookingLogo className="mx-0.5 h-3 w-auto" /> affiliate partner. Check live prices and book on the partner&apos;s site.</>],
 ];
 
 const vibes = [
@@ -46,6 +46,13 @@ export default function Home() {
             <Link href="/discover" className="btn btn-primary mt-6">Find your trip <span aria-hidden="true">→</span></Link>
             <p className="mt-3 text-xs text-white/90">A few quick questions. One affordable trip.</p>
           </div>
+        </div>
+      </section>
+
+      <section aria-label="Booking partner" className="border-t border-black/10 bg-surface py-5">
+        <div className="mx-auto flex max-w-[1520px] flex-col items-center justify-center gap-2 px-5 text-center sm:flex-row sm:gap-5 sm:px-8">
+          <BookingPartnerBadge />
+          <p className="text-xs leading-5 text-muted">Plan with GlobTrek. Check live stays and complete your reservation on Booking.com.</p>
         </div>
       </section>
 

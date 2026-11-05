@@ -1,3 +1,5 @@
+import { cjActivitySearchUrl, cjHotelSearchUrl, ensureCjTracking, isBookingComUrl, isCjUrl } from "./cj.js";
+
 function httpsUrl(value) {
   if (typeof value !== "string" || !value.trim()) return null;
   try {
@@ -37,6 +39,56 @@ export function hotelBookingUrl(item, exactPropertyUrl = null) {
     || exactGoogleMapsUrl(item);
 }
 
+// Booking.com property pages accept dates and party size in the URL; add any that are missing.
+function withStayDetails(value, { dates, travelers }) {
+  const url = new URL(value);
+  if (dates?.start && dates?.end && dates.end >= dates.start && !url.searchParams.has("checkin")) {
+    url.searchParams.set("checkin", dates.start);
+    url.searchParams.set("checkout", dates.end);
+  }
+  const adults = Number(travelers?.adults) || Number(travelers?.total) || 0;
+  if (adults > 0 && !url.searchParams.has("group_adults")) url.searchParams.set("group_adults", String(Math.min(30, adults)));
+  if (!url.searchParams.has("no_rooms")) url.searchParams.set("no_rooms", "1");
+  if (!url.searchParams.has("group_children")) url.searchParams.set("group_children", String(Math.max(0, Number(travelers?.children) || 0)));
+  return url.toString();
+}
+
+// Every hotel leaves through GlobTrek's CJ link: the exact Booking.com property when
+// known, otherwise a Booking.com search for that hotel pre-filled with dates and party.
+function affiliateHotelUrl(hotel, exactPropertyUrl, context) {
+  const exact = httpsUrl(exactPropertyUrl);
+  if (exact && isCjUrl(exact)) return exact;
+  if (exact && isBookingComUrl(exact)) return ensureCjTracking(withStayDetails(exact, context));
+  const provider = hotel?.providerLinkVerified ? httpsUrl(hotel?.providerUrl) : null;
+  if (provider && isBookingComUrl(provider)) return ensureCjTracking(withStayDetails(provider, context));
+  return cjHotelSearchUrl(hotel?.name, context.destination, context) || exact || provider || exactGoogleMapsUrl(hotel);
+}
+
+// Free places (parks, viewpoints) have nothing to book, so they keep their own page.
+// Anything with a cost goes to Booking.com Attractions through GlobTrek's CJ link.
+function isFreeExperience(item) {
+  return item?.isFree === true || (item?.estimatedCostHigh != null && Number(item.estimatedCostHigh) === 0);
+}
+
+function affiliateExperienceUrl(item, destination) {
+  const original = experienceBookingUrl(item);
+  if (isFreeExperience(item)) return original;
+  if (original && (isCjUrl(original) || isBookingComUrl(original))) return ensureCjTracking(original);
+  return cjActivitySearchUrl(item?.name, destination) || original;
+}
+
+// OpenTable accepts the party size in the URL; other restaurant sites are left as they are.
+function prefilledRestaurantUrl(item, travelers) {
+  const original = restaurantBookingUrl(item);
+  if (!original) return null;
+  const url = new URL(original);
+  if (/(^|\.)opentable\.[a-z.]+$/i.test(url.hostname) && !url.searchParams.has("covers")) {
+    const party = Number(travelers?.total) || Number(travelers?.adults) || 0;
+    if (party > 0) url.searchParams.set("covers", String(Math.min(20, party)));
+  }
+  return url.toString();
+}
+
 function compactBooking(item, type, exactUrl, extra = {}) {
   if (!item || !exactUrl) return null;
   return {
@@ -66,18 +118,21 @@ export function buildBookingManifest({
   flight = null,
   flightDeepLink = null,
 } = {}) {
-  const hotelBookings = hotels.map((hotel, index) => compactBooking(hotel, "hotel", hotelBookingUrl(hotel, hotelExactUrls[index]), {
+  const context = { destination, dates, travelers };
+  const hotelBookings = hotels.map((hotel, index) => compactBooking(hotel, "hotel", affiliateHotelUrl(hotel, hotelExactUrls[index], context), {
     affiliateUrl: httpsUrl(hotelExactUrls[index]),
     photoUrl: httpsUrl(hotel.photoUrl || hotel.imageUrl || hotel.image),
     priceEstimate: hotel.priceEstimate || (Number.isFinite(Number(hotel.estimatedStayLow)) && Number.isFinite(Number(hotel.estimatedStayHigh)) ? `${hotel.currency || "USD"} ${Math.round(Number(hotel.estimatedStayLow)).toLocaleString("en-US")}–${Math.round(Number(hotel.estimatedStayHigh)).toLocaleString("en-US")} estimated` : null),
   })).filter(Boolean);
-  const restaurantBookings = restaurants.map((restaurant) => compactBooking(restaurant, "restaurant", restaurantBookingUrl(restaurant), {
+  const restaurantBookings = restaurants.map((restaurant) => compactBooking(restaurant, "restaurant", prefilledRestaurantUrl(restaurant, travelers), {
     reservationTime: restaurant.reservationTime || restaurant.time || null,
   })).filter(Boolean);
-  const experienceBookings = experiences.map((experience) => compactBooking(experience, "experience", experienceBookingUrl(experience), {
+  const experienceBookings = experiences.map((experience) => compactBooking(experience, "experience", affiliateExperienceUrl(experience, destination), {
+    officialUrl: experienceBookingUrl(experience),
     scheduledAt: experience.scheduledAt || experience.dateTime || null,
   })).filter(Boolean);
-  const deepLink = flight?.selected ? httpsUrl(flightDeepLink) : null;
+  const rawFlight = flight?.selected ? httpsUrl(flightDeepLink) : null;
+  const deepLink = rawFlight && (isCjUrl(rawFlight) || isBookingComUrl(rawFlight)) ? ensureCjTracking(rawFlight) : rawFlight;
   const flightBooking = flight?.selected && deepLink ? {
     type: "flight",
     name: `${flight.origin} → ${flight.destination}`,

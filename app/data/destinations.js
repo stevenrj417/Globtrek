@@ -168,17 +168,9 @@ export function scoreDestination(destination, answers) {
   return tagScore + discoveryScore;
 }
 
-export const bookingLinks = {
-  stays: "https://www.kqzyfj.com/click-101801755-17293132",
-  flights: "https://www.dpbolvw.net/click-101801755-17288982",
-  activities: "https://www.dpbolvw.net/click-101801755-17288984",
-  cars: "https://www.dpbolvw.net/click-101801755-17314628",
-  taxis: "https://www.dpbolvw.net/click-101801755-17322565",
-};
+export const bookingLinks = CJ_LINKS;
 
-function trackedUrl(clickUrl, targetUrl) {
-  return `${clickUrl}?url=${encodeURIComponent(targetUrl)}`;
-}
+const trackedUrl = cjTracked;
 
 function travelerCount(trip) {
   const count = Number.parseInt(trip?.guestCount, 10);
@@ -230,8 +222,7 @@ export function bookingPropertyUrl(hotel, trip = {}) {
   let clickUrl = bookingLinks.stays;
   try {
     const candidate = new URL(hotel.cjTrackingBaseUrl || bookingLinks.stays);
-    const cjHosts = ["kqzyfj.com", "dpbolvw.net", "anrdoezrs.net", "jdoqocy.com", "tkqlhce.com", "qksrv.net"];
-    if (candidate.protocol === "https:" && cjHosts.some((host) => candidate.hostname === host || candidate.hostname.endsWith(`.${host}`))) clickUrl = candidate.toString().replace(/\/$/, "");
+    if (candidate.protocol === "https:" && CJ_HOSTS.some((host) => candidate.hostname === host || candidate.hostname.endsWith(`.${host}`))) clickUrl = candidate.toString().replace(/\/$/, "");
   } catch {}
   return trackedUrl(clickUrl, target.toString());
 }
@@ -282,3 +273,4 @@ import verifiedBatch02 from "../../scripts/destinations/verified-batch-02.json" 
 import verifiedBatch03 from "../../scripts/destinations/verified-batch-03.json" with { type: "json" };
 import verifiedBatch04 from "../../scripts/destinations/verified-batch-04.json" with { type: "json" };
 import { enrichDestinationIntelligence } from "./destinationIntelligence.js";
+import { CJ_HOSTS, CJ_LINKS, cjTracked } from "../lib/booking/cj.js";

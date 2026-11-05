@@ -1,4 +1,5 @@
 import { EditorialPage, EditorialSection } from "../components/EditorialPage";
+import { BookingPartnerBadge } from "../components/PartnerLogo";
 
 export const metadata = {
   title: "Affiliate disclosure",
@@ -10,11 +11,12 @@ export default function AffiliateDisclosurePage() {
     <EditorialPage updated="2026-08-12"
       eyebrow="Affiliate disclosure"
       title="A clear route to booking."
-      intro="Some links on GlobTrek may be affiliate links. That relationship should be understandable before you leave the site."
+      intro="GlobTrek participates in the Booking.com Affiliate Partner Program. We make that relationship clear before you leave the site."
     >
-      <EditorialSection number="01" title="How affiliate links work">
+      <BookingPartnerBadge className="mb-12" />
+      <EditorialSection number="01" title="Our Booking.com relationship">
         <p>
-          GlobTrek may receive compensation when a traveler follows an eligible link and completes a qualifying action or booking with an external provider. Compensation supports the product and does not turn GlobTrek into the booking provider.
+          GlobTrek is a Booking.com affiliate partner. We may receive a commission when a traveler follows an eligible Booking.com link and completes a qualifying booking. Compensation supports GlobTrek and does not turn GlobTrek into the booking provider.
         </p>
       </EditorialSection>
       <EditorialSection number="02" title="Pricing and decisions">

@@ -5,6 +5,7 @@ import { DestinationSearch } from "./DestinationSearch";
 import { ProductMenu } from "./ProductMenu";
 import { CurrentYear, MobileMenu, NavLinks, StickyHeader } from "./HeaderClient";
 import { CONTACT_EMAIL, INSTAGRAM_URL, LEGAL_NAME } from "../lib/site";
+import { BookingPartnerBadge } from "./PartnerLogo";
 
 const navigation = [["Trips", "/#trips"], ["Quiz", "/discover"], ["Destinations", "/destinations"], ["How it works", "/how-it-works"], ["About", "/about"]];
 
@@ -45,6 +46,7 @@ export function SiteFooter() {
           <div>
             <BrandWordmark className="text-3xl font-bold tracking-tight-4 sm:text-4xl" />
             <p className="mt-5 max-w-md text-sm leading-6 text-muted">A few quick questions. One affordable trip.</p>
+            <BookingPartnerBadge className="mt-5" />
             <ul className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted">
               <li><a href={INSTAGRAM_URL} rel="me noopener" className="inline-flex min-h-11 items-center gap-2 transition-colors duration-150 hover:text-ink"><svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4 fill-none stroke-current" strokeWidth="1.6"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" /></svg>Instagram</a></li>
               {CONTACT_EMAIL ? <li><a href={`mailto:${CONTACT_EMAIL}`} className="inline-flex min-h-11 items-center transition-colors duration-150 hover:text-ink">{CONTACT_EMAIL}</a></li> : null}
@@ -64,7 +66,7 @@ export function SiteFooter() {
         <div className="mt-12 flex flex-col gap-3 border-t border-black/10 pt-6 text-xs leading-5 text-subtle sm:flex-row sm:items-start sm:justify-between">
           <p className="tabular">© <CurrentYear /> {LEGAL_NAME}</p>
           <p className="max-w-2xl sm:text-right">
-            GlobTrek may earn a commission when you book through partner links. Your price doesn&apos;t change. <Link href="/affiliate-disclosure" className="underline decoration-black/25 hover:decoration-black">How this works</Link>
+            GlobTrek is a Booking.com affiliate partner and may earn a commission on qualifying bookings. Your price doesn&apos;t change. <Link href="/affiliate-disclosure" className="underline decoration-black/25 hover:decoration-black">How this works</Link>
           </p>
         </div>
       </div>

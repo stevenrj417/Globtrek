@@ -11,6 +11,14 @@ import {
 const destination = { city: "Mexico City", country: "Mexico", airport: "MEX" };
 const flight = { selected: true, origin: "PDX", destination: "MEX", departureDate: "2026-03-14", returnDate: "2026-03-23", adults: 2, children: 1, cabin: "ECONOMY", preferredDeparture: "morning" };
 
+// Booking.com links leave through GlobTrek's CJ click URL; check both layers.
+function cjTarget(value, program) {
+  const outer = new URL(value);
+  assert.match(outer.hostname, /(kqzyfj|dpbolvw)\.(com|net)$/, `expected a CJ link, got ${value}`);
+  if (program) assert.match(outer.pathname, new RegExp(`click-101801755-${program}$`));
+  return decodeURIComponent(outer.searchParams.get("url"));
+}
+
 function manifest(overrides = {}) {
   return buildBookingManifest({ tripId: "mex:current", destination, dates: { start: "2026-03-14", end: "2026-03-23" }, travelers: { adults: 2, children: 1, total: 3 }, ...overrides });
 }
@@ -18,7 +26,11 @@ function manifest(overrides = {}) {
 test("hotel-only manifest contains only the exact property action", () => {
   const result = manifest({ hotels: [{ id: "h1", name: "Casa Polanco" }], hotelExactUrls: ["https://www.booking.com/hotel/mx/casa-polanco.html"] });
   assert.deepEqual(bookingManifestEntries(result).map((item) => item.type), ["hotel"]);
-  assert.match(result.hotelBookings[0].exactUrl, /booking\.com\/hotel\/mx\/casa-polanco/);
+  const target = new URL(cjTarget(result.hotelBookings[0].exactUrl, "17293132"));
+  assert.equal(target.pathname, "/hotel/mx/casa-polanco.html");
+  assert.equal(target.searchParams.get("checkin"), "2026-03-14");
+  assert.equal(target.searchParams.get("checkout"), "2026-03-23");
+  assert.equal(target.searchParams.get("group_adults"), "2");
 });
 
 test("flight-only manifest transfers route, dates, party, cabin, and preference", () => {
@@ -26,7 +38,7 @@ test("flight-only manifest transfers route, dates, party, cabin, and preference"
   assert.deepEqual(bookingManifestEntries(result).map((item) => item.type), ["flight"]);
   assert.equal(result.flightBooking.preferredDeparture, "morning");
   assert.equal(result.flightBooking.children, 1);
-  assert.match(result.flightBooking.deepLink, /depart=2026-03-14/);
+  assert.match(cjTarget(result.flightBooking.deepLink, "17288982"), /depart=2026-03-14/);
 });
 
 test("an unselected flight never leaks into restaurant-only booking", () => {
@@ -63,14 +75,50 @@ test("hotel plus flight yields exactly two actions", () => {
   assert.deepEqual(bookingManifestEntries(result).map((item) => item.type), ["hotel", "flight"]);
 });
 
-test("hotel falls back only to an exact Google property identity", () => {
+test("a hotel without an exact page falls back to a pre-filled CJ Booking.com search for it", () => {
   const result = manifest({ hotels: [{ name: "Casa Polanco", googlePlaceId: "ChIJhotelExact" }] });
-  assert.match(result.hotelBookings[0].exactUrl, /query_place_id=ChIJhotelExact/);
+  const target = new URL(cjTarget(result.hotelBookings[0].exactUrl, "17293132"));
+  assert.equal(target.pathname, "/searchresults.html");
+  assert.equal(target.searchParams.get("ss"), "Casa Polanco, Mexico City, Mexico");
+  assert.equal(target.searchParams.get("checkin"), "2026-03-14");
+  assert.equal(target.searchParams.get("checkout"), "2026-03-23");
+  assert.equal(target.searchParams.get("group_adults"), "2");
+  assert.equal(target.searchParams.get("group_children"), "1");
 });
 
-test("missing unverified links are omitted rather than invented", () => {
+test("paid experiences go to CJ Booking.com Attractions; free places keep their own page", () => {
+  const result = manifest({ experiences: [
+    { name: "Lucha Libre night", officialWebsiteUrl: "https://cmll.example/tickets", estimatedCostHigh: 40 },
+    { name: "Chapultepec Park", officialWebsiteUrl: "https://chapultepec.example/", estimatedCostHigh: 0 },
+  ] });
+  const [paid, free] = result.experienceBookings;
+  assert.equal(new URL(cjTarget(paid.exactUrl, "17288984")).searchParams.get("query"), "Lucha Libre night, Mexico City");
+  assert.equal(paid.officialUrl, "https://cmll.example/tickets");
+  assert.equal(free.exactUrl, "https://chapultepec.example/");
+});
+
+test("every Booking.com link in a manifest carries CJ tracking", () => {
+  const result = manifest({
+    hotels: [{ name: "A" }, { name: "B", providerLinkVerified: true, providerUrl: "https://www.booking.com/hotel/mx/b.html" }],
+    hotelExactUrls: ["https://www.booking.com/hotel/mx/a.html"],
+    experiences: [{ name: "Tour", bookingUrl: "https://www.booking.com/attractions/mx/tour.html" }],
+    flight,
+    flightDeepLink: "https://flights.booking.com/flights/PDX.AIRPORT-MEX.AIRPORT/",
+  });
+  for (const entry of bookingManifestEntries(result)) assert.ok(cjTarget(entry.exactUrl).includes("booking.com"), entry.name);
+});
+
+test("OpenTable dinners are pre-filled with the party size", () => {
+  const result = manifest({ restaurants: [{ name: "Rosetta", bookingUrl: "https://www.opentable.com/r/rosetta" }] });
+  assert.equal(new URL(result.restaurantBookings[0].exactUrl).searchParams.get("covers"), "3");
+});
+
+test("unverified provider links are never used, and linkless restaurants are omitted", () => {
   const result = manifest({ hotels: [{ name: "Unknown Hotel", providerUrl: "https://provider.test/hotel", providerLinkVerified: false }], restaurants: [{ name: "No Link" }] });
-  assert.equal(bookingManifestEntries(result).length, 0);
+  const entries = bookingManifestEntries(result);
+  assert.deepEqual(entries.map((item) => item.type), ["hotel"]);
+  assert.doesNotMatch(entries[0].exactUrl, /provider\.test/);
+  assert.match(cjTarget(entries[0].exactUrl, "17293132"), /ss=Unknown\+Hotel/);
 });
 
 test("popup blocker returns individual fallback actions", () => {
@@ -153,7 +201,7 @@ test("Austin acceptance opens hotel, Caroline, Zilker, and flight synchronously 
     hotels: [{ name: "Austin Proper Hotel" }],
     hotelExactUrls: ["https://www.booking.com/hotel/us/austin-proper.html"],
     restaurants: [{ name: "Caroline", officialReservationUrl: "https://www.opentable.com/r/caroline-reservations-austin?restref=732061", officialWebsiteUrl: "https://www.carolinerestaurant.com/caroline" }],
-    experiences: [{ name: "Zilker Metropolitan Park", officialWebsiteUrl: "https://www.austintexas.gov/department/zilker-metropolitan-park", provider: "official" }],
+    experiences: [{ name: "Zilker Metropolitan Park", officialWebsiteUrl: "https://www.austintexas.gov/department/zilker-metropolitan-park", provider: "official", estimatedCostHigh: 0 }],
     flight: { selected: true, origin: "PDX", destination: "AUS", departureDate: "2026-10-10", returnDate: "2026-10-14", adults: 2, children: 0, cabin: "ECONOMY", preferredDeparture: "morning" },
     flightDeepLink: "https://flights.booking.com/flights/PDX.AIRPORT-AUS.AIRPORT/?type=ROUNDTRIP&cabinClass=ECONOMY&adults=2&children=0&depart=2026-10-10&return=2026-10-14",
   });
@@ -169,8 +217,8 @@ test("Austin acceptance opens hotel, Caroline, Zilker, and flight synchronously 
   assert.equal(launched.opened.length, 4);
   assert.deepEqual(launched.blocked, []);
   assert.equal(originalGlobTrekLocation, "https://www.glob-trek.com/results");
-  assert.match(destinations[0], /booking\.com\/hotel\/us\/austin-proper/);
+  assert.match(cjTarget(destinations[0], "17293132"), /booking\.com\/hotel\/us\/austin-proper/);
   assert.match(destinations[1], /opentable\.com\/r\/caroline-reservations-austin/);
   assert.match(destinations[2], /austintexas\.gov\/department\/zilker-metropolitan-park/);
-  assert.match(destinations[3], /PDX\.AIRPORT-AUS\.AIRPORT/);
+  assert.match(cjTarget(destinations[3], "17288982"), /PDX\.AIRPORT-AUS\.AIRPORT/);
 });
