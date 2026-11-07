@@ -1224,6 +1224,414 @@ export const LAUNCH_DATA = {
         "https://www.detaileddrivers.com/blog/lax-airport-car-service-los-angeles-transportation-guide"
       ]
     }
+  },
+  "palm-springs-76868": {
+    "verified": "2026-11-08",
+    "hotels": [
+      {
+        "id": "ps-the-palm-springs-hotel",
+        "name": "The Palm Springs Hotel",
+        "bookingUrl": "https://www.booking.com/hotel/us/the-palm-springs.html",
+        "address": "2135 North Palm Canyon Drive, Palm Springs, CA 92262",
+        "neighborhood": "North Palm Canyon",
+        "priceTier": "budget",
+        "rating": 8.6,
+        "reviewCount": 322,
+        "ratingSource": "Booking.com",
+        "note": "Small pool hotel on North Palm Canyon Drive"
+      },
+      {
+        "id": "ps-7-springs-inn",
+        "name": "7 Springs Inn & Suites",
+        "bookingUrl": "https://www.booking.com/hotel/us/7-springs-inn-suites.html",
+        "address": "950 North Indian Canyon Drive, Palm Springs, CA 92262",
+        "neighborhood": "Downtown",
+        "priceTier": "budget",
+        "rating": 7.9,
+        "reviewCount": 719,
+        "ratingSource": "Booking.com",
+        "note": "Walkable to downtown Palm Canyon Drive"
+      },
+      {
+        "id": "ps-adara",
+        "name": "Adara Palm Springs",
+        "bookingUrl": "https://www.booking.com/hotel/us/palm-canyon-inn.html",
+        "address": "1450 South Palm Canyon Drive, Palm Springs, CA 92264",
+        "neighborhood": "South Palm Canyon",
+        "priceTier": "budget",
+        "rating": 7.6,
+        "reviewCount": 928,
+        "ratingSource": "Booking.com",
+        "note": "Motel-style rooms near Moorten Botanical Garden"
+      },
+      {
+        "id": "ps-motel6-east",
+        "name": "Motel 6-Palm Springs, CA - East - Palm Canyon",
+        "bookingUrl": "https://www.booking.com/hotel/us/motel-6-palm-springs-east.html",
+        "address": "595 East Palm Canyon Drive, Palm Springs, CA 92264",
+        "neighborhood": "East Palm Canyon",
+        "priceTier": "budget",
+        "rating": 7.0,
+        "reviewCount": 1369,
+        "ratingSource": "Booking.com",
+        "note": "The cheapest dependable option; you'll want a car or rideshare"
+      }
+    ],
+    "gallery": [
+      {
+        "src": "https://images.unsplash.com/photo-1574876999742-a8be3a43f151",
+        "alt": "A midcentury house and palms below the mountains in Palm Springs",
+        "credit": "Unsplash"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1606608503505-679bda1b80fa",
+        "alt": "Palm tree silhouettes at sunset in Palm Springs",
+        "credit": "Justin Scocchio, Unsplash"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1621881806763-1b8128f374a7",
+        "alt": "The Palm Springs welcome sign on Gene Autry Trail",
+        "credit": "Unsplash"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1554094830-addc7e887420",
+        "alt": "The San Jacinto mountains rising above Palm Springs",
+        "credit": "Jocelynne Flor, Unsplash"
+      }
+    ],
+    "dinners": [
+      {
+        "name": "Tyler's Burgers",
+        "address": "149 S Indian Canyon Dr #6603, Palm Springs, CA 92262, USA",
+        "latitude": 33.8220583,
+        "longitude": -116.54581050000002,
+        "rating": 4.5,
+        "reviewCount": 912,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJOz5mMKQb24ARTz06DFT-TOo",
+        "googleMapsUri": "https://maps.google.com/?cid=16883148740040998223",
+        "officialWebsiteUrl": null,
+        "hours": [
+          "Monday: 11:00 AM – 4:00 PM",
+          "Tuesday: 11:00 AM – 4:00 PM",
+          "Wednesday: 11:00 AM – 4:00 PM",
+          "Thursday: 11:00 AM – 4:00 PM",
+          "Friday: 11:00 AM – 4:00 PM",
+          "Saturday: 11:00 AM – 4:00 PM",
+          "Sunday: Closed"
+        ],
+        "id": "ps-tyler-s-burgers",
+        "priceLevel": 1,
+        "order": "Small downtown burger stand; the classic cheeseburger",
+        "reservations": "walk-in",
+        "reservable": false
+      },
+      {
+        "name": "Sherman's Deli & Bakery",
+        "address": "401 E Tahquitz Canyon Way, Palm Springs, CA 92262, USA",
+        "latitude": 33.8228084,
+        "longitude": -116.5432257,
+        "rating": 4.6,
+        "reviewCount": 8311,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJRUUb86Mb24AR-oX7cZzXKZ8",
+        "googleMapsUri": "https://maps.google.com/?cid=11468934993002857978",
+        "officialWebsiteUrl": "https://shermansdeli.com/",
+        "hours": [
+          "Monday: 8:00 AM – 9:00 PM",
+          "Tuesday: 8:00 AM – 9:00 PM",
+          "Wednesday: 8:00 AM – 9:00 PM",
+          "Thursday: 8:00 AM – 9:00 PM",
+          "Friday: 8:00 AM – 9:00 PM",
+          "Saturday: 8:00 AM – 9:00 PM",
+          "Sunday: 8:00 AM – 9:00 PM"
+        ],
+        "id": "ps-sherman-s-deli-bakery",
+        "priceLevel": 2,
+        "order": "Jewish deli and bakery; pastrami and big desserts",
+        "reservations": "walk-in",
+        "reservable": false
+      },
+      {
+        "name": "El Mirasol Cocina Mexicana",
+        "address": "140 E Palm Canyon Dr, Palm Springs, CA 92264, USA",
+        "latitude": 33.8029073,
+        "longitude": -116.54533239999998,
+        "rating": 4.4,
+        "reviewCount": 1284,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJseLlBxEb24ARaqn7OrfwFZU",
+        "googleMapsUri": "https://maps.google.com/?cid=10742757155921439082",
+        "officialWebsiteUrl": "https://www.elmirasolrest.com/",
+        "hours": [
+          "Monday: 9:00 AM – 9:00 PM",
+          "Tuesday: 9:00 AM – 9:00 PM",
+          "Wednesday: 9:00 AM – 9:00 PM",
+          "Thursday: 9:30 AM – 9:00 PM",
+          "Friday: 9:00 AM – 9:00 PM",
+          "Saturday: 9:00 AM – 9:00 PM",
+          "Sunday: 9:00 AM – 9:00 PM"
+        ],
+        "id": "ps-el-mirasol-cocina-mexicana",
+        "priceLevel": 2,
+        "order": "Mexican plates on Palm Canyon Drive",
+        "reservations": "reservations",
+        "reservable": true
+      },
+      {
+        "name": "Rick's Restaurant",
+        "address": "1596 N Palm Canyon Dr, Palm Springs, CA 92262, USA",
+        "latitude": 33.844581999999996,
+        "longitude": -116.5462862,
+        "rating": 4.5,
+        "reviewCount": 2268,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJva4xxNob24ARDv-81gl39e4",
+        "googleMapsUri": "https://maps.google.com/?cid=17218799634462080782",
+        "officialWebsiteUrl": "https://ricksrestaurantps.com/",
+        "hours": [
+          "Monday: 7:00 AM – 2:00 PM",
+          "Tuesday: 7:00 AM – 2:00 PM",
+          "Wednesday: 7:00 AM – 2:00 PM",
+          "Thursday: 7:00 AM – 2:00 PM",
+          "Friday: 7:00 AM – 2:00 PM",
+          "Saturday: 7:00 AM – 2:00 PM",
+          "Sunday: 7:00 AM – 2:00 PM"
+        ],
+        "id": "ps-rick-s-restaurant",
+        "priceLevel": 2,
+        "order": "Diner breakfasts and Cuban-American plates",
+        "reservations": "walk-in",
+        "reservable": false
+      },
+      {
+        "name": "Lulu California Bistro",
+        "address": "200 S Palm Canyon Dr, Palm Springs, CA 92262, USA",
+        "latitude": 33.8211496,
+        "longitude": -116.5466699,
+        "rating": 4.2,
+        "reviewCount": 5463,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJl5TL1KUb24ARBx95Q9G14ag",
+        "googleMapsUri": "https://maps.google.com/?cid=12169207578516594439",
+        "officialWebsiteUrl": "https://lulupalmsprings.com/?utm_source=googlemybusiness",
+        "hours": [
+          "Monday: 11:00 AM – 9:00 PM",
+          "Tuesday: 11:00 AM – 9:00 PM",
+          "Wednesday: 11:00 AM – 9:00 PM",
+          "Thursday: 11:00 AM – 9:00 PM",
+          "Friday: 11:00 AM – 10:00 PM",
+          "Saturday: 9:00 AM – 10:00 PM",
+          "Sunday: 9:00 AM – 9:00 PM"
+        ],
+        "id": "ps-lulu-california-bistro",
+        "priceLevel": null,
+        "order": "Big menu and a patio on Palm Canyon Drive",
+        "reservations": "reservations",
+        "reservable": true
+      },
+      {
+        "name": "Townie Bagels | Bakery | Cafe",
+        "address": "650 E Sunny Dunes Rd #5, Palm Springs, CA 92264, USA",
+        "latitude": 33.8124008,
+        "longitude": -116.54153400000001,
+        "rating": 4.5,
+        "reviewCount": 1085,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJw9NJIGgb24ARaHkW5nDanTs",
+        "googleMapsUri": "https://maps.google.com/?cid=4295829798012746088",
+        "officialWebsiteUrl": "https://towniebagels.com/",
+        "hours": [
+          "Monday: 6:30 AM – 12:00 PM",
+          "Tuesday: Closed",
+          "Wednesday: 6:30 AM – 12:00 PM",
+          "Thursday: 6:30 AM – 12:00 PM",
+          "Friday: 6:30 AM – 12:00 PM",
+          "Saturday: 6:30 AM – 12:00 PM",
+          "Sunday: 6:30 AM – 12:00 PM"
+        ],
+        "id": "ps-townie-bagels-bakery-cafe",
+        "priceLevel": 1,
+        "order": "Bagels and breakfast sandwiches",
+        "reservations": "walk-in",
+        "reservable": false
+      }
+    ],
+    "activities": [
+      {
+        "name": "Palm Springs Aerial Tramway",
+        "address": "1 Tramway Rd, Palm Springs, CA 92262, USA",
+        "latitude": 33.8370537,
+        "longitude": -116.6141062,
+        "rating": 4.8,
+        "reviewCount": 16222,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJkyV_kOkQ24AR-W2beczJ7Jg",
+        "googleMapsUri": "https://maps.google.com/?cid=11019404268319501817",
+        "officialWebsiteUrl": "https://pstramway.com/",
+        "hours": [
+          "Monday: 10:00 AM – 8:00 PM",
+          "Tuesday: 10:00 AM – 8:00 PM",
+          "Wednesday: 10:00 AM – 8:00 PM",
+          "Thursday: 10:00 AM – 8:00 PM",
+          "Friday: 10:00 AM – 8:00 PM",
+          "Saturday: 8:00 AM – 8:00 PM",
+          "Sunday: 8:00 AM – 8:00 PM"
+        ],
+        "id": "ps-palm-springs-aerial-tramway",
+        "estimatedCostLow": 35,
+        "estimatedCostHigh": 40,
+        "isFree": false,
+        "payAtGate": false,
+        "durationMinutes": 150,
+        "category": "views",
+        "description": "Rotating cable car to about 8,500 feet on Mount San Jacinto; closes for maintenance each fall"
+      },
+      {
+        "name": "Indian Canyons",
+        "address": "38520 S Palm Canyon Dr, Palm Springs, CA 92264, USA",
+        "latitude": 33.7296213,
+        "longitude": -116.5513788,
+        "rating": 4.5,
+        "reviewCount": 1160,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJt3KFQ8gE24ARncAVlLdqzSQ",
+        "googleMapsUri": "https://maps.google.com/?cid=2651893092287103133",
+        "officialWebsiteUrl": "http://www.indian-canyons.com/",
+        "hours": [
+          "Monday: 8:00 AM – 5:00 PM",
+          "Tuesday: 8:00 AM – 5:00 PM",
+          "Wednesday: 8:00 AM – 5:00 PM",
+          "Thursday: 8:00 AM – 5:00 PM",
+          "Friday: 8:00 AM – 5:00 PM",
+          "Saturday: 8:00 AM – 5:00 PM",
+          "Sunday: 8:00 AM – 5:00 PM"
+        ],
+        "id": "ps-indian-canyons",
+        "estimatedCostLow": 11,
+        "estimatedCostHigh": 12,
+        "isFree": false,
+        "payAtGate": true,
+        "durationMinutes": 180,
+        "category": "nature",
+        "description": "Palm oases and trails on Agua Caliente land; pay at the toll gate"
+      },
+      {
+        "name": "Forever Marilyn",
+        "address": "Museum Wy, Palm Springs, CA 92262, USA",
+        "latitude": 33.8243772,
+        "longitude": -116.5481635,
+        "rating": 4.8,
+        "reviewCount": 2045,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJDc81Qmgb24ARVd4lu14D2lk",
+        "googleMapsUri": "https://maps.google.com/?cid=6474491119700139605",
+        "officialWebsiteUrl": "https://www.ps-resorts.com/forever-marilyn",
+        "hours": [],
+        "id": "ps-forever-marilyn",
+        "estimatedCostLow": 0,
+        "estimatedCostHigh": 0,
+        "isFree": true,
+        "payAtGate": false,
+        "durationMinutes": 15,
+        "category": "sights",
+        "description": "Giant Marilyn Monroe statue downtown"
+      },
+      {
+        "name": "Moorten Botanical Garden",
+        "address": "1701 S Palm Canyon Dr, Palm Springs, CA 92264, USA",
+        "latitude": 33.800232,
+        "longitude": -116.5461732,
+        "rating": 4.6,
+        "reviewCount": 746,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJXw0fKxEb24ARQ7KaZzMEpi0",
+        "googleMapsUri": "https://maps.google.com/?cid=3289321196668760643",
+        "officialWebsiteUrl": "http://www.moortenbotanicalgarden.com/",
+        "hours": [
+          "Monday: 10:00 AM – 4:00 PM",
+          "Tuesday: 10:00 AM – 4:00 PM",
+          "Wednesday: Closed",
+          "Thursday: 10:00 AM – 4:00 PM",
+          "Friday: 10:00 AM – 4:00 PM",
+          "Saturday: 10:00 AM – 4:00 PM",
+          "Sunday: 10:00 AM – 4:00 PM"
+        ],
+        "id": "ps-moorten-botanical-garden",
+        "estimatedCostLow": 5,
+        "estimatedCostHigh": 7,
+        "isFree": false,
+        "payAtGate": true,
+        "durationMinutes": 45,
+        "category": "garden",
+        "description": "Cactus garden and cactarium; closed Wednesdays"
+      },
+      {
+        "name": "Ruth Hardy Park",
+        "address": "700 Tamarisk Rd, Palm Springs, CA 92262, USA",
+        "latitude": 33.834994,
+        "longitude": -116.53899340000001,
+        "rating": 4.6,
+        "reviewCount": 1320,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJJVoBSb4b24AR17sQrBXrItM",
+        "googleMapsUri": "https://maps.google.com/?cid=15213980969524575191",
+        "officialWebsiteUrl": "https://www.palmspringsca.gov/government/departments/parks-recreation/parks-facilities/ruth-hardy-park",
+        "hours": [],
+        "id": "ps-ruth-hardy-park",
+        "estimatedCostLow": 0,
+        "estimatedCostHigh": 0,
+        "isFree": true,
+        "payAtGate": false,
+        "durationMinutes": 45,
+        "category": "park",
+        "description": "Shady city park with mountain views"
+      },
+      {
+        "name": "Palm Springs Visitor Center",
+        "address": "2901 N Palm Canyon Dr, Palm Springs, CA 92262, USA",
+        "latitude": 33.8583692,
+        "longitude": -116.5581897,
+        "rating": 4.5,
+        "reviewCount": 1305,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJ-490KH8Z24AR3O7mZPHUQzo",
+        "googleMapsUri": "https://maps.google.com/?cid=4198433410884497116",
+        "officialWebsiteUrl": "http://www.visitpalmsprings.com/",
+        "hours": [],
+        "id": "ps-palm-springs-visitor-center",
+        "estimatedCostLow": 0,
+        "estimatedCostHigh": 0,
+        "isFree": true,
+        "payAtGate": false,
+        "durationMinutes": 20,
+        "category": "architecture",
+        "description": "The midcentury Tramway Gas Station, now the visitor center"
+      }
+    ],
+    "airportRide": {
+      "airport": "Palm Springs International Airport (PSP)",
+      "airportLatitude": 33.8303194,
+      "airportLongitude": -116.50704680000001,
+      "toCenterLabel": "downtown",
+      "transit": {
+        "summary": "SunLine buses connect the airport with downtown in about 15 minutes",
+        "fare": "About $1 for an adult fare",
+        "checkUrl": "https://www.sunline.org/",
+        "checkLabel": "Check SunLine",
+        "note": "Fare from travel guides; check SunLine for current routes and fares"
+      },
+      "rideshare": {
+        "summary": "Uber and Lyft pick up at the terminal",
+        "fare": "Uber's own average is about $17 for the 3-mile ride",
+        "provider": "Uber"
+      },
+      "miles": 2,
+      "sources": [
+        "https://www.palmspringslife.com/the-guide/things-to-do/your-guide-to-getting-around-greater-palm-springs/",
+        "https://www.uber.com/global/en/r/airports/psp/pickup/"
+      ]
+    }
   }
 };
 
@@ -1246,7 +1654,7 @@ export function launchDinners(destinationId) {
 }
 
 export function launchActivities(destinationId) {
-  return (LAUNCH_DATA[destinationId]?.activities || []).map((item) => ({ ...item, type: "activity", provider: item.isFree ? "official" : "booking.com_attractions", verifiedAt: LAUNCH_DATA[destinationId].verified }));
+  return (LAUNCH_DATA[destinationId]?.activities || []).map((item) => ({ ...item, type: "activity", provider: item.isFree || item.payAtGate ? "official" : "booking.com_attractions", verifiedAt: LAUNCH_DATA[destinationId].verified }));
 }
 
 // One-tap rideshare from the airport to a hotel (Uber universal link; no partnership needed).

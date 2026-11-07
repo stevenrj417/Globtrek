@@ -70,7 +70,9 @@ export function LaunchSections({ item }) {
             <p className="mt-2 font-medium">{activity.name}</p>
             <p className="mt-1 text-sm text-muted">{activity.description}</p>
           </div>
-          <a href={activity.isFree ? activity.googleMapsUri : cjActivitySearchUrl(activity.name, destination)} target="_blank" rel={activity.isFree ? "noopener" : "noopener sponsored"} className="text-sm underline decoration-black/25 underline-offset-4 hover:decoration-ink">{activity.isFree ? "Map ↗" : <>Tickets on <BookingLogo className="h-3 w-auto" /> ↗</>}</a>
+          {activity.isFree ? <a href={activity.googleMapsUri} target="_blank" rel="noopener" className="text-sm underline decoration-black/25 underline-offset-4 hover:decoration-ink">Map ↗</a>
+            : activity.payAtGate ? <a href={activity.officialWebsiteUrl || activity.googleMapsUri} target="_blank" rel="noopener" className="text-sm underline decoration-black/25 underline-offset-4 hover:decoration-ink">Pay at the gate · official site ↗</a>
+            : <a href={cjActivitySearchUrl(activity.name, destination)} target="_blank" rel="noopener sponsored" className="text-sm underline decoration-black/25 underline-offset-4 hover:decoration-ink">Tickets on <BookingLogo className="h-3 w-auto" /> ↗</a>}
         </li>)}
       </ul>
     </Section> : null}

@@ -64,10 +64,11 @@ function affiliateHotelUrl(hotel, exactPropertyUrl, context) {
   return cjHotelSearchUrl(hotel?.name, context.destination, context) || exact || provider || exactGoogleMapsUrl(hotel);
 }
 
-// Free places (parks, viewpoints) have nothing to book, so they keep their own page.
-// Anything with a cost goes to Booking.com Attractions through GlobTrek's CJ link.
+// Free places (parks, viewpoints) and pay-at-the-gate places have nothing to book
+// online, so they keep their own page. Anything else with a cost goes to
+// Booking.com Attractions through GlobTrek's CJ link.
 function isFreeExperience(item) {
-  return item?.isFree === true || (item?.estimatedCostHigh != null && Number(item.estimatedCostHigh) === 0);
+  return item?.isFree === true || item?.payAtGate === true || (item?.estimatedCostHigh != null && Number(item.estimatedCostHigh) === 0);
 }
 
 function affiliateExperienceUrl(item, destination) {

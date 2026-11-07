@@ -222,3 +222,8 @@ test("Austin acceptance opens hotel, Caroline, Zilker, and flight synchronously 
   assert.match(destinations[2], /austintexas\.gov\/department\/zilker-metropolitan-park/);
   assert.match(cjTarget(destinations[3], "17288982"), /PDX\.AIRPORT-AUS\.AIRPORT/);
 });
+
+test("pay-at-the-gate experiences keep their official page instead of a Booking.com search", () => {
+  const result = manifest({ experiences: [{ name: "Indian Canyons", officialWebsiteUrl: "https://indian-canyons.com/", estimatedCostHigh: 12, payAtGate: true }] });
+  assert.equal(result.experienceBookings[0].exactUrl, "https://indian-canyons.com/");
+});
