@@ -3,11 +3,15 @@ import { OpenTableClient } from "../../../lib/restaurants/OpenTableClient";
 import { SupabaseRestaurantProvider } from "../../../lib/restaurants/SupabaseRestaurantProvider";
 import { createClient } from "../../../lib/supabase/server";
 import { GooglePlacesDiscoveryProvider } from "../../../lib/google-places/GooglePlacesDiscoveryProvider";
+import { launchDinners } from "../../../data/launchSet";
 
 export async function POST(request) {
   const body = await request.json().catch(() => ({}));
   const destination = destinations.find((item) => (item.id || item.airport) === body.destinationId);
   if (!destination) return Response.json({ error: "Unknown destination" }, { status: 400 });
+  // Launch destinations show only hand-verified restaurants.
+  const verified = launchDinners(destination.id);
+  if (verified.length) return Response.json({ restaurants: verified, source: "globtrek_launch_verified", availabilitySource: "not_requested" });
   try {
     let restaurants = [];
     let source = "supabase_verified";

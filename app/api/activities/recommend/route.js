@@ -4,11 +4,15 @@ import { buildBudgetPlan } from "../../../lib/recommendation/budgetEngine";
 import { normalizeTravelerProfile } from "../../../lib/recommendation/travelerProfile";
 import { createClient } from "../../../lib/supabase/server";
 import { GooglePlacesDiscoveryProvider } from "../../../lib/google-places/GooglePlacesDiscoveryProvider";
+import { launchActivities } from "../../../data/launchSet";
 
 export async function POST(request) {
   const body = await request.json().catch(() => ({}));
   const destination = destinations.find((item) => (item.id || item.airport) === body.destinationId);
   if (!destination) return Response.json({ error: "Unknown destination" }, { status: 400 });
+  // Launch destinations show only hand-verified activities.
+  const verified = launchActivities(destination.id);
+  if (verified.length) return Response.json({ activities: verified, source: "globtrek_launch_verified", isLive: false });
   try {
     const profile = normalizeTravelerProfile(body.quiz || {});
     const budgetPlan = buildBudgetPlan(profile, destination);

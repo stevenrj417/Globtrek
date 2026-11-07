@@ -7,6 +7,7 @@ import { destinationBySlug, publishedDestinations } from "../../data/destination
 import { estimateLine, formatMoney, formatRange } from "../../lib/recommendation/tripEstimate";
 import { SITE_URL } from "../../lib/site";
 import { BookingLogo } from "../../components/PartnerLogo";
+import { LaunchSections } from "./LaunchSections";
 
 export const dynamicParams = false;
 
@@ -103,6 +104,8 @@ export default async function DestinationPage({ params }) {
           ))}
         </dl>
       </section>
+
+      <LaunchSections item={item} />
 
       <section aria-labelledby="costs-heading" className="mx-auto mt-[var(--section-space)] max-w-[1280px] px-5 sm:px-8">
         <h2 id="costs-heading" className="text-2xl font-semibold tracking-tight-2">Know before you go</h2>

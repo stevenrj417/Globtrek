@@ -1,5 +1,11 @@
 # Changelog
 
+## Launch set and the first perfect destination (2026-11-08)
+
+- Launch set of 20 destinations and `npm run check:launch`, which scores each against an 8-point standard (photos, hotels, dinners, activities, airport ride, real fares, timing, free things) and writes `audit/launch-report.md`. Only Las Vegas is 8/8 so far.
+- Las Vegas: 4 budget hotels on verified Booking.com pages (Excalibur, Luxor, Circus Circus, Studio 6 Suites Tropicana) through CJ; 6 dinners and 6 activities confirmed OPERATIONAL in Google Places with ratings and hours; 4 verified gallery photos; airport bus and rideshare with sources and a one-tap Uber link.
+- Launch destinations serve only these verified hotels, dinners and activities (hotel, restaurant and activity APIs), and destination pages show them.
+
 ## Budget first, real flight fares (2026-11-08)
 
 - The quiz opens with "How much do you have for this trip?"; a setting chosen on the homepage skips its question.

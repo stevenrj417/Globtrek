@@ -39,7 +39,8 @@
     "check:data": "node scripts/check-data.mjs --out audit/data-report.md",
     "check:images": "node scripts/check-data.mjs --check-images --out audit/data-report.md",
     "flights:refresh": "node scripts/flights/refresh-prices.mjs",
-    "flights:dot": "node scripts/flights/refresh-dot-fares.mjs"
+    "flights:dot": "node scripts/flights/refresh-dot-fares.mjs",
+    "check:launch": "node scripts/check-launch.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.4",

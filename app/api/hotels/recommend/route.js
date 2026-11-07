@@ -4,6 +4,7 @@ import { SupabaseCuratedHotelProvider } from "../../../lib/inventory/SupabaseCur
 import { buildBudgetPlan } from "../../../lib/recommendation/budgetEngine.js";
 import { normalizeTravelerProfile } from "../../../lib/recommendation/travelerProfile.js";
 import { createClient } from "../../../lib/supabase/server.js";
+import { launchHotels } from "../../../data/launchSet.js";
 
 export const runtime = "nodejs";
 
@@ -12,6 +13,9 @@ export async function POST(request) {
     const body = await request.json();
     const destination = destinations.find((item) => (item.id || item.airport) === body.destinationId);
     if (!destination) return NextResponse.json({ error: "Unknown destination" }, { status: 400 });
+    // Launch destinations show only hand-verified hotels.
+    const verified = launchHotels(destination.id);
+    if (verified.length) return NextResponse.json({ hotels: verified, source: "globtrek_launch_verified", isLive: false, incomplete: verified.length < 4 });
     const profile = normalizeTravelerProfile(body.quiz || {});
     const budgetPlan = buildBudgetPlan(profile, destination);
     const provider = new SupabaseCuratedHotelProvider(await createClient());
