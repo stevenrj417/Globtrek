@@ -40,3 +40,17 @@ test("two-week windows average real fares and keep the cheapest", () => {
   assert.equal(fareForDate(route, "2027-06-01"), null);
   assert.equal(fareForDate(route, null).yearRound, true);
 });
+
+test("DOT quarterly fares price round trips by season and budget mode", async () => {
+  const { estimateFlight } = await import("../app/lib/recommendation/travelFeasibility.js");
+  const prices = (await import("../app/data/flightPrices.json", { with: { type: "json" } })).default;
+  const route = prices.routes["PDX:LAS"];
+  if (!route?.quarters?.["3"]) return; // data not refreshed in this checkout
+  const base = { origin: "PDX", dates: { start: "2027-08-10" } };
+  const cheap = estimateFlight({ ...base, spendStyle: "cheapest" }, { airport: "LAS" });
+  const comfy = estimateFlight({ ...base, spendStyle: "comfortable" }, { airport: "LAS" });
+  assert.equal(cheap.priceSource, "us_dot_average_fare_paid");
+  assert.equal(cheap.average, route.quarters["3"].fareLow * 2);
+  assert.equal(comfy.average, route.quarters["3"].fare * 2);
+  assert.match(cheap.basis, /Jul–Sep \d{4} on the cheapest airline/);
+});

@@ -3,7 +3,8 @@
 ## Budget first, real flight fares (2026-11-08)
 
 - The quiz opens with "How much do you have for this trip?"; a setting chosen on the homepage skips its question.
-- Travelpayouts (Aviasales Data API) integration: `npm run flights:refresh` pulls the cheapest round trip per departure date and writes two-week averages (26 windows a year) to `app/data/flightPrices.json`. Trips use the window for their departure date (cheapest fare in absolute-cheapest mode); results label the source and check date. Without data, the researched model is used.
+- **Real domestic fares, no account needed:** `npm run flights:dot` loads the U.S. DOT Consumer Airfare Report (Table 6, latest 2026 Q1) for 372 routes from 23 U.S. airports. Trips use the departure quarter's average fare actually paid (cheapest airline in absolute-cheapest mode); results cite it. Hawaii, Alaska and international routes keep researched fares.
+- Travelpayouts (Aviasales Data API) integration (dormant until a token exists): `npm run flights:refresh` pulls the cheapest round trip per departure date and writes two-week averages (26 windows a year) to `app/data/flightPrices.json`. Trips use the window for their departure date (cheapest fare in absolute-cheapest mode); results label the source and check date. Without data, the researched model is used.
 - Booking page and results tell travelers to sign in to Booking.com first so it fills their saved details; partner links can't carry names, contact or payment details.
 
 ## Budget-first trips (2026-11-04)

@@ -149,6 +149,38 @@ function routeFor(profile, destination) {
   return ROUTE_OVERRIDES[`${origin}:${airport}`] || coordinateRoute(profile, destination) || genericRoute(origin, airport, destination?.country);
 }
 
+const QUARTER_LABEL = { 1: "Jan–Mar", 2: "Apr–Jun", 3: "Jul–Sep", 4: "Oct–Dec" };
+
+// DOT fares are one way; a round trip is two. Cheapest mode uses the lowest-fare
+// airline's average, comfortable the all-airline average, best value the midpoint.
+function dotFare(route, profile) {
+  if (!route?.quarters || !Object.keys(route.quarters).length) return null;
+  const month = profileMonth(profile);
+  const quarter = month ? Math.ceil(month / 3) : null;
+  const picked = quarter && route.quarters[quarter] ? [route.quarters[quarter]] : Object.values(route.quarters);
+  const mean = (key) => picked.reduce((sum, item) => sum + item[key], 0) / picked.length;
+  const fare = mean("fare");
+  const fareLow = mean("fareLow");
+  const style = profile?.spendStyle || "value";
+  const oneWay = style === "cheapest" ? fareLow : style === "comfortable" ? fare : (fare + fareLow) / 2;
+  const average = Math.round(oneWay * 2);
+  const single = picked.length === 1 ? picked[0] : null;
+  const when = single ? `${QUARTER_LABEL[quarter]} ${single.year}` : "year-round";
+  return {
+    low: Math.round(fareLow * 2), high: Math.round(fare * 2), average, currency: "USD",
+    priceSource: "us_dot_average_fare_paid", priceLastChecked: flightPrices.latestPeriod || flightPrices.checkedAt, confidence: 0.8, isLive: false,
+    cabinClass: "economy", tripType: "round_trip",
+    basis: `U.S. DOT average fare actually paid, ${when}${style === "cheapest" && single?.carrierLow ? ` on the cheapest airline (${single.carrierLow})` : ""}, taxes included`,
+    fareQuarter: single ? { quarter, year: single.year, carrierLow: single.carrierLow } : null,
+    // Each month gets its quarter's real average (or the year-round mean if that quarter is missing).
+    monthlyAverageEconomyRoundTrip: MONTH_NAMES.map((monthName, index) => {
+      const row = route.quarters[Math.ceil((index + 1) / 3)];
+      const value = row ? (style === "cheapest" ? row.fareLow : style === "comfortable" ? row.fare : (row.fare + row.fareLow) / 2) : oneWay;
+      return { month: index + 1, monthName, average: Math.round(value * 2) };
+    }),
+  };
+}
+
 export function estimateFlight(profile, destination) {
   const origin = String(profile?.origin || "").toUpperCase();
   const airport = String(destination?.airport || "").toUpperCase();
@@ -161,7 +193,10 @@ export function estimateFlight(profile, destination) {
       monthlyAverageEconomyRoundTrip: MONTH_NAMES.map((monthName, index) => ({ month: index + 1, monthName, average: Math.round(average * monthMultiplier(index + 1)) })),
     };
   }
-  // Real fares first: two-week averages of what Aviasales travelers actually found.
+  // Real fares first. U.S. DOT quarterly averages of fares actually paid (domestic),
+  // or Travelpayouts two-week averages when that feed is configured.
+  const dot = dotFare(flightPrices.routes?.[`${origin}:${airport}`], profile);
+  if (dot) return dot;
   const observed = fareForDate(flightPrices.routes?.[`${origin}:${airport}`], profile?.dates?.start || null);
   if (observed) {
     const average = profile?.spendStyle === "cheapest" ? observed.cheapest : observed.average;
