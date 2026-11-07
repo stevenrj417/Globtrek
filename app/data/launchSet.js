@@ -812,6 +812,419 @@ export const LAUNCH_DATA = {
       ]
     }
   },
+  "los-angeles-76868": {
+    "verified": "2026-11-08",
+    "hotels": [
+      {
+        "id": "la-hi-santa-monica",
+        "name": "HI Los Angeles Santa Monica Hostel",
+        "bookingUrl": "https://www.booking.com/hotel/us/hostelling-international.html",
+        "address": "1436 2nd Street, Santa Monica, CA 90401",
+        "neighborhood": "Santa Monica",
+        "priceTier": "budget",
+        "rating": 8.8,
+        "reviewCount": 4730,
+        "ratingSource": "Booking.com",
+        "note": "Two blocks from the pier and the beach, with private rooms and a kitchen"
+      },
+      {
+        "id": "la-samesun-venice",
+        "name": "Samesun Venice Beach Hotel & Hostel",
+        "bookingUrl": "https://www.booking.com/hotel/us/venice-beach-cotel-los-angeles.html",
+        "address": "25 Windward Avenue, Los Angeles, CA 90291",
+        "neighborhood": "Venice Beach",
+        "priceTier": "budget",
+        "note": "Right on the Venice boardwalk"
+      },
+      {
+        "id": "la-samesun-hollywood",
+        "name": "Samesun Hollywood Hotel & Hostel",
+        "bookingUrl": "https://www.booking.com/hotel/us/samesun-hollywood.html",
+        "address": "6820 Hollywood Boulevard, Los Angeles, CA 90028",
+        "neighborhood": "Hollywood",
+        "priceTier": "budget",
+        "note": "On Hollywood Boulevard, on the Walk of Fame and near the Metro B Line"
+      },
+      {
+        "id": "la-super8-culver-city",
+        "name": "Super 8 by Wyndham Los Angeles-Culver City Area",
+        "bookingUrl": "https://www.booking.com/hotel/us/super-8-culver-city.html",
+        "address": "12664 West Washington Boulevard, Los Angeles, CA 90066",
+        "neighborhood": "Mar Vista, near Culver City",
+        "priceTier": "budget",
+        "rating": 8.5,
+        "reviewCount": 1029,
+        "ratingSource": "Booking.com",
+        "note": "Private motel rooms between LAX and the beaches"
+      }
+    ],
+    "gallery": [
+      {
+        "src": "https://images.unsplash.com/photo-1572975165711-e9636eba67fc",
+        "alt": "Griffith Observatory above Los Angeles at dusk",
+        "credit": "Unsplash"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1574562514932-a0fb04d5d347",
+        "alt": "Santa Monica Pier and the beach at golden hour",
+        "credit": "Unsplash"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1609924211018-5526c55bad5b",
+        "alt": "The Hollywood Sign on the hills",
+        "credit": "Gabe, Unsplash"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1523430410476-0185cb1f6ff9",
+        "alt": "The entrance sign of Santa Monica Pier under palm trees",
+        "credit": "Unsplash"
+      }
+    ],
+    "dinners": [
+      {
+        "name": "Grand Central Market",
+        "address": "317 S Broadway, Los Angeles, CA 90013, USA",
+        "latitude": 34.050872,
+        "longitude": -118.2490552,
+        "rating": 4.5,
+        "reviewCount": 37073,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJ53JDjkvGwoAR2NMG6_1OnUg",
+        "googleMapsUri": "https://maps.google.com/?cid=5232425194551170008",
+        "officialWebsiteUrl": "https://grandcentralmarket.com/",
+        "hours": [
+          "Monday: 8:00 AM – 9:00 PM",
+          "Tuesday: 8:00 AM – 9:00 PM",
+          "Wednesday: 8:00 AM – 9:00 PM",
+          "Thursday: 8:00 AM – 9:00 PM",
+          "Friday: 8:00 AM – 9:00 PM",
+          "Saturday: 8:00 AM – 9:00 PM",
+          "Sunday: 8:00 AM – 9:00 PM"
+        ],
+        "id": "la-grand-central-market",
+        "priceLevel": null,
+        "order": "Downtown food hall open since 1917; dozens of stalls",
+        "reservations": "walk-in",
+        "reservable": false
+      },
+      {
+        "name": "Guisados",
+        "address": "2100 E Cesar E Chavez Ave, Los Angeles, CA 90033, USA",
+        "latitude": 34.0482592,
+        "longitude": -118.21146770000001,
+        "rating": 4.5,
+        "reviewCount": 1770,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJJa92LAnGwoARwH4CYPv5T6k",
+        "googleMapsUri": "https://maps.google.com/?cid=12200244773612846784",
+        "officialWebsiteUrl": "http://www.guisados.la/",
+        "hours": [
+          "Monday: 9:00 AM – 9:00 PM",
+          "Tuesday: 9:00 AM – 9:00 PM",
+          "Wednesday: 9:00 AM – 9:00 PM",
+          "Thursday: 9:00 AM – 9:00 PM",
+          "Friday: 9:00 AM – 9:00 PM",
+          "Saturday: 9:00 AM – 9:00 PM",
+          "Sunday: 9:00 AM – 9:00 PM"
+        ],
+        "id": "la-guisados",
+        "priceLevel": 1,
+        "order": "Braised-meat tacos on handmade tortillas; get the sampler",
+        "reservations": "walk-in",
+        "reservable": false
+      },
+      {
+        "name": "Leo's Tacos Truck",
+        "address": "1515 S La Brea Ave, Los Angeles, CA 90019, USA",
+        "latitude": 34.046205,
+        "longitude": -118.3457754,
+        "rating": 4.5,
+        "reviewCount": 5907,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJvyR2GP64woARi52Ja30IGjc",
+        "googleMapsUri": "https://maps.google.com/?cid=3970495356248628619",
+        "officialWebsiteUrl": "http://leostacostruck.com/",
+        "hours": [
+          "Monday: 10:00 AM – 2:00 AM",
+          "Tuesday: 10:00 AM – 2:00 AM",
+          "Wednesday: 10:00 AM – 2:00 AM",
+          "Thursday: 10:00 AM – 2:00 AM",
+          "Friday: 10:00 AM – 3:30 AM",
+          "Saturday: 10:00 AM – 3:30 AM",
+          "Sunday: 10:00 AM – 2:00 AM"
+        ],
+        "id": "la-leo-s-tacos-truck",
+        "priceLevel": 1,
+        "order": "Al pastor carved straight off the spit",
+        "reservations": "walk-in",
+        "reservable": false
+      },
+      {
+        "name": "Philippe The Original",
+        "address": "1001 N Alameda St, Los Angeles, CA 90012, USA",
+        "latitude": 34.059686299999996,
+        "longitude": -118.23704889999999,
+        "rating": 4.6,
+        "reviewCount": 12335,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJd9NcMVvGwoARpVcjtJfZBQo",
+        "googleMapsUri": "https://maps.google.com/?cid=722222560848336805",
+        "officialWebsiteUrl": "https://www.philippes.com/",
+        "hours": [
+          "Monday: 6:00 AM – 10:00 PM",
+          "Tuesday: 6:00 AM – 10:00 PM",
+          "Wednesday: 6:00 AM – 10:00 PM",
+          "Thursday: 6:00 AM – 10:00 PM",
+          "Friday: 6:00 AM – 10:00 PM",
+          "Saturday: 6:00 AM – 10:00 PM",
+          "Sunday: 6:00 AM – 10:00 PM"
+        ],
+        "id": "la-philippe-the-original",
+        "priceLevel": 1,
+        "order": "French dip sandwiches near Union Station",
+        "reservations": "walk-in",
+        "reservable": false
+      },
+      {
+        "name": "Pink's Hot Dogs",
+        "address": "709 N La Brea Ave, Los Angeles, CA 90038, USA",
+        "latitude": 34.0838505,
+        "longitude": -118.3442797,
+        "rating": 4.5,
+        "reviewCount": 14044,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJVwjfzCq_woAR4FjKokeruig",
+        "googleMapsUri": "https://maps.google.com/?cid=2934846431347497184",
+        "officialWebsiteUrl": "http://www.pinkshollywood.com/",
+        "hours": [
+          "Monday: 9:30 AM – 12:00 AM",
+          "Tuesday: 9:30 AM – 12:00 AM",
+          "Wednesday: 9:30 AM – 12:00 AM",
+          "Thursday: 9:30 AM – 12:00 AM",
+          "Friday: 9:30 AM – 2:00 AM",
+          "Saturday: 9:30 AM – 2:00 AM",
+          "Sunday: 9:30 AM – 12:00 AM"
+        ],
+        "id": "la-pink-s-hot-dogs",
+        "priceLevel": 1,
+        "order": "Hollywood hot dog stand",
+        "reservations": "walk-in",
+        "reservable": false
+      },
+      {
+        "name": "Langer's Delicatessen-Restaurant",
+        "address": "704 S Alvarado St, Los Angeles, CA 90057, USA",
+        "latitude": 34.0561783,
+        "longitude": -118.27679930000001,
+        "rating": 4.6,
+        "reviewCount": 3840,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJP1rAZZ_HwoARAcX96y-BrjY",
+        "googleMapsUri": "https://maps.google.com/?cid=3940228766818485505",
+        "officialWebsiteUrl": "https://www.langersdeli.com/",
+        "hours": [
+          "Monday: 8:00 AM – 4:00 PM",
+          "Tuesday: 8:00 AM – 4:00 PM",
+          "Wednesday: 8:00 AM – 4:00 PM",
+          "Thursday: 8:00 AM – 4:00 PM",
+          "Friday: 8:00 AM – 4:00 PM",
+          "Saturday: 8:00 AM – 4:00 PM",
+          "Sunday: Closed"
+        ],
+        "id": "la-langer-s-delicatessen-restaurant",
+        "priceLevel": 2,
+        "order": "Hot pastrami; the #19",
+        "reservations": "walk-in",
+        "reservable": false
+      }
+    ],
+    "activities": [
+      {
+        "name": "Griffith Observatory",
+        "address": "2800 E Observatory Rd, Los Angeles, CA 90027, USA",
+        "latitude": 34.1184341,
+        "longitude": -118.30039350000001,
+        "rating": 4.7,
+        "reviewCount": 20702,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJywjU6WG_woAR3NrWwrEH_3M",
+        "googleMapsUri": "https://maps.google.com/?cid=8358407893482396380",
+        "officialWebsiteUrl": "https://griffithobservatory.org/",
+        "hours": [
+          "Monday: Closed",
+          "Tuesday: 12:00 – 10:00 PM",
+          "Wednesday: 12:00 – 10:00 PM",
+          "Thursday: 12:00 – 10:00 PM",
+          "Friday: 12:00 – 10:00 PM",
+          "Saturday: 10:00 AM – 10:00 PM",
+          "Sunday: 10:00 AM – 10:00 PM"
+        ],
+        "id": "la-griffith-observatory",
+        "estimatedCostLow": 0,
+        "estimatedCostHigh": 0,
+        "isFree": true,
+        "durationMinutes": 120,
+        "category": "views",
+        "description": "Free admission, with city and Hollywood Sign views; planetarium shows cost extra"
+      },
+      {
+        "name": "The Getty",
+        "address": "1200 Getty Center Dr, Los Angeles, CA 90049, USA",
+        "latitude": 34.0773438,
+        "longitude": -118.4732648,
+        "rating": 4.8,
+        "reviewCount": 37735,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJbzYnQte8woARJaqqFVpKeNo",
+        "googleMapsUri": "https://maps.google.com/?cid=15742414248244587045",
+        "officialWebsiteUrl": "https://www.getty.edu/",
+        "hours": [
+          "Monday: Closed",
+          "Tuesday: 10:00 AM – 6:30 PM",
+          "Wednesday: 10:00 AM – 6:30 PM",
+          "Thursday: 10:00 AM – 6:30 PM",
+          "Friday: 10:00 AM – 6:30 PM",
+          "Saturday: 10:00 AM – 9:00 PM",
+          "Sunday: 10:00 AM – 6:30 PM"
+        ],
+        "id": "la-the-getty",
+        "estimatedCostLow": 0,
+        "estimatedCostHigh": 0,
+        "isFree": true,
+        "durationMinutes": 180,
+        "category": "museum",
+        "description": "Free-admission art museum and gardens on a hilltop; parking is paid"
+      },
+      {
+        "name": "Santa Monica Pier",
+        "address": "200 Santa Monica Pier, Santa Monica, CA 90401, USA",
+        "latitude": 34.008282099999995,
+        "longitude": -118.4987585,
+        "rating": 4.6,
+        "reviewCount": 136308,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJm6deTdekwoARTY_RzhoRms0",
+        "googleMapsUri": "https://maps.google.com/?cid=14815172731025329997",
+        "officialWebsiteUrl": "https://santamonicapier.org/",
+        "hours": [
+          "Monday: 6:00 AM – 10:00 PM",
+          "Tuesday: 6:00 AM – 10:00 PM",
+          "Wednesday: 6:00 AM – 10:00 PM",
+          "Thursday: 6:00 AM – 10:00 PM",
+          "Friday: 6:00 AM – 10:00 PM",
+          "Saturday: 6:00 AM – 10:00 PM",
+          "Sunday: 6:00 AM – 10:00 PM"
+        ],
+        "id": "la-santa-monica-pier",
+        "estimatedCostLow": 0,
+        "estimatedCostHigh": 0,
+        "isFree": true,
+        "durationMinutes": 90,
+        "category": "beach",
+        "description": "Free to walk the pier and beach; rides cost extra"
+      },
+      {
+        "name": "Venice Beach Boardwalk",
+        "address": "Beach pavillion in, 517 Ocean Front Walk, Venice, CA 90291, USA",
+        "latitude": 33.9909254,
+        "longitude": -118.47744390000001,
+        "rating": 4.5,
+        "reviewCount": 2717,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJsyUr_9y7woARG6pTv7ogvu0",
+        "googleMapsUri": "https://maps.google.com/?cid=17131166019009882651",
+        "officialWebsiteUrl": null,
+        "hours": [],
+        "id": "la-venice-beach-boardwalk",
+        "estimatedCostLow": 0,
+        "estimatedCostHigh": 0,
+        "isFree": true,
+        "durationMinutes": 90,
+        "category": "beach",
+        "description": "Street performers, the skate park and Muscle Beach"
+      },
+      {
+        "name": "The Broad",
+        "address": "221 S Grand Ave, Los Angeles, CA 90012, USA",
+        "latitude": 34.0545021,
+        "longitude": -118.25018019999999,
+        "rating": 4.7,
+        "reviewCount": 18412,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJXaYsEk3GwoARvx7RKBUE8Zg",
+        "googleMapsUri": "https://maps.google.com/?cid=11020594252077932223",
+        "officialWebsiteUrl": "https://www.thebroad.org/",
+        "hours": [
+          "Monday: Closed",
+          "Tuesday: 11:00 AM – 5:00 PM",
+          "Wednesday: 11:00 AM – 5:00 PM",
+          "Thursday: 11:00 AM – 8:00 PM",
+          "Friday: 11:00 AM – 5:00 PM",
+          "Saturday: 10:00 AM – 6:00 PM",
+          "Sunday: 10:00 AM – 6:00 PM"
+        ],
+        "id": "la-the-broad",
+        "estimatedCostLow": 0,
+        "estimatedCostHigh": 0,
+        "isFree": true,
+        "durationMinutes": 90,
+        "category": "museum",
+        "description": "Free contemporary art museum; reserve a timed ticket"
+      },
+      {
+        "name": "Hollywood Walk of Fame",
+        "address": "Hollywood Boulevard, Vine St, Los Angeles, CA 90028, USA",
+        "latitude": 34.101605899999996,
+        "longitude": -118.32956940000001,
+        "rating": 4,
+        "reviewCount": 62391,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJXyC7WTu_woARPvVMCHBXd4U",
+        "googleMapsUri": "https://maps.google.com/?cid=9617251667960198462",
+        "officialWebsiteUrl": "https://walkoffame.com/",
+        "hours": [
+          "Monday: Open 24 hours",
+          "Tuesday: Open 24 hours",
+          "Wednesday: Open 24 hours",
+          "Thursday: Open 24 hours",
+          "Friday: Open 24 hours",
+          "Saturday: Open 24 hours",
+          "Sunday: Open 24 hours"
+        ],
+        "id": "la-hollywood-walk-of-fame",
+        "estimatedCostLow": 0,
+        "estimatedCostHigh": 0,
+        "isFree": true,
+        "durationMinutes": 45,
+        "category": "sights",
+        "description": "The stars along Hollywood Boulevard"
+      }
+    ],
+    "airportRide": {
+      "airport": "Los Angeles International Airport (LAX)",
+      "airportLatitude": 33.942153,
+      "airportLongitude": -118.40360520000002,
+      "toCenterLabel": "downtown",
+      "transit": {
+        "summary": "A free shuttle runs from the terminals to the LAX/Metro Transit Center for the K and C Line trains; FlyAway buses also run to Union Station",
+        "fare": "Metro is $1.75 with two hours of free transfers ($5 daily cap); FlyAway costs more",
+        "checkUrl": "https://www.metro.net/riding/fares/",
+        "checkLabel": "Check Metro",
+        "note": "Fares come from 2026 travel guides; check Metro and FlyAway before you go"
+      },
+      "rideshare": {
+        "summary": "Uber and Lyft pick up at the LAX-it lot, a free shuttle ride from the terminals (allow 15–20 minutes)",
+        "fare": "About $26–42 to Santa Monica or $35–55 to Hollywood off-peak; surges at rush hour",
+        "provider": "Uber"
+      },
+      "miles": 17,
+      "sources": [
+        "https://ride-again-react.lovable.app/blog/cheapest-way-from-lax",
+        "https://getridewise.com/blog/cheapest-uber-lyft-lax",
+        "https://www.detaileddrivers.com/blog/lax-airport-car-service-los-angeles-transportation-guide"
+      ]
+    }
+  }
 };
 
 export function launchHotels(destinationId) {

@@ -2,9 +2,10 @@
 
 ## Launch set and the first perfect destination (2026-11-08)
 
-- Launch set of 20 destinations and `npm run check:launch`, which scores each against an 8-point standard (photos, hotels, dinners, activities, airport ride, real fares, timing, free things) and writes `audit/launch-report.md`. Las Vegas and San Diego are 8/8.
+- Launch set of 20 destinations and `npm run check:launch`, which scores each against an 8-point standard (photos, hotels, dinners, activities, airport ride, real fares, timing, free things) and writes `audit/launch-report.md`. Las Vegas, San Diego and Los Angeles are 8/8.
 - Las Vegas: 4 budget hotels on verified Booking.com pages (Excalibur, Luxor, Circus Circus, Studio 6 Suites Tropicana) through CJ; 6 dinners and 6 activities confirmed OPERATIONAL in Google Places with ratings and hours; 4 verified gallery photos; airport bus and rideshare with sources and a one-tap Uber link.
 - San Diego: 4 budget stays on verified Booking.com pages (HI San Diego Downtown Hostel, Samesun Ocean Beach, Days Inn Hotel Circle, Kings Inn) through CJ; 6 dinners and 6 activities confirmed OPERATIONAL in Google Places; 4 verified gallery photos; MTS Route 992 and rideshare with sources and a one-tap Uber link.
+- Los Angeles: 4 budget stays on verified Booking.com pages (HI Santa Monica, Samesun Venice Beach, Samesun Hollywood, Super 8 Culver City) through CJ; 6 dinners and 6 free activities confirmed OPERATIONAL in Google Places; 4 verified gallery photos; LAX Metro, FlyAway and LAX-it rideshare with sources and a one-tap Uber link.
 - Launch destinations serve only these verified hotels, dinners and activities (hotel, restaurant and activity APIs), and destination pages show them.
 
 ## Budget first, real flight fares (2026-11-08)
