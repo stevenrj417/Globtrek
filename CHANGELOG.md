@@ -1,5 +1,9 @@
 # Changelog
 
+## Deployed to glob-trek.com (2026-11-08)
+
+Book everything, budget-first trips, DOT fares, the launch set and three perfect destinations (Las Vegas, San Diego, Los Angeles) are live. Production checks: all routes respond, the three launch APIs serve only verified inventory, quiz and no-match flows pass end to end, axe-core (WCAG 2.2 AA) passes, and mobile Lighthouse is home 92–93, quiz 100, Las Vegas 92–97 with accessibility, best practices and SEO at 100.
+
 ## Launch set and the first perfect destination (2026-11-08)
 
 - Launch set of 20 destinations and `npm run check:launch`, which scores each against an 8-point standard (photos, hotels, dinners, activities, airport ride, real fares, timing, free things) and writes `audit/launch-report.md`. Las Vegas, San Diego and Los Angeles are 8/8.
