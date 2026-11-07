@@ -383,6 +383,7 @@ export const LAUNCH_DATA = {
         "summary": "RTC buses run from the airport to the Strip",
         "fare": "About $6 for a 2-hour pass or $8 for 24 hours",
         "checkUrl": "https://www.rtcsnv.com/",
+        "checkLabel": "Check RTC",
         "note": "RTC proposed fare changes and changed routes in 2026; check current fares and routes before you go"
       },
       "rideshare": {
@@ -391,11 +392,425 @@ export const LAUNCH_DATA = {
         "provider": "Uber"
       },
       "miles": 5,
+      "toCenterLabel": "the Strip",
       "sources": [
         "https://lasvegaswonders.com/?p=7447",
         "https://www.nomadotravel.app/en/guides/getting-around-las-vegas"
       ]
     },
+  },
+  "san-diego-76868": {
+    "verified": "2026-11-08",
+    "hotels": [
+      {
+        "id": "sd-hi-downtown",
+        "name": "HI San Diego Downtown Hostel",
+        "bookingUrl": "https://www.booking.com/hotel/us/hostelling-international-san-diego.html",
+        "address": "521 Market Street, San Diego, CA 92101",
+        "neighborhood": "Gaslamp Quarter",
+        "priceTier": "budget",
+        "rating": 8.6,
+        "reviewCount": 1548,
+        "ratingSource": "Booking.com",
+        "note": "Nonprofit hostel with private rooms and a shared kitchen, a short walk from the bus to the airport"
+      },
+      {
+        "id": "sd-samesun-ob",
+        "name": "Samesun Ocean Beach Hotel & Hostel",
+        "bookingUrl": "https://www.booking.com/hotel/us/samesun-ocean-beach.html",
+        "address": "4961 Newport Avenue, San Diego, CA 92107",
+        "neighborhood": "Ocean Beach",
+        "priceTier": "budget",
+        "note": "On Ocean Beach's main street, steps from the sand and Hodad's"
+      },
+      {
+        "id": "sd-days-inn-hotel-circle",
+        "name": "Days Inn by Wyndham San Diego Hotel Circle",
+        "bookingUrl": "https://www.booking.com/hotel/us/days-circle.html",
+        "address": "543 Hotel Circle South, San Diego, CA 92108",
+        "neighborhood": "Mission Valley",
+        "priceTier": "budget",
+        "rating": 7.8,
+        "reviewCount": 4087,
+        "ratingSource": "Booking.com",
+        "note": "Private rooms off Interstate 8, central for driving to beaches and Old Town"
+      },
+      {
+        "id": "sd-kings-inn",
+        "name": "Kings Inn",
+        "bookingUrl": "https://www.booking.com/hotel/us/kings-inn.html",
+        "address": "1333 Hotel Circle South, San Diego, CA 92108",
+        "neighborhood": "Mission Valley",
+        "priceTier": "budget",
+        "note": "Budget motel in Hotel Circle, near Old Town"
+      }
+    ],
+    "gallery": [
+      {
+        "src": "https://images.unsplash.com/photo-1514939775307-d44e7f10cabd",
+        "alt": "The downtown San Diego skyline at night across the bay",
+        "credit": "Lucas Davies, Unsplash"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1546200378-434d318e5715",
+        "alt": "Waves breaking along the La Jolla coastline",
+        "credit": "Zach Josephson, Unsplash"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1612301738481-cb439dcf3c05",
+        "alt": "The lily pond and palms in Balboa Park",
+        "credit": "Zane Persaud, Unsplash"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1611459710407-40e34c81b19c",
+        "alt": "Sunset through Crystal Pier in Pacific Beach",
+        "credit": "Unsplash"
+      }
+    ],
+    "dinners": [
+      {
+        "name": "Las Cuatro Milpas",
+        "address": "1985 National Ave Ste 1131, San Diego, CA 92113, USA",
+        "latitude": 32.6996341,
+        "longitude": -117.1451038,
+        "rating": 4.6,
+        "reviewCount": 4555,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJ_2H_8mtT2YAR-NwWFrZW6LA",
+        "googleMapsUri": "https://maps.google.com/?cid=12747534085326822648",
+        "officialWebsiteUrl": "http://lascuatromilpas.online/",
+        "hours": [
+          "Monday: 8:00 AM – 3:00 PM",
+          "Tuesday: 8:00 AM – 3:00 PM",
+          "Wednesday: 8:00 AM – 3:00 PM",
+          "Thursday: 8:00 AM – 3:00 PM",
+          "Friday: 8:00 AM – 3:00 PM",
+          "Saturday: 7:00 AM – 3:00 PM",
+          "Sunday: Closed"
+        ],
+        "id": "sd-las-cuatro-milpas",
+        "priceLevel": 1,
+        "order": "Barrio Logan institution; handmade tortillas and rolled tacos",
+        "reservations": "walk-in",
+        "reservable": false
+      },
+      {
+        "name": "Hodad's Ocean Beach",
+        "address": "5010 Newport Ave, San Diego, CA 92107, USA",
+        "latitude": 32.7472099,
+        "longitude": -117.25114620000001,
+        "rating": 4.6,
+        "reviewCount": 6254,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJaYaXFTqq3oARNy537Kb_W_c",
+        "googleMapsUri": "https://maps.google.com/?cid=17824121042645757495",
+        "officialWebsiteUrl": "http://hodadsoceanbeach.com/",
+        "hours": [
+          "Monday: 11:00 AM – 9:00 PM",
+          "Tuesday: 11:00 AM – 9:00 PM",
+          "Wednesday: 11:00 AM – 9:00 PM",
+          "Thursday: 11:00 AM – 9:00 PM",
+          "Friday: 11:00 AM – 9:00 PM",
+          "Saturday: 11:00 AM – 9:00 PM",
+          "Sunday: 11:00 AM – 9:00 PM"
+        ],
+        "id": "sd-hodad-s-ocean-beach",
+        "priceLevel": 2,
+        "order": "Ocean Beach burgers; the bacon cheeseburger",
+        "reservations": "walk-in",
+        "reservable": false
+      },
+      {
+        "name": "Lucha Libre Taco Shop",
+        "address": "1810 W Washington St, San Diego, CA 92103, USA",
+        "latitude": 32.7433427,
+        "longitude": -117.18162960000001,
+        "rating": 4.3,
+        "reviewCount": 4353,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJq8oURS6r3oARdtYfAS-k538",
+        "googleMapsUri": "https://maps.google.com/?cid=9216515684226291318",
+        "officialWebsiteUrl": "http://www.luchalibretacoshop.com/",
+        "hours": [
+          "Monday: 10:00 AM – 10:00 PM",
+          "Tuesday: 10:00 AM – 10:00 PM",
+          "Wednesday: 10:00 AM – 10:00 PM",
+          "Thursday: 10:00 AM – 10:00 PM",
+          "Friday: 10:00 AM – 11:00 PM",
+          "Saturday: 10:00 AM – 11:00 PM",
+          "Sunday: 10:00 AM – 10:00 PM"
+        ],
+        "id": "sd-lucha-libre-taco-shop",
+        "priceLevel": 1,
+        "order": "Wrestling-themed taco shop; the surfin' California burrito",
+        "reservations": "walk-in",
+        "reservable": false
+      },
+      {
+        "name": "Phil's BBQ",
+        "address": "3750 Sports Arena Blvd, San Diego, CA 92110, USA",
+        "latitude": 32.7548759,
+        "longitude": -117.2158625,
+        "rating": 4.6,
+        "reviewCount": 12407,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJ7THPXPeq3oARSc2LId_Icwg",
+        "googleMapsUri": "https://maps.google.com/?cid=609051235291221321",
+        "officialWebsiteUrl": "http://www.philsbbq.com/",
+        "hours": [
+          "Monday: 11:00 AM – 10:00 PM",
+          "Tuesday: 11:00 AM – 10:00 PM",
+          "Wednesday: 11:00 AM – 10:00 PM",
+          "Thursday: 11:00 AM – 10:00 PM",
+          "Friday: 11:00 AM – 10:00 PM",
+          "Saturday: 11:00 AM – 10:00 PM",
+          "Sunday: 11:00 AM – 10:00 PM"
+        ],
+        "id": "sd-phil-s-bbq",
+        "priceLevel": 2,
+        "order": "Ribs and barbecue sandwiches",
+        "reservations": "walk-in",
+        "reservable": false
+      },
+      {
+        "name": "Liberty Public Market",
+        "address": "2820 Historic Decatur Rd, San Diego, CA 92106, USA",
+        "latitude": 32.7400774,
+        "longitude": -117.2110573,
+        "rating": 4.7,
+        "reviewCount": 8297,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJqTNLdAOr3oARx08fgT_mxGg",
+        "googleMapsUri": "https://maps.google.com/?cid=7549412035803434951",
+        "officialWebsiteUrl": "https://libertypublicmarketsd.com/",
+        "hours": [
+          "Monday: 9:00 AM – 8:00 PM",
+          "Tuesday: 9:00 AM – 8:00 PM",
+          "Wednesday: 9:00 AM – 8:00 PM",
+          "Thursday: 9:00 AM – 8:00 PM",
+          "Friday: 9:00 AM – 8:00 PM",
+          "Saturday: 9:00 AM – 8:00 PM",
+          "Sunday: 9:00 AM – 8:00 PM"
+        ],
+        "id": "sd-liberty-public-market",
+        "priceLevel": null,
+        "order": "Food hall in Liberty Station; something for everyone",
+        "reservations": "walk-in",
+        "reservable": false
+      },
+      {
+        "name": "The Taco Stand",
+        "address": "621 Pearl St, La Jolla, CA 92037, USA",
+        "latitude": 32.839351799999996,
+        "longitude": -117.2768191,
+        "rating": 4.6,
+        "reviewCount": 6669,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJ64xh0eUD3IARg7gW9skpNQc",
+        "googleMapsUri": "https://maps.google.com/?cid=519367279425009795",
+        "officialWebsiteUrl": "http://www.letstaco.com/",
+        "hours": [
+          "Monday: 9:00 AM – 9:00 PM",
+          "Tuesday: 9:00 AM – 9:00 PM",
+          "Wednesday: 9:00 AM – 9:00 PM",
+          "Thursday: 9:00 AM – 9:00 PM",
+          "Friday: 9:00 AM – 10:00 PM",
+          "Saturday: 9:00 AM – 10:00 PM",
+          "Sunday: 9:00 AM – 9:00 PM"
+        ],
+        "id": "sd-the-taco-stand",
+        "priceLevel": 1,
+        "order": "Baja-style tacos; the al pastor",
+        "reservations": "walk-in",
+        "reservable": false
+      }
+    ],
+    "activities": [
+      {
+        "name": "Balboa Park",
+        "address": "San Diego, CA, USA",
+        "latitude": 32.734147899999996,
+        "longitude": -117.14455299999997,
+        "rating": 4.8,
+        "reviewCount": 79729,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJA8tw-pZU2YARxPYVsDwL8-0",
+        "googleMapsUri": "https://maps.google.com/?cid=17146060561609782980",
+        "officialWebsiteUrl": "https://balboapark.org/",
+        "hours": [
+          "Monday: Open 24 hours",
+          "Tuesday: Open 24 hours",
+          "Wednesday: Open 24 hours",
+          "Thursday: Open 24 hours",
+          "Friday: Open 24 hours",
+          "Saturday: Open 24 hours",
+          "Sunday: Open 24 hours"
+        ],
+        "id": "sd-balboa-park",
+        "estimatedCostLow": 0,
+        "estimatedCostHigh": 0,
+        "isFree": true,
+        "durationMinutes": 180,
+        "category": "park",
+        "description": "Gardens, Spanish-style architecture and walking paths; museums inside charge separately"
+      },
+      {
+        "name": "La Jolla Cove",
+        "address": "La Jolla Cove, San Diego, CA 92037, USA",
+        "latitude": 32.8503895,
+        "longitude": -117.27294350000001,
+        "rating": 4.8,
+        "reviewCount": 5325,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJ6-V2qP4D3IARF8anKDxl_5A",
+        "googleMapsUri": "https://maps.google.com/?cid=10448180969577367063",
+        "officialWebsiteUrl": null,
+        "hours": [],
+        "id": "sd-la-jolla-cove",
+        "estimatedCostLow": 0,
+        "estimatedCostHigh": 0,
+        "isFree": true,
+        "durationMinutes": 60,
+        "category": "nature",
+        "description": "Sea lions and seals on the rocks, tide pools at low tide"
+      },
+      {
+        "name": "Sunset Cliffs Natural Park",
+        "address": "Ladera St, San Diego, CA 92107, USA",
+        "latitude": 32.715915,
+        "longitude": -117.25516789999999,
+        "rating": 4.8,
+        "reviewCount": 9018,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJA65lSMOr3oARFZHgtdTySeo",
+        "googleMapsUri": "https://maps.google.com/?cid=16882291673573396757",
+        "officialWebsiteUrl": "https://www.sandiego.gov/park-and-recreation/parks/regional/shoreline/sunset",
+        "hours": [
+          "Monday: Open 24 hours",
+          "Tuesday: Open 24 hours",
+          "Wednesday: Open 24 hours",
+          "Thursday: Open 24 hours",
+          "Friday: Open 24 hours",
+          "Saturday: Open 24 hours",
+          "Sunday: Open 24 hours"
+        ],
+        "id": "sd-sunset-cliffs-natural-park",
+        "estimatedCostLow": 0,
+        "estimatedCostHigh": 0,
+        "isFree": true,
+        "durationMinutes": 60,
+        "category": "nature",
+        "description": "Clifftop walk for sunset over the Pacific"
+      },
+      {
+        "name": "Old Town San Diego State Historic Park",
+        "address": "San Diego Avenue and, Twiggs St, San Diego, CA 92110, USA",
+        "latitude": 32.7549063,
+        "longitude": -117.19764070000001,
+        "rating": 4.7,
+        "reviewCount": 31990,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJe9OrW-eq3oARuXXd8wQMg14",
+        "googleMapsUri": "https://maps.google.com/?cid=6810300276925101497",
+        "officialWebsiteUrl": "https://www.parks.ca.gov/?page_id=663",
+        "hours": [
+          "Monday: 10:00 AM – 5:00 PM",
+          "Tuesday: 10:00 AM – 5:00 PM",
+          "Wednesday: 10:00 AM – 5:00 PM",
+          "Thursday: 10:00 AM – 5:00 PM",
+          "Friday: 10:00 AM – 5:00 PM",
+          "Saturday: 10:00 AM – 5:00 PM",
+          "Sunday: 10:00 AM – 5:00 PM"
+        ],
+        "id": "sd-old-town-san-diego-state-historic-park",
+        "estimatedCostLow": 0,
+        "estimatedCostHigh": 0,
+        "isFree": true,
+        "durationMinutes": 90,
+        "category": "history",
+        "description": "Free historic park with small museums and adobe buildings"
+      },
+      {
+        "name": "USS Midway Museum",
+        "address": "910 N Harbor Dr, San Diego, CA 92101, USA",
+        "latitude": 32.7137398,
+        "longitude": -117.17512649999999,
+        "rating": 4.8,
+        "reviewCount": 53304,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJwYBuKqtU2YARslNFQDCJt_s",
+        "googleMapsUri": "https://maps.google.com/?cid=18138116864587682738",
+        "officialWebsiteUrl": "https://www.midway.org/",
+        "hours": [
+          "Monday: 10:00 AM – 5:00 PM",
+          "Tuesday: 10:00 AM – 5:00 PM",
+          "Wednesday: 10:00 AM – 5:00 PM",
+          "Thursday: 10:00 AM – 5:00 PM",
+          "Friday: 10:00 AM – 5:00 PM",
+          "Saturday: 10:00 AM – 5:00 PM",
+          "Sunday: 10:00 AM – 5:00 PM"
+        ],
+        "id": "sd-uss-midway-museum",
+        "estimatedCostLow": 30,
+        "estimatedCostHigh": 40,
+        "isFree": false,
+        "durationMinutes": 180,
+        "category": "museum",
+        "description": "Aircraft carrier museum on the bay"
+      },
+      {
+        "name": "San Diego Zoo",
+        "address": "2920 Zoo Dr, San Diego, CA 92101, USA",
+        "latitude": 32.7360353,
+        "longitude": -117.1509849,
+        "rating": 4.7,
+        "reviewCount": 67712,
+        "ratingSource": "Google",
+        "googlePlaceId": "ChIJyYB_SZVU2YARR-I1Jjf08F0",
+        "googleMapsUri": "https://maps.google.com/?cid=6769178757639299655",
+        "officialWebsiteUrl": "https://zoo.sandiegozoo.org/",
+        "hours": [
+          "Monday: 9:00 AM – 5:00 PM",
+          "Tuesday: 9:00 AM – 5:00 PM",
+          "Wednesday: 9:00 AM – 5:00 PM",
+          "Thursday: 9:00 AM – 5:00 PM",
+          "Friday: 9:00 AM – 5:00 PM",
+          "Saturday: 9:00 AM – 5:00 PM",
+          "Sunday: 9:00 AM – 5:00 PM"
+        ],
+        "id": "sd-san-diego-zoo",
+        "estimatedCostLow": 70,
+        "estimatedCostHigh": 85,
+        "isFree": false,
+        "durationMinutes": 300,
+        "category": "zoo",
+        "description": "The city's famous zoo in Balboa Park"
+      }
+    ],
+    "airportRide": {
+      "airport": "San Diego International Airport (SAN)",
+      "airportLatitude": 32.7328909,
+      "airportLongitude": -117.1897127,
+      "toCenterLabel": "downtown",
+      "transit": {
+        "summary": "MTS Route 992 runs directly from both terminals to downtown, across from Santa Fe Depot",
+        "fare": "About $2.50 one way, or a $6 day pass earned by tapping a card or the PRONTO app",
+        "checkUrl": "https://www.sdmts.com/getting-around/airport",
+        "checkLabel": "Check MTS",
+        "note": "Fares come from an older MTS fare sheet; check current fares before you go"
+      },
+      "rideshare": {
+        "summary": "Uber and Lyft run from the terminals",
+        "fare": "About $10–20 to downtown, 10–15 minutes; expect surges during big events",
+        "provider": "Uber"
+      },
+      "miles": 3,
+      "sources": [
+        "https://www.sdmts.com/getting-around/airport",
+        "https://www.sdmts.com/sites/default/files/routes/pdfnext/992.pdf",
+        "https://leveled-mgmt.pages.dev/san-diego/guests/downtown/getting-around"
+      ]
+    }
   },
 };
 

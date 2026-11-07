@@ -77,10 +77,10 @@ export function LaunchSections({ item }) {
 
     {data.airportRide ? <Section id="airport-heading" title="From the airport">
       <dl className="mt-6 grid gap-px border border-black/10 bg-black/10 sm:grid-cols-2">
-        <div className="bg-bg p-5"><dt className="eyebrow">Bus</dt><dd className="mt-2 text-sm">{data.airportRide.transit.summary}. {data.airportRide.transit.fare}.</dd><dd className="mt-1 text-xs text-subtle">{data.airportRide.transit.note}. <a href={data.airportRide.transit.checkUrl} target="_blank" rel="noopener" className="underline underline-offset-2">Check RTC</a></dd></div>
+        <div className="bg-bg p-5"><dt className="eyebrow">Bus</dt><dd className="mt-2 text-sm">{data.airportRide.transit.summary}. {data.airportRide.transit.fare}.</dd><dd className="mt-1 text-xs text-subtle">{data.airportRide.transit.note}. <a href={data.airportRide.transit.checkUrl} target="_blank" rel="noopener" className="underline underline-offset-2">{data.airportRide.transit.checkLabel || "Check current fares"}</a></dd></div>
         <div className="bg-bg p-5"><dt className="eyebrow">Rideshare</dt><dd className="mt-2 text-sm">{data.airportRide.rideshare.summary}. {data.airportRide.rideshare.fare}.</dd>{uber ? <dd className="mt-3"><a href={uber} target="_blank" rel="noopener" className="btn btn-secondary">Uber to {firstHotel.name} ↗</a></dd> : null}</div>
       </dl>
-      <p className="mt-2 text-xs text-subtle">{data.airportRide.airport} is about {data.airportRide.miles} miles from the Strip.</p>
+      <p className="mt-2 text-xs text-subtle">{data.airportRide.airport} is about {data.airportRide.miles} miles from {data.airportRide.toCenterLabel || "the city center"}.</p>
     </Section> : null}
   </>;
 }
