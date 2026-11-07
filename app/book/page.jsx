@@ -48,7 +48,12 @@ export default async function BookPage({ searchParams }) {
       {summary ? <p className="tabular mt-3 text-muted">{summary}</p> : null}
       <p className="mt-6 text-base leading-7 text-muted">Each booking opens in its own tab with your dates and travelers already filled in. Review the details and confirm on each partner&apos;s site. You pay the partner directly.</p>
 
-      <div className="mt-8"><OpenAllBookings items={items} /></div>
+      <ol className="mt-8 space-y-3 border border-black/15 bg-surface p-5 text-sm leading-6">
+        <li><strong className="font-semibold">1. Sign in to Booking.com first.</strong> Booking.com then fills in your saved name, email, phone and card, so each tab is one step from Book. <a href="https://account.booking.com/sign-in" target="_blank" rel="noopener" className="underline decoration-black/25 underline-offset-4 hover:decoration-ink">Sign in to Booking.com</a></li>
+        <li><strong className="font-semibold">2. Open everything.</strong> Your dates, travelers and rooms are already filled in.</li>
+        <li><strong className="font-semibold">3. Check the price and press Book in each tab.</strong> You pay each partner directly; GlobTrek never sees your card.</li>
+      </ol>
+      <div className="mt-6"><OpenAllBookings items={items} /></div>
 
       <ol className="mt-10 divide-y divide-black/10 border-y border-black/10">
         {items.map((item) => (

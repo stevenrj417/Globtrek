@@ -6,7 +6,9 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { discoverySliderToUnknownness, legacyBudgetLabel, normalizeBudget } from "../lib/recommendation/budgetInput";
 import { TRAVEL_AREA_OPTIONS } from "../lib/recommendation/travelAreaOptions";
 
+// Budget comes first: GlobTrek starts from what you have, not where you want to go.
 const questions = [
+  { id: "budget", question: "How much do you have for this trip?", type: "budget" },
   {
     id: "alive",
     question: "What setting sounds best?",
@@ -73,7 +75,6 @@ const questions = [
       { label: "Shopping", image: "/quiz/shopping.jpg", alt: "Editorial fashion in Paris" },
     ],
   },
-  { id: "budget", question: "How much do you want to spend?", type: "budget" },
 ];
 
 const preferenceSteps = questions.length + 1;
@@ -179,7 +180,7 @@ function BudgetQuestion({ value, includes, spendStyle, onSpendStyle, onValueChan
     <div className="flex items-center justify-between"><span className="text-xl font-semibold uppercase tracking-tight-3">GlobTrek</span><Progress step={step} /></div>
     <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col justify-center py-12 text-center">
       <p className="text-micro uppercase tracking-editorial text-subtle">Your total trip budget</p>
-      <h1 className="mx-auto mt-7 max-w-4xl text-[clamp(2.8rem,6vw,6.5rem)] font-medium leading-[0.9] tracking-tight-4">How much do you want to spend?</h1>
+      <h1 className="mx-auto mt-7 max-w-4xl text-[clamp(2.8rem,6vw,6.5rem)] font-medium leading-[0.9] tracking-tight-4">How much do you have for this trip?</h1>
       <label className="mx-auto mt-12 flex max-w-3xl items-center justify-center border-b border-black pb-5">
         <span className="mr-3 font-serif text-[clamp(3rem,7vw,7rem)] font-light">$</span>
         <input aria-label="Exact trip budget" inputMode="numeric" autoComplete="off" value={formatted} onChange={(event) => onValueChange(event.target.value.replace(/\D/g, "").slice(0, 7))} placeholder="800" className="min-w-0 w-[7ch] bg-transparent text-center font-serif text-[clamp(3rem,7vw,7rem)] font-light tracking-tight-3 outline-none placeholder:text-black/18" />
@@ -197,7 +198,7 @@ function BudgetQuestion({ value, includes, spendStyle, onSpendStyle, onValueChan
       </fieldset>
     </div>
     <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-6 border-t border-black/10 pt-7">
-      <button type="button" onClick={onBack} className="min-h-12 text-xs uppercase tracking-label text-muted">← Back</button>
+      {step > 0 ? <button type="button" onClick={onBack} className="min-h-12 text-xs uppercase tracking-label text-muted">← Back</button> : <span />}
       <button type="button" disabled={!valid} onClick={() => onContinue(budget)} className="min-h-14 bg-black px-8 text-xs font-semibold uppercase tracking-label text-white disabled:opacity-25">Continue →</button>
     </div>
   </div>;
@@ -374,6 +375,7 @@ export default function TravelQuiz() {
   const timer = useRef(null);
   const [preferredDestination, setPreferredDestination] = useState(null);
   const [restored, setRestored] = useState(false);
+  const [skipSetting, setSkipSetting] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -394,18 +396,19 @@ export default function TravelQuiz() {
         setTravelAreaPreference(draft.travelAreaPreference || "anywhere");
         setGuestCount(draft.guestCount || "2");
         setStep(restoredStep);
-      } else if (setting && questions[0].options.some((option) => option.label === setting)) {
+      } else if (setting && questions.find((question) => question.id === "alive")?.options.some((option) => option.label === setting)) {
         setAnswers({ alive: setting });
-        setStep(1);
+        setSkipSetting(true);
+        setStep(0);
         params.delete("setting");
-        window.history.replaceState({ ...window.history.state, quizStep: 1 }, "", `${window.location.pathname}${params.size ? `?${params}` : ""}`);
+        window.history.replaceState({ ...window.history.state, quizStep: 0 }, "", `${window.location.pathname}${params.size ? `?${params}` : ""}`);
         track("quiz_started", { source: "vibe", setting });
       }
       setRestored(true);
     }, 0);
     const onPop = (event) => { if (typeof event.state?.quizStep === "number") setStep(event.state.quizStep); };
     window.addEventListener("popstate", onPop);
-    window.history.replaceState({ ...window.history.state, quizStep: setting ? 1 : restoredStep }, "");
+    window.history.replaceState({ ...window.history.state, quizStep: setting ? 0 : restoredStep }, "");
     return () => { window.removeEventListener("popstate", onPop); window.clearTimeout(initialize); window.clearTimeout(timer.current); };
   }, []);
 
@@ -426,7 +429,6 @@ export default function TravelQuiz() {
   }
 
   function choose(label) {
-    if (step === 0) track("quiz_started");
     setAnswers((value) => ({ ...value, [current.id]: label }));
     track("quiz_step_completed", { step: step + 1, question: current.id });
     timer.current = window.setTimeout(() => go(step + 1), 250);
@@ -440,8 +442,10 @@ export default function TravelQuiz() {
   }
 
   function continueBudget(budget) {
+    if (step === 0) track("quiz_started", { first: "budget" });
     setAnswers((value) => ({ ...value, memory: legacyBudgetLabel(budget), exactBudget: budget, includedBudgetCategories: budgetIncludes }));
-    go(step + 1);
+    // A setting picked on the homepage is already answered, so skip that question.
+    go(skipSetting && answers.alive && adaptiveQuestions[step + 1]?.id === "alive" ? step + 2 : step + 1);
   }
 
   function submit(event) {

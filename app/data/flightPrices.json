@@ -1,0 +1,7 @@
+{
+  "source": "Travelpayouts Aviasales Data API (grouped_prices, market us)",
+  "currency": "USD",
+  "checkedAt": null,
+  "basis": "Not refreshed yet: run npm run flights:refresh",
+  "routes": {}
+}

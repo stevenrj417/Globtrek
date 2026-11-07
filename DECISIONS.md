@@ -63,3 +63,9 @@ Choices made during the household-name upgrade, with the reason. When the spec w
 - **No dead ends.** The results page explains which constraint failed and offers only fixes that were re-run through the matcher.
 - **No "GlobTrek × Booking.com" lockup.** GlobTrek is a CJ affiliate; a co-branded partnership mark needs Booking.com's written approval. The logo appears beside "Book on Booking.com"-style lines instead.
 - **Not built yet (needs live flight data, e.g. Duffel):** baggage totals, layover/self-transfer/airport-change warnings, nearby-airport price comparison, flexible-date savings and price alerts. Today's warning covers arrival airports 15+ miles from the city center.
+
+## Pre-filled bookings and real fares (2026-11-08)
+
+- **Personal and payment details never go in links.** Partner deep links carry trip details only (dates, guests, rooms, route, currency). Putting names, emails, phones or cards in URLs would leak them into history, logs and analytics. Booking.com fills saved details for signed-in travelers, so the booking flow asks them to sign in first.
+- **Flight fares** come from the Travelpayouts Aviasales Data API (`grouped_prices`, market `us`, USD): cached fares travelers found in the last 48 hours, kept up to 7 days. They are averaged into two-week windows and refreshed by script; they are not live quotes. Flight booking links stay on Booking.com Flights through CJ.
+- **Exact hotel prices** need Booking.com's Demand API (gated). Travelpayouts' hotel API is granted case by case. Hotel prices stay labeled as estimates until one of those is approved.

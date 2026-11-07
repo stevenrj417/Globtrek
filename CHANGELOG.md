@@ -1,5 +1,11 @@
 # Changelog
 
+## Budget first, real flight fares (2026-11-08)
+
+- The quiz opens with "How much do you have for this trip?"; a setting chosen on the homepage skips its question.
+- Travelpayouts (Aviasales Data API) integration: `npm run flights:refresh` pulls the cheapest round trip per departure date and writes two-week averages (26 windows a year) to `app/data/flightPrices.json`. Trips use the window for their departure date (cheapest fare in absolute-cheapest mode); results label the source and check date. Without data, the researched model is used.
+- Booking page and results tell travelers to sign in to Booking.com first so it fills their saved details; partner links can't carry names, contact or payment details.
+
 ## Budget-first trips (2026-11-04)
 
 - 19 budget cities published (54 destinations total), priced with a budget editorial layer and researched Portland fares. Cheapest from Portland in absolute-cheapest mode, 1 traveler, 3 nights: Las Vegas ~$483, Oaxaca ~$491, Guadalajara ~$504.

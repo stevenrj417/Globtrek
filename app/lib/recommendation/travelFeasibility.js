@@ -1,3 +1,6 @@
+import flightPrices from "../../data/flightPrices.json" with { type: "json" };
+import { fareForDate } from "../flights/travelpayouts.js";
+
 const UPDATED = "2026-08-16";
 const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -156,6 +159,21 @@ export function estimateFlight(profile, destination) {
       priceSource: "route_market_estimate_without_origin", priceLastChecked: UPDATED, confidence: 0.25, isLive: false,
       cabinClass: "economy", tripType: "round_trip", basis: "Modeled monthly planning average; origin required for a route-specific estimate",
       monthlyAverageEconomyRoundTrip: MONTH_NAMES.map((monthName, index) => ({ month: index + 1, monthName, average: Math.round(average * monthMultiplier(index + 1)) })),
+    };
+  }
+  // Real fares first: two-week averages of what Aviasales travelers actually found.
+  const observed = fareForDate(flightPrices.routes?.[`${origin}:${airport}`], profile?.dates?.start || null);
+  if (observed) {
+    const average = profile?.spendStyle === "cheapest" ? observed.cheapest : observed.average;
+    return {
+      low: observed.cheapest, high: Math.round(observed.average * 1.12), average, currency: "USD",
+      priceSource: "aviasales_cached_fares", priceLastChecked: flightPrices.checkedAt, confidence: 0.8, isLive: false,
+      cabinClass: "economy", tripType: "round_trip",
+      basis: observed.yearRound
+        ? `Year-round average of round-trip fares travelers found from ${origin} (checked ${flightPrices.checkedAt})`
+        : `Average round-trip fare travelers found for departures ${observed.start} to ${observed.end} (checked ${flightPrices.checkedAt})`,
+      fareWindow: observed,
+      monthlyAverageEconomyRoundTrip: [],
     };
   }
   const route = routeFor(profile, destination);
