@@ -2,7 +2,7 @@ import { buildBudgetPlan } from "./budgetEngine.js";
 import { assessTravelFeasibility } from "./travelFeasibility.js";
 import { destinationMatchesTravelArea } from "./travelArea.js";
 
-const ANSWER_WEIGHTS = { alive: 16, duration: 8, luxury: 10, hotel: 9, escape: 8, self: 5 };
+const ANSWER_WEIGHTS = { alive: 16, duration: 8, luxury: 10, escape: 8, self: 5 };
 
 function preferenceScore(destination, answers) {
   const possible = Object.entries(ANSWER_WEIGHTS).filter(([key]) => answers?.[key]);
@@ -19,6 +19,11 @@ function unknownnessScore(destination, desired) {
 function tripLengthScore(destination, nights) {
   const preferred = destination.nights.startsWith("3") ? 4 : destination.nights.startsWith("10") ? 12 : 7;
   return Math.max(20, Math.round(100 - Math.abs(preferred - nights) * 9));
+}
+
+function effectiveCost(destination) {
+  const fit = (destination.preferenceMatchScore * 0.6 + destination.travelTimeFeasibilityScore * 0.4) / 100;
+  return destination.budgetPlan.budgetCheckTotal * (1.1 - 0.3 * fit);
 }
 
 export function rankDestinations(destinations, profile) {
@@ -41,6 +46,8 @@ export function rankDestinations(destinations, profile) {
     const bands = { excellent: 0, acceptable: 1, unknown: 1, poor: 2 };
     const aBand = a.travelFeasibility.status === "unreasonable" ? 3 : bands[a.budgetCompatibility] ?? 2;
     const bBand = b.travelFeasibility.status === "unreasonable" ? 3 : bands[b.budgetCompatibility] ?? 2;
-    return aBand - bBand || b.destinationMatchScore - a.destinationMatchScore || b.rawDestinationMatchScore - a.rawDestinationMatchScore || a.name.localeCompare(b.name);
+    // Budget-first: the cheapest trip from the traveler's own airport wins. A strong
+    // taste match can make a place up to 20% "cheaper" when comparing; a weak one, up to 10% dearer.
+    return aBand - bBand || effectiveCost(a) - effectiveCost(b) || b.destinationMatchScore - a.destinationMatchScore || a.name.localeCompare(b.name);
   });
 }

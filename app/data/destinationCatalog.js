@@ -54,7 +54,7 @@ export function completeness(destination) {
 
 function toPage(destination) {
   const tags = destination.tags || [];
-  const estimate = estimateTrip(destination, { nights: 5, travelers: 2 });
+  const estimate = estimateTrip(destination, { nights: 5, travelers: 1 });
   return {
     id: destination.id,
     slug: slugFor(destination),

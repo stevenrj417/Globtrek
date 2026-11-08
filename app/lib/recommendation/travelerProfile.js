@@ -75,7 +75,9 @@ export function normalizeTravelerProfile(input = {}) {
     budgetIncludesActivities: includedBudgetCategories.activities,
     budgetIncludesTransportation: includedBudgetCategories.transportation,
     budgetMode: input.budgetMode === "closest" ? "closest" : "under",
-    spendStyle: SPEND_STYLES.includes(input.spendStyle || input.answers?.spendStyle) ? (input.spendStyle || input.answers?.spendStyle) : "value",
+    // GlobTrek is a budget site: rock bottom unless the traveler picks otherwise.
+    spendStyle: SPEND_STYLES.includes(input.spendStyle || input.answers?.spendStyle) ? (input.spendStyle || input.answers?.spendStyle) : "cheapest",
+    lodging: { "Hostel bed": "hostel", "Private room": "private" }[answers.hotel] || "either",
     preferredDestinationId: input.destination || input.preferredDestination?.id || null,
     pace: answers.escape || null,
     relaxationPreference: ["Slow mornings", "Mostly relaxing"].includes(answers.escape) ? "high" : answers.escape === "Packed schedule" ? "low" : "medium",

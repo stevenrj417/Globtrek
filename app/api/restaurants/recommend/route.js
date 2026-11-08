@@ -5,6 +5,11 @@ import { createClient } from "../../../lib/supabase/server";
 import { GooglePlacesDiscoveryProvider } from "../../../lib/google-places/GooglePlacesDiscoveryProvider";
 import { launchDinners } from "../../../data/launchSet";
 
+// GlobTrek is a budget site: unless a traveler asks for comfort, no expensive tables.
+function pricey(level) {
+  return /EXPENSIVE/.test(String(level || "")) || Number(level) >= 3 || /^\${3,}$/.test(String(level || ""));
+}
+
 export async function POST(request) {
   const body = await request.json().catch(() => ({}));
   const destination = destinations.find((item) => (item.id || item.airport) === body.destinationId);
@@ -15,12 +20,14 @@ export async function POST(request) {
   try {
     let restaurants = [];
     let source = "supabase_verified";
-    try { restaurants = await new SupabaseRestaurantProvider(await createClient()).searchRestaurants({ destinationId: destination.id || destination.airport, names: Array.isArray(body.names) ? body.names.filter((name) => typeof name === "string") : [], limit: 4 }); }
+    const cheap = body.spendStyle !== "comfortable";
+    try { restaurants = await new SupabaseRestaurantProvider(await createClient()).searchRestaurants({ destinationId: destination.id || destination.airport, names: Array.isArray(body.names) ? body.names.filter((name) => typeof name === "string") : [], limit: cheap ? 12 : 4 }); }
     catch (error) { console.warn("Restaurant catalog unavailable; using verified place discovery.", error instanceof Error ? error.message : "unknown"); }
     if (!restaurants.length && process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY) {
-      restaurants = await new GooglePlacesDiscoveryProvider().discoverRestaurants(destination, { limit: 4 });
+      restaurants = await new GooglePlacesDiscoveryProvider().discoverRestaurants(destination, { limit: 8, cheap });
       source = "google_places_verified";
     }
+    if (cheap) restaurants = restaurants.filter((restaurant) => !pricey(restaurant.priceLevel));
     const openTable = new OpenTableClient();
     const canCheckAvailability = openTable.isConfigured() && body.startDateTime && body.partySize && restaurants.some((restaurant) => restaurant.openTableRestaurantId);
     const enriched = await Promise.all(restaurants.map(async (restaurant) => {

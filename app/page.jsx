@@ -4,6 +4,7 @@ import { SiteFooter, SiteHeader } from "./components/SiteChrome";
 import { EmailSignup } from "./components/EmailSignup";
 import { TripCard } from "./components/TripCard";
 import { trendingTrips } from "./data/trending";
+import { CHEAP_STAYS } from "./data/cheapStays";
 import { formatMoney } from "./lib/recommendation/tripEstimate";
 import { BookingLogo, BookingPartnerBadge } from "./components/PartnerLogo";
 
@@ -22,12 +23,10 @@ const vibes = [
 ];
 
 function budgetFacts() {
-  const [vegas, oaxaca, hanoi] = trendingTrips;
-  return [
-    vegas.planning && { trip: vegas, text: `A simple room from ~${formatMoney(vegas.planning.hotelNight)} a night` },
-    oaxaca.planning && { trip: oaxaca, text: `Food from ~${formatMoney(oaxaca.planning.foodPerPersonDay)} a day per person` },
-    hanoi.planning && { trip: hanoi, text: `Getting around from ~${formatMoney(hanoi.planning.localTransportDay)} a day` },
-  ].filter(Boolean);
+  return trendingTrips.map((trip) => {
+    const stay = CHEAP_STAYS[trip.airport];
+    return stay?.bedNight ? { trip, text: `Hostel beds from ~${formatMoney(stay.bedNight)} a night` } : null;
+  }).filter(Boolean);
 }
 
 const tripHref = (trip) => `/discover/quick?destination=${trip.id}&destinationName=${encodeURIComponent(trip.name)}&source=trending`;
@@ -96,7 +95,7 @@ export default function Home() {
               </li>
             ))}
           </ul>
-          <p className="mt-3 text-center text-xs text-subtle">GlobTrek planning averages for May. Not live prices.</p>
+          <p className="mt-3 text-center text-xs text-subtle">Cheapest well-reviewed beds on Booking.com, taxes in, checked November 2026. Not live prices.</p>
         </div>
       </section>
 

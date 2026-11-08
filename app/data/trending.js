@@ -18,9 +18,10 @@ export const trendingTrips = TRENDING.map((trip) => {
   return {
     ...trip,
     image: trip.image || sizedPhoto(destination.image, 960),
+    airport: destination.airport,
     name: displayName(destination.city),
     country: displayName(destination.country),
-    estimate: estimateTrip(destination, { nights: trip.nights, travelers: 2 }),
+    estimate: estimateTrip(destination, { nights: trip.nights, travelers: 1 }),
     planning: destination.planningAverages?.monthly?.[4] || null,
   };
 });

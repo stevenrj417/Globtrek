@@ -24,6 +24,11 @@ export async function POST(request) {
       activities = await new GooglePlacesDiscoveryProvider().discoverActivities(destination, { limit: 12 });
       source = "google_places_verified";
     }
+    // Rock bottom leads with the destination's free highlights.
+    if (profile.spendStyle === "cheapest" && destination.freeHighlights?.length) {
+      const free = destination.freeHighlights.map((name, index) => ({ id: `${destination.id || destination.airport}-free-${index}`, destinationId: destination.id || destination.airport, name, description: "Free", category: "free", isFree: true, estimatedCostLow: 0, estimatedCostHigh: 0, provider: "official", googleMapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name}, ${destination.city}`)}`, detailsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name}, ${destination.city}`)}`, imageUrl: null }));
+      activities = [...free, ...activities.filter((activity) => !free.some((item) => item.name === activity.name))];
+    }
     return Response.json({ activities, source, isLive: false });
   } catch (error) {
     console.warn("Verified activity catalog unavailable.", error instanceof Error ? error.message : "unknown");

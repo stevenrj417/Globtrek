@@ -1,5 +1,6 @@
 import flightPrices from "../../data/flightPrices.json" with { type: "json" };
 import { fareForDate } from "../flights/travelpayouts.js";
+import { FARE_SNAPSHOT_CHECKED, monthLabel, snapshotFare } from "../../data/fareSnapshots.js";
 
 const UPDATED = "2026-08-16";
 const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -45,13 +46,17 @@ function countryRegion(country) {
 const ROUTE_OVERRIDES = {
   "PDX:OGG": { flightHours: 5.8, connections: 0, low: 360, high: 720, popularity: "established" },
   "PDX:LAS": { flightHours: 2.2, connections: 0, low: 160, high: 350, popularity: "established" },
-  "PDX:HNL": { flightHours: 5.8, connections: 0, low: 350, high: 450, popularity: "established" },
+  "PDX:HNL": { flightHours: 5.8, connections: 0, low: 480, high: 600, popularity: "established" },
   "PDX:LAX": { flightHours: 2.4, connections: 0, low: 110, high: 180, popularity: "established" },
   "PDX:BUR": { flightHours: 2.3, connections: 0, low: 120, high: 190, popularity: "established" },
   "PDX:SAN": { flightHours: 2.5, connections: 0, low: 150, high: 200, popularity: "established" },
   "PDX:PSP": { flightHours: 2.4, connections: 0, low: 145, high: 200, popularity: "established" },
   "PDX:PHX": { flightHours: 2.6, connections: 0, low: 106, high: 200, popularity: "established" },
-  "PDX:MEX": { flightHours: 5.5, connections: 0, low: 255, high: 365, popularity: "established" },
+  "PDX:MEX": { flightHours: 5.5, connections: 0, low: 597, high: 700, popularity: "established" },
+  "PDX:OAX": { flightHours: 8, connections: 1, low: 664, high: 800, popularity: "connecting" },
+  "PDX:GDL": { flightHours: 4.5, connections: 0, low: 491, high: 620, popularity: "established" },
+  "PDX:PVR": { flightHours: 4.2, connections: 0, low: 511, high: 600, popularity: "established" },
+  "PDX:MID": { flightHours: 8.5, connections: 1, low: 666, high: 800, popularity: "connecting" },
   "PDX:MRS": { flightHours: 14.5, connections: 1, low: 850, high: 1450, popularity: "connecting" },
   "LHR:MRS": { flightHours: 2, connections: 0, low: 110, high: 360, popularity: "established" },
 };
@@ -149,6 +154,7 @@ function routeFor(profile, destination) {
   return ROUTE_OVERRIDES[`${origin}:${airport}`] || coordinateRoute(profile, destination) || genericRoute(origin, airport, destination?.country);
 }
 
+const CARRIERS = { NK: "Spirit", F9: "Frontier", G4: "Allegiant", WN: "Southwest", AS: "Alaska", B6: "JetBlue", SY: "Sun Country", MX: "Breeze", HA: "Hawaiian", DL: "Delta", UA: "United", AA: "American" };
 const QUARTER_LABEL = { 1: "Jan–Mar", 2: "Apr–Jun", 3: "Jul–Sep", 4: "Oct–Dec" };
 
 // DOT fares are one way; a round trip is two. Cheapest mode uses the lowest-fare
@@ -170,7 +176,7 @@ function dotFare(route, profile) {
     low: Math.round(fareLow * 2), high: Math.round(fare * 2), average, currency: "USD",
     priceSource: "us_dot_average_fare_paid", priceLastChecked: flightPrices.latestPeriod || flightPrices.checkedAt, confidence: 0.8, isLive: false,
     cabinClass: "economy", tripType: "round_trip",
-    basis: `U.S. DOT average fare actually paid, ${when}${style === "cheapest" && single?.carrierLow ? ` on the cheapest airline (${single.carrierLow})` : ""}, taxes included`,
+    basis: `U.S. DOT average fare actually paid, ${when}${style === "cheapest" && single?.carrierLow ? ` on the cheapest airline (${CARRIERS[single.carrierLow] || single.carrierLow})` : ""}, taxes included`,
     fareQuarter: single ? { quarter, year: single.year, carrierLow: single.carrierLow } : null,
     // Each month gets its quarter's real average (or the year-round mean if that quarter is missing).
     monthlyAverageEconomyRoundTrip: MONTH_NAMES.map((monthName, index) => {
@@ -193,8 +199,21 @@ export function estimateFlight(profile, destination) {
       monthlyAverageEconomyRoundTrip: MONTH_NAMES.map((monthName, index) => ({ month: index + 1, monthName, average: Math.round(average * monthMultiplier(index + 1)) })),
     };
   }
-  // Real fares first. U.S. DOT quarterly averages of fares actually paid (domestic),
+  // Real fares first: Google Flights fares for the traveler's month, then U.S. DOT quarterly averages of fares actually paid (domestic),
   // or Travelpayouts two-week averages when that feed is configured.
+  const snapshot = snapshotFare(origin, airport, profile?.dates?.start, profile?.dates?.flexible || !profile?.dates?.start);
+  if (snapshot) {
+    const average = profile?.spendStyle === "cheapest" ? snapshot.typical : Math.round(snapshot.typical * (profile?.spendStyle === "comfortable" ? 1.25 : 1.1));
+    return {
+      low: snapshot.cheapest, high: Math.round(snapshot.typical * 1.3), average, currency: "USD",
+      priceSource: "google_flights_snapshot", priceLastChecked: FARE_SNAPSHOT_CHECKED, confidence: 0.85, isLive: false,
+      cabinClass: "economy", tripType: "round_trip",
+      basis: `${snapshot.cheapestMonth ? `Cheapest month to fly: ${monthLabel(snapshot.month)}. ` : ""}Real round-trip fares for ${monthLabel(snapshot.month)} on Google Flights${snapshot.days > 1 ? ` (lowest $${snapshot.cheapest}, most days about $${snapshot.typical})` : ` (cheapest airline, sampled midweek)`}, checked ${FARE_SNAPSHOT_CHECKED}; personal item only on budget airlines`,
+      fareMonth: snapshot.month,
+      cheapestMonth: Boolean(snapshot.cheapestMonth),
+      monthlyAverageEconomyRoundTrip: [],
+    };
+  }
   const dot = dotFare(flightPrices.routes?.[`${origin}:${airport}`], profile);
   if (dot) return dot;
   const observed = fareForDate(flightPrices.routes?.[`${origin}:${airport}`], profile?.dates?.start || null);

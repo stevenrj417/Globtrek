@@ -51,15 +51,11 @@ const questions = [
   },
   {
     id: "hotel",
-    question: "What type of stay do you prefer?",
-    type: "visual",
+    question: "Where will you sleep?",
     options: [
-      { label: "Boutique hotel", image: "/quiz/boutique-hotel.jpg", alt: "Editorial city style in Paris" },
-      { label: "Beach resort", image: "/quiz/beach-resort.jpg", alt: "White architecture beside the sea" },
-      { label: "Mountain lodge", image: "/quiz/mountain-lodge.jpg", alt: "A grand mountain hotel in Banff" },
-      { label: "Private villa", image: "/quiz/private-villa.jpg", alt: "A private villa surrounded by greenery" },
-      { label: "Design hotel", image: "/quiz/design-hotel.jpg", alt: "A minimal contemporary hotel interior" },
-      { label: "Traditional inn", image: "/quiz/traditional-inn.jpg", alt: "A traditional inn on a quiet Kyoto street" },
+      { label: "Whatever's cheapest", display: "Whatever's cheapest", image: "/quiz/surprise-me.jpg", alt: "Rio de Janeiro seen from above" },
+      { label: "Hostel bed", display: "Hostel bed", image: "/quiz/traditional-inn.jpg", alt: "A traditional inn on a quiet Kyoto street" },
+      { label: "Private room", display: "Cheap private room", image: "/quiz/boutique-hotel.jpg", alt: "Editorial city style in Paris" },
     ],
   },
   {
@@ -87,19 +83,8 @@ function loadAirportSearch() {
   }));
 }
 
-const stayOptionsBySetting = {
-  Ocean: ["Beach resort", "Private villa", "Boutique hotel", "Design hotel"],
-  Mountains: ["Mountain lodge", "Boutique hotel", "Design hotel", "Traditional inn"],
-  Cities: ["Boutique hotel", "Design hotel", "Traditional inn"],
-  "Road Trips": ["Mountain lodge", "Private villa", "Boutique hotel", "Traditional inn"],
-  Culture: ["Traditional inn", "Boutique hotel", "Design hotel", "Private villa"],
-};
-
-function questionsFor(answers) {
-  const allowedStays = stayOptionsBySetting[answers.alive];
-  return questions.map((question) => question.id === "hotel" && allowedStays
-    ? { ...question, options: question.options.filter((option) => allowedStays.includes(option.label)) }
-    : question);
+function questionsFor() {
+  return questions;
 }
 
 function Progress({ step }) {
@@ -170,7 +155,7 @@ const budgetCategoryLabels = {
   transportation: "Transportation",
 };
 
-const SPEND_OPTIONS = [["cheapest", "Absolute cheapest", "Deal fares, simple rooms, mostly free days"], ["value", "Best value", "The smartest spend for the money"], ["comfortable", "Cheap but comfortable", "A nicer room and more sit-down meals"]];
+const SPEND_OPTIONS = [["cheapest", "Rock bottom", "Cheapest airline, hostel beds, fast food, free things to do"], ["value", "Cheap but sane", "Cheap flights, a simple room, cheap sit-down meals"], ["comfortable", "A little comfort", "A nicer room and more sit-down meals"]];
 
 function BudgetQuestion({ value, includes, spendStyle, onSpendStyle, onValueChange, onToggle, onBack, onContinue, step }) {
   const budget = normalizeBudget(value);
@@ -367,7 +352,7 @@ export default function TravelQuiz() {
   const [isFlexible, setIsFlexible] = useState(false);
   const [originDetails, setOriginDetails] = useState(null);
   const [travelAreaPreference, setTravelAreaPreference] = useState("anywhere");
-  const [guestCount, setGuestCount] = useState("2");
+  const [guestCount, setGuestCount] = useState("1");
   const [discoveryLevel, setDiscoveryLevel] = useState(50);
   const [exactBudget, setExactBudget] = useState("");
   const [budgetIncludes, setBudgetIncludes] = useState({ flights: true, hotel: true, food: true, activities: true, transportation: true });
@@ -394,7 +379,7 @@ export default function TravelQuiz() {
         setTripStart(draft.tripStart || ""); setTripEnd(draft.tripEnd || ""); setIsFlexible(Boolean(draft.isFlexible));
         setOriginDetails(draft.originDetails || null);
         setTravelAreaPreference(draft.travelAreaPreference || "anywhere");
-        setGuestCount(draft.guestCount || "2");
+        setGuestCount(draft.guestCount || "1");
         setStep(restoredStep);
       } else if (setting && questions.find((question) => question.id === "alive")?.options.some((option) => option.label === setting)) {
         setAnswers({ alive: setting });
@@ -485,6 +470,6 @@ export default function TravelQuiz() {
 
   return <section id="quiz" className={`relative overflow-hidden bg-canvas text-ink transition-[opacity,transform] duration-300 ease-out ${phase === "leaving" ? "-translate-y-2 opacity-0" : phase === "leaving-back" ? "translate-y-2 opacity-0" : phase === "entering" ? "translate-y-2 opacity-0" : "translate-y-0 opacity-100"}`}>
     {preferredDestination ? <div className="pointer-events-none absolute inset-x-0 top-1 z-40 text-center"><span className="inline-flex border border-black/10 bg-canvas/90 px-3 py-1.5 text-micro uppercase tracking-label text-black/55 backdrop-blur">Planning {preferredDestination.name}</span></div> : null}
-    {step < adaptiveQuestions.length ? current.type === "budget" ? <BudgetQuestion value={exactBudget} includes={budgetIncludes} spendStyle={answers.spendStyle || "value"} onSpendStyle={(style) => setAnswers((value) => ({ ...value, spendStyle: style }))} onValueChange={setExactBudget} onToggle={(key) => setBudgetIncludes((currentIncludes) => ({ ...currentIncludes, [key]: !currentIncludes[key] }))} onBack={back} onContinue={continueBudget} step={step} /> : <VisualQuestion question={current} value={answers[current.id]} onChoose={choose} step={step} /> : step === adaptiveQuestions.length ? <DiscoveryQuestion value={discoveryLevel} onChange={setDiscoveryLevel} onBack={back} onContinue={continueDiscovery} /> : <DateQuestion answers={answers} setAnswers={setAnswers} tripStart={tripStart} tripEnd={tripEnd} isFlexible={isFlexible} setTripStart={setTripStart} setTripEnd={setTripEnd} setIsFlexible={setIsFlexible} originDetails={originDetails} setOriginDetails={setOriginDetails} travelAreaPreference={travelAreaPreference} setTravelAreaPreference={setTravelAreaPreference} guestCount={guestCount} setGuestCount={setGuestCount} onBack={back} onSubmit={submit} canSubmit={canSubmit} />}
+    {step < adaptiveQuestions.length ? current.type === "budget" ? <BudgetQuestion value={exactBudget} includes={budgetIncludes} spendStyle={answers.spendStyle || "cheapest"} onSpendStyle={(style) => setAnswers((value) => ({ ...value, spendStyle: style }))} onValueChange={setExactBudget} onToggle={(key) => setBudgetIncludes((currentIncludes) => ({ ...currentIncludes, [key]: !currentIncludes[key] }))} onBack={back} onContinue={continueBudget} step={step} /> : <VisualQuestion question={current} value={answers[current.id]} onChoose={choose} step={step} /> : step === adaptiveQuestions.length ? <DiscoveryQuestion value={discoveryLevel} onChange={setDiscoveryLevel} onBack={back} onContinue={continueDiscovery} /> : <DateQuestion answers={answers} setAnswers={setAnswers} tripStart={tripStart} tripEnd={tripEnd} isFlexible={isFlexible} setTripStart={setTripStart} setTripEnd={setTripEnd} setIsFlexible={setIsFlexible} originDetails={originDetails} setOriginDetails={setOriginDetails} travelAreaPreference={travelAreaPreference} setTravelAreaPreference={setTravelAreaPreference} guestCount={guestCount} setGuestCount={setGuestCount} onBack={back} onSubmit={submit} canSubmit={canSubmit} />}
   </section>;
 }

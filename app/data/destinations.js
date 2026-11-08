@@ -174,7 +174,7 @@ const trackedUrl = cjTracked;
 
 function travelerCount(trip) {
   const count = Number.parseInt(trip?.guestCount, 10);
-  return Number.isFinite(count) && count > 0 ? Math.min(count, 30) : 2;
+  return Number.isFinite(count) && count > 0 ? Math.min(count, 30) : 1;
 }
 
 export function bookingStayUrl(destination, trip = {}) {

@@ -36,8 +36,9 @@ test("itinerary is curated horizontally and dining and experiences are separate 
   assert.doesNotMatch(sections, /type="checkbox"/);
 });
 
-test("flight proposal states when live itinerary data is not connected", () => {
-  assert.match(page, /live itinerary not connected/);
+test("flight proposal shows the fare basis and that it is planning, not a live search", () => {
+  assert.match(page, /round trip per person · \{estimate\.basis/);
+  assert.match(page, /Planning preferences, not a live search/);
   assert.match(page, /Update flight options/);
   assert.match(page, /Departure airport/);
   assert.match(page, /Preferred departure/);
@@ -47,7 +48,7 @@ test("flight proposal states when live itinerary data is not connected", () => {
 
 test("dining and experience edits each surface four verified choices with visual fallbacks", () => {
   assert.equal((sections.match(/initialLimit=\{4\}/g) || []).length, 2);
-  assert.match(restaurantRoute, /limit: 4/);
+  assert.match(restaurantRoute, /slice\(0, 4\)/);
   assert.match(restaurantRoute, /slice\(0, 4\)/);
   assert.match(sections, /View all.*experiences/);
   assert.match(sections, /destination\.image/);

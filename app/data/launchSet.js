@@ -3,8 +3,11 @@
 // records when and where. Verified places override database inventory for
 // these destinations, so a launch destination never shows an unverified hotel.
 
+import { CHEAP_STAYS, CHEAP_STAYS_CHECKED, stayMonthly } from "./cheapStays.js";
+import feedStays from "./feedStays.json" with { type: "json" };
+
 export const LAUNCH_SET = [
-  "las-vegas-76868", "san-diego-76868", "los-angeles-76868", "palm-springs-76868", "san-francisco-76868",
+  "las-vegas-76868", "san-diego-76868", "los-angeles-76868", "san-francisco-76868",
   "seattle-76868", "honolulu-76868", "MEX", "oaxaca-city-41937", "guadalajara-41937", "puerto-vallarta-41937",
   "merida-41937", "LIS", "HAN", "BKK", "CNX", "EZE", "new-orleans-76868", "austin-76868", "chicago-76868",
 ];
@@ -1635,17 +1638,66 @@ export const LAUNCH_DATA = {
   }
 };
 
-export function launchHotels(destinationId) {
-  return (LAUNCH_DATA[destinationId]?.hotels || []).map((hotel) => ({
+export const LAUNCH_AIRPORTS = {
+  "las-vegas-76868": "LAS", "san-diego-76868": "SAN", "los-angeles-76868": "LAX", "san-francisco-76868": "SFO", "seattle-76868": "SEA",
+  "honolulu-76868": "HNL", MEX: "MEX", "oaxaca-city-41937": "OAX", "guadalajara-41937": "GDL", "puerto-vallarta-41937": "PVR", "merida-41937": "MID",
+  LIS: "LIS", HAN: "HAN", BKK: "BKK", CNX: "CNX", EZE: "EZE", "new-orleans-76868": "MSY", "austin-76868": "AUS", "chicago-76868": "ORD",
+};
+
+// The rock-bottom plan prices a specific hostel, so it leads the list.
+function cheapestBed(destinationId) {
+  const stay = CHEAP_STAYS[LAUNCH_AIRPORTS[destinationId]];
+  if (!stay?.bedNight) return null;
+  return { id: `${destinationId}-cheapest-bed`, name: stay.name, bookingUrl: `https://www.booking.com/hotel/${stay.path}`, priceTier: "hostel", rating: stay.rating, reviewCount: stay.reviewCount, ratingSource: "Booking.com", bedNight: stay.bedNight, monthlyNight: stayMonthly({ airport: LAUNCH_AIRPORTS[destinationId] }), note: `Dorm beds from about $${stay.bedNight} a night, taxes included (checked ${CHEAP_STAYS_CHECKED})` };
+}
+
+const pagePath = (url) => String(url || "").replace(/^https:\/\/www\.booking\.com\/hotel\//, "").replace(/(\.[a-z-]+)?\.html.*$/, "");
+
+// Booking.com's own listing data from the CJ product feed: photos, rooms, beds,
+// amenities, cancellation and the feed's CJ link. No prices or reviews.
+const FEED_FIELDS = ["photos", "roomTypes", "dorms", "beds", "bedrooms", "bedsDescription", "maxGuests", "amenities", "freeCancellation", "freeWifi", "freeBreakfast", "category", "starRating", "latitude", "longitude", "cjTrackingBaseUrl", "description"];
+function withFeed(hotel, listing) {
+  if (!listing) return hotel;
+  const extra = Object.fromEntries(FEED_FIELDS.filter((field) => listing[field] !== null && listing[field] !== undefined).map((field) => [field, listing[field]]));
+  return { ...extra, ...hotel, address: hotel.address || listing.address, feedSku: listing.sku };
+}
+
+// Room-share listings named like ads ("Quiet, clean and comfortable room") aren't places.
+const GENERIC_NAME = /^(private|quiet|cozy|cosy|clean|room|bed|shared|charming)\b|\bminutes? (to|from)\b/i;
+
+export const FEED_STAYS_CHECKED = feedStays.checkedAt;
+export function feedListings(destinationId) {
+  return feedStays.stays?.[destinationId] || [];
+}
+
+export function launchHotels(destinationId, { limit = 8 } = {}) {
+  const listed = LAUNCH_DATA[destinationId]?.hotels || [];
+  const bed = cheapestBed(destinationId);
+  const existing = bed ? listed.find((hotel) => hotel.bookingUrl === bed.bookingUrl) : null;
+  const verified = bed ? [existing ? { ...existing, priceTier: "hostel", note: bed.note, bedNight: bed.bedNight, monthlyNight: bed.monthlyNight } : bed, ...listed.filter((hotel) => hotel !== existing)] : listed;
+  const feed = feedListings(destinationId);
+  const byPath = new Map(feed.map((listing) => [pagePath(listing.bookingUrl), listing]));
+  const enriched = verified.map((hotel) => withFeed(hotel, byPath.get(pagePath(hotel.bookingUrl))));
+  const taken = new Set(enriched.map((hotel) => pagePath(hotel.bookingUrl)));
+  const more = feed.filter((listing) => !taken.has(pagePath(listing.bookingUrl)) && !GENERIC_NAME.test(listing.name)).map((listing) => ({
+    ...listing,
+    priceTier: listing.dorms || listing.category === "Hostel" || listing.category === "Capsule hotel" ? "hostel" : "budget",
+    fromFeed: true,
+    note: [listing.category, listing.starRating ? `${listing.starRating}-star` : null, listing.dorms ? "dorm beds" : null].filter(Boolean).join(" · "),
+  }));
+  const hotels = [...enriched, ...more].slice(0, Math.max(limit, enriched.length));
+  return hotels.map((hotel) => ({
     ...hotel,
     type: "hotel",
     provider: "booking.com",
     providerUrl: hotel.bookingUrl,
     providerLinkVerified: true,
-    verifiedAt: LAUNCH_DATA[destinationId].verified,
-    verificationSource: hotel.bookingUrl,
-    amenities: [],
-    tags: [],
+    verifiedAt: hotel.fromFeed ? FEED_STAYS_CHECKED : LAUNCH_DATA[destinationId]?.verified || CHEAP_STAYS_CHECKED,
+    verificationSource: hotel.fromFeed ? "booking.com_cj_product_feed" : hotel.bookingUrl,
+    image: hotel.image || hotel.photos?.[0] || null,
+    imageSource: hotel.image ? hotel.imageSource : hotel.photos?.length ? "Booking.com" : undefined,
+    amenities: hotel.amenities || [],
+    tags: [hotel.dorms ? "dorm beds" : null, hotel.freeCancellation ? "free cancellation" : null, hotel.freeWifi ? "free Wi-Fi" : null, hotel.freeBreakfast ? "breakfast included" : null].filter(Boolean),
   }));
 }
 

@@ -24,6 +24,12 @@ const nextConfig = {
         protocol: "https",
         hostname: "upload.wikimedia.org",
       },
+      {
+        // Booking.com listing photos from the CJ product feed.
+        protocol: "https",
+        hostname: "*.bstatic.com",
+        pathname: "/xdata/images/hotel/**",
+      },
     ],
   },
 };

@@ -11,11 +11,12 @@ function roundTo(value, step = 10) {
   return Math.round((Number(value) || 0) / step) * step;
 }
 
-export function estimateTrip(destination, { nights = 5, travelers = 2, startDate = null } = {}) {
+export function estimateTrip(destination, { nights = 5, travelers = 1, startDate = null, spendStyle = "cheapest" } = {}) {
   const profile = {
     exactBudget: 0,
     tripLength: nights,
     travelers,
+    spendStyle,
     dates: startDate ? { start: startDate } : {},
     includedBudgetCategories: { flights: false, hotel: true, food: true, activities: true, transportation: true },
   };
@@ -31,7 +32,9 @@ export function estimateTrip(destination, { nights = 5, travelers = 2, startDate
     travelers,
     breakdown,
     excludes: ["Flights"],
-    basis: "Modeled good-value estimate for a clean, well-reviewed budget or simple three-star stay. Not a live quote.",
+    basis: plan.lodging?.type === "hostel_bed"
+      ? `Rock bottom: a bed at ${plan.lodging.name} (Booking.com, taxes in), fast food and street food, transit and free things to do. Not a live quote.`
+      : "Modeled good-value estimate for a clean, well-reviewed budget or simple three-star stay. Not a live quote.",
     source: plan.estimates.hotel.source,
     lastUpdated: plan.estimates.hotel.lastUpdated,
   };

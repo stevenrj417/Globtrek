@@ -18,8 +18,14 @@ const CITY = {
   ATL: "Atlanta, GA (Metropolitan Area)", JFK: "New York City, NY (Metropolitan Area)", EWR: "New York City, NY (Metropolitan Area)", BOS: "Boston, MA (Metropolitan Area)",
   IAD: "Washington, DC (Metropolitan Area)", MIA: "Miami, FL (Metropolitan Area)", PSP: "Palm Springs, CA", AUS: "Austin, TX", MSY: "New Orleans, LA",
   BNA: "Nashville, TN", MCO: "Orlando, FL", SAF: "Santa Fe, NM",
+  BOI: "Boise, ID", GEG: "Spokane, WA", RNO: "Reno, NV", SAT: "San Antonio, TX", ABQ: "Albuquerque, NM", TUS: "Tucson, AZ",
+  MCI: "Kansas City, MO", STL: "St. Louis, MO", DTW: "Detroit, MI", CLE: "Cleveland, OH (Metropolitan Area)", CMH: "Columbus, OH", IND: "Indianapolis, IN",
+  PHL: "Philadelphia, PA", PIT: "Pittsburgh, PA", BWI: "Washington, DC (Metropolitan Area)", CLT: "Charlotte, NC", RDU: "Raleigh/Durham, NC",
+  TPA: "Tampa, FL (Metropolitan Area)", FLL: "Miami, FL (Metropolitan Area)", MSP: "Minneapolis/St. Paul, MN", MKE: "Milwaukee, WI", OMA: "Omaha, NE",
+  OKC: "Oklahoma City, OK", MEM: "Memphis, TN", SDF: "Louisville, KY", BDL: "Hartford, CT", ONT: "Los Angeles, CA (Metropolitan Area)", SNA: "Los Angeles, CA (Metropolitan Area)",
 };
-const ORIGINS = ["PDX", "SEA", "SFO", "OAK", "SJC", "LAX", "BUR", "SAN", "SMF", "LAS", "PHX", "DEN", "SLC", "DFW", "IAH", "ORD", "MSP", "ATL", "JFK", "EWR", "BOS", "IAD", "MIA"];
+// Every mapped airport is a departure airport.
+const ORIGINS = Object.keys(CITY);
 const DESTINATIONS = ["LAS", "SAN", "PSP", "LAX", "SFO", "SEA", "ORD", "AUS", "MSY", "BNA", "MIA", "MCO", "SAF", "JFK", "DEN", "PHX", "SLC"];
 
 async function fetchRows(where) {

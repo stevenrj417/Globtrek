@@ -17,6 +17,7 @@ function money(value, currency = "USD") {
 function dateLabel(value) { return value ? new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", timeZone: "UTC" }).format(new Date(`${value}T00:00:00Z`)) : null; }
 function locationLabel(hotel, destination) { return hotel.neighborhood || hotel.address?.split(",")?.[0] || destination.city; }
 function priceLabel(hotel) {
+  if (hotel?.bedNight) return `Dorm beds from about ${money(hotel.bedNight)} a night, taxes in`;
   if (!hotel?.priceKnown) return "Current price shown by provider";
   return `${money(hotel.estimatedStayLow, hotel.currency)}–${money(hotel.estimatedStayHigh, hotel.currency)} estimated${hotel.priceStale ? " · recheck rate" : ""}`;
 }

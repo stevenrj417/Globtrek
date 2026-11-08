@@ -1,10 +1,26 @@
 import Image from "next/image";
 import { BookingLogo } from "../../components/PartnerLogo";
 import { bookingPropertyUrl } from "../../data/destinations";
-import { LAUNCH_DATA, rideshareUrl } from "../../data/launchSet";
+import { FEED_STAYS_CHECKED, LAUNCH_DATA, launchHotels, rideshareUrl } from "../../data/launchSet";
 import { cjActivitySearchUrl } from "../../lib/booking/cj";
 
 const PRICE = { 1: "$", 2: "$$", 3: "$$$" };
+const MONTH_INITIALS = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
+const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+// Expected dorm-bed price for each month, cheapest month highlighted.
+function MonthlyBeds({ prices }) {
+  if (!prices?.length) return null;
+  const low = Math.min(...prices);
+  return <div className="mt-3">
+    <p className="text-xs text-subtle">Expected bed price by month</p>
+    <ol className="tabular mt-1 grid grid-cols-12 gap-px text-center text-[11px]">
+      {prices.map((price, index) => <li key={MONTH_NAMES[index]} title={`${MONTH_NAMES[index]}: about $${price} a night`} className={price === low ? "bg-ink/10 font-medium" : ""}>
+        <span className="block text-subtle">{MONTH_INITIALS[index]}</span>${price}
+      </li>)}
+    </ol>
+  </div>;
+}
 
 function Section({ id, title, children }) {
   return <section aria-labelledby={id} className="mx-auto mt-[var(--section-space)] max-w-[1280px] px-5 sm:px-8">
@@ -19,8 +35,9 @@ function todaysHours(hours) {
 
 // Verified stays, dinners, things to do and airport ride for launch destinations.
 export function LaunchSections({ item }) {
-  const data = LAUNCH_DATA[item.id];
-  if (!data) return null;
+  const data = LAUNCH_DATA[item.id] || {};
+  const hotels = launchHotels(item.id);
+  if (!LAUNCH_DATA[item.id] && !hotels.length) return null;
   const destination = { city: item.name, country: item.country };
   const firstHotel = data.hotels?.[0];
   const uber = rideshareUrl(data.airportRide, firstHotel);
@@ -34,17 +51,24 @@ export function LaunchSections({ item }) {
       <p className="mt-2 text-xs text-subtle">Photos: {[...new Set(data.gallery.map((photo) => photo.credit))].join(" · ")}</p>
     </section> : null}
 
-    {data.hotels?.length ? <Section id="stay-heading" title="Where to stay">
-      <p className="mt-2 text-sm text-muted">Budget picks, checked on <BookingLogo className="h-3 w-auto" /> on {data.verified}. Prices are live on Booking.com.</p>
+    {hotels.length ? <Section id="stay-heading" title="Where to stay">
+      <p className="mt-2 text-sm text-muted">Hostels and budget stays only, from <BookingLogo className="h-3 w-auto" /> listings (checked {FEED_STAYS_CHECKED || data.verified}). Live prices are on Booking.com.</p>
       <ul className="mt-6 grid gap-px border border-black/10 bg-black/10 sm:grid-cols-2">
-        {data.hotels.map((hotel) => <li key={hotel.id} className="flex flex-col justify-between gap-4 bg-bg p-5">
+        {hotels.map((hotel) => <li key={hotel.id} className="flex flex-col justify-between gap-4 bg-bg p-5">
           <div>
+            {hotel.photos?.[0] ? <div className="relative mb-4 aspect-[16/9] overflow-hidden bg-placeholder">
+              <Image src={hotel.photos[0]} alt={`${hotel.name}, photo from Booking.com`} fill className="object-cover" sizes="(min-width: 640px) 40vw, 100vw" />
+            </div> : null}
             <p className="text-lg font-medium tracking-tight-1">{hotel.name}</p>
-            <p className="mt-1 text-sm text-subtle">{hotel.neighborhood} · {hotel.address}</p>
+            <p className="mt-1 text-sm text-subtle">{[hotel.priceTier === "hostel" ? hotel.category || "Hostel" : hotel.category, hotel.starRating ? `${hotel.starRating}-star` : null, hotel.neighborhood, hotel.address].filter(Boolean).join(" · ") || "Hostel · cheapest well-reviewed bed"}</p>
             {hotel.rating ? <p className="tabular mt-1 text-sm">{hotel.rating.toFixed(1)} / 10 · {hotel.reviewCount.toLocaleString("en-US")} Booking.com reviews</p> : null}
-            <p className="mt-2 text-sm text-muted">{hotel.note}</p>
+            {hotel.bedNight ? <p className="tabular mt-2 text-sm font-medium">Dorm beds from about ${hotel.bedNight} a night, taxes in</p> : hotel.fromFeed ? null : <p className="mt-2 text-sm text-muted">{hotel.note}</p>}
+            {hotel.tags?.length ? <ul className="mt-3 flex flex-wrap gap-1.5 text-xs">{hotel.tags.map((tag) => <li key={tag} className="border border-black/15 px-2 py-0.5">{tag}</li>)}</ul> : null}
+            {hotel.roomTypes?.length ? <p className="mt-3 text-sm text-muted">Rooms: {hotel.roomTypes.slice(0, 3).join(" · ")}{hotel.roomTypes.length > 3 ? ` · +${hotel.roomTypes.length - 3} more` : ""}</p> : null}
+            {hotel.maxGuests && !hotel.dorms ? <p className="text-xs text-subtle">Sleeps up to {hotel.maxGuests}{hotel.bedsDescription ? ` · ${hotel.bedsDescription}` : ""}</p> : null}
+            <MonthlyBeds prices={hotel.monthlyNight} />
           </div>
-          <a href={bookingPropertyUrl({ ...hotel, providerLinkVerified: true }, {})} target="_blank" rel="noopener sponsored" className="btn btn-secondary self-start">See rooms ↗</a>
+          <a href={bookingPropertyUrl({ ...hotel, providerLinkVerified: true }, {})} target="_blank" rel="noopener sponsored" className="btn btn-secondary self-start">See rooms and prices ↗</a>
         </li>)}
       </ul>
     </Section> : null}
