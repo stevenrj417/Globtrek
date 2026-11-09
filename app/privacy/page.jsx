@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function PrivacyPage() {
   return (
-    <EditorialPage updated="2026-11-02"
+    <EditorialPage updated="2026-11-09"
       eyebrow="Privacy"
       title="What the current product handles."
       intro="This notice describes the code and services used by the current early-access version of GlobTrek. It avoids promises the product is not yet equipped to make."
@@ -43,7 +43,12 @@ export default function PrivacyPage() {
           If you follow a booking link, the external provider controls its own site, data collection, pricing, availability, payment, reservation, and privacy practices. Review that provider’s notices before completing a transaction.
         </p>
       </EditorialSection>
-      <EditorialSection number="06" title="Who runs GlobTrek">
+      <EditorialSection number="06" title="The Booking Assistant extension">
+        <p>
+          The optional GlobTrek Booking Assistant for Chrome keeps traveler details on your own device and never sends them to GlobTrek. This site only learns whether it is installed and each booking&apos;s status. See the <Link className="text-ink underline decoration-black/25 underline-offset-4" href="/booking-assistant/privacy">Booking Assistant privacy policy</Link>.
+        </p>
+      </EditorialSection>
+      <EditorialSection number="07" title="Who runs GlobTrek">
         <p>
           This site is operated by {LEGAL_NAME}, based in Oregon, United States.{CONTACT_EMAIL ? <> Questions about this page: <a className="text-ink underline decoration-black/25 underline-offset-4" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</> : <> Questions about this page: see <Link className="text-ink underline decoration-black/25 underline-offset-4" href="/contact">Contact</Link>.</>}
         </p>

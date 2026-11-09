@@ -40,7 +40,7 @@ export default async function BookPage({ searchParams }) {
         <li><strong className="font-semibold">2. Check the current price and availability</strong> on the partner&apos;s site. GlobTrek&apos;s numbers are estimates; the partner&apos;s price is the one you pay.</li>
         <li><strong className="font-semibold">3. Book and pay on the partner&apos;s site,</strong> then come back and check it off. GlobTrek never sees your payment details. If you&apos;re signed in to <BookingLogo className="mx-0.5 h-3 w-auto" />, it may fill in details saved to your account.</li>
       </ol>
-      <div className="mt-8"><BookingChecklist entries={items} tripKey={`book:${trip.city}:${trip.start || ""}:${items.map((item) => item.exactUrl.length).join("-")}`} heading="Your bookings" details={<TravelerDetails />} /></div>
+      <div className="mt-8"><BookingChecklist entries={items} tripKey={`book:${trip.city}:${trip.start || ""}:${items.map((item) => item.exactUrl.length).join("-")}`} heading="Your bookings" details={<TravelerDetails />} trip={{ city: trip.city, country: trip.country, start: trip.start, end: trip.end, adults: trip.travelers }} /></div>
       {items.some((item) => item.officialUrl) ? <ul className="mt-4 space-y-1 text-xs text-subtle">{items.filter((item) => item.officialUrl).map((item) => <li key={item.id}>{item.name}: <a href={item.officialUrl} rel="noopener" target="_blank" className="underline decoration-black/25 underline-offset-2 hover:decoration-ink">official site</a></li>)}</ul> : null}
     </section>
     <SiteFooter />

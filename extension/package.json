@@ -1,0 +1,26 @@
+{
+  "name": "globtrek-booking-assistant",
+  "version": "0.1.0",
+  "private": true,
+  "description": "GlobTrek One Tab Booking Assistant — Chrome Manifest V3 extension",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "build": "node scripts/build.mjs --target=production",
+    "build:dev": "node scripts/build.mjs --target=development",
+    "test": "node --test --experimental-strip-types tests/*.test.ts",
+    "test:e2e": "node scripts/e2e.mjs",
+    "fixtures": "node scripts/fixture-server.mjs",
+    "package": "npm run typecheck && npm test && npm run build && node scripts/package.mjs",
+    "screenshots": "npm run build:dev && node scripts/e2e.mjs"
+  },
+  "devDependencies": {
+    "@puppeteer/browsers": "3.2.6",
+    "@types/chrome": "0.3.7",
+    "axe-core": "4.10.3",
+    "esbuild": "0.25.12",
+    "happy-dom": "21.0.4",
+    "puppeteer-core": "25.16.0",
+    "typescript": "5.9.3"
+  }
+}

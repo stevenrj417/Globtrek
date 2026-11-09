@@ -10,6 +10,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Built Chrome extension bundles (source in extension/src is linted).
+    "extension/dist/**",
   ]),
 ]);
 

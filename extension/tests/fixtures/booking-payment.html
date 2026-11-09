@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Fixture — Booking.com final details / payment</title></head>
+<body>
+<p class="banner">Sanitized fixture (not Booking.com).</p>
+<h1>Final step: payment</h1>
+<form id="payment">
+  <label for="cc_name">Cardholder's name</label><input id="cc_name" name="cc_name" autocomplete="cc-name">
+  <label for="cc_number">Card number</label><input id="cc_number" name="cc_number" autocomplete="cc-number" inputmode="numeric">
+  <label for="cc_exp">Expiry date</label><input id="cc_exp" name="cc_exp" autocomplete="cc-exp">
+  <label for="cc_cvc">CVC</label><input id="cc_cvc" name="cc_cvc" autocomplete="cc-csc">
+  <label><input type="checkbox" name="agree"> I agree to the terms</label>
+  <button type="submit" id="complete">Complete booking</button>
+</form>
+<script>document.getElementById("payment").addEventListener("submit",function(e){e.preventDefault();document.body.dataset.submitted="true";});</script>
+</body></html>

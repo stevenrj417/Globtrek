@@ -1,5 +1,13 @@
 # Changelog
 
+## Booking Assistant for Chrome (2026-11-09, branch only — not deployed)
+
+- New Manifest V3 extension in `extension/`: one-tab booking from the GlobTrek checklist. Opens each booking with GlobTrek's exact (CJ-tracked) link, guided or all at once; fills the traveler's own details where the partner allows it; reports Opened / Filling / Filled / Needs attention / Ready to review / Ready to pay / Marked complete / Stopped safely; never submits, accepts terms or pays.
+- No account: profile saved on the device or "use once and forget"; stored-field list, export, delete passports, forget everything. Optional passport storage, off by default, AES-GCM with a passphrase and auto-lock. Card numbers, CVV, passwords and one-time codes are refused.
+- Adapters: GetYourGuide on; Booking.com and OpenTable built and tested but off because their terms bar automated assistants (exact link + copy buttons instead); GlobTrek/Duffel flight checkout contract, off until it exists.
+- Website: "Book my trip" on the booking checklist (`/results`, `/book`) detects the extension, explains it when absent, hands off on desktop Chrome only, and shows each booking's assistant status. New `/booking-assistant` and `/booking-assistant/privacy`; privacy page and help updated.
+- Permissions: `storage`, `scripting`, content script on www.glob-trek.com, optional `www.getyourguide.com`.
+
 ## Deployed to glob-trek.com (2026-11-08)
 
 Book everything, budget-first trips, DOT fares, the launch set and three perfect destinations (Las Vegas, San Diego, Los Angeles) are live. Production checks: all routes respond, the three launch APIs serve only verified inventory, quiz and no-match flows pass end to end, axe-core (WCAG 2.2 AA) passes, and mobile Lighthouse is home 92–93, quiz 100, Las Vegas 92–97 with accessibility, best practices and SEO at 100.

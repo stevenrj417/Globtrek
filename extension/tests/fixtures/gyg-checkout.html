@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Fixture — GetYourGuide checkout (lead traveler)</title>
+<style>body{font:15px/1.5 system-ui;max-width:720px;margin:40px auto;padding:0 16px}label{display:block;margin:12px 0 4px}input,select,textarea{width:100%;padding:8px}.banner{background:#fff4d6;padding:8px 12px}</style></head>
+<body>
+<p class="banner">Sanitized fixture (not GetYourGuide). The form renders late, like a client-side app.</p>
+<h1>Contact details</h1>
+<div id="root"><p>Loading checkout…</p></div>
+<script>
+// Simulates a React-style app: fields mount after a delay and track their own value.
+setTimeout(function () {
+  var root = document.getElementById("root");
+  root.innerHTML = '<form id="lead">' +
+    '<label for="fn">First name</label><input id="fn" name="firstName" autocomplete="given-name">' +
+    '<label for="ln">Last name</label><input id="ln" name="lastName" autocomplete="family-name">' +
+    '<label for="em">Email</label><input id="em" name="email" type="email" autocomplete="email">' +
+    '<label for="cc">Country code</label><select id="cc" name="phoneCountryCode" autocomplete="tel-country-code"><option value="">Code</option><option value="+351">Portugal +351</option><option value="+44">United Kingdom +44</option><option value="+1">United States +1</option></select>' +
+    '<label for="ph">Mobile phone</label><input id="ph" name="phoneNumber" type="tel" autocomplete="tel-national">' +
+    '<label for="cm">Anything the provider should know?</label><textarea id="cm" name="comment"></textarea>' +
+    '<label><input type="checkbox" name="newsletter"> Send me offers</label>' +
+    '<button type="submit">Go to payment</button></form>';
+  var inputs = 0;
+  root.addEventListener("input", function () { inputs += 1; document.body.dataset.inputEvents = String(inputs); });
+  document.getElementById("lead").addEventListener("submit", function (e) { e.preventDefault(); document.body.dataset.submitted = "true"; });
+}, 400);
+</script>
+</body></html>

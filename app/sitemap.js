@@ -14,6 +14,8 @@ const routes = [
   "/help",
   "/contact",
   "/privacy",
+  "/booking-assistant",
+  "/booking-assistant/privacy",
   "/terms",
   "/affiliate-disclosure",
 ];

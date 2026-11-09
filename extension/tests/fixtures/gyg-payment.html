@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Fixture — GetYourGuide payment</title></head>
+<body>
+<p class="banner">Sanitized fixture (not GetYourGuide).</p>
+<h1>Payment</h1>
+<form id="pay">
+  <div data-test-id="payment-method-card">
+    <label for="n">Card number</label><input id="n" autocomplete="cc-number">
+    <label for="c">Security code</label><input id="c" autocomplete="cc-csc">
+  </div>
+  <button type="submit">Pay now</button>
+</form>
+<script>document.getElementById("pay").addEventListener("submit",function(e){e.preventDefault();document.body.dataset.submitted="true";});</script>
+</body></html>

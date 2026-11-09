@@ -41,7 +41,15 @@
     "check:images": "node scripts/check-data.mjs --check-images --out audit/data-report.md",
     "flights:refresh": "node scripts/flights/refresh-prices.mjs",
     "flights:dot": "node scripts/flights/refresh-dot-fares.mjs",
-    "check:launch": "node scripts/check-launch.mjs"
+    "check:launch": "node scripts/check-launch.mjs",
+    "ext:install": "npm --prefix extension ci",
+    "ext:typecheck": "npm --prefix extension run typecheck",
+    "ext:test": "npm --prefix extension test",
+    "ext:build": "npm --prefix extension run build",
+    "ext:build:dev": "npm --prefix extension run build:dev",
+    "ext:fixtures": "npm --prefix extension run fixtures",
+    "ext:e2e": "npm --prefix extension run test:e2e",
+    "ext:package": "npm --prefix extension run package"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.4",

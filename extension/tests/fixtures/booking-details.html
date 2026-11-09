@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Fixture — Booking.com "Enter your details"</title>
+<style>body{font:15px/1.5 system-ui;max-width:720px;margin:40px auto;padding:0 16px}label{display:block;margin:12px 0 4px}input,select,textarea{width:100%;padding:8px}.banner{background:#fff4d6;padding:8px 12px}</style></head>
+<body>
+<p class="banner">Sanitized fixture (not Booking.com). Selectors version 2026-11-09.1.</p>
+<h1>Enter your details</h1>
+<form id="guest-details" action="/booking/submitted" method="post">
+  <label for="firstname">First name</label><input id="firstname" name="firstname" autocomplete="given-name" required>
+  <label for="lastname">Last name</label><input id="lastname" name="lastname" autocomplete="family-name" required>
+  <label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" required>
+  <label for="email_confirm">Confirm email address</label><input id="email_confirm" name="email_confirm" type="email">
+  <label for="address1">Address</label><input id="address1" name="address1" autocomplete="address-line1">
+  <label for="city">City</label><input id="city" name="city" autocomplete="address-level2">
+  <label for="zip">Zip/Post code</label><input id="zip" name="zip" autocomplete="postal-code">
+  <label for="cc1">Country/region</label>
+  <select id="cc1" name="cc1" autocomplete="country"><option value="">Select</option><option value="pt">Portugal</option><option value="gb">United Kingdom</option><option value="us">United States</option></select>
+  <label for="phone">Phone number</label><input id="phone" name="phone" type="tel" autocomplete="tel">
+  <label for="remarks">Special requests</label><textarea id="remarks" name="remarks"></textarea>
+  <label for="checkin_eta_hour">Your arrival time</label>
+  <select id="checkin_eta_hour" name="checkin_eta_hour"><option value="">I don't know</option><option value="14">14:00 – 15:00</option><option value="15">15:00 – 16:00</option><option value="16">16:00 – 17:00</option></select>
+  <input type="hidden" name="hotel_id" value="fixture">
+  <label><input type="checkbox" name="agree_terms"> I agree to the booking conditions</label>
+  <label for="account_password">Create a password (optional)</label><input id="account_password" name="password" type="password">
+  <button type="submit" id="next">Next: Final details</button>
+</form>
+<script>document.getElementById("guest-details").addEventListener("submit",function(e){e.preventDefault();document.body.dataset.submitted="true";});</script>
+</body></html>

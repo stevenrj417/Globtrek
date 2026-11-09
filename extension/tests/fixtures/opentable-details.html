@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Fixture — OpenTable diner details</title>
+<style>body{font:15px/1.5 system-ui;max-width:720px;margin:40px auto;padding:0 16px}label{display:block;margin:12px 0 4px}input,select,textarea{width:100%;padding:8px}.banner{background:#fff4d6;padding:8px 12px}</style></head>
+<body>
+<p class="banner">Sanitized fixture (not OpenTable).</p>
+<h1>Diner details</h1>
+<form id="diner">
+  <label for="firstName">First name</label><input id="firstName" name="firstName">
+  <label for="lastName">Last name</label><input id="lastName" name="lastName">
+  <label for="phoneNumber">Phone number</label><input id="phoneNumber" name="phoneNumber" type="tel">
+  <label for="email">Email</label><input id="email" name="email" type="email">
+  <label for="occasion">Occasion</label><select id="occasion" name="occasion"><option value="">Select an occasion</option><option>Birthday</option><option>Anniversary</option></select>
+  <label for="specialRequests">Add a special request</label><textarea id="specialRequests" name="specialRequests"></textarea>
+  <label><input type="checkbox" name="optin"> Sign me up for offers</label>
+  <button type="submit">Complete reservation</button>
+</form>
+<script>document.getElementById("diner").addEventListener("submit",function(e){e.preventDefault();document.body.dataset.submitted="true";});</script>
+</body></html>

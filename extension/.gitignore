@@ -1,0 +1,5 @@
+node_modules/
+dist/
+.chrome/
+.e2e/
+store-assets/*.zip
