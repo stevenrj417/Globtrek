@@ -5,6 +5,8 @@ import { track } from "../lib/analytics";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { discoverySliderToUnknownness, legacyBudgetLabel, normalizeBudget } from "../lib/recommendation/budgetInput";
 import { TRAVEL_AREA_OPTIONS } from "../lib/recommendation/travelAreaOptions";
+import { cheapestTrip } from "../lib/quiz/cheapestTrip";
+import { DURATION_NIGHTS } from "../lib/trip/schedule";
 
 // Budget comes first: GlobTrek starts from what you have, not where you want to go.
 const questions = [
@@ -94,7 +96,7 @@ function Progress({ step }) {
   </div>;
 }
 
-function VisualQuestion({ question, value, onChoose, step }) {
+function VisualQuestion({ question, value, onChoose, step, status = {}, note = null }) {
   const selected = value || question.options[0].label;
   const [preview, setPreview] = useState(selected);
 
@@ -108,11 +110,11 @@ function VisualQuestion({ question, value, onChoose, step }) {
     function onKey(event) {
       if (event.metaKey || event.ctrlKey || event.altKey || event.target?.tagName === "INPUT") return;
       const index = Number(event.key) - 1;
-      if (Number.isInteger(index) && index >= 0 && index < question.options.length) { event.preventDefault(); onChoose(question.options[index].label); }
+      if (Number.isInteger(index) && index >= 0 && index < question.options.length && !status[question.options[index].label]?.disabled) { event.preventDefault(); onChoose(question.options[index].label); }
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [question, onChoose]);
+  }, [question, onChoose, status]);
 
   function moveFocus(event, index) {
     const delta = event.key === "ArrowRight" || event.key === "ArrowDown" ? 1 : event.key === "ArrowLeft" || event.key === "ArrowUp" ? -1 : 0;
@@ -127,7 +129,7 @@ function VisualQuestion({ question, value, onChoose, step }) {
       <div className="grid items-center gap-9 py-8 lg:grid-cols-[30%_70%] lg:gap-0 lg:py-8">
         <div className="relative z-10 lg:pr-12">
           <p className="mb-6 text-micro uppercase tracking-editorial text-subtle">The GlobTrek quiz</p>
-          <h1 className="max-w-md text-[2.25rem] font-medium leading-[0.94] tracking-tight-4 sm:text-[clamp(2.7rem,5.2vw,5.6rem)]">{question.question}</h1>
+          <h1 className="max-w-md text-[2.25rem] font-medium leading-[0.94] tracking-tight-4 sm:text-[clamp(2.7rem,5.2vw,5.6rem)]">{question.question}</h1>{note ? <p className="mt-5 max-w-sm text-sm leading-6 text-muted">{note}</p> : null}
         </div>
         <div className="relative aspect-[4/3] max-h-[300px] overflow-hidden bg-placeholder sm:max-h-none sm:min-h-[360px] lg:aspect-auto lg:h-[min(69vh,760px)]">
           {question.options.filter((option) => warm || option.label === selected || option.label === active.label).map((option) => (
@@ -139,7 +141,8 @@ function VisualQuestion({ question, value, onChoose, step }) {
         <div className="grid grid-cols-2 border-l border-t border-black/10 sm:flex sm:border-x-0 sm:border-y sm:px-6">
           {question.options.map((option, index) => {
             const isActive = selected === option.label;
-            return <button type="button" key={option.label} ref={(node) => { tiles.current[index] = node; }} onKeyDown={(event) => moveFocus(event, index)} aria-pressed={value === option.label} aria-keyshortcuts={String(index + 1)} onMouseEnter={() => setPreview(option.label)} onMouseLeave={() => setPreview(selected)} onFocus={() => setPreview(option.label)} onBlur={() => setPreview(selected)} onClick={() => onChoose(option.label)} className={`relative min-h-14 border-b border-r border-black/10 px-3 text-micro uppercase tracking-label transition-colors sm:min-h-24 sm:flex-1 sm:border-0 sm:px-4 sm:text-eyebrow sm:tracking-label ${isActive ? "bg-ink text-white sm:bg-transparent sm:text-black" : "text-subtle hover:text-black"}`}><span className={`absolute inset-x-6 top-0 hidden h-px bg-black transition-transform duration-500 sm:block ${isActive ? "scale-x-100" : "scale-x-0"}`} />{option.display || option.label}</button>;
+            const state = status[option.label] || {};
+            return <button type="button" key={option.label} ref={(node) => { tiles.current[index] = node; }} onKeyDown={(event) => moveFocus(event, index)} aria-pressed={value === option.label} aria-disabled={state.disabled || undefined} aria-describedby={state.note ? `option-note-${index}` : undefined} aria-keyshortcuts={String(index + 1)} onMouseEnter={() => setPreview(option.label)} onMouseLeave={() => setPreview(selected)} onFocus={() => setPreview(option.label)} onBlur={() => setPreview(selected)} onClick={() => { if (!state.disabled) onChoose(option.label); }} className={`relative min-h-14 border-b border-r border-black/10 px-3 text-micro uppercase tracking-label transition-colors sm:min-h-24 sm:flex-1 sm:border-0 sm:px-4 sm:text-eyebrow sm:tracking-label ${state.disabled ? "cursor-not-allowed text-black/25 line-through decoration-black/20" : isActive ? "bg-ink text-white sm:bg-transparent sm:text-black" : "text-subtle hover:text-black"}`}><span className={`absolute inset-x-6 top-0 hidden h-px bg-black transition-transform duration-500 sm:block ${isActive && !state.disabled ? "scale-x-100" : "scale-x-0"}`} />{option.display || option.label}{state.note ? <span id={`option-note-${index}`} className={`mt-1 block text-micro normal-case tracking-normal no-underline ${state.disabled ? "text-black/40" : "text-warning"}`}>{state.note}</span> : null}</button>;
           })}
         </div>
       </div>
@@ -155,37 +158,32 @@ const budgetCategoryLabels = {
   transportation: "Transportation",
 };
 
-const SPEND_OPTIONS = [["cheapest", "Rock bottom", "Cheapest airline, hostel beds, fast food, free things to do"], ["value", "Cheap but sane", "Cheap flights, a simple room, cheap sit-down meals"], ["comfortable", "A little comfort", "A nicer room and more sit-down meals"]];
-
-function BudgetQuestion({ value, includes, spendStyle, onSpendStyle, onValueChange, onToggle, onBack, onContinue, step }) {
+function BudgetQuestion({ value, includes, onValueChange, onToggle, onBack, onContinue, step }) {
   const budget = normalizeBudget(value);
   const valid = budget !== null && Object.values(includes).some(Boolean);
   const formatted = value ? Number(String(value).replace(/\D/g, "")).toLocaleString("en-US") : "";
   return <div className="quiz-stage flex min-h-[calc(100svh-5rem)] flex-col bg-canvas px-5 pb-8 pt-9 sm:px-8 lg:px-10">
     <div className="flex items-center justify-between"><span className="text-xl font-semibold uppercase tracking-tight-3">GlobTrek</span><Progress step={step} /></div>
-    <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col justify-center py-12 text-center">
-      <p className="text-micro uppercase tracking-editorial text-subtle">Your total trip budget</p>
-      <h1 className="mx-auto mt-7 max-w-4xl text-[clamp(2.8rem,6vw,6.5rem)] font-medium leading-[0.9] tracking-tight-4">How much do you have for this trip?</h1>
-      <label className="mx-auto mt-12 flex max-w-3xl items-center justify-center border-b border-black pb-5">
-        <span className="mr-3 font-serif text-[clamp(3rem,7vw,7rem)] font-light">$</span>
-        <input aria-label="Exact trip budget" inputMode="numeric" autoComplete="off" value={formatted} onChange={(event) => onValueChange(event.target.value.replace(/\D/g, "").slice(0, 7))} placeholder="800" className="min-w-0 w-[7ch] bg-transparent text-center font-serif text-[clamp(3rem,7vw,7rem)] font-light tracking-tight-3 outline-none placeholder:text-black/18" />
+    <form onSubmit={(event) => { event.preventDefault(); if (valid) onContinue(budget); }} className="mx-auto flex w-full max-w-3xl flex-1 flex-col justify-center py-10 text-center">
+      <h1 className="mx-auto max-w-3xl text-[clamp(2.6rem,5.6vw,5.75rem)] font-medium leading-[0.92] tracking-tight-4">How much do you want to spend?</h1>
+      <p className="mx-auto mt-5 max-w-md text-sm leading-6 text-muted">Your total for the whole trip. We&apos;ll plan the most comfortable trip it covers.</p>
+      <label className="mx-auto mt-10 flex w-full max-w-xl items-center justify-center border-b border-black pb-4">
+        <span className="sr-only">Total trip budget in US dollars</span>
+        <span aria-hidden="true" className="mr-2 font-serif text-[clamp(2.75rem,6vw,5.75rem)] font-light">$</span>
+        <input aria-label="Total trip budget in US dollars" inputMode="numeric" autoComplete="off" value={formatted} onChange={(event) => onValueChange(event.target.value.replace(/\D/g, "").slice(0, 7))} placeholder="800" className="w-[6.5ch] min-w-0 bg-transparent text-center font-serif text-[clamp(2.75rem,6vw,5.75rem)] font-light tracking-tight-3 outline-none placeholder:text-black/18" />
       </label>
-      <p className="mt-12 text-micro uppercase tracking-editorial text-subtle">What should that include?</p>
-      <div className="mx-auto mt-6 flex max-w-4xl flex-wrap justify-center gap-2">
-        {Object.entries(budgetCategoryLabels).map(([key, label]) => <button type="button" key={key} aria-pressed={includes[key]} onClick={() => onToggle(key)} className={`min-h-12 border px-5 text-micro uppercase tracking-label transition ${includes[key] ? "border-black bg-black text-white" : "border-black/20 bg-white/40 text-black/50 hover:border-black"}`}>{label}</button>)}
-      </div>
-      <p className="mt-5 text-xs text-subtle">Excluded items can still appear in your plan, but they will not count toward this budget.</p>
-      <fieldset className="mx-auto mt-10 w-full max-w-3xl">
-        <legend className="mx-auto text-micro uppercase tracking-editorial text-subtle">How do you want to spend it?</legend>
-        <div role="radiogroup" className="mt-4 grid gap-2 sm:grid-cols-3">
-          {SPEND_OPTIONS.map(([key, label, note]) => <button type="button" role="radio" key={key} aria-checked={spendStyle === key} onClick={() => onSpendStyle(key)} className={`min-h-16 border px-4 py-3 text-left transition-colors ${spendStyle === key ? "border-black bg-black text-white" : "border-black/20 bg-white/40 hover:border-black"}`}><span className="block text-xs font-semibold uppercase tracking-caps">{label}</span><span className={`mt-1 block text-micro ${spendStyle === key ? "text-white/75" : "text-subtle"}`}>{note}</span></button>)}
+      <fieldset className="mt-10">
+        <legend className="mx-auto text-micro uppercase tracking-editorial text-subtle">Count toward this budget</legend>
+        <div className="mt-4 flex flex-wrap justify-center gap-2">
+          {Object.entries(budgetCategoryLabels).map(([key, label]) => <button type="button" key={key} aria-pressed={includes[key]} onClick={() => onToggle(key)} className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm transition-colors ${includes[key] ? "border-black bg-black text-white" : "border-black/20 text-black/55 hover:border-black hover:text-black"}`}><span aria-hidden="true">{includes[key] ? "✓" : "+"}</span>{label}</button>)}
         </div>
+        <p className="mt-4 text-xs text-subtle">Anything you turn off is planned but paid on top.</p>
       </fieldset>
-    </div>
-    <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-6 border-t border-black/10 pt-7">
-      {step > 0 ? <button type="button" onClick={onBack} className="min-h-12 text-xs uppercase tracking-label text-muted">← Back</button> : <span />}
-      <button type="button" disabled={!valid} onClick={() => onContinue(budget)} className="min-h-14 bg-black px-8 text-xs font-semibold uppercase tracking-label text-white disabled:opacity-25">Continue →</button>
-    </div>
+      <div className="mt-10 flex items-center justify-between gap-6 border-t border-black/10 pt-6">
+        {step > 0 ? <button type="button" onClick={onBack} className="min-h-12 text-xs uppercase tracking-label text-muted">← Back</button> : <span />}
+        <button type="submit" disabled={!valid} className="min-h-14 bg-black px-8 text-xs font-semibold uppercase tracking-label text-white disabled:opacity-25">Continue →</button>
+      </div>
+    </form>
   </div>;
 }
 
@@ -344,7 +342,7 @@ function DateQuestion({ answers, setAnswers, tripStart, tripEnd, isFlexible, set
   </form>;
 }
 
-export default function TravelQuiz() {
+export default function TravelQuiz({ durationFloors = null }) {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({});
   const [tripStart, setTripStart] = useState("");
@@ -404,6 +402,18 @@ export default function TravelQuiz() {
   }, [restored, step, answers, discoveryLevel, exactBudget, budgetIncludes, tripStart, tripEnd, isFlexible, originDetails, travelAreaPreference, guestCount]);
 
   const adaptiveQuestions = useMemo(() => questionsFor(answers), [answers]);
+  // Trip lengths the budget can't cover even at rock bottom are greyed out; close calls are marked.
+  const durationStatus = useMemo(() => {
+    const budget = normalizeBudget(exactBudget);
+    if (!budget || !durationFloors) return {};
+    return Object.fromEntries(Object.entries(DURATION_NIGHTS).filter(([label]) => label !== "Open-Ended").map(([label, nights]) => {
+      const cheapest = cheapestTrip(durationFloors, nights, budgetIncludes);
+      if (cheapest === null) return [label, {}];
+      if (cheapest > budget) return [label, { disabled: true, note: `Needs about $${Math.ceil(cheapest / 50) * 50}+` }];
+      return [label, cheapest > budget * 0.85 ? { note: "Tight, but possible" } : {}];
+    }));
+  }, [durationFloors, exactBudget, budgetIncludes]);
+  const durationNote = Object.values(durationStatus).some((item) => item.disabled) ? `Greyed out: longer than $${Number(normalizeBudget(exactBudget)).toLocaleString("en-US")} covers, even at the cheapest, for one traveler.` : null;
   const current = adaptiveQuestions[step];
   const hasTravelDates = isFlexible ? Boolean(answers.season) : Boolean(tripStart && tripEnd && tripEnd >= tripStart);
   const canSubmit = normalizeBudget(exactBudget) !== null && Object.values(budgetIncludes).some(Boolean) && Boolean(originDetails?.airportCode && originDetails?.countryCode) && hasTravelDates;
@@ -437,7 +447,8 @@ export default function TravelQuiz() {
     event.preventDefault();
     if (!canSubmit) return;
     const budget = normalizeBudget(exactBudget);
-    const completeAnswers = { ...answers, memory: legacyBudgetLabel(budget), exactBudget: budget, includedBudgetCategories: budgetIncludes };
+    const { spendStyle: _oldSpendStyle, ...rest } = answers;
+    const completeAnswers = { ...rest, memory: legacyBudgetLabel(budget), exactBudget: budget, includedBudgetCategories: budgetIncludes };
     window.localStorage.setItem("globtrekQuiz", JSON.stringify({
       answers: completeAnswers,
       exactBudget: budget,
@@ -470,6 +481,6 @@ export default function TravelQuiz() {
 
   return <section id="quiz" className={`relative overflow-hidden bg-canvas text-ink transition-[opacity,transform] duration-300 ease-out ${phase === "leaving" ? "-translate-y-2 opacity-0" : phase === "leaving-back" ? "translate-y-2 opacity-0" : phase === "entering" ? "translate-y-2 opacity-0" : "translate-y-0 opacity-100"}`}>
     {preferredDestination ? <div className="pointer-events-none absolute inset-x-0 top-1 z-40 text-center"><span className="inline-flex border border-black/10 bg-canvas/90 px-3 py-1.5 text-micro uppercase tracking-label text-black/55 backdrop-blur">Planning {preferredDestination.name}</span></div> : null}
-    {step < adaptiveQuestions.length ? current.type === "budget" ? <BudgetQuestion value={exactBudget} includes={budgetIncludes} spendStyle={answers.spendStyle || "cheapest"} onSpendStyle={(style) => setAnswers((value) => ({ ...value, spendStyle: style }))} onValueChange={setExactBudget} onToggle={(key) => setBudgetIncludes((currentIncludes) => ({ ...currentIncludes, [key]: !currentIncludes[key] }))} onBack={back} onContinue={continueBudget} step={step} /> : <VisualQuestion question={current} value={answers[current.id]} onChoose={choose} step={step} /> : step === adaptiveQuestions.length ? <DiscoveryQuestion value={discoveryLevel} onChange={setDiscoveryLevel} onBack={back} onContinue={continueDiscovery} /> : <DateQuestion answers={answers} setAnswers={setAnswers} tripStart={tripStart} tripEnd={tripEnd} isFlexible={isFlexible} setTripStart={setTripStart} setTripEnd={setTripEnd} setIsFlexible={setIsFlexible} originDetails={originDetails} setOriginDetails={setOriginDetails} travelAreaPreference={travelAreaPreference} setTravelAreaPreference={setTravelAreaPreference} guestCount={guestCount} setGuestCount={setGuestCount} onBack={back} onSubmit={submit} canSubmit={canSubmit} />}
+    {step < adaptiveQuestions.length ? current.type === "budget" ? <BudgetQuestion value={exactBudget} includes={budgetIncludes} onValueChange={setExactBudget} onToggle={(key) => setBudgetIncludes((currentIncludes) => ({ ...currentIncludes, [key]: !currentIncludes[key] }))} onBack={back} onContinue={continueBudget} step={step} /> : <VisualQuestion question={current} value={current.id === "duration" && durationStatus[answers.duration]?.disabled ? null : answers[current.id]} onChoose={choose} step={step} {...(current.id === "duration" ? { status: durationStatus, note: durationNote } : {})} /> : step === adaptiveQuestions.length ? <DiscoveryQuestion value={discoveryLevel} onChange={setDiscoveryLevel} onBack={back} onContinue={continueDiscovery} /> : <DateQuestion answers={answers} setAnswers={setAnswers} tripStart={tripStart} tripEnd={tripEnd} isFlexible={isFlexible} setTripStart={setTripStart} setTripEnd={setTripEnd} setIsFlexible={setIsFlexible} originDetails={originDetails} setOriginDetails={setOriginDetails} travelAreaPreference={travelAreaPreference} setTravelAreaPreference={setTravelAreaPreference} guestCount={guestCount} setGuestCount={setGuestCount} onBack={back} onSubmit={submit} canSubmit={canSubmit} />}
   </section>;
 }

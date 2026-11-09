@@ -66,6 +66,5 @@ export function BookingChecklist({ entries, tripKey, details = null, id = "booki
         </li>;
       })}
     </ol> : <p className="mt-5 border border-black/15 bg-surface p-4 text-sm">Choose a stay or flight first; they&apos;ll appear here with their booking links.</p>}
-    <p className="mt-4 text-xs leading-5 text-black/55">GlobTrek may earn a commission when you book through these links. Your price doesn&apos;t change.</p>
   </section>;
 }

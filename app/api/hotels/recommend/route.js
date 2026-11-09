@@ -19,8 +19,10 @@ export async function POST(request) {
     const body = await request.json();
     const destination = destinations.find((item) => (item.id || item.airport) === body.destinationId);
     if (!destination) return NextResponse.json({ error: "Unknown destination" }, { status: 400 });
-    const profile = normalizeTravelerProfile(body.quiz || {});
-    const budgetPlan = buildBudgetPlan(profile, destination);
+    const quizProfile = normalizeTravelerProfile(body.quiz || {});
+    const budgetPlan = buildBudgetPlan(quizProfile, destination);
+    // The style the budget engine actually planned (it may have chosen it from the budget).
+    const profile = { ...quizProfile, spendStyle: budgetPlan.spendStyle };
     let supabase = null;
     try { supabase = await createClient(); } catch {}
     const curatedSearch = supabase

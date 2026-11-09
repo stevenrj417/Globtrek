@@ -344,7 +344,7 @@ test("the booking checklist lists bookable things only and never opens tabs on i
   assert.doesNotMatch(source, /window\.open|\.submit\(|\.click\(\)/);
   assert.match(source, /target="_blank" rel="noopener sponsored"/);
   assert.match(source, /opens in a new tab/);
-  assert.match(source, /may earn a commission/);
+  assert.doesNotMatch(source, /may earn a commission/);
   const results = readFileSync("app/results/page.jsx", "utf8");
   const book = readFileSync("app/book/page.jsx", "utf8");
   for (const page of [results, book]) {
@@ -361,4 +361,19 @@ test("stays from a same-named town elsewhere are dropped", async () => {
   const { snapshotProperties } = await import("../app/lib/inventory/CjCatalogHotelProvider.js");
   assert.ok(snapshotProperties("las-vegas-76868").every((item) => !/new mexico|\bNM\b/i.test(item.name)));
   assert.ok(snapshotProperties("las-vegas-76868").length >= 10);
+});
+
+test("the quiz greys out trip lengths no budget-sized trip could cover", async () => {
+  const { durationFloors } = await import("../app/lib/quiz/durationFloors.js");
+  const { cheapestTrip } = await import("../app/lib/quiz/cheapestTrip.js");
+  const floors = durationFloors(destinations);
+  const all = { flights: true, hotel: true, food: true, activities: true, transportation: true };
+  assert.ok(cheapestTrip(floors, 3, all) <= 500, "a long weekend fits $500");
+  assert.ok(cheapestTrip(floors, 14, all) > 500, "two weeks with flights doesn't fit $500");
+  assert.ok(cheapestTrip(floors, 10, all) <= 800, "ten days on $800 is tight, not impossible");
+  assert.ok(cheapestTrip(floors, 14, { ...all, flights: false }) < cheapestTrip(floors, 14, all), "excluding flights opens up longer trips");
+  const quiz = readFileSync("app/discover/TravelQuiz.jsx", "utf8");
+  assert.doesNotMatch(quiz, /How do you want to spend it|Rock bottom|Cheap but sane|A little comfort/);
+  assert.match(quiz, /How much do you want to spend\?/);
+  assert.doesNotMatch(quiz, /durationFloors"/, "the budget engine stays out of the quiz bundle");
 });

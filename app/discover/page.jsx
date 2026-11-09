@@ -1,4 +1,8 @@
 import TravelQuiz from "./TravelQuiz";
+import { destinations } from "../data/destinations";
+import { durationFloors } from "../lib/quiz/durationFloors";
+
+const floors = durationFloors(destinations);
 
 export const metadata = {
   title: "Find your trip",
@@ -9,7 +13,7 @@ export const metadata = {
 export default function DiscoverPage() {
   return (
     <main className="min-h-screen bg-canvas text-ink">
-      <TravelQuiz />
+      <TravelQuiz durationFloors={floors} />
     </main>
   );
 }

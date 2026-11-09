@@ -21,7 +21,23 @@ function estimate(category, average, source, confidence, isLive = false, spread 
 
 // options.stay: the traveler's chosen stay when it has a trustworthy price
 // ({ perUnit, unit: "bed" | "room", name, propertyId, priceKind, observedAt }).
+// With no spending style chosen ("auto"), GlobTrek plans the most comfortable
+// style the budget covers: a little comfort, then cheap but sane, then rock
+// bottom. With no budget at all, cheap but sane.
+const AUTO_ORDER = ["comfortable", "value", "cheapest"];
+
 export function buildBudgetPlan(profile, destination, options = {}) {
+  if (AUTO_ORDER.includes(profile.spendStyle)) return planForStyle(profile, destination, options);
+  if (!(profile.exactBudget > 0)) return { ...planForStyle({ ...profile, spendStyle: "value" }, destination, options), spendStyleChosenBy: "globtrek" };
+  let plan = null;
+  for (const spendStyle of AUTO_ORDER) {
+    plan = planForStyle({ ...profile, spendStyle }, destination, options);
+    if (plan.withinHardBudget) break;
+  }
+  return { ...plan, spendStyleChosenBy: "budget" };
+}
+
+function planForStyle(profile, destination, options = {}) {
   const targetBudget = profile.exactBudget || 0;
   const includes = profile.includedBudgetCategories;
   const nights = profile.tripLength;

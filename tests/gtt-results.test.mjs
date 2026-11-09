@@ -7,7 +7,7 @@ const sections = await readFile(new URL("../app/components/TripProposalSections.
 const restaurantRoute = await readFile(new URL("../app/api/restaurants/recommend/route.js", import.meta.url), "utf8");
 
 test("GTT results use a single proposal booking action instead of search sections", () => {
-  assert.match(page, /BOOK NOW/);
+  assert.match(page, /onBook={goToBooking}/);
   assert.doesNotMatch(page, /FlightSearchSection|Search flights|Search hotels|Search restaurants|Search activities/);
   assert.match(page, /bookingPropertyUrl\(stay, stayLinkContext\(context, stay\)\)/);
   assert.match(page, /<BookingChecklist entries=\{bookingManifestEntries\(bookingManifest\)\}/);
@@ -15,8 +15,8 @@ test("GTT results use a single proposal booking action instead of search section
 });
 
 test("sticky trip action always reflects current selections and flight logistics", () => {
-  assert.match(page, /aria-label="Trip action"/);
-  assert.match(page, /view\.stay \? "✓"/);
+  assert.match(page, /<TripDock /);
+  assert.match(page, /view\.stay \? "stay chosen"/);
   assert.match(page, /selectedRestaurants\.length/);
   assert.match(page, /selectedActivities\.length/);
   assert.match(page, /schedule\.datesLabel/);
@@ -52,8 +52,7 @@ test("dining and experience edits each surface four verified choices with visual
   assert.match(restaurantRoute, /slice\(0, 4\)/);
   assert.match(restaurantRoute, /slice\(0, 4\)/);
   assert.match(sections, /View all.*experiences/);
-  assert.match(sections, /destination\.image/);
-  assert.match(sections, /Destination view/);
+  assert.doesNotMatch(sections, /destination\.image|Destination view/, "cards never stand in a city photo for a named place");
 });
 
 test("final visual refinement keeps a cinematic hero and removes the redundant closing panel", () => {
@@ -67,5 +66,5 @@ test("itinerary preview uses three distinct grounded presentation slots", () => 
   assert.match(sections, /Arrival & settle/);
   assert.match(sections, /Historic neighborhoods/);
   assert.match(sections, /Local experiences/);
-  assert.match(sections, /verifiedImages\[index\] \|\| trip\.image/);
+  assert.match(sections, /text\.includes\(String\(item\.name\)\.toLowerCase\(\)\)/, "a day shows a photo of a place it mentions");
 });

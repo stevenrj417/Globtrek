@@ -11,7 +11,8 @@ function roundTo(value, step = 10) {
   return Math.round((Number(value) || 0) / step) * step;
 }
 
-export function estimateTrip(destination, { nights = 5, travelers = 1, startDate = null, spendStyle = "cheapest" } = {}) {
+export function estimateTrip(destination, { nights = 5, travelers = 1, startDate = null, spendStyle = "value" } = {}) {
+  // Shown before anyone gives a budget, so it uses the same default as the planner: cheap but sane.
   const profile = {
     exactBudget: 0,
     tripLength: nights,

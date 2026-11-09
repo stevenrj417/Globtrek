@@ -5,6 +5,7 @@ import { normalizeTravelerProfile } from "../../../lib/recommendation/travelerPr
 import { createClient } from "../../../lib/supabase/server";
 import { GooglePlacesDiscoveryProvider } from "../../../lib/google-places/GooglePlacesDiscoveryProvider";
 import { launchActivities } from "../../../data/launchSet";
+import { withPlacePhotos } from "../../../lib/google-places/placePhotos";
 
 export async function POST(request) {
   const body = await request.json().catch(() => ({}));
@@ -12,7 +13,7 @@ export async function POST(request) {
   if (!destination) return Response.json({ error: "Unknown destination" }, { status: 400 });
   // Launch destinations show only hand-verified activities.
   const verified = launchActivities(destination.id);
-  if (verified.length) return Response.json({ activities: verified, source: "globtrek_launch_verified", isLive: false });
+  if (verified.length) return Response.json({ activities: await withPlacePhotos(verified), source: "globtrek_launch_verified", isLive: false });
   try {
     const profile = normalizeTravelerProfile(body.quiz || {});
     const budgetPlan = buildBudgetPlan(profile, destination);
@@ -25,11 +26,11 @@ export async function POST(request) {
       source = "google_places_verified";
     }
     // Rock bottom leads with the destination's free highlights.
-    if (profile.spendStyle === "cheapest" && destination.freeHighlights?.length) {
+    if (budgetPlan.spendStyle === "cheapest" && destination.freeHighlights?.length) {
       const free = destination.freeHighlights.map((name, index) => ({ id: `${destination.id || destination.airport}-free-${index}`, destinationId: destination.id || destination.airport, name, description: "Free", category: "free", isFree: true, estimatedCostLow: 0, estimatedCostHigh: 0, provider: "official", googleMapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name}, ${destination.city}`)}`, detailsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name}, ${destination.city}`)}`, imageUrl: null }));
       activities = [...free, ...activities.filter((activity) => !free.some((item) => item.name === activity.name))];
     }
-    return Response.json({ activities, source, isLive: false });
+    return Response.json({ activities: await withPlacePhotos(activities.slice(0, 12)), source, isLive: false });
   } catch (error) {
     console.warn("Verified activity catalog unavailable.", error instanceof Error ? error.message : "unknown");
     return Response.json({ activities: [], source: "unavailable", isLive: false });

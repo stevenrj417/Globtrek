@@ -10,11 +10,19 @@ import { LAUNCH_SET, launchHotels } from "../app/data/launchSet.js";
 import { addNights } from "../app/lib/trip/schedule.js";
 
 const origin = { airportCode: "PDX", countryCode: "US", countryName: "United States", latitude: 45.59, longitude: -122.6 };
-const quiz = (extra) => ({ originDetails: origin, travelAreaPreference: "anywhere", exactBudget: 5000, answers: { exactBudget: 5000 }, ...extra });
+const quiz = (extra) => ({ originDetails: origin, travelAreaPreference: "anywhere", exactBudget: 5000, spendStyle: "cheapest", ...extra, answers: { exactBudget: 5000, ...extra?.answers } });
 const vegas = destinations.find((item) => item.id === "las-vegas-76868");
 
-test("GlobTrek defaults to the rock-bottom plan", () => {
-  assert.equal(normalizeTravelerProfile(quiz({})).spendStyle, "cheapest");
+test("with no style chosen, the budget picks the most comfortable plan it covers", () => {
+  const auto = (exactBudget) => buildBudgetPlan(normalizeTravelerProfile({ originDetails: origin, exactBudget, guestCount: "1", tripNights: 4, isFlexible: true }), vegas);
+  assert.equal(normalizeTravelerProfile({}).spendStyle, "auto");
+  assert.equal(auto(5000).spendStyle, "comfortable");
+  assert.equal(auto(5000).spendStyleChosenBy, "budget");
+  const tight = auto(450);
+  assert.equal(tight.spendStyle, "cheapest", "a tight budget falls back to rock bottom");
+  assert.ok(auto(5000).budgetCheckTotal > tight.budgetCheckTotal);
+  const none = buildBudgetPlan(normalizeTravelerProfile({ originDetails: origin, tripNights: 4, isFlexible: true }), vegas);
+  assert.equal(none.spendStyle, "value", "no budget → cheap but sane");
 });
 
 test("rock bottom prices a real hostel bed, cheap food and free activities", () => {

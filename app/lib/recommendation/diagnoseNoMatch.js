@@ -86,12 +86,12 @@ export function diagnoseNoMatch(destinations, quiz) {
   if (!reasons.length) reasons.push({ id: "other", text: "None of our destinations fit every answer at once. One of the changes below will." });
 
   const tries = [
-    profile.spendStyle !== "cheapest" && { id: "cheapest", label: "Switch to absolute cheapest", patch: { spendStyle: "cheapest" } },
+    !["cheapest", "auto"].includes(profile.spendStyle) && { id: "cheapest", label: "Switch to absolute cheapest", patch: { spendStyle: "cheapest" } },
     ...[nights - 1, nights - 2, 3, 2].filter((value, index, list) => value >= 2 && value < nights && list.indexOf(value) === index).map((value) => ({ id: `nights-${value}`, label: `Make it ${value} nights`, patch: { nights: value } })),
     profile.travelAreaPreference !== "anywhere" && { id: "area", label: "Go anywhere", patch: { area: "anywhere" } },
     includes.flights && { id: "flights", label: "Leave flights out of the budget", patch: { flights: false } },
-    profile.spendStyle !== "cheapest" && nights > 3 && { id: "cheapest-3", label: "Absolute cheapest, 3 nights", patch: { spendStyle: "cheapest", nights: 3 } },
-    profile.spendStyle !== "cheapest" && includes.flights && { id: "cheapest-noflights", label: "Absolute cheapest, flights paid separately", patch: { spendStyle: "cheapest", flights: false } },
+    !["cheapest", "auto"].includes(profile.spendStyle) && nights > 3 && { id: "cheapest-3", label: "Absolute cheapest, 3 nights", patch: { spendStyle: "cheapest", nights: 3 } },
+    !["cheapest", "auto"].includes(profile.spendStyle) && includes.flights && { id: "cheapest-noflights", label: "Absolute cheapest, flights paid separately", patch: { spendStyle: "cheapest", flights: false } },
     inArea && budget && inArea.total > budget && { id: "budget", label: `Raise the budget to ${money(Math.ceil(inArea.total / 25) * 25)}`, patch: { budget: Math.ceil(inArea.total / 25) * 25 } },
   ].filter(Boolean);
 

@@ -4,6 +4,7 @@ import { SupabaseRestaurantProvider } from "../../../lib/restaurants/SupabaseRes
 import { createClient } from "../../../lib/supabase/server";
 import { GooglePlacesDiscoveryProvider } from "../../../lib/google-places/GooglePlacesDiscoveryProvider";
 import { launchDinners } from "../../../data/launchSet";
+import { withPlacePhotos } from "../../../lib/google-places/placePhotos";
 
 // GlobTrek is a budget site: unless a traveler asks for comfort, no expensive tables.
 function pricey(level) {
@@ -16,7 +17,7 @@ export async function POST(request) {
   if (!destination) return Response.json({ error: "Unknown destination" }, { status: 400 });
   // Launch destinations show only hand-verified restaurants.
   const verified = launchDinners(destination.id);
-  if (verified.length) return Response.json({ restaurants: verified, source: "globtrek_launch_verified", availabilitySource: "not_requested" });
+  if (verified.length) return Response.json({ restaurants: await withPlacePhotos(verified), source: "globtrek_launch_verified", availabilitySource: "not_requested" });
   try {
     let restaurants = [];
     let source = "supabase_verified";
@@ -40,7 +41,7 @@ export async function POST(request) {
         return restaurant;
       }
     }));
-    return Response.json({ restaurants: enriched.slice(0, 4), source, availabilitySource: canCheckAvailability ? "opentable" : "not_requested" });
+    return Response.json({ restaurants: await withPlacePhotos(enriched.slice(0, 4)), source, availabilitySource: canCheckAvailability ? "opentable" : "not_requested" });
   } catch (error) {
     console.warn("Verified restaurant catalog unavailable.", error instanceof Error ? error.message : "unknown");
     return Response.json({ restaurants: [], source: "unavailable", availabilitySource: "unavailable" });

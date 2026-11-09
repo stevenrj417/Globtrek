@@ -31,7 +31,7 @@ export function NoMatchPanel({ quiz }) {
     nights: profile.tripLength,
     travelers: profile.travelers,
     flights: profile.includedBudgetCategories.flights,
-    spendStyle: profile.spendStyle || "value",
+    spendStyle: profile.spendStyle || "auto",
     area: profile.travelAreaPreference || "anywhere",
   });
   const edited = useMemo(() => applyQuizPatch(quiz, draft), [quiz, draft]);
@@ -62,7 +62,7 @@ export function NoMatchPanel({ quiz }) {
           <label className="text-sm font-medium">Total budget (USD)<input type="number" min="100" step="25" inputMode="numeric" value={draft.budget} onChange={set("budget")} className={field} /></label>
           <label className="text-sm font-medium">Nights<input type="number" min="1" max="28" value={draft.nights} onChange={set("nights")} className={field} /></label>
           <label className="text-sm font-medium">Travelers<input type="number" min="1" max="30" value={draft.travelers} onChange={set("travelers")} className={field} /></label>
-          <label className="text-sm font-medium">How to spend it<select value={draft.spendStyle} onChange={set("spendStyle")} className={field}><option value="cheapest">Absolute cheapest</option><option value="value">Best value</option><option value="comfortable">Cheap but comfortable</option></select></label>
+          <label className="text-sm font-medium">How to spend it<select value={draft.spendStyle} onChange={set("spendStyle")} className={field}><option value="auto">Let my budget decide</option><option value="cheapest">Absolute cheapest</option><option value="value">Best value</option><option value="comfortable">Cheap but comfortable</option></select></label>
           <label className="text-sm font-medium">Where<select value={draft.area} onChange={set("area")} className={field}><option value="anywhere">Anywhere</option><option value="domestic">Stay in my country</option><option value="international">International only</option></select></label>
           <label className="flex min-h-12 items-center gap-3 self-end text-sm font-medium"><input type="checkbox" checked={draft.flights} onChange={set("flights")} className="h-5 w-5 accent-black" />Budget includes flights</label>
         </div>

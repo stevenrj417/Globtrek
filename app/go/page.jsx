@@ -48,7 +48,6 @@ export default function HandoffPage() {
         {details ? <p className="tabular mt-3 text-base text-muted">{details}</p> : null}
         <div className="mx-auto mt-8 h-px w-40 overflow-hidden bg-black/15" aria-hidden="true"><div className="handoff-bar h-px bg-ink" /></div>
         <a href={handoff.to} rel="noopener sponsored" className="mt-8 inline-flex min-h-11 items-center text-sm underline decoration-black/25 underline-offset-4 hover:decoration-ink">Continue now</a>
-        <p className="mt-6 text-xs text-subtle">GlobTrek may earn a commission. Your price doesn&apos;t change.</p>
       </div>
     </main>
   );
