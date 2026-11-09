@@ -26,6 +26,21 @@ export function restaurantBookingUrl(item) {
     || exactGoogleMapsUrl(item);
 }
 
+// Only a real reservation link counts as something to book; a map or plain
+// website for a walk-in place does not.
+const RESERVATION_HOSTS = /(^|\.)(opentable\.[a-z.]+|resy\.com|exploretock\.com|sevenrooms\.com|thefork\.[a-z.]+|quandoo\.[a-z.]+)$/i;
+
+function reservationPlatformUrl(value) {
+  const url = httpsUrl(value);
+  try { return url && RESERVATION_HOSTS.test(new URL(url).hostname) ? url : null; } catch { return null; }
+}
+
+export function restaurantReservationUrl(item) {
+  return httpsUrl(item?.officialReservationUrl || item?.reservationUrl || item?.openTableUrl)
+    || reservationPlatformUrl(item?.bookingUrl)
+    || (item?.reservable === true && item?.reservations !== "walk-in" ? httpsUrl(item?.officialWebsiteUrl || item?.websiteUri || item?.websiteUrl) : null);
+}
+
 export function experienceBookingUrl(item) {
   return httpsUrl(item?.viatorAffiliateUrl || item?.affiliateUrl)
     || httpsUrl(item?.providerBookingUrl || item?.bookingUrl || item?.providerUrl)
@@ -127,6 +142,7 @@ export function buildBookingManifest({
   })).filter(Boolean);
   const restaurantBookings = restaurants.map((restaurant) => compactBooking(restaurant, "restaurant", prefilledRestaurantUrl(restaurant, travelers), {
     reservationTime: restaurant.reservationTime || restaurant.time || null,
+    reservation: Boolean(restaurantReservationUrl(restaurant)),
   })).filter(Boolean);
   const experienceBookings = experiences.map((experience) => compactBooking(experience, "experience", affiliateExperienceUrl(experience, destination), {
     officialUrl: experienceBookingUrl(experience),

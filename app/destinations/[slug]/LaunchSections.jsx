@@ -52,7 +52,7 @@ export function LaunchSections({ item }) {
     </section> : null}
 
     {hotels.length ? <Section id="stay-heading" title="Where to stay">
-      <p className="mt-2 text-sm text-muted">Hostels and budget stays only, from <BookingLogo className="h-3 w-auto" /> listings (checked {FEED_STAYS_CHECKED || data.verified}). Live prices are on Booking.com.</p>
+      <p className="mt-2 text-sm text-muted">Hostels and budget stays only, from <BookingLogo className="h-3 w-auto" /> listings (checked {FEED_STAYS_CHECKED || data.verified}). Check current prices and availability on Booking.com.</p>
       <ul className="mt-6 grid gap-px border border-black/10 bg-black/10 sm:grid-cols-2">
         {hotels.map((hotel) => <li key={hotel.id} className="flex flex-col justify-between gap-4 bg-bg p-5">
           <div>
@@ -62,7 +62,7 @@ export function LaunchSections({ item }) {
             <p className="text-lg font-medium tracking-tight-1">{hotel.name}</p>
             <p className="mt-1 text-sm text-subtle">{[hotel.priceTier === "hostel" ? hotel.category || "Hostel" : hotel.category, hotel.starRating ? `${hotel.starRating}-star` : null, hotel.neighborhood, hotel.address].filter(Boolean).join(" · ") || "Hostel · cheapest well-reviewed bed"}</p>
             {hotel.rating ? <p className="tabular mt-1 text-sm">{hotel.rating.toFixed(1)} / 10 · {hotel.reviewCount.toLocaleString("en-US")} Booking.com reviews</p> : null}
-            {hotel.bedNight ? <p className="tabular mt-2 text-sm font-medium">Dorm beds from about ${hotel.bedNight} a night, taxes in</p> : hotel.fromFeed ? null : <p className="mt-2 text-sm text-muted">{hotel.note}</p>}
+            {hotel.bedNight ? <p className="tabular mt-2 text-sm font-medium">Dorm beds seen from about ${hotel.bedNight} a night, taxes in{hotel.verifiedAt ? ` (checked ${hotel.verifiedAt})` : ""}; not a live price</p> : hotel.fromFeed ? null : <p className="mt-2 text-sm text-muted">{hotel.note}</p>}
             {hotel.tags?.length ? <ul className="mt-3 flex flex-wrap gap-1.5 text-xs">{hotel.tags.map((tag) => <li key={tag} className="border border-black/15 px-2 py-0.5">{tag}</li>)}</ul> : null}
             {hotel.roomTypes?.length ? <p className="mt-3 text-sm text-muted">Rooms: {hotel.roomTypes.slice(0, 3).join(" · ")}{hotel.roomTypes.length > 3 ? ` · +${hotel.roomTypes.length - 3} more` : ""}</p> : null}
             {hotel.maxGuests && !hotel.dorms ? <p className="text-xs text-subtle">Sleeps up to {hotel.maxGuests}{hotel.bedsDescription ? ` · ${hotel.bedsDescription}` : ""}</p> : null}

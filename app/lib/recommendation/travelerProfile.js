@@ -1,19 +1,12 @@
 import { normalizeTravelArea, originFromTrip } from "./travelArea.js";
 import { discoverySliderToUnknownness, legacyBudgetLabel, normalizeBudget } from "./budgetInput.js";
+import { tripSchedule } from "../trip/schedule.js";
 
 export { discoverySliderToUnknownness, legacyBudgetLabel, normalizeBudget };
 
 // Budget modes: "cheapest" (absolute cheapest), "value" (best value, default), "comfortable".
 export const SPEND_STYLES = ["cheapest", "value", "comfortable"];
 
-const DURATION_NIGHTS = {
-  "Long Weekend": 3,
-  "Five Nights": 5,
-  "One Week": 7,
-  "Ten Days": 10,
-  "Two Weeks": 14,
-  "Open-Ended": 7,
-};
 
 export const DEFAULT_BUDGET_CATEGORIES = Object.freeze({
   flights: true,
@@ -27,12 +20,6 @@ export function itineraryDayCount(input = {}) {
   return Math.min(28, Math.max(1, normalizeTravelerProfile(input).tripLength || 7));
 }
 
-function dateNights(start, end) {
-  const startTime = Date.parse(`${start || ""}T00:00:00Z`);
-  const endTime = Date.parse(`${end || ""}T00:00:00Z`);
-  if (!Number.isFinite(startTime) || !Number.isFinite(endTime) || endTime <= startTime) return null;
-  return Math.min(60, Math.max(1, Math.round((endTime - startTime) / 86400000)));
-}
 
 export function normalizeTravelerProfile(input = {}) {
   const answers = input.answers || {};
@@ -49,8 +36,8 @@ export function normalizeTravelerProfile(input = {}) {
     Object.keys(DEFAULT_BUDGET_CATEGORIES).map((key) => [key, suppliedCategories[key] ?? DEFAULT_BUDGET_CATEGORIES[key]]),
   );
   const travelers = Math.min(30, Math.max(1, Number.parseInt(input.guestCount ?? input.travelers, 10) || 1));
-  const requestedNights = Number.parseInt(input.tripNights, 10);
-  const tripLength = dateNights(input.tripStart, input.tripEnd) || (Number.isFinite(requestedNights) && requestedNights > 0 ? Math.min(28, requestedNights) : null) || DURATION_NIGHTS[answers.duration] || 7;
+  const schedule = tripSchedule(input);
+  const tripLength = schedule.nights;
 
   return {
     version: 2,
@@ -60,9 +47,9 @@ export function normalizeTravelerProfile(input = {}) {
     originCountry: originDetails?.countryName || null,
     travelAreaPreference: normalizeTravelArea(input.travelAreaPreference || answers.travelAreaPreference),
     dates: {
-      start: input.tripStart || null,
-      end: input.tripEnd || null,
-      flexible: Boolean(input.isFlexible),
+      start: schedule.start,
+      end: schedule.end,
+      flexible: schedule.flexible,
       season: answers.season || null,
     },
     tripLength,

@@ -7,6 +7,7 @@ import { buildBudgetPlan } from "../app/lib/recommendation/budgetEngine.js";
 import { estimateFlight } from "../app/lib/recommendation/travelFeasibility.js";
 import { snapshotFare } from "../app/data/fareSnapshots.js";
 import { LAUNCH_SET, launchHotels } from "../app/data/launchSet.js";
+import { addNights } from "../app/lib/trip/schedule.js";
 
 const origin = { airportCode: "PDX", countryCode: "US", countryName: "United States", latitude: 45.59, longitude: -122.6 };
 const quiz = (extra) => ({ originDetails: origin, travelAreaPreference: "anywhere", exactBudget: 5000, answers: { exactBudget: 5000 }, ...extra });
@@ -28,7 +29,7 @@ test("rock bottom prices a real hostel bed, cheap food and free activities", () 
 });
 
 test("hostel beds follow the season for the travel month", () => {
-  const bed = (start, item = vegas) => buildBudgetPlan(normalizeTravelerProfile(quiz({ guestCount: "1", tripNights: 4, tripStart: start, tripEnd: start, isFlexible: false })), item).lodging.perBedNight;
+  const bed = (start, item = vegas) => buildBudgetPlan(normalizeTravelerProfile(quiz({ guestCount: "1", tripNights: 4, tripStart: start, tripEnd: addNights(start, 4), isFlexible: false })), item).lodging.perBedNight;
   assert.equal(bed("2027-02-09"), 50);
   assert.ok(bed("2027-07-13") < bed("2027-12-14"));
   const lisbon = destinations.find((item) => item.id === "LIS");

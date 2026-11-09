@@ -35,7 +35,8 @@ function text(value, max = 120) {
 }
 
 export function encodeBookingPage(manifest) {
-  const items = bookingManifestEntries(manifest).slice(0, MAX_ITEMS).map((entry) => ({
+  // Restaurants are listed only when they take reservations online.
+  const items = bookingManifestEntries(manifest).filter((entry) => entry.type !== "restaurant" || entry.reservation).slice(0, MAX_ITEMS).map((entry) => ({
     t: entry.type,
     n: text(entry.name),
     u: entry.exactUrl,
@@ -71,7 +72,7 @@ export function decodeBookingPage(value) {
     // Anything Booking.com sells must leave through GlobTrek's CJ link.
     if ((type === "hotel" || type === "flight") && !isCjUrl(url)) return [];
     if (isBookingComUrl(url)) return [];
-    return [{ id: `${type}-${index}`, type, name: text(item.n) || "Booking", exactUrl: url, officialUrl: safeHttps(item.o) }];
+    return [{ id: `${type}-${index}`, type, name: text(item.n) || "Booking", exactUrl: url, officialUrl: safeHttps(item.o), reservation: type === "restaurant" }];
   });
   if (!items.length) return null;
   const date = (value) => (typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value) ? value : null);

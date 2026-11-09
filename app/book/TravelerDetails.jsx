@@ -46,7 +46,7 @@ export function TravelerDetails() {
   const all = filled.map((field) => `${field.label}: ${details[field.key]}`).join("\n");
   return <details className="mt-6 border border-black/15 p-5" open>
     <summary className="cursor-pointer font-semibold">Your details, ready to paste</summary>
-    <p className="mt-2 text-sm text-muted">Saved on this device only. GlobTrek never sends them anywhere. Copy each one into the partner&apos;s checkout; Booking.com fills them for you when you&apos;re signed in.</p>
+    <p className="mt-2 text-sm text-muted">Saved on this device only. GlobTrek never sends them anywhere. Copy each one into the partner&apos;s checkout when it asks.</p>
     <div className="mt-4 grid gap-3 sm:grid-cols-2">
       {FIELDS.map((field) => <label key={field.key} className="block text-sm">
         <span className="text-subtle">{field.label}</span>

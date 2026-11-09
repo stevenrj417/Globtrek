@@ -37,7 +37,7 @@ test("tampered payloads cannot strip CJ tracking or smuggle raw Booking.com link
   assert.equal(decodeBookingPage("not-base64!"), null);
 });
 
-test("the trip email wraps browser-supplied Booking.com links in CJ and adds Book everything", async () => {
+test("the trip email wraps browser-supplied Booking.com links in CJ and links the booking checklist", async () => {
   const { tripEmail } = await import("../app/lib/email/templates.js");
   const html = tripEmail({ model: {
     destination: { city: "Lisbon" }, travelers: { total: 2 }, dates: { start: "2027-04-12", end: "2027-04-17" },
@@ -47,6 +47,7 @@ test("the trip email wraps browser-supplied Booking.com links in CJ and adds Boo
   } });
   assert.match(html, /kqzyfj\.com\/click-101801755-17293132\?url=https%3A%2F%2Fwww\.booking\.com%2Fhotel%2Fpt%2Flisboa\.html/);
   assert.doesNotMatch(html, /href="https:\/\/www\.booking\.com/);
-  assert.match(html, /Book everything/);
+  assert.match(html, /Open booking checklist/);
+  assert.doesNotMatch(html, /pop-ups|Book everything/);
   assert.match(html, /https:\/\/www\.glob-trek\.com\/book\?b=/);
 });

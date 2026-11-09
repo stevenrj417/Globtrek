@@ -1,6 +1,7 @@
 import { destinations } from "../../data/destinations";
-import { itineraryDayCount, normalizeTravelerProfile } from "../../lib/recommendation/travelerProfile";
-import { rankDestinations } from "../../lib/recommendation/destinationEngine";
+import { normalizeTravelerProfile } from "../../lib/recommendation/travelerProfile";
+import { planDestination, rankDestinations } from "../../lib/recommendation/destinationEngine";
+import { tripSchedule } from "../../lib/trip/schedule";
 import { validateTripRecommendation } from "../../lib/recommendation/finalTripValidator";
 
 const resultCache = new Map();
@@ -185,9 +186,9 @@ function fallbackPlan(destination, input) {
     arrivalWindow: { title: "Arrival", steps: ["Keep the first evening light and close to your stay."] },
     picks: { restaurants: [], experiences: [] },
     budget,
-    days: Array.from({ length: itineraryDayCount(input) }, (_, index) => index === 0
+    days: Array.from({ length: tripSchedule(input).nights }, (_, index) => index === 0
       ? { day: "Day 1", title: "Arrive softly", location: destination.city, sequence: ["Arrive", "Check in", "Walk", "Dinner"], morning: "Travel and arrival", afternoon: "Settle into your stay", evening: "Easy neighborhood dinner" }
-      : { day: `Day ${index + 1}`, title: index === itineraryDayCount(input) - 1 ? "One last look" : "Find your rhythm", location: destination.city, sequence: ["Explore", "Pause", "Eat", "Wander"], morning: "One meaningful place", afternoon: "Explore at your pace", evening: "A memorable local meal" }),
+      : { day: `Day ${index + 1}`, title: index === tripSchedule(input).nights - 1 ? "One last look" : "Find your rhythm", location: destination.city, sequence: ["Explore", "Pause", "Eat", "Wander"], morning: "One meaningful place", afternoon: "Explore at your pace", evening: "A memorable local meal" }),
     practicalNotes: ["Confirm live schedules, availability, and final prices with each provider."],
   };
 }
@@ -200,13 +201,6 @@ function withFallbackPlans(matches, input) {
   });
 }
 
-function tripLength(body) {
-  if (body?.isFlexible || !body?.tripStart || !body?.tripEnd) return null;
-  const start = Date.parse(`${body.tripStart}T00:00:00Z`);
-  const end = Date.parse(`${body.tripEnd}T00:00:00Z`);
-  if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) return null;
-  return Math.min(30, Math.max(1, Math.round((end - start) / 86400000)));
-}
 
 const planSchema = {
   type: "object",
@@ -256,14 +250,16 @@ export async function POST(request) {
   const answers = body.answers || {};
   const travelerProfile = normalizeTravelerProfile(body);
   const ranked = fallbackMatches(body);
-  const forcedDestination = typeof body.destination === "string" ? ranked.find((destination) => (destination.id || destination.airport) === body.destination) : null;
+  // A destination named in the request always wins, even when the traveler's
+  // filters would have ranked it out.
+  const named = typeof body.destination === "string" ? destinations.find((destination) => (destination.id || destination.airport) === body.destination) : null;
+  const forcedDestination = named ? ranked.find((destination) => (destination.id || destination.airport) === body.destination) || planDestination(named, travelerProfile) : null;
   const fallback = forcedDestination ? [forcedDestination, ...ranked.filter((destination) => (destination.id || destination.airport) !== (forcedDestination.id || forcedDestination.airport))] : ranked;
   const primaryDestination = fallback[0];
   if (!primaryDestination) {
     return Response.json({ source: "fallback", aiStatus: "no_eligible_destination", travelerProfile, matches: [] }, { status: 422 });
   }
-  const nights = tripLength(body);
-  const planDays = nights ? Math.min(28, Math.max(1, nights)) : itineraryDayCount(body);
+  const planDays = tripSchedule(body).nights;
   const tune = typeof body.tune === "string" ? body.tune.slice(0, 40) : "original";
   const cacheKey = JSON.stringify({ travelerProfile, destination: primaryDestination.id || primaryDestination.airport, tune });
   const cached = resultCache.get(cacheKey);
@@ -302,7 +298,7 @@ export async function POST(request) {
               travelerProfile,
               budgetPlan: primaryDestination.budgetPlan,
               requestedTrip: {
-                nights,
+                nights: planDays,
                 flexible: Boolean(body.isFlexible),
                 guests: Number.parseInt(body.guestCount, 10) || 2,
                 originAirport: body.originAirport || null,

@@ -9,20 +9,21 @@ const restaurantRoute = await readFile(new URL("../app/api/restaurants/recommend
 test("GTT results use a single proposal booking action instead of search sections", () => {
   assert.match(page, /BOOK NOW/);
   assert.doesNotMatch(page, /FlightSearchSection|Search flights|Search hotels|Search restaurants|Search activities/);
-  assert.match(page, /bookingPropertyUrl\(selectedHotel/);
+  assert.match(page, /bookingPropertyUrl\(stay, stayLinkContext\(context, stay\)\)/);
+  assert.match(page, /<BookingChecklist entries=\{bookingManifestEntries\(bookingManifest\)\}/);
+  assert.doesNotMatch(page, /launchBookingManifest|window\.open/);
 });
 
 test("sticky trip action always reflects current selections and flight logistics", () => {
   assert.match(page, /aria-label="Trip action"/);
-  assert.match(page, /selectedHotel \? "✓"/);
+  assert.match(page, /view\.stay \? "✓"/);
   assert.match(page, /selectedRestaurants\.length/);
   assert.match(page, /selectedActivities\.length/);
-  assert.match(page, /activeDates/);
-  assert.match(page, /activeTravelers/);
-  assert.match(page, /buildBudgetPlan\(activeProfile, flightDestination\)/);
-  assert.match(page, /tripContext=\{flightContext\}/);
+  assert.match(page, /schedule\.datesLabel/);
+  assert.match(page, /buildBudgetPlan\(activeProfile, flightDestination, \{ stay: stayOption \}\)/);
+  assert.match(page, /tripContext=\{context\}/);
   assert.match(page, /key=\{`flight-\$\{destinationKey\}`\}/);
-  assert.match(page, /key=\{`hotel-\$\{destinationKey\}`\}/);
+  assert.match(page, /key=\{`stay-\$\{destinationKey\}`\}/);
   assert.doesNotMatch(page, /finalActionsVisible|aria-hidden={finalActionsVisible}/);
 });
 
@@ -59,7 +60,7 @@ test("final visual refinement keeps a cinematic hero and removes the redundant c
   assert.match(page, /min-h-\[92svh\]/);
   assert.match(page, /top-1\/2/);
   assert.doesNotMatch(page, /Ready when you are/);
-  assert.match(page, /<CostSection[^>]+onBook=\{bookNow\}/);
+  assert.match(page, /href="#booking-center"/);
 });
 
 test("itinerary preview uses three distinct grounded presentation slots", () => {

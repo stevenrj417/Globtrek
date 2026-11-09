@@ -1,6 +1,7 @@
 import { destinationCostProfile, seasonFor } from "./costProfiles.js";
 import { estimateFlight } from "./travelFeasibility.js";
-import { cheapStayFor, stayNightFor } from "../../data/cheapStays.js";
+import { observedMonthFor } from "../pricing/stayPrice.js";
+import { CHEAP_STAYS_CHECKED, cheapStayFor, stayNightFor } from "../../data/cheapStays.js";
 
 const CATEGORY_KEYS = ["flights", "hotel", "food", "activities", "transportation"];
 
@@ -18,7 +19,9 @@ function estimate(category, average, source, confidence, isLive = false, spread 
   return { category, low: Math.round(average * (1 - spread)), high: Math.round(average * (1 + spread)), average: roundedAverage, source, confidence, lastUpdated: "2026-08-14", isLive };
 }
 
-export function buildBudgetPlan(profile, destination) {
+// options.stay: the traveler's chosen stay when it has a trustworthy price
+// ({ perUnit, unit: "bed" | "room", name, propertyId, priceKind, observedAt }).
+export function buildBudgetPlan(profile, destination, options = {}) {
   const targetBudget = profile.exactBudget || 0;
   const includes = profile.includedBudgetCategories;
   const nights = profile.tripLength;
@@ -42,27 +45,42 @@ export function buildBudgetPlan(profile, destination) {
     foodPerPersonDay: baseCityAverage.foodPerPersonDay * style.food,
     activitiesPerPersonDay: baseCityAverage.activitiesPerPersonDay * style.activities,
   };
-  // Rock-bottom lodging: real hostel bed prices (taxes included) per traveler, unless
-  // the traveler asked for a private room or a cheap room beats the beds.
+  // Lodging is one explicit line: price per bed or room × beds or rooms × nights.
+  // Hotel cards, the cost table and saved trips all show this same breakdown.
+  // Rock bottom prices a real hostel bed per traveler (a price observed on
+  // Booking.com, adjusted for the month), unless the traveler asked for a private
+  // room or a room costs less. Otherwise it is GlobTrek's modeled city room rate.
+  const rooms = Math.max(1, Math.ceil(travelers / 2));
   const cheap = profile.spendStyle === "cheapest" ? cheapStayFor(destination) : null;
   // Price the beds for the travel month; with no dates, the month the flight was priced for.
   const stayMonth = profile?.dates?.start ? month : flight?.fareMonth ? Number(String(flight.fareMonth).slice(5, 7)) : null;
+  // The observed price is "observed" only for the month it was checked for; any other month is an estimate from it.
+  const cheapKind = !stayMonth || stayMonth === observedMonthFor(destination.airport) ? "observed" : "estimate";
   const stayNight = cheap ? stayNightFor(destination, stayMonth) : null;
-  const roomNight = cityAverage.hotelNight * (1 + (Number(destination.planningAverages?.lodgingTaxRate) || 0));
-  const bedsNight = cheap?.bedNight ? stayNight * travelers : null;
-  const useBeds = Boolean(bedsNight) && profile.lodging !== "private" && (profile.lodging === "hostel" || bedsNight <= roomNight);
-  const lodging = useBeds
-    ? { type: "hostel_bed", perNight: bedsNight, name: cheap.name, path: cheap.path, perBedNight: stayNight, month: stayMonth }
-    : cheap?.roomNight ? { type: "private_room", perNight: stayNight, month: stayMonth, name: cheap.name, path: cheap.path } : { type: "private_room", perNight: Math.round(roomNight) };
+  const cityTaxRate = Number(destination.planningAverages?.lodgingTaxRate) || 0;
+  const cityRoomNight = Math.round(cityAverage.hotelNight * (1 + cityTaxRate));
+  const useBeds = Boolean(cheap?.bedNight) && profile.lodging !== "private" && (profile.lodging === "hostel" || stayNight * travelers <= cityRoomNight * rooms);
+  const chosen = options.stay?.perUnit > 0 ? options.stay : null;
+  const lodging = chosen
+    ? { type: chosen.unit === "bed" ? "hostel_bed" : "private_room", unit: chosen.unit, units: chosen.unit === "bed" ? travelers : rooms, perUnit: Math.round(chosen.perUnit), name: chosen.name, propertyId: chosen.propertyId || null, priceKind: chosen.priceKind, observedAt: chosen.observedAt || null, month: stayMonth }
+    : useBeds
+      ? { type: "hostel_bed", unit: "bed", units: travelers, perUnit: stayNight, name: cheap.name, path: cheap.path, priceKind: cheapKind, observedAt: CHEAP_STAYS_CHECKED, month: stayMonth }
+      : cheap?.roomNight
+        ? { type: "private_room", unit: "room", units: rooms, perUnit: stayNight, name: cheap.name, path: cheap.path, priceKind: cheapKind, observedAt: CHEAP_STAYS_CHECKED, month: stayMonth }
+        : { type: "private_room", unit: "room", units: rooms, perUnit: cityRoomNight, name: null, priceKind: "city_estimate", observedAt: null, month };
+  lodging.perNight = lodging.perUnit * lodging.units;
+  lodging.nights = nights;
+  lodging.total = includes.hotel ? lodging.perNight * nights : 0;
+  lodging.perBedNight = lodging.unit === "bed" ? lodging.perUnit : null;
   if (cheap) {
     cityAverage.foodPerPersonDay = Math.min(cityAverage.foodPerPersonDay, cheap.cheapFoodDay);
     cityAverage.activitiesPerPersonDay = 0;
   }
-  const lodgingTaxRate = cheap ? 0 : Number(destination.planningAverages?.lodgingTaxRate) || 0;
+  const lodgingTaxRate = lodging.priceKind === "city_estimate" ? cityTaxRate : 0;
   const airportTransfers = (Number(destination.planningAverages?.airportTransferPerPerson) || 0) * 2 * travelers;
   const categories = {
     flights: { ...estimate("flights", includes.flights ? flight.average * travelers : 0, flight.priceSource, flight.confidence, flight.isLive, 0.12), currency: flight.currency, priceLastChecked: flight.priceLastChecked, cabinClass: flight.cabinClass, tripType: flight.tripType, monthlyAverageEconomyRoundTrip: flight.monthlyAverageEconomyRoundTrip, basis: flight.basis, fareWindow: flight.fareWindow || null, perTraveler: flight.average },
-    hotel: estimate("hotel", includes.hotel ? (cheap ? lodging.perNight : cityAverage.hotelNight * (1 + lodgingTaxRate)) * nights : 0, destination.planningAverages?.source || cost.source, destination.planningAverages?.confidence || cost.confidence, false, 0.15),
+    hotel: estimate("hotel", lodging.total, destination.planningAverages?.source || cost.source, destination.planningAverages?.confidence || cost.confidence, false, 0.15),
     food: estimate("food", includes.food ? cityAverage.foodPerPersonDay * nights * travelers : 0, destination.planningAverages?.source || cost.source, destination.planningAverages?.confidence || cost.confidence, false, 0.15),
     activities: estimate("activities", includes.activities ? cityAverage.activitiesPerPersonDay * nights * travelers : 0, destination.planningAverages?.source || cost.source, destination.planningAverages?.confidence || cost.confidence, false, 0.15),
     transportation: estimate("transportation", includes.transportation ? cityAverage.localTransportDay * nights + airportTransfers : 0, destination.planningAverages?.source || cost.source, destination.planningAverages?.confidence || cost.confidence, false, 0.15),
@@ -138,8 +156,8 @@ export function buildBudgetPlan(profile, destination) {
     budgetBasis: "good_value_monthly_plan_with_reserve",
     cityPlanningAverage: cityAverage,
     spendStyle: profile.spendStyle || "value",
-    lodgingTax: includes.hotel ? Math.round(cityAverage.hotelNight * nights * lodgingTaxRate) : 0,
-    lodging: cheap ? lodging : null,
+    lodgingTax: includes.hotel ? Math.round(cityAverage.hotelNight * lodgingTaxRate) * lodging.units * nights : 0,
+    lodging,
     perTraveler: Math.round((rawAverage + planningReserve) / travelers),
     lodgingTaxRate,
     airportTransfers: includes.transportation ? Math.round(airportTransfers) : 0,

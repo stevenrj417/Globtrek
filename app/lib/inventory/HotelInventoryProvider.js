@@ -6,6 +6,7 @@ export class HotelInventoryProvider {
 
 export const hotelProviderCapabilities = Object.freeze({
   curatedSupabase: { content: true, estimatedPrices: true, liveRates: false, availability: false, bookingRedirects: true },
+  cjBookingCatalog: { content: true, photos: true, rooms: true, amenities: true, liveRates: false, availability: false, reviews: false, bookingRedirects: true },
   expediaRapidFuture: { content: true, photos: true, rooms: true, liveRates: true, availability: true, bookingTokens: true },
   bookingComDemandFuture: { content: true, photos: true, rooms: true, liveRates: true, availability: true, bookingRedirects: true },
 });
