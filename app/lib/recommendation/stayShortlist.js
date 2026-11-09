@@ -92,7 +92,9 @@ function plural(count, word) {
 
 export function whyLine(choice, role, profile) {
   const facts = [];
-  if (choice.dorms) facts.push("dorm beds");
+  const privateRooms = (choice.roomTypes || []).some((room) => !/dorm|shared|bunk|bed in/i.test(room));
+  if (choice.dorms && !(profile.lodging === "private" && privateRooms)) facts.push("dorm beds");
+  else if (choice.dorms) facts.push("private rooms as well as dorms");
   else facts.push(`private ${stayType(choice).toLowerCase() === "hotel" ? "hotel rooms" : "rooms"}`);
   if (choice.catalogFreeBreakfast) facts.push("breakfast on some rates");
   if (choice.catalogFreeWifi) facts.push("free Wi-Fi");

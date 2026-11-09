@@ -59,7 +59,8 @@ const REGION_BY_COUNTRY = {
 const CATEGORY_WEIGHT = { Hostel: 6, "Capsule hotel": 6, "Guest house": 3.5, Motel: 3.5, Inn: 2.5, "Bed and breakfast": 2.5, Hotel: 1.5, Lodge: 1.5 };
 const MAX_STARS = 4;
 const DORM = /shared|dorm|bunk|capsule|\bpod\b/i;
-const GENERIC_NAME = /^(private|quiet|cozy|cosy|clean|room|bed|shared|charming)\b|\bminutes? (to|from)\b/i;
+// Listing-style names (a room description or an event, not a property name).
+export const GENERIC_NAME = /^(private|quiet|cozy|cosy|clean|room|bed|shared|charming|change of)\b|\bminutes? (to|from)\b|\b(new years?|new year's|christmas|holiday special|getaway|vacation rental)\b/i;
 
 const LIGHT = "id link categoryName starRating address { city latitude longitude }";
 export const FULL_FIELDS = (pid) => `id adId title description link imageLink additionalImageLink categoryName starRating roomType beds bedrooms baths bedsDescription includedGuestsCount

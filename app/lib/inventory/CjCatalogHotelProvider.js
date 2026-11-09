@@ -1,6 +1,7 @@
 import feedSnapshot from "../../data/feedStays.json" with { type: "json" };
 import { fromRow } from "../catalog/catalogStore.js";
 import { nearDestination } from "../catalog/nearDestination.js";
+import { GENERIC_NAME } from "../catalog/cjBookingImporter.js";
 import { destinations } from "../../data/destinations.js";
 
 // Booking.com property catalog from GlobTrek's CJ feeds: identity, details,
@@ -29,7 +30,7 @@ function destinationFor(destinationId) {
 }
 
 export function snapshotProperties(destinationId) {
-  return nearDestination((feedSnapshot.stays?.[destinationId] || []).map(fromSnapshot), destinationFor(destinationId));
+  return nearDestination((feedSnapshot.stays?.[destinationId] || []).map(fromSnapshot).filter((property) => !GENERIC_NAME.test(property.name || "")), destinationFor(destinationId));
 }
 
 export class CjCatalogHotelProvider {
@@ -41,7 +42,7 @@ export class CjCatalogHotelProvider {
     if (this.supabase) {
       try {
         const { data, error } = await this.supabase.from("cj_catalog_properties").select("*").eq("destination_id", destinationId).eq("active", true).order("budget_score", { ascending: false }).limit(80);
-        if (!error && data?.length) return { properties: nearDestination(data.map(fromRow), destinationFor(destinationId)), source: "supabase", checkedAt: data.reduce((latest, row) => (row.last_seen_at > latest ? row.last_seen_at : latest), "").slice(0, 10) || null };
+        if (!error && data?.length) return { properties: nearDestination(data.map(fromRow).filter((property) => !GENERIC_NAME.test(property.name || "")), destinationFor(destinationId)), source: "supabase", checkedAt: data.reduce((latest, row) => (row.last_seen_at > latest ? row.last_seen_at : latest), "").slice(0, 10) || null };
       } catch {}
     }
     const properties = snapshotProperties(destinationId);
