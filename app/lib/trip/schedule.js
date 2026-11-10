@@ -17,7 +17,24 @@ export const DURATION_NIGHTS = Object.freeze({
   "Open-Ended": 7,
 });
 
+// Nights a traveler may pick on the calendar for each trip length answer.
+const DURATION_RANGE = Object.freeze({
+  "Long Weekend": [3, 4],
+  "Five Nights": [5, 5],
+  "One Week": [7, 7],
+  "Ten Days": [10, 10],
+  "Two Weeks": [14, 14],
+});
+
 const MAX_NIGHTS = 28;
+
+// The allowed nights for a trip length answer, widened to include `keep`
+// (nights already on a saved trip) so an older trip never becomes invalid.
+export function nightsRange(duration, keep = null) {
+  const [min, max] = DURATION_RANGE[duration] || [1, MAX_NIGHTS];
+  const held = Number.isInteger(keep) && keep > 0 ? Math.min(MAX_NIGHTS, keep) : null;
+  return held ? { min: Math.min(min, held), max: Math.max(max, held) } : { min, max };
+}
 const DAY = 86400000;
 
 function isoDay(value) {
