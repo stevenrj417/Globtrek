@@ -6,7 +6,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { discoverySliderToUnknownness, legacyBudgetLabel, normalizeBudget } from "../lib/recommendation/budgetInput";
 import { TRAVEL_AREA_OPTIONS } from "../lib/recommendation/travelAreaOptions";
 import { cheapestTrip } from "../lib/quiz/cheapestTrip";
-import { DURATION_NIGHTS } from "../lib/trip/schedule";
+import { DURATION_NIGHTS, nightsBetween, nightsRange } from "../lib/trip/schedule";
+import { TripDatePicker } from "../components/TripDatePicker";
 
 // Budget comes first: GlobTrek starts from what you have, not where you want to go.
 const questions = [
@@ -291,6 +292,7 @@ function DiscoveryQuestion({ value, onChange, onBack, onContinue }) {
 
 function DateQuestion({ answers, setAnswers, tripStart, tripEnd, isFlexible, setTripStart, setTripEnd, setIsFlexible, originDetails, setOriginDetails, travelAreaPreference, setTravelAreaPreference, guestCount, setGuestCount, onBack, onSubmit, canSubmit }) {
   const [mode, setMode] = useState(isFlexible ? "flexible" : "dates");
+  const range = nightsRange(answers.duration);
   const seasons = [["Spring", "Mar – May", "Spring (Mar-May)"], ["Summer", "Jun – Aug", "Summer (Jun-Aug)"], ["Fall", "Sep – Nov", "Fall (Sep-Nov)"], ["Winter", "Dec – Feb", "Winter (Dec-Feb)"]];
 
   function selectMode(nextMode) {
@@ -324,9 +326,8 @@ function DateQuestion({ answers, setAnswers, tripStart, tripEnd, isFlexible, set
         </div>
 
         <div className="min-h-28">
-          {mode === "dates" ? <div className="mt-8 grid gap-6 sm:grid-cols-2">
-            <label><span className="text-micro uppercase tracking-editorial text-muted">Depart</span><input className="mt-2 w-full border-0 border-b border-black/25 bg-transparent px-0 py-4 text-base outline-none focus:border-black" type="date" value={tripStart} onChange={(event) => setTripStart(event.target.value)} required /></label>
-            <label><span className="text-micro uppercase tracking-editorial text-muted">Return</span><input className="mt-2 w-full border-0 border-b border-black/25 bg-transparent px-0 py-4 text-base outline-none focus:border-black" min={tripStart} type="date" value={tripEnd} onChange={(event) => setTripEnd(event.target.value)} required /></label>
+          {mode === "dates" ? <div className="mt-8">
+            <TripDatePicker start={tripStart} end={tripEnd} minNights={range.min} maxNights={range.max} label="Departure and return dates" onChange={(nextStart, nextEnd) => { setTripStart(nextStart); setTripEnd(nextEnd); }} />
           </div> : <div className="mt-8 grid grid-cols-4 border border-black/15">
             {seasons.map(([name, months, value]) => <button type="button" key={name} onClick={() => setAnswers((current) => ({ ...current, season: value }))} className={`min-h-20 border-r border-black/15 px-2 text-left transition-colors last:border-r-0 sm:px-3 ${answers.season === value ? "bg-ink text-white" : "text-muted hover:text-black"}`}><strong className="block text-micro font-medium uppercase tracking-caps">{name}</strong><span className={`mt-2 block text-micro ${answers.season === value ? "text-white/60" : "text-subtle"}`}>{months}</span></button>)}
           </div>}
@@ -415,7 +416,9 @@ export default function TravelQuiz({ durationFloors = null }) {
   }, [durationFloors, exactBudget, budgetIncludes]);
   const durationNote = Object.values(durationStatus).some((item) => item.disabled) ? `Greyed out: longer than $${Number(normalizeBudget(exactBudget)).toLocaleString("en-US")} covers, even at the cheapest, for one traveler.` : null;
   const current = adaptiveQuestions[step];
-  const hasTravelDates = isFlexible ? Boolean(answers.season) : Boolean(tripStart && tripEnd && tripEnd >= tripStart);
+  const tripRange = nightsRange(answers.duration);
+  const datedNights = nightsBetween(tripStart, tripEnd);
+  const hasTravelDates = isFlexible ? Boolean(answers.season) : Boolean(datedNights && datedNights >= tripRange.min && datedNights <= tripRange.max);
   const canSubmit = normalizeBudget(exactBudget) !== null && Object.values(budgetIncludes).some(Boolean) && Boolean(originDetails?.airportCode && originDetails?.countryCode) && hasTravelDates;
 
   function go(next, direction = "forward") {
