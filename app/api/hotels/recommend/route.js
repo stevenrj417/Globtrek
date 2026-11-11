@@ -8,6 +8,7 @@ import { buildStayShortlist } from "../../../lib/recommendation/stayShortlist.js
 import { normalizeTravelerProfile } from "../../../lib/recommendation/travelerProfile.js";
 import { createClient } from "../../../lib/supabase/server.js";
 import { verifiedStays } from "../../../data/launchSet.js";
+import { rateLimit } from "../../../lib/security/rateLimit";
 
 export const runtime = "nodejs";
 
@@ -15,6 +16,8 @@ export const runtime = "nodejs";
 // and curated hotels, ranked into Our pick / Best value / Upgrade. Catalog data is
 // property details only; no live rates exist until the Demand API is connected.
 export async function POST(request) {
+  const limited = rateLimit(request, { name: "hotels", limit: 40 });
+  if (limited) return limited;
   try {
     const body = await request.json();
     const destination = destinations.find((item) => (item.id || item.airport) === body.destinationId);

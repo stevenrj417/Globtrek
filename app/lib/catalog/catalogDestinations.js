@@ -11,6 +11,10 @@ const FEED_CITY_ALIASES = {
   JFK: ["New York", "Brooklyn", "Manhattan"],
   NAP: ["Amalfi", "Positano", "Sorrento", "Praiano", "Ravello"],
   JTR: ["Fira", "Oia", "Imerovigli", "Kamari"],
+  "chamonix-e3772": ["Chamonix-Mont-Blanc", "Chamonix Mont Blanc"],
+  "kazbegi-mtn": ["Stepantsminda", "Kazbegi", "Gergeti"],
+  "brasov-d6b89": ["Brasov", "Brașov"],
+  "dolomites-mtn": ["Cortina d'Ampezzo", "Cortina dʼAmpezzo"],
 };
 
 // Every destination GlobTrek can recommend, launch cities first.

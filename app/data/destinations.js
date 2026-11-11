@@ -154,7 +154,12 @@ const verifiedExpansion = [...(verifiedBatch01.records || verifiedBatch01), ...(
 }));
 
 const legacyNames = new Set(legacyDestinations.map((item) => `${item.city}|${item.country}`));
-export const destinations = [...legacyDestinations, ...verifiedExpansion.filter((item) => !legacyNames.has(`${item.city}|${item.country}`))].map(applyBudgetEditorial).map(enrichDestinationIntelligence);
+export const destinations = [...legacyDestinations, ...verifiedExpansion.filter((item) => !legacyNames.has(`${item.city}|${item.country}`)), ...MOUNTAIN_BASE].map(applyBudgetEditorial).map(enrichDestinationIntelligence).map((destination) => ({
+  ...destination,
+  imageAlt: destination.imageAlt || IMAGE_ALTS[destination.id] || null,
+  // Launch cities priced from hand-checked lodging and food (see cheapStays.js).
+  dataReviewed: destination.dataReviewed || (LAUNCH_SET.includes(destination.id) ? CHEAP_STAYS_CHECKED : null),
+}));
 
 export function scoreDestination(destination, answers) {
   const weights = { alive: 9, duration: 7, memory: 6, luxury: 6, hotel: 5, escape: 4, self: 3 };
@@ -274,4 +279,8 @@ import verifiedBatch03 from "../../scripts/destinations/verified-batch-03.json" 
 import verifiedBatch04 from "../../scripts/destinations/verified-batch-04.json" with { type: "json" };
 import { enrichDestinationIntelligence } from "./destinationIntelligence.js";
 import { applyBudgetEditorial } from "./budgetDestinations.js";
+import { MOUNTAIN_BASE } from "./mountainDestinations.js";
+import { IMAGE_ALTS } from "./imageAlts.js";
+import { LAUNCH_SET } from "./launchSet.js";
+import { CHEAP_STAYS_CHECKED } from "./cheapStays.js";
 import { CJ_HOSTS, CJ_LINKS, cjTracked } from "../lib/booking/cj.js";

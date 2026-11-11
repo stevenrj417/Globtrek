@@ -1,6 +1,7 @@
 import flightPrices from "../../data/flightPrices.json" with { type: "json" };
 import { fareForDate } from "../flights/travelpayouts.js";
 import { FARE_SNAPSHOT_CHECKED, monthLabel, snapshotFare } from "../../data/fareSnapshots.js";
+import { pricingMonth } from "../trip/period.js";
 
 const UPDATED = "2026-08-16";
 const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -87,7 +88,7 @@ function monthMultiplier(month) {
 }
 
 function profileMonth(profile) {
-  return profile?.dates?.start ? new Date(`${profile.dates.start}T00:00:00Z`).getUTCMonth() + 1 : null;
+  return pricingMonth(profile);
 }
 
 function routeAverage(route) {
@@ -201,7 +202,7 @@ export function estimateFlight(profile, destination) {
   }
   // Real fares first: Google Flights fares for the traveler's month, then U.S. DOT quarterly averages of fares actually paid (domestic),
   // or Travelpayouts two-week averages when that feed is configured.
-  const snapshot = snapshotFare(origin, airport, profile?.dates?.start, profile?.dates?.flexible || !profile?.dates?.start);
+  const snapshot = snapshotFare(origin, airport, profile?.dates?.start, profile?.dates?.flexible || !profile?.dates?.start, profile?.dates?.period?.months);
   if (snapshot) {
     const average = profile?.spendStyle === "cheapest" ? snapshot.typical : Math.round(snapshot.typical * (profile?.spendStyle === "comfortable" ? 1.25 : 1.1));
     return {

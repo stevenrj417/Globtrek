@@ -20,7 +20,7 @@ export function AccountEntry({ compact = false, light = false }) {
     </Link>;
   }
   return <>
-    <button type="button" onClick={() => setOpen(true)} className={`${compact ? "text-micro" : "text-xs"} uppercase tracking-label ${light ? "text-white" : "text-muted"}`}>Sign in</button>
+    <button type="button" onClick={() => setOpen(true)} className={`${compact ? "text-micro" : "text-xs"} inline-flex min-h-11 items-center uppercase tracking-label ${light ? "text-white" : "text-muted"}`}>Sign in</button>
     <AuthSheet open={open} onClose={() => setOpen(false)} returnTo={typeof window === "undefined" ? "/" : `${window.location.pathname}${window.location.search}`} />
   </>;
 }

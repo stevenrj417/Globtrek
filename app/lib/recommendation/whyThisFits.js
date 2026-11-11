@@ -48,3 +48,24 @@ export function whyThisFits({ answers = {}, exactBudget, budgetPlan, trip }) {
     : "";
   return [first, known].filter(Boolean).join(" ");
 }
+
+const SETTING_LABEL = { Ocean: ["Coastal setting", "Ocean"], Mountains: ["Mountain setting", "Mountains"], Cities: ["City setting", "Cities"], Culture: ["History & culture", "Culture"] };
+const PACE_LABEL = { "Slow mornings": "Relaxed pace", "Balanced days": "Balanced pace", "Packed schedule": "Packed schedule", "Mostly relaxing": "Plenty of downtime", "Adventure days": "Active days" };
+const NIGHT_WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"];
+
+// The "Why this matches" list: each line restates one of the traveler's own
+// answers, and appears only when the destination's structured data satisfies it.
+export function matchReasons({ answers = {}, profile = {}, budgetPlan, trip, range }) {
+  if (!trip) return [];
+  const tags = new Set(trip.tags || []);
+  const reasons = [];
+  const setting = SETTING_LABEL[answers.alive];
+  if (setting && tags.has(setting[1])) reasons.push(setting[0]);
+  if (PRIORITY[answers.luxury] && tags.has(answers.luxury)) reasons.push(`${answers.luxury}-focused`);
+  if (PACE_LABEL[answers.escape] && tags.has(answers.escape)) reasons.push(PACE_LABEL[answers.escape]);
+  const nights = profile.tripLength;
+  if (nights && range && nights >= range.min && nights <= range.max) reasons.push(`Fits your ${NIGHT_WORDS[nights] || nights}-night target`);
+  const budget = profile.exactBudget;
+  if (budget > 0 && budgetPlan?.withinHardBudget) reasons.push(`Estimated within your ${money(budget)} budget`);
+  return reasons;
+}

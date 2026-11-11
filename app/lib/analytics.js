@@ -10,6 +10,14 @@ export const EVENTS = Object.freeze([
   "hotel_card_viewed",
   "outbound_click",
   "email_signup",
+  "trip_shared",
+  "trip_adjusted",
+  "trip_adjust_undone",
+  "estimates_refreshed",
+  "result_feedback",
+  "no_match_fix",
+  "booking_item_opened",
+  "stay_partner_opened",
 ]);
 
 const PERSONAL = /@|\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b/;

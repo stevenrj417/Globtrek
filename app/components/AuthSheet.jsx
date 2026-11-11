@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { createClient } from "../lib/supabase/client";
 
@@ -49,7 +50,7 @@ export function AuthSheet({ open, onClose, returnTo = "/" }) {
         <button type="button" onClick={() => setEmailMode(false)} className="mt-4 text-micro uppercase tracking-editorial text-black/50">Back</button>
       </form>}
       {status && <p role="status" className="mt-5 text-xs leading-5 text-black/55">{status}</p>}
-      <p className="mt-7 border-t border-black/10 pt-5 text-micro leading-5 text-black/40">Creating an account does not subscribe you to marketing email.</p>
+      <p className="mt-7 border-t border-black/10 pt-5 text-xs leading-5 text-black/65">We use your email only to sign you in and keep your saved trips. Creating an account does not subscribe you to marketing email. You can download or delete your data anytime. <Link href="/privacy" className="underline underline-offset-2">Privacy policy</Link></p>
     </section>
   </div>;
 }

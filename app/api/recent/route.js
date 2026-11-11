@@ -3,9 +3,11 @@ import { createClient } from "../../lib/supabase/server";
 const TYPES = new Set(["hotel", "destination", "trip"]);
 
 export async function POST(request) {
+  // Recently viewed is a signed-in extra: with no session (or no auth service) there's nothing to record.
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL) return new Response(null, { status: 204 });
   const supabase = await createClient();
   const { data: auth } = await supabase.auth.getUser();
-  if (!auth.user) return new Response(null, { status: 204 });
+  if (!auth?.user) return new Response(null, { status: 204 });
   const body = await request.json().catch(() => null);
   if (!body || !TYPES.has(body.type) || !body.key || !body.title || JSON.stringify(body).length > 30000) return Response.json({ error: "Invalid recent item" }, { status: 400 });
   const record = { user_id: auth.user.id, item_type: body.type, item_key: String(body.key).slice(0, 180), title: String(body.title).slice(0, 160), subtitle: String(body.subtitle || "").slice(0, 180) || null, image_url: String(body.imageUrl || "").slice(0, 1000) || null, item_data: body.data && typeof body.data === "object" ? body.data : {}, viewed_at: new Date().toISOString() };

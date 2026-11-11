@@ -5,6 +5,8 @@ import { createClient } from "../../../lib/supabase/server";
 import { GooglePlacesDiscoveryProvider } from "../../../lib/google-places/GooglePlacesDiscoveryProvider";
 import { launchDinners } from "../../../data/launchSet";
 import { withPlacePhotos } from "../../../lib/google-places/placePhotos";
+import { curatedRestaurants } from "../../../lib/recommendation/eligibility";
+import { rateLimit } from "../../../lib/security/rateLimit";
 
 // GlobTrek is a budget site: unless a traveler asks for comfort, no expensive tables.
 function pricey(level) {
@@ -12,12 +14,17 @@ function pricey(level) {
 }
 
 export async function POST(request) {
+  const limited = rateLimit(request, { name: "restaurants", limit: 40 });
+  if (limited) return limited;
   const body = await request.json().catch(() => ({}));
+  if (typeof body.destinationId !== "string" || body.destinationId.length > 80) return Response.json({ error: "Unknown destination" }, { status: 400 });
   const destination = destinations.find((item) => (item.id || item.airport) === body.destinationId);
   if (!destination) return Response.json({ error: "Unknown destination" }, { status: 400 });
   // Launch destinations show only hand-verified restaurants.
   const verified = launchDinners(destination.id);
   if (verified.length) return Response.json({ restaurants: await withPlacePhotos(verified), source: "globtrek_launch_verified", availabilitySource: "not_requested" });
+  const curated = curatedRestaurants(destination.id || destination.airport).filter((restaurant) => body.spendStyle === "comfortable" || !pricey(restaurant.priceLevel));
+  if (curated.length) return Response.json({ restaurants: await withPlacePhotos(curated.slice(0, 8)), source: "globtrek_curated_google_places", availabilitySource: "not_requested" });
   try {
     let restaurants = [];
     let source = "supabase_verified";

@@ -5,7 +5,7 @@ import { decodeBookingPage } from "../lib/booking/bookPage";
 import { BookingChecklist } from "../components/BookingChecklist";
 import { TravelerDetails } from "./TravelerDetails";
 
-export const metadata = { title: "Book your trip", robots: { index: false, follow: false } };
+export const metadata = { title: "Your booking checklist", robots: { index: false, follow: false } };
 
 function formatDay(value) {
   return value ? new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" }).format(new Date(`${value}T00:00:00Z`)) : null;
@@ -19,7 +19,7 @@ export default async function BookPage({ searchParams }) {
     <SiteHeader />
     <section className="mx-auto max-w-[var(--width-reading)] px-5 py-[var(--section-space)] text-center">
       <h1 className="text-3xl font-semibold tracking-tight-2">This booking link has expired or is incomplete.</h1>
-      <p className="mt-3 text-muted">Open your trip again and choose Book now, or start a new one.</p>
+      <p className="mt-3 text-muted">Open your trip again and open the booking checklist, or start a new one.</p>
       <Link href="/discover" className="btn btn-primary mt-8">Find my trip</Link>
     </section>
     <SiteFooter />
@@ -32,7 +32,7 @@ export default async function BookPage({ searchParams }) {
   return <main className="min-h-screen bg-bg text-ink">
     <SiteHeader />
     <section className="mx-auto max-w-[var(--width-reading)] px-5 py-[var(--section-space)]">
-      <p className="eyebrow">Book your trip</p>
+      <p className="eyebrow">Your booking checklist</p>
       <h1 className="mt-3 text-[clamp(2.25rem,5vw,3.5rem)] font-semibold leading-[1.08] tracking-tight-3">{trip.city || "Your trip"}{trip.country ? <span className="text-muted">, {trip.country}</span> : null}</h1>
       {summary ? <p className="tabular mt-3 text-muted">{summary}</p> : null}
       <ol className="mt-8 space-y-3 border border-black/15 bg-surface p-5 text-sm leading-6">

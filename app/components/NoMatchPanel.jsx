@@ -42,19 +42,23 @@ export function NoMatchPanel({ quiz }) {
   return <main className="min-h-screen bg-canvas px-5 py-[var(--section-space)] text-ink sm:px-8">
     <div className="mx-auto max-w-3xl">
       <Link href="/" className="text-eyebrow font-semibold uppercase tracking-editorial">GlobTrek</Link>
-      <h1 className="mt-10 text-[clamp(2.25rem,5vw,3.5rem)] font-semibold leading-[1.08] tracking-tight-3">These settings don&apos;t fit a trip yet.</h1>
+      <h1 className="mt-10 text-[clamp(2.25rem,5vw,3.5rem)] font-semibold leading-[1.08] tracking-tight-3">No trip fits all your answers yet.</h1>
+      <p className="mt-4 text-base leading-7 text-muted">GlobTrek only recommends a destination that matches your setting and is estimated within your budget. Here&apos;s what&apos;s in the way.</p>
       <h2 className="mt-8 eyebrow">What&apos;s wrong</h2>
       <ul className="mt-3 space-y-3">{diagnosis.reasons.map((reason) => <li key={reason.id} className="border-l-2 border-ink pl-4 text-base leading-7">{reason.text}</li>)}</ul>
 
-      {diagnosis.suggestions.length ? <section className="mt-12" aria-labelledby="fixes-heading">
-        <h2 id="fixes-heading" className="eyebrow">Fix it in one click</h2>
-        <ul className="mt-4 grid gap-3 sm:grid-cols-2">{diagnosis.suggestions.map((suggestion) => <li key={suggestion.id}>
-          <button type="button" onClick={() => rerun(suggestion.quiz, suggestion.id)} className="flex h-full min-h-20 w-full flex-col justify-between border border-black/20 bg-surface-raised p-4 text-left transition-colors duration-150 hover:border-ink">
-            <span className="font-medium">{suggestion.label}</span>
-            <span className="tabular mt-2 text-sm text-muted">{suggestion.result}</span>
-          </button>
+      <section className="mt-12" aria-labelledby="fixes-heading">
+        <h2 id="fixes-heading" className="eyebrow">Ways to get a trip</h2>
+        <ul className="mt-4 grid gap-3 sm:grid-cols-2">{diagnosis.options.map((option) => <li key={option.id}>
+          {option.href && option.available ? <a href={option.href} onClick={() => track("no_match_fix", { source: option.id })} className="flex h-full min-h-20 w-full flex-col justify-between border border-black/20 bg-surface-raised p-4 text-left transition-colors duration-150 hover:border-ink">
+            <span className="font-medium">{option.label}</span>
+            <span className="tabular mt-2 text-sm text-muted">{option.result}</span>
+          </a> : <button type="button" disabled={!option.available} onClick={() => rerun(option.quiz, option.id)} className="flex h-full min-h-20 w-full flex-col justify-between border border-black/20 bg-surface-raised p-4 text-left transition-colors duration-150 hover:border-ink disabled:cursor-not-allowed disabled:opacity-55 disabled:hover:border-black/20">
+            <span className="font-medium">{option.label}</span>
+            <span className="tabular mt-2 text-sm text-muted">{option.result}</span>
+          </button>}
         </li>)}</ul>
-      </section> : null}
+      </section>
 
       <section className="mt-12 border-t border-black/10 pt-10" aria-labelledby="edit-heading">
         <h2 id="edit-heading" className="eyebrow">Or edit your trip</h2>
@@ -69,7 +73,7 @@ export function NoMatchPanel({ quiz }) {
         <p className="mt-3 text-sm text-subtle">Leaving from {profile.originDetails?.displayName || profile.origin || "an airport you haven't chosen"}. <Link href="/discover" className="underline decoration-black/25 underline-offset-4 hover:decoration-ink">Change it in the quiz</Link></p>
         <div aria-live="polite" className="mt-6 border border-black/15 bg-surface p-4 text-sm">
           {preview ? <p><span className="font-medium">With these settings:</span> <span className="tabular">{title(preview.city)} at about {money(preview.budgetPlan.budgetCheckTotal)}{draft.travelers > 1 ? ` (${money(preview.budgetPlan.budgetCheckTotal / draft.travelers)} per person)` : ""}</span></p>
-            : <p><span className="font-medium">Still no fit.</span> {diagnosis.cheapest ? `The cheapest trip is around ${money(diagnosis.cheapest.total)}; try fewer nights or the cheapest mode.` : "Try fewer nights or a bigger budget."}</p>}
+            : <p><span className="font-medium">Still no fit.</span> {diagnosis.closest ? `The closest trip is ${diagnosis.closest.city} at around ${money(diagnosis.closest.total)}; try fewer nights or a bigger budget.` : "Try a different setting or time of year."}</p>}
         </div>
         <div className="mt-6 flex flex-wrap items-center gap-4">
           <button type="button" disabled={!preview} onClick={() => rerun(edited, "editor")} className="btn btn-primary">Find my trip</button>

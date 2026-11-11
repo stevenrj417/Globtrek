@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
+import { reportClientError } from "./lib/reportError";
 
 export default function ErrorPage({ error, reset }) {
   useEffect(() => {
     if (process.env.NODE_ENV !== "production") console.error(error);
+    else reportClientError(error, "page");
   }, [error]);
 
   return (

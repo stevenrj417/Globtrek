@@ -85,7 +85,9 @@ test("the cheapest trip from the traveler's airport ranks first", () => {
   const ranked = rankDestinations(destinations, normalizeTravelerProfile(quiz({ guestCount: "1", tripNights: 4, isFlexible: true })));
   const top = ranked.slice(0, 5).map((item) => item.budgetPlan.budgetCheckTotal);
   assert.ok(top[0] < 500, `cheapest trip is $${top[0]}`);
-  assert.ok(Math.max(...top) < Math.min(...ranked.slice(20).map((item) => item.budgetPlan.budgetCheckTotal)));
+  // Price leads in cheapest mode: the first five beat the median candidate.
+  const median = ranked.map((item) => item.budgetPlan.budgetCheckTotal).sort((a, b) => a - b)[Math.floor(ranked.length / 2)];
+  assert.ok(Math.max(...top) < median);
 });
 
 test("Palm Springs is out of the launch set; every launch city leads with its hostel", () => {

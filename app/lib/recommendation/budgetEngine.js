@@ -1,4 +1,5 @@
 import { destinationCostProfile, seasonFor } from "./costProfiles.js";
+import { pricingMonth } from "../trip/period.js";
 import { estimateFlight } from "./travelFeasibility.js";
 import { observedMonthFor } from "../pricing/stayPrice.js";
 import { CHEAP_STAYS_CHECKED, cheapStayFor, stayNightFor } from "../../data/cheapStays.js";
@@ -45,7 +46,8 @@ function planForStyle(profile, destination, options = {}) {
   const cost = destinationCostProfile(destination);
   const season = seasonFor(destination, profile);
   const flight = estimateFlight(profile, destination);
-  const month = profile?.dates?.start ? new Date(`${profile.dates.start}T00:00:00Z`).getUTCMonth() + 1 : 5;
+  // Hotels, food and flights are all estimated for the same month (see period.js).
+  const month = pricingMonth(profile, flight?.fareMonth) || 5;
   const baseCityAverage = destination.planningAverages?.monthly?.find((item) => item.month === month) || {
     hotelNight: cost.typicalHotelNightLow,
     foodPerPersonDay: cost.foodDailyLow,
@@ -68,8 +70,8 @@ function planForStyle(profile, destination, options = {}) {
   // room or a room costs less. Otherwise it is GlobTrek's modeled city room rate.
   const rooms = Math.max(1, Math.ceil(travelers / 2));
   const cheap = profile.spendStyle === "cheapest" ? cheapStayFor(destination) : null;
-  // Price the beds for the travel month; with no dates, the month the flight was priced for.
-  const stayMonth = profile?.dates?.start ? month : flight?.fareMonth ? Number(String(flight.fareMonth).slice(5, 7)) : null;
+  // Price the beds for the same month as everything else.
+  const stayMonth = pricingMonth(profile, flight?.fareMonth);
   // The observed price is "observed" only for the month it was checked for; any other month is an estimate from it.
   const cheapKind = !stayMonth || stayMonth === observedMonthFor(destination.airport) ? "observed" : "estimate";
   const stayNight = cheap ? stayNightFor(destination, stayMonth) : null;
@@ -180,6 +182,8 @@ function planForStyle(profile, destination, options = {}) {
     remainingBudget: Math.round(remainingBudget),
     budgetFeasibilityScore,
     season,
+    period: profile?.dates?.period || null,
+    pricedMonth: month,
     confidence: Math.min(...active.map((key) => categories[key].confidence), 0.8),
     isLive: false,
     optimization: withinHardBudget ? optimization : "reduce_cost",

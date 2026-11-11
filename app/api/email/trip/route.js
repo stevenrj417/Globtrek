@@ -4,6 +4,7 @@ import { tripEmail } from "../../../lib/email/templates";
 import { confirmEmailAccepted, tripEmailIdempotencyKey } from "../../../lib/email/tripDelivery";
 import { normalizeEmail } from "../../../lib/email/subscriptions";
 import { buildTripEmailModel } from "../../../lib/recommendation/tripSerializer";
+import { rateLimit } from "../../../lib/security/rateLimit";
 
 function safeViewUrl(value) {
   if (typeof value !== "string") return null;
@@ -12,6 +13,8 @@ function safeViewUrl(value) {
 }
 
 export async function POST(request) {
+  const limited = rateLimit(request, { name: "email-trip", limit: 5 });
+  if (limited) return limited;
   const body = await request.json().catch(() => ({}));
   const email = normalizeEmail(body.email);
   const trip = body.trip;

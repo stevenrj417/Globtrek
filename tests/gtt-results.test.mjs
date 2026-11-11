@@ -51,7 +51,9 @@ test("dining and experience edits each surface four verified choices with visual
   assert.equal((sections.match(/initialLimit=\{4\}/g) || []).length, 2);
   assert.match(restaurantRoute, /slice\(0, 4\)/);
   assert.match(restaurantRoute, /slice\(0, 4\)/);
-  assert.match(sections, /View all.*experiences/);
+  assert.match(sections, /Show all \$\{.*\} \$\{noun\}/);
+  assert.match(sections, /status === "ready" && !items\.length\) return null/, "an empty section is left out");
+  assert.match(sections, /LOAD_TIMEOUT = 9000/, "each section times out and offers a retry");
   assert.doesNotMatch(sections, /destination\.image|Destination view/, "cards never stand in a city photo for a named place");
 });
 

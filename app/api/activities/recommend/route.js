@@ -6,14 +6,22 @@ import { createClient } from "../../../lib/supabase/server";
 import { GooglePlacesDiscoveryProvider } from "../../../lib/google-places/GooglePlacesDiscoveryProvider";
 import { launchActivities } from "../../../data/launchSet";
 import { withPlacePhotos } from "../../../lib/google-places/placePhotos";
+import { curatedActivities } from "../../../lib/recommendation/eligibility";
+import { rateLimit } from "../../../lib/security/rateLimit";
 
 export async function POST(request) {
+  const limited = rateLimit(request, { name: "activities", limit: 40 });
+  if (limited) return limited;
   const body = await request.json().catch(() => ({}));
+  if (typeof body.destinationId !== "string" || body.destinationId.length > 80) return Response.json({ error: "Unknown destination" }, { status: 400 });
   const destination = destinations.find((item) => (item.id || item.airport) === body.destinationId);
   if (!destination) return Response.json({ error: "Unknown destination" }, { status: 400 });
   // Launch destinations show only hand-verified activities.
   const verified = launchActivities(destination.id);
   if (verified.length) return Response.json({ activities: await withPlacePhotos(verified), source: "globtrek_launch_verified", isLive: false });
+  // Then the curated list checked against Google Places for this destination.
+  const curated = curatedActivities(destination.id || destination.airport);
+  if (curated.length) return Response.json({ activities: await withPlacePhotos(curated.slice(0, 12)), source: "globtrek_curated_google_places", isLive: false });
   try {
     const profile = normalizeTravelerProfile(body.quiz || {});
     const budgetPlan = buildBudgetPlan(profile, destination);

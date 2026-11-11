@@ -2,8 +2,11 @@ import airports from "../../../data/airports.json" with { type: "json" };
 import { GooglePlacesHotelProvider } from "../../../lib/google-places/GooglePlacesHotelProvider";
 import { matchAirportPlaces } from "../../../lib/recommendation/nearestAirport";
 import { normalizeLocationPlace } from "../../../lib/recommendation/locationSearch";
+import { rateLimit } from "../../../lib/security/rateLimit";
 
 export async function POST(request) {
+  const limited = rateLimit(request, { name: "nearest-airport", limit: 30 });
+  if (limited) return limited;
   const input = await request.json().catch(() => null);
   const latitude = Number(input?.latitude);
   const longitude = Number(input?.longitude);

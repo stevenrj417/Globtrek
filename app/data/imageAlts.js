@@ -1,0 +1,26 @@
+// Alt text for destination hero images that came without one. Unsplash photos
+// were looked at directly; Wikimedia Commons ones follow the file's own title.
+export const IMAGE_ALTS = Object.freeze({
+  BKK: "Tuk-tuks under neon signs on a rainy night in Bangkok's Chinatown",
+  CNX: "A golden temple and chedi in Chiang Mai",
+  HAN: "Motorbikes passing a corner café in Hanoi's Old Quarter",
+  LIS: "A yellow tram passing arcaded buildings on Lisbon's Praça do Comércio",
+  MEX: "The Palacio de Bellas Artes and Alameda Central seen from above in Mexico City",
+  EZE: "The Obelisco on Avenida 9 de Julio in Buenos Aires",
+  "oaxaca-city-41937": "The ruins of Monte Albán above the Oaxaca valley",
+  "los-angeles-76868": "The Hollywood sign on the hills above Los Angeles",
+  "seattle-76868": "Seattle Center and the Space Needle as night falls",
+  "chicago-76868": "A ferry on the Chicago River between downtown towers",
+  "miami-76868": "Villa Vizcaya's gardens and house on Biscayne Bay in Miami",
+  "san-francisco-76868": "San Francisco and the bay seen from the air",
+  "orlando-76868": "Downtown Orlando's skyline",
+  "new-orleans-76868": "The New Orleans Central Business District skyline from the air",
+  "austin-76868": "The Austin, Texas skyline",
+  "santa-fe-76868": "The adobe Palace of the Governors in Santa Fe",
+  "nashville-76868": "The Nashville skyline",
+  "san-diego-76868": "La Jolla Shores beach in San Diego",
+  "palm-springs-76868": "Palm Springs in the desert seen from the Museum Trail",
+  "anchorage-76868": "The Anchorage skyline with mountains behind",
+  "honolulu-76868": "Waikiki and Honolulu seen from Diamond Head",
+  "guadalajara-41937": "A panorama of Guadalajara looking north",
+});

@@ -303,3 +303,7 @@ p, li, dd { text-wrap: pretty; }
 
 @keyframes handoff-progress { from { transform: translateX(-100%); } to { transform: translateX(0); } }
 .handoff-bar { animation: handoff-progress 850ms var(--ease-enter) both; }
+
+/* Results sections number themselves, so a section left out never leaves a gap. */
+.results-editorial { counter-reset: trip-section; }
+.results-editorial .section-eyebrow::before { counter-increment: trip-section; content: counter(trip-section, decimal-leading-zero) "\00a0\00a0\00a0"; }

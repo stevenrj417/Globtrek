@@ -1,3 +1,4 @@
+import { pricingMonth } from "../trip/period.js";
 const UPDATED = "2026-08-14";
 
 const TIERS = {
@@ -21,7 +22,7 @@ const PEAK_MONTHS = {
 const HIGH_MONTHS = [6, 7, 8, 12];
 
 export function seasonFor(destination, profile) {
-  const month = profile?.dates?.start ? new Date(`${profile.dates.start}T00:00:00Z`).getUTCMonth() + 1 : null;
+  const month = pricingMonth(profile);
   if (!month) return { level: "shoulder", multiplier: 1, confidence: 0.42 };
   if ((PEAK_MONTHS[destination.city] || []).includes(month)) return { level: "peak", multiplier: 1.3, confidence: 0.58 };
   if (HIGH_MONTHS.includes(month)) return { level: "high", multiplier: 1.14, confidence: 0.5 };

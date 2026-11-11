@@ -8,6 +8,7 @@
 // admission charge.
 
 import { sentencePhrase } from "../lib/format.js";
+import { MOUNTAIN_EDITORIAL, MOUNTAINS_REVIEWED } from "./mountainDestinations.js";
 
 export const BUDGET_REVIEWED = "2026-11-04";
 
@@ -49,32 +50,36 @@ function title(value) {
 // Merges the editorial layer into a verified catalog record so it matches, prices
 // and publishes like a hand-curated destination.
 export function applyBudgetEditorial(destination) {
-  const editorial = BUDGET_EDITORIAL[destination.id];
+  const mountain = MOUNTAIN_EDITORIAL[destination.id];
+  const editorial = BUDGET_EDITORIAL[destination.id] || mountain;
   if (!editorial) return destination;
   const city = title(destination.city);
+  const free = editorial.free || [];
+  const days = [free[0] && `${free[0]} and a local dinner`, free[1] && `${free[1]} and a slow afternoon`, free[2] && `${free[2]} and local favorites`].filter(Boolean);
   return {
     ...destination,
     image: editorial.image || destination.image,
     imageAlt: editorial.alt || null,
     season: editorial.season,
     style: editorial.style,
-    tags: [...new Set([...editorial.tags, ...(destination.tags || [])])],
-    nights: editorial.nights,
+    tags: mountain ? [...editorial.tags] : [...new Set([...editorial.tags, ...(destination.tags || [])])],
+    nights: editorial.nights || (editorial.tripLengthFit ? `${editorial.tripLengthFit.minimumNights}–${editorial.tripLengthFit.maximumNights} nights` : destination.nights),
+    ...(editorial.tripLengthFit ? { tripLengthFit: editorial.tripLengthFit } : {}),
+    ...(Number.isFinite(editorial.latitude) ? { latitude: editorial.latitude, longitude: editorial.longitude } : {}),
+    avoidMonths: editorial.avoidMonths || [],
     price: "Budget trip · estimates checked against public listings",
-    why: `${city} keeps a full trip affordable: ${editorial.style.split(" / ").map(sentencePhrase).join(", ")}, with plenty to do for free.`,
+    why: `${city} keeps a full trip affordable: ${editorial.style.split(" / ").map(sentencePhrase).join(", ")}${free.length ? ", with plenty to do for free" : ""}.`,
     itinerary: [
       `Day 1: Arrive in ${city} and settle in`,
-      `Day 2: ${editorial.free[0]} and a neighborhood dinner`,
-      `Day 3: ${editorial.free[1]} and a slow afternoon`,
-      `Day 4: ${editorial.free[2]} and local favorites`,
+      ...days.map((text, index) => `Day ${index + 2}: ${text}`),
       "Final day: One last walk, meal, and departure",
     ],
     dining: ["A cheap local favorite", "A neighborhood market or food hall", "One sit-down dinner worth the splurge"],
-    budgetEditorial: { ...editorial, reviewed: BUDGET_REVIEWED, lodgingSources: editorial.lodgingSource ? SOURCES[editorial.lodgingSource] : [] },
-    freeHighlights: editorial.free,
+    budgetEditorial: { ...editorial, reviewed: mountain ? MOUNTAINS_REVIEWED : BUDGET_REVIEWED, lodgingSources: editorial.lodgingSource ? SOURCES[editorial.lodgingSource] : [] },
+    freeHighlights: free,
     airportToCenterMiles: editorial.airportMiles,
-    costLevel: editorial.planning.hotelNight < 70 ? "affordable" : "moderate",
+    costLevel: editorial.planning.hotelNight < 70 ? "affordable" : editorial.planning.hotelNight < 180 ? "moderate" : "expensive",
     recommendationReady: true,
-    catalogStatus: "curated_budget",
+    catalogStatus: mountain ? "curated_mountain" : "curated_budget",
   };
 }

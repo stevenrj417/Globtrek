@@ -1,7 +1,6 @@
-import { buildBudgetPlan } from "./budgetEngine.js";
-import { rankDestinations } from "./destinationEngine.js";
+import { closestOverBudget, rankDestinations } from "./destinationEngine.js";
 import { normalizeTravelerProfile } from "./travelerProfile.js";
-import { destinationMatchesTravelArea } from "./travelArea.js";
+import { structuredOrigin } from "./travelArea.js";
 
 // When no trip fits, say exactly why and offer fixes that are proven to work:
 // every suggestion is re-run through the real matcher before it is shown.
@@ -21,6 +20,13 @@ export function applyQuizPatch(quiz, patch = {}) {
   if (patch.travelers != null) next.guestCount = String(patch.travelers);
   if (patch.spendStyle) next.answers.spendStyle = patch.spendStyle;
   if (patch.area) next.travelAreaPreference = patch.area;
+  if (patch.interest) next.answers.luxury = patch.interest;
+  if (patch.setting) next.answers.alive = patch.setting;
+  if (patch.lodging) next.answers.hotel = patch.lodging;
+  if (patch.origin) {
+    const origin = structuredOrigin(patch.origin);
+    if (origin) { next.originAirport = origin.airportCode; next.originDetails = origin; }
+  }
   if (patch.flights != null) {
     next.includedBudgetCategories.flights = patch.flights;
     next.budgetIncludesFlights = patch.flights;
@@ -43,70 +49,52 @@ function title(value) {
   return String(value || "").toLowerCase().replace(/(^|[\s&-])\S/g, (letter) => letter.toUpperCase());
 }
 
-function cheapestFor(destinations, profile, { ignoreArea = false } = {}) {
-  let best = null;
-  const home = String(profile.origin || "").toUpperCase();
-  for (const destination of destinations) {
-    if (home && String(destination.airport || "").toUpperCase() === home) continue;
-    if (!ignoreArea && !destinationMatchesTravelArea(destination, profile)) continue;
-    const plan = buildBudgetPlan(profile, destination);
-    if (!best || plan.budgetCheckTotal < best.total) best = { destination, total: plan.budgetCheckTotal, plan };
-  }
-  return best;
-}
-
 function firstMatch(destinations, quiz, patch) {
   const patched = applyQuizPatch(quiz, patch);
   const match = rankDestinations(destinations, normalizeTravelerProfile(patched))[0];
   return match ? { quiz: patched, match } : null;
 }
 
+const SETTING_NAMES = { Ocean: "coastal", Mountains: "mountain", Cities: "city", Culture: "history and culture" };
+
+// The five ways out of "no match", each re-run through the real matcher so a
+// button only promises a trip it can deliver.
 export function diagnoseNoMatch(destinations, quiz) {
   const profile = normalizeTravelerProfile(quiz || {});
   const budget = profile.exactBudget || 0;
   const includes = profile.includedBudgetCategories;
   const nights = profile.tripLength;
   const travelers = profile.travelers;
+  const answers = profile.otherExistingQuizPreferences || {};
+  const closest = closestOverBudget(destinations, profile);
   const reasons = [];
-  const suggestions = [];
 
   if (!profile.origin) reasons.push({ id: "origin", text: "We don't know which airport you're leaving from, so flights can't be priced." });
-
-  const inArea = cheapestFor(destinations, profile);
-  const anywhere = cheapestFor(destinations, profile, { ignoreArea: true });
   const covered = Object.entries(includes).filter(([, on]) => on).map(([key]) => ({ flights: "flights", hotel: "lodging", food: "food", activities: "activities", transportation: "local transport" })[key]).filter(Boolean);
   const party = `${travelers} traveler${travelers === 1 ? "" : "s"}`;
-
-  if (inArea && budget && inArea.total > budget) {
-    reasons.push({ id: "budget", text: `Your ${money(budget)} budget covers ${covered.join(", ")} for ${party} and ${nights} night${nights === 1 ? "" : "s"}. The cheapest trip that fits your other answers is ${title(inArea.destination.city)} at about ${money(inArea.total)}, which is ${money(inArea.total - budget)} over.` });
+  const kind = SETTING_NAMES[answers.alive] ? `${SETTING_NAMES[answers.alive]} ` : "";
+  if (closest && budget) {
+    reasons.push({ id: "budget", text: `Your ${money(budget)} budget covers ${covered.join(", ")} for ${party} and ${nights} night${nights === 1 ? "" : "s"}. The closest ${kind}trip that fits your other answers is ${title(closest.city)} at about ${money(closest.budgetPlan.budgetCheckTotal)}, ${money(closest.budgetPlan.budgetCheckTotal - budget)} over.` });
   }
-  if (profile.travelAreaPreference !== "anywhere" && anywhere && (!inArea || anywhere.total < inArea.total) && anywhere.total <= budget) {
-    reasons.push({ id: "area", text: `Trips fit your budget, but not ${profile.travelAreaPreference === "domestic" ? "inside your country" : "outside your country"}. ${title(anywhere.destination.city)} comes in at about ${money(anywhere.total)}.` });
-  }
-  if (!reasons.length) reasons.push({ id: "other", text: "None of our destinations fit every answer at once. One of the changes below will." });
+  if (!closest) reasons.push({ id: "other", text: `No ${kind}destination we have complete information for fits your trip length, travel area and travel month together. Try a different setting or a different time of year.` });
 
-  const tries = [
-    !["cheapest", "auto"].includes(profile.spendStyle) && { id: "cheapest", label: "Switch to absolute cheapest", patch: { spendStyle: "cheapest" } },
-    ...[nights - 1, nights - 2, 3, 2].filter((value, index, list) => value >= 2 && value < nights && list.indexOf(value) === index).map((value) => ({ id: `nights-${value}`, label: `Make it ${value} nights`, patch: { nights: value } })),
-    profile.travelAreaPreference !== "anywhere" && { id: "area", label: "Go anywhere", patch: { area: "anywhere" } },
-    includes.flights && { id: "flights", label: "Leave flights out of the budget", patch: { flights: false } },
-    !["cheapest", "auto"].includes(profile.spendStyle) && nights > 3 && { id: "cheapest-3", label: "Absolute cheapest, 3 nights", patch: { spendStyle: "cheapest", nights: 3 } },
-    !["cheapest", "auto"].includes(profile.spendStyle) && includes.flights && { id: "cheapest-noflights", label: "Absolute cheapest, flights paid separately", patch: { spendStyle: "cheapest", flights: false } },
-    inArea && budget && inArea.total > budget && { id: "budget", label: `Raise the budget to ${money(Math.ceil(inArea.total / 25) * 25)}`, patch: { budget: Math.ceil(inArea.total / 25) * 25 } },
-  ].filter(Boolean);
-
-  const seenNights = new Set();
-  for (const attempt of tries) {
-    if (attempt.patch.nights && !attempt.patch.spendStyle) {
-      if ([...seenNights].some((value) => value > attempt.patch.nights)) continue; // keep only the longest trip that works
+  const shorter = [nights - 1, nights - 2, 5, 4, 3, 2].filter((value, index, list) => value >= 2 && value < nights && list.indexOf(value) === index);
+  const lodgingChoices = ["Hostel bed", "Whatever's cheapest"].filter((value) => value !== answers.hotel);
+  const attempt = (id, label, patches) => {
+    for (const patch of patches) {
+      const result = firstMatch(destinations, quiz, patch);
+      if (result) return { id, label: typeof label === "function" ? label(patch) : label, patch, quiz: result.quiz, available: true, result: `${title(result.match.city)} at about ${money(result.match.budgetPlan.budgetCheckTotal)}` };
     }
-    const result = firstMatch(destinations, quiz, attempt.patch);
-    if (!result) continue;
-    if (attempt.patch.nights && !attempt.patch.spendStyle) seenNights.add(attempt.patch.nights);
-    const total = result.match.budgetPlan?.budgetCheckTotal;
-    suggestions.push({ ...attempt, quiz: result.quiz, result: `${title(result.match.city)} at about ${money(total)}` });
-    if (suggestions.length >= 4) break;
-  }
+    return { id, label: typeof label === "function" ? label(patches[0] || {}) : label, available: false, result: "Still no match" };
+  };
+  const raised = closest ? Math.ceil(closest.budgetPlan.budgetCheckTotal / 25) * 25 : null;
+  const options = [
+    raised ? attempt("budget", `Increase my budget to ${money(raised)}`, [{ budget: raised }]) : { id: "budget", label: "Increase my budget", available: false, result: "No trip fits your other answers at any budget" },
+    includes.flights ? attempt("flights", "Remove flights from my budget", [{ flights: false }]) : { id: "flights", label: "Remove flights from my budget", available: false, result: "Flights are already outside your budget" },
+    shorter.length ? attempt("shorter", (patch) => `Shorten my trip to ${patch.nights} nights`, shorter.map((value) => ({ nights: value }))) : { id: "shorter", label: "Shorten my trip", available: false, result: "Already the shortest trip" },
+    lodgingChoices.length ? attempt("lodging", (patch) => `Change accommodation to ${patch.lodging === "Hostel bed" ? "a hostel bed" : "whatever's cheapest"}`, lodgingChoices.map((value) => ({ lodging: value, spendStyle: "cheapest" }))) : { id: "lodging", label: "Change accommodation type", available: false, result: "Already the cheapest accommodation" },
+    closest ? { id: "closest", label: "Show the closest match anyway", available: true, href: `/results?destination=${encodeURIComponent(closest.id || closest.airport)}`, result: `${title(closest.city)}, over budget by about ${money(closest.budgetPlan.budgetCheckTotal - budget)}` } : { id: "closest", label: "Show the closest match anyway", available: false, result: "No destination fits your other answers" },
+  ];
 
-  return { profile, reasons, suggestions, cheapest: inArea ? { city: title(inArea.destination.city), total: inArea.total } : null };
+  return { profile, reasons, options, suggestions: options.filter((option) => option.available && option.quiz), closest: closest ? { id: closest.id || closest.airport, city: title(closest.city), total: closest.budgetPlan.budgetCheckTotal } : null, cheapest: closest ? { city: title(closest.city), total: closest.budgetPlan.budgetCheckTotal } : null };
 }

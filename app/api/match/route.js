@@ -1,8 +1,9 @@
 import { destinations } from "../../data/destinations";
 import { normalizeTravelerProfile } from "../../lib/recommendation/travelerProfile";
-import { planDestination, rankDestinations } from "../../lib/recommendation/destinationEngine";
+import { MATCH_ALGORITHM_VERSION, closestOverBudget, matchExplanation, planDestination, rankDestinations } from "../../lib/recommendation/destinationEngine";
 import { tripSchedule } from "../../lib/trip/schedule";
 import { validateTripRecommendation } from "../../lib/recommendation/finalTripValidator";
+import { rateLimit } from "../../lib/security/rateLimit";
 
 const resultCache = new Map();
 const CACHE_TTL = 24 * 60 * 60 * 1000;
@@ -153,9 +154,10 @@ function extractOutputText(data) {
 
 function normalizeAiResult(aiResult, fallback) {
   const matches = fallback;
+  // The destination and its "why" come from structured matching only; the AI
+  // writes the day plan and nothing else.
   const primary = {
     ...matches[0],
-    why: aiResult?.why || matches[0].why,
     itinerary: Array.isArray(aiResult?.itinerary)
       ? aiResult.itinerary
       : matches[0].itinerary,
@@ -245,8 +247,11 @@ const planSchema = {
 };
 
 export async function POST(request) {
+  const limited = rateLimit(request, { name: "match", limit: 15 });
+  if (limited) return limited;
   const startedAt = Date.now();
-  const body = await request.json();
+  const body = await request.json().catch(() => null);
+  if (!body || typeof body !== "object" || Array.isArray(body) || JSON.stringify(body).length > 20000) return Response.json({ error: "Invalid request" }, { status: 400 });
   const answers = body.answers || {};
   const travelerProfile = normalizeTravelerProfile(body);
   const ranked = fallbackMatches(body);
@@ -257,8 +262,11 @@ export async function POST(request) {
   const fallback = forcedDestination ? [forcedDestination, ...ranked.filter((destination) => (destination.id || destination.airport) !== (forcedDestination.id || forcedDestination.airport))] : ranked;
   const primaryDestination = fallback[0];
   if (!primaryDestination) {
-    return Response.json({ source: "fallback", aiStatus: "no_eligible_destination", travelerProfile, matches: [] }, { status: 422 });
+    const closest = closestOverBudget(destinations, travelerProfile);
+    console.log(JSON.stringify({ level: "info", msg: "match_no_result", route: "/api/match", setting: answers.alive || null, interest: answers.luxury || null, closest: closest?.id || null }));
+    return Response.json({ source: "fallback", aiStatus: "no_eligible_destination", algorithmVersion: MATCH_ALGORITHM_VERSION, travelerProfile, matches: [], closest: closest ? withFallbackPlans([closest], body)[0] : null }, { status: 422 });
   }
+  const explanation = matchExplanation(fallback);
   const planDays = tripSchedule(body).nights;
   const tune = typeof body.tune === "string" ? body.tune.slice(0, 40) : "original";
   const cacheKey = JSON.stringify({ travelerProfile, destination: primaryDestination.id || primaryDestination.airport, tune });
@@ -269,7 +277,7 @@ export async function POST(request) {
   }
 
   if (!process.env.OPENAI_API_KEY) {
-    return Response.json({ source: "fallback", aiStatus: "missing_key", travelerProfile, matches: withFallbackPlans(fallback, body) });
+    return Response.json({ source: "fallback", aiStatus: "missing_key", algorithmVersion: MATCH_ALGORITHM_VERSION, explanation, travelerProfile, matches: withFallbackPlans(fallback, body) });
   }
 
   try {
@@ -320,6 +328,8 @@ export async function POST(request) {
 
     const value = {
       source: "openai",
+      algorithmVersion: MATCH_ALGORITHM_VERSION,
+      explanation,
       travelerProfile,
       matches: normalizeAiResult(aiResult, fallback).map((destination) => ({ ...destination, validation: validateTripRecommendation({ destination, travelerProfile, budgetPlan: destination.budgetPlan, itinerary: destination.plan }) })),
     };
@@ -329,6 +339,6 @@ export async function POST(request) {
     return Response.json(value);
   } catch (error) {
     console.error(JSON.stringify({ level: "error", msg: "match_failed", route: "/api/match", error: error instanceof Error ? error.message : "request_failed", ms: Date.now() - startedAt }));
-    return Response.json({ source: "fallback", aiStatus: error instanceof Error ? error.message : "request_failed", travelerProfile, matches: withFallbackPlans(fallback, body) });
+    return Response.json({ source: "fallback", aiStatus: error instanceof Error ? error.message : "request_failed", algorithmVersion: MATCH_ALGORITHM_VERSION, explanation, travelerProfile, matches: withFallbackPlans(fallback, body) });
   }
 }

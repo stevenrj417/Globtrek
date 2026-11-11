@@ -7,11 +7,31 @@ import { trendingTrips } from "./data/trending";
 import { CHEAP_STAYS } from "./data/cheapStays";
 import { formatMoney } from "./lib/recommendation/tripEstimate";
 import { BookingLogo, BookingPartnerBadge } from "./components/PartnerLogo";
+import { destinations } from "./data/destinations";
+import { destinationReadiness, tripLengthRange } from "./lib/recommendation/eligibility";
+import { rankDestinations } from "./lib/recommendation/destinationEngine";
+import { matchReasons } from "./lib/recommendation/whyThisFits";
+import { normalizeTravelerProfile } from "./lib/recommendation/travelerProfile";
+import { structuredOrigin } from "./lib/recommendation/travelArea";
+import { AFFILIATE_DISCLOSURE } from "./lib/site";
+
+// Counted from the catalog: only destinations complete enough to recommend.
+const READY_COUNT = destinations.filter((destination) => destinationReadiness(destination).eligible).length;
+
+// A real result from the same matcher the quiz uses, not a mock-up.
+const EXAMPLE_QUIZ = { answers: { alive: "Cities", luxury: "Food", escape: "Balanced days", duration: "Five Nights", hotel: "Whatever's cheapest" }, exactBudget: 1000, guestCount: "1", isFlexible: true, originAirport: "LAX", originDetails: structuredOrigin("LAX"), travelAreaPreference: "anywhere" };
+function exampleResult() {
+  const profile = normalizeTravelerProfile(EXAMPLE_QUIZ);
+  const trip = rankDestinations(destinations, profile)[0];
+  if (!trip) return null;
+  return { trip, total: trip.budgetPlan.budgetCheckTotal, reasons: matchReasons({ answers: EXAMPLE_QUIZ.answers, profile, budgetPlan: trip.budgetPlan, trip, range: tripLengthRange(trip) }) };
+}
+const title = (value) => String(value || "").toLowerCase().replace(/(^|[\s&-])\S/g, (letter) => letter.toUpperCase());
 
 const steps = [
   ["01", "Answer 7 quick questions", "Setting, pace, budget and when you can go."],
   ["02", "Get one trip that fits", "A destination, stays and things to do, inside your budget."],
-  ["03", "Book with our travel partners", <>GlobTrek is a <BookingLogo className="mx-0.5 h-3 w-auto" /> affiliate partner. Check live prices and book on the partner&apos;s site.</>],
+  ["03", "Check prices and book with providers", <>Open each option on the provider&apos;s site, such as <BookingLogo className="mx-0.5 h-3 w-auto" />, to see the live price. You pay the provider directly.</>],
 ];
 
 const vibes = [
@@ -32,6 +52,7 @@ function budgetFacts() {
 const tripHref = (trip) => `/discover/quick?destination=${trip.id}&destinationName=${encodeURIComponent(trip.name)}&source=trending`;
 
 export default function Home() {
+  const example = exampleResult();
   return (
     <main className="min-h-screen bg-bg text-ink">
       <SiteHeader />
@@ -39,11 +60,13 @@ export default function Home() {
       <section id="discover" className="px-4 pb-16 pt-4 sm:px-6 sm:pb-24">
         <div className="group relative mx-auto min-h-[72vh] max-w-[1880px] overflow-hidden bg-placeholder sm:min-h-[78vh]">
           <Image src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1" alt="A bright alpine lake and green mountains" fill preload className="image-calm object-cover" sizes="(min-width: 1880px) 1880px, 100vw" quality={75} />
-          <div className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/55 via-black/20 to-transparent" aria-hidden="true" />
+          <div className="absolute inset-x-0 bottom-0 h-4/5 bg-gradient-to-t from-black/75 via-black/45 to-transparent" aria-hidden="true" />
           <div className="absolute inset-x-0 bottom-0 flex flex-col items-center px-5 pb-10 text-center sm:pb-14 lg:pb-16">
-            <h1 className="whitespace-nowrap text-[clamp(1.65rem,5vw,5.25rem)] font-extralight uppercase leading-[0.9] tracking-tight-3 text-white">One Tab Travel</h1>
-            <Link href="/discover" className="btn btn-primary mt-6">Find your trip <span aria-hidden="true">→</span></Link>
-            <p className="mt-3 text-xs text-white/90">A few quick questions. One affordable trip.</p>
+            <h1 className="max-w-4xl text-[clamp(2rem,5.4vw,5rem)] font-normal leading-[0.98] tracking-tight-3 text-white [text-shadow:0_2px_24px_rgba(0,0,0,.45)]">One affordable trip, picked for you.</h1>
+            <p className="mt-4 max-w-xl text-base leading-7 text-white/95">Answer a few quick questions. Get one destination that fits your budget, with stays, things to do and a full cost estimate.</p>
+            <Link href="/discover" className="btn btn-primary mt-6 min-h-12">Find my trip <span aria-hidden="true">→</span></Link>
+            <p className="mt-3 text-sm text-white/95">{READY_COUNT} destinations · No account required · Free to use</p>
+            <p className="mt-1 text-xs text-white/85">Estimates, not live prices.</p>
           </div>
         </div>
       </section>
@@ -51,9 +74,29 @@ export default function Home() {
       <section aria-label="Booking partner" className="border-t border-black/10 bg-surface py-5">
         <div className="mx-auto flex max-w-[1520px] flex-col items-center justify-center gap-2 px-5 text-center sm:flex-row sm:gap-5 sm:px-8">
           <BookingPartnerBadge />
-          <p className="text-xs leading-5 text-muted">Plan with GlobTrek. Check live stays and complete your reservation on Booking.com.</p>
+          <p className="text-xs leading-5 text-muted">Plan with GlobTrek, then check live prices and book on Booking.com. {AFFILIATE_DISCLOSURE}</p>
         </div>
       </section>
+
+      {example ? <section aria-labelledby="example-heading" className="border-t border-black/10 py-12 sm:py-16">
+        <div className="mx-auto grid max-w-[1180px] items-center gap-8 px-5 sm:px-8 md:grid-cols-2">
+          <div>
+            <p className="eyebrow">What you get</p>
+            <h2 id="example-heading" className="mt-3 text-2xl font-semibold tracking-tight-2 sm:text-3xl">An example result</h2>
+            <p className="mt-3 text-sm leading-6 text-muted">From Los Angeles (LAX), one traveler, five nights, flexible dates, a $1,000 budget, a city trip for food lovers. This is the result GlobTrek&apos;s matcher gives for those answers today.</p>
+            <Link href="/discover" className="btn btn-primary mt-6">Find my trip <span aria-hidden="true">→</span></Link>
+          </div>
+          <article className="overflow-hidden border border-black/15 bg-white">
+            <div className="relative aspect-[16/9] bg-placeholder"><Image src={example.trip.image} alt={example.trip.imageAlt || `${title(example.trip.city)}, ${title(example.trip.country)}`} fill className="object-cover" sizes="(min-width: 768px) 40vw, 100vw" /></div>
+            <div className="p-5">
+              <p className="text-micro uppercase tracking-label text-black/60">Example match</p>
+              <h3 className="mt-1 font-serif text-3xl">{title(example.trip.city)}<span className="ml-2 font-sans text-sm text-black/60">{title(example.trip.country)}</span></h3>
+              <p className="tabular mt-2 text-sm">{formatMoney(example.total)} estimated for flights, stay, food, activities and local transport · not a live price</p>
+              {example.reasons.length ? <ul className="mt-3 flex flex-wrap gap-2">{example.reasons.map((reason) => <li key={reason} className="border border-black/15 px-2.5 py-1 text-xs">✓ {reason}</li>)}</ul> : null}
+            </div>
+          </article>
+        </div>
+      </section> : null}
 
       <section aria-labelledby="how-heading" className="border-t border-black/10 py-12 sm:py-16">
         <div className="mx-auto max-w-[1520px] px-5 sm:px-8">

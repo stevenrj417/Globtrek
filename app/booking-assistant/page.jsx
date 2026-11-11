@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SiteFooter, SiteHeader } from "../components/SiteChrome";
 import { ASSISTANT_INSTALL_URL } from "../lib/booking/assistant";
+import { AFFILIATE_DISCLOSURE } from "../lib/site";
 
 export const metadata = {
   title: "Booking Assistant for Chrome",
@@ -80,7 +81,7 @@ export default function BookingAssistantPage() {
       <ul className="mt-8 divide-y divide-black/12 border-y border-black/12">
         {PARTNERS.map(([name, body, tag]) => <li key={name} className="grid gap-2 py-5 sm:grid-cols-[1fr_2fr_auto] sm:items-baseline sm:gap-8"><p className="font-medium">{name}</p><p className="text-sm leading-6 text-muted">{body}</p><p className="text-micro uppercase tracking-label">{tag}</p></li>)}
       </ul>
-      <p className="mt-8 text-xs leading-5 text-subtle">GlobTrek is a Booking.com affiliate partner and may earn a commission on qualifying bookings made through its links; your price doesn&apos;t change. The assistant opens the same links as the trip page and only when you click. <Link href="/affiliate-disclosure" className="underline decoration-black/25 underline-offset-2">Affiliate disclosure</Link> · <Link href="/booking-assistant/privacy" className="underline decoration-black/25 underline-offset-2">Assistant privacy policy</Link> · <Link href="/help" className="underline decoration-black/25 underline-offset-2">Help</Link></p>
+      <p className="mt-8 text-xs leading-5 text-subtle">GlobTrek is a Booking.com affiliate partner. {AFFILIATE_DISCLOSURE} The assistant opens the same links as the trip page and only when you click. <Link href="/affiliate-disclosure" className="underline decoration-black/25 underline-offset-2">Affiliate disclosure</Link> · <Link href="/booking-assistant/privacy" className="underline decoration-black/25 underline-offset-2">Assistant privacy policy</Link> · <Link href="/help" className="underline decoration-black/25 underline-offset-2">Help</Link></p>
     </section>
     <SiteFooter />
   </main>;

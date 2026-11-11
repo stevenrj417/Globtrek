@@ -33,7 +33,7 @@ export function TripDock({ city, summary, total, picks, emailButton, onBook }) {
         <p className="tabular truncate text-micro text-black/55"><span className="font-medium text-ink">{total}</span> estimated{picks ? ` · ${picks}` : ""}</p>
       </div>
       <div className="hidden sm:block">{emailButton}</div>
-      <button type="button" onClick={onBook} className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full bg-black px-5 text-micro font-medium uppercase tracking-label text-white">Book <span aria-hidden="true">→</span></button>
+      <button type="button" onClick={onBook} className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full bg-black px-5 text-micro font-medium uppercase tracking-label text-white">Check prices <span aria-hidden="true">→</span></button>
     </div>
   </aside>;
 }

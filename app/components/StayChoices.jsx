@@ -114,7 +114,7 @@ export function StayChoices({ destination, tripContext, selectedStayId, onSelect
     <div className="mx-auto max-w-[1180px]">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-micro uppercase tracking-editorial">01 &nbsp;&nbsp; Your stay</p>
+          <p className="section-eyebrow text-micro uppercase tracking-editorial">Your stay</p>
           <h2 id="stay-heading" className="mt-3 font-serif text-[clamp(2rem,3vw,2.75rem)] leading-[.94] tracking-tight-2">Three places to sleep</h2>
           {budgetLodging?.total ? <p className="tabular mt-3 max-w-xl text-xs leading-5 text-black/60">Your estimate counts {money(budgetLodging.perUnit)} × {budgetLodging.units} {budgetLodging.unit}{budgetLodging.units === 1 ? "" : "s"} × {budgetLodging.nights} night{budgetLodging.nights === 1 ? "" : "s"} = {money(budgetLodging.total)} for lodging{budgetLodging.source ? ` (${budgetLodging.source})` : ""}.</p> : null}
         </div>

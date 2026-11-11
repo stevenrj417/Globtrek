@@ -1,6 +1,7 @@
 import { normalizeTravelArea, originFromTrip } from "./travelArea.js";
 import { discoverySliderToUnknownness, legacyBudgetLabel, normalizeBudget } from "./budgetInput.js";
 import { tripSchedule } from "../trip/schedule.js";
+import { travelPeriod } from "../trip/period.js";
 
 export { discoverySliderToUnknownness, legacyBudgetLabel, normalizeBudget };
 
@@ -51,6 +52,7 @@ export function normalizeTravelerProfile(input = {}) {
       end: schedule.end,
       flexible: schedule.flexible,
       season: answers.season || null,
+      period: travelPeriod({ start: schedule.start, flexible: schedule.flexible, season: answers.season || null }),
     },
     tripLength,
     travelers,

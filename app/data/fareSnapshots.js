@@ -47,12 +47,16 @@ export function monthLabel(key) {
 
 // The fare for the traveler's month; with no dates (or flexible dates in a month
 // not on file), the cheapest month on file.
-export function snapshotFare(origin, airport, startDate, flexible) {
+// periodMonths: for a flexible trip planned for a season, the "YYYY-MM" months it
+// may use; the cheapest month inside them is picked, and none outside.
+export function snapshotFare(origin, airport, startDate, flexible, periodMonths = null) {
   const route = FARE_SNAPSHOTS[`${String(origin || "").toUpperCase()}:${String(airport || "").toUpperCase()}`];
   if (!route) return null;
   const month = startDate ? String(startDate).slice(0, 7) : null;
   if (month && route[month]) return { month, ...route[month] };
   if (month && !flexible) return null;
-  const [best] = Object.entries(route).sort(([, a], [, b]) => a.typical - b.typical);
-  return { month: best[0], ...best[1], cheapestMonth: true };
+  const allowed = periodMonths?.length ? Object.entries(route).filter(([key]) => periodMonths.includes(key)) : Object.entries(route);
+  const [best] = allowed.sort(([keyA, a], [keyB, b]) => a.typical - b.typical || keyA.localeCompare(keyB));
+  if (!best) return null;
+  return { month: best[0], ...best[1], cheapestMonth: allowed.length > 1 };
 }

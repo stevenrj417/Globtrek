@@ -26,7 +26,7 @@ export default function FullTripPage({ params }) {
       const response = await fetch(id.startsWith("s_") ? `/api/public-trips/${encodeURIComponent(id)}` : `/api/trips/${encodeURIComponent(id)}`);
       const data = await response.json().catch(() => ({}));
       if (cancelled) return;
-      if (!response.ok) return setStatus(response.status === 401 ? "Sign in to view this saved trip." : "This trip could not be found.");
+      if (!response.ok) return setStatus(response.status === 401 ? "Sign in to view this saved trip." : response.status === 410 ? "This shared trip link has expired." : "This trip could not be found, or its owner stopped sharing it.");
       const savedTrip = data.trip?.trip_data;
       const trip = savedTrip?.destination && { ...savedTrip.destination, plan: savedTrip.itinerary, budgetPlan: savedTrip.estimatedCosts, why: savedTrip.destination.why || "A trip shaped around the way you travel." };
       setPayload({ trip, quiz: savedTrip?.trip, savedTrip });

@@ -52,6 +52,13 @@ const REGION_BY_COUNTRY = {
   "SOUTH AFRICA": ["Feed: Middle East, Africa"],
   MOROCCO: ["Feed: Middle East, Africa"],
   KENYA: ["Feed: Middle East, Africa"],
+  AUSTRIA: ["Feed: Western Europe", "Feed: Northern and Eastern Europe"],
+  SWITZERLAND: ["Feed: Western Europe", "Feed: Northern and Eastern Europe"],
+  POLAND: ["Feed: Northern and Eastern Europe", "Feed: Western Europe"],
+  ROMANIA: ["Feed: Northern and Eastern Europe", "Feed: Western Europe"],
+  SLOVENIA: ["Feed: Northern and Eastern Europe", "Feed: Western Europe"],
+  GEORGIA: ["Feed: Northern and Eastern Europe", "Feed: Middle East, Africa"],
+  NEPAL: ["Feed: South and Southeast Asia"],
 };
 
 // Stay types GlobTrek recommends, with a budget weight. Resorts, villas, whole
