@@ -1,5 +1,6 @@
 import { LAUNCH_SET, LAUNCH_DATA, launchActivities } from "../../data/launchSet.js";
-import feedStays from "../../data/feedStays.json" with { type: "json" };
+// Counts only: the full catalog snapshot is too large to ship to the browser.
+import feedStayCounts from "../../data/feedStayCounts.json" with { type: "json" };
 import curatedPlaces from "../../data/curatedPlaces.json" with { type: "json" };
 import { travelInfoFor } from "../../data/travelInfo.js";
 
@@ -37,7 +38,7 @@ export function activityCount(destinationId) {
 }
 
 export function stayCount(destinationId) {
-  return Math.max((LAUNCH_DATA[destinationId]?.hotels || []).length, (feedStays.stays?.[destinationId] || []).length);
+  return Math.max((LAUNCH_DATA[destinationId]?.hotels || []).length, feedStayCounts.counts?.[destinationId] || 0);
 }
 
 // Supported trip lengths, from the catalog's own trip-length data when present.

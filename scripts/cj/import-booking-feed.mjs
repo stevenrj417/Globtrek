@@ -52,6 +52,10 @@ if (mode === "snapshot") {
 const client = createCjClient();
 const log = (entry) => console.log(`${String(entry.destination).padEnd(24)} ${entry.status || "failed"}  ${entry.records ?? 0} stays${entry.error ? `  ${entry.error}` : ""}`);
 const run = await runImport({ client, destinations, store, dryRun: mode === "dry-run", trigger: "script", logger: log });
-if (mode === "snapshot" && run.destinationsSucceeded) await writeFile(snapshotUrl, `${JSON.stringify(store.snapshot)}\n`);
+if (mode === "snapshot" && run.destinationsSucceeded) {
+  await writeFile(snapshotUrl, `${JSON.stringify(store.snapshot)}\n`);
+  const counts = Object.fromEntries(Object.entries(store.snapshot.stays || {}).sort(([a], [b]) => a.localeCompare(b)).map(([id, stays]) => [id, stays.length]));
+  await writeFile(new URL("../../app/data/feedStayCounts.json", import.meta.url), `${JSON.stringify({ checkedAt: store.snapshot.checkedAt, counts })}\n`);
+}
 console.log(JSON.stringify({ mode, status: run.status, destinations: `${run.destinationsSucceeded}/${run.destinationsAttempted}`, records: run.recordsSeen, saved: run.recordsSaved, deactivated: run.recordsDeactivated, requests: run.requests, errors: run.errors }, null, 1));
 process.exit(run.status === "failed" ? 1 : 0);

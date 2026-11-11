@@ -7,7 +7,7 @@ import { buildBudgetPlan } from "../../../lib/recommendation/budgetEngine.js";
 import { buildStayShortlist } from "../../../lib/recommendation/stayShortlist.js";
 import { normalizeTravelerProfile } from "../../../lib/recommendation/travelerProfile.js";
 import { createClient } from "../../../lib/supabase/server.js";
-import { verifiedStays } from "../../../data/launchSet.js";
+import { verifiedStays } from "../../../data/launchStays.js";
 import { sharedRateLimit } from "../../../lib/security/rateLimit";
 
 export const runtime = "nodejs";

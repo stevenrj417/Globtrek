@@ -1,5 +1,6 @@
 import { destinations } from "../../data/destinations.js";
-import { LAUNCH_SET, verifiedStays } from "../../data/launchSet.js";
+import { LAUNCH_SET } from "../../data/launchSet.js";
+import { verifiedStays } from "../../data/launchStays.js";
 
 // City names the feed uses that differ from GlobTrek's (feed spelling → destination).
 const FEED_CITY_ALIASES = {

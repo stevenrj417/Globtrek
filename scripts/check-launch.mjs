@@ -2,7 +2,8 @@
 // Usage: npm run check:launch   (writes audit/launch-report.md)
 import { mkdir, writeFile } from "node:fs/promises";
 import { destinations, bookingPropertyUrl } from "../app/data/destinations.js";
-import { LAUNCH_DATA, LAUNCH_SET, launchHotels } from "../app/data/launchSet.js";
+import { LAUNCH_DATA, LAUNCH_SET } from "../app/data/launchSet.js";
+import { launchHotels } from "../app/data/launchStays.js";
 import { estimateFlight } from "../app/lib/recommendation/travelFeasibility.js";
 import { isCjUrl } from "../app/lib/booking/cj.js";
 

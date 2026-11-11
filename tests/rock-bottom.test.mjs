@@ -6,7 +6,8 @@ import { rankDestinations } from "../app/lib/recommendation/destinationEngine.js
 import { buildBudgetPlan } from "../app/lib/recommendation/budgetEngine.js";
 import { estimateFlight } from "../app/lib/recommendation/travelFeasibility.js";
 import { snapshotFare } from "../app/data/fareSnapshots.js";
-import { LAUNCH_SET, launchHotels } from "../app/data/launchSet.js";
+import { LAUNCH_SET } from "../app/data/launchSet.js";
+import { launchHotels } from "../app/data/launchStays.js";
 import { addNights } from "../app/lib/trip/schedule.js";
 
 const origin = { airportCode: "PDX", countryCode: "US", countryName: "United States", latitude: 45.59, longitude: -122.6 };

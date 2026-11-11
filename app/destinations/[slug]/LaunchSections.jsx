@@ -1,7 +1,8 @@
 import Image from "next/image";
 import { BookingLogo } from "../../components/PartnerLogo";
 import { bookingPropertyUrl } from "../../data/destinations";
-import { FEED_STAYS_CHECKED, LAUNCH_DATA, launchHotels, rideshareUrl } from "../../data/launchSet";
+import { LAUNCH_DATA, rideshareUrl } from "../../data/launchSet";
+import { FEED_STAYS_CHECKED, launchHotels } from "../../data/launchStays";
 import { cjActivitySearchUrl } from "../../lib/booking/cj";
 
 const PRICE = { 1: "$", 2: "$$", 3: "$$$" };

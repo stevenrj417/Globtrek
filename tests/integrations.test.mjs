@@ -133,3 +133,11 @@ test("the shared limiter falls back to the instance limit without a shared store
   assert.equal((await sharedRateLimit(request, { name: "s", limit: 2, now: 1003 })).status, 429);
   if (saved) process.env.SUPABASE_SERVICE_ROLE_KEY = saved;
 });
+
+test("the stay counts the browser uses match the catalog snapshot", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const snapshot = JSON.parse(await readFile(new URL("../app/data/feedStays.json", import.meta.url)));
+  const summary = JSON.parse(await readFile(new URL("../app/data/feedStayCounts.json", import.meta.url)));
+  assert.equal(summary.checkedAt, snapshot.checkedAt);
+  assert.deepEqual(summary.counts, Object.fromEntries(Object.entries(snapshot.stays).map(([id, stays]) => [id, stays.length]).sort(([a], [b]) => a.localeCompare(b))));
+});
