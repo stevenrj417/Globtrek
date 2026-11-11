@@ -153,10 +153,30 @@ const verifiedExpansion = [...(verifiedBatch01.records || verifiedBatch01), ...(
   recommendationReady: false, catalogStatus: "verified_destination_only", verificationSource: item.verificationSource,
 }));
 
+// Sourced facts (scripts/destinations/build-destination-facts.mjs) fill gaps
+// only: editorial coordinates, seasons, tags and alt text always win.
+function withFacts(destination) {
+  const fact = destinationFacts.facts?.[destination.id];
+  if (!fact) return destination;
+  const unreviewedSeason = !destination.season || /requires .*review/i.test(destination.season);
+  return {
+    ...destination,
+    latitude: destination.latitude ?? fact.latitude ?? null,
+    longitude: destination.longitude ?? fact.longitude ?? null,
+    tags: [...(destination.tags || []), ...(fact.addTags || [])],
+    season: unreviewedSeason && fact.climate ? fact.climate.season : destination.season,
+    seasonSource: unreviewedSeason && fact.climate ? "nasa_power_climate" : destination.seasonSource || "editorial",
+    avoidMonths: destination.avoidMonths?.length ? destination.avoidMonths : fact.climate?.avoidMonths || [],
+    factSource: fact.factSource || null,
+    dataCheckedAt: fact.checkedAt || null,
+    facts: { imageAlt: fact.imageAlt },
+  };
+}
+
 const legacyNames = new Set(legacyDestinations.map((item) => `${item.city}|${item.country}`));
-export const destinations = [...legacyDestinations, ...verifiedExpansion.filter((item) => !legacyNames.has(`${item.city}|${item.country}`)), ...MOUNTAIN_BASE].map(applyBudgetEditorial).map(enrichDestinationIntelligence).map((destination) => ({
+export const destinations = [...legacyDestinations, ...verifiedExpansion.filter((item) => !legacyNames.has(`${item.city}|${item.country}`)), ...MOUNTAIN_BASE].map(applyBudgetEditorial).map(enrichDestinationIntelligence).map(withFacts).map((destination) => ({
   ...destination,
-  imageAlt: destination.imageAlt || IMAGE_ALTS[destination.id] || null,
+  imageAlt: destination.imageAlt || IMAGE_ALTS[destination.id] || destination.facts?.imageAlt || null,
   // Launch cities priced from hand-checked lodging and food (see cheapStays.js).
   dataReviewed: destination.dataReviewed || (LAUNCH_SET.includes(destination.id) ? CHEAP_STAYS_CHECKED : null),
 }));
@@ -281,6 +301,7 @@ import { enrichDestinationIntelligence } from "./destinationIntelligence.js";
 import { applyBudgetEditorial } from "./budgetDestinations.js";
 import { MOUNTAIN_BASE } from "./mountainDestinations.js";
 import { IMAGE_ALTS } from "./imageAlts.js";
+import destinationFacts from "./destinationFacts.json" with { type: "json" };
 import { LAUNCH_SET } from "./launchSet.js";
 import { CHEAP_STAYS_CHECKED } from "./cheapStays.js";
 import { CJ_HOSTS, CJ_LINKS, cjTracked } from "../lib/booking/cj.js";

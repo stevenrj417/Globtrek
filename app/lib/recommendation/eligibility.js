@@ -1,7 +1,8 @@
 import { LAUNCH_SET, LAUNCH_DATA, launchActivities } from "../../data/launchSet.js";
 // Counts only: the full catalog snapshot is too large to ship to the browser.
 import feedStayCounts from "../../data/feedStayCounts.json" with { type: "json" };
-import curatedPlaces from "../../data/curatedPlaces.json" with { type: "json" };
+// Counts only, like the stays: the curated places themselves stay on the server.
+import curatedPlaceCounts from "../../data/curatedPlaceCounts.json" with { type: "json" };
 import { travelInfoFor } from "../../data/travelInfo.js";
 
 // Which destinations the quiz may recommend, and why the rest can't be.
@@ -25,16 +26,8 @@ const SETTING_TAGS = Object.values(SETTING_REQUIREMENTS).map((item) => item.tag)
 export const MIN_STAYS = 3;
 export const MIN_ACTIVITIES = 4;
 
-export function curatedActivities(destinationId) {
-  return curatedPlaces.places?.[destinationId]?.activities || [];
-}
-
-export function curatedRestaurants(destinationId) {
-  return curatedPlaces.places?.[destinationId]?.restaurants || [];
-}
-
 export function activityCount(destinationId) {
-  return launchActivities(destinationId).length || curatedActivities(destinationId).length;
+  return launchActivities(destinationId).length || curatedPlaceCounts.activities?.[destinationId] || 0;
 }
 
 export function stayCount(destinationId) {
@@ -55,13 +48,13 @@ const CHECKS = [
   ["interest tag", (d) => INTEREST_TAGS.some((tag) => d.tags?.includes(tag))],
   ["knownness score", (d) => Number.isFinite(d.recognition)],
   ["trip-length range", (d) => tripLengthRange(d).max >= tripLengthRange(d).min],
-  ["reviewed seasonal guidance", (d) => Boolean(d.season) && !/requires .*review/i.test(d.season)],
+  ["seasonal guidance", (d) => Boolean(d.season) && !/requires .*review/i.test(d.season)],
   ["flight estimate support", (d) => (d.latitude != null && d.longitude != null && Number.isFinite(Number(d.latitude)) && Number.isFinite(Number(d.longitude))) || LAUNCH_SET.includes(d.id)],
   [`${MIN_STAYS}+ accommodation options`, (d) => stayCount(d.id) >= MIN_STAYS],
   [`${MIN_ACTIVITIES}+ activities`, (d) => activityCount(d.id) >= MIN_ACTIVITIES],
-  ["destination-specific daily costs", (d) => d.planningAverages?.model === "city"],
-  ["data timestamp", (d) => Boolean(d.budgetEditorial?.reviewed || d.dataReviewed)],
-  ["fact source", (d) => Boolean(d.verificationSource || d.budgetEditorial?.sources?.length || LAUNCH_SET.includes(d.id))],
+  ["destination-specific daily costs", (d) => ["city", "local_prices"].includes(d.planningAverages?.model)],
+  ["data timestamp", (d) => Boolean(d.budgetEditorial?.reviewed || d.dataReviewed || d.dataCheckedAt)],
+  ["fact source", (d) => Boolean(d.verificationSource || d.factSource || d.budgetEditorial?.sources?.length || LAUNCH_SET.includes(d.id))],
   ["entry and advisory links", (d) => Boolean(travelInfoFor(d.country))],
   ["main image and alt text", (d) => Boolean(d.image && (d.imageAlt || d.budgetEditorial?.alt))],
 ];

@@ -39,7 +39,7 @@ let store = null;
 if (mode === "snapshot") {
   let previous = null;
   try { previous = JSON.parse(await readFile(snapshotUrl, "utf8")); } catch {}
-  store = new SnapshotCatalogStore(previous);
+  store = new SnapshotCatalogStore(previous, { compact: args.includes("--compact") });
 } else if (mode === "supabase") {
   const { createClient } = await import("@supabase/supabase-js");
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
@@ -51,11 +51,14 @@ if (mode === "snapshot") {
 
 const client = createCjClient();
 const log = (entry) => console.log(`${String(entry.destination).padEnd(24)} ${entry.status || "failed"}  ${entry.records ?? 0} stays${entry.error ? `  ${entry.error}` : ""}`);
-const run = await runImport({ client, destinations, store, dryRun: mode === "dry-run", trigger: "script", logger: log });
+// --size N keeps up to N properties per destination (default 60).
+const size = args.includes("--size") ? Math.max(6, Number(args[args.indexOf("--size") + 1]) || 60) : undefined;
+const run = await runImport({ client, destinations, store, dryRun: mode === "dry-run", trigger: "script", logger: log, ...(size ? { size } : {}) });
 if (mode === "snapshot" && run.destinationsSucceeded) {
   await writeFile(snapshotUrl, `${JSON.stringify(store.snapshot)}\n`);
   const counts = Object.fromEntries(Object.entries(store.snapshot.stays || {}).sort(([a], [b]) => a.localeCompare(b)).map(([id, stays]) => [id, stays.length]));
-  await writeFile(new URL("../../app/data/feedStayCounts.json", import.meta.url), `${JSON.stringify({ checkedAt: store.snapshot.checkedAt, counts })}\n`);
+  const dorms = Object.fromEntries(Object.entries(store.snapshot.stays || {}).sort(([a], [b]) => a.localeCompare(b)).map(([id, stays]) => [id, stays.filter((stay) => stay.dorms).length]).filter(([, count]) => count));
+  await writeFile(new URL("../../app/data/feedStayCounts.json", import.meta.url), `${JSON.stringify({ checkedAt: store.snapshot.checkedAt, counts, dorms })}\n`);
 }
 console.log(JSON.stringify({ mode, status: run.status, destinations: `${run.destinationsSucceeded}/${run.destinationsAttempted}`, records: run.recordsSeen, saved: run.recordsSaved, deactivated: run.recordsDeactivated, requests: run.requests, errors: run.errors }, null, 1));
 process.exit(run.status === "failed" ? 1 : 0);

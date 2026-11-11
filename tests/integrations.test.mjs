@@ -134,10 +134,19 @@ test("the shared limiter falls back to the instance limit without a shared store
   if (saved) process.env.SUPABASE_SERVICE_ROLE_KEY = saved;
 });
 
+test("the activity counts the browser uses match the curated places", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const places = JSON.parse(await readFile(new URL("../app/data/curatedPlaces.json", import.meta.url)));
+  const summary = JSON.parse(await readFile(new URL("../app/data/curatedPlaceCounts.json", import.meta.url)));
+  assert.equal(summary.checkedAt, places.checkedAt);
+  assert.deepEqual(summary.activities, Object.fromEntries(Object.entries(places.places).map(([id, entry]) => [id, entry.activities?.length || 0])));
+});
+
 test("the stay counts the browser uses match the catalog snapshot", async () => {
   const { readFile } = await import("node:fs/promises");
   const snapshot = JSON.parse(await readFile(new URL("../app/data/feedStays.json", import.meta.url)));
   const summary = JSON.parse(await readFile(new URL("../app/data/feedStayCounts.json", import.meta.url)));
   assert.equal(summary.checkedAt, snapshot.checkedAt);
   assert.deepEqual(summary.counts, Object.fromEntries(Object.entries(snapshot.stays).map(([id, stays]) => [id, stays.length]).sort(([a], [b]) => a.localeCompare(b))));
+  assert.deepEqual(summary.dorms, Object.fromEntries(Object.entries(snapshot.stays).map(([id, stays]) => [id, stays.filter((stay) => stay.dorms).length]).filter(([, count]) => count)));
 });

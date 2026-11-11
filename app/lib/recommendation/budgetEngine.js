@@ -3,6 +3,7 @@ import { pricingMonth } from "../trip/period.js";
 import { estimateFlight } from "./travelFeasibility.js";
 import { observedMonthFor } from "../pricing/stayPrice.js";
 import { CHEAP_STAYS_CHECKED, cheapStayFor, stayNightFor } from "../../data/cheapStays.js";
+import feedStayCounts from "../../data/feedStayCounts.json" with { type: "json" };
 
 const CATEGORY_KEYS = ["flights", "hotel", "food", "activities", "transportation"];
 
@@ -15,6 +16,14 @@ const SPEND_STYLE_FACTORS = {
   comfortable: { hotel: 1.3, food: 1.2, activities: 1 },
 };
 
+// Ultra-budget price bands, per bed or room per night, taxes included.
+export const NIGHTLY_TIERS = [15, 25, 40, 60, 100];
+export function nightlyTier(perNight) {
+  if (!(perNight > 0)) return null;
+  const cap = NIGHTLY_TIERS.find((limit) => perNight < limit);
+  return cap ? `under_${cap}` : "100_plus";
+}
+
 function estimate(category, average, source, confidence, isLive = false, spread = 0.15) {
   const roundedAverage = Math.round(average);
   return { category, low: Math.round(average * (1 - spread)), high: Math.round(average * (1 + spread)), average: roundedAverage, source, confidence, lastUpdated: "2026-08-14", isLive };
@@ -22,6 +31,7 @@ function estimate(category, average, source, confidence, isLive = false, spread 
 
 // options.stay: the traveler's chosen stay when it has a trustworthy price
 // ({ perUnit, unit: "bed" | "room", name, propertyId, priceKind, observedAt }).
+// options.observedFare: the server's observed fare for this route and dates.
 // With no spending style chosen ("auto"), GlobTrek plans the most comfortable
 // style the budget covers: a little comfort, then cheap but sane, then rock
 // bottom. With no budget at all, cheap but sane.
@@ -45,7 +55,7 @@ function planForStyle(profile, destination, options = {}) {
   const travelers = profile.travelers;
   const cost = destinationCostProfile(destination);
   const season = seasonFor(destination, profile);
-  const flight = estimateFlight(profile, destination);
+  const flight = estimateFlight(profile, destination, { observed: options.observedFare || null });
   // Hotels, food and flights are all estimated for the same month (see period.js).
   const month = pricingMonth(profile, flight?.fareMonth) || 5;
   const baseCityAverage = destination.planningAverages?.monthly?.find((item) => item.month === month) || {
@@ -78,6 +88,15 @@ function planForStyle(profile, destination, options = {}) {
   const cityTaxRate = Number(destination.planningAverages?.lodgingTaxRate) || 0;
   const cityRoomNight = Math.round(cityAverage.hotelNight * (1 + cityTaxRate));
   const useBeds = Boolean(cheap?.bedNight) && profile.lodging !== "private" && (profile.lodging === "hostel" || stayNight * travelers <= cityRoomNight * rooms);
+  // Where no hostel's price was checked by hand, rock bottom can still plan a dorm
+  // bed: GlobTrek's modeled dorm rate for the city, but only when the catalog has
+  // real dorm properties there, and never for a traveler who asked for privacy.
+  // It names no property: the rate is a city-level model, not any hostel's price.
+  const local = destination.planningAverages?.localPrices;
+  const modelDorm = profile.spendStyle === "cheapest" && !cheap && profile.lodging !== "private" && local?.lodging?.dormBed > 0 && (feedStayCounts.dorms?.[destination.id] || 0) > 0
+    ? Math.round(local.lodging.dormBed * (local.lodging.budgetRoom > 0 ? baseCityAverage.hotelNight / local.lodging.budgetRoom : 1) * (1 + cityTaxRate))
+    : null;
+  const useModelDorm = Boolean(modelDorm) && (profile.lodging === "hostel" || modelDorm * travelers <= cityRoomNight * rooms);
   const chosen = options.stay?.perUnit > 0 ? options.stay : null;
   const lodging = chosen
     ? { type: chosen.unit === "bed" ? "hostel_bed" : "private_room", unit: chosen.unit, units: chosen.unit === "bed" ? travelers : rooms, perUnit: Math.round(chosen.perUnit), name: chosen.name, propertyId: chosen.propertyId || null, priceKind: chosen.priceKind, observedAt: chosen.observedAt || null, month: stayMonth }
@@ -85,16 +104,22 @@ function planForStyle(profile, destination, options = {}) {
       ? { type: "hostel_bed", unit: "bed", units: travelers, perUnit: stayNight, name: cheap.name, path: cheap.path, priceKind: cheapKind, observedAt: CHEAP_STAYS_CHECKED, month: stayMonth }
       : cheap?.roomNight
         ? { type: "private_room", unit: "room", units: rooms, perUnit: stayNight, name: cheap.name, path: cheap.path, priceKind: cheapKind, observedAt: CHEAP_STAYS_CHECKED, month: stayMonth }
-        : { type: "private_room", unit: "room", units: rooms, perUnit: cityRoomNight, name: null, priceKind: "city_estimate", observedAt: null, month };
+        : useModelDorm
+          ? { type: "hostel_bed", unit: "bed", units: travelers, perUnit: modelDorm, name: null, priceKind: "dorm_estimate", observedAt: null, month }
+          : { type: "private_room", unit: "room", units: rooms, perUnit: cityRoomNight, name: null, priceKind: "city_estimate", observedAt: null, month };
   lodging.perNight = lodging.perUnit * lodging.units;
   lodging.nights = nights;
   lodging.total = includes.hotel ? lodging.perNight * nights : 0;
   lodging.perBedNight = lodging.unit === "bed" ? lodging.perUnit : null;
+  lodging.tier = nightlyTier(lodging.perUnit);
   if (cheap) {
     cityAverage.foodPerPersonDay = Math.min(cityAverage.foodPerPersonDay, cheap.cheapFoodDay);
     cityAverage.activitiesPerPersonDay = 0;
+  } else if (profile.spendStyle === "cheapest" && local?.foodDay?.cheapest > 0) {
+    cityAverage.foodPerPersonDay = Math.min(cityAverage.foodPerPersonDay, local.foodDay.cheapest);
+    cityAverage.activitiesPerPersonDay = 0;
   }
-  const lodgingTaxRate = lodging.priceKind === "city_estimate" ? cityTaxRate : 0;
+  const lodgingTaxRate = ["city_estimate", "dorm_estimate"].includes(lodging.priceKind) ? cityTaxRate : 0;
   const airportTransfers = (Number(destination.planningAverages?.airportTransferPerPerson) || 0) * 2 * travelers;
   const categories = {
     flights: { ...estimate("flights", includes.flights ? flight.average * travelers : 0, flight.priceSource, flight.confidence, flight.isLive, 0.12), currency: flight.currency, priceLastChecked: flight.priceLastChecked, cabinClass: flight.cabinClass, tripType: flight.tripType, monthlyAverageEconomyRoundTrip: flight.monthlyAverageEconomyRoundTrip, basis: flight.basis, fareWindow: flight.fareWindow || null, perTraveler: flight.average },
@@ -174,7 +199,7 @@ function planForStyle(profile, destination, options = {}) {
     budgetBasis: "good_value_monthly_plan_with_reserve",
     cityPlanningAverage: cityAverage,
     spendStyle: profile.spendStyle || "value",
-    lodgingTax: includes.hotel ? Math.round(cityAverage.hotelNight * lodgingTaxRate) * lodging.units * nights : 0,
+    lodgingTax: includes.hotel ? Math.round((lodging.priceKind === "dorm_estimate" ? lodging.perUnit / (1 + lodgingTaxRate) : cityAverage.hotelNight) * lodgingTaxRate) * lodging.units * nights : 0,
     lodging,
     perTraveler: Math.round((rawAverage + planningReserve) / travelers),
     lodgingTaxRate,

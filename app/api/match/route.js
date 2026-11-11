@@ -1,3 +1,5 @@
+import "../../lib/pricing/server.js";
+import { prefetchObservedFares } from "../../lib/pricing/observedFares.js";
 import { destinations } from "../../data/destinations";
 import { normalizeTravelerProfile } from "../../lib/recommendation/travelerProfile";
 import { MATCH_ALGORITHM_VERSION, closestOverBudget, matchExplanation, planDestination, rankDestinations } from "../../lib/recommendation/destinationEngine";
@@ -254,6 +256,7 @@ export async function POST(request) {
   if (!body || typeof body !== "object" || Array.isArray(body) || JSON.stringify(body).length > 20000) return Response.json({ error: "Invalid request" }, { status: 400 });
   const answers = body.answers || {};
   const travelerProfile = normalizeTravelerProfile(body);
+  await prefetchObservedFares(travelerProfile.origin);
   const ranked = fallbackMatches(body);
   // A destination named in the request always wins, even when the traveler's
   // filters would have ranked it out.

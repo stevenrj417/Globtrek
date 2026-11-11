@@ -1,0 +1,4464 @@
+{
+ "source": "Wikipedia and Wikidata (CC0)",
+ "checkedAt": "2026-11-11",
+ "destinations": {
+  "KIX": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Kyoto",
+   "wikidata": "https://www.wikidata.org/wiki/Q34600",
+   "population": 1448964,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Kamo River",
+     "description": "river in Kyoto Prefecture, Japan"
+    },
+    {
+     "label": "Katsura River",
+     "description": "river in Japan"
+    },
+    {
+     "label": "Yodo River",
+     "description": "river in Japan"
+    },
+    {
+     "label": "Lake Ogura",
+     "description": "freshwater lake which formerly existed south of Kyoto"
+    },
+    {
+     "label": "Lake Biwa Canal",
+     "description": "canal in Japan"
+    }
+   ]
+  },
+  "HND": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Tokyo",
+   "wikidata": "https://www.wikidata.org/wiki/Q1490",
+   "population": 14264798,
+   "elevationM": 6,
+   "water": [
+    {
+     "label": "Tokyo Bay",
+     "description": "bay in Japan"
+    },
+    {
+     "label": "Sumida River",
+     "description": "river in Tokyo, Japan"
+    },
+    {
+     "label": "Arakawa River",
+     "description": "river flowing through Saitama prefecture and Tokyo in Japan"
+    },
+    {
+     "label": "Edo River",
+     "description": "river in Japan"
+    }
+   ]
+  },
+  "ICN": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Seoul",
+   "wikidata": "https://www.wikidata.org/wiki/Q8684",
+   "population": 9668465,
+   "elevationM": 38,
+   "water": [
+    {
+     "label": "Han River",
+     "description": "river in South Korea"
+    },
+    {
+     "label": "Cheonggyecheon",
+     "description": "stream in Seoul, South Korea"
+    },
+    {
+     "label": "Jungnangcheon",
+     "description": "river in Gyeonggi-do and Seoul, South Korea"
+    },
+    {
+     "label": "Anyangcheon",
+     "description": "river in South Korea"
+    },
+    {
+     "label": "Tancheon",
+     "description": "river in South Korea"
+    },
+    {
+     "label": "Yangjaecheon",
+     "description": "river in South Korea"
+    },
+    {
+     "label": null,
+     "description": null
+    }
+   ]
+  },
+  "BKK": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Bangkok",
+   "wikidata": "https://www.wikidata.org/wiki/Q1861",
+   "population": 5676648,
+   "elevationM": 2,
+   "water": [
+    {
+     "label": "Chao Phraya River",
+     "description": "largest river in Thailand"
+    }
+   ]
+  },
+  "CNX": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Chiang_Mai",
+   "wikidata": "https://www.wikidata.org/wiki/Q52028",
+   "population": 1198000,
+   "elevationM": 310,
+   "water": []
+  },
+  "DPS": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Bali",
+   "wikidata": "https://www.wikidata.org/wiki/Q3125978",
+   "population": 4433300,
+   "elevationM": 3031,
+   "water": []
+  },
+  "SIN": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Singapore",
+   "wikidata": "https://www.wikidata.org/wiki/Q334",
+   "population": 5866139,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Singapore Strait",
+     "description": "strait between Indonesia, Malaysia and Singapore"
+    },
+    {
+     "label": "Singapore River",
+     "description": "river in Singapore"
+    }
+   ]
+  },
+  "HAN": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Hanoi",
+   "wikidata": "https://www.wikidata.org/wiki/Q1858",
+   "population": 8717600,
+   "elevationM": 16,
+   "water": [
+    {
+     "label": "Red River",
+     "description": "river in southwest China and northern Vietnam"
+    }
+   ]
+  },
+  "MLE": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Outline_of_the_Maldives",
+   "wikidata": "https://www.wikidata.org/wiki/Q7112345",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "DXB": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Dubai",
+   "wikidata": "https://www.wikidata.org/wiki/Q612",
+   "population": 3944751,
+   "elevationM": null,
+   "water": []
+  },
+  "CPT": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Cape_Town",
+   "wikidata": "https://www.wikidata.org/wiki/Q5465",
+   "population": 3776313,
+   "elevationM": 5,
+   "water": [
+    {
+     "label": "Table Bay",
+     "description": "bay at the north of the Cape Peninsula in South Africa"
+    }
+   ]
+  },
+  "RAK": {
+   "matched": false,
+   "query": "Marrakech Morocco"
+  },
+  "NBO": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Nairobi",
+   "wikidata": "https://www.wikidata.org/wiki/Q3870",
+   "population": 5545000,
+   "elevationM": 1661,
+   "water": []
+  },
+  "CDG": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Paris",
+   "wikidata": "https://www.wikidata.org/wiki/Q90",
+   "population": 2103778,
+   "elevationM": 28,
+   "water": [
+    {
+     "label": "Seine",
+     "description": "river in France"
+    },
+    {
+     "label": "Bassin de la Villette",
+     "description": "canal in Paris, France"
+    },
+    {
+     "label": "Canal Saint-Martin",
+     "description": "canal in Paris"
+    },
+    {
+     "label": "Canal de l'Ourcq",
+     "description": "canal"
+    }
+   ]
+  },
+  "MRS": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Provence",
+   "wikidata": "https://www.wikidata.org/wiki/Q101081",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "NAP": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Amalfi_Coast",
+   "wikidata": "https://www.wikidata.org/wiki/Q212214",
+   "population": null,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Gulf of Salerno",
+     "description": "gulf of the Tyrrhenian Sea"
+    }
+   ]
+  },
+  "FCO": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Rome",
+   "wikidata": "https://www.wikidata.org/wiki/Q220",
+   "population": 2748109,
+   "elevationM": 21,
+   "water": [
+    {
+     "label": "Tiber",
+     "description": "river in Italy"
+    },
+    {
+     "label": "Aniene",
+     "description": "river in Italy"
+    },
+    {
+     "label": "Tyrrhenian Sea",
+     "description": "part of the Mediterranean Sea off the western coast of Italy"
+    }
+   ]
+  },
+  "FLR": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Florence",
+   "wikidata": "https://www.wikidata.org/wiki/Q2044",
+   "population": 360930,
+   "elevationM": 50,
+   "water": [
+    {
+     "label": "Arno",
+     "description": "Italian river"
+    }
+   ]
+  },
+  "JTR": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Santorini",
+   "wikidata": "https://www.wikidata.org/wiki/Q129296",
+   "population": 17430,
+   "elevationM": 567,
+   "water": [
+    {
+     "label": "Aegean Sea",
+     "description": "part of the Mediterranean Sea, between the Greek mainland, the Turkish mainland, Crete, and Rhodes"
+    }
+   ]
+  },
+  "LIS": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Lisbon",
+   "wikidata": "https://www.wikidata.org/wiki/Q597",
+   "population": 545796,
+   "elevationM": 100,
+   "water": [
+    {
+     "label": "Tagus",
+     "description": "longest river in the Iberian Peninsula"
+    }
+   ]
+  },
+  "BCN": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Barcelona",
+   "wikidata": "https://www.wikidata.org/wiki/Q1492",
+   "population": 1731649,
+   "elevationM": 9,
+   "water": [
+    {
+     "label": "Mediterranean Sea",
+     "description": "sea between Europe, Africa and Asia"
+    },
+    {
+     "label": "Besòs",
+     "description": "river in Catalunya"
+    },
+    {
+     "label": "Llobregat",
+     "description": "second longest river in Catalonia, Spain"
+    }
+   ]
+  },
+  "KEF": {
+   "matched": false,
+   "query": "Iceland Ring Road Iceland"
+  },
+  "LHR": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/London",
+   "wikidata": "https://www.wikidata.org/wiki/Q84",
+   "population": 8799728,
+   "elevationM": 15,
+   "water": [
+    {
+     "label": "River Thames",
+     "description": "river in southern England"
+    },
+    {
+     "label": "Grand Union Canal",
+     "description": "canal in England, the main line of which runs from London to Birmingham"
+    }
+   ]
+  },
+  "JFK": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/New_York_City",
+   "wikidata": "https://www.wikidata.org/wiki/Q60",
+   "population": 8804190,
+   "elevationM": 25,
+   "water": [
+    {
+     "label": "Hudson River",
+     "description": "river in New York State, United States"
+    },
+    {
+     "label": "East River",
+     "description": "tidal strait in New York City"
+    },
+    {
+     "label": "Bronx River",
+     "description": "river in the U.S. state of New York"
+    },
+    {
+     "label": "Harlem River",
+     "description": "tidal strait in New York City, USA"
+    },
+    {
+     "label": "Long Island Sound",
+     "description": "estuary on the east coast of the United States"
+    },
+    {
+     "label": "Atlantic Ocean",
+     "description": "ocean between Europe, Africa and the Americas"
+    },
+    {
+     "label": "Upper New York Bay",
+     "description": "bay in New York, USA"
+    },
+    {
+     "label": "Lower New York Bay",
+     "description": "bay in New York, USA"
+    }
+   ]
+  },
+  "MEX": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Mexico_City",
+   "wikidata": "https://www.wikidata.org/wiki/Q1489",
+   "population": 9209944,
+   "elevationM": 2240,
+   "water": [
+    {
+     "label": "Lake Texcoco",
+     "description": "former natural lake formation within the Valley of Mexico"
+    }
+   ]
+  },
+  "TQO": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Tulum",
+   "wikidata": "https://www.wikidata.org/wiki/Q725883",
+   "population": null,
+   "elevationM": 12,
+   "water": []
+  },
+  "SJO": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Geography_of_Costa_Rica",
+   "wikidata": "https://www.wikidata.org/wiki/Q738314",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "GIG": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Rio_de_Janeiro",
+   "wikidata": "https://www.wikidata.org/wiki/Q8678",
+   "population": 6730729,
+   "elevationM": 31,
+   "water": []
+  },
+  "EZE": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Buenos_Aires",
+   "wikidata": "https://www.wikidata.org/wiki/Q1486",
+   "population": 3121707,
+   "elevationM": 25,
+   "water": [
+    {
+     "label": "Río de la Plata",
+     "description": "estuary formed by the confluence of the Uruguay River and the Paraná River on the border between Argentina and Uruguay"
+    }
+   ]
+  },
+  "FTE": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/East_Patagonia%2C_Tierra_del_Fuego_and_Strait_of_Magellan_dispute",
+   "wikidata": "https://www.wikidata.org/wiki/Q125341308",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "YYC": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Banff%2C_Alberta",
+   "wikidata": "https://www.wikidata.org/wiki/Q58337",
+   "population": 8305,
+   "elevationM": 1400,
+   "water": []
+  },
+  "YVR": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Vancouver",
+   "wikidata": "https://www.wikidata.org/wiki/Q24639",
+   "population": 662248,
+   "elevationM": 2,
+   "water": [
+    {
+     "label": "Fraser River",
+     "description": "river in British Columbia, Canada"
+    },
+    {
+     "label": "Burrard Inlet",
+     "description": "shallow-sided fjord in British Columbia, Canada"
+    },
+    {
+     "label": "English Bay",
+     "description": "bay in British Columbia, Canada"
+    }
+   ]
+  },
+  "OGG": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Maui_County%2C_Hawaii",
+   "wikidata": "https://www.wikidata.org/wiki/Q111409",
+   "population": 164754,
+   "elevationM": 975,
+   "water": []
+  },
+  "SYD": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Sydney",
+   "wikidata": "https://www.wikidata.org/wiki/Q3130",
+   "population": 5450496,
+   "elevationM": 6,
+   "water": [
+    {
+     "label": "Parramatta River",
+     "description": "river in Australia"
+    }
+   ]
+  },
+  "CHC": {
+   "matched": false,
+   "query": "New Zealand South Island New Zealand"
+  },
+  "PPT": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Tahiti",
+   "wikidata": "https://www.wikidata.org/wiki/Q42000",
+   "population": 178133,
+   "elevationM": 2241,
+   "water": [
+    {
+     "label": "Pacific Ocean",
+     "description": "ocean between Asia, Australia and the Americas"
+    }
+   ]
+  },
+  "kotor-479fb": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Kotor",
+   "wikidata": "https://www.wikidata.org/wiki/Q171080",
+   "population": 562,
+   "elevationM": null,
+   "water": []
+  },
+  "gjirokaster-79b9d": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Gjirokast%C3%ABr",
+   "wikidata": "https://www.wikidata.org/wiki/Q173690",
+   "population": 16569,
+   "elevationM": 190,
+   "water": []
+  },
+  "mestia-9113c": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Mestia",
+   "wikidata": "https://www.wikidata.org/wiki/Q1011051",
+   "population": 1798,
+   "elevationM": 1500,
+   "water": []
+  },
+  "sao-miguel-island-a4951": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/S%C3%A3o_Miguel_Island",
+   "wikidata": "https://www.wikidata.org/wiki/Q209036",
+   "population": 138557,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Atlantic Ocean",
+     "description": "ocean between Europe, Africa and the Americas"
+    }
+   ]
+  },
+  "lofoten-98845": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Lofoten",
+   "wikidata": "https://www.wikidata.org/wiki/Q186822",
+   "population": null,
+   "elevationM": 1161,
+   "water": [
+    {
+     "label": "Arctic Ocean",
+     "description": "smallest, shallowest, coldest, and northernmost of the world's major oceans"
+    }
+   ]
+  },
+  "visby-72ddd": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Visby",
+   "wikidata": "https://www.wikidata.org/wiki/Q54757",
+   "population": 26305,
+   "elevationM": 22,
+   "water": []
+  },
+  "kuldiga-c5f5b": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Kuld%C4%ABga",
+   "wikidata": "https://www.wikidata.org/wiki/Q155281",
+   "population": 9855,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Venta",
+     "description": "river in Latvia and Lithuania"
+    }
+   ]
+  },
+  "sibiu-d6b89": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Sibiu",
+   "wikidata": "https://www.wikidata.org/wiki/Q83324",
+   "population": 134308,
+   "elevationM": 415,
+   "water": []
+  },
+  "cesky-krumlov-1fef4": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/%C4%8Cesk%C3%BD_Krumlov",
+   "wikidata": "https://www.wikidata.org/wiki/Q188082",
+   "population": 12797,
+   "elevationM": 492,
+   "water": [
+    {
+     "label": "Polečnice",
+     "description": "stream in Český Krumlov District"
+    },
+    {
+     "label": "Myší díra",
+     "description": null
+    },
+    {
+     "label": "Vltava",
+     "description": "river in Czechia"
+    }
+   ]
+  },
+  "el-nido-80673": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/El_Nido%2C_Palawan",
+   "wikidata": "https://www.wikidata.org/wiki/Q111483",
+   "population": 51367,
+   "elevationM": 35,
+   "water": []
+  },
+  "yakushima-fcf29": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Yakushima",
+   "wikidata": "https://www.wikidata.org/wiki/Q242176",
+   "population": 13178,
+   "elevationM": 1935,
+   "water": [
+    {
+     "label": "Pacific Ocean",
+     "description": "ocean between Asia, Australia and the Americas"
+    }
+   ]
+  },
+  "colonia-del-sacramento-66b98": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Colonia_del_Sacramento",
+   "wikidata": "https://www.wikidata.org/wiki/Q56064",
+   "population": 31720,
+   "elevationM": 27,
+   "water": [
+    {
+     "label": null,
+     "description": "river in Colonia Department, Uruguay"
+    },
+    {
+     "label": "Río de la Plata",
+     "description": "estuary formed by the confluence of the Uruguay River and the Paraná River on the border between Argentina and Uruguay"
+    }
+   ]
+  },
+  "rovinj-d7e04": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Rovinj",
+   "wikidata": "https://www.wikidata.org/wiki/Q5316",
+   "population": 12968,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Adriatic Sea",
+     "description": "body of water between the Italian Peninsula and the Balkan Peninsula"
+    }
+   ]
+  },
+  "annecy-e3772": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Annecy",
+   "wikidata": "https://www.wikidata.org/wiki/Q50189",
+   "population": 132117,
+   "elevationM": 448,
+   "water": [
+    {
+     "label": "Thiou",
+     "description": "river in France"
+    }
+   ]
+  },
+  "ghent-5cb4c": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Ghent",
+   "wikidata": "https://www.wikidata.org/wiki/Q1296",
+   "population": 272657,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Ghent–Terneuzen Canal",
+     "description": "canal in Belgium and the Netherlands"
+    },
+    {
+     "label": "Ringvaart (Ghent)",
+     "description": "canal in Belgium"
+    },
+    {
+     "label": "Napoleon Arm of Pauw",
+     "description": "canal in Ghent, Belgium"
+    },
+    {
+     "label": "Moervaart",
+     "description": "Flemish canal"
+    },
+    {
+     "label": "Zuidlede",
+     "description": "river in Belgium"
+    },
+    {
+     "label": "Nederschelde",
+     "description": null
+    },
+    {
+     "label": "Lieve",
+     "description": "medieval canal between Ghent and the North Sea, Belgium"
+    },
+    {
+     "label": "Lys",
+     "description": "river in France and Belgium, and a left tributary of the Scheldt"
+    },
+    {
+     "label": "Ketelvest",
+     "description": "street in Ghent, Belgium"
+    },
+    {
+     "label": "Scheldt",
+     "description": "river in France, Belgium and the Netherlands"
+    }
+   ]
+  },
+  "utrecht-fb61c": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Utrecht",
+   "wikidata": "https://www.wikidata.org/wiki/Q803",
+   "population": 359370,
+   "elevationM": 5,
+   "water": [
+    {
+     "label": "Merwede canal",
+     "description": "canal in the Netherlands"
+    },
+    {
+     "label": "Leidse Rijn",
+     "description": "canal in Netherlands"
+    },
+    {
+     "label": "Drift",
+     "description": "street in Utrecht, the Netherlands"
+    },
+    {
+     "label": "Oudegracht",
+     "description": "street in Utrecht, the Netherlands"
+    },
+    {
+     "label": "Minstroom",
+     "description": null
+    },
+    {
+     "label": "Vecht",
+     "description": "river in the Netherlands"
+    },
+    {
+     "label": "Plompetorengracht",
+     "description": "street in Utrecht, the Netherlands"
+    },
+    {
+     "label": "Vaartse Rijn",
+     "description": "canal in the Netherlands"
+    },
+    {
+     "label": "Zwarte Water, Utrecht",
+     "description": "canal in Utrecht, Netherlands"
+    },
+    {
+     "label": "Vleutense Wetering",
+     "description": "canal in Utrecht, Netherlands"
+    },
+    {
+     "label": "Kruisvaart",
+     "description": null
+    },
+    {
+     "label": "Biltsche Grift",
+     "description": "canal in Utrecht, Netherlands"
+    },
+    {
+     "label": "Stadsbuitengracht",
+     "description": "Watercourse in Utrecht, the Netherlands"
+    },
+    {
+     "label": "Kromme Nieuwegracht",
+     "description": "street in Utrecht, the Netherlands"
+    },
+    {
+     "label": "Nieuwegracht",
+     "description": "street in Utrecht, the Netherlands"
+    },
+    {
+     "label": "Kromme Rijn",
+     "description": "watercourse in the Netherlands"
+    },
+    {
+     "label": "Amsterdam–Rhine Canal",
+     "description": "canal in the Netherlands"
+    }
+   ]
+  },
+  "kanazawa-fcf29": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Kanazawa",
+   "wikidata": "https://www.wikidata.org/wiki/Q191130",
+   "population": 462479,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Sea of Japan",
+     "description": "marginal sea between Japan, Russia, and Korea"
+    },
+    {
+     "label": "Saigawa River",
+     "description": "river through Ishikawa prefecture, Japan"
+    },
+    {
+     "label": "Asano River",
+     "description": "river in Kanazawa, Ishikawa Prefecture"
+    }
+   ]
+  },
+  "takayama-fcf29": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Takayama%2C_Gifu",
+   "wikidata": "https://www.wikidata.org/wiki/Q622594",
+   "population": 85199,
+   "elevationM": 573,
+   "water": []
+  },
+  "jeju-island-04653": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Jeju_Island",
+   "wikidata": "https://www.wikidata.org/wiki/Q29151",
+   "population": 583284,
+   "elevationM": 1950,
+   "water": [
+    {
+     "label": "Pacific Ocean",
+     "description": "ocean between Asia, Australia and the Americas"
+    }
+   ]
+  },
+  "nara-fcf29": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Nara_(city)",
+   "wikidata": "https://www.wikidata.org/wiki/Q169134",
+   "population": 352377,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Saho River",
+     "description": "river in Nara perfecture, Japan"
+    },
+    {
+     "label": "Tomio River",
+     "description": "river in Nara"
+    },
+    {
+     "label": "Yamato River",
+     "description": "river in Nara and Osaka prefectures, Japan"
+    }
+   ]
+  },
+  "george-town-ff3ea": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/George_Town%2C_Penang",
+   "wikidata": "https://www.wikidata.org/wiki/Q61092",
+   "population": 794313,
+   "elevationM": 4,
+   "water": []
+  },
+  "salta-354bf": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Salta",
+   "wikidata": "https://www.wikidata.org/wiki/Q36307",
+   "population": 594772,
+   "elevationM": 1152,
+   "water": []
+  },
+  "arequipa-36c57": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Arequipa",
+   "wikidata": "https://www.wikidata.org/wiki/Q159273",
+   "population": 1008290,
+   "elevationM": 2335,
+   "water": [
+    {
+     "label": "Chili River",
+     "description": "river in Peru"
+    }
+   ]
+  },
+  "essaouira-32e08": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Essaouira",
+   "wikidata": "https://www.wikidata.org/wiki/Q216939",
+   "population": 82962,
+   "elevationM": 11,
+   "water": [
+    {
+     "label": "Atlantic Ocean",
+     "description": "ocean between Europe, Africa and the Americas"
+    }
+   ]
+  },
+  "porto-a4951": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Porto",
+   "wikidata": "https://www.wikidata.org/wiki/Q36433",
+   "population": 273476,
+   "elevationM": 104,
+   "water": [
+    {
+     "label": "Atlantic Ocean",
+     "description": "ocean between Europe, Africa and the Americas"
+    },
+    {
+     "label": "Douro",
+     "description": "river in Spain and Portugal"
+    }
+   ]
+  },
+  "valencia-20a8d": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Valencia",
+   "wikidata": "https://www.wikidata.org/wiki/Q8818",
+   "population": 840792,
+   "elevationM": 15,
+   "water": [
+    {
+     "label": "Mediterranean Sea",
+     "description": "sea between Europe, Africa and Asia"
+    },
+    {
+     "label": "Turia",
+     "description": "Spanish river"
+    }
+   ]
+  },
+  "seville-20a8d": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Seville",
+   "wikidata": "https://www.wikidata.org/wiki/Q8717",
+   "population": 689423,
+   "elevationM": 18,
+   "water": [
+    {
+     "label": "Canal de Alfonso XIII",
+     "description": "canal"
+    },
+    {
+     "label": "Guadalquivir",
+     "description": "river in Spain"
+    }
+   ]
+  },
+  "bologna-ad79e": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Bologna",
+   "wikidata": "https://www.wikidata.org/wiki/Q1891",
+   "population": 387971,
+   "elevationM": 54,
+   "water": []
+  },
+  "lyon-e3772": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Lyon",
+   "wikidata": "https://www.wikidata.org/wiki/Q456",
+   "population": 519127,
+   "elevationM": 173,
+   "water": [
+    {
+     "label": "Rhône",
+     "description": "river in Switzerland and France"
+    },
+    {
+     "label": "Saône",
+     "description": "river of France"
+    },
+    {
+     "label": "Tête d'Or Lake",
+     "description": "lake in parc de la Tête d'Or, Lyon, France"
+    }
+   ]
+  },
+  "salzburg-59390": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Salzburg",
+   "wikidata": "https://www.wikidata.org/wiki/Q34713",
+   "population": 155021,
+   "elevationM": 424,
+   "water": [
+    {
+     "label": "Salzach",
+     "description": "river in Austria and Germany"
+    },
+    {
+     "label": "Alterbach",
+     "description": "river in Salzburg, Austria"
+    },
+    {
+     "label": "Saalach",
+     "description": "river"
+    }
+   ]
+  },
+  "ljubljana-d1aa0": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Ljubljana",
+   "wikidata": "https://www.wikidata.org/wiki/Q437",
+   "population": 284293,
+   "elevationM": 309,
+   "water": [
+    {
+     "label": "Sava",
+     "description": "river in Southeast Europe"
+    },
+    {
+     "label": "Ljubljanica",
+     "description": "river in Slovenia"
+    }
+   ]
+  },
+  "turin-ad79e": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Turin",
+   "wikidata": "https://www.wikidata.org/wiki/Q495",
+   "population": 841600,
+   "elevationM": 239,
+   "water": [
+    {
+     "label": "Po",
+     "description": "longest river in Italy"
+    },
+    {
+     "label": "Dora Riparia",
+     "description": "river"
+    },
+    {
+     "label": "Sangone",
+     "description": "torrent stream"
+    },
+    {
+     "label": "Stura di Lanzo",
+     "description": "river in north-western Italy (Piedmont), in the Metropolitan City of Turin"
+    }
+   ]
+  },
+  "oaxaca-city-41937": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Oaxaca_City",
+   "wikidata": "https://www.wikidata.org/wiki/Q131429",
+   "population": 258913,
+   "elevationM": 1555,
+   "water": []
+  },
+  "medellin-2f737": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Medell%C3%ADn",
+   "wikidata": "https://www.wikidata.org/wiki/Q48278",
+   "population": 2529403,
+   "elevationM": 1405,
+   "water": []
+  },
+  "taipei-094d5": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Taipei",
+   "wikidata": "https://www.wikidata.org/wiki/Q1867",
+   "population": 2429429,
+   "elevationM": 10,
+   "water": [
+    {
+     "label": "Keelung River",
+     "description": "river in the Tamsui river basin of Taiwan"
+    }
+   ]
+  },
+  "luang-prabang-7998b": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Luang_Prabang",
+   "wikidata": "https://www.wikidata.org/wiki/Q190165",
+   "population": 53792,
+   "elevationM": 305,
+   "water": []
+  },
+  "copenhagen-89da1": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Copenhagen",
+   "wikidata": "https://www.wikidata.org/wiki/Q1748",
+   "population": 667099,
+   "elevationM": 14,
+   "water": [
+    {
+     "label": "Øresund",
+     "description": "strait between Denmark and Sweden"
+    }
+   ]
+  },
+  "edinburgh-97691": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Edinburgh",
+   "wikidata": "https://www.wikidata.org/wiki/Q23436",
+   "population": 488050,
+   "elevationM": 47,
+   "water": [
+    {
+     "label": "Water of Leith",
+     "description": "river in Edinburgh, Scotland, UK, flows into the Firth of Forth"
+    },
+    {
+     "label": "River Almond",
+     "description": "river in Lothian, Scotland, UK, flows into the Firth of Forth at Cramond"
+    },
+    {
+     "label": "River Forth",
+     "description": "river in Scotland, flows into the Firth of Forth"
+    },
+    {
+     "label": "Firth of Forth",
+     "description": "estuary of Scotland's River Forth"
+    }
+   ]
+  },
+  "dublin-eb213": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Dublin",
+   "wikidata": "https://www.wikidata.org/wiki/Q1761",
+   "population": 592713,
+   "elevationM": 20,
+   "water": [
+    {
+     "label": "Liffey",
+     "description": "river flowing through Dublin, Ireland"
+    },
+    {
+     "label": "Irish Sea",
+     "description": "sea that separates the islands of Ireland and Great Britain"
+    },
+    {
+     "label": null,
+     "description": "canal in Ireland"
+    },
+    {
+     "label": "River Dodder",
+     "description": "river in Ireland"
+    }
+   ]
+  },
+  "brussels-5cb4c": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Brussels",
+   "wikidata": "https://www.wikidata.org/wiki/Q240",
+   "population": 1255795,
+   "elevationM": 13,
+   "water": []
+  },
+  "zurich-77dcd": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Zurich",
+   "wikidata": "https://www.wikidata.org/wiki/Q72",
+   "population": 452421,
+   "elevationM": 408,
+   "water": [
+    {
+     "label": "Lake Zurich",
+     "description": "major lake in Switzerland"
+    },
+    {
+     "label": "Limmat",
+     "description": "river in Switzerland"
+    },
+    {
+     "label": "Sihl",
+     "description": "river in Switzerland, tributary of the Limmat"
+    },
+    {
+     "label": "Katzensee",
+     "description": "lake in canton of Zürich, Switzerland"
+    },
+    {
+     "label": "Glatt",
+     "description": "river in Switzerland"
+    }
+   ]
+  },
+  "osaka-fcf29": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Osaka",
+   "wikidata": "https://www.wikidata.org/wiki/Q35765",
+   "population": 2751862,
+   "elevationM": 20,
+   "water": [
+    {
+     "label": "Higashi-Yokobori River",
+     "description": "river in Chūō-ku, Osaka, Japan"
+    },
+    {
+     "label": "Aji River",
+     "description": "river in Ōsaka, Japan"
+    },
+    {
+     "label": "Osaka Bay",
+     "description": "bay in Western Japan"
+    }
+   ]
+  },
+  "melbourne-ceafb": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Melbourne",
+   "wikidata": "https://www.wikidata.org/wiki/Q3141",
+   "population": 5350705,
+   "elevationM": 31,
+   "water": [
+    {
+     "label": "Yarra River",
+     "description": "river in Victoria, Australia"
+    },
+    {
+     "label": "Port Phillip",
+     "description": "bay in Victoria, Australia"
+    }
+   ]
+  },
+  "queenstown-a2238": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Queenstown%2C_New_Zealand",
+   "wikidata": "https://www.wikidata.org/wiki/Q613602",
+   "population": 29000,
+   "elevationM": null,
+   "water": []
+  },
+  "cartagena-2f737": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Cartagena%2C_Colombia",
+   "wikidata": "https://www.wikidata.org/wiki/Q657461",
+   "population": 1010995,
+   "elevationM": 2,
+   "water": []
+  },
+  "cusco-36c57": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Cusco",
+   "wikidata": "https://www.wikidata.org/wiki/Q5582862",
+   "population": 428450,
+   "elevationM": 3399,
+   "water": []
+  },
+  "dubrovnik-d7e04": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Dubrovnik",
+   "wikidata": "https://www.wikidata.org/wiki/Q1722",
+   "population": 41562,
+   "elevationM": 10,
+   "water": []
+  },
+  "phuket-a2b7c": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Phuket_province",
+   "wikidata": "https://www.wikidata.org/wiki/Q182565",
+   "population": 418785,
+   "elevationM": 529,
+   "water": [
+    {
+     "label": "Andaman Sea",
+     "description": "sea of the Indian Ocean"
+    }
+   ]
+  },
+  "venice-ad79e": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Venice",
+   "wikidata": "https://www.wikidata.org/wiki/Q641",
+   "population": 250369,
+   "elevationM": 2,
+   "water": [
+    {
+     "label": "Venetian Lagoon",
+     "description": "enclosed bay of the Adriatic Sea"
+    },
+    {
+     "label": "Adriatic Sea",
+     "description": "body of water between the Italian Peninsula and the Balkan Peninsula"
+    }
+   ]
+  },
+  "athens-4902a": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Athens",
+   "wikidata": "https://www.wikidata.org/wiki/Q1524",
+   "population": 643452,
+   "elevationM": 74,
+   "water": []
+  },
+  "amsterdam-fb61c": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Amsterdam",
+   "wikidata": "https://www.wikidata.org/wiki/Q727",
+   "population": 921468,
+   "elevationM": -2,
+   "water": [
+    {
+     "label": "Amstel",
+     "description": "river in the Netherlands"
+    },
+    {
+     "label": "IJ",
+     "description": "river (channel), formerly a bay, in Amsterdam, Netherlands"
+    },
+    {
+     "label": "IJmeer",
+     "description": "bordering lake in the Netherlands"
+    }
+   ]
+  },
+  "prague-1fef4": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Prague",
+   "wikidata": "https://www.wikidata.org/wiki/Q1085",
+   "population": 1397880,
+   "elevationM": 235,
+   "water": [
+    {
+     "label": "Vltava",
+     "description": "river in Czechia"
+    },
+    {
+     "label": "Čertovka",
+     "description": "canal in Prague"
+    },
+    {
+     "label": "Botič",
+     "description": "river"
+    },
+    {
+     "label": "Dalejský potok",
+     "description": "stream in Praha District"
+    },
+    {
+     "label": "Prokopský potok",
+     "description": "stream in Prague, Czech Republic"
+    },
+    {
+     "label": "Říčanský potok",
+     "description": "stream in Prague, Czech Republic"
+    },
+    {
+     "label": "Lochkovský potok",
+     "description": null
+    },
+    {
+     "label": "Rokytka",
+     "description": "stream in Prague"
+    }
+   ]
+  },
+  "vienna-59390": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Vienna",
+   "wikidata": "https://www.wikidata.org/wiki/Q1741",
+   "population": 2028289,
+   "elevationM": 151,
+   "water": [
+    {
+     "label": "Danube",
+     "description": "second-longest river in Europe"
+    },
+    {
+     "label": "Wien",
+     "description": "river that flows through the city of Vienna"
+    },
+    {
+     "label": "Liesing",
+     "description": "river in eastern Austria, tributary of Schwechat"
+    },
+    {
+     "label": "Donaukanal",
+     "description": "arm of the river Danube in Vienna"
+    }
+   ]
+  },
+  "istanbul-d7153": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Istanbul",
+   "wikidata": "https://www.wikidata.org/wiki/Q406",
+   "population": 15655924,
+   "elevationM": 100,
+   "water": [
+    {
+     "label": "Bosporus Strait",
+     "description": "narrow strait in northwestern Turkey"
+    },
+    {
+     "label": "Sea of Marmara",
+     "description": "inland sea, entirely within the borders of Turkey"
+    },
+    {
+     "label": "Black Sea",
+     "description": "sea between Europe and Asia"
+    },
+    {
+     "label": "Golden Horn",
+     "description": "urban waterway and the primary inlet of the Bosphorus in Istanbul, Turkey"
+    }
+   ]
+  },
+  "los-angeles-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Los_Angeles",
+   "wikidata": "https://www.wikidata.org/wiki/Q65",
+   "population": 3898747,
+   "elevationM": 106,
+   "water": [
+    {
+     "label": "Pacific Ocean",
+     "description": "ocean between Asia, Australia and the Americas"
+    }
+   ]
+  },
+  "las-vegas-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Las_Vegas",
+   "wikidata": "https://www.wikidata.org/wiki/Q23768",
+   "population": 641903,
+   "elevationM": 610,
+   "water": []
+  },
+  "hong-kong-d2eaf": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Hong_Kong",
+   "wikidata": "https://www.wikidata.org/wiki/Q8646",
+   "population": 7413070,
+   "elevationM": 7,
+   "water": [
+    {
+     "label": "Shing Mun River",
+     "description": "river channel that runs through Sha Tin District, Hong Kong"
+    },
+    {
+     "label": "South China Sea",
+     "description": "marginal sea in the Pacific Ocean"
+    }
+   ]
+  },
+  "madrid-20a8d": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Madrid",
+   "wikidata": "https://www.wikidata.org/wiki/Q2807",
+   "population": 3506730,
+   "elevationM": 663,
+   "water": [
+    {
+     "label": "Manzanares",
+     "description": "river in Spain"
+    },
+    {
+     "label": "Arroyo Meaques",
+     "description": "watercourse in Spain"
+    }
+   ]
+  },
+  "berlin-17d53": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Berlin",
+   "wikidata": "https://www.wikidata.org/wiki/Q64",
+   "population": 3913644,
+   "elevationM": 34,
+   "water": [
+    {
+     "label": "Spree",
+     "description": "river in Germany"
+    },
+    {
+     "label": "Großer Wannsee",
+     "description": "lake near Berlin"
+    },
+    {
+     "label": "Lake Tegel",
+     "description": "lake in Germany"
+    },
+    {
+     "label": "Havel",
+     "description": "river in northeastern Germany"
+    },
+    {
+     "label": "Dahme",
+     "description": "river in Germany"
+    },
+    {
+     "label": "Müggelsee",
+     "description": "lake in Köpenick, Berlin, Germany"
+    },
+    {
+     "label": "Tegeler Fließ",
+     "description": "river"
+    },
+    {
+     "label": "Aalemannkanal",
+     "description": "canal"
+    },
+    {
+     "label": "Neukölln Ship Canal",
+     "description": "canal in Neukölln, Germany"
+    },
+    {
+     "label": "Luisenstadt Canal",
+     "description": "canal in Berlin, 1852 to 1926"
+    },
+    {
+     "label": "Teltow Canal",
+     "description": "canal to the south of Berlin"
+    },
+    {
+     "label": "Landwehr Canal",
+     "description": "canal in Berlin, Germany"
+    },
+    {
+     "label": "Westhafen Canal",
+     "description": "canal in Mitte, Germany"
+    },
+    {
+     "label": "Gosen Canal",
+     "description": "canal"
+    },
+    {
+     "label": "Berlin-Spandau Ship Canal",
+     "description": "built between 1848 and 1859"
+    }
+   ]
+  },
+  "cancun-41937": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Canc%C3%BAn",
+   "wikidata": "https://www.wikidata.org/wiki/Q8969",
+   "population": 888797,
+   "elevationM": 5,
+   "water": [
+    {
+     "label": "Caribbean Sea",
+     "description": "marginal tropical sea of the Atlantic Ocean, located east of Central America, south of the Greater Antilles and north of South America"
+    }
+   ]
+  },
+  "piran-d1aa0": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Piran",
+   "wikidata": "https://www.wikidata.org/wiki/Q1382",
+   "population": 3787,
+   "elevationM": 7,
+   "water": []
+  },
+  "brasov-d6b89": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Bra%C8%99ov",
+   "wikidata": "https://www.wikidata.org/wiki/Q82174",
+   "population": 237589,
+   "elevationM": 600,
+   "water": []
+  },
+  "plovdiv-5c777": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Plovdiv",
+   "wikidata": "https://www.wikidata.org/wiki/Q459",
+   "population": 333994,
+   "elevationM": 172,
+   "water": [
+    {
+     "label": "Maritsa",
+     "description": "river in the Balkans"
+    }
+   ]
+  },
+  "kas-d7153": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Ka%C5%9F",
+   "wikidata": "https://www.wikidata.org/wiki/Q1004438",
+   "population": 58600,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Mediterranean Sea",
+     "description": "sea between Europe, Africa and Asia"
+    }
+   ]
+  },
+  "lecce-ad79e": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Lecce",
+   "wikidata": "https://www.wikidata.org/wiki/Q13386",
+   "population": 94783,
+   "elevationM": 49,
+   "water": []
+  },
+  "ohrid-e2ac5": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Lake_Ohrid",
+   "wikidata": "https://www.wikidata.org/wiki/Q156258",
+   "population": null,
+   "elevationM": 695,
+   "water": []
+  },
+  "alesund-98845": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/%C3%85lesund",
+   "wikidata": "https://www.wikidata.org/wiki/Q42900680",
+   "population": 52163,
+   "elevationM": 3.4,
+   "water": []
+  },
+  "funchal-a4951": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Funchal",
+   "wikidata": "https://www.wikidata.org/wiki/Q25444",
+   "population": 112290,
+   "elevationM": null,
+   "water": []
+  },
+  "korcula-d7e04": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Kor%C4%8Dula",
+   "wikidata": "https://www.wikidata.org/wiki/Q13288",
+   "population": null,
+   "elevationM": 569,
+   "water": [
+    {
+     "label": "Adriatic Sea",
+     "description": "body of water between the Italian Peninsula and the Balkan Peninsula"
+    }
+   ]
+  },
+  "hydra-4902a": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Hydra_(island)",
+   "wikidata": "https://www.wikidata.org/wiki/Q208319",
+   "population": 1966,
+   "elevationM": 593,
+   "water": [
+    {
+     "label": "Saronic Gulf",
+     "description": "gulf of the Aegean sea, on the shores of Attica, Argolis and Corinthia, Greece"
+    }
+   ]
+  },
+  "capri-ad79e": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Capri",
+   "wikidata": "https://www.wikidata.org/wiki/Q173292",
+   "population": 12903,
+   "elevationM": 589,
+   "water": [
+    {
+     "label": "Tyrrhenian Sea",
+     "description": "part of the Mediterranean Sea off the western coast of Italy"
+    }
+   ]
+  },
+  "paros-4902a": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Paros",
+   "wikidata": "https://www.wikidata.org/wiki/Q201272",
+   "population": 13715,
+   "elevationM": 724,
+   "water": [
+    {
+     "label": "Aegean Sea",
+     "description": "part of the Mediterranean Sea, between the Greek mainland, the Turkish mainland, Crete, and Rhodes"
+    }
+   ]
+  },
+  "tbilisi-9113c": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Tbilisi",
+   "wikidata": "https://www.wikidata.org/wiki/Q994",
+   "population": 1331485,
+   "elevationM": 575,
+   "water": [
+    {
+     "label": "Kura River",
+     "description": "river in South Caucasus"
+    }
+   ]
+  },
+  "yerevan-5f459": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Yerevan",
+   "wikidata": "https://www.wikidata.org/wiki/Q1953",
+   "population": 1106300,
+   "elevationM": 987,
+   "water": [
+    {
+     "label": "Hrazdan River",
+     "description": "river in Armenia"
+    },
+    {
+     "label": "Yerevan Lake",
+     "description": "reservoir in Armenia"
+    }
+   ]
+  },
+  "sarajevo-62ac5": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Sarajevo",
+   "wikidata": "https://www.wikidata.org/wiki/Q11194",
+   "population": 275524,
+   "elevationM": 518,
+   "water": [
+    {
+     "label": "Miljacka",
+     "description": "river in Bosnia and Herzegovina"
+    }
+   ]
+  },
+  "tallinn-f0a96": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Tallinn",
+   "wikidata": "https://www.wikidata.org/wiki/Q1770",
+   "population": 457572,
+   "elevationM": 28,
+   "water": [
+    {
+     "label": "Gulf of Finland",
+     "description": "arm of the Baltic Sea"
+    }
+   ]
+  },
+  "riga-c5f5b": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Riga",
+   "wikidata": "https://www.wikidata.org/wiki/Q1773",
+   "population": 588911,
+   "elevationM": 6,
+   "water": [
+    {
+     "label": "Gulf of Riga",
+     "description": "bay of the Baltic Sea between Latvia and Estonia"
+    },
+    {
+     "label": "Daugava",
+     "description": "river in Latvia, Belarus and Russia"
+    },
+    {
+     "label": "Ķīšezers",
+     "description": "lake in Riga, Latvia"
+    },
+    {
+     "label": "Buļļupe",
+     "description": "river in Latvia"
+    },
+    {
+     "label": "Sarkandaugava",
+     "description": "river in Latvia"
+    },
+    {
+     "label": "Vecdaugava",
+     "description": "bay in Latvia"
+    },
+    {
+     "label": "Jugla Lake",
+     "description": "lake in Latvia"
+    },
+    {
+     "label": "Mazā Daugava",
+     "description": "river in Riga, Latvia"
+    },
+    {
+     "label": "Mīlgrāvis",
+     "description": "canal in Riga, Latvia"
+    },
+    {
+     "label": "Mārupīte",
+     "description": "river in Latvia"
+    }
+   ]
+  },
+  "innsbruck-59390": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Innsbruck",
+   "wikidata": "https://www.wikidata.org/wiki/Q1735",
+   "population": 132499,
+   "elevationM": 574,
+   "water": [
+    {
+     "label": "Inn",
+     "description": "river in Switzerland, Austria and Germany, a right tributary of the Danube"
+    }
+   ]
+  },
+  "san-sebastian-20a8d": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/San_Sebasti%C3%A1n",
+   "wikidata": "https://www.wikidata.org/wiki/Q10313",
+   "population": 189866,
+   "elevationM": 6,
+   "water": [
+    {
+     "label": "Cantabrian Sea",
+     "description": "sea in the southern Bay of Biscay of the North Atlantic Ocean"
+    },
+    {
+     "label": "Urumea River",
+     "description": "river in Spain"
+    }
+   ]
+  },
+  "menorca-20a8d": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Menorca",
+   "wikidata": "https://www.wikidata.org/wiki/Q52636",
+   "population": 100323,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Mediterranean Sea",
+     "description": "sea between Europe, Africa and Asia"
+    }
+   ]
+  },
+  "busan-04653": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Busan",
+   "wikidata": "https://www.wikidata.org/wiki/Q16520",
+   "population": 3453198,
+   "elevationM": 30,
+   "water": [
+    {
+     "label": "Tsushima Strait",
+     "description": "eastern channel of the Korea Strait between Tsushima and Kyushu"
+    },
+    {
+     "label": "Port of Busan",
+     "description": "sea port in South Korea"
+    }
+   ]
+  },
+  "isle-of-skye-97691": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Isle_of_Skye",
+   "wikidata": "https://www.wikidata.org/wiki/Q107393",
+   "population": 10008,
+   "elevationM": 993,
+   "water": [
+    {
+     "label": "Atlantic Ocean",
+     "description": "ocean between Europe, Africa and the Americas"
+    }
+   ]
+  },
+  "lake-como-ad79e": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Lake_Como",
+   "wikidata": "https://www.wikidata.org/wiki/Q15523",
+   "population": null,
+   "elevationM": 198,
+   "water": []
+  },
+  "seychelles-3d2d7": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Cinema_of_Seychelles",
+   "wikidata": "https://www.wikidata.org/wiki/Q127039167",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "granada-20a8d": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Granada",
+   "wikidata": "https://www.wikidata.org/wiki/Q8810",
+   "population": 233975,
+   "elevationM": 693,
+   "water": [
+    {
+     "label": "Darro",
+     "description": "river in Spain"
+    }
+   ]
+  },
+  "palermo-ad79e": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Palermo",
+   "wikidata": "https://www.wikidata.org/wiki/Q2656",
+   "population": 630167,
+   "elevationM": 14,
+   "water": [
+    {
+     "label": "Oreto River",
+     "description": "river in Italy"
+    },
+    {
+     "label": "Tyrrhenian Sea",
+     "description": "part of the Mediterranean Sea off the western coast of Italy"
+    }
+   ]
+  },
+  "siem-reap-314cc": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Siem_Reap",
+   "wikidata": "https://www.wikidata.org/wiki/Q11711",
+   "population": 147866,
+   "elevationM": 18,
+   "water": []
+  },
+  "bilbao-20a8d": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Bilbao",
+   "wikidata": "https://www.wikidata.org/wiki/Q8692",
+   "population": 351124,
+   "elevationM": 19,
+   "water": [
+    {
+     "label": "Estuary of Bilbao",
+     "description": "at the mouth of the rivers Nervion, Ibaizabal and Cadagua"
+    }
+   ]
+  },
+  "strasbourg-e3772": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Strasbourg",
+   "wikidata": "https://www.wikidata.org/wiki/Q6602",
+   "population": 293771,
+   "elevationM": 150,
+   "water": [
+    {
+     "label": "Rhine",
+     "description": "river in Western Europe to the North Sea"
+    },
+    {
+     "label": "Canal du Faux-Rempart",
+     "description": "canal in the French city of Strasbourg"
+    },
+    {
+     "label": "Ill",
+     "description": "river in Alsace, France"
+    },
+    {
+     "label": "Marne–Rhine Canal",
+     "description": "canal"
+    },
+    {
+     "label": "Aar",
+     "description": "watercourse in Strasbourg, France"
+    },
+    {
+     "label": "Canal de la Bruche",
+     "description": "canal in Bas-Rhin, France"
+    }
+   ]
+  },
+  "da-nang-68110": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Da_Nang",
+   "wikidata": "https://www.wikidata.org/wiki/Q25282",
+   "population": 2819900,
+   "elevationM": 19,
+   "water": [
+    {
+     "label": "Han River",
+     "description": "river in Vietnam"
+    }
+   ]
+  },
+  "bordeaux-e3772": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Bordeaux",
+   "wikidata": "https://www.wikidata.org/wiki/Q1479",
+   "population": 267991,
+   "elevationM": 6,
+   "water": [
+    {
+     "label": "Garonne",
+     "description": "river in southwest France and northern Spain"
+    }
+   ]
+  },
+  "marseille-e3772": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Marseille",
+   "wikidata": "https://www.wikidata.org/wiki/Q23482",
+   "population": 886040,
+   "elevationM": 6,
+   "water": [
+    {
+     "label": "Bay of Marseille",
+     "description": "maritime bay bordering the French city of Marseille and the Gulf of Lion in the Mediterranean Sea"
+    },
+    {
+     "label": "Gulf of Lion",
+     "description": "bay"
+    }
+   ]
+  },
+  "naples-ad79e": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Naples",
+   "wikidata": "https://www.wikidata.org/wiki/Q2634",
+   "population": 913462,
+   "elevationM": 17,
+   "water": [
+    {
+     "label": "Gulf of Naples",
+     "description": "bay on the southwestern coast of Italy"
+    }
+   ]
+  },
+  "monaco-35ab1": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Monaco",
+   "wikidata": "https://www.wikidata.org/wiki/Q235",
+   "population": 38857,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Mediterranean Sea",
+     "description": "sea between Europe, Africa and Asia"
+    },
+    {
+     "label": "Ligurian Sea",
+     "description": "arm of the Mediterranean Sea"
+    }
+   ]
+  },
+  "st-barts-e3772": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Saint_Barth%C3%A9lemy",
+   "wikidata": "https://www.wikidata.org/wiki/Q25362",
+   "population": 10124,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Caribbean Sea",
+     "description": "marginal tropical sea of the Atlantic Ocean, located east of Central America, south of the Greater Antilles and north of South America"
+    }
+   ]
+  },
+  "aspen-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Aspen_Dental",
+   "wikidata": "https://www.wikidata.org/wiki/Q4807808",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "warsaw-5ff03": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Warsaw",
+   "wikidata": "https://www.wikidata.org/wiki/Q270",
+   "population": 1862402,
+   "elevationM": 118,
+   "water": [
+    {
+     "label": "Vistula",
+     "description": "river in East-Central Europe"
+    }
+   ]
+  },
+  "lima-36c57": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Lima",
+   "wikidata": "https://www.wikidata.org/wiki/Q2868",
+   "population": 9943800,
+   "elevationM": 154,
+   "water": [
+    {
+     "label": "Rímac River",
+     "description": "Peruvian river"
+    }
+   ]
+  },
+  "kuala-lumpur-ff3ea": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Kuala_Lumpur",
+   "wikidata": "https://www.wikidata.org/wiki/Q1865",
+   "population": 9000280,
+   "elevationM": 66,
+   "water": [
+    {
+     "label": "Gombak River",
+     "description": "river in Malaysia"
+    },
+    {
+     "label": "Klang River",
+     "description": "river in Malaysia"
+    }
+   ]
+  },
+  "montreal-cd6a7": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Montreal",
+   "wikidata": "https://www.wikidata.org/wiki/Q340",
+   "population": 1895211,
+   "elevationM": 31,
+   "water": [
+    {
+     "label": "Rivière des Prairies",
+     "description": "river in Quebec between the islands of Montreal and Laval"
+    },
+    {
+     "label": "St. Lawrence River",
+     "description": "major river in eastern Canada and the United States, flowing into the Gulf of St. Lawrence"
+    },
+    {
+     "label": "St. Lawrence Seaway",
+     "description": "major canal system connecting the Great Lakes to the Atlantic Ocean"
+    },
+    {
+     "label": "Lake of Two Mountains",
+     "description": "lake in Laurentides, Quebec, Canada"
+    },
+    {
+     "label": "Lac Saint-Louis",
+     "description": "widening of the Saint Lawrence River, Montreal"
+    }
+   ]
+  },
+  "budapest-f14e4": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Budapest",
+   "wikidata": "https://www.wikidata.org/wiki/Q1781",
+   "population": 1675777,
+   "elevationM": 117,
+   "water": [
+    {
+     "label": "Danube",
+     "description": "second-longest river in Europe"
+    }
+   ]
+  },
+  "cairo-1c39a": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Cairo",
+   "wikidata": "https://www.wikidata.org/wiki/Q85",
+   "population": 9801536,
+   "elevationM": 23,
+   "water": [
+    {
+     "label": "Nile",
+     "description": "major river in northeastern Africa"
+    }
+   ]
+  },
+  "stockholm-72ddd": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Stockholm",
+   "wikidata": "https://www.wikidata.org/wiki/Q1754",
+   "population": 984748,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Saltsjön",
+     "description": "body of water in central Stockholm, Sweden"
+    },
+    {
+     "label": "Mälaren",
+     "description": "lake in Sweden"
+    }
+   ]
+  },
+  "munich-17d53": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Munich",
+   "wikidata": "https://www.wikidata.org/wiki/Q1726",
+   "population": 1505036,
+   "elevationM": 519,
+   "water": [
+    {
+     "label": "Isar",
+     "description": "river in Tyrol, Austria and Bavaria, Germany"
+    },
+    {
+     "label": "Isar-Werkkanal",
+     "description": "lateral canal of Isar river in Munich"
+    },
+    {
+     "label": "Würm",
+     "description": "river in Germany"
+    },
+    {
+     "label": "Eisbach",
+     "description": "manmade river in Munich"
+    },
+    {
+     "label": "Auer Mühlbach",
+     "description": "stream"
+    },
+    {
+     "label": "Kleinhesseloher See",
+     "description": "lake in Germany"
+    },
+    {
+     "label": "Dreiseenplatte",
+     "description": "lake group in Munich, Bavaria, Germany"
+    },
+    {
+     "label": "Kleine Isar",
+     "description": "river in Germany"
+    },
+    {
+     "label": "Nymphenburg Canal",
+     "description": "channel in front of Nymphenburg Castle, Munich"
+    },
+    {
+     "label": "Schwabinger Bach",
+     "description": "river in Germany"
+    }
+   ]
+  },
+  "seattle-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Seattle",
+   "wikidata": "https://www.wikidata.org/wiki/Q5083",
+   "population": 737015,
+   "elevationM": 40,
+   "water": [
+    {
+     "label": "Lake Union",
+     "description": "lake in King County, Washington, USA"
+    },
+    {
+     "label": "Elliott Bay",
+     "description": "bay of Puget Sound at Seattle, Washington, United States of America"
+    },
+    {
+     "label": "Green Lake",
+     "description": "lake in north central Seattle, Washington, USA"
+    },
+    {
+     "label": "Lake Washington",
+     "description": "lake in Washington state, U.S."
+    },
+    {
+     "label": "Puget Sound",
+     "description": "sound along the northwestern coast of the U.S. state of Washington"
+    }
+   ]
+  },
+  "doha-83ef3": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Doha",
+   "wikidata": "https://www.wikidata.org/wiki/Q3861",
+   "population": 1186023,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Persian Gulf",
+     "description": "extension of the Indian Ocean"
+    }
+   ]
+  },
+  "abu-dhabi-d115b": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Abu_Dhabi",
+   "wikidata": "https://www.wikidata.org/wiki/Q1519",
+   "population": 1570000,
+   "elevationM": 14,
+   "water": [
+    {
+     "label": "Persian Gulf",
+     "description": "extension of the Indian Ocean"
+    }
+   ]
+  },
+  "bora-bora-40f39": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Bora_Bora",
+   "wikidata": "https://www.wikidata.org/wiki/Q183113",
+   "population": 10605,
+   "elevationM": 727,
+   "water": [
+    {
+     "label": "Pacific Ocean",
+     "description": "ocean between Asia, Australia and the Americas"
+    }
+   ]
+  },
+  "chicago-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Chicago",
+   "wikidata": "https://www.wikidata.org/wiki/Q1297",
+   "population": 2731585,
+   "elevationM": 587,
+   "water": [
+    {
+     "label": "Chicago River",
+     "description": "river in Chicago, Illinois, United States"
+    },
+    {
+     "label": "Lake Michigan",
+     "description": "one of the Great Lakes of North America"
+    }
+   ]
+  },
+  "delhi-967ce": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Delhi",
+   "wikidata": "https://www.wikidata.org/wiki/Q1353",
+   "population": 26495000,
+   "elevationM": 221,
+   "water": []
+  },
+  "mumbai-967ce": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Mumbai",
+   "wikidata": "https://www.wikidata.org/wiki/Q1156",
+   "population": 15414288,
+   "elevationM": 14,
+   "water": [
+    {
+     "label": "Arabian Sea",
+     "description": "marginal sea of the northern Indian Ocean"
+    }
+   ]
+  },
+  "miami-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Miami",
+   "wikidata": "https://www.wikidata.org/wiki/Q8652",
+   "population": 449514,
+   "elevationM": 2,
+   "water": [
+    {
+     "label": "Miami River",
+     "description": "river in Florida, United States"
+    },
+    {
+     "label": "Biscayne Bay",
+     "description": "lagoon located on the Atlantic coast of South Florida, United States"
+    }
+   ]
+  },
+  "toronto-cd6a7": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Toronto",
+   "wikidata": "https://www.wikidata.org/wiki/Q172",
+   "population": 2794356,
+   "elevationM": 76,
+   "water": [
+    {
+     "label": "Lake Ontario",
+     "description": "one of the Great Lakes in North America"
+    },
+    {
+     "label": "Humber River",
+     "description": "river in Ontario, Canada"
+    },
+    {
+     "label": "Don River",
+     "description": "watercourse in Ontario, Canada"
+    },
+    {
+     "label": "Rouge River",
+     "description": "river in the Greater Toronto Area, Ontario, Canada"
+    }
+   ]
+  },
+  "beijing-d2eaf": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Beijing",
+   "wikidata": "https://www.wikidata.org/wiki/Q956",
+   "population": 21893095,
+   "elevationM": 43,
+   "water": [
+    {
+     "label": "Yongding River",
+     "description": "river in the People's Republic of China"
+    },
+    {
+     "label": "Qing River",
+     "description": "watercourse in Beijing, People's Republic of China"
+    },
+    {
+     "label": "Wenyu River",
+     "description": "river in Beijing, People's Republic of China"
+    }
+   ]
+  },
+  "san-francisco-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/San_Francisco",
+   "wikidata": "https://www.wikidata.org/wiki/Q62",
+   "population": 808988,
+   "elevationM": 52,
+   "water": [
+    {
+     "label": "San Francisco Bay",
+     "description": "bay of the Pacific Ocean on the California coast of the United States"
+    },
+    {
+     "label": "Pacific Ocean",
+     "description": "ocean between Asia, Australia and the Americas"
+    },
+    {
+     "label": "Golden Gate",
+     "description": "North American strait"
+    }
+   ]
+  },
+  "boston-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Boston",
+   "wikidata": "https://www.wikidata.org/wiki/Q100",
+   "population": 675647,
+   "elevationM": 43,
+   "water": [
+    {
+     "label": "Charles River",
+     "description": "river in Massachusetts, United States"
+    },
+    {
+     "label": "Neponset River",
+     "description": "river in Massachusetts, United States"
+    },
+    {
+     "label": "Mystic River",
+     "description": "river in Massachusetts, United States"
+    },
+    {
+     "label": "Boston Harbor",
+     "description": "estuary and harbor of Massachusetts Bay in the northeastern United States"
+    }
+   ]
+  },
+  "shanghai-d2eaf": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Shanghai",
+   "wikidata": "https://www.wikidata.org/wiki/Q8686",
+   "population": 24870895,
+   "elevationM": 4,
+   "water": [
+    {
+     "label": "Suzhou Creek",
+     "description": "creek in Jiangsu and Shanghai, China"
+    },
+    {
+     "label": "Yangtze River",
+     "description": "longest river in Asia and third-longest in the world"
+    },
+    {
+     "label": "Huangpu River",
+     "description": "Major tributary of the Yangtze flowing through central Shanghai, now the municipality's largest river after floods during the Yuan and Ming dynasties"
+    },
+    {
+     "label": "East China Sea",
+     "description": "marginal sea in the Pacific Ocean"
+    },
+    {
+     "label": "Dianshan Lake",
+     "description": "lake in People's Republic of China"
+    }
+   ]
+  },
+  "orlando-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Orlando%2C_Florida",
+   "wikidata": "https://www.wikidata.org/wiki/Q49233",
+   "population": 334854,
+   "elevationM": 34,
+   "water": []
+  },
+  "washington-d-c-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Washington",
+   "wikidata": "https://www.wikidata.org/wiki/Q25301",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "jerusalem-4c197": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Jerusalem",
+   "wikidata": "https://www.wikidata.org/wiki/Q1218",
+   "population": 1050151,
+   "elevationM": 754,
+   "water": []
+  },
+  "portland-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Portland%2C_Oregon",
+   "wikidata": "https://www.wikidata.org/wiki/Q6106",
+   "population": 652503,
+   "elevationM": 152,
+   "water": [
+    {
+     "label": "Willamette River",
+     "description": "major river in northwest Oregon"
+    },
+    {
+     "label": "Columbia River",
+     "description": "river in North America; flows from British Columbia, through Washington, and along the Washington-Oregon border to the Pacific Ocean"
+    }
+   ]
+  },
+  "savannah-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Savannah_Chrisley_(influencer)",
+   "wikidata": "https://www.wikidata.org/wiki/Q116678292",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "charleston-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/College_of_Charleston",
+   "wikidata": "https://www.wikidata.org/wiki/Q4507421",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "new-orleans-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/New_Orleans",
+   "wikidata": "https://www.wikidata.org/wiki/Q34404",
+   "population": 383997,
+   "elevationM": -2,
+   "water": [
+    {
+     "label": "Mississippi River",
+     "description": "primary river of the largest drainage basin in the United States"
+    },
+    {
+     "label": "Mississippi River – Gulf Outlet Canal",
+     "description": "former canal in Louisiana, United States of America"
+    }
+   ]
+  },
+  "austin-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Austin%2C_Texas",
+   "wikidata": "https://www.wikidata.org/wiki/Q16559",
+   "population": 961855,
+   "elevationM": 149,
+   "water": []
+  },
+  "santa-fe-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Santa_Fe%2C_New_Mexico",
+   "wikidata": "https://www.wikidata.org/wiki/Q38555",
+   "population": 87505,
+   "elevationM": 2194,
+   "water": [
+    {
+     "label": "Santa Fe River",
+     "description": "river in Santa Fe and Sandoval counties in New Mexico, United States"
+    }
+   ]
+  },
+  "sedona-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Sedona%2C_Arizona",
+   "wikidata": "https://www.wikidata.org/wiki/Q80041",
+   "population": 9684,
+   "elevationM": 1319,
+   "water": []
+  },
+  "nashville-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Nashville%2C_Tennessee",
+   "wikidata": "https://www.wikidata.org/wiki/Q23197",
+   "population": 689447,
+   "elevationM": 182,
+   "water": [
+    {
+     "label": "Cumberland River",
+     "description": "river in Kentucky and Tennessee, United States"
+    }
+   ]
+  },
+  "san-diego-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/San_Diego",
+   "wikidata": "https://www.wikidata.org/wiki/Q16552",
+   "population": 1386932,
+   "elevationM": 422,
+   "water": []
+  },
+  "palm-springs-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Palm_Springs_International_Airport",
+   "wikidata": "https://www.wikidata.org/wiki/Q2550620",
+   "population": null,
+   "elevationM": 145,
+   "water": []
+  },
+  "anchorage-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Anchorage%2C_Alaska",
+   "wikidata": "https://www.wikidata.org/wiki/Q39450",
+   "population": 289600,
+   "elevationM": 31,
+   "water": []
+  },
+  "honolulu-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Honolulu",
+   "wikidata": "https://www.wikidata.org/wiki/Q18094",
+   "population": 350964,
+   "elevationM": 12,
+   "water": []
+  },
+  "quebec-city-cd6a7": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Quebec_City",
+   "wikidata": "https://www.wikidata.org/wiki/Q2145",
+   "population": 574482,
+   "elevationM": 98,
+   "water": [
+    {
+     "label": "Rivière Saint-Charles",
+     "description": "watercourse in Québec, Quebec, Canada"
+    },
+    {
+     "label": "St. Lawrence River",
+     "description": "major river in eastern Canada and the United States, flowing into the Gulf of St. Lawrence"
+    },
+    {
+     "label": "Rivière du Berger",
+     "description": "watercourse in Quebec, Canada"
+    }
+   ]
+  },
+  "halifax-cd6a7": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Halifax%2C_Nova_Scotia",
+   "wikidata": "https://www.wikidata.org/wiki/Q2141",
+   "population": 440072,
+   "elevationM": 28,
+   "water": [
+    {
+     "label": "Bedford Basin",
+     "description": "bay in Nova Scotia, Canada"
+    },
+    {
+     "label": "Atlantic Ocean",
+     "description": "ocean between Europe, Africa and the Americas"
+    }
+   ]
+  },
+  "victoria-cd6a7": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Victoria%2C_British_Columbia",
+   "wikidata": "https://www.wikidata.org/wiki/Q2132",
+   "population": 91867,
+   "elevationM": 23,
+   "water": [
+    {
+     "label": "Strait of Juan de Fuca",
+     "description": "strait between Canada and the United States"
+    }
+   ]
+  },
+  "calgary-cd6a7": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Calgary",
+   "wikidata": "https://www.wikidata.org/wiki/Q36312",
+   "population": 1306784,
+   "elevationM": 1045,
+   "water": [
+    {
+     "label": "Bow River",
+     "description": "watercourse in Alberta, Canada"
+    },
+    {
+     "label": "Elbow River",
+     "description": "watercourse in Alberta, Canada"
+    },
+    {
+     "label": "Glenmore Reservoir",
+     "description": "reservoir in Alberta, Canada"
+    }
+   ]
+  },
+  "ottawa-cd6a7": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Ottawa",
+   "wikidata": "https://www.wikidata.org/wiki/Q1930",
+   "population": 1017449,
+   "elevationM": 70,
+   "water": [
+    {
+     "label": "Ottawa River",
+     "description": "major river in Ontario and Quebec, Canada"
+    },
+    {
+     "label": "Rideau Canal",
+     "description": "canal between Ottawa and Kingston, Canada"
+    },
+    {
+     "label": "Rideau River",
+     "description": "watercourse in Ontario, Canada"
+    }
+   ]
+  },
+  "winnipeg-cd6a7": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Winnipeg",
+   "wikidata": "https://www.wikidata.org/wiki/Q2135",
+   "population": 749607,
+   "elevationM": 238,
+   "water": [
+    {
+     "label": "Red River of the North",
+     "description": "river in central Canada and the United States"
+    },
+    {
+     "label": "Assiniboine River",
+     "description": "river in Saskatchewan and Manitoba, Canada"
+    },
+    {
+     "label": "Seine River",
+     "description": "tributary of Red River in Manitoba, Canada"
+    },
+    {
+     "label": "La Salle River",
+     "description": "river of Manitoba, in Canada"
+    }
+   ]
+  },
+  "merida-41937": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/M%C3%A9rida%2C_Yucat%C3%A1n",
+   "wikidata": "https://www.wikidata.org/wiki/Q165204",
+   "population": 921771,
+   "elevationM": 14,
+   "water": []
+  },
+  "san-miguel-de-allende-41937": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/San_Miguel_de_Allende",
+   "wikidata": "https://www.wikidata.org/wiki/Q753891",
+   "population": 69811,
+   "elevationM": 1900,
+   "water": []
+  },
+  "guadalajara-41937": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Guadalajara",
+   "wikidata": "https://www.wikidata.org/wiki/Q9022",
+   "population": 1385621,
+   "elevationM": 1536,
+   "water": []
+  },
+  "puerto-vallarta-41937": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Puerto_Vallarta",
+   "wikidata": "https://www.wikidata.org/wiki/Q853258",
+   "population": 224166,
+   "elevationM": 101,
+   "water": []
+  },
+  "la-paz-41937": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/La_Paz%2C_Baja_California_Sur",
+   "wikidata": "https://www.wikidata.org/wiki/Q214215",
+   "population": 250141,
+   "elevationM": 31,
+   "water": [
+    {
+     "label": "La Paz Cove",
+     "description": "cove of the Gulf of California on the Baja California Sur coast"
+    }
+   ]
+  },
+  "guanajuato-city-41937": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Guanajuato_(city)",
+   "wikidata": "https://www.wikidata.org/wiki/Q61306",
+   "population": 70068,
+   "elevationM": 2045,
+   "water": []
+  },
+  "antigua-guatemala-11760": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Guatemala_City",
+   "wikidata": "https://www.wikidata.org/wiki/Q1555",
+   "population": 994938,
+   "elevationM": 1500,
+   "water": []
+  },
+  "belize-city-42ab0": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Belize_City",
+   "wikidata": "https://www.wikidata.org/wiki/Q108223",
+   "population": 63999,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Caribbean Sea",
+     "description": "marginal tropical sea of the Atlantic Ocean, located east of Central America, south of the Greater Antilles and north of South America"
+    }
+   ]
+  },
+  "panama-city-1e36b": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Panama_City",
+   "wikidata": "https://www.wikidata.org/wiki/Q3306",
+   "population": 1540000,
+   "elevationM": 20,
+   "water": [
+    {
+     "label": "Pacific Ocean",
+     "description": "ocean between Asia, Australia and the Americas"
+    },
+    {
+     "label": "Panama Canal",
+     "description": "large canal in Panama"
+    }
+   ]
+  },
+  "roatan-5aa58": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Roat%C3%A1n",
+   "wikidata": "https://www.wikidata.org/wiki/Q1419813",
+   "population": 41831,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Caribbean Sea",
+     "description": "marginal tropical sea of the Atlantic Ocean, located east of Central America, south of the Greater Antilles and north of South America"
+    }
+   ]
+  },
+  "havana-c484b": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Havana",
+   "wikidata": "https://www.wikidata.org/wiki/Q1563",
+   "population": 2492618,
+   "elevationM": 59,
+   "water": [
+    {
+     "label": "Gulf of Mexico",
+     "description": "marginal sea of the Atlantic Ocean"
+    },
+    {
+     "label": "Almendares River",
+     "description": "river in Cuba"
+    }
+   ]
+  },
+  "santo-domingo-8a4bf": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Santo_Domingo",
+   "wikidata": "https://www.wikidata.org/wiki/Q34820",
+   "population": 2201941,
+   "elevationM": 14,
+   "water": [
+    {
+     "label": "Caribbean Sea",
+     "description": "marginal tropical sea of the Atlantic Ocean, located east of Central America, south of the Greater Antilles and north of South America"
+    },
+    {
+     "label": "Ozama River",
+     "description": "river in the Dominican Republic"
+    },
+    {
+     "label": "Isabela River",
+     "description": "river in the Dominican Republic"
+    },
+    {
+     "label": "Haina River",
+     "description": "river in the Dominican Republic"
+    }
+   ]
+  },
+  "san-juan-fe23c": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/San_Juan%2C_Puerto_Rico",
+   "wikidata": "https://www.wikidata.org/wiki/Q41211",
+   "population": 342259,
+   "elevationM": 3,
+   "water": []
+  },
+  "montego-bay-5eedd": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Montego_Bay",
+   "wikidata": "https://www.wikidata.org/wiki/Q637555",
+   "population": 123994,
+   "elevationM": null,
+   "water": []
+  },
+  "nassau-1f797": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Nassau%2C_Bahamas",
+   "wikidata": "https://www.wikidata.org/wiki/Q2467",
+   "population": 227940,
+   "elevationM": 34,
+   "water": [
+    {
+     "label": "Atlantic Ocean",
+     "description": "ocean between Europe, Africa and the Americas"
+    }
+   ]
+  },
+  "willemstad-9461d": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Willemstad",
+   "wikidata": "https://www.wikidata.org/wiki/Q132679",
+   "population": 136660,
+   "elevationM": 37,
+   "water": []
+  },
+  "bridgetown-93409": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Bridgetown",
+   "wikidata": "https://www.wikidata.org/wiki/Q36168",
+   "population": 98511,
+   "elevationM": 1,
+   "water": [
+    {
+     "label": "Caribbean Sea",
+     "description": "marginal tropical sea of the Atlantic Ocean, located east of Central America, south of the Greater Antilles and north of South America"
+    },
+    {
+     "label": "Constitution River",
+     "description": "river in Barbados"
+    }
+   ]
+  },
+  "bogota-2f737": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Bogot%C3%A1",
+   "wikidata": "https://www.wikidata.org/wiki/Q2841",
+   "population": 8034649,
+   "elevationM": 2582,
+   "water": []
+  },
+  "santa-marta-2f737": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Santa_Marta",
+   "wikidata": "https://www.wikidata.org/wiki/Q209016",
+   "population": 505915,
+   "elevationM": 8,
+   "water": []
+  },
+  "quito-09f19": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Quito",
+   "wikidata": "https://www.wikidata.org/wiki/Q2900",
+   "population": 1763275,
+   "elevationM": 2850,
+   "water": []
+  },
+  "galapagos-islands-09f19": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Gal%C3%A1pagos_Islands",
+   "wikidata": "https://www.wikidata.org/wiki/Q38095",
+   "population": 25000,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Pacific Ocean",
+     "description": "ocean between Asia, Australia and the Americas"
+    }
+   ]
+  },
+  "la-paz-a001a": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/La_Paz",
+   "wikidata": "https://www.wikidata.org/wiki/Q1491",
+   "population": 755732,
+   "elevationM": 3640,
+   "water": []
+  },
+  "uyuni-a001a": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Uyuni_Airport",
+   "wikidata": "https://www.wikidata.org/wiki/Q555406",
+   "population": null,
+   "elevationM": 3672,
+   "water": []
+  },
+  "santiago-34950": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Santiago",
+   "wikidata": "https://www.wikidata.org/wiki/Q2887",
+   "population": 6257516,
+   "elevationM": 575,
+   "water": [
+    {
+     "label": "Mapocho River",
+     "description": "river in Chile"
+    }
+   ]
+  },
+  "valparaiso-34950": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Valpara%C3%ADso",
+   "wikidata": "https://www.wikidata.org/wiki/Q33986",
+   "population": 296655,
+   "elevationM": 21,
+   "water": []
+  },
+  "atacama-desert-34950": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Atacama_Desert",
+   "wikidata": "https://www.wikidata.org/wiki/Q47141",
+   "population": null,
+   "elevationM": 2657,
+   "water": []
+  },
+  "mendoza-354bf": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Mendoza%2C_Argentina",
+   "wikidata": "https://www.wikidata.org/wiki/Q44237",
+   "population": 127160,
+   "elevationM": 769,
+   "water": []
+  },
+  "bariloche-354bf": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Bariloche",
+   "wikidata": "https://www.wikidata.org/wiki/Q47772",
+   "population": 136381,
+   "elevationM": 1093,
+   "water": []
+  },
+  "montevideo-66b98": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Montevideo",
+   "wikidata": "https://www.wikidata.org/wiki/Q1335",
+   "population": 1302954,
+   "elevationM": 41,
+   "water": [
+    {
+     "label": "Río de la Plata",
+     "description": "estuary formed by the confluence of the Uruguay River and the Paraná River on the border between Argentina and Uruguay"
+    }
+   ]
+  },
+  "punta-del-este-66b98": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Punta_del_Este",
+   "wikidata": "https://www.wikidata.org/wiki/Q56069",
+   "population": 9277,
+   "elevationM": 11,
+   "water": []
+  },
+  "sao-paulo-37497": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/S%C3%A3o_Paulo",
+   "wikidata": "https://www.wikidata.org/wiki/Q174",
+   "population": 11904961,
+   "elevationM": 760,
+   "water": [
+    {
+     "label": "Pinheiros River",
+     "description": "river in São Paulo, Brazil"
+    },
+    {
+     "label": "Tietê River",
+     "description": "river in São Paulo, Brazil"
+    }
+   ]
+  },
+  "salvador-37497": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Salvador%2C_Bahia",
+   "wikidata": "https://www.wikidata.org/wiki/Q36947",
+   "population": 2564204,
+   "elevationM": 8,
+   "water": [
+    {
+     "label": "Atlantic Ocean",
+     "description": "ocean between Europe, Africa and the Americas"
+    },
+    {
+     "label": "Bay of All Saints",
+     "description": "bay in Brazil"
+    },
+    {
+     "label": "Enseada dos Tainheiros",
+     "description": null
+    },
+    {
+     "label": "Enseada do Cabrito",
+     "description": "landform of Salvador, Bahia, Brazil"
+    },
+    {
+     "label": "Baía de Aratu",
+     "description": null
+    }
+   ]
+  },
+  "florianopolis-37497": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Florian%C3%B3polis",
+   "wikidata": "https://www.wikidata.org/wiki/Q132997",
+   "population": 587486,
+   "elevationM": 3,
+   "water": []
+  },
+  "manaus-37497": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Manaus",
+   "wikidata": "https://www.wikidata.org/wiki/Q40236",
+   "population": 2303732,
+   "elevationM": 92,
+   "water": [
+    {
+     "label": "Amazon River",
+     "description": "river in South America"
+    },
+    {
+     "label": "Rio Negro",
+     "description": "tributary of the Amazon river"
+    }
+   ]
+  },
+  "recife-37497": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Recife",
+   "wikidata": "https://www.wikidata.org/wiki/Q48344",
+   "population": 1588376,
+   "elevationM": 6,
+   "water": [
+    {
+     "label": "Atlantic Ocean",
+     "description": "ocean between Europe, Africa and the Americas"
+    },
+    {
+     "label": "Beberibe River",
+     "description": "river in Brazil"
+    },
+    {
+     "label": "Capibaribe River",
+     "description": "river in Pernambuco, Brazil"
+    },
+    {
+     "label": "Tejipió River",
+     "description": "river in Brazil"
+    },
+    {
+     "label": "Jaboatão River",
+     "description": "river in Brazil"
+    },
+    {
+     "label": "Pirapama River",
+     "description": "river in Pernambuco, Brazil"
+    }
+   ]
+  },
+  "cartago-1bf42": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Cartago%2C_Costa_Rica",
+   "wikidata": "https://www.wikidata.org/wiki/Q30617",
+   "population": 22775,
+   "elevationM": 1435,
+   "water": []
+  },
+  "reykjavik-b3c92": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Reykjav%C3%ADk",
+   "wikidata": "https://www.wikidata.org/wiki/Q1764",
+   "population": 138772,
+   "elevationM": 8,
+   "water": [
+    {
+     "label": "Atlantic Ocean",
+     "description": "ocean between Europe, Africa and the Americas"
+    }
+   ]
+  },
+  "oslo-98845": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Oslo",
+   "wikidata": "https://www.wikidata.org/wiki/Q585",
+   "population": 717710,
+   "elevationM": 23,
+   "water": [
+    {
+     "label": "Alna",
+     "description": "river in Oslo, Norway"
+    },
+    {
+     "label": "Oslofjord",
+     "description": "fjord in southern Norway, with Oslo bordering the fjord"
+    },
+    {
+     "label": "Akerselva",
+     "description": "river in Oslo, Norway"
+    }
+   ]
+  },
+  "bergen-98845": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Bergen",
+   "wikidata": "https://www.wikidata.org/wiki/Q26793",
+   "population": 291189,
+   "elevationM": 5,
+   "water": []
+  },
+  "troms-98845": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Troms%C3%B8",
+   "wikidata": "https://www.wikidata.org/wiki/Q42328401",
+   "population": 38980,
+   "elevationM": 6,
+   "water": []
+  },
+  "helsinki-c909b": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Helsinki",
+   "wikidata": "https://www.wikidata.org/wiki/Q1757",
+   "population": 694392,
+   "elevationM": 17,
+   "water": [
+    {
+     "label": "Gulf of Finland",
+     "description": "arm of the Baltic Sea"
+    },
+    {
+     "label": "Vantaa River",
+     "description": "river of Southern Finland"
+    }
+   ]
+  },
+  "rovaniemi-c909b": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Rovaniemi",
+   "wikidata": "https://www.wikidata.org/wiki/Q103717",
+   "population": 65329,
+   "elevationM": 88,
+   "water": [
+    {
+     "label": "Kemijoki",
+     "description": "river of Lapland region, Finland"
+    }
+   ]
+  },
+  "gothenburg-72ddd": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Gothenburg",
+   "wikidata": "https://www.wikidata.org/wiki/Q25287",
+   "population": 674529,
+   "elevationM": 12,
+   "water": [
+    {
+     "label": "Göta älv",
+     "description": "river in Sweden; with the Klarälven, the longest river system in the Nordic countries"
+    },
+    {
+     "label": "Kattegat",
+     "description": "sea area between Denmark and Sweden"
+    }
+   ]
+  },
+  "aarhus-89da1": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Aarhus",
+   "wikidata": "https://www.wikidata.org/wiki/Q25319",
+   "population": 290598,
+   "elevationM": 6,
+   "water": [
+    {
+     "label": "Kattegat",
+     "description": "sea area between Denmark and Sweden"
+    }
+   ]
+  },
+  "hamburg-17d53": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Hamburg",
+   "wikidata": "https://www.wikidata.org/wiki/Q1055",
+   "population": 1869473,
+   "elevationM": 6,
+   "water": [
+    {
+     "label": "Alster",
+     "description": "right tributary of the Elbe in Schleswig-Holstein and Hamburg"
+    },
+    {
+     "label": "Elbe",
+     "description": "major river in Central Europe"
+    },
+    {
+     "label": "Bille",
+     "description": "river in Stormarn, Schleswig-Holstein, Germany"
+    },
+    {
+     "label": "Seevekanal",
+     "description": null
+    },
+    {
+     "label": "Flottbek",
+     "description": "river"
+    },
+    {
+     "label": "Este",
+     "description": "left-bank tributary of the river Elbe that flows through Lower Saxony and Hamburg"
+    },
+    {
+     "label": "Wandse",
+     "description": "river in Germany"
+    },
+    {
+     "label": "Osterbek",
+     "description": "river in Germany"
+    },
+    {
+     "label": "Goldbekkanal",
+     "description": "canal in Hamburg"
+    },
+    {
+     "label": "Isebekkanal",
+     "description": "canal"
+    },
+    {
+     "label": "Tarpenbek",
+     "description": "river in Germany"
+    },
+    {
+     "label": "Saselbek",
+     "description": "river in Germany"
+    },
+    {
+     "label": "Rodenbek",
+     "description": "river in Germany"
+    },
+    {
+     "label": "Bredenbek",
+     "description": "river in Germany"
+    },
+    {
+     "label": "North Sea",
+     "description": "marginal sea of the Atlantic Ocean"
+    },
+    {
+     "label": "Susebek",
+     "description": null
+    },
+    {
+     "label": "Rethe",
+     "description": "river in Germany"
+    },
+    {
+     "label": "Köhlbrand",
+     "description": "river in Germany"
+    },
+    {
+     "label": "Süderelbe",
+     "description": "river in Germany"
+    },
+    {
+     "label": "Wedeler Au",
+     "description": "river in Germany"
+    }
+   ]
+  },
+  "cologne-17d53": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Cologne",
+   "wikidata": "https://www.wikidata.org/wiki/Q365",
+   "population": 1025523,
+   "elevationM": 59,
+   "water": [
+    {
+     "label": "Rhine",
+     "description": "river in Western Europe to the North Sea"
+    }
+   ]
+  },
+  "frankfurt-17d53": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Frankfurt",
+   "wikidata": "https://www.wikidata.org/wiki/Q1794",
+   "population": 760656,
+   "elevationM": 112,
+   "water": [
+    {
+     "label": "Main",
+     "description": "right tributary of Rhine river in Germany"
+    }
+   ]
+  },
+  "leipzig-17d53": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Leipzig",
+   "wikidata": "https://www.wikidata.org/wiki/Q2079",
+   "population": 633592,
+   "elevationM": 110,
+   "water": [
+    {
+     "label": "Elsterflutbett",
+     "description": "river"
+    },
+    {
+     "label": "White Elster",
+     "description": "river in the Czech Republic and Germany, tributary of the Saale"
+    },
+    {
+     "label": "Pleiße",
+     "description": "river in Germany"
+    }
+   ]
+  },
+  "dresden-17d53": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Dresden",
+   "wikidata": "https://www.wikidata.org/wiki/Q1731",
+   "population": 562764,
+   "elevationM": 126,
+   "water": [
+    {
+     "label": "Elbe",
+     "description": "major river in Central Europe"
+    },
+    {
+     "label": "Weißeritz",
+     "description": "river, tributary of Elbe, Germany"
+    },
+    {
+     "label": "Lockwitzbach",
+     "description": "river in Germany"
+    },
+    {
+     "label": "Prießnitz",
+     "description": "river in Germany"
+    },
+    {
+     "label": "Kaitzbach",
+     "description": "river in Germany"
+    },
+    {
+     "label": "Lausenbach",
+     "description": "river in Germany"
+    }
+   ]
+  },
+  "bruges-5cb4c": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Bruges",
+   "wikidata": "https://www.wikidata.org/wiki/Q12994",
+   "population": 118509,
+   "elevationM": 2,
+   "water": [
+    {
+     "label": "North Sea",
+     "description": "marginal sea of the Atlantic Ocean"
+    },
+    {
+     "label": "Boudewijnkanaal",
+     "description": "canal in Belgium"
+    },
+    {
+     "label": "Reie",
+     "description": "river in Belgium"
+    }
+   ]
+  },
+  "luxembourg-city-50767": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Luxembourg_City",
+   "wikidata": "https://www.wikidata.org/wiki/Q1842",
+   "population": 137678,
+   "elevationM": 300,
+   "water": [
+    {
+     "label": "Alzette",
+     "description": "river of France and Luxembourg"
+    },
+    {
+     "label": "Pétrusse",
+     "description": "stream in Luxembourg"
+    },
+    {
+     "label": "Zéissengerbaach",
+     "description": null
+    },
+    {
+     "label": null,
+     "description": null
+    },
+    {
+     "label": "Drosbach",
+     "description": "stream in Luxembourg"
+    }
+   ]
+  },
+  "rotterdam-fb61c": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Rotterdam",
+   "wikidata": "https://www.wikidata.org/wiki/Q34370",
+   "population": 664311,
+   "elevationM": 10,
+   "water": [
+    {
+     "label": "Nieuwe Waterweg",
+     "description": "ship canal in the Netherlands"
+    },
+    {
+     "label": "Nieuwe Maas",
+     "description": "distributary of the Rhine River"
+    }
+   ]
+  },
+  "the-hague-fb61c": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/The_Hague",
+   "wikidata": "https://www.wikidata.org/wiki/Q36600",
+   "population": 548320,
+   "elevationM": 1,
+   "water": [
+    {
+     "label": "North Sea",
+     "description": "marginal sea of the Atlantic Ocean"
+    },
+    {
+     "label": "Haagse Trekvliet",
+     "description": "watercourse in Netherlands"
+    },
+    {
+     "label": "Koninginnegracht",
+     "description": "canal in The Hague, the Netherlands"
+    }
+   ]
+  },
+  "cork-eb213": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Cork_(city)",
+   "wikidata": "https://www.wikidata.org/wiki/Q36647",
+   "population": 222333,
+   "elevationM": null,
+   "water": []
+  },
+  "galway-eb213": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Galway",
+   "wikidata": "https://www.wikidata.org/wiki/Q129610",
+   "population": 83456,
+   "elevationM": 25,
+   "water": [
+    {
+     "label": "Galway Bay",
+     "description": "bay on the west coast of Ireland"
+    },
+    {
+     "label": "River Corrib",
+     "description": "river in Ireland"
+    }
+   ]
+  },
+  "manchester-97691": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Manchester",
+   "wikidata": "https://www.wikidata.org/wiki/Q18125",
+   "population": 547627,
+   "elevationM": 38,
+   "water": [
+    {
+     "label": "River Irwell",
+     "description": "river in Lancashire, United Kingdom"
+    }
+   ]
+  },
+  "liverpool-97691": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Liverpool",
+   "wikidata": "https://www.wikidata.org/wiki/Q24826",
+   "population": 513441,
+   "elevationM": 70,
+   "water": [
+    {
+     "label": "River Mersey",
+     "description": "river in England"
+    }
+   ]
+  },
+  "bath-97691": {
+   "matched": false,
+   "query": "Bath United Kingdom"
+  },
+  "oxford-97691": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Oxford",
+   "wikidata": "https://www.wikidata.org/wiki/Q34217",
+   "population": 147500,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "River Thames",
+     "description": "river in southern England"
+    },
+    {
+     "label": "River Cherwell",
+     "description": "tributary of the River Thames in central England"
+    }
+   ]
+  },
+  "cambridge-97691": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Cambridge",
+   "wikidata": "https://www.wikidata.org/wiki/Q350",
+   "population": 123867,
+   "elevationM": 6,
+   "water": []
+  },
+  "brighton-97691": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Brighton",
+   "wikidata": "https://www.wikidata.org/wiki/Q131491",
+   "population": 134293,
+   "elevationM": 22,
+   "water": []
+  },
+  "porto-santo-a4951": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Porto_Santo_Island",
+   "wikidata": "https://www.wikidata.org/wiki/Q27320",
+   "population": 5149,
+   "elevationM": 402,
+   "water": [
+    {
+     "label": "Atlantic Ocean",
+     "description": "ocean between Europe, Africa and the Americas"
+    }
+   ]
+  },
+  "faro-a4951": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Faro%2C_Portugal",
+   "wikidata": "https://www.wikidata.org/wiki/Q159457",
+   "population": 64560,
+   "elevationM": 10,
+   "water": []
+  },
+  "coimbra-a4951": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Coimbra",
+   "wikidata": "https://www.wikidata.org/wiki/Q45412",
+   "population": 140816,
+   "elevationM": 43,
+   "water": [
+    {
+     "label": "Mondego River",
+     "description": "river in Portugal"
+    }
+   ]
+  },
+  "malaga-20a8d": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/M%C3%A1laga",
+   "wikidata": "https://www.wikidata.org/wiki/Q8851",
+   "population": 603144,
+   "elevationM": 18,
+   "water": [
+    {
+     "label": "Mediterranean Sea",
+     "description": "sea between Europe, Africa and Asia"
+    }
+   ]
+  },
+  "cordoba-20a8d": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/C%C3%B3rdoba%2C_Spain",
+   "wikidata": "https://www.wikidata.org/wiki/Q5818",
+   "population": 323262,
+   "elevationM": 120,
+   "water": [
+    {
+     "label": "Guadalquivir",
+     "description": "river in Spain"
+    },
+    {
+     "label": "Arroyo de Cantarranas",
+     "description": "watercourse in Spain"
+    }
+   ]
+  },
+  "tenerife-20a8d": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Tenerife",
+   "wikidata": "https://www.wikidata.org/wiki/Q40846",
+   "population": 955063,
+   "elevationM": 10,
+   "water": [
+    {
+     "label": "Atlantic Ocean",
+     "description": "ocean between Europe, Africa and the Americas"
+    }
+   ]
+  },
+  "lanzarote-20a8d": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Lanzarote",
+   "wikidata": "https://www.wikidata.org/wiki/Q182432",
+   "population": 163467,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Atlantic Ocean",
+     "description": "ocean between Europe, Africa and the Americas"
+    }
+   ]
+  },
+  "nice-e3772": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Nice",
+   "wikidata": "https://www.wikidata.org/wiki/Q33959",
+   "population": 357737,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Var",
+     "description": "river in Southern France"
+    },
+    {
+     "label": "Paillon",
+     "description": "river of the Alpes-Maritimes, France"
+    },
+    {
+     "label": "Magnan",
+     "description": "river in France"
+    },
+    {
+     "label": "Mediterranean Sea",
+     "description": "sea between Europe, Africa and Asia"
+    }
+   ]
+  },
+  "toulouse-e3772": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Toulouse",
+   "wikidata": "https://www.wikidata.org/wiki/Q7880",
+   "population": 514819,
+   "elevationM": 156,
+   "water": [
+    {
+     "label": "Garonne",
+     "description": "river in southwest France and northern Spain"
+    }
+   ]
+  },
+  "montpellier-e3772": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Montpellier",
+   "wikidata": "https://www.wikidata.org/wiki/Q6441",
+   "population": 310240,
+   "elevationM": 7,
+   "water": [
+    {
+     "label": "Lez",
+     "description": "river in France, tributary of the Mediterranean Sea"
+    },
+    {
+     "label": "Mosson",
+     "description": "watercourse"
+    },
+    {
+     "label": "Verdanson",
+     "description": "river in France"
+    }
+   ]
+  },
+  "chamonix-e3772": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Chamonix",
+   "wikidata": "https://www.wikidata.org/wiki/Q83236",
+   "population": 8705,
+   "elevationM": 1030,
+   "water": []
+  },
+  "normandy-e3772": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Normandy",
+   "wikidata": "https://www.wikidata.org/wiki/Q15878",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "milan-ad79e": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Milan",
+   "wikidata": "https://www.wikidata.org/wiki/Q490",
+   "population": 1354196,
+   "elevationM": 138,
+   "water": [
+    {
+     "label": "Naviglio della Martesana",
+     "description": "canal"
+    }
+   ]
+  },
+  "verona-ad79e": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Verona",
+   "wikidata": "https://www.wikidata.org/wiki/Q2028",
+   "population": 255588,
+   "elevationM": 59,
+   "water": [
+    {
+     "label": "Adige",
+     "description": "river in northern Italy"
+    }
+   ]
+  },
+  "siena-ad79e": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Siena",
+   "wikidata": "https://www.wikidata.org/wiki/Q2751",
+   "population": 52812,
+   "elevationM": 322,
+   "water": []
+  },
+  "catania-ad79e": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Catania",
+   "wikidata": "https://www.wikidata.org/wiki/Q1903",
+   "population": 311584,
+   "elevationM": 7,
+   "water": []
+  },
+  "sardinia-ad79e": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Sardinia",
+   "wikidata": "https://www.wikidata.org/wiki/Q1462",
+   "population": 1628384,
+   "elevationM": 384,
+   "water": [
+    {
+     "label": "Mediterranean Sea",
+     "description": "sea between Europe, Africa and Asia"
+    }
+   ]
+  },
+  "mykonos-4902a": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Mykonos",
+   "wikidata": "https://www.wikidata.org/wiki/Q190210",
+   "population": 10134,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Aegean Sea",
+     "description": "part of the Mediterranean Sea, between the Greek mainland, the Turkish mainland, Crete, and Rhodes"
+    }
+   ]
+  },
+  "crete-4902a": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Crete",
+   "wikidata": "https://www.wikidata.org/wiki/Q34374",
+   "population": 623065,
+   "elevationM": 2456,
+   "water": [
+    {
+     "label": "Mediterranean Sea",
+     "description": "sea between Europe, Africa and Asia"
+    },
+    {
+     "label": "Sea of Crete",
+     "description": "southern portion of the Aegean Sea"
+    },
+    {
+     "label": "Libyan Sea",
+     "description": "sea, part of the Mediterranean Sea between Libya and Crete, Greece"
+    }
+   ]
+  },
+  "thessaloniki-4902a": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Thessaloniki",
+   "wikidata": "https://www.wikidata.org/wiki/Q17151",
+   "population": 309617,
+   "elevationM": 6,
+   "water": [
+    {
+     "label": "Thermaic Gulf",
+     "description": "bay of Aegean Sea in Macedonia, Greece"
+    }
+   ]
+  },
+  "meteora-4902a": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Meteora",
+   "wikidata": "https://www.wikidata.org/wiki/Q3125051",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "split-d7e04": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Split%2C_Croatia",
+   "wikidata": "https://www.wikidata.org/wiki/Q1663",
+   "population": 160577,
+   "elevationM": null,
+   "water": []
+  },
+  "hvar-d7e04": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Hvar",
+   "wikidata": "https://www.wikidata.org/wiki/Q5993",
+   "population": null,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Adriatic Sea",
+     "description": "body of water between the Italian Peninsula and the Balkan Peninsula"
+    }
+   ]
+  },
+  "zagreb-d7e04": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Zagreb",
+   "wikidata": "https://www.wikidata.org/wiki/Q1435",
+   "population": 767131,
+   "elevationM": 127,
+   "water": [
+    {
+     "label": "Sava",
+     "description": "river in Southeast Europe"
+    }
+   ]
+  },
+  "belgrade-6d31b": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Belgrade",
+   "wikidata": "https://www.wikidata.org/wiki/Q3711",
+   "population": 1197714,
+   "elevationM": 117,
+   "water": [
+    {
+     "label": "Sava",
+     "description": "river in Southeast Europe"
+    },
+    {
+     "label": "Danube",
+     "description": "second-longest river in Europe"
+    }
+   ]
+  },
+  "sofia-5c777": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Sofia",
+   "wikidata": "https://www.wikidata.org/wiki/Q472",
+   "population": 1213134,
+   "elevationM": 560,
+   "water": [
+    {
+     "label": "Vladaya River",
+     "description": "river in Bulgaria"
+    },
+    {
+     "label": "Iskar",
+     "description": "river in Bulgaria"
+    },
+    {
+     "label": "Kakach River",
+     "description": null
+    },
+    {
+     "label": "Boyanska reka",
+     "description": "river in Bulgaria"
+    },
+    {
+     "label": "Gornobanska river",
+     "description": null
+    },
+    {
+     "label": "Perlovska",
+     "description": "watercourse in Bulgaria"
+    },
+    {
+     "label": "Suhodolska river",
+     "description": "river in Bulgaria"
+    }
+   ]
+  },
+  "bucharest-d6b89": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Bucharest",
+   "wikidata": "https://www.wikidata.org/wiki/Q19660",
+   "population": 1716961,
+   "elevationM": 70,
+   "water": [
+    {
+     "label": "Dâmbovița River",
+     "description": "river in Romania"
+    }
+   ]
+  },
+  "gdansk-5ff03": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Gda%C5%84sk",
+   "wikidata": "https://www.wikidata.org/wiki/Q1792",
+   "population": 487834,
+   "elevationM": 11,
+   "water": [
+    {
+     "label": "Vistula",
+     "description": "river in East-Central Europe"
+    }
+   ]
+  },
+  "geneva-77dcd": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Geneva",
+   "wikidata": "https://www.wikidata.org/wiki/Q71",
+   "population": 211152,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Rhône",
+     "description": "river in Switzerland and France"
+    },
+    {
+     "label": "Arve",
+     "description": "river in France and Switzerland, tributary of the Rhône"
+    },
+    {
+     "label": "Lake Geneva",
+     "description": "lake in Switzerland and France"
+    }
+   ]
+  },
+  "lucerne-77dcd": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Lucerne",
+   "wikidata": "https://www.wikidata.org/wiki/Q4191",
+   "population": 86699,
+   "elevationM": 436,
+   "water": [
+    {
+     "label": "Reuss",
+     "description": "river in Switzerland"
+    },
+    {
+     "label": "Lake Lucerne",
+     "description": "lake at Lucerne, Switzerland"
+    },
+    {
+     "label": "Kleine Emme",
+     "description": "river in Switzerland"
+    }
+   ]
+  },
+  "interlaken-77dcd": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Interlaken",
+   "wikidata": "https://www.wikidata.org/wiki/Q68103",
+   "population": 6123,
+   "elevationM": 571,
+   "water": [
+    {
+     "label": "Lake Thun",
+     "description": "lake in the canton of Bern, Switzerland"
+    },
+    {
+     "label": "Lake Brienz",
+     "description": "lake in the Berne Canton, Switzerland"
+    },
+    {
+     "label": "Aare",
+     "description": "river in Switzerland and tributary of the Rhine"
+    }
+   ]
+  },
+  "zermatt-77dcd": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Zermatt",
+   "wikidata": "https://www.wikidata.org/wiki/Q27494",
+   "population": 6113,
+   "elevationM": 1624,
+   "water": [
+    {
+     "label": "Zmuttbach",
+     "description": "river in Switzerland"
+    },
+    {
+     "label": "Vispa",
+     "description": "left tributary of Rhône in Switzerland"
+    }
+   ]
+  },
+  "hallstatt-59390": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Hallstatt",
+   "wikidata": "https://www.wikidata.org/wiki/Q131633",
+   "population": 741,
+   "elevationM": 511,
+   "water": [
+    {
+     "label": "Hallstätter See",
+     "description": "lake"
+    }
+   ]
+  },
+  "bratislava-b6c14": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Bratislava",
+   "wikidata": "https://www.wikidata.org/wiki/Q1780",
+   "population": 480902,
+   "elevationM": 152,
+   "water": [
+    {
+     "label": "Danube",
+     "description": "second-longest river in Europe"
+    }
+   ]
+  },
+  "eger-f14e4": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Eger",
+   "wikidata": "https://www.wikidata.org/wiki/Q167109",
+   "population": 47921,
+   "elevationM": 165,
+   "water": [
+    {
+     "label": "Eger Stream",
+     "description": "stream in Heves County"
+    }
+   ]
+  },
+  "ankara-d7153": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Ankara",
+   "wikidata": "https://www.wikidata.org/wiki/Q3640",
+   "population": 5803482,
+   "elevationM": 938,
+   "water": [
+    {
+     "label": "Çubuk",
+     "description": "river in Turkey"
+    },
+    {
+     "label": "Hatip",
+     "description": "river in Turkey"
+    }
+   ]
+  },
+  "cappadocia-d7153": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Cappadocia",
+   "wikidata": "https://www.wikidata.org/wiki/Q217265",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "izmir-d7153": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/%C4%B0zmir",
+   "wikidata": "https://www.wikidata.org/wiki/Q35997",
+   "population": 4493242,
+   "elevationM": 2,
+   "water": [
+    {
+     "label": "Gulf of İzmir",
+     "description": "gulf of the Aegean Sea"
+    },
+    {
+     "label": "Aegean Sea",
+     "description": "part of the Mediterranean Sea, between the Greek mainland, the Turkish mainland, Crete, and Rhodes"
+    },
+    {
+     "label": "Gediz River",
+     "description": "river in Erzurum, western Turkey"
+    }
+   ]
+  },
+  "beirut-5caa7": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Beirut",
+   "wikidata": "https://www.wikidata.org/wiki/Q3820",
+   "population": 2421354,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Mediterranean Sea",
+     "description": "sea between Europe, Africa and Asia"
+    }
+   ]
+  },
+  "amman-67402": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Amman",
+   "wikidata": "https://www.wikidata.org/wiki/Q3805",
+   "population": 4007526,
+   "elevationM": 776,
+   "water": []
+  },
+  "muscat-c14c3": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Muscat",
+   "wikidata": "https://www.wikidata.org/wiki/Q3826",
+   "population": 1421409,
+   "elevationM": 69,
+   "water": [
+    {
+     "label": "Gulf of Oman",
+     "description": "strait that connects the Arabian Sea with the Persian Gulf"
+    }
+   ]
+  },
+  "tel-aviv-4c197": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Tel_Aviv",
+   "wikidata": "https://www.wikidata.org/wiki/Q33935",
+   "population": 467875,
+   "elevationM": 5,
+   "water": [
+    {
+     "label": "Levantine Sea",
+     "description": "peripheral sea of the Mediterranean Sea"
+    }
+   ]
+  },
+  "alula-6f49c": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Al-Ula",
+   "wikidata": "https://www.wikidata.org/wiki/Q27242",
+   "population": 32413,
+   "elevationM": 692,
+   "water": []
+  },
+  "fes-32e08": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Fez%2C_Morocco",
+   "wikidata": "https://www.wikidata.org/wiki/Q80985",
+   "population": 1167842,
+   "elevationM": 408,
+   "water": []
+  },
+  "chefchaouen-32e08": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Chefchaouen",
+   "wikidata": "https://www.wikidata.org/wiki/Q676778",
+   "population": 46168,
+   "elevationM": 564,
+   "water": []
+  },
+  "tangier-32e08": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Tangier",
+   "wikidata": "https://www.wikidata.org/wiki/Q126148",
+   "population": 1275428,
+   "elevationM": 80,
+   "water": []
+  },
+  "tunis-edf40": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Tunis",
+   "wikidata": "https://www.wikidata.org/wiki/Q3572",
+   "population": 602560,
+   "elevationM": 4,
+   "water": [
+    {
+     "label": "Lake of Tunis",
+     "description": "lake in Tunisia"
+    },
+    {
+     "label": "Gulf of Tunis",
+     "description": "bay"
+    }
+   ]
+  },
+  "luxor-1c39a": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Luxor",
+   "wikidata": "https://www.wikidata.org/wiki/Q130514",
+   "population": 284952,
+   "elevationM": 89,
+   "water": []
+  },
+  "aswan-1c39a": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Aswan",
+   "wikidata": "https://www.wikidata.org/wiki/Q29888",
+   "population": 401890,
+   "elevationM": 99,
+   "water": [
+    {
+     "label": "Nile",
+     "description": "major river in northeastern Africa"
+    }
+   ]
+  },
+  "dakar-d8973": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Dakar",
+   "wikidata": "https://www.wikidata.org/wiki/Q3718",
+   "population": 1438725,
+   "elevationM": 10,
+   "water": [
+    {
+     "label": "Atlantic Ocean",
+     "description": "ocean between Europe, Africa and the Americas"
+    }
+   ]
+  },
+  "accra-317db": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Accra",
+   "wikidata": "https://www.wikidata.org/wiki/Q3761",
+   "population": 1782150,
+   "elevationM": 61,
+   "water": [
+    {
+     "label": "Gulf of Guinea",
+     "description": "gulf on the west coast of Africa"
+    }
+   ]
+  },
+  "lagos-9742d": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Lagos",
+   "wikidata": "https://www.wikidata.org/wiki/Q8673",
+   "population": 15070000,
+   "elevationM": 34,
+   "water": []
+  },
+  "addis-ababa-3d91f": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Addis_Ababa",
+   "wikidata": "https://www.wikidata.org/wiki/Q3624",
+   "population": 5704000,
+   "elevationM": 2355,
+   "water": []
+  },
+  "zanzibar-city-7e380": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Zanzibar_City",
+   "wikidata": "https://www.wikidata.org/wiki/Q2222874",
+   "population": 709809,
+   "elevationM": null,
+   "water": []
+  },
+  "serengeti-national-park-7e380": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Serengeti_National_Park",
+   "wikidata": "https://www.wikidata.org/wiki/Q11812902",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "kigali-7266a": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Kigali",
+   "wikidata": "https://www.wikidata.org/wiki/Q3859",
+   "population": 1745555,
+   "elevationM": 1567,
+   "water": [
+    {
+     "label": "Ruganwa",
+     "description": null
+    }
+   ]
+  },
+  "victoria-falls-5922f": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Victoria_Falls%2C_Zimbabwe",
+   "wikidata": "https://www.wikidata.org/wiki/Q1393804",
+   "population": 33060,
+   "elevationM": 961,
+   "water": []
+  },
+  "windhoek-bfe79": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Windhoek",
+   "wikidata": "https://www.wikidata.org/wiki/Q3935",
+   "population": 486169,
+   "elevationM": 1650,
+   "water": []
+  },
+  "sossusvlei-bfe79": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Sossusvlei",
+   "wikidata": "https://www.wikidata.org/wiki/Q1932730",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "johannesburg-35fda": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Johannesburg",
+   "wikidata": "https://www.wikidata.org/wiki/Q34647",
+   "population": 4803262,
+   "elevationM": 1753,
+   "water": []
+  },
+  "durban-35fda": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Durban",
+   "wikidata": "https://www.wikidata.org/wiki/Q5468",
+   "population": 595061,
+   "elevationM": 22,
+   "water": []
+  },
+  "gaborone-180c8": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Gaborone",
+   "wikidata": "https://www.wikidata.org/wiki/Q3919",
+   "population": 246325,
+   "elevationM": 1014,
+   "water": []
+  },
+  "mauritius-26160": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Districts_of_Mauritius",
+   "wikidata": "https://www.wikidata.org/wiki/Q1139753",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "nosy-be-f92bc": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Nosy_Be",
+   "wikidata": "https://www.wikidata.org/wiki/Q1330558",
+   "population": 60000,
+   "elevationM": 450,
+   "water": [
+    {
+     "label": "Mozambique Channel",
+     "description": "arm of the Indian Ocean located between the Southeast African countries of Madagascar and Mozambique"
+    },
+    {
+     "label": null,
+     "description": null
+    }
+   ]
+  },
+  "wadi-musa-67402": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Wadi_Musa",
+   "wikidata": "https://www.wikidata.org/wiki/Q2739446",
+   "population": null,
+   "elevationM": 850,
+   "water": []
+  },
+  "zakopane-mtn": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Zakopane",
+   "wikidata": "https://www.wikidata.org/wiki/Q144786",
+   "population": 25562,
+   "elevationM": 837,
+   "water": []
+  },
+  "kazbegi-mtn": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Kazbegi_Municipality",
+   "wikidata": "https://www.wikidata.org/wiki/Q2475628",
+   "population": 4887,
+   "elevationM": null,
+   "water": []
+  },
+  "pokhara-mtn": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Pokhara",
+   "wikidata": "https://www.wikidata.org/wiki/Q6640",
+   "population": 353841,
+   "elevationM": 900,
+   "water": []
+  },
+  "bled-mtn": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Lake_Bled",
+   "wikidata": "https://www.wikidata.org/wiki/Q648902",
+   "population": null,
+   "elevationM": 475,
+   "water": []
+  },
+  "dolomites-mtn": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Cortina_d'Ampezzo",
+   "wikidata": "https://www.wikidata.org/wiki/Q41158",
+   "population": 5546,
+   "elevationM": 1224,
+   "water": []
+  }
+ }
+}

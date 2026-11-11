@@ -333,7 +333,7 @@ export async function importDestination(client, destination, feeds, { importedAt
 }
 
 // store: { begin(run), save(result, run), finish(run) } — see catalogStore.js.
-export async function runImport({ client, destinations, store = null, dryRun = true, trigger = "manual", logger = () => {}, now = () => new Date() }) {
+export async function runImport({ client, destinations, store = null, dryRun = true, trigger = "manual", logger = () => {}, now = () => new Date(), size = SHORTLIST }) {
   const run = { startedAt: now().toISOString(), dryRun, trigger, destinationsAttempted: destinations.length, destinationsSucceeded: 0, recordsSeen: 0, recordsSaved: 0, recordsDeactivated: 0, errors: [], feeds: [] };
   if (!client.credentials.configured) return { ...run, status: "failed", errors: [{ scope: "run", message: "cj_not_configured" }], finishedAt: now().toISOString() };
   if (store && !dryRun) await store.begin(run);
@@ -345,7 +345,7 @@ export async function runImport({ client, destinations, store = null, dryRun = t
   if (run.feeds.length) {
     for (const destination of destinations) {
       try {
-        const result = await importDestination(client, destination, run.feeds, { importedAt: run.startedAt });
+        const result = await importDestination(client, destination, run.feeds, { importedAt: run.startedAt, size });
         run.recordsSeen += result.records.length;
         if (result.status === "ok") {
           run.destinationsSucceeded += 1;

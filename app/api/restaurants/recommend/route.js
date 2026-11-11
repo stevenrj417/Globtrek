@@ -5,8 +5,10 @@ import { createClient } from "../../../lib/supabase/server";
 import { GooglePlacesDiscoveryProvider } from "../../../lib/google-places/GooglePlacesDiscoveryProvider";
 import { launchDinners } from "../../../data/launchSet";
 import { withPlacePhotos } from "../../../lib/google-places/placePhotos";
-import { curatedRestaurants } from "../../../lib/recommendation/eligibility";
+import { curatedRestaurants } from "../../../lib/places/curated";
 import { sharedRateLimit } from "../../../lib/security/rateLimit";
+import { usdRate } from "../../../lib/pricing/aggregate";
+import { localPrices } from "../../../data/destinationPlanningAverages";
 
 // GlobTrek is a budget site: unless a traveler asks for comfort, no expensive tables.
 function pricey(level) {
@@ -35,7 +37,17 @@ export async function POST(request) {
       restaurants = await new GooglePlacesDiscoveryProvider().discoverRestaurants(destination, { limit: 8, cheap });
       source = "google_places_verified";
     }
-    if (cheap) restaurants = restaurants.filter((restaurant) => !pricey(restaurant.priceLevel));
+    if (cheap) {
+      // Over budget by Google's own per-person range: the cheapest price it lists
+      // is above what three in four local restaurants start at.
+      const upper = localPrices(destination)?.meal?.upper;
+      const today = new Date().toISOString().slice(0, 10);
+      const overBudget = (range) => {
+        const rate = range ? usdRate(range.currency, today) : null;
+        return Boolean(upper && rate && range.low * rate > upper);
+      };
+      restaurants = restaurants.filter((restaurant) => !pricey(restaurant.priceLevel) && !overBudget(restaurant.priceRange));
+    }
     const openTable = new OpenTableClient();
     const canCheckAvailability = openTable.isConfigured() && body.startDateTime && body.partySize && restaurants.some((restaurant) => restaurant.openTableRestaurantId);
     const enriched = await Promise.all(restaurants.map(async (restaurant) => {

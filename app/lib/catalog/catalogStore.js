@@ -141,7 +141,10 @@ export class SupabaseCatalogStore {
 // Keeps what the bundled snapshot needs; existing destinations that were not part
 // of this run are kept as they were.
 export class SnapshotCatalogStore {
-  constructor(previous = null) {
+  // compact: keep 5 photos and a short description per property, so adding
+  // hundreds of destinations keeps the snapshot a manageable size.
+  constructor(previous = null, { compact = false } = {}) {
+    this.compact = compact;
     this.snapshot = { source: "Booking.com property catalog via GlobTrek's CJ product feeds", note: "Property details only. The feed has no prices, availability or guest reviews.", checkedAt: null, stays: { ...(previous?.stays || {}) } };
   }
 
@@ -152,7 +155,7 @@ export class SnapshotCatalogStore {
   async save(result) {
     const before = this.snapshot.stays[result.destinationId] || [];
     const records = result.records.map(({ importedAt, ...record }) => ({ ...record, id: `cj-${record.providerPropertyId}`, sku: record.providerPropertyId, address: [record.streetAddress, record.city, record.provinceState, record.postalCode].filter(Boolean).join(", ") || null, importedAt }));
-    this.snapshot.stays[result.destinationId] = records;
+    this.snapshot.stays[result.destinationId] = this.compact ? records.map((record) => ({ ...record, photos: (record.photos || []).slice(0, 5), description: record.description ? record.description.slice(0, 280) : null })) : records;
     const kept = new Set(records.map((record) => record.sku));
     return { saved: records.length, deactivated: before.filter((record) => !kept.has(record.sku)).length };
   }

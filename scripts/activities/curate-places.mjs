@@ -87,3 +87,6 @@ for (const raw of targets) {
 }
 file.checkedAt = today;
 await writeFile(fileUrl, `${JSON.stringify(file, null, 1)}\n`);
+// The browser only needs how many activities each destination has.
+const counts = Object.fromEntries(Object.entries(file.places).map(([id, entry]) => [id, entry.activities?.length || 0]));
+await writeFile(new URL("../../app/data/curatedPlaceCounts.json", import.meta.url), `${JSON.stringify({ checkedAt: file.checkedAt, activities: counts })}\n`);

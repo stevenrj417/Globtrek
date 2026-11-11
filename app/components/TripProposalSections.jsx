@@ -55,7 +55,7 @@ function safeImage(item) {
 function CatalogCard({ item, selected, onToggle, kind, destination }) {
   const verifiedImage = safeImage(item);
   const meta = kind === "restaurant"
-    ? [Array.isArray(item.cuisine) ? item.cuisine.slice(0, 2).join(" · ") : item.cuisine, item.neighborhood, item.rating ? `${item.rating} rating` : null]
+    ? [Array.isArray(item.cuisine) ? item.cuisine.slice(0, 2).join(" · ") : item.cuisine, item.neighborhood, item.rating ? `${item.rating} rating` : null, item.priceRange ? `${item.priceRange.currency} ${item.priceRange.low}${item.priceRange.high ? `–${item.priceRange.high}` : "+"} per person (Google Maps)` : null]
     : [item.category ? String(item.category).replace(/_/g, " ") : null, item.isFree ? "Free" : null];
   const description = item.description || (kind === "restaurant" ? "Selected from the verified dining edit." : "Matched to the pace and interests of this trip.");
   const sourceUrl = item.imageSourceUrl || item.imageLicenseMetadata?.sourcePageUrl || null;

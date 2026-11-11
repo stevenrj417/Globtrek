@@ -20,7 +20,7 @@ test("sticky trip action always reflects current selections and flight logistics
   assert.match(page, /selectedRestaurants\.length/);
   assert.match(page, /selectedActivities\.length/);
   assert.match(page, /schedule\.datesLabel/);
-  assert.match(page, /buildBudgetPlan\(activeProfile, flightDestination, \{ stay: stayOption \}\)/);
+  assert.match(page, /buildBudgetPlan\(activeProfile, flightDestination, \{ stay: stayOption, observedFare: /);
   assert.match(page, /tripContext=\{context\}/);
   assert.match(page, /key=\{`flight-\$\{destinationKey\}`\}/);
   assert.match(page, /key=\{`stay-\$\{destinationKey\}`\}/);

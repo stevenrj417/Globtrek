@@ -1,3 +1,5 @@
+import "../../../lib/pricing/server.js";
+import { prefetchObservedFares } from "../../../lib/pricing/observedFares.js";
 import { destinations } from "../../../data/destinations";
 import { SupabaseActivityProvider } from "../../../lib/inventory/SupabaseActivityProvider";
 import { buildBudgetPlan } from "../../../lib/recommendation/budgetEngine";
@@ -6,7 +8,7 @@ import { createClient } from "../../../lib/supabase/server";
 import { GooglePlacesDiscoveryProvider } from "../../../lib/google-places/GooglePlacesDiscoveryProvider";
 import { launchActivities } from "../../../data/launchSet";
 import { withPlacePhotos } from "../../../lib/google-places/placePhotos";
-import { curatedActivities } from "../../../lib/recommendation/eligibility";
+import { curatedActivities } from "../../../lib/places/curated";
 import { sharedRateLimit } from "../../../lib/security/rateLimit";
 import { bookableActivities } from "../../../lib/activities/bookable";
 
@@ -40,6 +42,7 @@ export async function POST(request) {
   if (curated.length) return Response.json({ activities: await withPlacePhotos(curated.slice(0, 12)), bookable: await bookablePromise, source: "globtrek_curated_google_places", isLive: false });
   try {
     const profile = normalizeTravelerProfile(body.quiz || {});
+    await prefetchObservedFares(profile.origin);
     const budgetPlan = buildBudgetPlan(profile, destination);
     let activities = [];
     let source = "supabase_verified";

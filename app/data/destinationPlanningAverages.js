@@ -1,3 +1,4 @@
+import destinationCosts from "./pricing/destinationCosts.json" with { type: "json" };
 const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 const COST_LEVELS = {
@@ -19,6 +20,17 @@ const CITY_OVERRIDES = {
 const NORTHERN_MONTH_FACTORS = [0.9, 0.9, 0.96, 1, 1.04, 1.1, 1.15, 1.12, 1.02, 0.97, 0.94, 1.1];
 const SOUTHERN_MONTH_FACTORS = [1.15, 1.1, 1.02, 0.97, 0.94, 0.9, 0.9, 0.92, 0.98, 1.02, 1.08, 1.15];
 const TROPICAL_MONTH_FACTORS = [1.08, 1.06, 1, 0.96, 0.92, 0.9, 0.9, 0.92, 0.96, 1, 1.04, 1.1];
+
+// Daily costs from observed local prices (scripts/pricing/build-destination-costs.mjs):
+// food and lodging modeled from local restaurant prices and the country price
+// level, checked against observed hostel prices and editorial budgets. Used for
+// city destinations without an editorial budget; the model was fit on cities,
+// so islands, resorts and multi-stop regions keep the price-tier default.
+const LOCAL_TYPES = new Set(["city"]);
+export function localPrices(destination) {
+  const local = destinationCosts.destinations[destination.id];
+  return local && LOCAL_TYPES.has(destination.destinationType || "city") ? local : null;
+}
 
 function roundMoney(value) {
   return Math.max(1, Math.round(value));
@@ -42,7 +54,9 @@ export function buildDestinationPlanningAverages(destination = {}) {
   const level = destination.typicalCostLevel || "moderate";
   const fallback = COST_LEVELS[level] || COST_LEVELS.moderate;
   const profile = destination.costProfile || {};
-  const city = destination.budgetEditorial?.planning || CITY_OVERRIDES[destination.city] || {};
+  const editorial = destination.budgetEditorial?.planning || CITY_OVERRIDES[destination.city] || null;
+  const local = editorial ? null : localPrices(destination);
+  const city = editorial || (local ? { hotelNight: local.lodging.budgetRoom, foodDay: local.foodDay.value, activitiesDay: local.activity?.medianListedUsd } : {});
   const baseline = {
     hotelNight: city.hotelNight ?? goodValueAverage(profile.typicalHotelNightLow, profile.typicalHotelNightHigh, fallback.hotelNight),
     foodDay: city.foodDay ?? goodValueAverage(profile.foodDailyLow, profile.foodDailyHigh, fallback.foodDay),
@@ -53,14 +67,18 @@ export function buildDestinationPlanningAverages(destination = {}) {
   return {
     currency: "USD",
     hotelStandard: "Clean, well-reviewed budget hotel or simple three-star",
-    basis: "Modeled good-value planning average; not a live quote or guaranteed price",
-    // "city" when a city-specific baseline exists, otherwise a price-tier default.
-    model: destination.budgetEditorial || CITY_OVERRIDES[destination.city] ? "city" : "tier",
+    basis: local
+      ? `Modeled from ${local.restaurants} local restaurants' price ranges on Google Maps (checked ${local.checkedAt}) and the country price level (World Bank); typical error about 20%. Not a live quote.`
+      : "Modeled good-value planning average; not a live quote or guaranteed price",
+    // "city": an editorial city baseline; "local_prices": modeled from observed
+    // local prices; "tier": a price-tier default only.
+    model: editorial ? "city" : local ? "local_prices" : "tier",
+    localPrices: local ? { checkedAt: local.checkedAt, restaurants: local.restaurants, meal: local.meal, foodDay: local.foodDay, lodging: local.lodging, activity: local.activity } : null,
     airportTransferPerPerson: Number(city.airportTransferPerPerson) || 0,
     lodgingTaxRate: Number(city.lodgingTaxRate) || 0,
     costLevel: level,
-    source: profile.source || "globtrek_city_budget_baseline_v1",
-    confidence: Math.max(0.3, Number(profile.confidence) || 0.4),
+    source: local ? "globtrek_local_prices_v1" : profile.source || "globtrek_city_budget_baseline_v1",
+    confidence: local ? 0.5 : Math.max(0.3, Number(profile.confidence) || 0.4),
     monthly: MONTH_NAMES.map((monthName, index) => ({
       month: index + 1,
       monthName,

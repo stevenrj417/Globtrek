@@ -1,3 +1,5 @@
+import "../../../lib/pricing/server.js";
+import { prefetchObservedFares } from "../../../lib/pricing/observedFares.js";
 import { NextResponse } from "next/server";
 import { destinations } from "../../../data/destinations.js";
 import { SupabaseCuratedHotelProvider } from "../../../lib/inventory/SupabaseCuratedHotelProvider.js";
@@ -23,6 +25,7 @@ export async function POST(request) {
     const destination = destinations.find((item) => (item.id || item.airport) === body.destinationId);
     if (!destination) return NextResponse.json({ error: "Unknown destination" }, { status: 400 });
     const quizProfile = normalizeTravelerProfile(body.quiz || {});
+    await prefetchObservedFares(quizProfile.origin);
     const budgetPlan = buildBudgetPlan(quizProfile, destination);
     // The style the budget engine actually planned (it may have chosen it from the budget).
     const profile = { ...quizProfile, spendStyle: budgetPlan.spendStyle };

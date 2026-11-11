@@ -59,6 +59,7 @@ const LABELS = { hotel: "Stay", flights: "Flights", food: "Dining", activities: 
 function lodgingSource(lodging) {
   if (!lodging) return null;
   if (lodging.priceKind === "city_estimate") return "GlobTrek's city estimate for a simple room, taxes included";
+  if (lodging.priceKind === "dorm_estimate") return "GlobTrek's modeled dorm-bed rate for this city, not a specific hostel's price";
   if (lodging.priceKind === "live") return "live price";
   if (lodging.priceKind === "observed") return `price seen on Booking.com, checked ${formatDate(lodging.observedAt)}`;
   return lodging.observedAt ? `GlobTrek estimate from the Booking.com price checked ${formatDate(lodging.observedAt)}, adjusted for your travel month` : "GlobTrek estimate";
@@ -67,7 +68,8 @@ function lodgingSource(lodging) {
 function lodgingLine(lodging) {
   if (!lodging?.total) return null;
   const what = `${lodging.unit === "bed" ? "dorm bed" : "room"}${lodging.units === 1 ? "" : "s"}`;
-  return `${lodging.name ? `${lodging.name}: ` : ""}${money(lodging.perUnit)} × ${lodging.units} ${what} × ${lodging.nights} night${lodging.nights === 1 ? "" : "s"} · ${lodgingSource(lodging)}`;
+  const tier = lodging.tier ? ` (${lodging.tier === "100_plus" ? "$100+" : `under $${lodging.tier.slice(6)}`} a ${lodging.unit === "bed" ? "bed" : "room"})` : "";
+  return `${lodging.name ? `${lodging.name}: ` : ""}${money(lodging.perUnit)}${tier} × ${lodging.units} ${what} × ${lodging.nights} night${lodging.nights === 1 ? "" : "s"} · ${lodgingSource(lodging)}`;
 }
 
 function CostSection({ budgetPlan, trip, nights, travelers, missingPriceStay }) {
@@ -87,7 +89,7 @@ function CostSection({ budgetPlan, trip, nights, travelers, missingPriceStay }) 
 
 // Everything the page shows, derived once from the quiz, the trip on screen and
 // the traveler's choices, so dates, nights, prices and links agree everywhere.
-function buildView({ quiz, trip, flightPreferences, selectedHotel, selectedRestaurants, selectedActivities }) {
+function buildView({ quiz, trip, flightPreferences, selectedHotel, selectedRestaurants, selectedActivities, observedFare }) {
   const profile = normalizeTravelerProfile(quiz);
   const quizSchedule = tripSchedule(quiz);
   const nightsAllowed = nightsRange(quiz.answers?.duration, quizSchedule.flexible ? null : quizSchedule.nights);
@@ -103,7 +105,11 @@ function buildView({ quiz, trip, flightPreferences, selectedHotel, selectedResta
   const stay = selectedHotel && !noStay ? selectedHotel : null;
   // A stay's price only counts when it was priced for these same nights.
   const stayOption = stay?.price?.nights === schedule.nights ? stayBudgetOption(stay, stay.price) : null;
-  const budgetPlan = buildBudgetPlan(activeProfile, flightDestination, { stay: stayOption });
+  // Observed fares live on the server; the page asks for this route and dates.
+  const fareMonths = (activeProfile.dates?.period?.months || []).map((value) => Number(String(value).slice(5, 7))).filter(Boolean);
+  const fareDepart = activeProfile.dates?.start && !activeProfile.dates?.flexible ? activeProfile.dates.start : "";
+  const fareQuery = activeProfile.origin && flightDestination.airport ? new URLSearchParams({ origin: activeProfile.origin, destination: flightDestination.airport, ...(fareDepart ? { depart: fareDepart } : {}), months: fareMonths.join(",") }).toString() : null;
+  const budgetPlan = buildBudgetPlan(activeProfile, flightDestination, { stay: stayOption, observedFare: observedFare?.query === fareQuery ? observedFare.fare : null });
   const flightUrl = bookingFlightUrl(flightDestination, context);
   const flightSelection = { selected: Boolean(prefs.departureAirport && prefs.arrivalAirport), origin: prefs.departureAirport, destination: prefs.arrivalAirport, departureDate: schedule.start, returnDate: schedule.end, adults: prefs.adults, children: prefs.children, cabin: prefs.cabin || "ECONOMY", timing: prefs.timing, preferredDeparture: prefs.timing, selectedItinerary: prefs.selectedItinerary || null };
   const stayForManifest = stay ? { ...stay, photoUrl: stay.image || stay.photos?.[0] || null, priceEstimate: stayOption ? `${money(budgetPlan.lodging.total)} ${PRICE_KIND_LABEL[stay.price.kind].toLowerCase()} for ${schedule.nights} nights` : "Price not available; check Booking.com" } : null;
@@ -111,7 +117,7 @@ function buildView({ quiz, trip, flightPreferences, selectedHotel, selectedResta
   const bookingManifest = buildBookingManifest({ tripId: `${destinationKey}:${sharedPayload.slice(0, 120)}`, destination: { id: destinationKey, city: trip.city, country: trip.country, airport: trip.airport, image: trip.image }, dates: { start: schedule.start, end: schedule.end }, travelers: { adults: prefs.adults, children: prefs.children, total: travelers }, hotels: stayForManifest ? [stayForManifest] : [], hotelExactUrls: [stay ? bookingPropertyUrl(stay, stayLinkContext(context, stay)) : null], restaurants: selectedRestaurants, experiences: selectedActivities, flight: flightSelection, flightDeepLink: flightUrl });
   const providerLinks = { hotel: bookingManifest.hotelBookings[0]?.exactUrl || null, flight: bookingManifest.flightBooking?.deepLink || null, restaurants: bookingManifest.restaurantBookings.map((item) => ({ name: item.name, url: item.exactUrl })), activities: bookingManifest.experienceBookings.map((item) => ({ name: item.name, url: item.exactUrl })) };
   const savedTrip = { clientTripKey: bookingManifest.tripId, sharePath: `/results?destination=${encodeURIComponent(destinationKey)}`, destination: bookingManifest.destination, trip: context, schedule, travelerProfile: activeProfile, preferences: { pace: activeProfile.pace, budget: activeProfile.exactBudget, travelAreaPreference: activeProfile.travelAreaPreference, originCountryCode: activeProfile.originCountryCode, flightTimingPreference: prefs.timing, quizAnswers: activeProfile.otherExistingQuizPreferences }, exactBudget: activeProfile.exactBudget, includedBudgetCategories: activeProfile.includedBudgetCategories, itinerary: trip.plan || null, estimatedCosts: budgetPlan, costConfidence: budgetPlan.confidence ?? null, bookingManifest, bookingLinks: providerLinks, selections: { hotel: stayForManifest, flight: flightSelection, restaurants: selectedRestaurants, activities: selectedActivities } };
-  return { profile, prefs, nightsAllowed, travelers, context, schedule, activeProfile, budgetPlan, stay, stayMissingPrice: stay?.price?.kind === "unavailable", sharedPayload, bookingManifest, savedTrip, destinationKey };
+  return { fareQuery, profile, prefs, nightsAllowed, travelers, context, schedule, activeProfile, budgetPlan, stay, stayMissingPrice: stay?.price?.kind === "unavailable", sharedPayload, bookingManifest, savedTrip, destinationKey };
 }
 
 export default function ResultsPage() {
@@ -126,6 +132,7 @@ export default function ResultsPage() {
   const [shareError, setShareError] = useState("");
   const [shareOpen, setShareOpen] = useState(false);
   const [refreshNonce, setRefreshNonce] = useState(0);
+  const [observedFare, setObservedFare] = useState(null);
 
   useEffect(() => {
     let savedQuiz = null;
@@ -173,7 +180,14 @@ export default function ResultsPage() {
     return fromRemote || pickTrip({ destinationId: resolved.destinationId || pinnedId, matches: localMatches, catalog: destinations, plan: (destination) => planDestination(destination, profile) });
   }, [quiz, resolved, remoteMatches, localMatches, wantedId, pinnedId]);
   const destinationKey = trip?.id || trip?.airport;
-  const view = useMemo(() => (quiz && trip ? buildView({ quiz, trip, flightPreferences, selectedHotel, selectedRestaurants, selectedActivities }) : null), [quiz, trip, flightPreferences, selectedHotel, selectedRestaurants, selectedActivities]);
+  const view = useMemo(() => (quiz && trip ? buildView({ quiz, trip, flightPreferences, selectedHotel, selectedRestaurants, selectedActivities, observedFare }) : null), [quiz, trip, flightPreferences, selectedHotel, selectedRestaurants, selectedActivities, observedFare]);
+  const fareQuery = view?.fareQuery || null;
+  useEffect(() => {
+    if (!fareQuery) return undefined;
+    const controller = new AbortController();
+    fetch(`/api/flights/observed?${fareQuery}`, { signal: controller.signal }).then((response) => (response.ok ? response.json() : null)).then((data) => { if (data?.fare) setObservedFare({ query: fareQuery, fare: data.fare }); }).catch(() => {});
+    return () => controller.abort();
+  }, [fareQuery]);
 
   useEffect(() => { if (!destinationKey || !trip) return; const controller = new AbortController(); fetch("/api/recent", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ type: "destination", key: destinationKey, title: trip.city, subtitle: trip.country, imageUrl: trip.image, data: { id: destinationKey, airport: trip.airport } }), signal: controller.signal }).catch(() => {}); return () => controller.abort(); }, [destinationKey, trip]);
   useEffect(() => { if (view) { try { window.sessionStorage.setItem("globtrekCurrentTrip", JSON.stringify({ trip, quiz, savedTrip: view.savedTrip })); } catch {} } }, [view, trip, quiz]);

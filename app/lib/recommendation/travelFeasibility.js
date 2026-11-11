@@ -190,7 +190,41 @@ function dotFare(route, profile) {
   };
 }
 
-export function estimateFlight(profile, destination) {
+// Server code registers observedFare() from app/lib/pricing/observedFares.js;
+// browser code never loads the fare index, so it falls through to the sources below.
+let observedFareLookup = null;
+export function registerObservedFares(lookup) {
+  observedFareLookup = lookup;
+}
+
+const SHORT_DAY = (iso) => new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", timeZone: "UTC" }).format(new Date(`${iso}T00:00:00Z`));
+const PERIOD_LABEL = (period) => `${period.endsWith("a") ? "early " : period.endsWith("b") ? "late " : ""}${MONTH_NAMES[Number(period.slice(0, 2)) - 1]}`;
+
+// In the browser, a page may pass the server's answer for this route and dates
+// (from /api/flights/observed) as `observed`.
+function aviasalesFare(profile, origin, airport, observed = null) {
+  if (!observedFareLookup && !observed) return null;
+  const exact = profile?.dates?.start && !profile?.dates?.flexible ? profile.dates.start : null;
+  const months = (profile?.dates?.period?.months || []).map((value) => Number(String(value).slice(5, 7))).filter(Boolean);
+  const fare = observedFareLookup ? observedFareLookup({ origin, destination: airport, departDate: exact, months }) : observed;
+  if (!fare || fare.stale) return null;
+  const style = profile?.spendStyle || "value";
+  const average = style === "cheapest" ? fare.medianUsd : style === "comfortable" ? Math.round((fare.averageUsd + fare.highUsd) / 2) : fare.averageUsd;
+  const where = fare.metroDestination || fare.metroOrigin ? ` (any ${[fare.metroOrigin, fare.metroDestination].filter(Boolean).join("/")} airport)` : "";
+  return {
+    low: fare.lowUsd, high: fare.highUsd, average, currency: "USD",
+    priceSource: fare.basis === "observed_biweekly" ? "aviasales_observed_biweekly" : "aviasales_observed_monthly",
+    priceLastChecked: fare.observedTo, confidence: fare.basis === "observed_biweekly" ? 0.75 : 0.65, isLive: false,
+    cabinClass: "economy", tripType: "round_trip",
+    basis: `${fare.samples} round-trip fares Aviasales travelers found for ${PERIOD_LABEL(fare.period)} departures${where}, found ${SHORT_DAY(fare.observedFrom)}–${SHORT_DAY(fare.observedTo)}; not a live quote`,
+    observedFare: fare,
+    fareMonth: Number(fare.period.slice(0, 2)),
+    cheapestMonth: Boolean(fare.cheapestOfMonths),
+    monthlyAverageEconomyRoundTrip: [],
+  };
+}
+
+export function estimateFlight(profile, destination, { observed: serverFare = null } = {}) {
   const origin = String(profile?.origin || "").toUpperCase();
   const airport = String(destination?.airport || "").toUpperCase();
   if (!origin || !airport) {
@@ -204,6 +238,8 @@ export function estimateFlight(profile, destination) {
   }
   // Real fares first: Google Flights fares for the traveler's month, then U.S. DOT quarterly averages of fares actually paid (domestic),
   // or Travelpayouts two-week averages when that feed is configured.
+  const observedAviasales = aviasalesFare(profile, origin, airport, serverFare);
+  if (observedAviasales) return observedAviasales;
   const snapshot = snapshotFare(origin, airport, profile?.dates?.start, profile?.dates?.flexible || !profile?.dates?.start, profile?.dates?.period?.months);
   if (snapshot) {
     const average = profile?.spendStyle === "cheapest" ? snapshot.typical : Math.round(snapshot.typical * (profile?.spendStyle === "comfortable" ? 1.25 : 1.1));

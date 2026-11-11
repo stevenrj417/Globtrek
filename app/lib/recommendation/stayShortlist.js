@@ -106,13 +106,20 @@ export function whyLine(choice, role, profile) {
   return choice.price.kind === "unavailable" ? `A step up in comfort and privacy (${list}); price not available, so check it on Booking.com.` : `A step up in comfort and privacy (${list}) for ${plural(profile.tripLength, "night")}.`;
 }
 
+// A traveler who asked for a private room never gets a place that only sells dorm beds.
+export function dormOnly(property) {
+  if (!property.dorms && property.priceTier !== "hostel") return false;
+  const rooms = property.roomTypes || [];
+  return !rooms.some((room) => !/dorm|shared|bunk|bed in/i.test(room));
+}
+
 export function buildStayShortlist({ candidates, profile, destination, budgetPlan, accessibleOnly = false, now = Date.now() }) {
   const month = budgetPlan?.lodging?.month ?? null;
   const context = { ...profile, hotelBudget: budgetPlan?.hotelBudget };
   const pool = mergeCandidates([candidates]).map((property) => {
     const price = stayPrice(property, { airport: destination.airport, nights: profile.tripLength, travelers: profile.travelers, month, privateRoom: profile.lodging === "private" || budgetPlan?.lodging?.unit === "room" });
     return { ...property, price, ...scoreStay(property, { profile: context, destination, price, accessibleOnly, now }) };
-  }).filter((property) => !accessibleOnly || isAccessible(property));
+  }).filter((property) => (!accessibleOnly || isAccessible(property)) && !(profile.lodging === "private" && dormOnly(property)));
   const ranked = [...pool].sort((a, b) => b.score - a.score || Number(Boolean(b.verified)) - Number(Boolean(a.verified)) || a.name.localeCompare(b.name));
   const choices = [];
   const pick = ranked[0];

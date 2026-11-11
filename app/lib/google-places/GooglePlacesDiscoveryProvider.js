@@ -20,12 +20,22 @@ function matchesCityWithoutCoordinates(destination, place) {
   return localities.some((locality) => address.includes(locality));
 }
 
+// Google's per-person price range for a restaurant, as Google shows it. Fetched
+// with each request, never stored.
+function priceRange(place) {
+  const low = Number(place.priceRange?.startPrice?.units);
+  const high = Number(place.priceRange?.endPrice?.units);
+  const currency = place.priceRange?.startPrice?.currencyCode;
+  if (!Number.isFinite(low) || !currency) return null;
+  return { low, high: Number.isFinite(high) ? high : null, currency, source: "Google Maps price range per person" };
+}
+
 export class GooglePlacesDiscoveryProvider extends GooglePlacesHotelProvider {
   async searchNearby(destination, { textQuery, includedType, limit, allowedTypes, useLocationBias = true }) {
     const hasCoordinates = useLocationBias && Number.isFinite(Number(destination.latitude)) && Number.isFinite(Number(destination.longitude));
     const radius = Math.min(50000, Math.max(5000, Number(destination.hotelSearchRadiusKm || 40) * 1000));
     const locationBias = hasCoordinates ? { circle: { center: { latitude: Number(destination.latitude), longitude: Number(destination.longitude) }, radius } } : undefined;
-    const payload = await this.request("/places:searchText", { method: "POST", body: { textQuery, includedType, strictTypeFiltering: false, maxResultCount: Math.min(20, Math.max(limit * 2, limit)), ...(locationBias ? { locationBias } : {}) }, fieldMask: "places.id,places.displayName,places.formattedAddress,places.location,places.types,places.primaryType,places.businessStatus,places.rating,places.userRatingCount,places.priceLevel,places.googleMapsUri,places.websiteUri,places.photos" });
+    const payload = await this.request("/places:searchText", { method: "POST", body: { textQuery, includedType, strictTypeFiltering: false, maxResultCount: Math.min(20, Math.max(limit * 2, limit)), ...(locationBias ? { locationBias } : {}) }, fieldMask: "places.id,places.displayName,places.formattedAddress,places.location,places.types,places.primaryType,places.businessStatus,places.rating,places.userRatingCount,places.priceLevel,places.priceRange,places.googleMapsUri,places.websiteUri,places.photos" });
     return (payload.places || []).filter((place) => placeName(place) && (!place.businessStatus || place.businessStatus === "OPERATIONAL") && (place.types || []).some((type) => allowedTypes.has(type)) && (hasCoordinates ? (distanceMeters(destination, place.location) ?? 0) <= 60000 : matchesCityWithoutCoordinates(destination, place))).sort((a, b) => score(b) - score(a)).slice(0, limit);
   }
 
@@ -39,7 +49,7 @@ export class GooglePlacesDiscoveryProvider extends GooglePlacesHotelProvider {
   async discoverRestaurants(destination, { limit = 4, cheap = false } = {}) {
     const key = cacheKey("restaurants", destination); const hit = cached(key); if (hit) return hit.slice(0, limit);
     const places = await this.searchNearby(destination, { textQuery: `${cheap ? "cheap eats, street food and casual restaurants" : "restaurants"} in ${destination.city}, ${destination.country}`, includedType: "restaurant", limit: Math.max(4, limit), allowedTypes: RESTAURANT_TYPES });
-    const records = await Promise.all(places.map(async (place) => ({ id: `google:${place.id}`, destinationId: destination.id || destination.airport, name: placeName(place), description: null, cuisine: [], neighborhood: place.formattedAddress || null, priceLevel: place.priceLevel || null, latitude: place.location?.latitude ?? null, longitude: place.location?.longitude ?? null, provider: "google_places", providerId: place.id, googlePlaceId: place.id, bookingUrl: null, officialWebsiteUrl: place.websiteUri || null, websiteUri: place.websiteUri || null, googleMapsUrl: place.googleMapsUri || null, googleMapsUri: place.googleMapsUri || null, detailsUrl: place.googleMapsUri || null, rating: Number(place.rating) || null, reviewCount: Number(place.userRatingCount) || null, category: category(place, "restaurant"), verifiedAt: new Date().toISOString(), ...(await this.firstPhoto(place)) })));
+    const records = await Promise.all(places.map(async (place) => ({ id: `google:${place.id}`, destinationId: destination.id || destination.airport, name: placeName(place), description: null, cuisine: [], neighborhood: place.formattedAddress || null, priceLevel: place.priceLevel || null, priceRange: priceRange(place), latitude: place.location?.latitude ?? null, longitude: place.location?.longitude ?? null, provider: "google_places", providerId: place.id, googlePlaceId: place.id, bookingUrl: null, officialWebsiteUrl: place.websiteUri || null, websiteUri: place.websiteUri || null, googleMapsUrl: place.googleMapsUri || null, googleMapsUri: place.googleMapsUri || null, detailsUrl: place.googleMapsUri || null, rating: Number(place.rating) || null, reviewCount: Number(place.userRatingCount) || null, category: category(place, "restaurant"), verifiedAt: new Date().toISOString(), ...(await this.firstPhoto(place)) })));
     return remember(key, records).slice(0, limit);
   }
 
