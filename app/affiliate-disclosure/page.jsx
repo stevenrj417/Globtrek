@@ -17,7 +17,7 @@ export default function AffiliateDisclosurePage() {
       <BookingPartnerBadge className="mb-12" />
       <EditorialSection number="01" title="Our Booking.com relationship">
         <p>
-          <strong>{AFFILIATE_DISCLOSURE}</strong> GlobTrek is a Booking.com affiliate partner: we may receive a commission when a traveler follows an eligible Booking.com link and completes a qualifying booking. Compensation supports GlobTrek and does not turn GlobTrek into the booking provider. You pay the travel provider directly.
+          <strong>{AFFILIATE_DISCLOSURE}</strong> GlobTrek is a Booking.com affiliate partner: we may receive a commission when a traveler follows an eligible Booking.com link and completes a qualifying booking. Tour and ticket links go to WeGoTrip through the Travelpayouts partner network, and may earn a commission the same way. Compensation supports GlobTrek and does not turn GlobTrek into the booking provider. You pay the travel provider directly.
         </p>
       </EditorialSection>
       <EditorialSection number="02" title="Pricing and decisions">

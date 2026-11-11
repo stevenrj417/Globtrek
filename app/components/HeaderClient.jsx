@@ -3,6 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { useAuth } from "./AuthProvider";
+import { AuthSheet } from "./AuthSheet";
 
 function isActive(pathname, href) {
   if (href.startsWith("/#")) return false;
@@ -34,6 +37,8 @@ export function NavLinks({ items }) {
 
 export function MobileMenu({ items, actionHref, actionLabel }) {
   const [open, setOpen] = useState(false);
+  const [signingIn, setSigningIn] = useState(false);
+  const { user } = useAuth();
   const pathname = usePathname();
   const panel = useRef(null);
   const trigger = useRef(null);
@@ -63,20 +68,25 @@ export function MobileMenu({ items, actionHref, actionLabel }) {
       <svg viewBox="0 0 20 14" className="h-3.5 w-5" fill="none" aria-hidden="true"><path d="M0 1h20M0 7h20M0 13h20" stroke="currentColor" strokeWidth="1.4" /></svg>
       <span className="sr-only">Open menu</span>
     </button>
-    {open ? <div className="fixed inset-0 z-50" role="dialog" aria-modal="true" aria-label="Menu">
+    {/* Mounted on the body: the header's backdrop blur would otherwise contain this fixed layer. */}
+    {open ? createPortal(<div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true" aria-label="Menu">
       <button type="button" tabIndex={-1} aria-hidden="true" className="absolute inset-0 bg-black/30" onClick={() => setOpen(false)} />
-      <div ref={panel} id="mobile-menu" className="mobile-sheet absolute inset-x-0 bottom-0 bg-bg px-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-3 shadow-overlay">
+      <div ref={panel} id="mobile-menu" className="mobile-sheet absolute inset-x-0 bottom-0 max-h-[100dvh] overflow-y-auto bg-bg px-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-3 shadow-overlay">
         <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-black/15" aria-hidden="true" />
         <nav aria-label="Mobile navigation">
           {items.map(([label, href]) => {
             const active = isActive(pathname, href);
             return <Link aria-current={active ? "page" : undefined} href={href} key={label} onClick={() => setOpen(false)} className={`flex min-h-14 items-center justify-between border-b border-black/10 text-lg tracking-tight-1 ${active ? "font-semibold" : ""}`}>{label}<span aria-hidden="true" className="text-subtle">→</span></Link>;
           })}
+          {user
+            ? <Link href="/account" onClick={() => setOpen(false)} className="flex min-h-14 items-center justify-between border-b border-black/10 text-lg tracking-tight-1 sm:hidden">Account<span aria-hidden="true" className="text-subtle">→</span></Link>
+            : <button type="button" onClick={() => { setOpen(false); setSigningIn(true); }} className="flex min-h-14 w-full items-center justify-between border-b border-black/10 text-left text-lg tracking-tight-1 sm:hidden">Sign in<span aria-hidden="true" className="text-subtle">→</span></button>}
         </nav>
         <Link href={actionHref} onClick={() => setOpen(false)} className="btn btn-primary mt-6 w-full">{actionLabel}</Link>
         <button type="button" onClick={() => { setOpen(false); trigger.current?.focus(); }} className="mt-2 min-h-12 w-full text-xs uppercase tracking-caps text-muted">Close</button>
       </div>
-    </div> : null}
+    </div>, document.body) : null}
+    <AuthSheet open={signingIn} onClose={() => setSigningIn(false)} returnTo={pathname} />
   </div>;
 }
 

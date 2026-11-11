@@ -55,6 +55,19 @@ function firstMatch(destinations, quiz, patch) {
   return match ? { quiz: patched, match } : null;
 }
 
+// Nothing passes the setting, area and season filters together, so no fix above can
+// work. Loosen the area, then the setting, until some destination is in reach, so
+// the panel never ends with every action disabled.
+function relaxed(destinations, quiz) {
+  for (const patch of [{ area: "anywhere" }, { setting: "Surprise Me" }, { area: "anywhere", setting: "Surprise Me" }]) {
+    const patched = applyQuizPatch(quiz, patch);
+    const profile = normalizeTravelerProfile(patched);
+    const found = rankDestinations(destinations, profile)[0] || closestOverBudget(destinations, profile);
+    if (found) return { id: "closest", label: "Show the closest match anyway", available: true, quiz: patched, href: `/results?destination=${encodeURIComponent(found.id || found.airport)}`, result: `${title(found.city)} at about ${money(found.budgetPlan.budgetCheckTotal)}` };
+  }
+  return { id: "closest", label: "Show the closest match anyway", available: false, result: "No destination fits your other answers" };
+}
+
 const SETTING_NAMES = { Ocean: "coastal", Mountains: "mountain", Cities: "city", Culture: "history and culture" };
 
 // The five ways out of "no match", each re-run through the real matcher so a
@@ -93,7 +106,7 @@ export function diagnoseNoMatch(destinations, quiz) {
     includes.flights ? attempt("flights", "Remove flights from my budget", [{ flights: false }]) : { id: "flights", label: "Remove flights from my budget", available: false, result: "Flights are already outside your budget" },
     shorter.length ? attempt("shorter", (patch) => `Shorten my trip to ${patch.nights} nights`, shorter.map((value) => ({ nights: value }))) : { id: "shorter", label: "Shorten my trip", available: false, result: "Already the shortest trip" },
     lodgingChoices.length ? attempt("lodging", (patch) => `Change accommodation to ${patch.lodging === "Hostel bed" ? "a hostel bed" : "whatever's cheapest"}`, lodgingChoices.map((value) => ({ lodging: value, spendStyle: "cheapest" }))) : { id: "lodging", label: "Change accommodation type", available: false, result: "Already the cheapest accommodation" },
-    closest ? { id: "closest", label: "Show the closest match anyway", available: true, href: `/results?destination=${encodeURIComponent(closest.id || closest.airport)}`, result: `${title(closest.city)}, over budget by about ${money(closest.budgetPlan.budgetCheckTotal - budget)}` } : { id: "closest", label: "Show the closest match anyway", available: false, result: "No destination fits your other answers" },
+    closest ? { id: "closest", label: "Show the closest match anyway", available: true, href: `/results?destination=${encodeURIComponent(closest.id || closest.airport)}`, result: `${title(closest.city)}, over budget by about ${money(closest.budgetPlan.budgetCheckTotal - budget)}` } : relaxed(destinations, quiz),
   ];
 
   return { profile, reasons, options, suggestions: options.filter((option) => option.available && option.quiz), closest: closest ? { id: closest.id || closest.airport, city: title(closest.city), total: closest.budgetPlan.budgetCheckTotal } : null, cheapest: closest ? { city: title(closest.city), total: closest.budgetPlan.budgetCheckTotal } : null };

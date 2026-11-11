@@ -50,7 +50,7 @@ export function NoMatchPanel({ quiz }) {
       <section className="mt-12" aria-labelledby="fixes-heading">
         <h2 id="fixes-heading" className="eyebrow">Ways to get a trip</h2>
         <ul className="mt-4 grid gap-3 sm:grid-cols-2">{diagnosis.options.map((option) => <li key={option.id}>
-          {option.href && option.available ? <a href={option.href} onClick={() => track("no_match_fix", { source: option.id })} className="flex h-full min-h-20 w-full flex-col justify-between border border-black/20 bg-surface-raised p-4 text-left transition-colors duration-150 hover:border-ink">
+          {option.href && option.available ? <a href={option.href} onClick={() => { if (option.quiz) { try { window.localStorage.setItem("globtrekQuiz", JSON.stringify(option.quiz)); } catch {} } track("no_match_fix", { source: option.id }); }} className="flex h-full min-h-20 w-full flex-col justify-between border border-black/20 bg-surface-raised p-4 text-left transition-colors duration-150 hover:border-ink">
             <span className="font-medium">{option.label}</span>
             <span className="tabular mt-2 text-sm text-muted">{option.result}</span>
           </a> : <button type="button" disabled={!option.available} onClick={() => rerun(option.quiz, option.id)} className="flex h-full min-h-20 w-full flex-col justify-between border border-black/20 bg-surface-raised p-4 text-left transition-colors duration-150 hover:border-ink disabled:cursor-not-allowed disabled:opacity-55 disabled:hover:border-black/20">

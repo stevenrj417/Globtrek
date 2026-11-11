@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { destinations } from "../data/destinations";
 import { discoverySliderToUnknownness, legacyBudgetLabel } from "../lib/recommendation/travelerProfile";
 import { searchDestinations } from "../lib/search/destinationSearch";
@@ -63,9 +64,11 @@ export function DestinationSearchPanel({ onClose }) {
     window.location.assign(`/thinking?destination=${encodeURIComponent(destination.id || destination.airport)}`);
   }
 
-  return <>
-    {open ? <div className="fixed inset-0 z-[120] grid place-items-center overflow-y-auto bg-black/30 px-4 py-6 backdrop-blur-[3px]" onMouseDown={close}>
-      <section role="dialog" aria-modal="true" aria-label={destination ? `Personalize ${destination.city}` : "Search destinations"} className="my-auto w-full max-w-2xl bg-bg p-6 shadow-overlay sm:p-10" onMouseDown={(event) => event.stopPropagation()}>
+  // The header's backdrop blur makes it the containing block for fixed children,
+  // so the dialog is mounted on the body to cover the real viewport.
+  return createPortal(<>
+    {open ? <div className="fixed inset-0 z-[120] grid place-items-center bg-black/30 px-4 py-4 backdrop-blur-[3px]" onMouseDown={close}>
+      <section role="dialog" aria-modal="true" aria-label={destination ? `Personalize ${destination.city}` : "Search destinations"} className="max-h-[calc(100dvh-2rem)] w-full max-w-2xl overflow-y-auto overscroll-contain bg-bg p-6 shadow-overlay sm:p-10" onMouseDown={(event) => event.stopPropagation()}>
         <div className="flex items-start justify-between gap-6"><div><p className="text-micro uppercase tracking-editorial text-black/40">{destination ? "A quick edit" : "Go somewhere specific"}</p><h2 className="mt-3 font-serif text-4xl tracking-tight-3 sm:text-5xl">{destination ? titleCase(destination.city) : "Find a destination."}</h2></div><button type="button" onClick={close} aria-label="Close" className="grid h-10 w-10 place-items-center text-xl font-light">×</button></div>
         {!destination ? <div className="mt-8"><label className="sr-only" htmlFor="destination-search">Destination</label><input id="destination-search" autoFocus value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Try Provence, Japan, coast…" className="min-h-16 w-full border-b border-black/20 bg-transparent font-serif text-2xl outline-none placeholder:text-black/25 focus:border-black" />
           <div className="mt-3">{suggestions.map((item) => <button key={item.id || item.airport} type="button" onClick={() => setDestination(item)} className="flex w-full items-center justify-between border-b border-black/10 py-4 text-left transition hover:pl-2"><span><strong className="font-serif text-xl font-normal">{titleCase(item.city)}</strong><span className="ml-3 text-micro uppercase tracking-label text-black/40">{titleCase(item.country)}</span></span><span className="text-micro tracking-label text-black/35">{item.airport}</span></button>)}{query && !suggestions.length ? <p className="py-8 text-sm font-light text-black/45">That place is not in the GlobTrek collection yet.</p> : null}</div>
@@ -76,9 +79,9 @@ export function DestinationSearchPanel({ onClose }) {
           <fieldset><legend className="text-micro uppercase tracking-editorial text-black/40">What matters most?</legend><div className="mt-3 flex flex-wrap gap-2">{VIBES.map((item) => <button key={item} type="button" onClick={() => setVibe(item)} className={`border px-4 py-3 text-micro uppercase tracking-label ${vibe === item ? "border-black bg-black text-white" : "border-black/15"}`}>{item}</button>)}</div></fieldset>
           <fieldset><legend className="text-micro uppercase tracking-editorial text-black/40">Pace</legend><div className="mt-3 flex flex-wrap gap-2">{PACES.map((item) => <button key={item} type="button" onClick={() => setPace(item)} className={`border px-4 py-3 text-micro uppercase tracking-label ${pace === item ? "border-black bg-black text-white" : "border-black/15"}`}>{item}</button>)}</div></fieldset>
           <label className="block"><span className="flex justify-between text-micro uppercase tracking-editorial text-black/40"><span>Hidden</span><span>Iconic</span></span><input type="range" min="0" max="100" value={knownness} onChange={(event) => setKnownness(Number(event.target.value))} className="mt-4 w-full accent-black" aria-label="Destination knownness" /></label>
-          <div className="flex items-center justify-between border-t border-black/10 pt-6"><button type="button" onClick={() => setDestination(null)} className="text-micro uppercase tracking-editorial text-black/45">← Back</button><button type="button" onClick={launch} className="min-h-14 bg-black px-7 text-micro uppercase tracking-editorial text-white">Build this trip →</button></div>
+          <div className="sticky -bottom-6 -mx-6 -mb-6 flex items-center justify-between border-t border-black/10 bg-bg px-6 pb-6 pt-4 sm:-bottom-10 sm:-mx-10 sm:-mb-10 sm:px-10 sm:pb-10 sm:pt-6"><button type="button" onClick={() => setDestination(null)} className="text-micro uppercase tracking-editorial text-black/45">← Back</button><button type="button" onClick={launch} className="min-h-14 bg-black px-7 text-micro uppercase tracking-editorial text-white">Build this trip →</button></div>
         </div>}
       </section>
     </div> : null}
-  </>;
+  </>, document.body);
 }

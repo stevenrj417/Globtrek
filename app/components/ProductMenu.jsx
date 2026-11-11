@@ -35,14 +35,14 @@ export function ProductMenu() {
   if (visibleProducts.length === 1) {
     return <Link href="/" className="group inline-flex min-h-12 items-center gap-2.5 text-2xl text-ink sm:text-3xl">
       <span className="globtrek-wordmark">globtrek</span>
-      <BrandMark className="transition-opacity duration-300 group-hover:opacity-75" />
+      <BrandMark className="transition-opacity duration-300 group-hover:opacity-75 max-sm:hidden" />
     </Link>;
   }
 
   return <div className="relative z-50" ref={root}>
     <button type="button" aria-expanded={open} aria-haspopup="menu" aria-controls="globtrek-product-menu" onClick={() => setOpen((value) => !value)} className="group inline-flex min-h-12 items-center gap-2.5 text-2xl text-ink sm:text-3xl">
       <span className="globtrek-wordmark">globtrek</span>
-      <BrandMark className="transition-opacity duration-300 group-hover:opacity-75" />
+      <BrandMark className="transition-opacity duration-300 group-hover:opacity-75 max-sm:hidden" />
       <svg viewBox="0 0 12 8" className={`ml-1 h-2 w-3 shrink-0 transition-transform ${open ? "rotate-180" : ""}`} fill="none" aria-hidden="true" focusable="false"><path d="m1 1.25 5 5 5-5" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" /></svg>
       <span className="sr-only">Choose a GlobTrek experience</span>
     </button>

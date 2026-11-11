@@ -3,7 +3,7 @@ import wegotripCities from "../../data/wegotripCities.json" with { type: "json" 
 // WeGoTrip products (public API, no key): self-guided audio tours and
 // attraction tickets with real prices, photos and ratings. Products are ranked
 // by the traveler's quiz answers, not by provider popularity alone.
-// Prices are per person in the product's own currency.
+// Prices are per person, requested in USD to match the rest of the trip.
 
 export const WEGOTRIP_API = "https://app.wegotrip.com/api/v2";
 
@@ -43,7 +43,7 @@ export function normalizeProduct(item) {
     rating: Number.isFinite(Number(item.rating)) && item.ratingsCount > 0 ? Number(item.rating) : null,
     ratingsCount: Number(item.ratingsCount) || 0,
     durationMinutes: Number(item.durationMin) || null,
-    duration: item.duration || null,
+    duration: item.duration ? String(item.duration).replace(/^1 (hour|day|minute)s\b/i, "1 $1") : null,
     selfGuided: Boolean(item.tags?.audioguide),
     url,
   };
@@ -71,7 +71,7 @@ export function rankProducts(products, preferences = {}) {
 }
 
 export async function fetchCityProducts(cityId, { fetchImpl = fetch, perPage = 60 } = {}) {
-  const response = await fetchImpl(`${WEGOTRIP_API}/products/popular/?city=${Number(cityId)}&per_page=${perPage}`, { signal: AbortSignal.timeout(8000), headers: { Accept: "application/json" } });
+  const response = await fetchImpl(`${WEGOTRIP_API}/products/popular/?city=${Number(cityId)}&per_page=${perPage}&currency=USD`, { signal: AbortSignal.timeout(8000), headers: { Accept: "application/json" } });
   if (!response.ok) throw new Error(`wegotrip_http_${response.status}`);
   const json = await response.json();
   return (json?.data?.results || []).map(normalizeProduct).filter(Boolean);

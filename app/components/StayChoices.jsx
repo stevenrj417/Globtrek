@@ -38,15 +38,14 @@ export function stayLinkContext(trip, stay) {
 }
 
 function PriceBlock({ price }) {
+  // No price for this property: the card's "Check price" link is the answer, and
+  // the section's estimate stays the only number shown.
+  if (price.kind === "unavailable") return null;
   return <div className="mt-4 border-t border-black/12 pt-4">
     <p className="text-micro uppercase tracking-label text-black/50">{PRICE_KIND_LABEL[price.kind]}</p>
-    {price.kind === "unavailable"
-      ? null
-      : <>
-        <p className="tabular mt-1 font-serif text-xl">{money(price.total)} <span className="font-sans text-xs text-black/55">for {price.nights} night{price.nights === 1 ? "" : "s"}</span></p>
-        <p className="tabular mt-1 text-xs text-black/60">{price.math}</p>
-        <p className="mt-1 text-xs leading-5 text-black/55">{price.detail}</p>
-      </>}
+    <p className="tabular mt-1 font-serif text-xl">{money(price.total)} <span className="font-sans text-xs text-black/55">for {price.nights} night{price.nights === 1 ? "" : "s"}</span></p>
+    <p className="tabular mt-1 text-xs text-black/60">{price.math}</p>
+    <p className="mt-1 text-xs leading-5 text-black/55">{price.detail}</p>
   </div>;
 }
 
