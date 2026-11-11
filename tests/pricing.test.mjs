@@ -94,3 +94,8 @@ test("the browser prices a flight from the server's observed fare, and never a s
   const stale = estimateFlight(profile, { airport: "HNL" }, { observed: { ...server, stale: true } });
   assert.notEqual(stale.priceSource, "aviasales_observed_biweekly");
 });
+
+test("a private room with a shared bathroom is still a private room", () => {
+  assert.equal(dormOnly({ dorms: true, roomTypes: ["Double Room with Shared Bathroom"] }), false);
+  assert.equal(dormOnly({ dorms: true, roomTypes: ["Bed in 6-Bed Mixed Dormitory Room"] }), true);
+});

@@ -15,6 +15,8 @@ const CALM_TYPES = new Set(["Guest house", "Bed and breakfast", "Inn"]);
 const SOCIAL = /bar|nightclub|pub crawl|happy hour|games room|karaoke/i;
 const ACCESSIBLE = /wheelchair|accessible|step-free|roll-in|elevator|lift/i;
 const DAY = 86400000;
+// A bed in a shared room. A private room with a shared bathroom is still private.
+const SHARED_SLEEPING = /dorm|bunk|bed in|shared (room|dorm)|capsule/i;
 
 const clamp = (value) => Math.max(0, Math.min(100, Math.round(value)));
 
@@ -59,7 +61,7 @@ export function scoreStay(property, { profile, destination, price, accessibleOnl
   const type = stayType(property);
   const lodging = profile.lodging || "either";
   const typeFit = lodging === "hostel" ? (property.dorms ? 100 : type === "Hostel" ? 70 : 25)
-    : lodging === "private" ? (property.dorms && !(property.roomTypes || []).some((room) => !/dorm|shared|bunk|bed in/i.test(room)) ? 15 : 95)
+    : lodging === "private" ? (property.dorms && !(property.roomTypes || []).some((room) => !SHARED_SLEEPING.test(room)) ? 15 : 95)
       : profile.spendStyle === "comfortable" ? (property.dorms ? 20 : TYPE_RANK[type] >= 3 ? 95 : 75)
       : profile.spendStyle === "value" ? (property.dorms ? 60 : TYPE_RANK[type] <= 3 ? 90 : 75)
         : property.dorms ? 90 : TYPE_RANK[type] <= 2 ? 85 : 65;
@@ -92,7 +94,7 @@ function plural(count, word) {
 
 export function whyLine(choice, role, profile) {
   const facts = [];
-  const privateRooms = (choice.roomTypes || []).some((room) => !/dorm|shared|bunk|bed in/i.test(room));
+  const privateRooms = (choice.roomTypes || []).some((room) => !SHARED_SLEEPING.test(room));
   if (choice.dorms && !(profile.lodging === "private" && privateRooms)) facts.push("dorm beds");
   else if (choice.dorms) facts.push("private rooms as well as dorms");
   else facts.push(`private ${stayType(choice).toLowerCase() === "hotel" ? "hotel rooms" : "rooms"}`);
@@ -110,7 +112,7 @@ export function whyLine(choice, role, profile) {
 export function dormOnly(property) {
   if (!property.dorms && property.priceTier !== "hostel") return false;
   const rooms = property.roomTypes || [];
-  return !rooms.some((room) => !/dorm|shared|bunk|bed in/i.test(room));
+  return !rooms.some((room) => !SHARED_SLEEPING.test(room));
 }
 
 export function buildStayShortlist({ candidates, profile, destination, budgetPlan, accessibleOnly = false, now = Date.now() }) {
