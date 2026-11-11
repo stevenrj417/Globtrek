@@ -217,7 +217,8 @@ export default function ResultsPage() {
   const why = whyThisFits({ answers: quiz.answers || {}, exactBudget: profile.exactBudget, budgetPlan, trip });
   const includedSummary = budgetPlan.includedBudgetCategories.flights === false ? "flights not included" : "flight estimate included";
   const reasons = matchReasons({ answers: quiz.answers || {}, profile: view.activeProfile, budgetPlan: trip.budgetPlan, trip, range: tripLengthRange(trip) });
-  const currentEstimate = snapshotEstimate(trip.budgetPlan);
+  // The fare date shown is the one behind the flight price on this page.
+  const currentEstimate = { ...snapshotEstimate(trip.budgetPlan), flightPriceChecked: budgetPlan.estimates?.flights?.priceLastChecked || null };
   const changed = estimateChanged(snapshot?.estimate, currentEstimate);
   const datesLine = schedule.flexible ? (budgetPlan.period?.kind === "season" ? `Flexible · ${budgetPlan.period.label}` : `Flexible dates${budgetPlan.pricedMonth ? ` · priced for ${new Intl.DateTimeFormat("en-US", { month: "long", timeZone: "UTC" }).format(new Date(Date.UTC(2026, budgetPlan.pricedMonth - 1, 1)))}` : ""}`) : schedule.datesLabel;
   const alternatives = localMatches.filter((item) => (item.id || item.airport) !== destinationKey).slice(0, 3);
