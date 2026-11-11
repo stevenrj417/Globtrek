@@ -1,5 +1,5 @@
 import { openShareToken, sealShareToken } from "../../lib/results/shareToken";
-import { rateLimit } from "../../lib/security/rateLimit";
+import { sharedRateLimit } from "../../lib/security/rateLimit";
 
 const NO_STORE = { "Cache-Control": "no-store" };
 const ID = /^[A-Za-z0-9_-]{2,80}$/;
@@ -20,7 +20,7 @@ function cleanPayload(body) {
 }
 
 export async function POST(request) {
-  const limited = rateLimit(request, { name: "share", limit: 20 });
+  const limited = await sharedRateLimit(request, { name: "share", limit: 20 });
   if (limited) return limited;
   const body = await request.json().catch(() => null);
   const payload = cleanPayload(body);
@@ -36,7 +36,7 @@ export async function POST(request) {
 }
 
 export async function GET(request) {
-  const limited = rateLimit(request, { name: "share-open", limit: 60 });
+  const limited = await sharedRateLimit(request, { name: "share-open", limit: 60 });
   if (limited) return limited;
   const token = new URL(request.url).searchParams.get("t");
   const result = openShareToken(token);

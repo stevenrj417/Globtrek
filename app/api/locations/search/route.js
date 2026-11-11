@@ -2,7 +2,7 @@ import airports from "../../../data/airports.json" with { type: "json" };
 import { GooglePlacesHotelProvider } from "../../../lib/google-places/GooglePlacesHotelProvider";
 import { airportByIata } from "../../../lib/recommendation/travelArea";
 import { normalizeLocationPlace } from "../../../lib/recommendation/locationSearch";
-import { rateLimit } from "../../../lib/security/rateLimit";
+import { sharedRateLimit } from "../../../lib/security/rateLimit";
 
 const cache = globalThis.__globtrekLocationSearchCache || new Map();
 globalThis.__globtrekLocationSearchCache = cache;
@@ -16,7 +16,7 @@ function airportMatch(query) {
 }
 
 export async function GET(request) {
-  const limited = rateLimit(request, { name: "locations", limit: 60 });
+  const limited = await sharedRateLimit(request, { name: "locations", limit: 60 });
   if (limited) return limited;
   const query = new URL(request.url).searchParams.get("q")?.trim().slice(0, 100) || "";
   if (query.length < 2) return Response.json({ locations: [] });

@@ -4,7 +4,7 @@
 //   npm run stays:import -- --dry-run            fetch and report, write nothing
 //   npm run stays:import -- --snapshot           refresh app/data/feedStays.json (bundled fallback)
 //   npm run stays:import -- --supabase           upsert into Supabase (needs SUPABASE_SERVICE_ROLE_KEY)
-//   add --destinations HAN,LIS to limit the run
+//   add --destinations HAN,LIS to limit the run, or --all to include destinations that aren't ready yet
 //
 // Credentials (CJ_API_TOKEN, CJ_COMPANY_ID, CJ_PID, and for --supabase
 // NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY) are read from the
@@ -30,7 +30,9 @@ const { catalogDestinations } = await import("../../app/lib/catalog/catalogDesti
 const args = process.argv.slice(2);
 const mode = args.includes("--supabase") ? "supabase" : args.includes("--snapshot") ? "snapshot" : "dry-run";
 const only = args.includes("--destinations") ? args[args.indexOf("--destinations") + 1].split(",").map((id) => id.trim()) : null;
-const destinations = catalogDestinations().filter((destination) => !only || only.includes(destination.id));
+// --all also covers catalog destinations not yet recommendation-ready, to see which can be completed.
+const pool = args.includes("--all") ? catalogDestinations({ all: true }) : catalogDestinations();
+const destinations = pool.filter((destination) => !only || only.includes(destination.id));
 const snapshotUrl = new URL("../../app/data/feedStays.json", import.meta.url);
 
 let store = null;

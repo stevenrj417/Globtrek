@@ -1,12 +1,12 @@
 import { exactPlacePhotos } from "../../../../data/journeyDiscovery";
 import { GooglePlacesHotelProvider } from "../../../../lib/google-places/GooglePlacesHotelProvider";
-import { rateLimit } from "../../../../lib/security/rateLimit";
+import { sharedRateLimit } from "../../../../lib/security/rateLimit";
 
 const cache = globalThis.__globtrekExactPhotoCache || new Map();
 globalThis.__globtrekExactPhotoCache = cache;
 
 export async function GET(request, { params }) {
-  const limited = rateLimit(request, { name: "exact-photo", limit: 60 });
+  const limited = await sharedRateLimit(request, { name: "exact-photo", limit: 60 });
   if (limited) return limited;
   const { placeId } = await params;
   const known = exactPlacePhotos[placeId];

@@ -1,9 +1,9 @@
-import { rateLimit } from "../../lib/security/rateLimit";
+import { sharedRateLimit } from "../../lib/security/rateLimit";
 
 // Browser crash reports, written to the server log as one structured line so
 // they show up beside server errors in Vercel's logs.
 export async function POST(request) {
-  const limited = rateLimit(request, { name: "client-error", limit: 20 });
+  const limited = await sharedRateLimit(request, { name: "client-error", limit: 20 });
   if (limited) return limited;
   const body = await request.json().catch(() => null);
   if (!body || typeof body !== "object") return new Response(null, { status: 400 });

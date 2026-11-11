@@ -1,7 +1,7 @@
 import { travelpayoutsConfig } from "../../../lib/travelpayouts/client.js";
 import { recentFares } from "../../../lib/travelpayouts/fares.js";
 import { partnerUrls } from "../../../lib/travelpayouts/partnerCache.js";
-import { rateLimit } from "../../../lib/security/rateLimit.js";
+import { sharedRateLimit } from "../../../lib/security/rateLimit.js";
 
 export const dynamic = "force-dynamic";
 
@@ -15,7 +15,7 @@ const cache = new Map();
 const TTL = 30 * 60000;
 
 export async function GET(request) {
-  const limited = rateLimit(request, { name: "flight-fares", limit: 30 });
+  const limited = await sharedRateLimit(request, { name: "flight-fares", limit: 30 });
   if (limited) return limited;
   const params = new URL(request.url).searchParams;
   const origin = String(params.get("origin") || "").toUpperCase();
@@ -46,7 +46,7 @@ export async function GET(request) {
       fares: fares.map((fare, index) => ({
         departDate: fare.departDate, returnDate: fare.returnDate, roundTrip: true, exactDates: fare.exactDates,
         pricePerPerson: fare.pricePerPerson, groupTotal: fare.groupTotal, adults: fare.adults, currency: fare.currency,
-        stops: fare.stops, airline: fare.airline, otherAirport: fare.otherAirport,
+        stops: fare.stops, airline: fare.airline, otherAirport: fare.otherAirport, otherReturnAirport: fare.otherReturnAirport,
         bookingUrl: links[index].partnerUrl || fare.searchUrl, attributed: Boolean(links[index].partnerUrl),
       })),
     };

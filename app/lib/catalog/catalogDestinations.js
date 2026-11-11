@@ -18,8 +18,8 @@ const FEED_CITY_ALIASES = {
 };
 
 // Every destination GlobTrek can recommend, launch cities first.
-export function catalogDestinations() {
-  const ready = destinations.filter((destination) => destination.recommendationReady !== false || LAUNCH_SET.includes(destination.id));
+export function catalogDestinations({ all = false } = {}) {
+  const ready = destinations.filter((destination) => all || destination.recommendationReady !== false || LAUNCH_SET.includes(destination.id));
   const ordered = [...ready].sort((a, b) => Number(LAUNCH_SET.includes(b.id)) - Number(LAUNCH_SET.includes(a.id)));
   return ordered.map((destination) => ({
     id: destination.id,

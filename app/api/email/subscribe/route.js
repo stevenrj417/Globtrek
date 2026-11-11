@@ -2,10 +2,10 @@ import { createAdminClient } from "../../../lib/supabase/admin";
 import { sendEmail } from "../../../lib/email/resend";
 import { welcomeEmail } from "../../../lib/email/templates";
 import { createUnsubscribeToken, hashUnsubscribeToken, normalizeEmail, publicSiteUrl } from "../../../lib/email/subscriptions";
-import { rateLimit } from "../../../lib/security/rateLimit";
+import { sharedRateLimit } from "../../../lib/security/rateLimit";
 
 export async function POST(request) {
-  const limited = rateLimit(request, { name: "email-subscribe", limit: 5 });
+  const limited = await sharedRateLimit(request, { name: "email-subscribe", limit: 5 });
   if (limited) return limited;
   const body = await request.json().catch(() => ({}));
   const email = normalizeEmail(body.email);

@@ -1,4 +1,4 @@
-import { rateLimit } from "../../lib/security/rateLimit";
+import { sharedRateLimit } from "../../lib/security/rateLimit";
 import { scrubMessage } from "../../lib/security/scrub";
 
 const KINDS = new Set(["great_match", "not_for_me", "something_wrong"]);
@@ -8,7 +8,7 @@ const ID = /^[A-Za-z0-9_.-]{1,80}$/;
 // Result feedback is written to the server log as one structured line, which
 // Vercel retains with the project's logs. No IP address or account is stored.
 export async function POST(request) {
-  const limited = rateLimit(request, { name: "feedback", limit: 10 });
+  const limited = await sharedRateLimit(request, { name: "feedback", limit: 10 });
   if (limited) return limited;
   const body = await request.json().catch(() => null);
   if (!body || !KINDS.has(body.kind)) return Response.json({ error: "Invalid feedback" }, { status: 400 });

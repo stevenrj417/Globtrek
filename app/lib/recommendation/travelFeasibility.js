@@ -107,9 +107,11 @@ function distanceMiles([fromLatitude, fromLongitude], [toLatitude, toLongitude])
   return 3958.8 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
+// Number(null) and Number("") are 0, which would put a missing location at 0°, 0°.
 function coordinates(value) {
-  const latitude = Number(value?.latitude);
-  const longitude = Number(value?.longitude);
+  if (value?.latitude == null || value?.longitude == null || value.latitude === "" || value.longitude === "") return null;
+  const latitude = Number(value.latitude);
+  const longitude = Number(value.longitude);
   return Number.isFinite(latitude) && Number.isFinite(longitude) ? [latitude, longitude] : null;
 }
 

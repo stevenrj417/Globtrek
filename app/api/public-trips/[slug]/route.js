@@ -1,12 +1,12 @@
 import { createAdminClient } from "../../../lib/supabase/admin";
-import { rateLimit } from "../../../lib/security/rateLimit";
+import { sharedRateLimit } from "../../../lib/security/rateLimit";
 
 const NOT_FOUND = () => Response.json({ error: "Trip not found" }, { status: 404, headers: { "Cache-Control": "no-store" } });
 
 // A shared trip, readable by anyone with its link until it expires or is revoked.
 // Only the plan is returned: never the owner's id, email or sharing settings.
 export async function GET(request, { params }) {
-  const limited = rateLimit(request, { name: "public-trip", limit: 60 });
+  const limited = await sharedRateLimit(request, { name: "public-trip", limit: 60 });
   if (limited) return limited;
   const { slug } = await params;
   if (!/^s_[A-Za-z0-9_-]{20,40}$/.test(slug)) return NOT_FOUND();

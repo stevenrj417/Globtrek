@@ -67,6 +67,17 @@ function when(value, field) {
   return String(value);
 }
 
+// Airports a cached itinerary actually uses, read from the route code in its
+// search link (e.g. "...LAXLAS...LASONT_..." departs LAX and returns to ONT).
+export function itineraryAirports(link) {
+  if (typeof link !== "string") return {};
+  const code = (link.match(/[?&]t=([^&]+)/)?.[1] || "").split("_")[0];
+  const runs = code.match(/[A-Z]{6,}/g) || [];
+  if (!runs.length) return {};
+  const last = runs[runs.length - 1];
+  return { departsFrom: runs[0].slice(0, 3), returnsTo: runs.length > 1 ? last.slice(-3) : null };
+}
+
 const num = (value) => (Number.isFinite(Number(value)) ? Number(value) : null);
 const day = (value) => (typeof value === "string" && value.length >= 10 ? value.slice(0, 10) : null);
 
@@ -94,6 +105,7 @@ export function normalizeFare(item, { currency = "usd", roundTrip } = {}) {
     foundAt: item.found_at || null,
     expiresAt: item.expires_at || null,
     searchPath: typeof item.link === "string" && item.link.startsWith("/search/") ? item.link : null,
+    returnAirport: itineraryAirports(item.link).returnsTo || null,
     source: "aviasales_cache",
   };
 }

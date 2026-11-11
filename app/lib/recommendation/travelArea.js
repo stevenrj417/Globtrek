@@ -31,6 +31,9 @@ export function structuredOrigin(value) {
   };
 }
 
+// Number(null) and Number("") are 0; a missing coordinate must stay missing.
+const finiteOrNull = (value) => (value == null || value === "" || !Number.isFinite(Number(value)) ? null : Number(value));
+
 export function originFromTrip(input = {}) {
   if (input.originDetails?.city && input.originDetails?.countryCode) return {
     type: input.originDetails.type || (input.originDetails.airportCode ? "airport" : "city"),
@@ -40,8 +43,8 @@ export function originFromTrip(input = {}) {
     city: input.originDetails.city,
     countryCode: input.originDetails.countryCode,
     countryName: input.originDetails.countryName || regionNames.of(input.originDetails.countryCode) || input.originDetails.countryCode,
-    latitude: Number.isFinite(Number(input.originDetails.latitude)) ? Number(input.originDetails.latitude) : null,
-    longitude: Number.isFinite(Number(input.originDetails.longitude)) ? Number(input.originDetails.longitude) : null,
+    latitude: finiteOrNull(input.originDetails.latitude),
+    longitude: finiteOrNull(input.originDetails.longitude),
     formattedAddress: input.originDetails.formattedAddress || null,
     verificationSource: input.originDetails.verificationSource || null,
   };

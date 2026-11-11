@@ -21,8 +21,13 @@ export function selectFares(fares, { destination, nights, depart, ret }) {
     .filter((fare) => fare.roundTrip && fare.departDate && fare.returnDate)
     .filter((fare) => !depart || (fare.departDate === depart && (!ret || fare.returnDate === ret)))
     .filter((fare) => !nights || Math.abs(nightsBetween(fare.departDate, fare.returnDate) - nights) <= 1)
-    .map((fare) => ({ ...fare, otherAirport: fare.destinationAirport && fare.destinationAirport !== destination ? fare.destinationAirport : null }))
-    .sort((a, b) => Number(Boolean(a.otherAirport)) - Number(Boolean(b.otherAirport)) || a.pricePerPerson - b.pricePerPerson);
+    .map((fare) => ({
+      ...fare,
+      otherAirport: fare.destinationAirport && fare.destinationAirport !== destination ? fare.destinationAirport : null,
+      // Returns to a different airport than it left from (e.g. out of LAX, back into ONT).
+      otherReturnAirport: fare.returnAirport && fare.originAirport && fare.returnAirport !== fare.originAirport ? fare.returnAirport : null,
+    }))
+    .sort((a, b) => Number(Boolean(a.otherAirport || a.otherReturnAirport)) - Number(Boolean(b.otherAirport || b.otherReturnAirport)) || a.pricePerPerson - b.pricePerPerson);
 }
 
 // months: YYYY-MM strings to search when dates are flexible.

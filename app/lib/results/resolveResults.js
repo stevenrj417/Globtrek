@@ -14,6 +14,15 @@
 
 export const DEFAULT_QUIZ = Object.freeze({ answers: {} });
 
+// Readable ?trip= links (made before encrypted share links, November 11, 2026)
+// carry no date of their own, so they all stop opening on this day, 90 days
+// after the change, the same lifetime as an encrypted link.
+export const LEGACY_TRIP_LINKS_UNTIL = "2027-02-09";
+
+export function legacyTripLinksOpen(now = new Date()) {
+  return now.toISOString().slice(0, 10) < LEGACY_TRIP_LINKS_UNTIL;
+}
+
 export function encodeSharedTrip(trip) {
   const bytes = new TextEncoder().encode(JSON.stringify(trip));
   let binary = "";
@@ -45,8 +54,9 @@ function parseJson(raw) {
 const cleanId = (value) => (typeof value === "string" && /^[A-Za-z0-9_-]{2,80}$/.test(value) ? value : null);
 
 // search: the page's query string; savedQuiz / savedStay: raw localStorage values.
-export function resolveResultsState({ search = "", savedQuiz = null, savedStay = null } = {}) {
+export function resolveResultsState({ search = "", savedQuiz = null, savedStay = null, now = new Date() } = {}) {
   const params = new URLSearchParams(search);
+  if (params.get("trip") && !legacyTripLinksOpen(now)) return { source: "legacy_expired", quiz: DEFAULT_QUIZ, destinationId: null, stayId: null, useSavedStay: false };
   const shared = params.get("trip") ? decodeSharedTrip(params.get("trip")) : null;
   if (shared?.quiz && typeof shared.quiz === "object") {
     return { source: "shared", quiz: shared.quiz, destinationId: cleanId(shared.destination), stayId: cleanId(shared.stay) || null, useSavedStay: false };

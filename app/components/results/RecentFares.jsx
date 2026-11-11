@@ -50,6 +50,7 @@ export function RecentFares({ origin, destination, depart, ret, months, nights, 
             {fare.adults > 1 ? <p className="tabular mt-1 text-xs">{money(fare.groupTotal)} for {fare.adults} adults</p> : null}
             <p className="mt-2 text-xs">{short(fare.departDate)} → {short(fare.returnDate)}{fare.exactDates ? " · your dates" : ""} · {fare.stops === 0 ? "nonstop" : fare.stops ? `${fare.stops} stop${fare.stops === 1 ? "" : "s"}` : "stops vary"}</p>
             {fare.otherAirport ? <p className="mt-1 text-xs"><strong>Arrives at {fare.otherAirport}</strong>, not {destination}.</p> : null}
+            {fare.otherReturnAirport ? <p className="mt-1 text-xs"><strong>Returns to {fare.otherReturnAirport}</strong>, not {origin}.</p> : null}
           </div>
           <a href={fare.bookingUrl} target="_blank" rel="noopener sponsored" onClick={() => track("recent_fare_opened", { route: `${origin}-${destination}`, exact: fare.exactDates })} className="mt-4 inline-flex min-h-11 items-center justify-center border border-black px-4 text-micro uppercase tracking-label hover:bg-black hover:text-white">Check this fare on Aviasales <span className="ml-2" aria-hidden="true">↗</span></a>
         </li>)}

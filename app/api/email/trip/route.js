@@ -4,16 +4,35 @@ import { tripEmail } from "../../../lib/email/templates";
 import { confirmEmailAccepted, tripEmailIdempotencyKey } from "../../../lib/email/tripDelivery";
 import { normalizeEmail } from "../../../lib/email/subscriptions";
 import { buildTripEmailModel } from "../../../lib/recommendation/tripSerializer";
-import { rateLimit } from "../../../lib/security/rateLimit";
+import { sharedRateLimit } from "../../../lib/security/rateLimit";
+import { decodeSharedTrip } from "../../../lib/results/resolveResults";
+import { sealShareToken } from "../../../lib/results/shareToken";
 
+// Only links back to GlobTrek. A readable ?trip= link is swapped for an
+// encrypted, expiring share link so trip details never sit in the email in clear.
 function safeViewUrl(value) {
   if (typeof value !== "string") return null;
-  if (value.startsWith("/")) return `https://glob-trek.com${value}`;
-  try { const url = new URL(value); return url.protocol === "https:" && ["glob-trek.com", "www.glob-trek.com"].includes(url.hostname) ? url.toString() : null; } catch { return null; }
+  let url;
+  try { url = new URL(value, "https://www.glob-trek.com"); } catch { return null; }
+  if (url.protocol !== "https:" || !["glob-trek.com", "www.glob-trek.com"].includes(url.hostname)) return null;
+  const legacy = url.searchParams.get("trip");
+  if (legacy) {
+    const trip = decodeSharedTrip(legacy);
+    if (!trip?.quiz || typeof trip.destination !== "string") return "https://www.glob-trek.com/results";
+    const quiz = { ...trip.quiz };
+    for (const field of ["email", "name", "phone", "firstName", "lastName"]) delete quiz[field];
+    try {
+      const { token } = sealShareToken({ quiz, destination: trip.destination, stay: typeof trip.stay === "string" ? trip.stay : null, snapshot: null });
+      return `https://www.glob-trek.com/results?s=${token}`;
+    } catch {
+      return `https://www.glob-trek.com/results?destination=${encodeURIComponent(trip.destination)}`;
+    }
+  }
+  return url.toString();
 }
 
 export async function POST(request) {
-  const limited = rateLimit(request, { name: "email-trip", limit: 5 });
+  const limited = await sharedRateLimit(request, { name: "email-trip", limit: 5 });
   if (limited) return limited;
   const body = await request.json().catch(() => ({}));
   const email = normalizeEmail(body.email);

@@ -1,12 +1,12 @@
 import { esimPlans } from "../../../lib/extras/esim.js";
 import { partnerUrls } from "../../../lib/travelpayouts/partnerCache.js";
-import { rateLimit } from "../../../lib/security/rateLimit.js";
+import { sharedRateLimit } from "../../../lib/security/rateLimit.js";
 
 export const dynamic = "force-dynamic";
 
 // Optional eSIM plans for an international trip (Airalo feed prices, USD).
 export async function GET(request) {
-  const limited = rateLimit(request, { name: "esim", limit: 30 });
+  const limited = await sharedRateLimit(request, { name: "esim", limit: 30 });
   if (limited) return limited;
   const params = new URL(request.url).searchParams;
   const country = String(params.get("country") || "").slice(0, 60);

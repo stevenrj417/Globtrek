@@ -1,0 +1,145 @@
+{
+ "checkedAt": "2026-11-11",
+ "locations": {
+  "KIX": {
+   "latitude": 35.0116,
+   "longitude": 135.7681,
+   "source": "https://en.wikipedia.org/wiki/Kyoto"
+  },
+  "HND": {
+   "latitude": 35.6897,
+   "longitude": 139.6922,
+   "source": "https://en.wikipedia.org/wiki/Tokyo"
+  },
+  "ICN": {
+   "latitude": 37.56,
+   "longitude": 126.99,
+   "source": "https://en.wikipedia.org/wiki/Seoul"
+  },
+  "DPS": {
+   "latitude": -8.6717,
+   "longitude": 115.2339,
+   "source": "https://en.wikipedia.org/wiki/Denpasar"
+  },
+  "SIN": {
+   "latitude": 1.2833,
+   "longitude": 103.8333,
+   "source": "https://en.wikipedia.org/wiki/Singapore"
+  },
+  "MLE": {
+   "latitude": 4.1753,
+   "longitude": 73.5089,
+   "source": "https://en.wikipedia.org/wiki/Mal%C3%A9"
+  },
+  "DXB": {
+   "latitude": 25.2047,
+   "longitude": 55.2708,
+   "source": "https://en.wikipedia.org/wiki/Dubai"
+  },
+  "CPT": {
+   "latitude": -33.9253,
+   "longitude": 18.4239,
+   "source": "https://en.wikipedia.org/wiki/Cape_Town"
+  },
+  "RAK": {
+   "latitude": 31.63,
+   "longitude": -8.0089,
+   "source": "https://en.wikipedia.org/wiki/Marrakesh"
+  },
+  "NBO": {
+   "latitude": -1.2864,
+   "longitude": 36.8172,
+   "source": "https://en.wikipedia.org/wiki/Nairobi"
+  },
+  "CDG": {
+   "latitude": 48.8567,
+   "longitude": 2.3522,
+   "source": "https://en.wikipedia.org/wiki/Paris"
+  },
+  "MRS": {
+   "latitude": 43.5263,
+   "longitude": 5.4454,
+   "source": "https://en.wikipedia.org/wiki/Aix-en-Provence"
+  },
+  "NAP": {
+   "latitude": 40.6337,
+   "longitude": 14.6026,
+   "source": "https://en.wikipedia.org/wiki/Amalfi"
+  },
+  "FCO": {
+   "latitude": 41.8933,
+   "longitude": 12.4828,
+   "source": "https://en.wikipedia.org/wiki/Rome"
+  },
+  "FLR": {
+   "latitude": 43.7714,
+   "longitude": 11.2542,
+   "source": "https://en.wikipedia.org/wiki/Florence"
+  },
+  "JTR": {
+   "latitude": 36.415,
+   "longitude": 25.4325,
+   "source": "https://en.wikipedia.org/wiki/Santorini"
+  },
+  "BCN": {
+   "latitude": 41.3828,
+   "longitude": 2.1769,
+   "source": "https://en.wikipedia.org/wiki/Barcelona"
+  },
+  "KEF": {
+   "latitude": 64.1458,
+   "longitude": -21.9425,
+   "source": "https://en.wikipedia.org/wiki/Reykjav%C3%ADk"
+  },
+  "LHR": {
+   "latitude": 51.5072,
+   "longitude": -0.1275,
+   "source": "https://en.wikipedia.org/wiki/London"
+  },
+  "JFK": {
+   "latitude": 40.7128,
+   "longitude": -74.0061,
+   "source": "https://en.wikipedia.org/wiki/New_York_City"
+  },
+  "TQO": {
+   "latitude": 20.2147,
+   "longitude": -87.4289,
+   "source": "https://en.wikipedia.org/wiki/Tulum"
+  },
+  "SJO": {
+   "latitude": 9.9325,
+   "longitude": -84.08,
+   "source": "https://en.wikipedia.org/wiki/San_Jos%C3%A9%2C_Costa_Rica"
+  },
+  "GIG": {
+   "latitude": -22.9111,
+   "longitude": -43.2056,
+   "source": "https://en.wikipedia.org/wiki/Rio_de_Janeiro"
+  },
+  "YVR": {
+   "latitude": 49.2608,
+   "longitude": -123.1139,
+   "source": "https://en.wikipedia.org/wiki/Vancouver"
+  },
+  "OGG": {
+   "latitude": 20.8,
+   "longitude": -156.3,
+   "source": "https://en.wikipedia.org/wiki/Maui"
+  },
+  "SYD": {
+   "latitude": -33.8678,
+   "longitude": 151.21,
+   "source": "https://en.wikipedia.org/wiki/Sydney"
+  },
+  "CHC": {
+   "latitude": -43.5311,
+   "longitude": 172.6361,
+   "source": "https://en.wikipedia.org/wiki/Christchurch"
+  },
+  "PPT": {
+   "latitude": -17.535,
+   "longitude": -149.5696,
+   "source": "https://en.wikipedia.org/wiki/Papeete"
+  }
+ }
+}

@@ -3,7 +3,7 @@ import { normalizeTravelerProfile } from "../../lib/recommendation/travelerProfi
 import { MATCH_ALGORITHM_VERSION, closestOverBudget, matchExplanation, planDestination, rankDestinations } from "../../lib/recommendation/destinationEngine";
 import { tripSchedule } from "../../lib/trip/schedule";
 import { validateTripRecommendation } from "../../lib/recommendation/finalTripValidator";
-import { rateLimit } from "../../lib/security/rateLimit";
+import { sharedRateLimit } from "../../lib/security/rateLimit";
 
 const resultCache = new Map();
 const CACHE_TTL = 24 * 60 * 60 * 1000;
@@ -247,7 +247,7 @@ const planSchema = {
 };
 
 export async function POST(request) {
-  const limited = rateLimit(request, { name: "match", limit: 15 });
+  const limited = await sharedRateLimit(request, { name: "match", limit: 15 });
   if (limited) return limited;
   const startedAt = Date.now();
   const body = await request.json().catch(() => null);

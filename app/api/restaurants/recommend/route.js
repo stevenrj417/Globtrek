@@ -6,7 +6,7 @@ import { GooglePlacesDiscoveryProvider } from "../../../lib/google-places/Google
 import { launchDinners } from "../../../data/launchSet";
 import { withPlacePhotos } from "../../../lib/google-places/placePhotos";
 import { curatedRestaurants } from "../../../lib/recommendation/eligibility";
-import { rateLimit } from "../../../lib/security/rateLimit";
+import { sharedRateLimit } from "../../../lib/security/rateLimit";
 
 // GlobTrek is a budget site: unless a traveler asks for comfort, no expensive tables.
 function pricey(level) {
@@ -14,7 +14,7 @@ function pricey(level) {
 }
 
 export async function POST(request) {
-  const limited = rateLimit(request, { name: "restaurants", limit: 40 });
+  const limited = await sharedRateLimit(request, { name: "restaurants", limit: 40 });
   if (limited) return limited;
   const body = await request.json().catch(() => ({}));
   if (typeof body.destinationId !== "string" || body.destinationId.length > 80) return Response.json({ error: "Unknown destination" }, { status: 400 });

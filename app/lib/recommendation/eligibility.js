@@ -55,7 +55,7 @@ const CHECKS = [
   ["knownness score", (d) => Number.isFinite(d.recognition)],
   ["trip-length range", (d) => tripLengthRange(d).max >= tripLengthRange(d).min],
   ["reviewed seasonal guidance", (d) => Boolean(d.season) && !/requires .*review/i.test(d.season)],
-  ["flight estimate support", (d) => (Number.isFinite(Number(d.latitude)) && Number.isFinite(Number(d.longitude))) || LAUNCH_SET.includes(d.id)],
+  ["flight estimate support", (d) => (d.latitude != null && d.longitude != null && Number.isFinite(Number(d.latitude)) && Number.isFinite(Number(d.longitude))) || LAUNCH_SET.includes(d.id)],
   [`${MIN_STAYS}+ accommodation options`, (d) => stayCount(d.id) >= MIN_STAYS],
   [`${MIN_ACTIVITIES}+ activities`, (d) => activityCount(d.id) >= MIN_ACTIVITIES],
   ["destination-specific daily costs", (d) => d.planningAverages?.model === "city"],

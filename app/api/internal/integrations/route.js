@@ -31,6 +31,8 @@ export async function GET(request) {
     check("get_special_offers", async () => sample(await specialOffers({ token, origin: "LAX" }))),
     check("nearest_places_matrix", async () => sample(await nearestPlaces({ token, origin: "LAX", destination: "LIS" }))),
     check("statistics_fields", async () => ({ count: (await statisticsFields({ token })).length })),
+    // Row count only: the report's figures stay behind the private report route.
+    check("statistics_query", async () => { const { bookingStatistics } = await import("../../../lib/travelpayouts/client.js"); const report = await bookingStatistics({ token, from: "2026-10-01", to: "2026-11-11" }); return { rows: report.rows.length, fields: Object.keys(report.rows[0] || {}) }; }),
     check("links_create", async () => {
       const urls = [
         `https://www.aviasales.com/search/LAX1503LIS221`,

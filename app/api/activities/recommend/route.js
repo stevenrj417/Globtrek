@@ -7,7 +7,7 @@ import { GooglePlacesDiscoveryProvider } from "../../../lib/google-places/Google
 import { launchActivities } from "../../../data/launchSet";
 import { withPlacePhotos } from "../../../lib/google-places/placePhotos";
 import { curatedActivities } from "../../../lib/recommendation/eligibility";
-import { rateLimit } from "../../../lib/security/rateLimit";
+import { sharedRateLimit } from "../../../lib/security/rateLimit";
 import { bookableActivities } from "../../../lib/activities/bookable";
 
 // Bookable tours for the traveler: interest and pace from the quiz, and the
@@ -25,7 +25,7 @@ function bookableFor(destination, quiz) {
 }
 
 export async function POST(request) {
-  const limited = rateLimit(request, { name: "activities", limit: 40 });
+  const limited = await sharedRateLimit(request, { name: "activities", limit: 40 });
   if (limited) return limited;
   const body = await request.json().catch(() => ({}));
   if (typeof body.destinationId !== "string" || body.destinationId.length > 80) return Response.json({ error: "Unknown destination" }, { status: 400 });
