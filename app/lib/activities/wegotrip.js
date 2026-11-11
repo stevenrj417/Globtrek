@@ -24,6 +24,8 @@ export function wegotripCity(destinationId) {
 export function normalizeProduct(item) {
   const price = Number(item?.price);
   if (!item?.id || !item.title || !Number.isFinite(price) || price < 0 || item.tags?.available === false) return null;
+  // The same tour is often listed again in another language; GlobTrek's pages are in English.
+  if (item.locale && item.locale !== "en") return null;
   const url = typeof item.url === "string" && item.url.startsWith("https://wegotrip.com/")
     ? item.url
     : item.slug && item.city?.slug && item.city?.id ? `https://wegotrip.com/${item.city.slug}-d${item.city.id}/${item.slug}-p${item.id}/` : null;

@@ -100,6 +100,7 @@ test("WeGoTrip products rank by the traveler's interest and keep real provider l
   assert.equal(rankProducts(products, { interest: "Culture" }).filter((item) => item.matchesInterest).length, 2);
   assert.equal(normalizeProduct({ id: 5, title: "x", price: 3, url: "https://phish.example/" }), null);
   assert.equal(normalizeProduct({ id: 6, title: "x", price: 3, slug: "s", city: { id: 1, slug: "c" }, tags: { available: false } }), null, "unavailable products are dropped");
+  assert.equal(normalizeProduct({ id: 7, title: "Билет", price: 3, slug: "s", city: { id: 1, slug: "c" }, locale: "ru" }), null, "other-language duplicates are dropped");
   const euro = scoreProduct(products[0], { perPersonBudget: 1 });
   assert.equal(euro, scoreProduct(products[0], {}), "a USD allowance isn't compared with euro prices");
 });
