@@ -25,6 +25,7 @@ import { Alternatives } from "../components/results/Alternatives";
 import { AdjustTrip } from "../components/results/AdjustTrip";
 import { BeforeYouGo } from "../components/results/BeforeYouGo";
 import { FeedbackPanel } from "../components/results/FeedbackPanel";
+import { RecentFares } from "../components/results/RecentFares";
 import { AFFILIATE_DISCLOSURE } from "../lib/site";
 import { BookingLogo } from "../components/PartnerLogo";
 import { NoMatchPanel } from "../components/NoMatchPanel";
@@ -236,9 +237,10 @@ export default function ResultsPage() {
     <section aria-label="About this result" className="border-b border-black/10 px-6 py-6 sm:px-12"><div className="mx-auto grid max-w-[1240px] gap-5 lg:grid-cols-[1.2fr_1fr]"><div className="space-y-4"><OverBudgetNotice budgetPlan={trip.budgetPlan} /><WhyThisMatches reasons={reasons} /></div><EstimateStatus snapshot={snapshot} current={currentEstimate} changed={changed} onRefresh={refreshEstimates} /></div></section>
     <StayChoices key={`stay-${destinationKey}`} destination={trip} tripContext={context} selectedStayId={preferredStayId} onSelected={chooseStay} budgetLodging={budgetPlan.lodging?.total ? { ...budgetPlan.lodging, source: lodgingSource(budgetPlan.lodging) } : null} />
     <FlightPlan key={`flight-${destinationKey}`} trip={trip} profile={profile} estimate={budgetPlan.estimates?.flights} preferences={prefs} range={view.nightsAllowed} onUpdate={updateFlightPreferences} />
+    <RecentFares origin={prefs.departureAirport} destination={prefs.arrivalAirport || trip.airport} depart={prefs.departureDate} ret={prefs.returnDate} months={budgetPlan.period?.months} nights={schedule.nights} adults={prefs.adults || travelers} />
     <ProposalItinerary trip={trip} images={[...(proposalCatalog.activities || []), ...(proposalCatalog.restaurants || [])]} />
     <CuratedTripChoices destination={trip} quiz={quiz} restaurants={selectedRestaurants} activities={selectedActivities} onRestaurantsChange={setSelectedRestaurants} onActivitiesChange={setSelectedActivities} onCatalogChange={setProposalCatalog} />
-    <BeforeYouGo trip={trip} seasonWarning={!seasonSuitable(trip, view.activeProfile)} />
+    <BeforeYouGo trip={trip} seasonWarning={!seasonSuitable(trip, view.activeProfile)} nights={schedule.nights} />
     <CostSection budgetPlan={budgetPlan} trip={trip} nights={schedule.nights} travelers={travelers} missingPriceStay={view.stayMissingPrice ? view.stay.name : null} />
     <section className="border-t border-black/15 px-6 py-10 sm:px-12 sm:py-12"><div className="mx-auto max-w-[1180px]"><BookingChecklist entries={bookingManifestEntries(bookingManifest)} tripKey={bookingManifest.tripId} datesSet={!schedule.flexible} datesLabel={schedule.flexible ? null : `${schedule.datesLabel} · ${schedule.label} · ${travelers} ${travelers === 1 ? "traveler" : "travelers"}`} trip={{ city: trip.city, country: trip.country, start: schedule.start, end: schedule.end, adults: prefs.adults, children: prefs.children, flight: bookingManifest.flightBooking }} /></div></section>
     <Alternatives alternatives={alternatives} current={trip} answers={quiz.answers || {}} />

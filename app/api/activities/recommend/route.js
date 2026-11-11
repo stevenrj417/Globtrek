@@ -8,6 +8,21 @@ import { launchActivities } from "../../../data/launchSet";
 import { withPlacePhotos } from "../../../lib/google-places/placePhotos";
 import { curatedActivities } from "../../../lib/recommendation/eligibility";
 import { rateLimit } from "../../../lib/security/rateLimit";
+import { bookableActivities } from "../../../lib/activities/bookable";
+
+// Bookable tours for the traveler: interest and pace from the quiz, and the
+// per-person activity allowance for the whole trip as the price ceiling.
+function bookableFor(destination, quiz) {
+  const profile = normalizeTravelerProfile(quiz || {});
+  const answers = profile.otherExistingQuizPreferences || {};
+  let perPersonBudget;
+  try {
+    const plan = buildBudgetPlan(profile, destination);
+    const travelers = Math.max(1, profile.travelers || 1);
+    if (plan.estimates?.activities?.average) perPersonBudget = plan.estimates.activities.average / travelers;
+  } catch {}
+  return bookableActivities(destination.id || destination.airport, { interest: answers.luxury, pace: answers.escape, perPersonBudget });
+}
 
 export async function POST(request) {
   const limited = rateLimit(request, { name: "activities", limit: 40 });
@@ -17,11 +32,12 @@ export async function POST(request) {
   const destination = destinations.find((item) => (item.id || item.airport) === body.destinationId);
   if (!destination) return Response.json({ error: "Unknown destination" }, { status: 400 });
   // Launch destinations show only hand-verified activities.
+  const bookablePromise = bookableFor(destination, body.quiz).catch(() => []);
   const verified = launchActivities(destination.id);
-  if (verified.length) return Response.json({ activities: await withPlacePhotos(verified), source: "globtrek_launch_verified", isLive: false });
+  if (verified.length) return Response.json({ activities: await withPlacePhotos(verified), bookable: await bookablePromise, source: "globtrek_launch_verified", isLive: false });
   // Then the curated list checked against Google Places for this destination.
   const curated = curatedActivities(destination.id || destination.airport);
-  if (curated.length) return Response.json({ activities: await withPlacePhotos(curated.slice(0, 12)), source: "globtrek_curated_google_places", isLive: false });
+  if (curated.length) return Response.json({ activities: await withPlacePhotos(curated.slice(0, 12)), bookable: await bookablePromise, source: "globtrek_curated_google_places", isLive: false });
   try {
     const profile = normalizeTravelerProfile(body.quiz || {});
     const budgetPlan = buildBudgetPlan(profile, destination);
@@ -38,9 +54,9 @@ export async function POST(request) {
       const free = destination.freeHighlights.map((name, index) => ({ id: `${destination.id || destination.airport}-free-${index}`, destinationId: destination.id || destination.airport, name, description: "Free", category: "free", isFree: true, estimatedCostLow: 0, estimatedCostHigh: 0, provider: "official", googleMapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name}, ${destination.city}`)}`, detailsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name}, ${destination.city}`)}`, imageUrl: null }));
       activities = [...free, ...activities.filter((activity) => !free.some((item) => item.name === activity.name))];
     }
-    return Response.json({ activities: await withPlacePhotos(activities.slice(0, 12)), source, isLive: false });
+    return Response.json({ activities: await withPlacePhotos(activities.slice(0, 12)), bookable: await bookablePromise, source, isLive: false });
   } catch (error) {
     console.warn("Verified activity catalog unavailable.", error instanceof Error ? error.message : "unknown");
-    return Response.json({ activities: [], source: "unavailable", isLive: false });
+    return Response.json({ activities: [], bookable: await bookablePromise, source: "unavailable", isLive: false });
   }
 }

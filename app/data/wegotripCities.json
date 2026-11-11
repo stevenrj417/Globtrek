@@ -1,0 +1,1098 @@
+{
+ "source": "WeGoTrip public API v2",
+ "checkedAt": "2026-11-11",
+ "cities": {
+  "KIX": {
+   "id": 1857910,
+   "name": "Kyoto",
+   "slug": "kyoto",
+   "country": "Japan",
+   "items": 4
+  },
+  "HND": {
+   "id": 1850147,
+   "name": "Tokyo",
+   "slug": "tokyo",
+   "country": "Japan",
+   "items": 9
+  },
+  "ICN": {
+   "id": 1835848,
+   "name": "Seoul",
+   "slug": "seoul",
+   "country": "South Korea",
+   "items": 4
+  },
+  "BKK": {
+   "id": 1609350,
+   "name": "Bangkok",
+   "slug": "bangkok",
+   "country": "Thailand",
+   "items": 4
+  },
+  "SIN": {
+   "id": 1880252,
+   "name": "Singapore",
+   "slug": "singapore",
+   "country": "Singapore",
+   "items": 14
+  },
+  "HAN": {
+   "id": 1581130,
+   "name": "Hanoi",
+   "slug": "hanoi",
+   "country": "Vietnam",
+   "items": 1
+  },
+  "DXB": {
+   "id": 292223,
+   "name": "Dubai",
+   "slug": "dubai",
+   "country": "United Arab Emirates",
+   "items": 29
+  },
+  "CPT": {
+   "id": 3369157,
+   "name": "Cape Town",
+   "slug": "cape-town",
+   "country": "South Africa",
+   "items": 4
+  },
+  "NBO": {
+   "id": 184745,
+   "name": "Nairobi",
+   "slug": "nairobi",
+   "country": "Kenya",
+   "items": 5
+  },
+  "CDG": {
+   "id": 2988507,
+   "name": "Paris",
+   "slug": "paris",
+   "country": "France",
+   "items": 113
+  },
+  "FCO": {
+   "id": 3169070,
+   "name": "Rome",
+   "slug": "rome",
+   "country": "Italy",
+   "items": 50
+  },
+  "FLR": {
+   "id": 3176959,
+   "name": "Florence",
+   "slug": "florence",
+   "country": "Italy",
+   "items": 41
+  },
+  "JTR": {
+   "id": 252920,
+   "name": "Santorini",
+   "slug": "santorini",
+   "country": "Greece",
+   "items": 1
+  },
+  "LIS": {
+   "id": 2267057,
+   "name": "Lisbon",
+   "slug": "lisbon",
+   "country": "Portugal",
+   "items": 32
+  },
+  "BCN": {
+   "id": 3128760,
+   "name": "Barcelona",
+   "slug": "barcelona",
+   "country": "Spain",
+   "items": 70
+  },
+  "LHR": {
+   "id": 2643743,
+   "name": "London",
+   "slug": "london",
+   "country": "United Kingdom",
+   "items": 70
+  },
+  "JFK": {
+   "id": 5128581,
+   "name": "New York City",
+   "slug": "new-york-city",
+   "country": "United States",
+   "items": 47
+  },
+  "MEX": {
+   "id": 3530597,
+   "name": "Mexico City",
+   "slug": "mexico-city",
+   "country": "Mexico",
+   "items": 3
+  },
+  "TQO": {
+   "id": 3515040,
+   "name": "Tulum",
+   "slug": "tulum",
+   "country": "Mexico",
+   "items": 2
+  },
+  "GIG": {
+   "id": 3451190,
+   "name": "Rio de Janeiro",
+   "slug": "rio-de-janeiro",
+   "country": "Brazil",
+   "items": 2
+  },
+  "EZE": {
+   "id": 3435910,
+   "name": "Buenos Aires",
+   "slug": "buenos-aires",
+   "country": "Argentina",
+   "items": 4
+  },
+  "YYC": {
+   "id": 5892532,
+   "name": "Banff",
+   "slug": "banff",
+   "country": "Canada",
+   "items": 1
+  },
+  "YVR": {
+   "id": 6173331,
+   "name": "Vancouver",
+   "slug": "vancouver",
+   "country": "Canada",
+   "items": 6
+  },
+  "SYD": {
+   "id": 2147714,
+   "name": "Sydney",
+   "slug": "sydney",
+   "country": "Australia",
+   "items": 30
+  },
+  "kotor-479fb": {
+   "id": 3197538,
+   "name": "Kotor",
+   "slug": "kotor",
+   "country": "Montenegro",
+   "items": 1
+  },
+  "gjirokaster-79b9d": {
+   "id": 783148,
+   "name": "Gjirokastër",
+   "slug": "gjirokaster",
+   "country": "Albania",
+   "items": 1
+  },
+  "kuldiga-c5f5b": {
+   "id": 458460,
+   "name": "Kuldīga",
+   "slug": "kuldiga",
+   "country": "Latvia",
+   "items": 1
+  },
+  "cesky-krumlov-1fef4": {
+   "id": 3077889,
+   "name": "Český Krumlov",
+   "slug": "cesky-krumlov",
+   "country": "Czechia",
+   "items": 1
+  },
+  "rovinj-d7e04": {
+   "id": 3191518,
+   "name": "Rovinj",
+   "slug": "rovinj",
+   "country": "Croatia",
+   "items": 1
+  },
+  "utrecht-fb61c": {
+   "id": 2745912,
+   "name": "Utrecht",
+   "slug": "utrecht",
+   "country": "Netherlands",
+   "items": 8
+  },
+  "george-town-ff3ea": {
+   "id": 1735106,
+   "name": "George Town",
+   "slug": "george-town-1735106",
+   "country": "Malaysia",
+   "items": 1
+  },
+  "porto-a4951": {
+   "id": 2735943,
+   "name": "Porto",
+   "slug": "porto-2735943",
+   "country": "Portugal",
+   "items": 13
+  },
+  "valencia-20a8d": {
+   "id": 2509954,
+   "name": "Valencia",
+   "slug": "valencia-2509954",
+   "country": "Spain",
+   "items": 17
+  },
+  "bologna-ad79e": {
+   "id": 3181928,
+   "name": "Bologna",
+   "slug": "bologna",
+   "country": "Italy",
+   "items": 14
+  },
+  "lyon-e3772": {
+   "id": 2996944,
+   "name": "Lyon",
+   "slug": "lyon",
+   "country": "France",
+   "items": 5
+  },
+  "salzburg-59390": {
+   "id": 2766824,
+   "name": "Salzburg",
+   "slug": "salzburg",
+   "country": "Austria",
+   "items": 8
+  },
+  "ljubljana-d1aa0": {
+   "id": 3196359,
+   "name": "Ljubljana",
+   "slug": "ljubljana",
+   "country": "Slovenia",
+   "items": 3
+  },
+  "turin-ad79e": {
+   "id": 3165524,
+   "name": "Turin",
+   "slug": "turin",
+   "country": "Italy",
+   "items": 4
+  },
+  "medellin-2f737": {
+   "id": 3674962,
+   "name": "Medellín",
+   "slug": "medellin",
+   "country": "Colombia",
+   "items": 4
+  },
+  "copenhagen-89da1": {
+   "id": 2618425,
+   "name": "Copenhagen",
+   "slug": "copenhagen",
+   "country": "Denmark",
+   "items": 11
+  },
+  "edinburgh-97691": {
+   "id": 2650225,
+   "name": "Edinburgh",
+   "slug": "edinburgh",
+   "country": "United Kingdom",
+   "items": 17
+  },
+  "dublin-eb213": {
+   "id": 2964574,
+   "name": "Dublin",
+   "slug": "dublin",
+   "country": "Ireland",
+   "items": 6
+  },
+  "brussels-5cb4c": {
+   "id": 2800866,
+   "name": "Brussels",
+   "slug": "brussels",
+   "country": "Belgium",
+   "items": 12
+  },
+  "zurich-77dcd": {
+   "id": 2657896,
+   "name": "Zürich",
+   "slug": "zurich",
+   "country": "Switzerland",
+   "items": 4
+  },
+  "osaka-fcf29": {
+   "id": 1853909,
+   "name": "Osaka",
+   "slug": "osaka",
+   "country": "Japan",
+   "items": 1
+  },
+  "melbourne-ceafb": {
+   "id": 2158177,
+   "name": "Melbourne",
+   "slug": "melbourne",
+   "country": "Australia",
+   "items": 13
+  },
+  "cusco-36c57": {
+   "id": 3941584,
+   "name": "Cusco",
+   "slug": "cusco",
+   "country": "Peru",
+   "items": 4
+  },
+  "dubrovnik-d7e04": {
+   "id": 3201047,
+   "name": "Dubrovnik",
+   "slug": "dubrovnik",
+   "country": "Croatia",
+   "items": 7
+  },
+  "phuket-a2b7c": {
+   "id": 1151254,
+   "name": "Phuket",
+   "slug": "phuket",
+   "country": "Thailand",
+   "items": 8
+  },
+  "venice-ad79e": {
+   "id": 3164603,
+   "name": "Venice",
+   "slug": "venice",
+   "country": "Italy",
+   "items": 34
+  },
+  "athens-4902a": {
+   "id": 264371,
+   "name": "Athens",
+   "slug": "athens",
+   "country": "Greece",
+   "items": 14
+  },
+  "amsterdam-fb61c": {
+   "id": 2759794,
+   "name": "Amsterdam",
+   "slug": "amsterdam",
+   "country": "Netherlands",
+   "items": 66
+  },
+  "prague-1fef4": {
+   "id": 3067696,
+   "name": "Prague",
+   "slug": "prague",
+   "country": "Czechia",
+   "items": 37
+  },
+  "vienna-59390": {
+   "id": 2761369,
+   "name": "Vienna",
+   "slug": "vienna",
+   "country": "Austria",
+   "items": 32
+  },
+  "istanbul-d7153": {
+   "id": 745044,
+   "name": "Istanbul",
+   "slug": "istanbul",
+   "country": "Turkey",
+   "items": 15
+  },
+  "los-angeles-76868": {
+   "id": 5368361,
+   "name": "Los Angeles",
+   "slug": "los-angeles-5368361",
+   "country": "United States",
+   "items": 14
+  },
+  "las-vegas-76868": {
+   "id": 5506956,
+   "name": "Las Vegas",
+   "slug": "las-vegas-5506956",
+   "country": "United States",
+   "items": 14
+  },
+  "madrid-20a8d": {
+   "id": 3117735,
+   "name": "Madrid",
+   "slug": "madrid",
+   "country": "Spain",
+   "items": 38
+  },
+  "berlin-17d53": {
+   "id": 2950159,
+   "name": "Berlin",
+   "slug": "berlin",
+   "country": "Germany",
+   "items": 81
+  },
+  "cancun-41937": {
+   "id": 3531673,
+   "name": "Cancún",
+   "slug": "cancun",
+   "country": "Mexico",
+   "items": 2
+  },
+  "brasov-d6b89": {
+   "id": 683844,
+   "name": "Braşov",
+   "slug": "brasov",
+   "country": "Romania",
+   "items": 1
+  },
+  "lecce-ad79e": {
+   "id": 3174953,
+   "name": "Lecce",
+   "slug": "lecce",
+   "country": "Italy",
+   "items": 1
+  },
+  "funchal-a4951": {
+   "id": 2267827,
+   "name": "Funchal",
+   "slug": "funchal",
+   "country": "Portugal",
+   "items": 2
+  },
+  "tbilisi-9113c": {
+   "id": 611717,
+   "name": "Tbilisi",
+   "slug": "tbilisi",
+   "country": "Georgia",
+   "items": 7
+  },
+  "yerevan-5f459": {
+   "id": 616052,
+   "name": "Yerevan",
+   "slug": "yerevan",
+   "country": "Armenia",
+   "items": 1
+  },
+  "tallinn-f0a96": {
+   "id": 588409,
+   "name": "Tallinn",
+   "slug": "tallinn",
+   "country": "Estonia",
+   "items": 9
+  },
+  "riga-c5f5b": {
+   "id": 456172,
+   "name": "Riga",
+   "slug": "riga",
+   "country": "Latvia",
+   "items": 6
+  },
+  "innsbruck-59390": {
+   "id": 2775220,
+   "name": "Innsbruck",
+   "slug": "innsbruck",
+   "country": "Austria",
+   "items": 2
+  },
+  "granada-20a8d": {
+   "id": 2517117,
+   "name": "Granada",
+   "slug": "granada-2517117",
+   "country": "Spain",
+   "items": 6
+  },
+  "palermo-ad79e": {
+   "id": 2523920,
+   "name": "Palermo",
+   "slug": "palermo-2523920",
+   "country": "Italy",
+   "items": 5
+  },
+  "bilbao-20a8d": {
+   "id": 3128026,
+   "name": "Bilbao",
+   "slug": "bilbao",
+   "country": "Spain",
+   "items": 3
+  },
+  "strasbourg-e3772": {
+   "id": 2973783,
+   "name": "Strasbourg",
+   "slug": "strasbourg",
+   "country": "France",
+   "items": 3
+  },
+  "bordeaux-e3772": {
+   "id": 3031582,
+   "name": "Bordeaux",
+   "slug": "bordeaux",
+   "country": "France",
+   "items": 3
+  },
+  "marseille-e3772": {
+   "id": 2995469,
+   "name": "Marseille",
+   "slug": "marseille",
+   "country": "France",
+   "items": 4
+  },
+  "naples-ad79e": {
+   "id": 3172394,
+   "name": "Naples",
+   "slug": "naples",
+   "country": "Italy",
+   "items": 23
+  },
+  "monaco-35ab1": {
+   "id": 2993458,
+   "name": "Monaco",
+   "slug": "monaco",
+   "country": "Monaco",
+   "items": 2
+  },
+  "aspen-76868": {
+   "id": 5412230,
+   "name": "Aspen",
+   "slug": "aspen",
+   "country": "United States",
+   "items": 1
+  },
+  "warsaw-5ff03": {
+   "id": 756135,
+   "name": "Warsaw",
+   "slug": "warsaw",
+   "country": "Poland",
+   "items": 3
+  },
+  "lima-36c57": {
+   "id": 3936456,
+   "name": "Lima",
+   "slug": "lima",
+   "country": "Peru",
+   "items": 2
+  },
+  "kuala-lumpur-ff3ea": {
+   "id": 1735161,
+   "name": "Kuala Lumpur",
+   "slug": "kuala-lumpur",
+   "country": "Malaysia",
+   "items": 6
+  },
+  "montreal-cd6a7": {
+   "id": 6077243,
+   "name": "Montréal",
+   "slug": "montreal",
+   "country": "Canada",
+   "items": 5
+  },
+  "budapest-f14e4": {
+   "id": 3054643,
+   "name": "Budapest",
+   "slug": "budapest",
+   "country": "Hungary",
+   "items": 15
+  },
+  "cairo-1c39a": {
+   "id": 360630,
+   "name": "Cairo",
+   "slug": "cairo",
+   "country": "Egypt",
+   "items": 1
+  },
+  "stockholm-72ddd": {
+   "id": 2673730,
+   "name": "Stockholm",
+   "slug": "stockholm",
+   "country": "Sweden",
+   "items": 11
+  },
+  "munich-17d53": {
+   "id": 2867714,
+   "name": "Munich",
+   "slug": "munich",
+   "country": "Germany",
+   "items": 11
+  },
+  "seattle-76868": {
+   "id": 5809844,
+   "name": "Seattle",
+   "slug": "seattle",
+   "country": "United States",
+   "items": 10
+  },
+  "abu-dhabi-d115b": {
+   "id": 292968,
+   "name": "Abu Dhabi",
+   "slug": "abu-dhabi",
+   "country": "United Arab Emirates",
+   "items": 12
+  },
+  "chicago-76868": {
+   "id": 4887398,
+   "name": "Chicago",
+   "slug": "chicago",
+   "country": "United States",
+   "items": 30
+  },
+  "mumbai-967ce": {
+   "id": 1275339,
+   "name": "Mumbai",
+   "slug": "mumbai",
+   "country": "India",
+   "items": 1
+  },
+  "miami-76868": {
+   "id": 4164138,
+   "name": "Miami",
+   "slug": "miami",
+   "country": "United States",
+   "items": 14
+  },
+  "toronto-cd6a7": {
+   "id": 6167865,
+   "name": "Toronto",
+   "slug": "toronto",
+   "country": "Canada",
+   "items": 6
+  },
+  "beijing-d2eaf": {
+   "id": 1816670,
+   "name": "Beijing",
+   "slug": "beijing",
+   "country": "China",
+   "items": 1
+  },
+  "san-francisco-76868": {
+   "id": 5391959,
+   "name": "San Francisco",
+   "slug": "san-francisco-5391959",
+   "country": "United States",
+   "items": 16
+  },
+  "boston-76868": {
+   "id": 4930956,
+   "name": "Boston",
+   "slug": "boston-4930956",
+   "country": "United States",
+   "items": 11
+  },
+  "shanghai-d2eaf": {
+   "id": 1796236,
+   "name": "Shanghai",
+   "slug": "shanghai",
+   "country": "China",
+   "items": 1
+  },
+  "orlando-76868": {
+   "id": 4167147,
+   "name": "Orlando",
+   "slug": "orlando",
+   "country": "United States",
+   "items": 7
+  },
+  "washington-d-c-76868": {
+   "id": 4140963,
+   "name": "Washington, D.C.",
+   "slug": "washington-dc",
+   "country": "United States",
+   "items": 15
+  },
+  "jerusalem-4c197": {
+   "id": 281184,
+   "name": "Jerusalem",
+   "slug": "jerusalem",
+   "country": "Israel",
+   "items": 1
+  },
+  "portland-76868": {
+   "id": 5746545,
+   "name": "Portland",
+   "slug": "portland-5746545",
+   "country": "United States",
+   "items": 1
+  },
+  "savannah-76868": {
+   "id": 4221552,
+   "name": "Savannah",
+   "slug": "savannah",
+   "country": "United States",
+   "items": 2
+  },
+  "charleston-76868": {
+   "id": 4574324,
+   "name": "Charleston",
+   "slug": "charleston-4574324",
+   "country": "United States",
+   "items": 2
+  },
+  "new-orleans-76868": {
+   "id": 4335045,
+   "name": "New Orleans",
+   "slug": "new-orleans",
+   "country": "United States",
+   "items": 5
+  },
+  "austin-76868": {
+   "id": 4671654,
+   "name": "Austin",
+   "slug": "austin",
+   "country": "United States",
+   "items": 3
+  },
+  "nashville-76868": {
+   "id": 4644585,
+   "name": "Nashville",
+   "slug": "nashville-4644585",
+   "country": "United States",
+   "items": 8
+  },
+  "san-diego-76868": {
+   "id": 5391811,
+   "name": "San Diego",
+   "slug": "san-diego-5391811",
+   "country": "United States",
+   "items": 9
+  },
+  "palm-springs-76868": {
+   "id": 5380668,
+   "name": "Palm Springs",
+   "slug": "palm-springs-5380668",
+   "country": "United States",
+   "items": 1
+  },
+  "honolulu-76868": {
+   "id": 5856195,
+   "name": "Honolulu",
+   "slug": "honolulu",
+   "country": "United States",
+   "items": 5
+  },
+  "victoria-cd6a7": {
+   "id": 6174041,
+   "name": "Victoria",
+   "slug": "victoria-6174041",
+   "country": "Canada",
+   "items": 2
+  },
+  "calgary-cd6a7": {
+   "id": 5913490,
+   "name": "Calgary",
+   "slug": "calgary",
+   "country": "Canada",
+   "items": 1
+  },
+  "san-miguel-de-allende-41937": {
+   "id": 3985344,
+   "name": "San Miguel de Allende",
+   "slug": "san-miguel-de-allende",
+   "country": "Mexico",
+   "items": 1
+  },
+  "guadalajara-41937": {
+   "id": 4005539,
+   "name": "Guadalajara",
+   "slug": "guadalajara-4005539",
+   "country": "Mexico",
+   "items": 2
+  },
+  "antigua-guatemala-11760": {
+   "id": 3599699,
+   "name": "Antigua Guatemala",
+   "slug": "antigua-guatemala",
+   "country": "Guatemala",
+   "items": 1
+  },
+  "san-juan-fe23c": {
+   "id": 4568127,
+   "name": "San Juan",
+   "slug": "san-juan-4568127",
+   "country": "Puerto Rico",
+   "items": 1
+  },
+  "willemstad-9461d": {
+   "id": 3513090,
+   "name": "Willemstad",
+   "slug": "willemstad",
+   "country": "Curacao",
+   "items": 1
+  },
+  "bridgetown-93409": {
+   "id": 3374036,
+   "name": "Bridgetown",
+   "slug": "bridgetown",
+   "country": "Barbados",
+   "items": 1
+  },
+  "bogota-2f737": {
+   "id": 3688689,
+   "name": "Bogotá",
+   "slug": "bogota",
+   "country": "Colombia",
+   "items": 2
+  },
+  "santiago-34950": {
+   "id": 3871336,
+   "name": "Santiago",
+   "slug": "santiago-3871336",
+   "country": "Chile",
+   "items": 1
+  },
+  "sao-paulo-37497": {
+   "id": 3448439,
+   "name": "São Paulo",
+   "slug": "sao-paulo",
+   "country": "Brazil",
+   "items": 3
+  },
+  "reykjavik-b3c92": {
+   "id": 3413829,
+   "name": "Reykjavík",
+   "slug": "reykjavik",
+   "country": "Iceland",
+   "items": 4
+  },
+  "oslo-98845": {
+   "id": 3143244,
+   "name": "Oslo",
+   "slug": "oslo",
+   "country": "Norway",
+   "items": 9
+  },
+  "bergen-98845": {
+   "id": 3161732,
+   "name": "Bergen",
+   "slug": "bergen-3161732",
+   "country": "Norway",
+   "items": 2
+  },
+  "helsinki-c909b": {
+   "id": 658225,
+   "name": "Helsinki",
+   "slug": "helsinki",
+   "country": "Finland",
+   "items": 8
+  },
+  "hamburg-17d53": {
+   "id": 2911298,
+   "name": "Hamburg",
+   "slug": "hamburg",
+   "country": "Germany",
+   "items": 12
+  },
+  "leipzig-17d53": {
+   "id": 2879139,
+   "name": "Leipzig",
+   "slug": "leipzig",
+   "country": "Germany",
+   "items": 2
+  },
+  "dresden-17d53": {
+   "id": 2935022,
+   "name": "Dresden",
+   "slug": "dresden",
+   "country": "Germany",
+   "items": 5
+  },
+  "rotterdam-fb61c": {
+   "id": 2747891,
+   "name": "Rotterdam",
+   "slug": "rotterdam",
+   "country": "Netherlands",
+   "items": 7
+  },
+  "the-hague-fb61c": {
+   "id": 2747373,
+   "name": "The Hague",
+   "slug": "the-hague",
+   "country": "Netherlands",
+   "items": 3
+  },
+  "manchester-97691": {
+   "id": 2643123,
+   "name": "Manchester",
+   "slug": "manchester",
+   "country": "United Kingdom",
+   "items": 3
+  },
+  "liverpool-97691": {
+   "id": 2644210,
+   "name": "Liverpool",
+   "slug": "liverpool-2644210",
+   "country": "United Kingdom",
+   "items": 7
+  },
+  "bath-97691": {
+   "id": 2656173,
+   "name": "Bath",
+   "slug": "bath",
+   "country": "United Kingdom",
+   "items": 1
+  },
+  "brighton-97691": {
+   "id": 2654710,
+   "name": "Brighton",
+   "slug": "brighton",
+   "country": "United Kingdom",
+   "items": 1
+  },
+  "faro-a4951": {
+   "id": 2268339,
+   "name": "Faro",
+   "slug": "faro",
+   "country": "Portugal",
+   "items": 2
+  },
+  "coimbra-a4951": {
+   "id": 2740637,
+   "name": "Coimbra",
+   "slug": "coimbra",
+   "country": "Portugal",
+   "items": 1
+  },
+  "malaga-20a8d": {
+   "id": 2514256,
+   "name": "Málaga",
+   "slug": "malaga",
+   "country": "Spain",
+   "items": 11
+  },
+  "cordoba-20a8d": {
+   "id": 2519240,
+   "name": "Córdoba",
+   "slug": "cordoba-2519240",
+   "country": "Spain",
+   "items": 1
+  },
+  "nice-e3772": {
+   "id": 2990440,
+   "name": "Nice",
+   "slug": "nice",
+   "country": "France",
+   "items": 3
+  },
+  "toulouse-e3772": {
+   "id": 2972315,
+   "name": "Toulouse",
+   "slug": "toulouse",
+   "country": "France",
+   "items": 1
+  },
+  "montpellier-e3772": {
+   "id": 2992166,
+   "name": "Montpellier",
+   "slug": "montpellier",
+   "country": "France",
+   "items": 2
+  },
+  "milan-ad79e": {
+   "id": 3173435,
+   "name": "Milan",
+   "slug": "milan",
+   "country": "Italy",
+   "items": 29
+  },
+  "verona-ad79e": {
+   "id": 3164527,
+   "name": "Verona",
+   "slug": "verona",
+   "country": "Italy",
+   "items": 7
+  },
+  "siena-ad79e": {
+   "id": 3166548,
+   "name": "Siena",
+   "slug": "siena",
+   "country": "Italy",
+   "items": 5
+  },
+  "catania-ad79e": {
+   "id": 2525068,
+   "name": "Catania",
+   "slug": "catania",
+   "country": "Italy",
+   "items": 2
+  },
+  "thessaloniki-4902a": {
+   "id": 734077,
+   "name": "Thessaloníki",
+   "slug": "thessaloniki",
+   "country": "Greece",
+   "items": 2
+  },
+  "split-d7e04": {
+   "id": 3190261,
+   "name": "Split",
+   "slug": "split",
+   "country": "Croatia",
+   "items": 2
+  },
+  "hvar-d7e04": {
+   "id": 3199180,
+   "name": "Hvar",
+   "slug": "hvar",
+   "country": "Croatia",
+   "items": 1
+  },
+  "zagreb-d7e04": {
+   "id": 3186886,
+   "name": "Zagreb",
+   "slug": "zagreb",
+   "country": "Croatia",
+   "items": 3
+  },
+  "belgrade-6d31b": {
+   "id": 792680,
+   "name": "Belgrade",
+   "slug": "belgrade",
+   "country": "Serbia",
+   "items": 5
+  },
+  "sofia-5c777": {
+   "id": 727011,
+   "name": "Sofia",
+   "slug": "sofia",
+   "country": "Bulgaria",
+   "items": 5
+  },
+  "bucharest-d6b89": {
+   "id": 683506,
+   "name": "Bucharest",
+   "slug": "bucharest",
+   "country": "Romania",
+   "items": 3
+  },
+  "gdansk-5ff03": {
+   "id": 3099434,
+   "name": "Gdańsk",
+   "slug": "gdansk",
+   "country": "Poland",
+   "items": 2
+  },
+  "hallstatt-59390": {
+   "id": 2776943,
+   "name": "Hallstatt",
+   "slug": "hallstatt",
+   "country": "Austria",
+   "items": 1
+  },
+  "bratislava-b6c14": {
+   "id": 3060972,
+   "name": "Bratislava",
+   "slug": "bratislava",
+   "country": "Slovakia",
+   "items": 5
+  },
+  "ankara-d7153": {
+   "id": 323786,
+   "name": "Ankara",
+   "slug": "ankara",
+   "country": "Turkey",
+   "items": 1
+  },
+  "tel-aviv-4c197": {
+   "id": 293397,
+   "name": "Tel Aviv",
+   "slug": "tel-aviv",
+   "country": "Israel",
+   "items": 3
+  },
+  "fes-32e08": {
+   "id": 2548885,
+   "name": "Fès",
+   "slug": "fes",
+   "country": "Morocco",
+   "items": 1
+  },
+  "johannesburg-35fda": {
+   "id": 993800,
+   "name": "Johannesburg",
+   "slug": "johannesburg",
+   "country": "South Africa",
+   "items": 1
+  }
+ }
+}

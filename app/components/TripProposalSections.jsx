@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { BrandMark } from "./BrandMark";
+import { BookableTours } from "./results/BookableTours";
 
 const GENERIC_PLAN_COPY = /arrive softly|find your rhythm|one meaningful place|explore at your pace|memorable local meal|easy neighborhood dinner|settle into your stay/i;
 const DAY_HIGHLIGHTS = [
@@ -94,7 +95,7 @@ function useCatalog(url, body, key) {
     const timer = setTimeout(() => controller.abort(new DOMException("timeout", "TimeoutError")), LOAD_TIMEOUT);
     fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: payload, signal: controller.signal })
       .then((response) => (response.ok ? response.json() : Promise.reject(new Error(`status_${response.status}`))))
-      .then((data) => setState((current) => ({ ...current, status: "ready", items: Array.isArray(data?.[key]) ? data[key] : [] })))
+      .then((data) => setState((current) => ({ ...current, status: "ready", items: Array.isArray(data?.[key]) ? data[key] : [], extra: data })))
       .catch((error) => { if (controller.signal.reason?.name === "TimeoutError" || error?.name !== "AbortError") setState((current) => ({ ...current, status: "error", items: [] })); })
       .finally(() => clearTimeout(timer));
     return () => { clearTimeout(timer); controller.abort(); };
@@ -111,5 +112,6 @@ export function CuratedTripChoices({ destination, quiz, restaurants, activities,
   return <>
     <CuratedSection id="dining" eyebrow="Dining ideas" title={(count) => count ? `${count} suggested restaurant${count === 1 ? "" : "s"}` : "Suggested restaurants"} intro="Well-rated places to eat in town, checked on Google Maps. GlobTrek doesn't make reservations; book or walk in directly with the restaurant." items={dining.items} status={dining.status} onRetry={dining.retry} selections={restaurants} onToggle={(item) => toggle(item, restaurants, onRestaurantsChange)} kind="restaurant" destination={destination} initialLimit={4} />
     <CuratedSection id="experiences" eyebrow="Things to do" title={(count) => count ? `${count} experience${count === 1 ? "" : "s"} to consider` : "Experiences to consider"} intro="Places and activities near the center with strong recent ratings, checked on Google Maps. Confirm hours and prices with each place." items={experiences.items} status={experiences.status} onRetry={experiences.retry} selections={activities} onToggle={(item) => toggle(item, activities, onActivitiesChange)} kind="activity" destination={destination} initialLimit={4} />
+    <BookableTours tours={experiences.extra?.bookable || []} destination={destination} interest={quiz?.answers?.luxury} />
   </>;
 }

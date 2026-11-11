@@ -1,5 +1,7 @@
 import { travelInfoFor, TRAVEL_INFO_CHECKED } from "../../data/travelInfo";
 import { LAUNCH_DATA } from "../../data/launchSet";
+import { EsimOption } from "./EsimOption";
+import { intuiTransferPage } from "../../data/intuiTransfers";
 
 function money(value) {
   return `$${Math.round(value || 0).toLocaleString("en-US")}`;
@@ -10,7 +12,7 @@ function title(value) {
 }
 
 // Season, getting from the airport, and official entry and safety pages.
-export function BeforeYouGo({ trip, seasonWarning }) {
+export function BeforeYouGo({ trip, seasonWarning, nights }) {
   const info = travelInfoFor(trip.country);
   const ride = LAUNCH_DATA[trip.id]?.airportRide || null;
   const miles = ride?.miles || trip.airportToCenterMiles;
@@ -30,6 +32,7 @@ export function BeforeYouGo({ trip, seasonWarning }) {
           <p className="mt-2 text-sm leading-6">Fly into {ride?.airport || trip.airport}{miles ? `, about ${miles} miles from ${ride?.toCenterLabel || "the center"}` : ""}.{transfer ? ` The estimate includes about ${money(transfer)} per person each way for the airport transfer.` : ""}</p>
           {ride?.transit ? <p className="mt-2 text-sm leading-6">{ride.transit.summary}{ride.transit.fare ? ` (${ride.transit.fare})` : ""}.{ride.transit.checkUrl ? <> <a href={ride.transit.checkUrl} target="_blank" rel="noopener" className="underline underline-offset-4">{ride.transit.checkLabel || "Check current fares"}<span className="sr-only"> (opens in a new tab)</span></a></> : null}</p> : null}
           <a href={directions} target="_blank" rel="noopener" className="mt-2 inline-flex min-h-11 items-center text-sm underline decoration-black/30 underline-offset-4">Transit directions from the airport on Google Maps<span className="sr-only"> (opens in a new tab)</span> ↗</a>
+          {intuiTransferPage(trip.country) ? <a href={`/go/transfer?country=${encodeURIComponent(trip.country)}`} target="_blank" rel="noopener sponsored nofollow" className="inline-flex min-h-11 items-center text-sm underline decoration-black/30 underline-offset-4">Private airport transfers on Intui (prices on their site)<span className="sr-only"> (opens in a new tab)</span> ↗</a> : null}
         </div>
         <div>
           <h3 className="text-micro uppercase tracking-label text-black/60">Entry and safety</h3>
@@ -43,6 +46,7 @@ export function BeforeYouGo({ trip, seasonWarning }) {
           <p className="mt-1 text-micro text-black/50">Links checked {TRAVEL_INFO_CHECKED}.</p>
         </div>
       </div>
+      {info && !info.domestic && nights ? <EsimOption country={trip.country} nights={nights} /> : null}
     </div>
   </section>;
 }

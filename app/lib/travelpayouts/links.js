@@ -11,7 +11,7 @@ export const PARTNER_HOSTS = Object.freeze({
   aviasales: ["aviasales.com", "www.aviasales.com"],
   wegotrip: ["wegotrip.com", "www.wegotrip.com"],
   airalo: ["airalo.com", "www.airalo.com"],
-  intui: ["intui.travel", "www.intui.travel"],
+  intui: ["intui.travel", "www.intui.travel", "en.intui.travel"],
 });
 
 const ALLOWED = new Map(Object.entries(PARTNER_HOSTS).flatMap(([brand, hosts]) => hosts.map((host) => [host, brand])));

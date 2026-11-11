@@ -72,6 +72,12 @@ const nextConfig = {
         hostname: "*.bstatic.com",
         pathname: "/xdata/images/hotel/**",
       },
+      {
+        // WeGoTrip product photos (tour and ticket listings).
+        protocol: "https",
+        hostname: "wgt-prod-storage.s3.amazonaws.com",
+        pathname: "/media/**",
+      },
     ],
   },
 };
