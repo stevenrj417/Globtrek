@@ -267,7 +267,7 @@ test("hotel photo surfaces use short caching and exact-property fallback photos"
     "../app/api/hotels/[id]/google-photos/route.js",
     "../app/components/HotelExperience.jsx",
     "../app/components/HotelPropertyPhoto.jsx",
-    "../app/account/page.jsx",
+    "../app/account/AccountClient.jsx",
   ].map((path) => readFile(new URL(path, import.meta.url), "utf8")));
   assert.match(route, /private, max-age=60/);
   assert.match(experience, /useHotelMedia\(hotel, limit = 2\)/);

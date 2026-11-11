@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { createClient } from "../lib/supabase/client";
 
 export function AuthSheet({ open, onClose, returnTo = "/" }) {
@@ -9,7 +10,18 @@ export function AuthSheet({ open, onClose, returnTo = "/" }) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("");
 
-  if (!open) return null;
+  // The header is sticky with a backdrop blur, which traps position:fixed
+  // children inside its own box. Rendering into <body> keeps the sheet full-screen.
+  useEffect(() => {
+    if (!open) return undefined;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (event) => { if (event.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    return () => { document.body.style.overflow = previous; window.removeEventListener("keydown", onKey); };
+  }, [open, onClose]);
+
+  if (!open || typeof document === "undefined") return null;
 
   function close() {
     setEmailMode(false);
@@ -36,7 +48,7 @@ export function AuthSheet({ open, onClose, returnTo = "/" }) {
     setStatus(error ? "We couldn't send the link. Check the address and try again." : "Check your email. Your sign-in link is on its way.");
   }
 
-  return <div className="fixed inset-0 z-[100] grid place-items-center overflow-y-auto bg-black/30 px-4 py-6 backdrop-blur-[3px] sm:px-6" role="presentation" onMouseDown={close}>
+  return createPortal(<div className="fixed inset-0 z-[100] grid place-items-center overflow-y-auto bg-black/30 px-4 py-6 backdrop-blur-[3px] sm:px-6" role="presentation" onMouseDown={close}>
     <section role="dialog" aria-modal="true" aria-labelledby="auth-title" className="relative my-auto w-full max-w-[460px] overflow-hidden rounded-[2px] border border-black/10 bg-bg px-6 pb-8 pt-6 shadow-overlay sm:px-11 sm:pb-10 sm:pt-9" onMouseDown={(event) => event.stopPropagation()}>
       <div className="flex items-start justify-between gap-8"><div><p className="text-micro uppercase tracking-editorial text-black/40">Optional account</p><h2 id="auth-title" className="mt-4 font-serif text-4xl tracking-tight-2">Keep your trip.</h2></div><button type="button" onClick={close} aria-label="Close" className="grid h-10 w-10 place-items-center text-xl font-light">×</button></div>
       <p className="mt-4 max-w-sm text-sm font-light leading-6 text-black/55">Save your edit and return to it anytime. Planning and booking links always work without an account.</p>
@@ -52,5 +64,5 @@ export function AuthSheet({ open, onClose, returnTo = "/" }) {
       {status && <p role="status" className="mt-5 text-xs leading-5 text-black/55">{status}</p>}
       <p className="mt-7 border-t border-black/10 pt-5 text-xs leading-5 text-black/65">We use your email only to sign you in and keep your saved trips. Creating an account does not subscribe you to marketing email. You can download or delete your data anytime. <Link href="/privacy" className="underline underline-offset-2">Privacy policy</Link></p>
     </section>
-  </div>;
+  </div>, document.body);
 }
