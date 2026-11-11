@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image from "../../components/Photo";
 import Link from "next/link";
 import { use, useEffect, useState } from "react";
 import { AccountEntry } from "../../components/AccountEntry";

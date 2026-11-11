@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "./Photo";
 import Link from "next/link";
 import { EstimateDetails } from "./EstimateDetails";
 import { estimateLine, formatNights } from "../lib/recommendation/tripEstimate";

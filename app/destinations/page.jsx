@@ -16,7 +16,7 @@ export default function DestinationsPage() {
       <SiteHeader />
       <div className="mx-auto max-w-[1520px] px-5 py-[var(--section-space)] sm:px-8">
         <nav aria-label="Breadcrumb" className="text-sm text-subtle"><Link href="/" className="hover:text-ink">Home</Link> <span aria-hidden="true">›</span> <span aria-current="page">Destinations</span></nav>
-        <h1 className="mt-6 text-[clamp(2.5rem,6vw,4.5rem)] font-semibold leading-[1.05] tracking-tight-3">Destinations</h1>
+        <h1 className="mt-6 font-serif text-[clamp(2.5rem,5.4vw,5rem)] font-normal leading-[1.02] tracking-tight-2">Destinations</h1>
         <p className="mt-4 max-w-[var(--width-reading)] text-lg leading-8 text-muted">Rock-bottom estimates for one person, 5 nights, before flights: a hostel bed, cheap eats and free things to do. Open one to see what&apos;s included and plan it as your trip.</p>
         <p className="mt-2 text-sm text-subtle">Book stays, flights and attractions on <BookingLogo className="h-3.5 w-auto" /></p>
         <div className="mt-12">

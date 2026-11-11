@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "../../components/Photo";
 import { BookingLogo } from "../../components/PartnerLogo";
 import { bookingPropertyUrl } from "../../data/destinations";
 import { LAUNCH_DATA, rideshareUrl } from "../../data/launchSet";

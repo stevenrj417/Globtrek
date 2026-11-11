@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image from "../Photo";
 
 function money(value) {
   return `$${Math.round(value || 0).toLocaleString("en-US")}`;

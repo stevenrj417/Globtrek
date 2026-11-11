@@ -12,6 +12,8 @@ export default function AboutPage() {
       eyebrow="About GlobTrek"
       title="Start with the traveler."
       intro="Planning a trip has turned into a pile of tabs. Flights in one, hotels in another, restaurants saved somewhere else."
+      image="/quiz/v2/five-nights.jpg"
+      imageAlt="Lisbon rooftops and the Tagus"
     >
       <EditorialSection number="01" title="A simpler starting point">
         <p>GlobTrek starts with how you want to travel, then brings the trip together in one recommendation.</p>

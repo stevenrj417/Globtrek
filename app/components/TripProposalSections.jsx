@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image from "./Photo";
 import { useEffect, useState } from "react";
 import { BrandMark } from "./BrandMark";
 import { BookableTours } from "./results/BookableTours";
