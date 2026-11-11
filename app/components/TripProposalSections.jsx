@@ -57,7 +57,7 @@ function CatalogCard({ item, selected, onToggle, kind, destination }) {
   const meta = kind === "restaurant"
     ? [Array.isArray(item.cuisine) ? item.cuisine.slice(0, 2).join(" · ") : item.cuisine, item.neighborhood, item.rating ? `${item.rating} rating` : null, item.priceRange ? `${item.priceRange.currency} ${item.priceRange.low}${item.priceRange.high ? `–${item.priceRange.high}` : "+"} per person (Google Maps)` : null]
     : [item.category ? String(item.category).replace(/_/g, " ") : null, item.isFree ? "Free" : null];
-  const description = item.description || (kind === "restaurant" ? "Selected from the verified dining edit." : "Matched to the pace and interests of this trip.");
+  const description = item.description || null;
   const sourceUrl = item.imageSourceUrl || item.imageLicenseMetadata?.sourcePageUrl || null;
   const action = selected ? "Added to your trip" : "Add to trip";
   return <article className={`group relative overflow-hidden border border-black/8 transition duration-300 ${selected ? "bg-placeholder shadow-hover" : "bg-surface hover:bg-surface-sunken"}`}><button type="button" onClick={() => onToggle(item)} aria-pressed={selected} className="block w-full text-left">
@@ -110,8 +110,8 @@ export function CuratedTripChoices({ destination, quiz, restaurants, activities,
   useEffect(() => { onCatalogChange?.({ restaurants: dining.items, activities: experiences.items }); }, [dining.items, experiences.items, onCatalogChange]);
   function toggle(item, selected, update) { update(selected.some((current) => (current.id || current.name) === (item.id || item.name)) ? selected.filter((current) => (current.id || current.name) !== (item.id || item.name)) : [...selected, item]); }
   return <>
-    <CuratedSection id="dining" eyebrow="Dining ideas" title={(count) => count ? `${count} suggested restaurant${count === 1 ? "" : "s"}` : "Suggested restaurants"} intro="Well-rated places to eat in town, checked on Google Maps. GlobTrek doesn't make reservations; book or walk in directly with the restaurant." items={dining.items} status={dining.status} onRetry={dining.retry} selections={restaurants} onToggle={(item) => toggle(item, restaurants, onRestaurantsChange)} kind="restaurant" destination={destination} initialLimit={4} />
-    <CuratedSection id="experiences" eyebrow="Things to do" title={(count) => count ? `${count} experience${count === 1 ? "" : "s"} to consider` : "Experiences to consider"} intro="Places and activities near the center with strong recent ratings, checked on Google Maps. Confirm hours and prices with each place." items={experiences.items} status={experiences.status} onRetry={experiences.retry} selections={activities} onToggle={(item) => toggle(item, activities, onActivitiesChange)} kind="activity" destination={destination} initialLimit={4} />
+    <CuratedSection id="dining" eyebrow="Dining ideas" title={(count) => count ? `${count} suggested restaurant${count === 1 ? "" : "s"}` : "Suggested restaurants"} intro="Well rated on Google Maps." items={dining.items} status={dining.status} onRetry={dining.retry} selections={restaurants} onToggle={(item) => toggle(item, restaurants, onRestaurantsChange)} kind="restaurant" destination={destination} initialLimit={4} />
+    <CuratedSection id="experiences" eyebrow="Things to do" title={(count) => count ? `${count} experience${count === 1 ? "" : "s"} to consider` : "Experiences to consider"} intro="Near the center, well rated on Google Maps." items={experiences.items} status={experiences.status} onRetry={experiences.retry} selections={activities} onToggle={(item) => toggle(item, activities, onActivitiesChange)} kind="activity" destination={destination} initialLimit={4} />
     <BookableTours tours={experiences.extra?.bookable || []} destination={destination} interest={quiz?.answers?.luxury} />
   </>;
 }

@@ -28,8 +28,7 @@ export function Alternatives({ alternatives, current, answers }) {
   if (!alternatives?.length) return null;
   return <section id="alternatives" aria-labelledby="alternatives-heading" className="scroll-mt-24 border-t border-black/15 px-6 py-10 sm:px-12">
     <div className="mx-auto max-w-[1180px]">
-      <h2 id="alternatives-heading" className="font-serif text-[clamp(1.8rem,3vw,2.5rem)] leading-[.95] tracking-tight-2">Other trips that fit your answers</h2>
-      <p className="mt-2 max-w-2xl text-sm text-black/65">Each one passed the same checks as your match. They ranked lower on how well they fit your answers.</p>
+      <h2 id="alternatives-heading" className="font-serif text-[clamp(1.8rem,3vw,2.5rem)] leading-[.95] tracking-tight-2">Also a good fit</h2>
       <ul className="mt-6 grid gap-4 sm:grid-cols-3">{alternatives.map((item) => {
         const key = item.id || item.airport;
         return <li key={key} className="flex flex-col border border-black/15 bg-white">

@@ -37,9 +37,11 @@ test("itinerary is curated horizontally and dining and experiences are separate 
   assert.doesNotMatch(sections, /type="checkbox"/);
 });
 
-test("flight proposal shows the fare basis and that it is planning, not a live search", () => {
-  assert.match(page, /round trip per person · \{estimate\.basis/);
-  assert.match(page, /Planning preferences, not a live search/);
+test("flight card prices only from recent fares, offers one search action, and keeps the fare basis in details", () => {
+  assert.match(page, /const observed = OBSERVED_FARE_SOURCES\.includes\(estimate\?\.source\)/);
+  assert.match(page, /No recent fares for this route yet/);
+  assert.match(page, /Check flights/);
+  assert.match(page, /Flights: \{flights\.basis\}/);
   assert.match(page, /Update flight options/);
   assert.match(page, /Departure airport/);
   assert.match(page, /Preferred departure/);
@@ -59,7 +61,8 @@ test("dining and experience edits each surface four verified choices with visual
 
 test("final visual refinement keeps a cinematic hero and removes the redundant closing panel", () => {
   assert.match(page, /min-h-\[92svh\]/);
-  assert.match(page, /top-1\/2/);
+  assert.match(page, /data-trip-hero/);
+  assert.match(page, /Estimated price · final prices confirmed by providers/);
   assert.doesNotMatch(page, /Ready when you are/);
   assert.match(page, /href="#booking-center"/);
 });

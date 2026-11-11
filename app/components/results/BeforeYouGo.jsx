@@ -1,52 +1,33 @@
-import { travelInfoFor, TRAVEL_INFO_CHECKED } from "../../data/travelInfo";
-import { LAUNCH_DATA } from "../../data/launchSet";
-import { EsimOption } from "./EsimOption";
-import { intuiTransferPage } from "../../data/intuiTransfers";
-
-function money(value) {
-  return `$${Math.round(value || 0).toLocaleString("en-US")}`;
-}
+import { travelInfoFor } from "../../data/travelInfo";
 
 function title(value) {
   return String(value || "").toLowerCase().replace(/(^|[\s&'-])\S/g, (letter) => letter.toUpperCase());
 }
 
-// Season, getting from the airport, and official entry and safety pages.
-export function BeforeYouGo({ trip, seasonWarning, nights }) {
+const external = "inline-flex min-h-11 items-center underline decoration-black/30 underline-offset-4 hover:decoration-black";
+
+// Entry and safety, folded away. An off-season warning always stays visible.
+export function BeforeYouGo({ trip, seasonWarning }) {
   const info = travelInfoFor(trip.country);
-  const ride = LAUNCH_DATA[trip.id]?.airportRide || null;
-  const miles = ride?.miles || trip.airportToCenterMiles;
-  const transfer = Number(trip.planningAverages?.airportTransferPerPerson) || 0;
-  const directions = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(`${trip.airport} airport`)}&destination=${encodeURIComponent(`${title(trip.city)}, ${title(trip.country)}`)}&travelmode=transit`;
-  return <section id="before-you-go" aria-labelledby="before-heading" className="scroll-mt-24 border-t border-black/15 px-6 py-10 sm:px-12">
+  if (!info && !seasonWarning) return null;
+  return <section id="before-you-go" aria-label="Travel essentials" className="scroll-mt-24 px-6 py-6 sm:px-12">
     <div className="mx-auto max-w-[1180px]">
-      <h2 id="before-heading" className="font-serif text-[clamp(1.8rem,3vw,2.5rem)] leading-[.95] tracking-tight-2">Before you go</h2>
-      <div className="mt-6 grid gap-6 md:grid-cols-3">
-        <div>
-          <h3 className="text-micro uppercase tracking-label text-black/60">When to go</h3>
-          <p className="mt-2 text-sm leading-6">Best time to visit: {trip.season}.</p>
-          {seasonWarning ? <p className="mt-2 border-l-2 border-warning pl-3 text-sm leading-6">Your travel month is outside the usual season for {title(trip.city)}. Check weather, closures and opening hours.</p> : null}
+      {seasonWarning ? <p role="note" className="mb-4 border-l-2 border-warning pl-3 text-sm leading-6">Outside the usual season for {title(trip.city)}. Check weather and opening hours.</p> : null}
+      {info ? <details className="group border-y border-black/12">
+        <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between text-sm font-medium">Travel essentials <span aria-hidden="true" className="text-black/50 transition-transform duration-200 group-open:rotate-45">+</span></summary>
+        <div className="pb-5 text-sm leading-6">
+          {info.domestic
+            ? <p>No passport needed for U.S. travelers; bring a REAL ID or other <a href="https://www.tsa.gov/travel/security-screening/identification" target="_blank" rel="noopener" className="underline underline-offset-4">TSA-accepted ID<span className="sr-only"> (opens in a new tab)</span></a>.</p>
+            : <>
+              <p>Entry rules depend on your passport. Check before you book.</p>
+              <ul className="mt-1 flex flex-wrap gap-x-6">
+                {info.usCitizensUrl ? <li><a href={info.usCitizensUrl} target="_blank" rel="noopener" className={external}>{info.usCitizensLabel}<span className="sr-only"> (opens in a new tab)</span> ↗</a></li> : null}
+                <li><a href={info.entryUrl} target="_blank" rel="noopener" className={external}>{info.entryLabel}<span className="sr-only"> (opens in a new tab)</span> ↗</a></li>
+                <li><a href={info.advisoryUrl} target="_blank" rel="noopener" className={external}>{info.advisoryLabel}<span className="sr-only"> (opens in a new tab)</span> ↗</a></li>
+              </ul>
+            </>}
         </div>
-        <div>
-          <h3 className="text-micro uppercase tracking-label text-black/60">Getting there and around</h3>
-          <p className="mt-2 text-sm leading-6">Fly into {ride?.airport || trip.airport}{miles ? `, about ${miles} miles from ${ride?.toCenterLabel || "the center"}` : ""}.{transfer ? ` The estimate includes about ${money(transfer)} per person each way for the airport transfer.` : ""}</p>
-          {ride?.transit ? <p className="mt-2 text-sm leading-6">{ride.transit.summary}{ride.transit.fare ? ` (${ride.transit.fare})` : ""}.{ride.transit.checkUrl ? <> <a href={ride.transit.checkUrl} target="_blank" rel="noopener" className="underline underline-offset-4">{ride.transit.checkLabel || "Check current fares"}<span className="sr-only"> (opens in a new tab)</span></a></> : null}</p> : null}
-          <a href={directions} target="_blank" rel="noopener" className="mt-2 inline-flex min-h-11 items-center text-sm underline decoration-black/30 underline-offset-4">Transit directions from the airport on Google Maps<span className="sr-only"> (opens in a new tab)</span> ↗</a>
-          {intuiTransferPage(trip.country) ? <a href={`/go/transfer?country=${encodeURIComponent(trip.country)}`} target="_blank" rel="noopener sponsored nofollow" className="inline-flex min-h-11 items-center text-sm underline decoration-black/30 underline-offset-4">Private airport transfers on Intui (prices on their site)<span className="sr-only"> (opens in a new tab)</span> ↗</a> : null}
-        </div>
-        <div>
-          <h3 className="text-micro uppercase tracking-label text-black/60">Entry and safety</h3>
-          {info?.domestic ? <p className="mt-2 text-sm leading-6">Domestic trip for U.S. travelers: no passport needed, but you need TSA-accepted ID such as a REAL ID.</p> : <p className="mt-2 text-sm leading-6">Passport, visa and entry rules depend on your nationality. Check the official pages before you book.</p>}
-          {info ? <ul className="mt-2 space-y-1 text-sm">
-            {info.domestic ? <li><a href="https://www.tsa.gov/travel/security-screening/identification" target="_blank" rel="noopener" className="inline-flex min-h-11 items-center underline underline-offset-4">TSA: acceptable ID<span className="sr-only"> (opens in a new tab)</span> ↗</a></li> : null}
-            {info.usCitizensUrl ? <li><a href={info.usCitizensUrl} target="_blank" rel="noopener" className="inline-flex min-h-11 items-center underline underline-offset-4">{info.usCitizensLabel}<span className="sr-only"> (opens in a new tab)</span> ↗</a></li> : null}
-            {!info.domestic ? <li><a href={info.entryUrl} target="_blank" rel="noopener" className="inline-flex min-h-11 items-center underline underline-offset-4">{info.entryLabel}<span className="sr-only"> (opens in a new tab)</span> ↗</a></li> : null}
-            {!info.domestic ? <li><a href={info.advisoryUrl} target="_blank" rel="noopener" className="inline-flex min-h-11 items-center underline underline-offset-4">{info.advisoryLabel}<span className="sr-only"> (opens in a new tab)</span> ↗</a></li> : null}
-          </ul> : null}
-          <p className="mt-1 text-micro text-black/50">Links checked {TRAVEL_INFO_CHECKED}.</p>
-        </div>
-      </div>
-      {info && !info.domestic && nights ? <EsimOption country={trip.country} nights={nights} /> : null}
+      </details> : null}
     </div>
   </section>;
 }

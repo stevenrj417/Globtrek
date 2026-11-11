@@ -100,12 +100,9 @@ export function whyLine(choice, role, profile) {
   else facts.push(`private ${stayType(choice).toLowerCase() === "hotel" ? "hotel rooms" : "rooms"}`);
   if (choice.catalogFreeBreakfast) facts.push("breakfast on some rates");
   if (choice.catalogFreeWifi) facts.push("free Wi-Fi");
-  if (choice.distanceKm !== null && choice.distanceKm !== undefined && choice.distanceKm <= 3) facts.push(`${choice.distanceKm} km from the center`);
-  const list = facts.slice(0, 3).join(", ");
-  const who = profile.travelers === 1 ? "a solo trip" : profile.travelers === 2 ? "two travelers" : `a group of ${profile.travelers}`;
-  if (role === "Our pick") return `Best overall fit for ${who}: ${list}.`;
-  if (role === "Best value") return choice.price.kind === "unavailable" ? `A simpler, usually lower-cost style of stay (${list}); check the current price on Booking.com.` : `Lowest estimated stay cost on this list: ${list}.`;
-  return choice.price.kind === "unavailable" ? `A step up in comfort and privacy (${list}); price not available, so check it on Booking.com.` : `A step up in comfort and privacy (${list}) for ${plural(profile.tripLength, "night")}.`;
+  // The card already shows the role and the distance; this is what you get.
+  const list = facts.slice(0, 3).join(" · ");
+  return list.charAt(0).toUpperCase() + list.slice(1);
 }
 
 // A traveler who asked for a private room never gets a place that only sells dorm beds.
@@ -139,7 +136,7 @@ export function buildStayShortlist({ candidates, profile, destination, budgetPla
   if (upgrade) choices.push({ ...upgrade, role: "Upgrade" });
   const finished = choices.map((choice) => ({ ...choice, why: whyLine(choice, choice.role, profile) }));
   const notice = finished.length >= 3 ? null : finished.length
-    ? `Only ${plural(finished.length, "stay")} here ${finished.length === 1 ? "meets" : "meet"} GlobTrek's standard for this trip${accessibleOnly ? " with accessibility details listed" : ""}. We'd rather show fewer than pad the list.`
-    : accessibleOnly ? "No stay here lists accessibility features in Booking.com's catalog. Check accessibility details directly on Booking.com." : "No stay here meets GlobTrek's standard yet.";
+    ? `Only ${plural(finished.length, "stay")} ${finished.length === 1 ? "fits" : "fit"} this trip${accessibleOnly ? " with accessibility details listed" : ""}.`
+    : accessibleOnly ? "No stay here lists accessibility features. Check with Booking.com directly." : "No stays fit this trip yet.";
   return { choices: finished, notice, considered: pool.length };
 }

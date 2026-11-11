@@ -307,3 +307,10 @@ p, li, dd { text-wrap: pretty; }
 /* Results sections number themselves, so a section left out never leaves a gap. */
 .results-editorial { counter-reset: trip-section; }
 .results-editorial .section-eyebrow::before { counter-increment: trip-section; content: counter(trip-section, decimal-leading-zero) "\00a0\00a0\00a0"; }
+
+/* Homepage hero: a slow settle on the photo and the headline rising in. */
+@keyframes hero-drift { from { transform: scale(1.06); } to { transform: scale(1); } }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.hero-drift { animation: hero-drift 2.4s cubic-bezier(.2,.7,.2,1) both; }
+.rise { animation: rise .9s .25s cubic-bezier(.2,.7,.2,1) both; }
+@media (prefers-reduced-motion: reduce) { .hero-drift, .rise { animation: none; } }

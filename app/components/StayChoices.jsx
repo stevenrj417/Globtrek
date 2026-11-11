@@ -41,7 +41,7 @@ function PriceBlock({ price }) {
   return <div className="mt-4 border-t border-black/12 pt-4">
     <p className="text-micro uppercase tracking-label text-black/50">{PRICE_KIND_LABEL[price.kind]}</p>
     {price.kind === "unavailable"
-      ? <p className="mt-1 text-sm">Check the current price and availability on Booking.com.</p>
+      ? null
       : <>
         <p className="tabular mt-1 font-serif text-xl">{money(price.total)} <span className="font-sans text-xs text-black/55">for {price.nights} night{price.nights === 1 ? "" : "s"}</span></p>
         <p className="tabular mt-1 text-xs text-black/60">{price.math}</p>
@@ -75,7 +75,6 @@ function StayCard({ stay, destination, trip, selected, onSelect, priority }) {
       <div className="mt-auto pt-5">
         <button type="button" aria-pressed={selected} onClick={() => onSelect(stay)} className={`flex min-h-11 w-full items-center justify-between px-4 text-micro uppercase tracking-label ${selected ? "border border-black bg-transparent" : "bg-black text-white"}`}>{selected ? "Selected for your trip" : "Select this stay"}<span aria-hidden="true">{selected ? "✓" : "→"}</span></button>
         {url ? <a href={url} target="_blank" rel="noopener sponsored" onClick={() => track("stay_partner_opened", { destination: destination.city, role: stay.role })} className="mt-3 inline-flex min-h-11 items-center text-sm underline decoration-black/30 underline-offset-4 hover:decoration-ink">Check price and availability on <BookingLogo className="mx-1 h-3 w-auto" /> ↗</a> : null}
-        {updated ? <p className="mt-1 text-micro text-black/45">Property details updated {updated}</p> : null}
       </div>
     </div>
   </li>;
@@ -116,20 +115,20 @@ export function StayChoices({ destination, tripContext, selectedStayId, onSelect
         <div>
           <p className="section-eyebrow text-micro uppercase tracking-editorial">Your stay</p>
           <h2 id="stay-heading" className="mt-3 font-serif text-[clamp(2rem,3vw,2.75rem)] leading-[.94] tracking-tight-2">Three places to sleep</h2>
-          {budgetLodging?.total ? <p className="tabular mt-3 max-w-xl text-xs leading-5 text-black/60">Your estimate counts {money(budgetLodging.perUnit)} × {budgetLodging.units} {budgetLodging.unit}{budgetLodging.units === 1 ? "" : "s"} × {budgetLodging.nights} night{budgetLodging.nights === 1 ? "" : "s"} = {money(budgetLodging.total)} for lodging{budgetLodging.source ? ` (${budgetLodging.source})` : ""}.</p> : null}
+          {budgetLodging?.total ? <p className="tabular mt-3 max-w-xl text-xs leading-5 text-black/60">{money(budgetLodging.perUnit)} a {budgetLodging.unit} a night in your estimate · {money(budgetLodging.total)} for {budgetLodging.nights} night{budgetLodging.nights === 1 ? "" : "s"}</p> : null}
         </div>
         <label className="flex min-h-11 items-center gap-2 text-sm">
           <input type="checkbox" checked={accessibleOnly} onChange={(event) => setAccessibleOnly(event.target.checked)} className="h-4 w-4 accent-black" />
-          Only stays that list accessibility features
+          Accessible stays only
         </label>
       </div>
       <div aria-live="polite" aria-busy={state.status === "loading"}>
         {state.status === "loading" ? <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-label="Loading stays">{[0, 1, 2].map((item) => <li key={item} className="h-[520px] animate-pulse bg-placeholder motion-reduce:animate-none" />)}</ul> : null}
-        {state.status === "error" ? <p className="mt-6 border border-black/15 bg-surface p-5 text-sm">Stays are temporarily unavailable. Your trip estimate still includes lodging; try again in a moment.</p> : null}
+        {state.status === "error" ? <p className="mt-6 border border-black/15 bg-surface p-5 text-sm">Stays aren&apos;t loading right now. Try again in a moment.</p> : null}
         {state.status === "ready" && state.hotels.length ? <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{state.hotels.map((stay, index) => <StayCard key={stay.id} stay={stay} destination={destination} trip={tripContext} selected={stay.id === selectedStayId} onSelect={(choice) => { onSelected(choice, { automatic: false }); track("hotel_selected", { destination: destination.city, role: choice.role }); }} priority={index === 0} />)}</ul> : null}
         {state.status === "ready" && state.notice ? <p className="mt-4 text-sm text-black/60">{state.notice}</p> : null}
       </div>
-      <p className="mt-5 text-xs leading-5 text-black/55">Property details come from <BookingLogo className="mx-0.5 h-3 w-auto" />&apos;s catalog{state.catalog?.checkedAt ? `, updated ${formatDay(state.catalog.checkedAt)}` : ""}. They aren&apos;t live availability or a confirmed room. &quot;On some rates&quot; means Booking.com offers it on at least one rate; check the terms of the rate you book.{stale ? " These details are more than three weeks old." : ""}</p>
+      <p className="mt-5 text-xs leading-5 text-black/55">Details from <BookingLogo className="mx-0.5 h-3 w-auto" />{state.catalog?.checkedAt ? `, ${formatDay(state.catalog.checkedAt)}` : ""} · not live availability · &quot;on some rates&quot; means at least one rate includes it{stale ? " · over three weeks old" : ""}</p>
       <button type="button" onClick={() => onSelected({ id: "none", type: "none", name: "No hotel needed" }, { automatic: false })} className="mt-3 min-h-11 text-xs text-black/55 underline decoration-black/25 underline-offset-4">I already have a place to stay</button>
     </div>
   </section>;

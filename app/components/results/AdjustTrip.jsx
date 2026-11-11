@@ -91,7 +91,7 @@ export function AdjustTrip({ quiz, profile, currentTotal }) {
   return <section id="adjust" aria-labelledby="adjust-heading" className="scroll-mt-24 border-t border-black/15 px-6 py-10 sm:px-12">
     <div className="mx-auto max-w-[1180px]">
       <div className="flex flex-wrap items-end justify-between gap-3">
-        <div><h2 id="adjust-heading" className="font-serif text-[clamp(1.8rem,3vw,2.5rem)] leading-[.95] tracking-tight-2">Adjust this trip</h2><p className="mt-2 text-sm text-black/65">Each change shows what you&apos;d get before you apply it. Currently {money(currentTotal)}.</p></div>
+        <div><h2 id="adjust-heading" className="font-serif text-[clamp(1.8rem,3vw,2.5rem)] leading-[.95] tracking-tight-2">Adjust this trip</h2><p className="mt-2 text-sm text-black/65">Currently {money(currentTotal)}.</p></div>
         {history.length ? <button type="button" onClick={undo} className="inline-flex min-h-11 items-center border border-black/25 px-4 text-sm hover:border-black">↶ Undo last change</button> : null}
       </div>
       <ul className="mt-6 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">{options.map((option) => <li key={option.id}>

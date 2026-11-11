@@ -74,7 +74,7 @@ export function BookingAssistant({ entries, trip, tripKey, onStatuses }) {
       <div>
         <p className="text-micro uppercase tracking-label text-black/55">{session ? "Booking assistant · in progress" : "One-tab booking"}</p>
         {session ? <p className="tabular mt-2 text-sm leading-6" aria-live="polite">{done} of {session.items.length} marked booked{attention ? ` · ${attention} need${attention === 1 ? "s" : ""} you` : ""}. The assistant tab has your checklist and copy buttons; statuses appear below too.</p>
-          : <p className="mt-2 max-w-xl text-sm leading-6">Open {payload.items.length === 1 ? "your booking" : `all ${payload.items.length} bookings`} from one place, with your details filled in where the partner allows it. You review and pay on each partner&apos;s site.</p>}
+          : <p className="mt-2 max-w-xl text-sm leading-6">Open {payload.items.length === 1 ? "your booking" : `all ${payload.items.length} bookings`} at once. You pay each provider on their site.</p>}
         {error ? <p role="alert" className="mt-2 text-sm text-danger">{error}</p> : null}
       </div>
       <button type="button" onClick={start} disabled={state === "checking" || busy} aria-haspopup={state === "present" ? undefined : "dialog"} className="inline-flex min-h-12 items-center justify-center gap-2 bg-black px-6 text-micro font-medium uppercase tracking-label text-white disabled:opacity-40">

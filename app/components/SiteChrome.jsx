@@ -46,7 +46,7 @@ export function SiteFooter() {
         <div className="flex flex-col justify-between gap-12 lg:flex-row">
           <div>
             <BrandWordmark className="text-3xl font-bold tracking-tight-4 sm:text-4xl" />
-            <p className="mt-5 max-w-md text-sm leading-6 text-muted">A few quick questions. One affordable trip.</p>
+            <p className="mt-5 max-w-md text-sm leading-6 text-muted">Where to next?</p>
             <p className="mt-3 text-sm text-muted">Stays, flights and attractions booked on <BookingLogo className="h-3.5 w-auto" /></p>
             <BookingPartnerBadge className="mt-5" />
             <ul className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted">
