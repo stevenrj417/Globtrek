@@ -15,7 +15,7 @@ function commonsLoader({ src, width }) {
   return `${base}/${step}px-${file}${/\.svg$/i.test(file) ? ".png" : ""}`;
 }
 
-export default function Photo(props) {
+export default function Photo({ alt, ...props }) {
   const commons = typeof props.src === "string" && COMMONS_THUMB.test(props.src);
-  return <Image {...props} loader={commons ? commonsLoader : props.loader} />;
+  return <Image alt={alt} {...props} loader={commons ? commonsLoader : props.loader} />;
 }
