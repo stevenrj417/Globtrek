@@ -8,6 +8,7 @@ import { TRAVEL_AREA_OPTIONS } from "../lib/recommendation/travelAreaOptions";
 import { cheapestTrip } from "../lib/quiz/cheapestTrip";
 import { DURATION_NIGHTS, nightsBetween, nightsRange } from "../lib/trip/schedule";
 import { TripDatePicker } from "../components/TripDatePicker";
+import { photoCredit } from "../lib/photoCredits";
 
 // Budget comes first: GlobTrek starts from what you have, not where you want to go.
 const questions = [
@@ -17,13 +18,13 @@ const questions = [
     question: "What setting sounds best?",
     type: "visual",
     options: [
-      { label: "Ocean", display: "Coast", image: "/quiz/ocean.jpg", alt: "A woman overlooking a bright Mediterranean sea" },
-      { label: "Mountains", image: "/quiz/mountains.jpg", alt: "A fashion portrait in a snowy mountain landscape" },
-      { label: "Cities", display: "City", image: "/quiz/cities.jpg", alt: "A black-and-white fashion portrait in Paris" },
+      { label: "Ocean", display: "Coast", image: "/quiz/v2/ocean.jpg", alt: "Atrani on the Amalfi Coast, Italy" },
+      { label: "Mountains", image: "/quiz/v2/mountains.jpg", alt: "Lago di Carezza below the Latemar, Dolomites" },
+      { label: "Cities", display: "City", image: "/quiz/v2/cities.jpg", alt: "Paris and the Eiffel Tower from above" },
       // Set hidden to false to restore Road Trips to the setting question.
       { label: "Road Trips", display: "Road trip", image: "/quiz/road-trips.jpg", alt: "An open road through a dramatic desert landscape", hidden: true },
-      { label: "Culture", display: "History & culture", image: "/quiz/culture.jpg", alt: "A quiet tree-lined street in Kyoto" },
-      { label: "Surprise Me", display: "No preference", image: "/quiz/surprise-me.jpg", alt: "Rio de Janeiro seen from above" },
+      { label: "Culture", display: "History & culture", image: "/quiz/v2/culture.jpg", alt: "Kinkaku-ji reflected in its pond, Kyoto" },
+      { label: "Surprise Me", display: "No preference", image: "/quiz/v2/surprise-me.jpg", alt: "Hot-air balloons lifting off over Cappadocia" },
     ].filter((option) => !option.hidden),
   },
   {
@@ -31,12 +32,12 @@ const questions = [
     question: "What pace do you prefer?",
     type: "visual",
     options: [
-      { label: "Slow mornings", display: "Relaxed", image: "/quiz/slow-mornings.jpg", alt: "A beautiful slow morning with coffee" },
-      { label: "Balanced days", display: "Balanced", image: "/quiz/balanced-days.jpg", alt: "A calm open road beneath a wide sky" },
-      { label: "Packed schedule", display: "Full schedule", image: "/quiz/packed-schedule.jpg", alt: "A vibrant city seen from above" },
-      { label: "Mostly relaxing", display: "Mostly downtime", image: "/quiz/mostly-relaxing.jpg", alt: "Clear water and a quiet tropical beach" },
-      { label: "Adventure days", display: "Active", image: "/quiz/adventure-days.jpg", alt: "A hiker overlooking dramatic mountains" },
-      { label: "Surprise me", display: "No preference", image: "/quiz/surprise-pace.jpg", alt: "Travelers laughing together in the sun" },
+      { label: "Slow mornings", display: "Relaxed", image: "/quiz/v2/slow-mornings.jpg", alt: "Coffee and croissants at breakfast" },
+      { label: "Balanced days", display: "Balanced", image: "/quiz/v2/balanced-days.jpg", alt: "A canal bridge in Amsterdam" },
+      { label: "Packed schedule", display: "Full schedule", image: "/quiz/v2/packed-schedule.jpg", alt: "Shibuya Crossing, Tokyo" },
+      { label: "Mostly relaxing", display: "Mostly downtime", image: "/quiz/v2/mostly-relaxing.jpg", alt: "A jetty over a turquoise lagoon in the Maldives" },
+      { label: "Adventure days", display: "Active", image: "/quiz/v2/adventure-days.jpg", alt: "A hiker on the ridge of Mangart, Slovenia" },
+      { label: "Surprise me", display: "No preference", image: "/quiz/v2/surprise-pace.jpg", alt: "A sailboat at sunset off Zoutelande, Netherlands" },
     ],
   },
   {
@@ -44,21 +45,21 @@ const questions = [
     question: "How long do you want to be away?",
     type: "visual",
     options: [
-      { label: "Long Weekend", display: "3–4 nights", image: "/quiz/long-weekend.jpg", alt: "A polished long weekend escape" },
-      { label: "Five Nights", display: "5 nights", image: "/quiz/five-nights.jpg", alt: "A five-night city escape" },
-      { label: "One Week", display: "One week", image: "/quiz/one-week.jpg", alt: "A week of travel in a beautiful landscape" },
-      { label: "Ten Days", display: "10 days", image: "/quiz/ten-days.jpg", alt: "A ten-day road trip" },
-      { label: "Two Weeks", display: "Two weeks", image: "/quiz/two-weeks.jpg", alt: "A two-week journey through dramatic scenery" },
-      { label: "Open-Ended", display: "Not sure yet", image: "/quiz/open-ended.jpg", alt: "An open-ended journey" },
+      { label: "Long Weekend", display: "3–4 nights", image: "/quiz/v2/long-weekend.jpg", alt: "Prague Castle above red rooftops" },
+      { label: "Five Nights", display: "5 nights", image: "/quiz/v2/five-nights.jpg", alt: "Lisbon rooftops and the Tagus" },
+      { label: "One Week", display: "One week", image: "/quiz/v2/one-week.jpg", alt: "Blue domes above the caldera in Oia, Santorini" },
+      { label: "Ten Days", display: "10 days", image: "/quiz/v2/ten-days.jpg", alt: "Skógafoss waterfall, Iceland" },
+      { label: "Two Weeks", display: "Two weeks", image: "/quiz/v2/two-weeks.jpg", alt: "Cuernos del Paine at sunrise, Patagonia" },
+      { label: "Open-Ended", display: "Not sure yet", image: "/quiz/v2/open-ended.jpg", alt: "A tree-lined country road at dawn" },
     ],
   },
   {
     id: "hotel",
     question: "Where will you sleep?",
     options: [
-      { label: "Whatever's cheapest", display: "Whatever's cheapest", image: "/quiz/surprise-me.jpg", alt: "Rio de Janeiro seen from above" },
-      { label: "Hostel bed", display: "Hostel bed", image: "/quiz/traditional-inn.jpg", alt: "A traditional inn on a quiet Kyoto street" },
-      { label: "Private room", display: "Cheap private room", image: "/quiz/boutique-hotel.jpg", alt: "Editorial city style in Paris" },
+      { label: "Whatever's cheapest", display: "Whatever's cheapest", image: "/quiz/v2/cheapest.jpg", alt: "A red-cottage hostel on Arholma, Sweden" },
+      { label: "Hostel bed", display: "Hostel bed", image: "/quiz/v2/hostel-bed.jpg", alt: "A bright hostel bunk beside a tall window" },
+      { label: "Private room", display: "Cheap private room", image: "/quiz/v2/private-room.jpg", alt: "A canopy bed in a quiet hotel suite" },
     ],
   },
   {
@@ -66,12 +67,12 @@ const questions = [
     question: "What matters most on this trip?",
     type: "visual",
     options: [
-      { label: "Food", image: "/quiz/food.jpg", alt: "A welcoming restaurant table" },
-      { label: "Nature", image: "/quiz/nature.jpg", alt: "Snowy mountains in clear light" },
-      { label: "Culture", image: "/quiz/culture-priority.jpg", alt: "A quiet Kyoto street" },
-      { label: "Nightlife", image: "/quiz/nightlife.jpg", alt: "A crowd beneath city lights" },
-      { label: "Wellness", image: "/quiz/wellness.jpg", alt: "A calm coastal setting" },
-      { label: "Shopping", image: "/quiz/shopping.jpg", alt: "Editorial fashion in Paris" },
+      { label: "Food", image: "/quiz/v2/food.jpg", alt: "A fruit stall at La Boqueria, Barcelona" },
+      { label: "Nature", image: "/quiz/v2/nature.jpg", alt: "Moraine Lake, Banff National Park" },
+      { label: "Culture", image: "/quiz/v2/culture-priority.jpg", alt: "The Long Room library at Trinity College Dublin" },
+      { label: "Nightlife", image: "/quiz/v2/nightlife.jpg", alt: "Neon signs in Kabukichō, Tokyo" },
+      { label: "Wellness", image: "/quiz/v2/wellness.jpg", alt: "The outdoor pools at Széchenyi Baths, Budapest" },
+      { label: "Shopping", image: "/quiz/v2/shopping.jpg", alt: "Galleria Vittorio Emanuele II, Milan" },
     ],
   },
 ];
@@ -102,6 +103,7 @@ function VisualQuestion({ question, value, onChoose, step, status = {}, note = n
   const [preview, setPreview] = useState(selected);
 
   const active = question.options.find((option) => option.label === preview) || question.options[0];
+  const credit = photoCredit(active.image);
   const tiles = useRef([]);
   // Let the first photo win the network race; the other previews load just after it.
   const [warm, setWarm] = useState(false);
@@ -134,8 +136,9 @@ function VisualQuestion({ question, value, onChoose, step, status = {}, note = n
         </div>
         <div className="relative aspect-[4/3] max-h-[300px] overflow-hidden bg-placeholder sm:max-h-none sm:min-h-[360px] lg:aspect-auto lg:h-[min(69vh,760px)]">
           {question.options.filter((option) => warm || option.label === selected || option.label === active.label).map((option) => (
-            <Image key={option.label} src={option.image} alt={option.label === active.label ? option.alt : ""} fill priority={option.label === selected} className={`object-contain transition-[opacity,transform] duration-500 ease-[cubic-bezier(.22,.61,.36,1)] sm:object-cover ${option.label === active.label ? "scale-100 opacity-100" : "pointer-events-none scale-[1.012] opacity-0"}`} sizes="(min-width:1024px) 70vw, 100vw" />
+            <Image key={option.label} src={option.image} alt={option.label === active.label ? option.alt : ""} fill priority={option.label === selected} className={`object-cover transition-[opacity,transform] duration-500 ease-[cubic-bezier(.22,.61,.36,1)] ${option.label === active.label ? "scale-100 opacity-100" : "pointer-events-none scale-[1.012] opacity-0"}`} sizes="(min-width:1024px) 70vw, 100vw" />
           ))}
+          {credit ? <a href={credit.source} target="_blank" rel="noopener" className="absolute right-2 top-2 z-10 max-w-[80%] truncate bg-black/35 px-2 py-0.5 text-[10px] leading-4 text-white/85 backdrop-blur-sm hover:text-white">Photo: {credit.artist} · {credit.license}<span className="sr-only"> (opens in a new tab)</span></a> : null}
         </div>
       </div>
       <div className="relative z-20 mx-auto w-full max-w-[1500px] bg-surface lg:-mt-16">

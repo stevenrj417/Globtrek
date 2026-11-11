@@ -6,11 +6,11 @@ import { TripCard } from "./components/TripCard";
 import { trendingTrips } from "./data/trending";
 
 const vibes = [
-  ["Coast", "Ocean", "/quiz/ocean.jpg", "A bright Mediterranean coastline"],
-  ["Mountains", "Mountains", "/quiz/mountains.jpg", "A snowy mountain landscape"],
-  ["City", "Cities", "/quiz/cities.jpg", "A city street in Paris"],
-  ["History & culture", "Culture", "/quiz/culture.jpg", "A quiet tree-lined street in Kyoto"],
-  ["Surprise me", "Surprise Me", "/quiz/surprise-me.jpg", "Rio de Janeiro seen from above"],
+  ["Coast", "Ocean", "/quiz/v2/ocean.jpg", "Atrani on the Amalfi Coast, Italy"],
+  ["Mountains", "Mountains", "/quiz/v2/mountains.jpg", "Lago di Carezza below the Latemar, Dolomites"],
+  ["City", "Cities", "/quiz/v2/cities.jpg", "Paris and the Eiffel Tower from above"],
+  ["History & culture", "Culture", "/quiz/v2/culture.jpg", "Kinkaku-ji reflected in its pond, Kyoto"],
+  ["Surprise me", "Surprise Me", "/quiz/v2/surprise-me.jpg", "Hot-air balloons lifting off over Cappadocia"],
 ];
 
 const tripHref = (trip) => `/discover/quick?destination=${trip.id}&destinationName=${encodeURIComponent(trip.name)}&source=trending`;

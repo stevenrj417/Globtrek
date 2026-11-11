@@ -86,12 +86,12 @@ export function TripDatePicker({ start, end, onChange, minNights = 1, maxNights 
 
   return <div className="select-none" role="group" aria-label={label}>
     <div className="grid grid-cols-2 border border-black/15 bg-white">
-      <button type="button" onClick={() => { setChoosingReturn(false); if (start) moveFocus(start); }} className={`px-4 py-3 text-left transition-colors ${!choosingReturn ? "bg-ink text-white" : "hover:bg-black/[.03]"}`} aria-pressed={!choosingReturn}>
-        <span className={`block text-micro uppercase tracking-editorial ${!choosingReturn ? "text-white/60" : "text-muted"}`}>Depart</span>
+      <button type="button" onClick={() => { setChoosingReturn(false); if (start) moveFocus(start); }} className={`px-4 py-3 text-left transition-[background-color,box-shadow] duration-200 ${!choosingReturn ? "bg-white shadow-[inset_0_-2px_0_#111]" : "bg-white/60 text-black/60 hover:bg-white"}`} aria-pressed={!choosingReturn}>
+        <span className={`block text-micro uppercase tracking-editorial ${!choosingReturn ? "text-ink" : "text-muted"}`}>Depart</span>
         <span className="mt-1 block font-serif text-xl leading-tight">{start ? format(start, { weekday: "short", month: "short", day: "numeric" }) : "Choose a day"}</span>
       </button>
-      <button type="button" disabled={!start || fixed} onClick={() => { setChoosingReturn(true); if (end) moveFocus(end); }} className={`border-l border-black/15 px-4 py-3 text-left transition-colors disabled:cursor-default ${choosingReturn ? "bg-ink text-white" : "enabled:hover:bg-black/[.03]"}`} aria-pressed={choosingReturn}>
-        <span className={`block text-micro uppercase tracking-editorial ${choosingReturn ? "text-white/60" : "text-muted"}`}>Return{fixed ? " · set for you" : ""}</span>
+      <button type="button" disabled={!start || fixed} onClick={() => { setChoosingReturn(true); if (end) moveFocus(end); }} className={`border-l border-black/10 px-4 py-3 text-left transition-[background-color,box-shadow] duration-200 disabled:cursor-default ${choosingReturn ? "bg-white shadow-[inset_0_-2px_0_#111]" : "bg-white/60 text-black/60 enabled:hover:bg-white"}`} aria-pressed={choosingReturn}>
+        <span className={`block text-micro uppercase tracking-editorial ${choosingReturn ? "text-ink" : "text-muted"}`}>Return{fixed ? " · set for you" : ""}</span>
         <span className="mt-1 block font-serif text-xl leading-tight">{end ? format(end, { weekday: "short", month: "short", day: "numeric" }) : "—"}</span>
       </button>
     </div>

@@ -18,6 +18,7 @@ const routes = [
   "/booking-assistant/privacy",
   "/terms",
   "/affiliate-disclosure",
+  "/photo-credits",
 ];
 
 // Only indexable pages: quiz results are personal, and unpublished destinations stay out.

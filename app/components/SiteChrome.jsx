@@ -13,7 +13,7 @@ const navigation = [["Trips", "/#trips"], ["Quiz", "/discover"], ["Destinations"
 const footerGroups = [
   ["Plan", [["Find my trip", "/discover"], ["Destinations", "/destinations"], ["How it works", "/how-it-works"]]],
   ["Company", [["About", "/about"], ["Help", "/help"], ["Contact", "/contact"]]],
-  ["Policies", [["Privacy", "/privacy"], ["Terms", "/terms"], ["Affiliate disclosure", "/affiliate-disclosure"]]],
+  ["Policies", [["Privacy", "/privacy"], ["Terms", "/terms"], ["Affiliate disclosure", "/affiliate-disclosure"], ["Photo credits", "/photo-credits"]]],
 ];
 
 export function SiteHeader({ actionHref = "/discover", actionLabel = "Find my trip" }) {
