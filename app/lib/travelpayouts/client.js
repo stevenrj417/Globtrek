@@ -132,10 +132,11 @@ export async function groupedPrices({ origin, destination, departureAt, groupBy 
 }
 
 // Fares found for a period ("month" needs beginningOfPeriod as YYYY-MM-01).
-export async function latestPrices({ origin, destination, beginningOfPeriod, periodType = "month", oneWay = false, tripDuration, currency = "usd", market = "us", ...options }) {
+// periodType "year" with no destination lists every route searched from the origin.
+export async function latestPrices({ origin, destination, beginningOfPeriod, periodType = "month", oneWay = false, tripDuration, currency = "usd", market = "us", limit = 30, page = 1, affiliateOnly = true, ...options }) {
   const json = await request("/aviasales/v3/get_latest_prices", {
     ...options,
-    query: { origin: iata(origin, "origin"), destination: destination ? iata(destination, "destination") : undefined, beginning_of_period: when(beginningOfPeriod, "period"), period_type: periodType, one_way: String(oneWay), trip_duration: tripDuration, currency, market, sorting: "price", show_to_affiliates: "true", limit: 30 },
+    query: { origin: iata(origin, "origin"), destination: destination ? iata(destination, "destination") : undefined, beginning_of_period: when(beginningOfPeriod, "period"), period_type: periodType, one_way: String(oneWay), trip_duration: tripDuration, currency, market, sorting: "price", show_to_affiliates: String(affiliateOnly), limit, page },
   });
   return list(json).map((item) => normalizeFare(item, { currency, roundTrip: !oneWay })).filter(Boolean);
 }
