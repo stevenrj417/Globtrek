@@ -26,6 +26,7 @@ const { createCjClient } = await import("../../app/lib/catalog/cjClient.js");
 const { runImport } = await import("../../app/lib/catalog/cjBookingImporter.js");
 const { SnapshotCatalogStore, SupabaseCatalogStore } = await import("../../app/lib/catalog/catalogStore.js");
 const { catalogDestinations } = await import("../../app/lib/catalog/catalogDestinations.js");
+const { stayCounts } = await import("../../app/lib/catalog/stayCounts.js");
 
 const args = process.argv.slice(2);
 const mode = args.includes("--supabase") ? "supabase" : args.includes("--snapshot") ? "snapshot" : "dry-run";
@@ -56,9 +57,7 @@ const size = args.includes("--size") ? Math.max(6, Number(args[args.indexOf("--s
 const run = await runImport({ client, destinations, store, dryRun: mode === "dry-run", trigger: "script", logger: log, ...(size ? { size } : {}) });
 if (mode === "snapshot" && run.destinationsSucceeded) {
   await writeFile(snapshotUrl, `${JSON.stringify(store.snapshot)}\n`);
-  const counts = Object.fromEntries(Object.entries(store.snapshot.stays || {}).sort(([a], [b]) => a.localeCompare(b)).map(([id, stays]) => [id, stays.length]));
-  const dorms = Object.fromEntries(Object.entries(store.snapshot.stays || {}).sort(([a], [b]) => a.localeCompare(b)).map(([id, stays]) => [id, stays.filter((stay) => stay.dorms).length]).filter(([, count]) => count));
-  await writeFile(new URL("../../app/data/feedStayCounts.json", import.meta.url), `${JSON.stringify({ checkedAt: store.snapshot.checkedAt, counts, dorms })}\n`);
+  await writeFile(new URL("../../app/data/feedStayCounts.json", import.meta.url), `${JSON.stringify(stayCounts(store.snapshot))}\n`);
 }
 console.log(JSON.stringify({ mode, status: run.status, destinations: `${run.destinationsSucceeded}/${run.destinationsAttempted}`, records: run.recordsSeen, saved: run.recordsSaved, deactivated: run.recordsDeactivated, requests: run.requests, errors: run.errors }, null, 1));
 process.exit(run.status === "failed" ? 1 : 0);

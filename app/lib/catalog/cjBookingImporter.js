@@ -73,8 +73,8 @@ const REGION_BY_COUNTRY = {
   ICELAND: ["Feed: Northern and Eastern Europe", "Feed: Western Europe"],
   POLAND: ["Feed: Northern and Eastern Europe", "Feed: Western Europe"],
   ROMANIA: ["Feed: Northern and Eastern Europe", "Feed: Western Europe"],
-  GEORGIA: ["Feed: Northern and Eastern Europe", "Feed: Western Europe"],
-  ARMENIA: ["Feed: Northern and Eastern Europe", "Feed: Western Europe"],
+  GEORGIA: ["Feed: Northern and Eastern Europe", "Feed: Western Europe", "Feed: Middle East, Africa"],
+  ARMENIA: ["Feed: Northern and Eastern Europe", "Feed: Western Europe", "Feed: Middle East, Africa"],
   BULGARIA: ["Feed: Northern and Eastern Europe", "Feed: Western Europe"],
   "CZECH REPUBLIC": ["Feed: Northern and Eastern Europe", "Feed: Western Europe"],
   ESTONIA: ["Feed: Northern and Eastern Europe", "Feed: Western Europe"],
@@ -303,7 +303,7 @@ export async function importDestination(client, destination, feeds, { importedAt
   const candidates = feedsForCountry(feeds, destination.country);
   if (!candidates.length) return { destinationId: destination.id, status: "skipped", reason: "no_feed_for_country", records: [] };
   const places = destinationPlaces(destination);
-  const searches = [...new Set([destination.city, ...(destination.hotelSearchCenters || []).slice(0, 3)].map(titleCase))];
+  const searches = [...new Set([destination.city, ...(destination.hotelSearchCenters || []).slice(0, 3), ...(destination.feedCityAliases || []).slice(0, 4)].map(titleCase))];
   for (const feed of candidates) {
     const seen = new Map();
     for (const place of searches) {

@@ -46,9 +46,12 @@ function ols(X, y) {
   for (let i = n - 1; i >= 0; i -= 1) x[i] = (b[i] - A[i].slice(i + 1).reduce((sum, value, k) => sum + value * x[i + 1 + k], 0)) / A[i][i];
   return x;
 }
-const features = (input) => [1, Math.log(input.level), Math.log(input.meal)];
+// Places the World Bank publishes no price level for (Taiwan, Cuba, French
+// overseas territories) use the same fit with the local meal price alone.
+const features = (input) => (input.level ? [1, Math.log(input.level), Math.log(input.meal)] : [1, Math.log(input.meal)]);
 const fit = (points) => ols(points.map((point) => features(point)), points.map((point) => Math.log(point.y)));
 const predict = (beta, input) => Math.exp(features(input).reduce((sum, value, k) => sum + value * beta[k], 0));
+const mealOnly = (points) => points.map(({ level, ...point }) => { void level; return point; });
 function validate(points) {
   const errors = points.map((point, index) => Math.abs(predict(fit(points.filter((_, other) => other !== index)), point) - point.y) / point.y);
   return { samples: points.length, medianAbsPctError: Number((median(errors) * 100).toFixed(1)), meanAbsPctError: Number((errors.reduce((sum, value) => sum + value, 0) / errors.length * 100).toFixed(1)), within30Pct: errors.filter((value) => value <= 0.3).length };
@@ -58,7 +61,8 @@ const byId = Object.fromEntries(destinations.map((destination) => [destination.i
 const inputs = (destination) => {
   const meal = meals.destinations[destination.id];
   const level = levels.countries[COUNTRY_OF[destination.airport]]?.level;
-  return meal?.enough && level && meal.budgetMealUsd > 0 ? { meal: meal.budgetMealUsd, level } : null;
+  if (!meal?.enough || !(meal.budgetMealUsd > 0)) return null;
+  return level ? { meal: meal.budgetMealUsd, level } : { meal: meal.budgetMealUsd, level: null };
 };
 const points = (target) => destinations.map((destination) => ({ ...inputs(destination), y: target(destination), id: destination.id })).filter((point) => point.meal && point.y);
 const sets = {
@@ -67,8 +71,10 @@ const sets = {
   cheapestFoodDay: { points: points((destination) => CHEAP_STAYS[destination.airport]?.cheapFoodDay), against: "editorial cheapest food day (cheapStays.js)" },
   valueFoodDay: { points: points((destination) => destination.budgetEditorial?.planning?.foodDay), against: "editorial good-value food day (budgetEditorial)" },
 };
+for (const set of Object.values(sets)) set.points = set.points.filter((point) => point.level);
 const models = Object.fromEntries(Object.entries(sets).map(([name, set]) => [name, fit(set.points)]));
-const validation = Object.fromEntries(Object.entries(sets).map(([name, set]) => [name, { against: set.against, ...validate(set.points) }]));
+const mealOnlyModels = Object.fromEntries(Object.entries(sets).map(([name, set]) => [name, fit(mealOnly(set.points))]));
+const validation = Object.fromEntries(Object.entries(sets).map(([name, set]) => [name, { against: set.against, ...validate(set.points), mealOnly: validate(mealOnly(set.points)) }]));
 
 const activityPrices = {};
 for (const [, destinationId, , price, currency, , , , ] of activityLines) {
@@ -82,17 +88,19 @@ for (const destination of destinations) {
   if (!input) continue;
   const meal = meals.destinations[destination.id];
   const tours = activityPrices[destination.id] || [];
+  const m = input.level ? models : mealOnlyModels;
   out[destination.id] = {
     checkedAt: meal.checkedAt,
     restaurants: meal.restaurants,
     priceLevel: input.level,
+    ...(input.level ? {} : { model: "meal_only" }),
     meal: { budget: meal.budgetMealUsd, typical: meal.typicalMealUsd, upper: meal.upperMealUsd },
     foodDay: {
-      cheapest: round(predict(models.cheapestFoodDay, input)),
-      value: round(predict(models.valueFoodDay, input)),
+      cheapest: round(predict(m.cheapestFoodDay, input)),
+      value: round(predict(m.valueFoodDay, input)),
       comfortable: round(meal.typicalMealUsd * 1.5 + meal.upperMealUsd),
     },
-    lodging: { dormBed: round(predict(models.dormBed, input)), budgetRoom: round(predict(models.budgetRoom, input)) },
+    lodging: { dormBed: round(predict(m.dormBed, input)), budgetRoom: round(predict(m.budgetRoom, input)) },
     activity: tours.length >= 4 ? { medianListedUsd: round(median(tours)), products: tours.length } : null,
   };
 }

@@ -1,4 +1,5 @@
 import destinationCosts from "./pricing/destinationCosts.json" with { type: "json" };
+import feedStayCounts from "./feedStayCounts.json" with { type: "json" };
 const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 const COST_LEVELS = {
@@ -25,11 +26,25 @@ const TROPICAL_MONTH_FACTORS = [1.08, 1.06, 1, 0.96, 0.92, 0.9, 0.9, 0.92, 0.96,
 // food and lodging modeled from local restaurant prices and the country price
 // level, checked against observed hostel prices and editorial budgets. Used for
 // city destinations without an editorial budget; the model was fit on cities,
-// so islands, resorts and multi-stop regions keep the price-tier default.
+// so islands, resorts and multi-stop regions only use it when the Booking.com
+// catalog shows real budget lodging there (three or more hostels, simple guest
+// houses or two-star hotels). Checked against the seven non-city places with
+// editorial budgets, the city lodging fit is off by a median 31% there (20%
+// in cities), so those estimates carry less confidence. Places with only
+// upscale stays (many resort islands) keep the price-tier default.
 const LOCAL_TYPES = new Set(["city"]);
+export const MIN_BUDGET_STAYS = 3;
+export const AREA_LODGING_ERROR_PCT = 31;
+// Island economies where visitor prices are set by resort tourism, far above
+// the local price level the model learns from (the model gives the Seychelles
+// a $53 room and the Maldives a $49 one). They wait for real property prices.
+const RESORT_ECONOMIES = new Set(["MLE", "seychelles-3d2d7", "OGG", "PPT", "bora-bora-40f39", "st-barts-e3772"]);
 export function localPrices(destination) {
   const local = destinationCosts.destinations[destination.id];
-  return local && LOCAL_TYPES.has(destination.destinationType || "city") ? local : null;
+  if (!local) return null;
+  if (LOCAL_TYPES.has(destination.destinationType || "city")) return local;
+  if (RESORT_ECONOMIES.has(destination.id)) return null;
+  return (feedStayCounts.budget?.[destination.id] || 0) >= MIN_BUDGET_STAYS ? { ...local, area: true } : null;
 }
 
 function roundMoney(value) {
@@ -68,7 +83,7 @@ export function buildDestinationPlanningAverages(destination = {}) {
     currency: "USD",
     hotelStandard: "Clean, well-reviewed budget hotel or simple three-star",
     basis: local
-      ? `Modeled from ${local.restaurants} local restaurants' price ranges on Google Maps (checked ${local.checkedAt}) and the country price level (World Bank); typical error about 20%. Not a live quote.`
+      ? `Modeled from ${local.restaurants} local restaurants' price ranges on Google Maps (checked ${local.checkedAt}) and the country price level (World Bank); typical error about ${local.area ? `${AREA_LODGING_ERROR_PCT}% for lodging outside cities` : "20%"}. Not a live quote.`
       : "Modeled good-value planning average; not a live quote or guaranteed price",
     // "city": an editorial city baseline; "local_prices": modeled from observed
     // local prices; "tier": a price-tier default only.
@@ -78,7 +93,7 @@ export function buildDestinationPlanningAverages(destination = {}) {
     lodgingTaxRate: Number(city.lodgingTaxRate) || 0,
     costLevel: level,
     source: local ? "globtrek_local_prices_v1" : profile.source || "globtrek_city_budget_baseline_v1",
-    confidence: local ? 0.5 : Math.max(0.3, Number(profile.confidence) || 0.4),
+    confidence: local ? (local.area ? 0.4 : 0.5) : Math.max(0.3, Number(profile.confidence) || 0.4),
     monthly: MONTH_NAMES.map((monthName, index) => ({
       month: index + 1,
       monthName,

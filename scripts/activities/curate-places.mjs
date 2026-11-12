@@ -32,8 +32,8 @@ const provider = new GooglePlacesDiscoveryProvider();
 const targets = destinations.filter((destination) => (only ? only.includes(destination.id) : (LAUNCH_SET.includes(destination.id) || ["curated_budget", "curated_mountain"].includes(destination.catalogStatus))));
 // Keep places a traveler can actually visit near the destination: no tour
 // operators, agencies or visitor centers, and nothing more than 40 km out.
-const NOT_A_PLACE = /\b(tour agency|travel agency|visitor center|lodging|hotel)\b/i;
-const OPERATOR_NAME = /\b(operador|receptivo|tours?|agency|travel)\b/i;
+const NOT_A_PLACE = /\b(tour agency|travel agency|visitor center|lodging|hotel|service|boat rental)\b/i;
+const OPERATOR_NAME = /\b(operador|receptivo|tours?|agency|travel|charters?|excursions?|safaris)\b/i;
 function km(a, b) {
   const rad = (value) => value * Math.PI / 180;
   const dLat = rad(b[0] - a[0]); const dLon = rad(b[1] - a[1]);
@@ -65,8 +65,10 @@ const place = (destination, item, kind) => ({
 
 // Launch cities whose catalog records predate coordinates, and search names for
 // destinations whose catalog name is a region rather than a town.
-const CENTERS = { HAN: [21.0285, 105.8542], BKK: [13.7563, 100.5018], LIS: [38.7223, -9.1393], MEX: [19.4326, -99.1332] };
-const SEARCH_NAME = { FTE: "El Calafate", "dolomites-mtn": "Cortina d'Ampezzo", "kazbegi-mtn": "Stepantsminda" };
+const CENTERS = { HAN: [21.0285, 105.8542], BKK: [13.7563, 100.5018], LIS: [38.7223, -9.1393], MEX: [19.4326, -99.1332], "atacama-desert-34950": [-22.9087, -68.1997], "serengeti-national-park-7e380": [-2.4531, 34.8233] };
+// Small islands and parks where few places reach 50 reviews.
+const MIN_REVIEWS = { "hydra-4902a": 15, "st-barts-e3772": 15, "serengeti-national-park-7e380": 15, "sossusvlei-bfe79": 15, "bora-bora-40f39": 20 };
+const SEARCH_NAME = { FTE: "El Calafate", "dolomites-mtn": "Cortina d'Ampezzo", "kazbegi-mtn": "Stepantsminda", KEF: "Reykjavík", CHC: "Christchurch", NBO: "Nairobi", PPT: "Papeete", SJO: "San José", "serengeti-national-park-7e380": "Serengeti National Park", "atacama-desert-34950": "San Pedro de Atacama", "galapagos-islands-09f19": "Puerto Ayora", "sossusvlei-bfe79": "Sossusvlei" };
 
 for (const raw of targets) {
   const destination = CENTERS[raw.id] ? { ...raw, latitude: CENTERS[raw.id][0], longitude: CENTERS[raw.id][1] } : raw;
@@ -74,10 +76,15 @@ for (const raw of targets) {
   const city = SEARCH_NAME[destination.id] || destination.city.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
   const query = async (textQuery, includedType, allowedTypes, limit) => {
     const results = await provider.searchNearby(destination, { textQuery, includedType, limit, allowedTypes });
-    return results.filter((item) => (item.userRatingCount || 0) >= 50);
+    return results.filter((item) => (item.userRatingCount || 0) >= (MIN_REVIEWS[destination.id] || 50));
   };
   try {
     const activities = launchActivities(destination.id).length ? [] : (await query(`top attractions and things to do in ${city}, ${destination.country}`, "tourist_attraction", ACTIVITY_TYPES, 12)).sort((a, b) => (b.userRatingCount || 0) - (a.userRatingCount || 0)).map((item) => place(destination, item, "attraction")).filter((item) => visitable(destination, item)).slice(0, 8);
+    // Small places: a second, broader search for beaches, parks and viewpoints.
+    if (activities.length < 4 && !launchActivities(destination.id).length) {
+      const more = (await query(`beaches, parks, viewpoints and landmarks in ${city}, ${destination.country.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())}`, undefined, ACTIVITY_TYPES, 12)).map((item) => place(destination, item, "attraction")).filter((item) => visitable(destination, item) && !activities.some((existing) => existing.googlePlaceId === item.googlePlaceId));
+      activities.push(...more.slice(0, 8 - activities.length));
+    }
     const restaurants = (await query(`popular local restaurants in ${city}, ${destination.country}`, "restaurant", RESTAURANT_TYPES, 8)).sort((a, b) => (b.rating || 0) - (a.rating || 0)).slice(0, 4).map((item) => place(destination, item, "restaurant"));
     file.places[destination.id] = { activities, restaurants, checkedAt: today };
     console.log(`${destination.id.padEnd(26)} ${activities.length} activities, ${restaurants.length} restaurants`);

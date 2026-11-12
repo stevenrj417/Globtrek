@@ -153,6 +153,25 @@ const verifiedExpansion = [...(verifiedBatch01.records || verifiedBatch01), ...(
   recommendationReady: false, catalogStatus: "verified_destination_only", verificationSource: item.verificationSource,
 }));
 
+// Quiz tags the original records left out, set from what each place is:
+// Provence's Roman towns and hill villages, the mountains around Lake Como,
+// Iceland's glaciers and volcanoes and Palm Springs' San Jacinto range; the
+// reefs, lagoons and Haleakalā behind the island resorts.
+const EDITORIAL_TAGS = {
+  MRS: ["Culture"],
+  KEF: ["Mountains"],
+  "lake-como-ad79e": ["Mountains"],
+  "palm-springs-76868": ["Mountains"],
+  MLE: ["Nature"],
+  OGG: ["Nature"],
+  PPT: ["Nature"],
+  "bora-bora-40f39": ["Nature"],
+};
+function withEditorialTags(destination) {
+  const extra = (EDITORIAL_TAGS[destination.id] || []).filter((tag) => !destination.tags?.includes(tag));
+  return extra.length ? { ...destination, tags: [...(destination.tags || []), ...extra] } : destination;
+}
+
 // Sourced facts (scripts/destinations/build-destination-facts.mjs) fill gaps
 // only: editorial coordinates, seasons, tags and alt text always win.
 function withFacts(destination) {
@@ -174,7 +193,7 @@ function withFacts(destination) {
 }
 
 const legacyNames = new Set(legacyDestinations.map((item) => `${item.city}|${item.country}`));
-export const destinations = [...legacyDestinations, ...verifiedExpansion.filter((item) => !legacyNames.has(`${item.city}|${item.country}`)), ...MOUNTAIN_BASE].map(applyBudgetEditorial).map(enrichDestinationIntelligence).map(withFacts).map((destination) => ({
+export const destinations = [...legacyDestinations, ...verifiedExpansion.filter((item) => !legacyNames.has(`${item.city}|${item.country}`)), ...MOUNTAIN_BASE].map(applyBudgetEditorial).map(enrichDestinationIntelligence).map(withFacts).map(withEditorialTags).map((destination) => ({
   ...destination,
   imageAlt: destination.imageAlt || IMAGE_ALTS[destination.id] || destination.facts?.imageAlt || null,
   // Launch cities priced from hand-checked lodging and food (see cheapStays.js).
