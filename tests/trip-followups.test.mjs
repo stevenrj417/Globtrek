@@ -59,3 +59,11 @@ test("welcome and monthly emails show trending trips and an unsubscribe link", (
     assert.match(html, /utm_source=email/);
   }
 });
+
+test("sign-in link failures explain the real reason", async () => {
+  const { emailLinkProblem } = await import("../app/lib/authErrors.js");
+  assert.match(emailLinkProblem({ status: 429, code: "over_email_send_rate_limit", message: "email rate limit exceeded" }), /Too many/);
+  assert.match(emailLinkProblem({ status: 400, code: "email_address_not_authorized", message: "Email address not authorized" }), /isn't available/);
+  assert.match(emailLinkProblem({ status: 500, code: "unexpected_failure", message: "Error sending magic link email" }), /email service/);
+  assert.match(emailLinkProblem({ status: 422, code: "otp_disabled", message: "Signups not allowed for otp" }), /switched off/);
+});

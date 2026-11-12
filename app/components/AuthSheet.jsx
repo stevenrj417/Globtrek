@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { createClient } from "../lib/supabase/client";
+import { emailLinkProblem } from "../lib/authErrors";
 
 export function AuthSheet({ open, onClose, returnTo = "/" }) {
   const [emailMode, setEmailMode] = useState(false);
@@ -45,7 +46,11 @@ export function AuthSheet({ open, onClose, returnTo = "/" }) {
     const next = returnTo.startsWith("/") ? returnTo : "/";
     const emailRedirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`;
     const { error } = await supabase.auth.signInWithOtp({ email: email.trim(), options: { emailRedirectTo } });
-    setStatus(error ? "We couldn't send the link. Check the address and try again." : "Check your email. Your sign-in link is on its way.");
+    if (!error) { setStatus("Check your email. Your sign-in link is on its way."); return; }
+    // Supabase's message goes to the server log (addresses are scrubbed there);
+    // the traveler gets the reason in plain words.
+    fetch("/api/client-error", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ where: "auth_email_link", message: `${error.status || ""} ${error.code || ""} ${error.message || ""}`.trim(), path: window.location.pathname }) }).catch(() => {});
+    setStatus(emailLinkProblem(error));
   }
 
   return createPortal(<div className="fixed inset-0 z-[100] grid place-items-center overflow-y-auto bg-black/30 px-4 py-6 backdrop-blur-[3px] sm:px-6" role="presentation" onMouseDown={close}>
