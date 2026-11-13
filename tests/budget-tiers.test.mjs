@@ -69,3 +69,19 @@ test("nightly lodging bands follow the ultra-budget tiers", async () => {
   assert.equal(nightlyTier(140), "100_plus");
   assert.equal(nightlyTier(0), null);
 });
+
+test("rock bottom picked by the budget spends leftover money on things to do, still under budget", () => {
+  let upgraded = 0;
+  for (const budget of [800, 1200, 1600]) {
+    const profile = normalizeTravelerProfile(quiz(budget, { answers: { duration: "Five Nights", hotel: "Private room" } }));
+    for (const destination of destinations) {
+      const plan = buildBudgetPlan(profile, destination);
+      if (plan.spendStyle !== "cheapest" || !plan.withinHardBudget) continue;
+      const bare = buildBudgetPlan({ ...profile, spendStyle: "cheapest" }, destination);
+      assert.ok(plan.budgetCheckTotal <= budget, `${destination.id} costs ${plan.budgetCheckTotal}`);
+      assert.ok(plan.estimates.activities.average >= bare.estimates.activities.average, destination.id);
+      if (plan.estimates.activities.average > bare.estimates.activities.average) upgraded += 1;
+    }
+  }
+  assert.ok(upgraded > 0, "no rock-bottom trip used its leftover budget");
+});

@@ -79,6 +79,12 @@ const questions = [
 
 const preferenceSteps = questions.length + 1;
 const DRAFT_KEY = "globtrekQuizDraft";
+// "Portland, OR" or "Lisbon, PT": enough to tell same-named cities apart.
+function airportPlace(airport) {
+  const place = airport.city || airport.name;
+  return `${place}, ${airport.region || airport.country}`;
+}
+
 // The worldwide airport list is large, so it loads only when the final step's field mounts.
 function loadAirportSearch() {
   return Promise.all([import("../data/airports.json"), import("../lib/recommendation/travelArea")]).then(([data, travelArea]) => ({
@@ -211,13 +217,14 @@ function AirportAutocomplete({ value, onChange }) {
         else if (`${city} ${name} ${code}`.includes(normalized)) rank = 5;
         return { airport, rank };
       })
-      .filter(({ rank }) => rank < 99)
+      // Airfields with no airline service only appear when their code is typed exactly.
+      .filter(({ airport, rank }) => rank < 99 && (airport.scheduled || rank === 0))
       .sort((a, b) => a.rank - b.rank || Number(b.airport.scheduled) - Number(a.airport.scheduled) || a.airport.city.localeCompare(b.airport.city));
     return ranked.slice(0, 8).map(({ airport }) => airport);
   }, [normalized, search]);
 
   function choose(airport) {
-    setQuery(`${airport.city || airport.name} (${airport.code})`);
+    setQuery(`${airportPlace(airport)} (${airport.code})`);
     onChange(search.structuredOrigin(airport.code));
     setOpen(false);
     setActiveIndex(0);
@@ -260,7 +267,7 @@ function AirportAutocomplete({ value, onChange }) {
         onClick={() => choose(airport)}
         className={`flex w-full items-center justify-between gap-5 border-t border-black/10 px-5 py-3 text-left transition-colors first:border-t-0 ${index === activeIndex ? "bg-surface-sunken" : "hover:bg-canvas"}`}
       >
-        <span className="min-w-0"><strong className="block truncate text-sm font-medium text-black">{airport.city || airport.name}</strong><span className="mt-1 block truncate text-micro uppercase tracking-caps text-subtle">{airport.name}{airport.country ? ` · ${airport.country}` : ""}</span></span>
+        <span className="min-w-0"><strong className="block truncate text-sm font-medium text-black">{airportPlace(airport)}</strong><span className="mt-1 block text-micro uppercase leading-5 tracking-caps text-subtle">{airport.name}</span></span>
         <span className="shrink-0 text-xs font-semibold tracking-label">{airport.code}</span>
       </button>) : <p className="px-5 py-4 text-xs text-subtle">{search ? "No matching airport found." : "Loading airports…"}</p>}
     </div>}
@@ -280,8 +287,8 @@ function DiscoveryQuestion({ value, onChange, onBack, onContinue }) {
         <div className="relative h-24 sm:h-32">
           <div className="absolute inset-x-0 top-1/2 h-px bg-black/25" />
           <div className="absolute left-0 top-1/2 h-px bg-black transition-[width] duration-300" style={{ width: `${level}%` }} />
-          <div className="pointer-events-none absolute top-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border border-black bg-canvas shadow-hover transition-[left] duration-150 sm:h-20 sm:w-20" style={{ left: `${level}%` }}><span className="grid h-full place-items-center text-micro tabular-nums tracking-label">{level}</span></div>
-          <input aria-label="Destination familiarity" className="absolute inset-0 h-full w-full cursor-ew-resize opacity-0" type="range" min="0" max="100" step="1" value={level} onInput={(event) => onChange(Number(event.currentTarget.value))} onChange={(event) => onChange(Number(event.currentTarget.value))} />
+          <input aria-label="How well known should it be? 0 is hidden places, 100 is iconic places" aria-valuetext={`${level}: ${mood}`} className="peer absolute inset-0 z-10 h-full w-full cursor-ew-resize opacity-0" type="range" min="0" max="100" step="1" value={level} onInput={(event) => onChange(Number(event.currentTarget.value))} onChange={(event) => onChange(Number(event.currentTarget.value))} />
+          <div className="pointer-events-none absolute top-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border border-black bg-canvas shadow-hover transition-[left] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-4 peer-focus-visible:outline-black duration-150 sm:h-20 sm:w-20" style={{ left: `${level}%` }}><span className="grid h-full place-items-center text-micro tabular-nums tracking-label">{level}</span></div>
         </div>
         <div className="flex justify-between gap-8 border-t border-black/10 pt-5 text-micro uppercase tracking-editorial text-muted"><span>Hidden places</span><span className="text-right">Iconic places</span></div>
       </div>

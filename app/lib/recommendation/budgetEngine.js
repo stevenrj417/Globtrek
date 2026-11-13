@@ -41,11 +41,27 @@ export function buildBudgetPlan(profile, destination, options = {}) {
   if (AUTO_ORDER.includes(profile.spendStyle)) return planForStyle(profile, destination, options);
   if (!(profile.exactBudget > 0)) return { ...planForStyle({ ...profile, spendStyle: "value" }, destination, options), spendStyleChosenBy: "globtrek" };
   let plan = null;
+  let valuePlan = null;
   for (const spendStyle of AUTO_ORDER) {
     plan = planForStyle({ ...profile, spendStyle }, destination, options);
+    if (spendStyle === "value") valuePlan = plan;
     if (plan.withinHardBudget) break;
   }
-  return { ...plan, spendStyleChosenBy: "budget" };
+  return { ...withLeftoverActivities(profile, destination, options, plan, valuePlan), spendStyleChosenBy: "budget" };
+}
+
+// Rock bottom plans free things to do. When the budget picked rock bottom but
+// money is left over, spend some of it on paid things to do, up to what a
+// cheap-but-sane plan would, and only while the trip stays under budget.
+function withLeftoverActivities(profile, destination, options, plan, valuePlan) {
+  const people = profile.tripLength * profile.travelers;
+  const room = plan.remainingBudget * 0.9;
+  if (plan.spendStyle !== "cheapest" || !plan.includedBudgetCategories.activities || plan.estimates.activities.average > 0 || !(people > 0) || room < 20) return plan;
+  const fullAmount = valuePlan?.estimates.activities.average || 0;
+  const perPersonDay = Math.floor(Math.min(fullAmount, room) / people);
+  if (!(perPersonDay > 0)) return plan;
+  const richer = planForStyle({ ...profile, spendStyle: "cheapest" }, destination, { ...options, activitiesPerPersonDay: perPersonDay });
+  return richer.withinHardBudget ? richer : plan;
 }
 
 function planForStyle(profile, destination, options = {}) {
@@ -114,10 +130,10 @@ function planForStyle(profile, destination, options = {}) {
   lodging.tier = nightlyTier(lodging.perUnit);
   if (cheap) {
     cityAverage.foodPerPersonDay = Math.min(cityAverage.foodPerPersonDay, cheap.cheapFoodDay);
-    cityAverage.activitiesPerPersonDay = 0;
+    cityAverage.activitiesPerPersonDay = options.activitiesPerPersonDay || 0;
   } else if (profile.spendStyle === "cheapest" && local?.foodDay?.cheapest > 0) {
     cityAverage.foodPerPersonDay = Math.min(cityAverage.foodPerPersonDay, local.foodDay.cheapest);
-    cityAverage.activitiesPerPersonDay = 0;
+    cityAverage.activitiesPerPersonDay = options.activitiesPerPersonDay || 0;
   }
   const lodgingTaxRate = ["city_estimate", "dorm_estimate"].includes(lodging.priceKind) ? cityTaxRate : 0;
   const airportTransfers = (Number(destination.planningAverages?.airportTransferPerPerson) || 0) * 2 * travelers;

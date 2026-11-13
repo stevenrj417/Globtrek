@@ -1,6 +1,16 @@
 // Alt text for destination hero images that came without one. Unsplash photos
 // were looked at directly; Wikimedia Commons ones follow the file's own title.
 export const IMAGE_ALTS = Object.freeze({
+  "hong-kong-d2eaf": "Hong Kong's towers and harbour seen from Victoria Peak",
+  "menorca-20a8d": "Pines above the turquoise water of Cala en Turqueta, Menorca",
+  "isle-of-skye-97691": "The green ridges of the Quiraing on the Isle of Skye",
+  "seychelles-3d2d7": "Granite boulders and clear water at Anse Patates, La Digue, Seychelles",
+  "monaco-35ab1": "Monaco's harbour and the Rock seen from La Turbie",
+  "st-barts-e3772": "Saint-Barthélemy's bays and hills from above",
+  "normandy-e3772": "Mont-Saint-Michel reflected in the tidal flats after sunrise",
+  "sardinia-ad79e": "A path through the scrub to La Pelosa beach, Sardinia",
+  "mauritius-26160": "Green peaks above a river mouth in Mauritius",
+  "nosy-be-f92bc": "A white beach on Nosy Iranja, a day trip from Nosy Be",
   BKK: "Tuk-tuks under neon signs on a rainy night in Bangkok's Chinatown",
   CNX: "A golden temple and chedi in Chiang Mai",
   HAN: "Motorbikes passing a corner café in Hanoi's Old Quarter",
