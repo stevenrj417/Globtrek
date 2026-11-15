@@ -6,6 +6,7 @@ import { track } from "@vercel/analytics";
 import { bookingPropertyUrl } from "../data/destinations";
 import { PRICE_KIND_LABEL } from "../lib/pricing/stayPrice";
 import { BookingLogo } from "./PartnerLogo";
+import { cjDestinationStaysUrl } from "../lib/booking/cj";
 
 const STALE_DAYS = 21;
 
@@ -81,6 +82,15 @@ function StayCard({ stay, destination, trip, selected, onSelect, priority }) {
 
 // Three stays for the trip (Our pick, Best value, Upgrade), each with only the
 // facts the catalog supports and a price labeled by where it came from.
+// No checked stays for this place yet: hand off to a Booking.com search with the trip's dates and party.
+function EmptyStays({ destination, trip }) {
+  const city = String(destination.city || "").toLowerCase().replace(/(^|[\s'(-])\p{L}/gu, (letter) => letter.toUpperCase());
+  const adults = Math.max(1, Number(trip?.adults) || Number.parseInt(trip?.guestCount, 10) || 2);
+  const url = cjDestinationStaysUrl(destination, { dates: { start: trip?.tripStart, end: trip?.tripEnd }, travelers: { adults, children: Number(trip?.children) || 0 } });
+  if (!url) return null;
+  return <p className="mt-3 text-sm text-black/60">We haven&apos;t checked stays in {city} yet. <a href={url} target="_blank" rel="noopener sponsored" onClick={() => track("stay_search_opened", { destination: destination.city })} className="whitespace-nowrap text-ink underline decoration-black/25 underline-offset-4">Search stays on <BookingLogo className="mx-0.5 inline h-3 w-auto align-baseline" /> →</a></p>;
+}
+
 export function StayChoices({ destination, tripContext, selectedStayId, onSelected, budgetLodging }) {
   const [state, setState] = useState({ status: "loading", hotels: [], notice: null, catalog: null });
   const [accessibleOnly, setAccessibleOnly] = useState(false);
@@ -113,7 +123,7 @@ export function StayChoices({ destination, tripContext, selectedStayId, onSelect
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="section-eyebrow text-micro uppercase tracking-editorial">Your stay</p>
-          <h2 id="stay-heading" className="mt-3 font-serif text-[clamp(2rem,3vw,2.75rem)] leading-[.94] tracking-tight-2">Three places to sleep</h2>
+          <h2 id="stay-heading" className="mt-3 font-serif text-[clamp(2rem,3vw,2.75rem)] leading-[.94] tracking-tight-2">{state.status === "ready" && !state.hotels.length ? "Where to sleep" : "Three places to sleep"}</h2>
           {budgetLodging?.total ? <p className="tabular mt-3 max-w-xl text-xs leading-5 text-black/60">{money(budgetLodging.perUnit)} a {budgetLodging.unit} a night in your estimate · {money(budgetLodging.total)} for {budgetLodging.nights} night{budgetLodging.nights === 1 ? "" : "s"}</p> : null}
         </div>
         <label className="flex min-h-11 items-center gap-2 text-sm">
@@ -125,9 +135,10 @@ export function StayChoices({ destination, tripContext, selectedStayId, onSelect
         {state.status === "loading" ? <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-label="Loading stays">{[0, 1, 2].map((item) => <li key={item} className="h-[520px] animate-pulse bg-placeholder motion-reduce:animate-none" />)}</ul> : null}
         {state.status === "error" ? <p className="mt-6 border border-black/15 bg-surface p-5 text-sm">Stays aren&apos;t loading right now. Try again in a moment.</p> : null}
         {state.status === "ready" && state.hotels.length ? <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{state.hotels.map((stay, index) => <StayCard key={stay.id} stay={stay} destination={destination} trip={tripContext} selected={stay.id === selectedStayId} onSelect={(choice) => { onSelected(choice, { automatic: false }); track("hotel_selected", { destination: destination.city, role: choice.role }); }} priority={index === 0} />)}</ul> : null}
-        {state.status === "ready" && state.notice ? <p className="mt-4 text-sm text-black/60">{state.notice}</p> : null}
+        {state.status === "ready" && state.notice && (state.hotels.length || accessibleOnly) ? <p className="mt-4 text-sm text-black/60">{state.notice}</p> : null}
+        {state.status === "ready" && !state.hotels.length && !accessibleOnly ? <EmptyStays destination={destination} trip={tripContext} /> : null}
       </div>
-      <p className="mt-5 text-xs leading-5 text-black/55">Details from <BookingLogo className="mx-0.5 h-3 w-auto" />{state.catalog?.checkedAt ? `, ${formatDay(state.catalog.checkedAt)}` : ""} · not live availability · &quot;on some rates&quot; means at least one rate includes it{stale ? " · over three weeks old" : ""}</p>
+      {state.status === "ready" && !state.hotels.length ? null : <p className="mt-5 text-xs leading-5 text-black/55">Details from <BookingLogo className="mx-0.5 h-3 w-auto" />{state.catalog?.checkedAt ? `, ${formatDay(state.catalog.checkedAt)}` : ""} · not live availability · &quot;on some rates&quot; means at least one rate includes it{stale ? " · over three weeks old" : ""}</p>}
       <button type="button" onClick={() => onSelected({ id: "none", type: "none", name: "No hotel needed" }, { automatic: false })} className="mt-3 min-h-11 text-xs text-black/55 underline decoration-black/25 underline-offset-4">I already have a place to stay</button>
     </div>
   </section>;

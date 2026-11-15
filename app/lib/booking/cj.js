@@ -53,10 +53,8 @@ function partySize(travelers) {
   return Math.min(30, Math.max(1, Number.isFinite(adults) && adults > 0 ? adults : Number.isFinite(total) && total > 0 ? total : 2));
 }
 
-// Booking.com hotel search for a named hotel, pre-filled with dates and party size.
-export function cjHotelSearchUrl(name, destination, { dates, travelers } = {}) {
-  if (!name || !destination?.city) return null;
-  const params = new URLSearchParams({ ss: [name, destination.city, destination.country].filter(Boolean).join(", ") });
+function staySearch(query, { dates, travelers } = {}) {
+  const params = new URLSearchParams({ ss: query });
   if (dates?.start && dates?.end && dates.end >= dates.start) {
     params.set("checkin", dates.start);
     params.set("checkout", dates.end);
@@ -65,6 +63,18 @@ export function cjHotelSearchUrl(name, destination, { dates, travelers } = {}) {
   params.set("no_rooms", "1");
   params.set("group_children", String(Math.max(0, Number(travelers?.children) || 0)));
   return cjTracked(CJ_LINKS.stays, `https://www.booking.com/searchresults.html?${params.toString()}`);
+}
+
+// Booking.com hotel search for a named hotel, pre-filled with dates and party size.
+export function cjHotelSearchUrl(name, destination, options = {}) {
+  if (!name || !destination?.city) return null;
+  return staySearch([name, destination.city, destination.country].filter(Boolean).join(", "), options);
+}
+
+// Booking.com stays search for the whole destination, for places we haven't checked stays in yet.
+export function cjDestinationStaysUrl(destination, options = {}) {
+  if (!destination?.city) return null;
+  return staySearch([destination.city, destination.country].filter(Boolean).join(", "), options);
 }
 
 // Booking.com Attractions search for a named activity in the trip's city.
