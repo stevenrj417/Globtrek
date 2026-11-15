@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
 
-const page = await readFile(new URL("../app/results/page.jsx", import.meta.url), "utf8");
+const page = await readFile(new URL("../app/results/ResultsClient.jsx", import.meta.url), "utf8");
 const sections = await readFile(new URL("../app/components/TripProposalSections.jsx", import.meta.url), "utf8");
 const restaurantRoute = await readFile(new URL("../app/api/restaurants/recommend/route.js", import.meta.url), "utf8");
 

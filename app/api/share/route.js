@@ -27,7 +27,7 @@ export async function POST(request) {
   if (!payload) return Response.json({ error: "Invalid trip" }, { status: 400, headers: NO_STORE });
   try {
     const { token, expiresAt } = sealShareToken(payload);
-    return Response.json({ token, expiresAt, path: `/results?s=${token}` }, { headers: NO_STORE });
+    return Response.json({ token, expiresAt, path: `/s/${token}` }, { headers: NO_STORE });
   } catch (error) {
     const message = error instanceof Error ? error.message : "share_failed";
     console.error(JSON.stringify({ level: "error", msg: "share_seal_failed", error: message }));

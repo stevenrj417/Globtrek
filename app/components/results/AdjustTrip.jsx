@@ -120,9 +120,9 @@ export function AdjustTrip({ quiz, profile, currentTotal, currentId = null, curr
       <button type="button" aria-expanded={editing} aria-controls="adjust-editor" onClick={() => setEditing((value) => !value)} className="mt-6 inline-flex min-h-11 items-center text-sm underline decoration-black/30 underline-offset-4">{editing ? "Hide trip details" : "Edit budget, length, travelers, airport or lodging"}</button>
       {editing ? <div id="adjust-editor" className="mt-4 border border-black/15 bg-surface p-5">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <label className="text-sm font-medium">Total budget (USD)<input type="number" min="100" max="100000" step="25" inputMode="numeric" value={draft.budget} onChange={set("budget")} className={field} /></label>
-          <label className="text-sm font-medium">Nights<input type="number" min="1" max="28" value={draft.nights} onChange={set("nights")} className={field} /></label>
-          <label className="text-sm font-medium">Travelers<input type="number" min="1" max="30" value={draft.travelers} onChange={set("travelers")} className={field} /></label>
+          <label className="text-sm font-medium">Total budget (USD)<input type="number" inputMode="numeric" min="100" max="100000" step="25" value={draft.budget} onChange={set("budget")} className={field} /></label>
+          <label className="text-sm font-medium">Nights<input type="number" inputMode="numeric" min="1" max="28" value={draft.nights} onChange={set("nights")} className={field} /></label>
+          <label className="text-sm font-medium">Travelers<input type="number" inputMode="numeric" min="1" max="30" value={draft.travelers} onChange={set("travelers")} className={field} /></label>
           <label className="text-sm font-medium">Departure airport (3-letter code)<input value={draft.origin} onChange={set("origin")} maxLength={3} autoCapitalize="characters" className={`${field} uppercase`} /></label>
           <label className="text-sm font-medium">Accommodation<select value={draft.lodging} onChange={set("lodging")} className={field}><option>Whatever&apos;s cheapest</option><option>Hostel bed</option><option>Private room</option></select></label>
           <label className="flex min-h-11 items-center gap-3 self-end text-sm font-medium"><input type="checkbox" checked={draft.flights} onChange={set("flights")} className="h-5 w-5 accent-black" />Budget includes flights</label>

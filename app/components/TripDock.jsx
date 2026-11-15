@@ -27,7 +27,7 @@ export function TripDock({ city, summary, total, picks, emailButton, onBook }) {
   }, []);
 
   return <aside aria-label="Your trip" className={`fixed inset-x-3 bottom-[max(.75rem,env(safe-area-inset-bottom))] z-40 mx-auto max-w-3xl transition-[transform,opacity] duration-300 ease-[cubic-bezier(.2,0,0,1)] motion-reduce:transition-none sm:inset-x-6 ${visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-[130%] opacity-0"}`} inert={!visible}>
-    <div className="flex items-center gap-3 rounded-full border border-black/10 bg-surface/95 py-2 pl-5 pr-2 text-ink shadow-overlay backdrop-blur-xl">
+    <div className="flex items-center gap-3 rounded-full border border-black/10 bg-surface py-2 pl-5 pr-2 text-ink shadow-overlay">
       <div className="min-w-0 flex-1">
         <p className="truncate text-sm font-medium">{city} <span className="font-normal text-black/50">· {summary}</span></p>
         <p className="tabular truncate text-micro text-black/55"><span className="font-medium text-ink">{total}</span> estimated{picks ? ` · ${picks}` : ""}</p>

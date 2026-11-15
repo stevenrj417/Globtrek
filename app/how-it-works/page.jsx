@@ -93,7 +93,7 @@ export default function HowItWorksPage() {
       </section>
 
       <section className="px-4 py-4 sm:px-6">
-        <div className="relative mx-auto flex h-[min(64vh,640px)] min-h-[420px] max-w-[1880px] items-end overflow-hidden bg-placeholder">
+        <div className="relative mx-auto flex h-[min(64svh,640px)] min-h-[420px] max-w-[1880px] items-end overflow-hidden bg-placeholder">
           <Image src="/quiz/v2/surprise-me.jpg" alt="Hot-air balloons lifting off over Cappadocia" fill className="image-calm object-cover" sizes="100vw" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-transparent" aria-hidden="true" />
           <div className="relative w-full px-6 pb-12 text-white sm:px-12 sm:pb-16">

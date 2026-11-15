@@ -21,8 +21,8 @@ export default function Home() {
       <SiteHeader />
 
       <section id="discover" className="px-4 pb-16 pt-4 sm:px-6 sm:pb-28">
-        <div className="group relative mx-auto min-h-[82vh] max-w-[1880px] overflow-hidden bg-placeholder sm:min-h-[86vh]">
-          <Image src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1" alt="A bright alpine lake and green mountains" fill preload className="image-calm hero-drift object-cover" sizes="(min-width: 1880px) 1880px, 100vw" quality={75} />
+        <div className="group relative mx-auto min-h-[82svh] max-w-[1880px] overflow-hidden bg-placeholder sm:min-h-[86svh]">
+          <Image src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1" alt="A bright alpine lake and green mountains" fill preload fetchPriority="high" className="image-calm hero-drift object-cover" sizes="(min-width: 1880px) 1880px, 100vw" quality={75} />
           <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black/70 via-black/30 to-transparent" aria-hidden="true" />
           <div className="rise absolute inset-x-0 bottom-0 flex flex-col items-center px-5 pb-12 text-center sm:pb-16 lg:pb-20">
             <h1 className="max-w-4xl font-serif text-[clamp(2.6rem,7vw,6.5rem)] font-normal leading-[0.92] tracking-tight-3 text-white [text-shadow:0_2px_24px_rgba(0,0,0,.35)]">Where to next?</h1>

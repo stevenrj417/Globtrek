@@ -225,8 +225,10 @@ button {
 }
 
 /* Typography rules shared by every page. */
-h1, h2, h3, h4 { text-wrap: balance; }
-p, li, dd { text-wrap: pretty; }
+/* The longhand only: the text-wrap shorthand also resets wrapping, which would
+   undo "truncate" and "whitespace-nowrap" on these elements. */
+h1, h2, h3, h4 { text-wrap-style: balance; }
+p, li, dd { text-wrap-style: pretty; }
 .tabular, time, data { font-variant-numeric: tabular-nums; }
 
 @layer components {
@@ -311,6 +313,19 @@ p, li, dd { text-wrap: pretty; }
 /* Homepage hero: a slow settle on the photo and the headline rising in. */
 @keyframes hero-drift { from { transform: scale(1.06); } to { transform: scale(1); } }
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-.hero-drift { animation: hero-drift 2.4s cubic-bezier(.2,.7,.2,1) both; }
+/* Phones skip the slow zoom so the first photo shows at once. */
+@media (min-width: 640px) { .hero-drift { animation: hero-drift 2.4s cubic-bezier(.2,.7,.2,1) both; } }
 .rise { animation: rise .9s .25s cubic-bezier(.2,.7,.2,1) both; }
 @media (prefers-reduced-motion: reduce) { .hero-drift, .rise { animation: none; } }
+
+/* iPhone zooms the whole page when a field under 16px gets focus. On touch
+   screens, fields that inherit a small size, or use a small text utility,
+   are raised to 16px; larger sizes are left alone. */
+@layer base {
+  @media (pointer: coarse) {
+    input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), select, textarea { font-size: max(16px, 1em); }
+  }
+}
+@media (pointer: coarse) {
+  :is(input, select, textarea):is(.text-xs, .text-sm, .text-micro, .text-\[13px\], .text-\[14px\], .text-\[15px\]) { font-size: 16px; }
+}

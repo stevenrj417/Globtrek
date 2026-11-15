@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { createClient } from "../lib/supabase/client";
 import { emailLinkProblem } from "../lib/authErrors";
 
 export function AuthSheet({ open, onClose, returnTo = "/" }) {
@@ -32,6 +31,7 @@ export function AuthSheet({ open, onClose, returnTo = "/" }) {
 
   async function continueWith(provider) {
     setStatus("Opening sign-in…");
+    const { createClient } = await import("../lib/supabase/client");
     const supabase = createClient();
     const next = returnTo.startsWith("/") ? returnTo : "/";
     const redirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`;
@@ -42,6 +42,7 @@ export function AuthSheet({ open, onClose, returnTo = "/" }) {
   async function continueWithEmail(event) {
     event.preventDefault();
     setStatus("Sending your sign-in link…");
+    const { createClient } = await import("../lib/supabase/client");
     const supabase = createClient();
     const next = returnTo.startsWith("/") ? returnTo : "/";
     const emailRedirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`;

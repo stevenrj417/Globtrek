@@ -345,7 +345,7 @@ test("the booking checklist lists bookable things only and never opens tabs on i
   assert.match(source, /target="_blank" rel="noopener sponsored"/);
   assert.match(source, /opens in a new tab/);
   assert.doesNotMatch(source, /may earn a commission/);
-  const results = readFileSync("app/results/page.jsx", "utf8");
+  const results = readFileSync("app/results/ResultsClient.jsx", "utf8");
   const book = readFileSync("app/book/page.jsx", "utf8");
   for (const page of [results, book]) {
     assert.doesNotMatch(page, /OpenAllBookings|launchBookingManifest|window\.open/);

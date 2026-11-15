@@ -140,7 +140,7 @@ function VisualQuestion({ question, value, onChoose, step, status = {}, note = n
           <p className="mb-6 text-micro uppercase tracking-editorial text-subtle">The GlobTrek quiz</p>
           <h1 className="max-w-md text-[2.25rem] font-medium leading-[0.94] tracking-tight-4 sm:text-[clamp(2.7rem,5.2vw,5.6rem)]">{question.question}</h1>{note ? <p className="mt-5 max-w-sm text-sm leading-6 text-muted">{note}</p> : null}
         </div>
-        <div className="relative aspect-[4/3] max-h-[300px] overflow-hidden bg-placeholder sm:max-h-none sm:min-h-[360px] lg:aspect-auto lg:h-[min(69vh,760px)]">
+        <div className="relative aspect-[4/3] max-h-[300px] overflow-hidden bg-placeholder sm:max-h-none sm:min-h-[360px] lg:aspect-auto lg:h-[min(69svh,760px)]">
           {question.options.filter((option) => warm || option.label === selected || option.label === active.label).map((option) => (
             <Image key={option.label} src={option.image} alt={option.label === active.label ? option.alt : ""} fill priority={option.label === selected} className={`object-cover transition-[opacity,transform] duration-500 ease-[cubic-bezier(.22,.61,.36,1)] ${option.label === active.label ? "scale-100 opacity-100" : "pointer-events-none scale-[1.012] opacity-0"}`} sizes="(min-width:1024px) 70vw, 100vw" />
           ))}
@@ -320,7 +320,7 @@ function DateQuestion({ answers, setAnswers, tripStart, tripEnd, isFlexible, set
 
         <div className="mt-9 grid gap-8 sm:grid-cols-[1fr_7rem]">
           <label><span className="text-micro uppercase tracking-editorial text-muted">Leaving from</span><AirportAutocomplete value={originDetails} onChange={setOriginDetails} /></label>
-          <label><span className="text-micro uppercase tracking-editorial text-muted">Travelers</span><input className="mt-3 w-full border-0 border-b border-black/25 bg-transparent px-0 py-4 text-lg outline-none focus:border-black" type="number" min="1" max="30" value={guestCount} onChange={(event) => setGuestCount(event.target.value)} required /></label>
+          <label><span className="text-micro uppercase tracking-editorial text-muted">Travelers</span><input className="mt-3 w-full border-0 border-b border-black/25 bg-transparent px-0 py-4 text-lg outline-none focus:border-black" type="number" inputMode="numeric" min="1" max="30" value={guestCount} onChange={(event) => setGuestCount(event.target.value)} required /></label>
         </div>
 
         <fieldset className="mt-9">

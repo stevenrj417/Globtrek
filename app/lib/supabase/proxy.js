@@ -4,6 +4,8 @@ import { NextResponse } from "next/server";
 export async function updateSession(request) {
   let response = NextResponse.next({ request });
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY) return response;
+  // Nothing to refresh for visitors who aren't signed in.
+  if (!request.cookies.getAll().some(({ name }) => /^sb-.*-auth-token/.test(name))) return response;
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,

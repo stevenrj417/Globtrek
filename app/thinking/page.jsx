@@ -25,7 +25,7 @@ function FlightPath() {
     query.addEventListener("change", sync);
     return () => query.removeEventListener("change", sync);
   }, []);
-  return <svg aria-hidden="true" viewBox="0 0 1000 280" preserveAspectRatio="xMidYMid slice" className="pointer-events-none absolute inset-x-0 top-[10%] h-[38vh] w-full text-ink">
+  return <svg aria-hidden="true" viewBox="0 0 1000 280" preserveAspectRatio="xMidYMid slice" className="pointer-events-none absolute inset-x-0 top-[10%] h-[38svh] w-full text-ink">
     <path id="flight-route" d={ROUTE} fill="none" stroke="currentColor" strokeOpacity=".2" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="2 9" />
     {still ? <path d={PLANE} fill="currentColor" transform="translate(520 92) rotate(-4)" /> : <>
       <path d={ROUTE} fill="none" stroke="currentColor" strokeOpacity=".5" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="1200" strokeDashoffset="1200">

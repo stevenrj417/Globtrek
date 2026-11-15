@@ -1,34 +1,14 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { StartingLocationField } from "../../components/StartingLocationField";
-import { destinations as catalog } from "../../data/destinations";
-import { displayName } from "../../data/trending";
-
-const destinations = {
-  KIX: { name: "Kyoto", answers: { alive: "Culture", escape: "Balanced days", hotel: "Traditional inn", luxury: "Culture" } },
-  NAP: { name: "Amalfi Coast", answers: { alive: "Ocean", escape: "Mostly relaxing", hotel: "Beach resort", luxury: "Food" } },
-  YYC: { name: "Banff", answers: { alive: "Mountains", escape: "Adventure days", hotel: "Mountain lodge", luxury: "Nature" } },
-  MEX: { name: "Mexico City", answers: { alive: "Cities", escape: "Balanced days", hotel: "Boutique hotel", luxury: "Food" } },
-  HAN: { name: "Hanoi", answers: { alive: "Culture", escape: "Balanced days", hotel: "Boutique hotel", luxury: "Food" } },
-  LIS: { name: "Lisbon", answers: { alive: "Cities", escape: "Slow mornings", hotel: "Boutique hotel", luxury: "Food" } },
-};
-// Any catalog destination can be planned; the ones above keep their hand-set answers.
-function destinationFor(id) {
-  if (destinations[id]) return destinations[id];
-  const item = id ? catalog.find((entry) => entry.id === id) : null;
-  if (!item) return null;
-  const tags = item.tags || [];
-  return { name: displayName(item.city), answers: { alive: tags.includes("Ocean") ? "Ocean" : tags.includes("Mountains") ? "Mountains" : tags.includes("Culture") ? "Culture" : "Cities", escape: "Balanced days", hotel: "Boutique hotel", luxury: tags.includes("Food") ? "Food" : tags.includes("Nature") ? "Nature" : "Culture" } };
-}
 const durations = [["Long weekend", "Long Weekend"], ["Five nights", "Five Nights"], ["One week", "One Week"], ["Ten days", "Ten Days"], ["Two weeks", "Two Weeks"]];
 
-export function QuickTripQuiz() {
+// The page looks the destination up on the server, so the browser never
+// downloads the whole catalog for one name and a few answers.
+export function QuickTripQuiz({ destinationId = null, destination = null }) {
   const router = useRouter();
-  const params = useSearchParams();
-  const destinationId = params.get("destination");
-  const destination = useMemo(() => destinationFor(destinationId), [destinationId]);
   const [originDetails, setOriginDetails] = useState(null);
   const [travelers, setTravelers] = useState("2");
   const [budget, setBudget] = useState("");
@@ -36,5 +16,5 @@ export function QuickTripQuiz() {
   const ready = useMemo(() => destination && originDetails?.city && originDetails?.countryCode && Number.isFinite(originDetails?.latitude) && Number.isFinite(originDetails?.longitude) && Number(budget) >= 100 && Number(travelers) >= 1, [budget, destination, originDetails, travelers]);
   function submit(event) { event.preventDefault(); if (!ready) return; const included = { flights: true, hotel: true, food: true, activities: true, transportation: true }; const answers = { ...destination.answers, duration, discovery: 50, exactBudget: Number(budget), includedBudgetCategories: included }; window.localStorage.setItem("globtrekQuiz", JSON.stringify({ answers, exactBudget: Number(budget), includedBudgetCategories: included, budgetIncludesFlights: true, budgetIncludesHotel: true, budgetIncludesFood: true, budgetIncludesActivities: true, budgetIncludesTransportation: true, tripStart: "", tripEnd: "", isFlexible: true, originAirport: originDetails.airportCode || null, originDetails, originCountryCode: originDetails.countryCode, originCountryName: originDetails.countryName, travelAreaPreference: "anywhere", guestCount: travelers, destination: destinationId, preferredDestination: { id: destinationId, name: destination.name }, source: "trending_quick_quiz", createdAt: Date.now() })); router.push(`/thinking?destination=${encodeURIComponent(destinationId)}`); }
   if (!destination) return <section className="grid min-h-[70svh] place-items-center px-6 text-center"><div><h1 className="font-serif text-5xl">Choose a destination first.</h1><button type="button" onClick={() => router.push("/")} className="mt-8 bg-black px-6 py-4 text-xs uppercase tracking-caps text-white">See trending trips</button></div></section>;
-  return <form onSubmit={submit} className="px-6 py-14 sm:px-10 sm:py-20"><div className="mx-auto max-w-[1100px]"><p className="text-micro uppercase tracking-editorial text-brass">Your {destination.name} trip</p><h1 className="mt-5 max-w-4xl font-serif text-[clamp(3.5rem,7vw,7rem)] leading-[.86] tracking-tight-3">Just the details that make it yours.</h1><div className="mt-14 grid gap-x-12 gap-y-10 sm:grid-cols-2"><label className="text-micro uppercase tracking-label text-black/45">Leaving from<StartingLocationField id="trip-origin" value={originDetails} onChange={setOriginDetails} /></label><label className="text-micro uppercase tracking-label text-black/45">Travelers<input type="number" min="1" max="30" value={travelers} onChange={(event) => setTravelers(event.target.value)} className="mt-3 w-full border-b border-black/30 bg-transparent py-5 text-xl outline-none" /></label><label className="text-micro uppercase tracking-label text-black/45">Total trip budget · USD<input type="number" min="100" step="50" value={budget} onChange={(event) => setBudget(event.target.value)} placeholder="800" className="mt-3 w-full border-b border-black/30 bg-transparent py-5 font-serif text-4xl outline-none placeholder:text-black/18" /></label><fieldset><legend className="text-micro uppercase tracking-label text-black/45">Trip length</legend><div className="mt-3 grid grid-cols-2 border border-black/15">{durations.map(([label, value]) => <button key={value} type="button" aria-pressed={duration === value} onClick={() => setDuration(value)} className={`min-h-14 border-b border-r border-black/15 px-3 text-left text-xs last:border-b-0 ${duration === value ? "bg-black text-white" : ""}`}>{label}</button>)}</div></fieldset></div><div className="mt-14 flex justify-end border-t border-black/12 pt-7"><button disabled={!ready} type="submit" className="min-h-14 bg-black px-7 text-xs font-semibold uppercase tracking-caps text-white disabled:opacity-25">Create my {destination.name} trip →</button></div></div></form>;
+  return <form onSubmit={submit} className="px-6 py-14 sm:px-10 sm:py-20"><div className="mx-auto max-w-[1100px]"><p className="text-micro uppercase tracking-editorial text-brass">Your {destination.name} trip</p><h1 className="mt-5 max-w-4xl font-serif text-[clamp(3.5rem,7vw,7rem)] leading-[.86] tracking-tight-3">Just the details that make it yours.</h1><div className="mt-14 grid gap-x-12 gap-y-10 sm:grid-cols-2"><label className="text-micro uppercase tracking-label text-black/45">Leaving from<StartingLocationField id="trip-origin" value={originDetails} onChange={setOriginDetails} /></label><label className="text-micro uppercase tracking-label text-black/45">Travelers<input type="number" inputMode="numeric" min="1" max="30" value={travelers} onChange={(event) => setTravelers(event.target.value)} className="mt-3 w-full border-b border-black/30 bg-transparent py-5 text-xl outline-none" /></label><label className="text-micro uppercase tracking-label text-black/45">Total trip budget · USD<input type="number" inputMode="numeric" min="100" step="50" value={budget} onChange={(event) => setBudget(event.target.value)} placeholder="800" className="mt-3 w-full border-b border-black/30 bg-transparent py-5 font-serif text-4xl outline-none placeholder:text-black/18" /></label><fieldset><legend className="text-micro uppercase tracking-label text-black/45">Trip length</legend><div className="mt-3 grid grid-cols-2 border border-black/15">{durations.map(([label, value]) => <button key={value} type="button" aria-pressed={duration === value} onClick={() => setDuration(value)} className={`min-h-14 border-b border-r border-black/15 px-3 text-left text-xs last:border-b-0 ${duration === value ? "bg-black text-white" : ""}`}>{label}</button>)}</div></fieldset></div><div className="mt-14 flex justify-end border-t border-black/12 pt-7"><button disabled={!ready} type="submit" className="min-h-14 bg-black px-7 text-xs font-semibold uppercase tracking-caps text-white disabled:opacity-25">Create my {destination.name} trip →</button></div></div></form>;
 }

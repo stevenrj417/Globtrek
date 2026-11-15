@@ -26,7 +26,7 @@ function safeViewUrl(value) {
     for (const field of ["email", "name", "phone", "firstName", "lastName"]) delete quiz[field];
     try {
       const { token } = sealShareToken({ quiz, destination: trip.destination, stay: typeof trip.stay === "string" ? trip.stay : null, snapshot: null });
-      return `https://www.glob-trek.com/results?s=${token}`;
+      return `https://www.glob-trek.com/s/${token}`;
     } catch {
       return `https://www.glob-trek.com/results?destination=${encodeURIComponent(trip.destination)}`;
     }

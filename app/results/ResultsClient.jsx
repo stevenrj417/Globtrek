@@ -1,0 +1,299 @@
+"use client";
+
+import Image from "../components/Photo";
+import Link from "next/link";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { track } from "../lib/analytics";
+import { bookingFlightUrl, bookingPropertyUrl, destinations } from "../data/destinations";
+import { normalizeTravelerProfile } from "../lib/recommendation/travelerProfile";
+import { planDestination, rankDestinations } from "../lib/recommendation/destinationEngine";
+import { buildBudgetPlan } from "../lib/recommendation/budgetEngine";
+import { AccountEntry } from "../components/AccountEntry";
+import { SaveTripButton } from "../components/SaveTripButton";
+import { StayChoices, stayLinkContext } from "../components/StayChoices";
+import { BookingChecklist } from "../components/BookingChecklist";
+import { TripDock } from "../components/TripDock";
+import { EmailTripButton } from "../components/EmailTripButton";
+import { BOOK_EVENT, TripEmailAutomation } from "../components/TripEmailAutomation";
+import { ProposalItinerary, CuratedTripChoices } from "../components/TripProposalSections";
+import { bookingManifestEntries, buildBookingManifest } from "../lib/booking/manifest";
+import { takePrefetchedMatches } from "../lib/matchPrefetch";
+import { matchReasons } from "../lib/recommendation/whyThisFits";
+import { seasonSuitable, tripLengthRange } from "../lib/recommendation/eligibility";
+import { clearSnapshot, estimateChanged, loadSnapshot, makeSnapshot, quizKey, saveSnapshot, snapshotEstimate } from "../lib/results/snapshot";
+import { EstimateStatus, OverBudgetNotice, WhyThisMatches } from "../components/results/TripInsights";
+import { Alternatives } from "../components/results/Alternatives";
+import { AdjustTrip } from "../components/results/AdjustTrip";
+import { BeforeYouGo } from "../components/results/BeforeYouGo";
+import { FeedbackPanel } from "../components/results/FeedbackPanel";
+import { AFFILIATE_DISCLOSURE } from "../lib/site";
+import { BookingLogo } from "../components/PartnerLogo";
+import { NoMatchPanel } from "../components/NoMatchPanel";
+import { pickTrip, resolveResultsState, encodeSharedTrip } from "../lib/results/resolveResults";
+import { nightsBetween, nightsLabel, nightsRange, tripSchedule } from "../lib/trip/schedule";
+import { TripDatePicker } from "../components/TripDatePicker";
+import { stayBudgetOption, PRICE_KIND_LABEL } from "../lib/pricing/stayPrice";
+
+function getMatches(quiz) { return rankDestinations(destinations, normalizeTravelerProfile(quiz || {})); }
+function formatDate(value, year = true) { if (!value) return null; return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", ...(year ? { year: "numeric" } : {}), timeZone: "UTC" }).format(new Date(`${value}T00:00:00Z`)); }
+function titleCase(value) { return String(value || "").toLowerCase().replace(/(^|[\s&'(-])\p{L}/gu, (letter) => letter.toUpperCase()); }
+function money(value) { return `$${Math.round(value || 0).toLocaleString("en-US")}`; }
+function airportCode(value) { return String(value || "").replace(/[^a-z]/gi, "").slice(0, 3).toUpperCase(); }
+
+function FlightPlan({ trip, profile, estimate, preferences, range, onUpdate, searchUrl, datesLabel }) {
+  const origin = profile.originDetails?.displayName || profile.originDetails?.airportName || profile.origin || "Departure origin";
+  const [draft, setDraft] = useState(preferences);
+  const [picking, setPicking] = useState(false);
+  const draftNights = nightsBetween(draft.departureDate, draft.returnDate);
+  const datesValid = (!draft.departureDate && !draft.returnDate) || Boolean(draftNights && draftNights >= range.min && draftNights <= range.max);
+  const valid = draft.departureAirport.length === 3 && draft.arrivalAirport.length === 3 && datesValid && draft.adults > 0;
+  function change(key, value) { setDraft((current) => ({ ...current, [key]: value })); }
+  function adjust(key, amount) { setDraft((current) => ({ ...current, [key]: Math.max(key === "adults" ? 1 : 0, Math.min(20, current[key] + amount)) })); }
+  function submit(event) { event.preventDefault(); if (valid) { onUpdate(draft); setPicking(false); } }
+  // A price only when it comes from fares for this route; otherwise say so.
+  const observed = OBSERVED_FARE_SOURCES.includes(estimate?.source);
+  const perPerson = estimate?.perTraveler ?? estimate?.average;
+  return <section className="px-6 py-10 sm:px-12 sm:py-14" aria-labelledby="flight-plan-heading"><div className="mx-auto max-w-[1180px] border border-black/12 bg-white">
+    <div className="grid gap-6 p-6 sm:p-8 md:grid-cols-[1fr_auto] md:items-end">
+      <div><p className="text-micro uppercase tracking-editorial text-black/55">Flight</p><h2 id="flight-plan-heading" className="mt-3 font-serif text-[clamp(2.2rem,4vw,3.25rem)] leading-none tracking-tight-2">{preferences.departureAirport || profile.origin || origin} <span aria-hidden="true" className="text-black/35">→</span><span className="sr-only"> to </span> {preferences.arrivalAirport}</h2><p className="tabular mt-3 text-sm text-black/65">{datesLabel}</p></div>
+      <div className="md:text-right">{observed && perPerson ? <><p className="tabular font-serif text-3xl">{money(perPerson)}</p><p className="mt-1 text-xs text-black/55">round trip per person · recent fares</p></> : <p className="max-w-[16rem] text-xs leading-5 text-black/60">No recent fares for this route yet. Your total uses a typical fare.</p>}<a href={searchUrl} target="_blank" rel="noopener sponsored" onClick={() => track("flight_search_opened", { destination: trip.city })} className="mt-4 inline-flex min-h-12 items-center bg-black px-6 text-micro font-medium uppercase tracking-label text-white">Check flights <span aria-hidden="true" className="ml-2">↗</span><span className="sr-only"> (opens in a new tab)</span></a></div>
+    </div>
+    <details className="group border-t border-black/10"><summary className="flex min-h-12 cursor-pointer list-none items-center justify-between px-6 text-micro uppercase tracking-label text-black/65 sm:px-8">Change flight details <span aria-hidden="true" className="transition-transform duration-200 group-open:rotate-45">+</span></summary><div className="px-6 pb-6 sm:px-8"><form onSubmit={submit} className="grid gap-x-5 gap-y-4 sm:grid-cols-2 lg:grid-cols-4"><label className="text-micro uppercase tracking-label">Departure<input aria-label="Departure airport" value={draft.departureAirport} onChange={(event) => change("departureAirport", airportCode(event.target.value))} placeholder="PDX" maxLength={3} required className="mt-1 min-h-9 w-full border-b border-black/20 bg-transparent text-sm uppercase outline-none focus:border-black" /></label><label className="text-micro uppercase tracking-label">Arrival<input aria-label="Arrival airport" value={draft.arrivalAirport} onChange={(event) => change("arrivalAirport", airportCode(event.target.value))} placeholder={trip.airport} maxLength={3} required className="mt-1 min-h-9 w-full border-b border-black/20 bg-transparent text-sm uppercase outline-none focus:border-black" /></label><div className="sm:col-span-2 lg:col-span-4"><button type="button" aria-expanded={picking} aria-controls="flight-dates" onClick={() => setPicking((open) => !open)} className="flex min-h-12 w-full items-center justify-between gap-4 border-b border-black/20 text-left"><span><span className="block text-micro uppercase tracking-label">Dates</span><span className="tabular mt-1 block text-sm">{draft.departureDate && draft.returnDate ? `${formatDate(draft.departureDate, false)} → ${formatDate(draft.returnDate)} · ${nightsLabel(nightsBetween(draft.departureDate, draft.returnDate) || range.min)}` : `Flexible · pick ${range.min === range.max ? nightsLabel(range.min) : `${range.min}–${range.max} nights`}`}</span></span><span className="text-micro uppercase tracking-label text-black/55">{picking ? "Done" : "Change"} <span aria-hidden="true">{picking ? "↑" : "↓"}</span></span></button>{picking ? <div id="flight-dates" className="pt-5"><TripDatePicker start={draft.departureDate} end={draft.returnDate} minNights={range.min} maxNights={range.max} label="Flight dates" onChange={(start, end) => setDraft((current) => ({ ...current, departureDate: start, returnDate: end }))} /></div> : null}</div><fieldset className="sm:col-span-2"><legend className="text-micro uppercase tracking-label">Preferred departure</legend><div className="mt-2 grid grid-cols-3 gap-1">{["Morning", "Afternoon", "Night"].map((timing) => { const value = timing === "Night" ? "evening" : timing.toLowerCase(); return <button key={timing} type="button" aria-pressed={draft.timing === value} onClick={() => change("timing", value)} className={`min-h-9 border px-2 text-micro ${draft.timing === value ? "border-black bg-black text-white" : "border-black/15"}`}>{timing}</button>; })}</div></fieldset><div className="grid grid-cols-2 gap-3 sm:col-span-2">{[["Adults", "adults"], ["Children", "children"]].map(([label, key]) => <div key={key} className="flex min-h-10 items-center justify-between border-y border-black/15"><span className="text-micro">{label}</span><span className="flex items-center gap-2"><button type="button" onClick={() => adjust(key, -1)} aria-label={`Remove ${label.toLowerCase()}`} className="h-8 w-8 text-base">−</button><strong className="min-w-4 text-center text-xs font-medium">{draft[key]}</strong><button type="button" onClick={() => adjust(key, 1)} aria-label={`Add ${label.toLowerCase()}`} className="h-8 w-8 text-base">+</button></span></div>)}</div><div className="flex flex-wrap items-center gap-4 sm:col-span-2 lg:col-span-4"><button disabled={!valid} className="min-h-10 bg-black px-5 text-micro uppercase tracking-label text-white disabled:cursor-not-allowed disabled:opacity-35">Update flight options</button><p role="status" className="text-micro">{preferences.updated ? "Updated." : ""}</p></div></form></div></details>
+  </div></section>;
+}
+
+const OBSERVED_FARE_SOURCES = ["aviasales_observed_biweekly", "aviasales_observed_monthly", "google_flights_snapshot", "us_dot_average_fare_paid"];
+
+const SPEND_LABELS = { cheapest: "Rock bottom", value: "Cheap but sane", comfortable: "A little comfort" };
+const LABELS = { hotel: "Stay", flights: "Flights", food: "Dining", activities: "Experiences", transportation: "Transportation", miscBuffer: "Buffer" };
+
+// Where the lodging line's price comes from, in the same words everywhere.
+function lodgingSource(lodging) {
+  if (!lodging) return null;
+  if (lodging.priceKind === "city_estimate") return "GlobTrek's city estimate for a simple room, taxes included";
+  if (lodging.priceKind === "dorm_estimate") return "GlobTrek's modeled dorm-bed rate for this city, not a specific hostel's price";
+  if (lodging.priceKind === "live") return "live price";
+  if (lodging.priceKind === "observed") return `price seen on Booking.com, checked ${formatDate(lodging.observedAt)}`;
+  return lodging.observedAt ? `GlobTrek estimate from the Booking.com price checked ${formatDate(lodging.observedAt)}, adjusted for your travel month` : "GlobTrek estimate";
+}
+
+function lodgingLine(lodging) {
+  if (!lodging?.total) return null;
+  const what = `${lodging.unit === "bed" ? "dorm bed" : "room"}${lodging.units === 1 ? "" : "s"}`;
+  return `${lodging.name ? `${lodging.name} · ` : ""}${money(lodging.perUnit)} × ${lodging.units} ${what} × ${lodging.nights} night${lodging.nights === 1 ? "" : "s"}`;
+}
+
+function CostSection({ budgetPlan, trip, nights, travelers, missingPriceStay, snapshot }) {
+  if (!budgetPlan?.estimates) return null;
+  const grand = budgetPlan.budgetCheckTotal;
+  const cheapest = budgetPlan.spendStyle === "cheapest";
+  const flights = budgetPlan.estimates.flights;
+  const notes = {
+    flights: flights ? `${OBSERVED_FARE_SOURCES.includes(flights.source) ? "Recent fares" : "Typical fare"} · ${money(flights.perTraveler)} × ${travelers}` : null,
+    hotel: lodgingLine(budgetPlan.lodging),
+    food: cheapest ? "Street food and groceries" : null,
+    activities: cheapest ? (budgetPlan.estimates.activities?.average ? "Free sights plus a few paid ones" : "Free things only") : null,
+    transportation: budgetPlan.airportTransfers > 0 ? "Includes airport transfers" : null,
+  };
+  const farAirport = Number(trip?.airportToCenterMiles) >= 15 ? trip.airportToCenterMiles : null;
+  const generated = snapshot?.generatedAt ? new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(new Date(snapshot.generatedAt)) : null;
+  return <section id="cost" className="scroll-mt-24 px-6 py-12 sm:px-12 sm:py-16" aria-labelledby="cost-heading"><div className="mx-auto max-w-[1180px]"><div className="overflow-hidden border border-black/12 bg-white lg:grid lg:grid-cols-[.8fr_1.2fr]">
+    <div className="flex flex-col justify-between border-b border-black/10 p-6 sm:p-8 lg:border-b-0 lg:border-r"><div>
+      <p className="text-micro uppercase tracking-editorial text-black/55">Your trip</p>
+      <h2 id="cost-heading" className="tabular mt-4 font-serif text-[clamp(2.6rem,4.5vw,4rem)] leading-[.92] tracking-tight-3">{money(grand)}</h2>
+      <p className="tabular mt-3 text-sm text-black/65">{travelers > 1 ? `${money(grand / travelers)} per person · ` : ""}{nights} night{nights === 1 ? "" : "s"}{budgetPlan.spendStyle ? ` · ${SPEND_LABELS[budgetPlan.spendStyle] || "Best value"}` : ""}</p>
+      <p className="mt-1 text-xs text-black/50">Estimated price · final prices confirmed by providers</p>
+      {farAirport ? <p className="mt-4 max-w-sm border-l-2 border-warning pl-3 text-xs leading-5">The airport is about {farAirport} miles from the center.</p> : null}
+      {missingPriceStay ? <p className="mt-4 max-w-sm border-l-2 border-warning pl-3 text-xs leading-5">{missingPriceStay} has no reliable price yet; the stay line uses our estimate.</p> : null}
+    </div><a href="#booking-center" className="mt-8 flex min-h-12 w-full items-center justify-between bg-black px-6 text-micro font-medium uppercase tracking-label text-white">Start booking <span aria-hidden="true">↓</span></a></div>
+    <dl className="divide-y divide-black/10">{Object.entries(budgetPlan.estimates).map(([key, item]) => { const included = key === "miscBuffer" || budgetPlan.includedBudgetCategories[key]; return <div key={key} className="grid grid-cols-[1fr_auto] items-center gap-6 px-6 py-4 sm:px-8"><dt className="text-sm">{LABELS[key] || key}{included && notes[key] ? <span className="mt-0.5 block text-xs text-black/55">{notes[key]}</span> : null}{!included ? <span className="mt-0.5 block text-xs text-black/55">Not included</span> : null}</dt><dd className="tabular font-serif text-lg">{included ? money(item.average) : "—"}</dd></div>; })}<div className="grid grid-cols-[1fr_auto] items-center gap-6 bg-surface px-6 py-4 sm:px-8"><dt className="text-micro font-medium uppercase tracking-label">Estimated total</dt><dd className="tabular font-serif text-lg">{money(grand)}</dd></div></dl>
+  </div>
+  <details className="group mt-4 border-b border-black/10"><summary className="flex min-h-12 cursor-pointer list-none items-center justify-between text-sm text-black/65">How we estimate <span aria-hidden="true" className="transition-transform duration-200 group-open:rotate-45">+</span></summary><div className="max-w-3xl space-y-2 pb-5 text-xs leading-5 text-black/65">
+    <p>{cheapest ? "Rock bottom: the cheapest fare for your month, a hostel bed, street food, transit and free things to do." : "Economy flights, a simple room, everyday meals, local transport and activities for your travel month."} These are GlobTrek estimates, not live prices.</p>
+    {flights?.basis ? <p>Flights: {flights.basis}.</p> : null}
+    {budgetPlan.lodging?.total ? <p>Stay: {lodgingSource(budgetPlan.lodging)}.</p> : null}
+    <p>Range {money(budgetPlan.estimatedTripLow)}–{money(budgetPlan.estimatedTripHigh)}.{generated ? ` Estimated ${generated}.` : ""}{snapshot?.resultId ? ` Result ${snapshot.resultId}.` : ""}</p>
+  </div></details>
+  {trip?.freeHighlights?.length ? <div className="mt-8"><p className="text-micro uppercase tracking-editorial text-black/55">Free in {titleCase(trip.city)}</p><ul className="mt-3 grid gap-2 text-sm sm:grid-cols-3">{trip.freeHighlights.map((item) => <li key={item}>{item}</li>)}</ul></div> : null}
+</div></section>;
+}
+
+// Everything the page shows, derived once from the quiz, the trip on screen and
+// the traveler's choices, so dates, nights, prices and links agree everywhere.
+function buildView({ quiz, trip, flightPreferences, selectedHotel, selectedRestaurants, selectedActivities, observedFare }) {
+  const profile = normalizeTravelerProfile(quiz);
+  const quizSchedule = tripSchedule(quiz);
+  const nightsAllowed = nightsRange(quiz.answers?.duration, quizSchedule.flexible ? null : quizSchedule.nights);
+  const destinationKey = trip.id || trip.airport;
+  const defaults = { departureAirport: airportCode(profile.originDetails?.airportCode || quiz.originAirport || profile.origin), arrivalAirport: airportCode(trip.airport), departureDate: quizSchedule.start || "", returnDate: quizSchedule.end || "", adults: Math.max(1, Number(profile.travelers) || 1), children: 0, cabin: "ECONOMY", timing: "morning", updated: false };
+  const prefs = flightPreferences || defaults;
+  const travelers = prefs.adults + prefs.children;
+  const noStay = selectedHotel?.type === "none";
+  const context = { ...quiz, originAirport: prefs.departureAirport, originDetails: prefs.departureAirport === quiz?.originDetails?.airportCode ? quiz.originDetails : null, tripStart: prefs.departureDate, tripEnd: prefs.returnDate, isFlexible: !(prefs.departureDate && prefs.returnDate), guestCount: String(travelers), adults: prefs.adults, children: prefs.children, cabinClass: prefs.cabin || "ECONOMY", flightTimingPreference: prefs.timing, ...(noStay ? { includedBudgetCategories: { ...profile.includedBudgetCategories, hotel: false } } : {}) };
+  const schedule = tripSchedule(context);
+  const activeProfile = normalizeTravelerProfile(context);
+  const flightDestination = { ...trip, airport: prefs.arrivalAirport || trip.airport };
+  const stay = selectedHotel && !noStay ? selectedHotel : null;
+  // A stay's price only counts when it was priced for these same nights.
+  const stayOption = stay?.price?.nights === schedule.nights ? stayBudgetOption(stay, stay.price) : null;
+  // Observed fares live on the server; the page asks for this route and dates.
+  const fareMonths = (activeProfile.dates?.period?.months || []).map((value) => Number(String(value).slice(5, 7))).filter(Boolean);
+  const fareDepart = activeProfile.dates?.start && !activeProfile.dates?.flexible ? activeProfile.dates.start : "";
+  const fareQuery = activeProfile.origin && flightDestination.airport ? new URLSearchParams({ origin: activeProfile.origin, destination: flightDestination.airport, ...(fareDepart ? { depart: fareDepart } : {}), months: fareMonths.join(",") }).toString() : null;
+  const budgetPlan = buildBudgetPlan(activeProfile, flightDestination, { stay: stayOption, observedFare: observedFare?.query === fareQuery ? observedFare.fare : null });
+  const flightUrl = bookingFlightUrl(flightDestination, context);
+  const flightSelection = { selected: Boolean(prefs.departureAirport && prefs.arrivalAirport), origin: prefs.departureAirport, destination: prefs.arrivalAirport, departureDate: schedule.start, returnDate: schedule.end, adults: prefs.adults, children: prefs.children, cabin: prefs.cabin || "ECONOMY", timing: prefs.timing, preferredDeparture: prefs.timing, selectedItinerary: prefs.selectedItinerary || null };
+  const stayForManifest = stay ? { ...stay, photoUrl: stay.image || stay.photos?.[0] || null, priceEstimate: stayOption ? `${money(budgetPlan.lodging.total)} ${PRICE_KIND_LABEL[stay.price.kind].toLowerCase()} for ${schedule.nights} nights` : "Price not available; check Booking.com" } : null;
+  const sharedPayload = encodeSharedTrip({ quiz: context, destination: destinationKey, stay: stay?.id || null });
+  const bookingManifest = buildBookingManifest({ tripId: `${destinationKey}:${sharedPayload.slice(0, 120)}`, destination: { id: destinationKey, city: trip.city, country: trip.country, airport: trip.airport, image: trip.image }, dates: { start: schedule.start, end: schedule.end }, travelers: { adults: prefs.adults, children: prefs.children, total: travelers }, hotels: stayForManifest ? [stayForManifest] : [], hotelExactUrls: [stay ? bookingPropertyUrl(stay, stayLinkContext(context, stay)) : null], restaurants: selectedRestaurants, experiences: selectedActivities, flight: flightSelection, flightDeepLink: flightUrl });
+  const providerLinks = { hotel: bookingManifest.hotelBookings[0]?.exactUrl || null, flight: bookingManifest.flightBooking?.deepLink || null, restaurants: bookingManifest.restaurantBookings.map((item) => ({ name: item.name, url: item.exactUrl })), activities: bookingManifest.experienceBookings.map((item) => ({ name: item.name, url: item.exactUrl })) };
+  const savedTrip = { clientTripKey: bookingManifest.tripId, sharePath: `/results?destination=${encodeURIComponent(destinationKey)}`, destination: bookingManifest.destination, trip: context, schedule, travelerProfile: activeProfile, preferences: { pace: activeProfile.pace, budget: activeProfile.exactBudget, travelAreaPreference: activeProfile.travelAreaPreference, originCountryCode: activeProfile.originCountryCode, flightTimingPreference: prefs.timing, quizAnswers: activeProfile.otherExistingQuizPreferences }, exactBudget: activeProfile.exactBudget, includedBudgetCategories: activeProfile.includedBudgetCategories, itinerary: trip.plan || null, estimatedCosts: budgetPlan, costConfidence: budgetPlan.confidence ?? null, bookingManifest, bookingLinks: providerLinks, selections: { hotel: stayForManifest, flight: flightSelection, restaurants: selectedRestaurants, activities: selectedActivities } };
+  return { fareQuery, profile, prefs, nightsAllowed, travelers, context, schedule, activeProfile, budgetPlan, stay, stayMissingPrice: stay?.price?.kind === "unavailable", sharedPayload, bookingManifest, savedTrip, destinationKey };
+}
+
+// shareToken is set when the trip was opened from a short share link (/s/…).
+export default function ResultsPage({ shareToken = null }) {
+  const [resolved, setResolved] = useState(null);
+  const [remoteMatches, setRemoteMatches] = useState(null);
+  const [selectedHotel, setSelectedHotel] = useState(null);
+  const [selectedRestaurants, setSelectedRestaurants] = useState([]);
+  const [selectedActivities, setSelectedActivities] = useState([]);
+  const [shareStatus, setShareStatus] = useState("");
+  const [flightPreferences, setFlightPreferences] = useState(null);
+  const [proposalCatalog, setProposalCatalog] = useState({ restaurants: [], activities: [] });
+  const [shareError, setShareError] = useState("");
+  const [shareOpen, setShareOpen] = useState(false);
+  const [refreshNonce, setRefreshNonce] = useState(0);
+  const [observedFare, setObservedFare] = useState(null);
+
+  useEffect(() => {
+    let savedQuiz = null;
+    let savedStay = null;
+    try { savedQuiz = window.localStorage.getItem("globtrekQuiz"); savedStay = window.localStorage.getItem("globtrekStay"); } catch {}
+    const loadMatches = (state) => {
+      const prefetched = state.source === "shared" ? null : takePrefetchedMatches(state.quiz, state.destinationId || state.pinnedId);
+      if (prefetched) window.setTimeout(() => setRemoteMatches(prefetched), 0);
+      else fetch("/api/match", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...state.quiz, destination: state.destinationId || state.pinnedId }) }).then((response) => response.json()).then((data) => { if (Array.isArray(data.matches) && data.matches.length) setRemoteMatches(data.matches); }).catch(() => {});
+      track("result_viewed", { source: state.source });
+    };
+    const token = shareToken || new URLSearchParams(window.location.search).get("s");
+    if (token) {
+      // An opaque share link: the server opens it and says if it has expired.
+      const controller = new AbortController();
+      fetch(`/api/share?t=${encodeURIComponent(token)}`, { signal: controller.signal }).then(async (response) => ({ ok: response.ok, data: await response.json().catch(() => ({})) })).then(({ ok, data }) => {
+        if (!ok || !data.trip?.quiz) { setShareError(data.error || "This shared trip link isn't valid."); return; }
+        const state = { source: "shared", quiz: data.trip.quiz, destinationId: data.trip.destination, stayId: data.trip.stay || null, useSavedStay: false, sharedSnapshot: data.trip.snapshot || null, sharedExpiresAt: data.expiresAt };
+        setResolved(state);
+        loadMatches(state);
+      }).catch((error) => { if (error.name !== "AbortError") setShareError("We couldn't open this shared trip. Check your connection and try again."); });
+      return () => controller.abort();
+    }
+    const state = resolveResultsState({ search: window.location.search, savedQuiz, savedStay });
+    if (state.source === "legacy_expired") { window.setTimeout(() => setShareError("This shared trip link has expired."), 0); return undefined; }
+    // Same answers as last time: show the same destination that was picked then.
+    let pinned = null;
+    try { pinned = state.source === "saved" ? loadSnapshot(window.localStorage, quizKey(state.quiz)) : null; } catch {}
+    const ready = { ...state, pinnedId: pinned?.destinationId || null };
+    const initialize = window.setTimeout(() => setResolved(ready), 0);
+    loadMatches(ready);
+    return () => window.clearTimeout(initialize);
+  }, [shareToken]);
+
+  const quiz = resolved?.quiz || null;
+  const localMatches = useMemo(() => (quiz ? getMatches(quiz) : []), [quiz]);
+  // A pinned destination is kept only while it still passes every filter.
+  const pinnedId = resolved?.pinnedId && localMatches.some((item) => (item.id || item.airport) === resolved.pinnedId) ? resolved.pinnedId : null;
+  const wantedId = resolved?.destinationId || pinnedId || localMatches[0]?.id || localMatches[0]?.airport || null;
+  const trip = useMemo(() => {
+    if (!quiz) return null;
+    const profile = normalizeTravelerProfile(quiz);
+    // The server may add an AI-written day plan, but never changes which destination is shown.
+    const fromRemote = wantedId ? pickTrip({ destinationId: wantedId, matches: remoteMatches || [], catalog: [], plan: () => null }) : null;
+    return fromRemote || pickTrip({ destinationId: resolved.destinationId || pinnedId, matches: localMatches, catalog: destinations, plan: (destination) => planDestination(destination, profile) });
+  }, [quiz, resolved, remoteMatches, localMatches, wantedId, pinnedId]);
+  const destinationKey = trip?.id || trip?.airport;
+  const view = useMemo(() => (quiz && trip ? buildView({ quiz, trip, flightPreferences, selectedHotel, selectedRestaurants, selectedActivities, observedFare }) : null), [quiz, trip, flightPreferences, selectedHotel, selectedRestaurants, selectedActivities, observedFare]);
+  const fareQuery = view?.fareQuery || null;
+  useEffect(() => {
+    if (!fareQuery) return undefined;
+    const controller = new AbortController();
+    fetch(`/api/flights/observed?${fareQuery}`, { signal: controller.signal }).then((response) => (response.ok ? response.json() : null)).then((data) => { if (data?.fare) setObservedFare({ query: fareQuery, fare: data.fare }); }).catch(() => {});
+    return () => controller.abort();
+  }, [fareQuery]);
+
+  useEffect(() => { if (!destinationKey || !trip) return; const controller = new AbortController(); fetch("/api/recent", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ type: "destination", key: destinationKey, title: trip.city, subtitle: trip.country, imageUrl: trip.image, data: { id: destinationKey, airport: trip.airport } }), signal: controller.signal }).catch(() => {}); return () => controller.abort(); }, [destinationKey, trip]);
+  useEffect(() => { if (view) { try { window.sessionStorage.setItem("globtrekCurrentTrip", JSON.stringify({ trip, quiz, savedTrip: view.savedTrip })); } catch {} } }, [view, trip, quiz]);
+
+  // The result's frozen estimate: read once per set of answers, created the first time.
+  const snapshot = useMemo(() => {
+    if (!quiz || !trip) return null;
+    if (resolved.source === "shared" && resolved.sharedSnapshot?.generatedAt) return { ...resolved.sharedSnapshot, destinationId: destinationKey };
+    let stored = null;
+    try { stored = resolved.source === "saved" ? loadSnapshot(window.localStorage, quizKey(quiz)) : null; } catch {}
+    if (stored && stored.destinationId === destinationKey && refreshNonce === 0) return stored;
+    return makeSnapshot({ quiz, destinationId: destinationKey, budgetPlan: trip.budgetPlan });
+  }, [quiz, trip, resolved, destinationKey, refreshNonce]);
+  useEffect(() => { if (snapshot && resolved?.source === "saved") { try { saveSnapshot(window.localStorage, snapshot); } catch {} } }, [snapshot, resolved]);
+
+  const chooseStay = useCallback((stay, { automatic } = {}) => {
+    setSelectedHotel((current) => (current?.id === stay?.id && current?.price?.total === stay?.price?.total && current?.price?.nights === stay?.price?.nights ? current : stay));
+    if (!automatic && stay) { try { window.localStorage.setItem("globtrekStay", JSON.stringify({ destinationId: destinationKey, id: stay.id })); } catch {} }
+  }, [destinationKey]);
+
+  if (shareError) return <main className="grid min-h-screen place-items-center bg-canvas px-6 text-center"><div><h1 className="font-serif text-3xl">{shareError}</h1><p className="mt-3 text-sm text-black/65">Shared links last 90 days. Ask for a new link, or plan your own trip.</p><Link href="/discover" className="mt-6 inline-flex min-h-11 items-center bg-black px-6 text-micro uppercase tracking-label text-white">Find my trip</Link></div></main>;
+  if (!resolved) return <main className="min-h-screen bg-canvas" />;
+  if (!trip || !view) return <NoMatchPanel quiz={quiz} />;
+
+  const { profile, prefs, travelers, context, schedule, budgetPlan, savedTrip, bookingManifest, sharedPayload } = view;
+  const grand = budgetPlan.budgetCheckTotal;
+  const tagline = String(trip.style || "").split(" / ").filter((part) => part && !/considered escape/i.test(part)).join(" · ");
+  const reasons = matchReasons({ answers: quiz.answers || {}, profile: view.activeProfile, budgetPlan: trip.budgetPlan, trip, range: tripLengthRange(trip) });
+  // The fare date shown is the one behind the flight price on this page.
+  const currentEstimate = { ...snapshotEstimate(trip.budgetPlan), flightPriceChecked: budgetPlan.estimates?.flights?.priceLastChecked || null };
+  const changed = estimateChanged(snapshot?.estimate, currentEstimate);
+  const datesLine = schedule.flexible ? (budgetPlan.period?.kind === "season" ? `Flexible · ${budgetPlan.period.label}` : `Flexible dates${budgetPlan.pricedMonth ? ` · priced for ${new Intl.DateTimeFormat("en-US", { month: "long", timeZone: "UTC" }).format(new Date(Date.UTC(2026, budgetPlan.pricedMonth - 1, 1)))}` : ""}`) : schedule.datesLabel;
+  const alternatives = localMatches.filter((item) => (item.id || item.airport) !== destinationKey).slice(0, 3);
+  function refreshEstimates() {
+    try { clearSnapshot(window.localStorage, quizKey(quiz)); } catch {}
+    setResolved((current) => ({ ...current, pinnedId: null }));
+    setRefreshNonce((value) => value + 1);
+    track("estimates_refreshed", { destination: trip.city });
+  }
+  const preferredStayId = selectedHotel?.id || resolved.stayId;
+  function tripLink() { return `${window.location.origin}/results?trip=${sharedPayload}`; }
+  async function shareTrip() {
+    setShareStatus("Creating link…");
+    const response = await fetch("/api/share", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ quiz: context, destination: destinationKey, stay: view.stay?.id || null, snapshot }) }).catch(() => null);
+    const data = response ? await response.json().catch(() => ({})) : {};
+    if (!response?.ok || !data.path) { setShareStatus(data.error || "Couldn't create a link"); return; }
+    const url = new URL(data.path, window.location.origin).toString();
+    const expires = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(new Date(data.expiresAt));
+    track("trip_shared", { destination: trip.city });
+    if (navigator.share) { try { await navigator.share({ title: `${schedule.nights} nights in ${trip.city}`, url }); setShareStatus(`Shared · link expires ${expires}`); return; } catch {} }
+    try { await navigator.clipboard.writeText(url); setShareStatus(`Link copied · expires ${expires}`); } catch { window.prompt("Copy your trip link", url); setShareStatus(`Link expires ${expires}`); }
+  }
+  function updateFlightPreferences(next) { setFlightPreferences({ ...next, updated: true }); track("flight_preferences_updated", { destination: trip.city, timing: next.timing, travelers: next.adults + next.children }); }
+  function goToBooking() { window.dispatchEvent(new Event(BOOK_EVENT)); document.querySelector("#booking-center")?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); track("booking_center_viewed", { destination: trip.city }); }
+
+  return <main className="results-editorial min-h-screen bg-canvas pb-28 text-ink">
+    <header className="absolute inset-x-0 top-0 z-30 flex items-center justify-between px-6 py-7 text-white sm:px-12 sm:py-10"><Link href="/" className="inline-flex min-h-11 items-center text-sm font-semibold uppercase tracking-editorial">GlobTrek</Link><div className="flex items-center gap-5"><AccountEntry compact light /><Link href="/discover" className="inline-flex min-h-11 items-center text-xs text-white/90 hover:text-white">Start over</Link></div></header>
+    <section data-trip-hero className="relative min-h-[92svh] overflow-hidden"><Image src={trip.image} alt={trip.imageAlt || `${trip.city}, ${trip.country}`} fill priority className="hero-drift object-cover" sizes="100vw" quality={88} /><div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/25 to-black/80" /><div className="absolute inset-x-0 bottom-0 h-2/3 bg-[radial-gradient(ellipse_at_bottom,rgba(0,0,0,.45),transparent_70%)]" aria-hidden="true" /><div className="rise absolute inset-x-0 bottom-0 mx-auto w-full max-w-[1240px] px-6 pb-16 text-center text-white [text-shadow:0_1px_12px_rgba(0,0,0,.45)] sm:px-12 sm:pb-20"><p className="text-micro uppercase tracking-editorial text-white/85">{titleCase(trip.country)}</p><h1 className="mx-auto mt-3 max-w-[92vw] font-serif text-[clamp(3rem,8vw,7.5rem)] font-normal leading-[.88] tracking-tight-3 [text-shadow:0_2px_28px_rgba(0,0,0,.25)]">{titleCase(trip.city)}</h1>{tagline ? <p className="mx-auto mt-5 max-w-xl font-serif text-lg italic text-white/90 sm:text-xl">{tagline}</p> : null}<p className="tabular mt-6 text-sm text-white/85">{schedule.label} · {datesLine} · {travelers} {travelers === 1 ? "traveler" : "travelers"}</p><p className="tabular mt-6 font-serif text-[clamp(2.4rem,4.5vw,3.5rem)] leading-none">{money(grand)}</p><p className="mt-2 text-xs text-white/75">Estimated price · final prices confirmed by providers</p><div className="mt-7 flex flex-wrap items-center justify-center gap-3"><button type="button" onClick={goToBooking} className="inline-flex min-h-12 items-center bg-white px-7 text-micro font-medium uppercase tracking-label text-black transition-opacity hover:opacity-90">Start booking</button><a href="#hotel-selection" className="inline-flex min-h-12 items-center px-4 text-micro uppercase tracking-label text-white/90 underline decoration-white/40 underline-offset-4 hover:decoration-white">See the trip</a></div></div></section>
+    <section id="overview" className="scroll-mt-20 border-b border-black/10 px-6 py-3 sm:px-12"><div className="mx-auto flex max-w-[1240px] items-center justify-end gap-5"><button type="button" aria-expanded={shareOpen} aria-controls="share-panel" onClick={() => setShareOpen((open) => !open)} className="min-h-11 text-micro text-black/70">Share</button><SaveTripButton trip={savedTrip} className="inline-flex min-h-11 items-center text-micro" /></div>
+      {shareOpen ? <div id="share-panel" className="mx-auto mb-3 max-w-[1240px] border border-black/15 bg-white p-4 text-sm"><p>The link shows the destination, dates, budget, travelers and departure airport, never your name or email. It expires in 90 days.</p><div className="mt-3 flex flex-wrap items-center gap-3"><button type="button" onClick={shareTrip} className="inline-flex min-h-11 items-center bg-black px-5 text-micro uppercase tracking-label text-white">Create share link</button><p role="status" className="text-xs">{shareStatus}</p></div></div> : null}
+    </section>
+    <section aria-label="About this result" className="px-6 py-6 sm:px-12"><div className="mx-auto max-w-[1240px] space-y-4"><OverBudgetNotice budgetPlan={trip.budgetPlan} /><WhyThisMatches reasons={reasons} /><EstimateStatus current={currentEstimate} snapshot={snapshot} changed={changed} onRefresh={refreshEstimates} /></div></section>
+    <StayChoices key={`stay-${destinationKey}`} destination={trip} tripContext={context} selectedStayId={preferredStayId} onSelected={chooseStay} budgetLodging={budgetPlan.lodging?.total ? { ...budgetPlan.lodging, source: lodgingSource(budgetPlan.lodging) } : null} />
+    <FlightPlan key={`flight-${destinationKey}`} trip={trip} profile={profile} estimate={budgetPlan.estimates?.flights} searchUrl={bookingFlightUrl({ ...trip, airport: prefs.arrivalAirport || trip.airport }, context)} datesLabel={datesLine} preferences={prefs} range={view.nightsAllowed} onUpdate={updateFlightPreferences} />
+    <ProposalItinerary trip={trip} images={[...(proposalCatalog.activities || []), ...(proposalCatalog.restaurants || [])]} />
+    <CuratedTripChoices destination={trip} quiz={quiz} restaurants={selectedRestaurants} activities={selectedActivities} onRestaurantsChange={setSelectedRestaurants} onActivitiesChange={setSelectedActivities} onCatalogChange={setProposalCatalog} />
+    <BeforeYouGo trip={trip} seasonWarning={!seasonSuitable(trip, view.activeProfile)} />
+    <CostSection budgetPlan={budgetPlan} trip={trip} nights={schedule.nights} travelers={travelers} missingPriceStay={view.stayMissingPrice ? view.stay.name : null} snapshot={snapshot} />
+    <section className="border-t border-black/15 px-6 py-10 sm:px-12 sm:py-12"><div className="mx-auto max-w-[1180px]"><BookingChecklist entries={bookingManifestEntries(bookingManifest)} tripKey={bookingManifest.tripId} datesSet={!schedule.flexible} datesLabel={schedule.flexible ? null : `${schedule.datesLabel} · ${schedule.label} · ${travelers} ${travelers === 1 ? "traveler" : "travelers"}`} trip={{ city: trip.city, country: trip.country, start: schedule.start, end: schedule.end, adults: prefs.adults, children: prefs.children, flight: bookingManifest.flightBooking }} /></div></section>
+    <Alternatives alternatives={alternatives} current={trip} answers={quiz.answers || {}} />
+    <AdjustTrip key={quizKey(quiz)} quiz={quiz} profile={profile} currentTotal={trip.budgetPlan.budgetCheckTotal} currentId={destinationKey} currentStyle={trip.budgetPlan.spendStyle} />
+    <section aria-labelledby="setting-heading" className="border-t border-black/15 px-6 py-10 sm:px-12"><div className="mx-auto max-w-[1180px]"><h2 id="setting-heading" className="text-xl font-medium tracking-tight-1">Try a different setting</h2><div className="mt-5 flex flex-wrap gap-2">{[["Coast", "Ocean"], ["Mountains", "Mountains"], ["City", "Cities"], ["History & culture", "Culture"], ["Surprise me", "Surprise Me"]].filter(([, setting]) => setting !== quiz.answers?.alive).map(([label, setting]) => <Link key={setting} href={`/discover?setting=${encodeURIComponent(setting)}`} className="inline-flex min-h-11 items-center border border-black/20 px-4 text-sm transition-colors duration-150 hover:border-ink">{label}</Link>)}<Link href="/discover" className="inline-flex min-h-11 items-center px-4 text-sm underline decoration-black/25 underline-offset-4 hover:decoration-ink">Retake quiz</Link></div></div></section>
+    <section aria-label="Feedback" className="border-t border-black/15 px-6 py-10 sm:px-12"><div className="mx-auto max-w-[1180px]"><FeedbackPanel resultId={snapshot?.resultId || null} destinationId={destinationKey} algorithmVersion={trip.algorithmVersion || snapshot?.algorithmVersion || null} /><p className="mt-6 max-w-2xl text-xs leading-5 text-black/55">{AFFILIATE_DISCLOSURE}</p></div></section>
+    <TripDock city={trip.city} summary={`${datesLine} · ${schedule.label} · ${travelers} ${travelers === 1 ? "traveler" : "travelers"}`} total={money(grand)} picks={[view.stay ? "stay chosen" : null, prefs.updated ? "flight set" : null, selectedRestaurants.length + selectedActivities.length ? `${selectedRestaurants.length + selectedActivities.length} plans` : null].filter(Boolean).join(" · ")} emailButton={<EmailTripButton trip={savedTrip} viewUrl={tripLink()} className="min-h-11 rounded-full border border-black/15 px-4 text-micro text-black" />} onBook={goToBooking} />
+    <TripEmailAutomation trip={savedTrip} viewUrl={tripLink} city={trip.city} />
+  </main>;
+}

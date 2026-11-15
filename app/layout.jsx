@@ -11,8 +11,10 @@ export const metadata = {
   title: { default: "GlobTrek · One Tab Travel", template: "%s · GlobTrek" },
   description,
   applicationName: "GlobTrek",
-  openGraph: { type: "website", siteName: "GlobTrek", title: "GlobTrek · One Tab Travel", description, url: SITE_URL, locale: "en_US" },
-  twitter: { card: "summary_large_image", title: "GlobTrek · One Tab Travel", description },
+  // No site-wide title, description or url here: link previews then use each
+  // page's own <title> and description instead of the home page's.
+  openGraph: { type: "website", siteName: "GlobTrek", locale: "en_US" },
+  twitter: { card: "summary_large_image" },
 };
 
 export const viewport = {

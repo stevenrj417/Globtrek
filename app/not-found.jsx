@@ -3,7 +3,7 @@ import { SiteFooter, SiteHeader } from "./components/SiteChrome";
 import { TripCard } from "./components/TripCard";
 import { trendingTrips } from "./data/trending";
 
-export const metadata = { title: "Page not found · GlobTrek", robots: { index: false } };
+export const metadata = { title: "Page not found", robots: { index: false } };
 
 export default function NotFound() {
   return (

@@ -21,7 +21,7 @@ test("a saved trip's nights stay pickable", () => {
 
 test("quiz and flight panel use the trip-length calendar", () => {
   const quiz = readFileSync(new URL("../app/discover/TravelQuiz.jsx", import.meta.url), "utf8");
-  const results = readFileSync(new URL("../app/results/page.jsx", import.meta.url), "utf8");
+  const results = readFileSync(new URL("../app/results/ResultsClient.jsx", import.meta.url), "utf8");
   assert.match(quiz, /<TripDatePicker[^>]*minNights=\{range\.min\} maxNights=\{range\.max\}/);
   assert.match(quiz, /datedNights >= tripRange\.min && datedNights <= tripRange\.max/);
   assert.doesNotMatch(quiz, /type="date"/);
