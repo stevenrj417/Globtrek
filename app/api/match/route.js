@@ -283,6 +283,12 @@ export async function POST(request) {
     return Response.json({ ...cached.value, cached: true });
   }
 
+  // The AI day plan is off by default: with web search it never finished inside the
+  // 4.5s cap, so every call cost money for nothing. Set MATCH_AI_PLAN=on to try it again.
+  if (process.env.MATCH_AI_PLAN !== "on") {
+    return Response.json({ source: "fallback", aiStatus: "disabled", algorithmVersion: MATCH_ALGORITHM_VERSION, explanation, travelerProfile, matches: withFallbackPlans(fallback, body) });
+  }
+
   if (!process.env.OPENAI_API_KEY) {
     return Response.json({ source: "fallback", aiStatus: "missing_key", algorithmVersion: MATCH_ALGORITHM_VERSION, explanation, travelerProfile, matches: withFallbackPlans(fallback, body) });
   }

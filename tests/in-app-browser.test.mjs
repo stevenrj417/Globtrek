@@ -30,3 +30,10 @@ test("the AI day plan can't hold the traveler past the thinking screen", () => {
   assert.match(route, /aiStatus: "timeout"/);
   assert.ok(timeout + 2500 <= cap, `AI cap ${timeout}ms leaves room under the ${cap}ms screen cap`);
 });
+
+test("the AI day plan is off unless MATCH_AI_PLAN=on", () => {
+  const route = readFileSync(new URL("../app/api/match/route.js", import.meta.url), "utf8");
+  const off = route.indexOf('process.env.MATCH_AI_PLAN !== "on"');
+  assert.ok(off > 0 && off < route.indexOf("api.openai.com"), "the switch is checked before any OpenAI call");
+  assert.match(route, /aiStatus: "disabled"/);
+});
