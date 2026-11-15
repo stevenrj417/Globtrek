@@ -7,6 +7,10 @@ import { tripSchedule } from "../../lib/trip/schedule";
 import { validateTripRecommendation } from "../../lib/recommendation/finalTripValidator";
 import { sharedRateLimit } from "../../lib/security/rateLimit";
 
+// Under the thinking screen's 8s cap (app/thinking/page.jsx MAX_MS) so its prefetch lands and
+// the results page never pays for a second call.
+const AI_PLAN_TIMEOUT_MS = 5500;
+
 const resultCache = new Map();
 const CACHE_TTL = 24 * 60 * 60 * 1000;
 
@@ -285,6 +289,9 @@ export async function POST(request) {
 
   try {
     const response = await fetch("https://api.openai.com/v1/responses", {
+      // The destination is already chosen; the AI only writes the day plan. Past this,
+      // travelers get the standard plan instead of waiting (with web search it took 18–24s).
+      signal: AbortSignal.timeout(AI_PLAN_TIMEOUT_MS),
       method: "POST",
       headers: {
         Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
@@ -341,6 +348,10 @@ export async function POST(request) {
     console.log(JSON.stringify({ level: "info", msg: "match_complete", route: "/api/match", source: "openai", ms: Date.now() - startedAt }));
     return Response.json(value);
   } catch (error) {
+    if (error?.name === "TimeoutError" || error?.name === "AbortError") {
+      console.log(JSON.stringify({ level: "warn", msg: "match_ai_timeout", route: "/api/match", ms: Date.now() - startedAt }));
+      return Response.json({ source: "fallback", aiStatus: "timeout", algorithmVersion: MATCH_ALGORITHM_VERSION, explanation, travelerProfile, matches: withFallbackPlans(fallback, body) });
+    }
     console.error(JSON.stringify({ level: "error", msg: "match_failed", route: "/api/match", error: error instanceof Error ? error.message : "request_failed", ms: Date.now() - startedAt }));
     return Response.json({ source: "fallback", aiStatus: error instanceof Error ? error.message : "request_failed", algorithmVersion: MATCH_ALGORITHM_VERSION, explanation, travelerProfile, matches: withFallbackPlans(fallback, body) });
   }

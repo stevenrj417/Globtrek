@@ -9,7 +9,7 @@ const STEPS = ["Reading your answers", "Pricing round-trip flights", "Finding st
 // A short, honest wait reads as more careful work than an instant answer, so
 // the screen stays up for at least MIN_MS even when the matcher is faster.
 const MIN_MS = 4200;
-const MAX_MS = 6500;
+const MAX_MS = 8000;
 
 const ROUTE = "M -40 230 C 260 40, 640 40, 1040 190";
 const PLANE = "M 18 0 L -6 -4 L -14 -16 L -19 -16 L -13 -3 L -24 -2 L -29 -8 L -32 -8 L -29 0 L -32 8 L -29 8 L -24 2 L -13 3 L -19 16 L -14 16 L -6 4 Z";
