@@ -51,7 +51,7 @@ const key = (item) => item?.id || item?.airport || null;
 export function preview(quiz, currentId = null, keep = false) {
   const ranked = rankDestinations(destinations, normalizeTravelerProfile(quiz));
   const match = (keep && currentId && ranked.find((item) => key(item) === currentId)) || ranked[0];
-  return match ? { id: key(match), city: title(match.city), total: match.budgetPlan.budgetCheckTotal, style: match.budgetPlan.spendStyle, same: key(match) === currentId } : null;
+  return match ? { id: key(match), city: title(match.city), total: match.budgetPlan.budgetCheckTotal, style: match.budgetPlan.spendStyle, same: key(match) === currentId, tags: match.tags || [] } : null;
 }
 
 export function adjustmentOptions(quiz, profile, currentId = null, currentTotal = null) {
@@ -61,19 +61,23 @@ export function adjustmentOptions(quiz, profile, currentId = null, currentTotal 
   const longer = NIGHT_STEPS.find((value) => value > nights);
   return [
     profile.spendStyle !== "cheapest" && { id: "cheaper", label: "Cheaper", patch: { spendStyle: "cheapest" }, keep: true },
-    profile.spendStyle !== "comfortable" && { id: "comfortable", label: "More comfortable", patch: { spendStyle: "comfortable" }, keep: true },
+    profile.spendStyle !== "comfortable" && { id: "comfortable", label: "More comfortable", patch: { spendStyle: "comfortable" }, keep: true, sameTrip: true },
     profile.travelAreaPreference !== "domestic" && { id: "closer", label: "Closer to home", patch: { area: "domestic" } },
-    answers.luxury !== "Nature" && { id: "nature", label: "More nature", patch: { interest: "Nature" } },
-    answers.luxury !== "Culture" && { id: "culture", label: "More culture", patch: { interest: "Culture" } },
-    answers.luxury !== "Nightlife" && { id: "nightlife", label: "More nightlife", patch: { interest: "Nightlife" } },
+    answers.luxury !== "Nature" && { id: "nature", label: "More nature", patch: { interest: "Nature" }, needsTag: "Nature" },
+    answers.luxury !== "Culture" && { id: "culture", label: "More culture", patch: { interest: "Culture" }, needsTag: "Culture" },
+    answers.luxury !== "Nightlife" && { id: "nightlife", label: "More nightlife", patch: { interest: "Nightlife" }, needsTag: "Nightlife" },
     shorter && { id: "shorter", label: `Shorter (${shorter} nights)`, patch: { nights: shorter }, keep: true },
     longer && { id: "longer", label: `Longer (${longer} nights)`, patch: { nights: longer }, keep: true },
     profile.includedBudgetCategories.flights && { id: "no-flights", label: "Leave flights out of the budget", patch: { flights: false }, keep: true },
   ].filter(Boolean).map((option) => {
     const next = applyQuizPatch(quiz, option.patch);
     return { ...option, quiz: next, result: preview(next, currentId, option.keep) };
-  // Drop changes that would land on the same trip at the same price.
-  }).filter((option) => !(option.result?.same && option.result.total === currentTotal));
+  // Drop changes that would land on the same trip at the same price, "more X"
+  // when the new trip isn't known for X, and "more comfortable" when the
+  // current trip can't be made more comfortable within the budget.
+  }).filter((option) => !(option.result?.same && option.result.total === currentTotal))
+    .filter((option) => !option.needsTag || option.result?.tags.includes(option.needsTag))
+    .filter((option) => !option.sameTrip || option.result?.same);
 }
 
 export function AdjustTrip({ quiz, profile, currentTotal, currentId = null, currentStyle = null }) {

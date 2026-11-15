@@ -59,7 +59,7 @@ export const LAUNCH_DATA = {
         "ratingSource": "Google",
         "googlePlaceId": "ChIJuZ22zmzEyIARH1U2pl31Nes",
         "googleMapsUri": "https://maps.google.com/?cid=16948722555248071967",
-        "officialWebsiteUrl": "https://rebrand.ly/tacos-gordo",
+        "officialWebsiteUrl": null,
         "hours": [
           "Monday: 10:00 AM – 2:00 AM",
           "Tuesday: 10:00 AM – 2:00 AM",
