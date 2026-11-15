@@ -13,7 +13,7 @@ export function StartingLocationField({ value, onChange, id = "starting-location
     const text = query.trim();
     if (!open || text.length < 2 || label(value) === text) return undefined;
     const controller = new AbortController();
-    const timer = window.setTimeout(() => { setStatus("Searching…"); fetch(`/api/locations/search?q=${encodeURIComponent(text)}`, { signal: controller.signal }).then((response) => response.json()).then((payload) => { setLocations(payload.locations || []); setStatus(payload.locations?.length ? "" : "No verified city or airport found."); }).catch((error) => { if (error.name !== "AbortError") setStatus("Location search is temporarily unavailable."); }); }, 260);
+    const timer = window.setTimeout(() => { setStatus("Searching…"); fetch(`/api/locations/search?q=${encodeURIComponent(text)}`, { signal: controller.signal }).then((response) => response.json()).then((payload) => { setLocations(payload.locations || []); setStatus(payload.locations?.length ? "" : payload.error ? "Location search is temporarily unavailable. Try an airport code like PDX." : "No verified city or airport found."); }).catch((error) => { if (error.name !== "AbortError") setStatus("Location search is temporarily unavailable."); }); }, 260);
     return () => { window.clearTimeout(timer); controller.abort(); };
   }, [open, query, value]);
   function choose(location) { onChange(location); setQuery(label(location)); setLocations([]); setOpen(false); setStatus(""); }
