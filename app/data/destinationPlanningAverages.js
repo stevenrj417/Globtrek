@@ -1,5 +1,6 @@
 import destinationCosts from "./pricing/destinationCosts.json" with { type: "json" };
 import feedStayCounts from "./feedStayCounts.json" with { type: "json" };
+import lodgingBands from "./lodgingPriceBands.json" with { type: "json" };
 const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 const COST_LEVELS = {
@@ -47,6 +48,15 @@ export function localPrices(destination) {
   return (feedStayCounts.budget?.[destination.id] || 0) >= MIN_BUDGET_STAYS ? { ...local, area: true } : null;
 }
 
+// The master destination list's typical nightly prices (lodgingPriceBands.json)
+// are regional bands shared by many places, so they come after observed and
+// modeled local prices, and never for resort economies, whose band is far
+// below what their resorts charge.
+export function priceBand(destination) {
+  if (RESORT_ECONOMIES.has(destination.id)) return null;
+  return lodgingBands.bands[destination.id] || null;
+}
+
 function roundMoney(value) {
   return Math.max(1, Math.round(value));
 }
@@ -71,7 +81,11 @@ export function buildDestinationPlanningAverages(destination = {}) {
   const profile = destination.costProfile || {};
   const editorial = destination.budgetEditorial?.planning || CITY_OVERRIDES[destination.city] || null;
   const local = editorial ? null : localPrices(destination);
-  const city = editorial || (local ? { hotelNight: local.lodging.budgetRoom, foodDay: local.foodDay.value, activitiesDay: local.activity?.medianListedUsd } : {});
+  const band = editorial || local ? null : priceBand(destination);
+  // With a band, food and activities still come from observed local prices.
+  const meals = band ? destinationCosts.destinations[destination.id] || null : null;
+  const city = editorial || (local ? { hotelNight: local.lodging.budgetRoom, foodDay: local.foodDay.value, activitiesDay: local.activity?.medianListedUsd }
+    : band ? { hotelNight: band.budgetHotel ?? undefined, foodDay: meals?.foodDay.value, activitiesDay: meals?.activity?.medianListedUsd } : {});
   const baseline = {
     hotelNight: city.hotelNight ?? goodValueAverage(profile.typicalHotelNightLow, profile.typicalHotelNightHigh, fallback.hotelNight),
     foodDay: city.foodDay ?? goodValueAverage(profile.foodDailyLow, profile.foodDailyHigh, fallback.foodDay),
@@ -84,16 +98,21 @@ export function buildDestinationPlanningAverages(destination = {}) {
     hotelStandard: "Clean, well-reviewed budget hotel or simple three-star",
     basis: local
       ? `Modeled from ${local.restaurants} local restaurants' price ranges on Google Maps (checked ${local.checkedAt}) and the country price level (World Bank); typical error about ${local.area ? `${AREA_LODGING_ERROR_PCT}% for lodging outside cities` : "20%"}. Not a live quote.`
-      : "Modeled good-value planning average; not a live quote or guaranteed price",
+      : band
+        ? `Lodging: typical nightly price for a well-reviewed budget hotel, an estimated yearly average for a regional price band shared by ${band.sharedBy} places on GlobTrek's destination list.${meals ? ` Food modeled from ${meals.restaurants} local restaurants' price ranges on Google Maps (checked ${meals.checkedAt}).` : ""} Not a live quote.`
+        : "Modeled good-value planning average; not a live quote or guaranteed price",
     // "city": an editorial city baseline; "local_prices": modeled from observed
-    // local prices; "tier": a price-tier default only.
-    model: editorial ? "city" : local ? "local_prices" : "tier",
+    // local prices; "price_band": regional lodging band plus observed local
+    // meal prices; "price_band_partial": the band without local meal prices;
+    // "tier": a price-tier default only.
+    model: editorial ? "city" : local ? "local_prices" : band ? (meals ? "price_band" : "price_band_partial") : "tier",
+    lodgingBand: band,
     localPrices: local ? { checkedAt: local.checkedAt, restaurants: local.restaurants, meal: local.meal, foodDay: local.foodDay, lodging: local.lodging, activity: local.activity } : null,
     airportTransferPerPerson: Number(city.airportTransferPerPerson) || 0,
     lodgingTaxRate: Number(city.lodgingTaxRate) || 0,
     costLevel: level,
-    source: local ? "globtrek_local_prices_v1" : profile.source || "globtrek_city_budget_baseline_v1",
-    confidence: local ? (local.area ? 0.4 : 0.5) : Math.max(0.3, Number(profile.confidence) || 0.4),
+    source: local ? "globtrek_local_prices_v1" : band ? "globtrek_destination_list_price_band" : profile.source || "globtrek_city_budget_baseline_v1",
+    confidence: local ? (local.area ? 0.4 : 0.5) : band ? 0.3 : Math.max(0.3, Number(profile.confidence) || 0.4),
     monthly: MONTH_NAMES.map((monthName, index) => ({
       month: index + 1,
       monthName,

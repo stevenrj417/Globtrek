@@ -112,6 +112,27 @@ const COUNTRIES = {
   "BOTSWANA": { state: "Botswana", uk: "botswana", name: "Botswana" },
   "MAURITIUS": { state: "Mauritius", uk: "mauritius", name: "Mauritius" },
   "MADAGASCAR": { state: "Madagascar", uk: "madagascar", name: "Madagascar" },
+  // Master destination list (2026-11-15). Two-country outcomes use the first
+  // country named; GOV.UK covers the Faroe Islands under Denmark.
+  DOMINICA: { state: "Dominica", uk: "dominica", name: "Dominica" },
+  "ARGENTINA AND BRAZIL": { state: "Argentina", uk: "argentina", name: "Argentina" },
+  SURINAME: { state: "Suriname", uk: "suriname", name: "Suriname" },
+  GUYANA: { state: "Guyana", uk: "guyana", name: "Guyana" },
+  "FAROE ISLANDS": { state: "Denmark", uk: "denmark", name: "Faroe Islands (Denmark)" },
+  LITHUANIA: { state: "Lithuania", uk: "lithuania", name: "Lithuania" },
+  UGANDA: { state: "Uganda", uk: "uganda", name: "Uganda" },
+  "SAO TOME AND PRINCIPE": { uk: "sao-tome-and-principe", name: "São Tomé and Príncipe" },
+  "MALAYSIA AND INDONESIA": { state: "Malaysia", uk: "malaysia", name: "Malaysia" },
+  BHUTAN: { state: "Bhutan", uk: "bhutan", name: "Bhutan" },
+  "SRI LANKA": { uk: "sri-lanka", name: "Sri Lanka" },
+  UZBEKISTAN: { state: "Uzbekistan", uk: "uzbekistan", name: "Uzbekistan" },
+  KAZAKHSTAN: { state: "Kazakhstan", uk: "kazakhstan", name: "Kazakhstan" },
+  KYRGYZSTAN: { uk: "kyrgyzstan", name: "Kyrgyzstan" },
+  "COOK ISLANDS": { uk: "cook-islands-tokelau-and-niue", name: "Cook Islands" },
+  FIJI: { state: "Fiji", uk: "fiji", name: "Fiji" },
+  SAMOA: { state: "Samoa", uk: "samoa", name: "Samoa" },
+  VANUATU: { state: "Vanuatu", uk: "vanuatu", name: "Vanuatu" },
+  PALAU: { state: "Palau", uk: "palau", name: "Palau" },
 };
 
 export function travelInfoFor(country) {

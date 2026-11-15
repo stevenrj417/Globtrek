@@ -1,6 +1,6 @@
 {
  "source": "Wikipedia and Wikidata (CC0)",
- "checkedAt": "2026-11-11",
+ "checkedAt": "2026-11-15",
  "destinations": {
   "KIX": {
    "matched": true,
@@ -116,10 +116,10 @@
   },
   "DPS": {
    "matched": true,
-   "wikipedia": "https://en.wikipedia.org/wiki/Bali",
-   "wikidata": "https://www.wikidata.org/wiki/Q3125978",
-   "population": 4433300,
-   "elevationM": 3031,
+   "wikipedia": "https://en.wikipedia.org/wiki/Denpasar",
+   "wikidata": "https://www.wikidata.org/wiki/Q11506",
+   "population": 670210,
+   "elevationM": 4,
    "water": []
   },
   "SIN": {
@@ -182,8 +182,12 @@
    ]
   },
   "RAK": {
-   "matched": false,
-   "query": "Marrakech Morocco"
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Marrakesh",
+   "wikidata": "https://www.wikidata.org/wiki/Q101625",
+   "population": 1002697,
+   "elevationM": 468,
+   "water": []
   },
   "NBO": {
    "matched": true,
@@ -264,7 +268,7 @@
    "matched": true,
    "wikipedia": "https://en.wikipedia.org/wiki/Florence",
    "wikidata": "https://www.wikidata.org/wiki/Q2044",
-   "population": 360930,
+   "population": 360603,
    "elevationM": 50,
    "water": [
     {
@@ -405,8 +409,8 @@
   },
   "SJO": {
    "matched": true,
-   "wikipedia": "https://en.wikipedia.org/wiki/Geography_of_Costa_Rica",
-   "wikidata": "https://www.wikidata.org/wiki/Q738314",
+   "wikipedia": "https://en.wikipedia.org/wiki/Culture_of_Costa_Rica",
+   "wikidata": "https://www.wikidata.org/wiki/Q2374224",
    "population": null,
    "elevationM": null,
    "water": []
@@ -957,7 +961,7 @@
    "matched": true,
    "wikipedia": "https://en.wikipedia.org/wiki/Bologna",
    "wikidata": "https://www.wikidata.org/wiki/Q1891",
-   "population": 387971,
+   "population": 391806,
    "elevationM": 54,
    "water": []
   },
@@ -1024,7 +1028,7 @@
    "matched": true,
    "wikipedia": "https://en.wikipedia.org/wiki/Turin",
    "wikidata": "https://www.wikidata.org/wiki/Q495",
-   "population": 841600,
+   "population": 856087,
    "elevationM": 239,
    "water": [
     {
@@ -1269,7 +1273,7 @@
    "matched": true,
    "wikipedia": "https://en.wikipedia.org/wiki/Venice",
    "wikidata": "https://www.wikidata.org/wiki/Q641",
-   "population": 250369,
+   "population": 249881,
    "elevationM": 2,
    "water": [
     {
@@ -1982,7 +1986,7 @@
     },
     {
      "label": "Gulf of Lion",
-     "description": "bay"
+     "description": "embayment of the Mediterranean coastline of Catalonia, Languedoc-Roussillon and Provence"
     }
    ]
   },
@@ -2031,8 +2035,8 @@
   },
   "aspen-76868": {
    "matched": true,
-   "wikipedia": "https://en.wikipedia.org/wiki/Aspen_Dental",
-   "wikidata": "https://www.wikidata.org/wiki/Q4807808",
+   "wikipedia": "https://en.wikipedia.org/wiki/Aspen_Institute",
+   "wikidata": "https://www.wikidata.org/wiki/Q457528",
    "population": null,
    "elevationM": null,
    "water": []
@@ -2488,10 +2492,10 @@
   },
   "savannah-76868": {
    "matched": true,
-   "wikipedia": "https://en.wikipedia.org/wiki/Savannah_Chrisley_(influencer)",
-   "wikidata": "https://www.wikidata.org/wiki/Q116678292",
-   "population": null,
-   "elevationM": null,
+   "wikipedia": "https://en.wikipedia.org/wiki/Savannah%2C_Georgia",
+   "wikidata": "https://www.wikidata.org/wiki/Q83813",
+   "population": 147780,
+   "elevationM": 15,
    "water": []
   },
   "charleston-76868": {
@@ -2504,20 +2508,11 @@
   },
   "new-orleans-76868": {
    "matched": true,
-   "wikipedia": "https://en.wikipedia.org/wiki/New_Orleans",
-   "wikidata": "https://www.wikidata.org/wiki/Q34404",
-   "population": 383997,
-   "elevationM": -2,
-   "water": [
-    {
-     "label": "Mississippi River",
-     "description": "primary river of the largest drainage basin in the United States"
-    },
-    {
-     "label": "Mississippi River – Gulf Outlet Canal",
-     "description": "former canal in Louisiana, United States of America"
-    }
-   ]
+   "wikipedia": "https://en.wikipedia.org/wiki/2026_New_Orleans_ship_collision",
+   "wikidata": "https://www.wikidata.org/wiki/Q142149760",
+   "population": null,
+   "elevationM": null,
+   "water": []
   },
   "austin-76868": {
    "matched": true,
@@ -3032,20 +3027,11 @@
   },
   "sao-paulo-37497": {
    "matched": true,
-   "wikipedia": "https://en.wikipedia.org/wiki/S%C3%A3o_Paulo",
-   "wikidata": "https://www.wikidata.org/wiki/Q174",
-   "population": 11904961,
-   "elevationM": 760,
-   "water": [
-    {
-     "label": "Pinheiros River",
-     "description": "river in São Paulo, Brazil"
-    },
-    {
-     "label": "Tietê River",
-     "description": "river in São Paulo, Brazil"
-    }
-   ]
+   "wikipedia": "https://en.wikipedia.org/wiki/2026_S%C3%A3o_Paulo_Grand_Prix",
+   "wikidata": "https://www.wikidata.org/wiki/Q124014141",
+   "population": null,
+   "elevationM": null,
+   "water": []
   },
   "salvador-37497": {
    "matched": true,
@@ -3561,8 +3547,12 @@
    ]
   },
   "bath-97691": {
-   "matched": false,
-   "query": "Bath United Kingdom"
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/University_of_Bath_School_of_Management",
+   "wikidata": "https://www.wikidata.org/wiki/Q7895111",
+   "population": null,
+   "elevationM": null,
+   "water": []
   },
   "oxford-97691": {
    "matched": true,
@@ -3766,7 +3756,7 @@
    "matched": true,
    "wikipedia": "https://en.wikipedia.org/wiki/Milan",
    "wikidata": "https://www.wikidata.org/wiki/Q490",
-   "population": 1354196,
+   "population": 1363093,
    "elevationM": 138,
    "water": [
     {
@@ -3779,7 +3769,7 @@
    "matched": true,
    "wikipedia": "https://en.wikipedia.org/wiki/Verona",
    "wikidata": "https://www.wikidata.org/wiki/Q2028",
-   "population": 255588,
+   "population": 255335,
    "elevationM": 59,
    "water": [
     {
@@ -3792,7 +3782,7 @@
    "matched": true,
    "wikipedia": "https://en.wikipedia.org/wiki/Siena",
    "wikidata": "https://www.wikidata.org/wiki/Q2751",
-   "population": 52812,
+   "population": 53275,
    "elevationM": 322,
    "water": []
   },
@@ -4389,11 +4379,16 @@
   },
   "mauritius-26160": {
    "matched": true,
-   "wikipedia": "https://en.wikipedia.org/wiki/Districts_of_Mauritius",
-   "wikidata": "https://www.wikidata.org/wiki/Q1139753",
-   "population": null,
+   "wikipedia": "https://en.wikipedia.org/wiki/Mauritius",
+   "wikidata": "https://www.wikidata.org/wiki/Q1027",
+   "population": 1264613,
    "elevationM": null,
-   "water": []
+   "water": [
+    {
+     "label": "Indian Ocean",
+     "description": "ocean bounded by Africa, Asia, Australia, and Antarctica"
+    }
+   ]
   },
   "nosy-be-f92bc": {
    "matched": true,
@@ -4418,6 +4413,1040 @@
    "wikidata": "https://www.wikidata.org/wiki/Q2739446",
    "population": null,
    "elevationM": 850,
+   "water": []
+  },
+  "oregon-coast-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Oregon_Coast",
+   "wikidata": "https://www.wikidata.org/wiki/Q1797345",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "denali-national-park-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Denali_National_Park_and_Preserve",
+   "wikidata": "https://www.wikidata.org/wiki/Q217136",
+   "population": null,
+   "elevationM": 324,
+   "water": []
+  },
+  "zion-national-park-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Zion_National_Park",
+   "wikidata": "https://www.wikidata.org/wiki/Q205325",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "rocky-mountain-national-park-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Rocky_Mountain_National_Park",
+   "wikidata": "https://www.wikidata.org/wiki/Q777183",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "yellowstone-national-park-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Yellowstone_National_Park",
+   "wikidata": "https://www.wikidata.org/wiki/Q351",
+   "population": null,
+   "elevationM": 2470,
+   "water": []
+  },
+  "glacier-national-park-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Glacier_National_Park_(U.S.)",
+   "wikidata": "https://www.wikidata.org/wiki/Q373567",
+   "population": null,
+   "elevationM": 1837,
+   "water": []
+  },
+  "acadia-national-park-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Acadia_National_Park",
+   "wikidata": "https://www.wikidata.org/wiki/Q337396",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "asheville-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Asheville%2C_North_Carolina",
+   "wikidata": "https://www.wikidata.org/wiki/Q648501",
+   "population": 94589,
+   "elevationM": 650,
+   "water": []
+  },
+  "mackinac-island-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Mackinac_Island%2C_Michigan",
+   "wikidata": "https://www.wikidata.org/wiki/Q2355628",
+   "population": 583,
+   "elevationM": 181,
+   "water": []
+  },
+  "philadelphia-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Philadelphia",
+   "wikidata": "https://www.wikidata.org/wiki/Q1345",
+   "population": 1603797,
+   "elevationM": 12,
+   "water": [
+    {
+     "label": "Delaware River",
+     "description": "major river on the East coast of the United States of America"
+    }
+   ]
+  },
+  "sun-valley-76868": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Sun_Valley_Serenade",
+   "wikidata": "https://www.wikidata.org/wiki/Q366244",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "tofino-cd6a7": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Tofino",
+   "wikidata": "https://www.wikidata.org/wiki/Q462564",
+   "population": null,
+   "elevationM": 10,
+   "water": []
+  },
+  "jasper-national-park-cd6a7": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Jasper_National_Park",
+   "wikidata": "https://www.wikidata.org/wiki/Q503429",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "fogo-island-cd6a7": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Fogo_Island%2C_Newfoundland_and_Labrador",
+   "wikidata": "https://www.wikidata.org/wiki/Q1435159",
+   "population": 2706,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Atlantic Ocean",
+     "description": "ocean between Europe, Africa and the Americas"
+    }
+   ]
+  },
+  "gros-morne-national-park-cd6a7": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Gros_Morne_National_Park",
+   "wikidata": "https://www.wikidata.org/wiki/Q257598",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "isla-holbox-41937": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Isla_Holbox",
+   "wikidata": "https://www.wikidata.org/wiki/Q1535905",
+   "population": 1841,
+   "elevationM": 1,
+   "water": [
+    {
+     "label": "Yucatán Channel",
+     "description": "strait between Mexico and Cuba"
+    }
+   ]
+  },
+  "guanajuato-41937": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Guanajuato",
+   "wikidata": "https://www.wikidata.org/wiki/Q46475",
+   "population": 5853677,
+   "elevationM": 2072,
+   "water": []
+  },
+  "copper-canyon-41937": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Copper_Canyon",
+   "wikidata": "https://www.wikidata.org/wiki/Q674485",
+   "population": null,
+   "elevationM": 1023,
+   "water": []
+  },
+  "bacalar-41937": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Bacalar",
+   "wikidata": "https://www.wikidata.org/wiki/Q1709140",
+   "population": 12527,
+   "elevationM": 11,
+   "water": []
+  },
+  "todos-santos-41937": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Todos_Santos%2C_Baja_California_Sur",
+   "wikidata": "https://www.wikidata.org/wiki/Q1658489",
+   "population": 7185,
+   "elevationM": 38,
+   "water": [
+    {
+     "label": "Pacific Ocean",
+     "description": "ocean between Asia, Australia and the Americas"
+    }
+   ]
+  },
+  "lake-atitlan-11760": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Lake_Atitl%C3%A1n",
+   "wikidata": "https://www.wikidata.org/wiki/Q273276",
+   "population": null,
+   "elevationM": 1562,
+   "water": []
+  },
+  "tikal-11760": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Tikal",
+   "wikidata": "https://www.wikidata.org/wiki/Q181172",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "caye-caulker-42ab0": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Caye_Caulker",
+   "wikidata": "https://www.wikidata.org/wiki/Q1051967",
+   "population": 2729,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Caribbean Sea",
+     "description": "marginal tropical sea of the Atlantic Ocean, located east of Central America, south of the Greater Antilles and north of South America"
+    }
+   ]
+  },
+  "san-ignacio-42ab0": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/San_Ignacio%2C_Belize",
+   "wikidata": "https://www.wikidata.org/wiki/Q724815",
+   "population": 26151,
+   "elevationM": 76,
+   "water": []
+  },
+  "arenal-and-la-fortuna-1bf42": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Arenal_Volcano",
+   "wikidata": "https://www.wikidata.org/wiki/Q641588",
+   "population": null,
+   "elevationM": 1670,
+   "water": []
+  },
+  "monteverde-1bf42": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Monteverde",
+   "wikidata": "https://www.wikidata.org/wiki/Q111444555",
+   "population": 5386,
+   "elevationM": 1330,
+   "water": []
+  },
+  "osa-peninsula-1bf42": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Osa_Peninsula",
+   "wikidata": "https://www.wikidata.org/wiki/Q2333457",
+   "population": null,
+   "elevationM": 276,
+   "water": [
+    {
+     "label": "Pacific Ocean",
+     "description": "ocean between Asia, Australia and the Americas"
+    }
+   ]
+  },
+  "bocas-del-toro-1e36b": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Bocas_Town%2C_Bocas_del_Toro",
+   "wikidata": "https://www.wikidata.org/wiki/Q888971",
+   "population": null,
+   "elevationM": 10,
+   "water": []
+  },
+  "trinidad-c484b": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Trinidad%2C_Cuba",
+   "wikidata": "https://www.wikidata.org/wiki/Q319272",
+   "population": 51994,
+   "elevationM": 60,
+   "water": []
+  },
+  "vieques-fe23c": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Vieques%2C_Puerto_Rico",
+   "wikidata": "https://www.wikidata.org/wiki/Q737624",
+   "population": 8249,
+   "elevationM": 37,
+   "water": [
+    {
+     "label": "Caribbean Sea",
+     "description": "marginal tropical sea of the Atlantic Ocean, located east of Central America, south of the Greater Antilles and north of South America"
+    }
+   ]
+  },
+  "samana-peninsula-8a4bf": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Saman%C3%A1_Peninsula",
+   "wikidata": "https://www.wikidata.org/wiki/Q2279055",
+   "population": null,
+   "elevationM": 330,
+   "water": [
+    {
+     "label": "Atlantic Ocean",
+     "description": "ocean between Europe, Africa and the Americas"
+    }
+   ]
+  },
+  "kingston-5eedd": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Kingston%2C_Jamaica",
+   "wikidata": "https://www.wikidata.org/wiki/Q34692",
+   "population": 937700,
+   "elevationM": 9,
+   "water": [
+    {
+     "label": "Caribbean Sea",
+     "description": "marginal tropical sea of the Atlantic Ocean, located east of Central America, south of the Greater Antilles and north of South America"
+    }
+   ]
+  },
+  "port-antonio-5eedd": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Port_Antonio",
+   "wikidata": "https://www.wikidata.org/wiki/Q162782",
+   "population": 14816,
+   "elevationM": 20,
+   "water": []
+  },
+  "dominica-bc1cd": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Dominica",
+   "wikidata": "https://www.wikidata.org/wiki/Q784",
+   "population": 74656,
+   "elevationM": null,
+   "water": []
+  },
+  "salento-and-cocora-valley-2f737": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Cocora_Valley",
+   "wikidata": "https://www.wikidata.org/wiki/Q965776",
+   "population": null,
+   "elevationM": 2366,
+   "water": []
+  },
+  "cuenca-09f19": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Cuenca%2C_Ecuador",
+   "wikidata": "https://www.wikidata.org/wiki/Q54886",
+   "population": 361524,
+   "elevationM": 2550,
+   "water": [
+    {
+     "label": "Tomebamba River",
+     "description": "river in Ecuador"
+    }
+   ]
+  },
+  "machu-picchu-36c57": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Machu_Picchu",
+   "wikidata": "https://www.wikidata.org/wiki/Q676203",
+   "population": null,
+   "elevationM": 2430,
+   "water": []
+  },
+  "torres-del-paine-national-park-34950": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Torres_del_Paine_National_Park",
+   "wikidata": "https://www.wikidata.org/wiki/Q901646",
+   "population": null,
+   "elevationM": 579,
+   "water": []
+  },
+  "el-chalten-354bf": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/El_Chalt%C3%A9n",
+   "wikidata": "https://www.wikidata.org/wiki/Q1323978",
+   "population": 1865,
+   "elevationM": 397,
+   "water": []
+  },
+  "iguazu-falls-c213f": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Iguazu_Falls",
+   "wikidata": "https://www.wikidata.org/wiki/Q36332",
+   "population": null,
+   "elevationM": 180,
+   "water": [
+    {
+     "label": "Iguazu River",
+     "description": "river in Paraná, Brazil"
+    }
+   ]
+  },
+  "lencois-maranhenses-national-park-37497": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Len%C3%A7%C3%B3is_Maranhenses_National_Park",
+   "wikidata": "https://www.wikidata.org/wiki/Q647777",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "jose-ignacio-66b98": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Jos%C3%A9_Ignacio%2C_Uruguay",
+   "wikidata": "https://www.wikidata.org/wiki/Q1303777",
+   "population": 148,
+   "elevationM": null,
+   "water": []
+  },
+  "paramaribo-b17fc": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Paramaribo",
+   "wikidata": "https://www.wikidata.org/wiki/Q3001",
+   "population": 223757,
+   "elevationM": 3,
+   "water": [
+    {
+     "label": "Suriname River",
+     "description": "river in Suriname"
+    },
+    {
+     "label": "Atlantic Ocean",
+     "description": "ocean between Europe, Africa and the Americas"
+    }
+   ]
+  },
+  "kaieteur-falls-bc88a": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Kaieteur_Falls",
+   "wikidata": "https://www.wikidata.org/wiki/Q38120",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "black-forest-17d53": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Black_Forest",
+   "wikidata": "https://www.wikidata.org/wiki/Q4204",
+   "population": null,
+   "elevationM": 1493,
+   "water": []
+  },
+  "faroe-islands-1082f": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Faroe_Islands_national_football_team",
+   "wikidata": "https://www.wikidata.org/wiki/Q200688",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "westfjords-b3c92": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Westfjords",
+   "wikidata": "https://www.wikidata.org/wiki/Q727267",
+   "population": 7379,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Denmark Strait",
+     "description": "oceanic strait between Greenland to its northwest and Iceland to its southeast"
+    }
+   ]
+  },
+  "vilnius-74a78": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Vilnius",
+   "wikidata": "https://www.wikidata.org/wiki/Q216",
+   "population": 619405,
+   "elevationM": 112,
+   "water": [
+    {
+     "label": "Neris",
+     "description": "river in Lithuania and Belarus"
+    },
+    {
+     "label": "Vilnia",
+     "description": "river in Lithuania and Belarus"
+    }
+   ]
+  },
+  "krakow-5ff03": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Krak%C3%B3w",
+   "wikidata": "https://www.wikidata.org/wiki/Q31487",
+   "population": 804237,
+   "elevationM": 219,
+   "water": [
+    {
+     "label": "Vistula",
+     "description": "river in East-Central Europe"
+    }
+   ]
+  },
+  "wroclaw-5ff03": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Wroc%C5%82aw",
+   "wikidata": "https://www.wikidata.org/wiki/Q1799",
+   "population": 673531,
+   "elevationM": 111,
+   "water": [
+    {
+     "label": "Oder",
+     "description": "river in Central Europe flowing from the Czech Republic and along the Poland–Germany border"
+    },
+    {
+     "label": "Ślęza",
+     "description": "river in Poland, left tributary of the Odra River"
+    },
+    {
+     "label": "Oława",
+     "description": "river in Poland"
+    },
+    {
+     "label": "Widawa",
+     "description": "river in Poland"
+    },
+    {
+     "label": "Bystrzyca",
+     "description": "river in Poland, left tributary of the Odra River"
+    }
+   ]
+  },
+  "mostar-62ac5": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Mostar",
+   "wikidata": "https://www.wikidata.org/wiki/Q93347",
+   "population": 105448,
+   "elevationM": 60,
+   "water": [
+    {
+     "label": "Neretva",
+     "description": "river in Bosnia and Herzegovina and in Croatia"
+    }
+   ]
+  },
+  "berat-79b9d": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Berat",
+   "wikidata": "https://www.wikidata.org/wiki/Q170244",
+   "population": 40665,
+   "elevationM": 58,
+   "water": [
+    {
+     "label": "Osum",
+     "description": "river in Albania"
+    }
+   ]
+  },
+  "naxos-4902a": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Naxos",
+   "wikidata": "https://www.wikidata.org/wiki/Q188527",
+   "population": 17930,
+   "elevationM": 1003,
+   "water": [
+    {
+     "label": "Aegean Sea",
+     "description": "part of the Mediterranean Sea, between the Greek mainland, the Turkish mainland, Crete, and Rhodes"
+    }
+   ]
+  },
+  "dolomites-ad79e": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Dolomites",
+   "wikidata": "https://www.wikidata.org/wiki/Q1283",
+   "population": null,
+   "elevationM": 3343,
+   "water": []
+  },
+  "puglia-ad79e": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Apulia",
+   "wikidata": "https://www.wikidata.org/wiki/Q1447",
+   "population": 3866174,
+   "elevationM": null,
+   "water": []
+  },
+  "mallorca-20a8d": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Palma_de_Mallorca",
+   "wikidata": "https://www.wikidata.org/wiki/Q8826",
+   "population": 434786,
+   "elevationM": 13,
+   "water": [
+    {
+     "label": "Mediterranean Sea",
+     "description": "sea between Europe, Africa and Asia"
+    }
+   ]
+  },
+  "sahara-desert-at-merzouga-32e08": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Merzouga",
+   "wikidata": "https://www.wikidata.org/wiki/Q1922278",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "kruger-national-park-35fda": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Kruger_National_Park",
+   "wikidata": "https://www.wikidata.org/wiki/Q24451",
+   "population": null,
+   "elevationM": 370,
+   "water": []
+  },
+  "okavango-delta-180c8": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Okavango_Delta",
+   "wikidata": "https://www.wikidata.org/wiki/Q650872",
+   "population": null,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Okavango River",
+     "description": "river in southwestern Africa"
+    }
+   ]
+  },
+  "lamu-a84f5": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Lamu_Island",
+   "wikidata": "https://www.wikidata.org/wiki/Q783117",
+   "population": null,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Indian Ocean",
+     "description": "ocean bounded by Africa, Asia, Australia, and Antarctica"
+    }
+   ]
+  },
+  "bwindi-impenetrable-forest-e9290": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Bwindi_Impenetrable_National_Park",
+   "wikidata": "https://www.wikidata.org/wiki/Q500397",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "simien-mountains-3d91f": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Simien_Mountains",
+   "wikidata": "https://www.wikidata.org/wiki/Q1982017",
+   "population": null,
+   "elevationM": 4550,
+   "water": []
+  },
+  "sao-tome-6ddcb": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/S%C3%A3o_Tom%C3%A9",
+   "wikidata": "https://www.wikidata.org/wiki/Q3932",
+   "population": 71868,
+   "elevationM": 137,
+   "water": [
+    {
+     "label": "Gulf of Guinea",
+     "description": "gulf on the west coast of Africa"
+    }
+   ]
+  },
+  "naoshima-fcf29": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Naoshima",
+   "wikidata": "https://www.wikidata.org/wiki/Q1350060",
+   "population": 3026,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Bisan Seto",
+     "description": null
+    }
+   ]
+  },
+  "hokkaido-fcf29": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Hokkaido",
+   "wikidata": "https://www.wikidata.org/wiki/Q35581",
+   "population": 5383579,
+   "elevationM": 2290,
+   "water": [
+    {
+     "label": "Pacific Ocean",
+     "description": "ocean between Asia, Australia and the Americas"
+    },
+    {
+     "label": "Sea of Japan",
+     "description": "marginal sea between Japan, Russia, and Korea"
+    },
+    {
+     "label": "Sea of Okhotsk",
+     "description": "marginal sea of the Pacific Ocean"
+    }
+   ]
+  },
+  "guilin-and-yangshuo-d2eaf": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Yangshuo_County",
+   "wikidata": "https://www.wikidata.org/wiki/Q31358",
+   "population": 273124,
+   "elevationM": null,
+   "water": []
+  },
+  "borneo-rainforest-7c3c7": {
+   "matched": false,
+   "query": "Borneo Rainforest Malaysia And Indonesia"
+  },
+  "komodo-national-park-35536": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Komodo_National_Park",
+   "wikidata": "https://www.wikidata.org/wiki/Q4520",
+   "population": null,
+   "elevationM": 81,
+   "water": []
+  },
+  "yogyakarta-35536": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Yogyakarta",
+   "wikidata": "https://www.wikidata.org/wiki/Q7568",
+   "population": 422732,
+   "elevationM": 113,
+   "water": []
+  },
+  "manila-80673": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Manila",
+   "wikidata": "https://www.wikidata.org/wiki/Q1461",
+   "population": 1902590,
+   "elevationM": 9,
+   "water": [
+    {
+     "label": "Pasig River",
+     "description": "river in the Philippines"
+    },
+    {
+     "label": "Manila Bay",
+     "description": "natural harbour, industrial port of Manila on Luzon"
+    }
+   ]
+  },
+  "banaue-rice-terraces-80673": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Banaue_Rice_Terraces",
+   "wikidata": "https://www.wikidata.org/wiki/Q826551",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "kathmandu-valley-0e1d5": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Kathmandu_Valley",
+   "wikidata": "https://www.wikidata.org/wiki/Q970717",
+   "population": null,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Bagmati River",
+     "description": "river in Nepal and India"
+    }
+   ]
+  },
+  "bhutan-bb225": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/History_of_Bhutan",
+   "wikidata": "https://www.wikidata.org/wiki/Q956615",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "rajasthan-967ce": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Jaipur",
+   "wikidata": "https://www.wikidata.org/wiki/Q66485",
+   "population": 3073350,
+   "elevationM": 431,
+   "water": []
+  },
+  "kerala-backwaters-967ce": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Kerala_backwaters",
+   "wikidata": "https://www.wikidata.org/wiki/Q666519",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "varanasi-967ce": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Varanasi",
+   "wikidata": "https://www.wikidata.org/wiki/Q79980",
+   "population": 1198491,
+   "elevationM": 76,
+   "water": [
+    {
+     "label": "Ganges",
+     "description": "major river in India"
+    },
+    {
+     "label": "Varuna River",
+     "description": "river in India"
+    }
+   ]
+  },
+  "sri-lanka-cultural-triangle-19704": {
+   "matched": false,
+   "query": "Sri Lanka Cultural Triangle Sri Lanka"
+  },
+  "samarkand-db800": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Samarkand",
+   "wikidata": "https://www.wikidata.org/wiki/Q5753",
+   "population": 546303,
+   "elevationM": 702,
+   "water": [
+    {
+     "label": "Zeravshan",
+     "description": "river in Uzbekistan and Tajikistan"
+    }
+   ]
+  },
+  "almaty-and-the-tian-shan-2f36b": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Almaty",
+   "wikidata": "https://www.wikidata.org/wiki/Q35493",
+   "population": 2228675,
+   "elevationM": 893,
+   "water": []
+  },
+  "kyrgyzstan-s-song-kol-lake-c7879": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Song-K%C3%B6l",
+   "wikidata": "https://www.wikidata.org/wiki/Q2298945",
+   "population": null,
+   "elevationM": 3016,
+   "water": []
+  },
+  "wadi-rum-67402": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Wadi_Rum",
+   "wikidata": "https://www.wikidata.org/wiki/Q40729",
+   "population": null,
+   "elevationM": 800,
+   "water": []
+  },
+  "great-barrier-reef-ceafb": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Great_Barrier_Reef",
+   "wikidata": "https://www.wikidata.org/wiki/Q7343",
+   "population": null,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Coral Sea",
+     "description": "marginal sea in the Pacific Ocean off the northeast coast of Australia"
+    }
+   ]
+  },
+  "tasmania-ceafb": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Tasmania",
+   "wikidata": "https://www.wikidata.org/wiki/Q34366",
+   "population": 539590,
+   "elevationM": 1009,
+   "water": []
+  },
+  "uluru-ceafb": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Uluru",
+   "wikidata": "https://www.wikidata.org/wiki/Q33910",
+   "population": null,
+   "elevationM": 900,
+   "water": []
+  },
+  "perth-and-rottnest-island-ceafb": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Rottnest_Island",
+   "wikidata": "https://www.wikidata.org/wiki/Q585317",
+   "population": 166,
+   "elevationM": 19,
+   "water": [
+    {
+     "label": "Indian Ocean",
+     "description": "ocean bounded by Africa, Asia, Australia, and Antarctica"
+    }
+   ]
+  },
+  "auckland-a2238": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Auckland",
+   "wikidata": "https://www.wikidata.org/wiki/Q37100",
+   "population": 1470100,
+   "elevationM": 196,
+   "water": [
+    {
+     "label": "Waitematā Harbour",
+     "description": "harbour in Auckland, New Zealand"
+    },
+    {
+     "label": "Manukau Harbour",
+     "description": "harbour in Auckland, New Zealand"
+    },
+    {
+     "label": "Hauraki Gulf / Tīkapa Moana",
+     "description": "gulf in New Zealand"
+    }
+   ]
+  },
+  "fiordland-national-park-a2238": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Fiordland_National_Park",
+   "wikidata": "https://www.wikidata.org/wiki/Q877719",
+   "population": null,
+   "elevationM": 1063,
+   "water": []
+  },
+  "wellington-a2238": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Wellington",
+   "wikidata": "https://www.wikidata.org/wiki/Q23661",
+   "population": 216200,
+   "elevationM": null,
+   "water": [
+    {
+     "label": "Cook Strait",
+     "description": "strait between the North and South Islands of New Zealand"
+    }
+   ]
+  },
+  "rarotonga-4bacf": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Rarotonga",
+   "wikidata": "https://www.wikidata.org/wiki/Q471793",
+   "population": 10572,
+   "elevationM": 236,
+   "water": [
+    {
+     "label": "Pacific Ocean",
+     "description": "ocean between Asia, Australia and the Americas"
+    }
+   ]
+  },
+  "viti-levu-bbb7e": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Viti_Levu",
+   "wikidata": "https://www.wikidata.org/wiki/Q208198",
+   "population": 580000,
+   "elevationM": 1324,
+   "water": [
+    {
+     "label": "Pacific Ocean",
+     "description": "ocean between Asia, Australia and the Americas"
+    }
+   ]
+  },
+  "savai-i-f5680": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Savai%CA%BBi",
+   "wikidata": "https://www.wikidata.org/wiki/Q337519",
+   "population": 100000,
+   "elevationM": 1858,
+   "water": [
+    {
+     "label": "Pacific Ocean",
+     "description": "ocean between Asia, Australia and the Americas"
+    }
+   ]
+  },
+  "espiritu-santo-d16ad": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Espiritu_Santo",
+   "wikidata": "https://www.wikidata.org/wiki/Q337524",
+   "population": null,
+   "elevationM": 1879,
+   "water": [
+    {
+     "label": "Pacific Ocean",
+     "description": "ocean between Asia, Australia and the Americas"
+    }
+   ]
+  },
+  "palau-e5e0b": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Survivor%3A_Palau",
+   "wikidata": "https://www.wikidata.org/wiki/Q1825865",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "wild-atlantic-way-eb213": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Wild_Atlantic_Way",
+   "wikidata": "https://www.wikidata.org/wiki/Q16853596",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "alsace-wine-route-e3772": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Colmar",
+   "wikidata": "https://www.wikidata.org/wiki/Q130994",
+   "population": 66970,
+   "elevationM": 198,
+   "water": [
+    {
+     "label": "Ill",
+     "description": "river in Alsace, France"
+    }
+   ]
+  },
+  "garden-route-35fda": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Garden_Route_National_Park",
+   "wikidata": "https://www.wikidata.org/wiki/Q1381341",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "ha-giang-loop-68110": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Ha_Giang_Loop",
+   "wikidata": "https://www.wikidata.org/wiki/Q114407150",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "koh-lanta-a2b7c": {
+   "matched": false,
+   "query": "Koh Lanta Thailand"
+  },
+  "annapurna-circuit-0e1d5": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Annapurna_Circuit",
+   "wikidata": "https://www.wikidata.org/wiki/Q381683",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "wadi-shab-c14c3": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/Wadi_Tiwi",
+   "wikidata": "https://www.wikidata.org/wiki/Q3565018",
+   "population": null,
+   "elevationM": null,
+   "water": []
+  },
+  "hoi-an-68110": {
+   "matched": true,
+   "wikipedia": "https://en.wikipedia.org/wiki/H%E1%BB%99i_An_(city)",
+   "wikidata": "https://www.wikidata.org/wiki/Q36160",
+   "population": 121716,
+   "elevationM": 13,
    "water": []
   },
   "zakopane-mtn": {
@@ -4456,7 +5485,7 @@
    "matched": true,
    "wikipedia": "https://en.wikipedia.org/wiki/Cortina_d'Ampezzo",
    "wikidata": "https://www.wikidata.org/wiki/Q41158",
-   "population": 5546,
+   "population": 5370,
    "elevationM": 1224,
    "water": []
   }

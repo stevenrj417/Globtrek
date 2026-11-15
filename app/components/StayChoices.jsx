@@ -7,6 +7,7 @@ import { bookingPropertyUrl } from "../data/destinations";
 import { PRICE_KIND_LABEL } from "../lib/pricing/stayPrice";
 import { BookingLogo } from "./PartnerLogo";
 import { cjDestinationStaysUrl } from "../lib/booking/cj";
+import { priceBand } from "../data/destinationPlanningAverages";
 
 const STALE_DAYS = 21;
 
@@ -91,6 +92,15 @@ function EmptyStays({ destination, trip }) {
   return <p className="mt-3 text-sm text-black/60">We haven&apos;t checked stays in {city} yet. <a href={url} target="_blank" rel="noopener sponsored" onClick={() => track("stay_search_opened", { destination: destination.city })} className="whitespace-nowrap text-ink underline decoration-black/25 underline-offset-4">Search stays on <BookingLogo className="mx-0.5 inline h-3 w-auto align-baseline" /> →</a></p>;
 }
 
+// Typical nightly prices from the master destination list. They are regional
+// bands (many places share one), so they are labeled as planning estimates.
+function TypicalPrices({ destination }) {
+  const band = priceBand(destination);
+  if (!band?.budgetHotel) return null;
+  const parts = [["budget hotel", band.budgetHotel], ["three-star", band.threeStar], ["four-star", band.fourStar], ["luxury", band.luxury]].filter(([, value]) => value);
+  return <p className="tabular mt-4 text-xs leading-5 text-black/55">Typical nightly price, averaged over a year: {parts.map(([label, value]) => `${label} ${money(value)}`).join(" · ")}. A planning estimate for places like this, not a quote.</p>;
+}
+
 export function StayChoices({ destination, tripContext, selectedStayId, onSelected, budgetLodging }) {
   const [state, setState] = useState({ status: "loading", hotels: [], notice: null, catalog: null });
   const [accessibleOnly, setAccessibleOnly] = useState(false);
@@ -137,6 +147,7 @@ export function StayChoices({ destination, tripContext, selectedStayId, onSelect
         {state.status === "ready" && state.hotels.length ? <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{state.hotels.map((stay, index) => <StayCard key={stay.id} stay={stay} destination={destination} trip={tripContext} selected={stay.id === selectedStayId} onSelect={(choice) => { onSelected(choice, { automatic: false }); track("hotel_selected", { destination: destination.city, role: choice.role }); }} priority={index === 0} />)}</ul> : null}
         {state.status === "ready" && state.notice && (state.hotels.length || accessibleOnly) ? <p className="mt-4 text-sm text-black/60">{state.notice}</p> : null}
         {state.status === "ready" && !state.hotels.length && !accessibleOnly ? <EmptyStays destination={destination} trip={tripContext} /> : null}
+        {state.status === "ready" ? <TypicalPrices destination={destination} /> : null}
       </div>
       {state.status === "ready" && !state.hotels.length ? null : <p className="mt-5 text-xs leading-5 text-black/55">Details from <BookingLogo className="mx-0.5 h-3 w-auto" />{state.catalog?.checkedAt ? `, ${formatDay(state.catalog.checkedAt)}` : ""} · not live availability · &quot;on some rates&quot; means at least one rate includes it{stale ? " · over three weeks old" : ""}</p>}
       <button type="button" onClick={() => onSelected({ id: "none", type: "none", name: "No hotel needed" }, { automatic: false })} className="mt-3 min-h-11 text-xs text-black/55 underline decoration-black/25 underline-offset-4">I already have a place to stay</button>

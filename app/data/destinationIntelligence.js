@@ -12,6 +12,17 @@ const typeMembers = {
   multi_stop: ["NAIROBI & THE MAASAI MARA", "TAHITI & MOOREA", "VICTORIA FALLS"],
 };
 
+// Master-list places (verified-batch-05) arrive with the workbook's
+// "Destination Type"; this maps it onto the types pricing and hotel search use.
+const OUTCOME_TYPES = {
+  city: ["City", "Small city", "Historic city", "Coastal town", "Mountain town", "Lake town", "Small town", "Historic town", "Island town"],
+  island: ["Island", "Island region", "Island nation"],
+  region: ["Coastal region", "Scenic region", "Lake region", "Forest region", "Historic region", "Wine region", "Mountain region", "Cultural region", "Desert region", "Wetland region", "Trekking region", "Reef region", "Historic site"],
+  nature_area: ["National park", "Natural landmark"],
+  route: ["Scenic route"],
+  country: ["Country journey"],
+};
+const typeByOutcomeType = new Map(Object.entries(OUTCOME_TYPES).flatMap(([type, names]) => names.map((name) => [name, type])));
 const destinationTypeByName = new Map(Object.entries(typeMembers).flatMap(([type, names]) => names.map((name) => [name, type])));
 const searchOverrides = {
   "AMALFI COAST": ["Positano", "Amalfi", "Ravello", "Praiano"],
@@ -37,7 +48,7 @@ const typicalCostLevel = { affordable: "value", value: "value", moderate: "moder
 const radiusByType = { city: 15, island: 60, region: 90, country: 250, route: 50, nature_area: 80, resort_area: 35, multi_stop: 80 };
 
 export function enrichDestinationIntelligence(destination) {
-  const destinationType = destinationTypeByName.get(destination.city) || "city";
+  const destinationType = destinationTypeByName.get(destination.city) || typeByOutcomeType.get(destination.outcomeType) || "city";
   const sourceCostLevel = destination.costLevel || legacyCostLevels[destination.id || destination.airport] || null;
   const typical = typicalCostLevel[sourceCostLevel] || null;
   const aliases = [...new Set([...(destination.aliases || []), destination.city])];

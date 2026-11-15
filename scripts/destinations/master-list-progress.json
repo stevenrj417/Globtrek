@@ -1,0 +1,5137 @@
+{
+ "summary": {
+  "checkedAt": "2026-11-15",
+  "outcomes": 237,
+  "inCatalog": 237,
+  "quizReady": 160,
+  "withPhotoAndAlt": 237,
+  "sixPlusActivities": 202,
+  "ninePlusStays": 162,
+  "threePlusStays": 166,
+  "withRestaurants": 230,
+  "costModels": {
+   "price_band": 64,
+   "local_prices": 147,
+   "city": 19,
+   "tier": 2,
+   "price_band_partial": 5
+  },
+  "missingByCheck": {
+   "3+ accommodation options": 71,
+   "4+ activities": 16,
+   "destination-specific daily costs": 7,
+   "setting tag": 12
+  },
+  "complete": false,
+  "completeNote": "No outcome is complete under the spec until verified per-property lodging (9+ with prices, ratings and photos) is available; that needs Booking Demand API access."
+ },
+ "outcomes": [
+  {
+   "outcomeId": "GT-0001",
+   "exactMatch": "Oregon Coast, Oregon",
+   "destinationId": "oregon-coast-76868",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 5,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0002",
+   "exactMatch": "Sedona, Arizona",
+   "destinationId": "sedona-76868",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0003",
+   "exactMatch": "San Francisco, California",
+   "destinationId": "san-francisco-76868",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 61,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "city",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0004",
+   "exactMatch": "Austin, Texas",
+   "destinationId": "austin-76868",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 61,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "city",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0005",
+   "exactMatch": "New York City, New York",
+   "destinationId": "JFK",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0006",
+   "exactMatch": "Seattle, Washington",
+   "destinationId": "seattle-76868",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 61,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "city",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0007",
+   "exactMatch": "Denali National Park, Alaska",
+   "destinationId": "denali-national-park-76868",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 1,
+   "restaurants": 0,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options",
+    "4+ activities"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "no verified restaurants",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0008",
+   "exactMatch": "Maui, Hawaii",
+   "destinationId": "OGG",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 21,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "tier",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "destination-specific daily costs"
+   ],
+   "reachable": false,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0009",
+   "exactMatch": "Zion National Park, Utah",
+   "destinationId": "zion-national-park-76868",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0010",
+   "exactMatch": "Rocky Mountain National Park, Colorado",
+   "destinationId": "rocky-mountain-national-park-76868",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0011",
+   "exactMatch": "Yellowstone National Park, Wyoming",
+   "destinationId": "yellowstone-national-park-76868",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0012",
+   "exactMatch": "Glacier National Park, Montana",
+   "destinationId": "glacier-national-park-76868",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0013",
+   "exactMatch": "Las Vegas, Nevada",
+   "destinationId": "las-vegas-76868",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 65,
+   "activities": 6,
+   "restaurants": 4,
+   "costModel": "city",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0014",
+   "exactMatch": "Miami and Miami Beach, Florida",
+   "destinationId": "miami-76868",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "city",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0015",
+   "exactMatch": "New Orleans, Louisiana",
+   "destinationId": "new-orleans-76868",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 61,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "city",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0016",
+   "exactMatch": "Nashville, Tennessee",
+   "destinationId": "nashville-76868",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "city",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0017",
+   "exactMatch": "Chicago, Illinois",
+   "destinationId": "chicago-76868",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 61,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "city",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0018",
+   "exactMatch": "Boston, Massachusetts",
+   "destinationId": "boston-76868",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0019",
+   "exactMatch": "Acadia National Park, Maine",
+   "destinationId": "acadia-national-park-76868",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 6,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0020",
+   "exactMatch": "Charleston, South Carolina",
+   "destinationId": "charleston-76868",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0021",
+   "exactMatch": "Savannah, Georgia",
+   "destinationId": "savannah-76868",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0022",
+   "exactMatch": "Asheville, North Carolina",
+   "destinationId": "asheville-76868",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0023",
+   "exactMatch": "Mackinac Island, Michigan",
+   "destinationId": "mackinac-island-76868",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 1,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0024",
+   "exactMatch": "Philadelphia, Pennsylvania",
+   "destinationId": "philadelphia-76868",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0025",
+   "exactMatch": "Santa Fe, New Mexico",
+   "destinationId": "santa-fe-76868",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 49,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "city",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0026",
+   "exactMatch": "Sun Valley, Idaho",
+   "destinationId": "sun-valley-76868",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 3,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options",
+    "4+ activities"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0027",
+   "exactMatch": "Vancouver, Canada",
+   "destinationId": "YVR",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0028",
+   "exactMatch": "Victoria, British Columbia, Canada",
+   "destinationId": "victoria-cd6a7",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0029",
+   "exactMatch": "Tofino, Canada",
+   "destinationId": "tofino-cd6a7",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 15,
+   "activities": 7,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0030",
+   "exactMatch": "Banff National Park, Canada",
+   "destinationId": "YYC",
+   "linkedBy": "manual",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 7,
+   "restaurants": 4,
+   "costModel": "city",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0031",
+   "exactMatch": "Jasper National Park, Canada",
+   "destinationId": "jasper-national-park-cd6a7",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0032",
+   "exactMatch": "Quebec City, Canada",
+   "destinationId": "quebec-city-cd6a7",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0033",
+   "exactMatch": "Montreal, Canada",
+   "destinationId": "montreal-cd6a7",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0034",
+   "exactMatch": "Toronto, Canada",
+   "destinationId": "toronto-cd6a7",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0035",
+   "exactMatch": "Fogo Island, Canada",
+   "destinationId": "fogo-island-cd6a7",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 4,
+   "restaurants": 2,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0036",
+   "exactMatch": "Gros Morne National Park, Canada",
+   "destinationId": "gros-morne-national-park-cd6a7",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0037",
+   "exactMatch": "Mexico City, Mexico",
+   "destinationId": "MEX",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 61,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "city",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0038",
+   "exactMatch": "Oaxaca City, Mexico",
+   "destinationId": "oaxaca-city-41937",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 61,
+   "activities": 6,
+   "restaurants": 4,
+   "costModel": "city",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0039",
+   "exactMatch": "San Miguel de Allende, Mexico",
+   "destinationId": "san-miguel-de-allende-41937",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0040",
+   "exactMatch": "Merida, Mexico",
+   "destinationId": "merida-41937",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 61,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "city",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0041",
+   "exactMatch": "Tulum, Mexico",
+   "destinationId": "TQO",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0042",
+   "exactMatch": "Isla Holbox, Mexico",
+   "destinationId": "isla-holbox-41937",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 5,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0043",
+   "exactMatch": "Guanajuato, Mexico",
+   "destinationId": "guanajuato-41937",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0044",
+   "exactMatch": "Copper Canyon, Mexico",
+   "destinationId": "copper-canyon-41937",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 5,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0045",
+   "exactMatch": "Bacalar, Mexico",
+   "destinationId": "bacalar-41937",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "setting tag"
+   ],
+   "reachable": false,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0046",
+   "exactMatch": "Todos Santos, Mexico",
+   "destinationId": "todos-santos-41937",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 13,
+   "activities": 5,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "fewer than 6 verified activities",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0047",
+   "exactMatch": "Antigua, Guatemala",
+   "destinationId": "antigua-guatemala-11760",
+   "linkedBy": "manual",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0048",
+   "exactMatch": "Lake Atitlan, Guatemala",
+   "destinationId": "lake-atitlan-11760",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0049",
+   "exactMatch": "Tikal, Guatemala",
+   "destinationId": "tikal-11760",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 4,
+   "activities": 5,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0050",
+   "exactMatch": "Caye Caulker, Belize",
+   "destinationId": "caye-caulker-42ab0",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 39,
+   "activities": 4,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "fewer than 6 verified activities",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0051",
+   "exactMatch": "San Ignacio, Belize",
+   "destinationId": "san-ignacio-42ab0",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 33,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0052",
+   "exactMatch": "Arenal and La Fortuna, Costa Rica",
+   "destinationId": "arenal-and-la-fortuna-1bf42",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0053",
+   "exactMatch": "Monteverde, Costa Rica",
+   "destinationId": "monteverde-1bf42",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0054",
+   "exactMatch": "Osa Peninsula, Costa Rica",
+   "destinationId": "osa-peninsula-1bf42",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 5,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0055",
+   "exactMatch": "Panama City, Panama",
+   "destinationId": "panama-city-1e36b",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0056",
+   "exactMatch": "Bocas del Toro, Panama",
+   "destinationId": "bocas-del-toro-1e36b",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0057",
+   "exactMatch": "Havana, Cuba",
+   "destinationId": "havana-c484b",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0058",
+   "exactMatch": "Trinidad, Cuba",
+   "destinationId": "trinidad-c484b",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band_partial",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options",
+    "destination-specific daily costs"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0059",
+   "exactMatch": "Old San Juan, Puerto Rico",
+   "destinationId": "san-juan-fe23c",
+   "linkedBy": "manual",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0060",
+   "exactMatch": "Vieques, Puerto Rico",
+   "destinationId": "vieques-fe23c",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 18,
+   "activities": 6,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0061",
+   "exactMatch": "Santo Domingo, Dominican Republic",
+   "destinationId": "santo-domingo-8a4bf",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0062",
+   "exactMatch": "Samana Peninsula, Dominican Republic",
+   "destinationId": "samana-peninsula-8a4bf",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 7,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0063",
+   "exactMatch": "Kingston, Jamaica",
+   "destinationId": "kingston-5eedd",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 33,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0064",
+   "exactMatch": "Port Antonio, Jamaica",
+   "destinationId": "port-antonio-5eedd",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 37,
+   "activities": 7,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0065",
+   "exactMatch": "Curacao, Curacao",
+   "destinationId": "willemstad-9461d",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0066",
+   "exactMatch": "Dominica, Dominica",
+   "destinationId": "dominica-bc1cd",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0067",
+   "exactMatch": "Cartagena, Colombia",
+   "destinationId": "cartagena-2f737",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0068",
+   "exactMatch": "Medellin, Colombia",
+   "destinationId": "medellin-2f737",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0069",
+   "exactMatch": "Salento and Cocora Valley, Colombia",
+   "destinationId": "salento-and-cocora-valley-2f737",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0070",
+   "exactMatch": "Quito, Ecuador",
+   "destinationId": "quito-09f19",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0071",
+   "exactMatch": "Galapagos Islands, Ecuador",
+   "destinationId": "galapagos-islands-09f19",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0072",
+   "exactMatch": "Cuenca, Ecuador",
+   "destinationId": "cuenca-09f19",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0073",
+   "exactMatch": "Lima, Peru",
+   "destinationId": "lima-36c57",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0074",
+   "exactMatch": "Cusco and the Sacred Valley, Peru",
+   "destinationId": "cusco-36c57",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0075",
+   "exactMatch": "Machu Picchu, Peru",
+   "destinationId": "machu-picchu-36c57",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0076",
+   "exactMatch": "Arequipa and Colca Canyon, Peru",
+   "destinationId": "arequipa-36c57",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0077",
+   "exactMatch": "La Paz, Bolivia",
+   "destinationId": "la-paz-a001a",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 18,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0078",
+   "exactMatch": "Uyuni Salt Flats, Bolivia",
+   "destinationId": "uyuni-a001a",
+   "linkedBy": "manual",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 4,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "fewer than 6 verified activities",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0079",
+   "exactMatch": "Santiago, Chile",
+   "destinationId": "santiago-34950",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0080",
+   "exactMatch": "Atacama Desert, Chile",
+   "destinationId": "atacama-desert-34950",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0081",
+   "exactMatch": "Torres del Paine National Park, Chile",
+   "destinationId": "torres-del-paine-national-park-34950",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0082",
+   "exactMatch": "Valparaiso, Chile",
+   "destinationId": "valparaiso-34950",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0083",
+   "exactMatch": "Buenos Aires, Argentina",
+   "destinationId": "EZE",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 61,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "city",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0084",
+   "exactMatch": "Mendoza, Argentina",
+   "destinationId": "mendoza-354bf",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0085",
+   "exactMatch": "El Chalten, Argentina",
+   "destinationId": "el-chalten-354bf",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 22,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0086",
+   "exactMatch": "Iguazu Falls, Argentina and Brazil",
+   "destinationId": "iguazu-falls-c213f",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "setting tag",
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0087",
+   "exactMatch": "Rio de Janeiro, Brazil",
+   "destinationId": "GIG",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0088",
+   "exactMatch": "Sao Paulo, Brazil",
+   "destinationId": "sao-paulo-37497",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0089",
+   "exactMatch": "Salvador, Brazil",
+   "destinationId": "salvador-37497",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0090",
+   "exactMatch": "Lençóis Maranhenses National Park, Brazil",
+   "destinationId": "lencois-maranhenses-national-park-37497",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 6,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "setting tag",
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0091",
+   "exactMatch": "Montevideo, Uruguay",
+   "destinationId": "montevideo-66b98",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0092",
+   "exactMatch": "Jose Ignacio, Uruguay",
+   "destinationId": "jose-ignacio-66b98",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 29,
+   "activities": 5,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "fewer than 6 verified activities",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0093",
+   "exactMatch": "Paramaribo, Suriname",
+   "destinationId": "paramaribo-b17fc",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band_partial",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options",
+    "destination-specific daily costs"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0094",
+   "exactMatch": "Kaieteur Falls, Guyana",
+   "destinationId": "kaieteur-falls-bc88a",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 2,
+   "restaurants": 0,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "setting tag",
+    "3+ accommodation options",
+    "4+ activities"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "no verified restaurants",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0095",
+   "exactMatch": "London, United Kingdom",
+   "destinationId": "LHR",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0096",
+   "exactMatch": "Edinburgh, United Kingdom",
+   "destinationId": "edinburgh-97691",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0097",
+   "exactMatch": "Isle of Skye, United Kingdom",
+   "destinationId": "isle-of-skye-97691",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0098",
+   "exactMatch": "Bath, United Kingdom",
+   "destinationId": "bath-97691",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0099",
+   "exactMatch": "Dublin, Ireland",
+   "destinationId": "dublin-eb213",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0100",
+   "exactMatch": "Wild Atlantic Way, Ireland",
+   "destinationId": "wild-atlantic-way-eb213",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 2,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options",
+    "4+ activities"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0101",
+   "exactMatch": "Paris, France",
+   "destinationId": "CDG",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0102",
+   "exactMatch": "French Riviera, France",
+   "destinationId": "nice-e3772",
+   "linkedBy": "manual",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0103",
+   "exactMatch": "Alsace Wine Route, France",
+   "destinationId": "alsace-wine-route-e3772",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 4,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0104",
+   "exactMatch": "Annecy, France",
+   "destinationId": "annecy-e3772",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0105",
+   "exactMatch": "Amsterdam, Netherlands",
+   "destinationId": "amsterdam-fb61c",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0106",
+   "exactMatch": "Rotterdam, Netherlands",
+   "destinationId": "rotterdam-fb61c",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0107",
+   "exactMatch": "Bruges, Belgium",
+   "destinationId": "bruges-5cb4c",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0108",
+   "exactMatch": "Berlin, Germany",
+   "destinationId": "berlin-17d53",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0109",
+   "exactMatch": "Munich, Germany",
+   "destinationId": "munich-17d53",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0110",
+   "exactMatch": "Black Forest, Germany",
+   "destinationId": "black-forest-17d53",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0111",
+   "exactMatch": "Copenhagen, Denmark",
+   "destinationId": "copenhagen-89da1",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0112",
+   "exactMatch": "Stockholm, Sweden",
+   "destinationId": "stockholm-72ddd",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0113",
+   "exactMatch": "Lofoten Islands, Norway",
+   "destinationId": "lofoten-98845",
+   "linkedBy": "manual",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 25,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0114",
+   "exactMatch": "Faroe Islands, Faroe Islands",
+   "destinationId": "faroe-islands-1082f",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0115",
+   "exactMatch": "Reykjavik and the South Coast, Iceland",
+   "destinationId": "reykjavik-b3c92",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0116",
+   "exactMatch": "Westfjords, Iceland",
+   "destinationId": "westfjords-b3c92",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 1,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options",
+    "4+ activities"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0117",
+   "exactMatch": "Helsinki, Finland",
+   "destinationId": "helsinki-c909b",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0118",
+   "exactMatch": "Tallinn, Estonia",
+   "destinationId": "tallinn-f0a96",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0119",
+   "exactMatch": "Riga, Latvia",
+   "destinationId": "riga-c5f5b",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0120",
+   "exactMatch": "Vilnius, Lithuania",
+   "destinationId": "vilnius-74a78",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0121",
+   "exactMatch": "Prague, Czechia",
+   "destinationId": "prague-1fef4",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0122",
+   "exactMatch": "Krakow, Poland",
+   "destinationId": "krakow-5ff03",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0123",
+   "exactMatch": "Wroclaw, Poland",
+   "destinationId": "wroclaw-5ff03",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0124",
+   "exactMatch": "Budapest, Hungary",
+   "destinationId": "budapest-f14e4",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0125",
+   "exactMatch": "Vienna, Austria",
+   "destinationId": "vienna-59390",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0126",
+   "exactMatch": "Salzburg, Austria",
+   "destinationId": "salzburg-59390",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0127",
+   "exactMatch": "Slovenian Alps and Lake Bled, Slovenia",
+   "destinationId": "bled-mtn",
+   "linkedBy": "manual",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "city",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0128",
+   "exactMatch": "Ljubljana, Slovenia",
+   "destinationId": "ljubljana-d1aa0",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0129",
+   "exactMatch": "Dubrovnik, Croatia",
+   "destinationId": "dubrovnik-d7e04",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0130",
+   "exactMatch": "Split and Hvar, Croatia",
+   "destinationId": "split-d7e04",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0131",
+   "exactMatch": "Kotor, Montenegro",
+   "destinationId": "kotor-479fb",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0132",
+   "exactMatch": "Sarajevo, Bosnia and Herzegovina",
+   "destinationId": "sarajevo-62ac5",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0133",
+   "exactMatch": "Mostar, Bosnia and Herzegovina",
+   "destinationId": "mostar-62ac5",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0134",
+   "exactMatch": "Berat, Albania",
+   "destinationId": "berat-79b9d",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0135",
+   "exactMatch": "Athens, Greece",
+   "destinationId": "athens-4902a",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0136",
+   "exactMatch": "Santorini, Greece",
+   "destinationId": "JTR",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0137",
+   "exactMatch": "Naxos, Greece",
+   "destinationId": "naxos-4902a",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0138",
+   "exactMatch": "Rome, Italy",
+   "destinationId": "FCO",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0139",
+   "exactMatch": "Florence, Italy",
+   "destinationId": "FLR",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0140",
+   "exactMatch": "Venice, Italy",
+   "destinationId": "venice-ad79e",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0141",
+   "exactMatch": "Dolomites, Italy",
+   "destinationId": "dolomites-ad79e",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0142",
+   "exactMatch": "Puglia, Italy",
+   "destinationId": "puglia-ad79e",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 1,
+   "restaurants": 2,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options",
+    "4+ activities"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0143",
+   "exactMatch": "Lisbon, Portugal",
+   "destinationId": "LIS",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 61,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "city",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0144",
+   "exactMatch": "Porto and the Douro Valley, Portugal",
+   "destinationId": "porto-a4951",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0145",
+   "exactMatch": "Madeira, Portugal",
+   "destinationId": "funchal-a4951",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0146",
+   "exactMatch": "Barcelona, Spain",
+   "destinationId": "BCN",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0147",
+   "exactMatch": "Madrid, Spain",
+   "destinationId": "madrid-20a8d",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0148",
+   "exactMatch": "Seville, Spain",
+   "destinationId": "seville-20a8d",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0149",
+   "exactMatch": "San Sebastian, Spain",
+   "destinationId": "san-sebastian-20a8d",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0150",
+   "exactMatch": "Mallorca, Spain",
+   "destinationId": "mallorca-20a8d",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0151",
+   "exactMatch": "Tbilisi, Georgia",
+   "destinationId": "tbilisi-9113c",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0152",
+   "exactMatch": "Svaneti, Georgia",
+   "destinationId": "mestia-9113c",
+   "linkedBy": "manual",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0153",
+   "exactMatch": "Istanbul, Türkiye",
+   "destinationId": "istanbul-d7153",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0154",
+   "exactMatch": "Cappadocia, Türkiye",
+   "destinationId": "cappadocia-d7153",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0155",
+   "exactMatch": "Marrakech, Morocco",
+   "destinationId": "RAK",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0156",
+   "exactMatch": "Fes, Morocco",
+   "destinationId": "fes-32e08",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0157",
+   "exactMatch": "Chefchaouen, Morocco",
+   "destinationId": "chefchaouen-32e08",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0158",
+   "exactMatch": "Sahara Desert at Merzouga, Morocco",
+   "destinationId": "sahara-desert-at-merzouga-32e08",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 57,
+   "activities": 4,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "setting tag"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0159",
+   "exactMatch": "Cairo and Giza, Egypt",
+   "destinationId": "cairo-1c39a",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0160",
+   "exactMatch": "Luxor, Egypt",
+   "destinationId": "luxor-1c39a",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0161",
+   "exactMatch": "Cape Town, South Africa",
+   "destinationId": "CPT",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0162",
+   "exactMatch": "Garden Route, South Africa",
+   "destinationId": "garden-route-35fda",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 2,
+   "activities": 4,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0163",
+   "exactMatch": "Kruger National Park, South Africa",
+   "destinationId": "kruger-national-park-35fda",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 2,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "setting tag",
+    "3+ accommodation options",
+    "4+ activities"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0164",
+   "exactMatch": "Namib Desert, Namibia",
+   "destinationId": "sossusvlei-bfe79",
+   "linkedBy": "manual",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 2,
+   "activities": 5,
+   "restaurants": 2,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "setting tag",
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0165",
+   "exactMatch": "Okavango Delta, Botswana",
+   "destinationId": "okavango-delta-180c8",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 1,
+   "restaurants": 0,
+   "costModel": "price_band_partial",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "setting tag",
+    "3+ accommodation options",
+    "4+ activities",
+    "destination-specific daily costs"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "no verified restaurants",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0166",
+   "exactMatch": "Victoria Falls, Zambia and Zimbabwe",
+   "destinationId": "victoria-falls-5922f",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0167",
+   "exactMatch": "Zanzibar, Tanzania",
+   "destinationId": "zanzibar-city-7e380",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0168",
+   "exactMatch": "Serengeti National Park, Tanzania",
+   "destinationId": "serengeti-national-park-7e380",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 15,
+   "activities": 2,
+   "restaurants": 2,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "setting tag",
+    "4+ activities"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0169",
+   "exactMatch": "Lamu, Kenya",
+   "destinationId": "lamu-a84f5",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 33,
+   "activities": 4,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "fewer than 6 verified activities",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0170",
+   "exactMatch": "Bwindi Impenetrable Forest, Uganda",
+   "destinationId": "bwindi-impenetrable-forest-e9290",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 4,
+   "restaurants": 3,
+   "costModel": "price_band_partial",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options",
+    "destination-specific daily costs"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0171",
+   "exactMatch": "Kigali, Rwanda",
+   "destinationId": "kigali-7266a",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 7,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0172",
+   "exactMatch": "Simien Mountains, Ethiopia",
+   "destinationId": "simien-mountains-3d91f",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 1,
+   "restaurants": 0,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options",
+    "4+ activities"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "no verified restaurants",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0173",
+   "exactMatch": "Dakar, Senegal",
+   "destinationId": "dakar-d8973",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0174",
+   "exactMatch": "Sao Tome, Sao Tome and Principe",
+   "destinationId": "sao-tome-6ddcb",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 4,
+   "restaurants": 4,
+   "costModel": "price_band_partial",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options",
+    "destination-specific daily costs"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0175",
+   "exactMatch": "Tokyo, Japan",
+   "destinationId": "HND",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0176",
+   "exactMatch": "Kyoto, Japan",
+   "destinationId": "KIX",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0177",
+   "exactMatch": "Naoshima, Japan",
+   "destinationId": "naoshima-fcf29",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 27,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0178",
+   "exactMatch": "Hokkaido, Japan",
+   "destinationId": "hokkaido-fcf29",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 2,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options",
+    "4+ activities"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0179",
+   "exactMatch": "Seoul, South Korea",
+   "destinationId": "ICN",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0180",
+   "exactMatch": "Jeju Island, South Korea",
+   "destinationId": "jeju-island-04653",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0181",
+   "exactMatch": "Beijing, China",
+   "destinationId": "beijing-d2eaf",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0182",
+   "exactMatch": "Shanghai, China",
+   "destinationId": "shanghai-d2eaf",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0183",
+   "exactMatch": "Guilin and Yangshuo, China",
+   "destinationId": "guilin-and-yangshuo-d2eaf",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0184",
+   "exactMatch": "Taipei, Taiwan",
+   "destinationId": "taipei-094d5",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0185",
+   "exactMatch": "Hanoi, Vietnam",
+   "destinationId": "HAN",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 61,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "city",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0186",
+   "exactMatch": "Ha Giang Loop, Vietnam",
+   "destinationId": "ha-giang-loop-68110",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0187",
+   "exactMatch": "Hoi An, Vietnam",
+   "destinationId": "hoi-an-68110",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0188",
+   "exactMatch": "Bangkok, Thailand",
+   "destinationId": "BKK",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 61,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "city",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0189",
+   "exactMatch": "Chiang Mai, Thailand",
+   "destinationId": "CNX",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 61,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "city",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0190",
+   "exactMatch": "Koh Lanta, Thailand",
+   "destinationId": "koh-lanta-a2b7c",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 23,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0191",
+   "exactMatch": "Luang Prabang, Laos",
+   "destinationId": "luang-prabang-7998b",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0192",
+   "exactMatch": "Siem Reap and Angkor, Cambodia",
+   "destinationId": "siem-reap-314cc",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0193",
+   "exactMatch": "Singapore, Singapore",
+   "destinationId": "SIN",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0194",
+   "exactMatch": "Kuala Lumpur, Malaysia",
+   "destinationId": "kuala-lumpur-ff3ea",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0195",
+   "exactMatch": "George Town, Penang, Malaysia",
+   "destinationId": "george-town-ff3ea",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0196",
+   "exactMatch": "Borneo Rainforest, Malaysia and Indonesia",
+   "destinationId": "borneo-rainforest-7c3c7",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 1,
+   "restaurants": 0,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "setting tag",
+    "3+ accommodation options",
+    "4+ activities"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "no verified restaurants",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0197",
+   "exactMatch": "Bali, Indonesia",
+   "destinationId": "DPS",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0198",
+   "exactMatch": "Komodo National Park, Indonesia",
+   "destinationId": "komodo-national-park-35536",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0199",
+   "exactMatch": "Yogyakarta, Indonesia",
+   "destinationId": "yogyakarta-35536",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0200",
+   "exactMatch": "Manila, Philippines",
+   "destinationId": "manila-80673",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0201",
+   "exactMatch": "Palawan, Philippines",
+   "destinationId": "el-nido-80673",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0202",
+   "exactMatch": "Banaue Rice Terraces, Philippines",
+   "destinationId": "banaue-rice-terraces-80673",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0203",
+   "exactMatch": "Kathmandu Valley, Nepal",
+   "destinationId": "kathmandu-valley-0e1d5",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0204",
+   "exactMatch": "Annapurna Circuit, Nepal",
+   "destinationId": "annapurna-circuit-0e1d5",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 6,
+   "restaurants": 3,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0205",
+   "exactMatch": "Bhutan, Bhutan",
+   "destinationId": "bhutan-bb225",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0206",
+   "exactMatch": "Delhi and Agra, India",
+   "destinationId": "delhi-967ce",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 5,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0207",
+   "exactMatch": "Rajasthan, India",
+   "destinationId": "rajasthan-967ce",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 14,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0208",
+   "exactMatch": "Kerala Backwaters, India",
+   "destinationId": "kerala-backwaters-967ce",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 7,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "setting tag",
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0209",
+   "exactMatch": "Varanasi, India",
+   "destinationId": "varanasi-967ce",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0210",
+   "exactMatch": "Sri Lanka Cultural Triangle, Sri Lanka",
+   "destinationId": "sri-lanka-cultural-triangle-19704",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0211",
+   "exactMatch": "Maldives, Maldives",
+   "destinationId": "MLE",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 7,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "tier",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "destination-specific daily costs"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0212",
+   "exactMatch": "Samarkand, Uzbekistan",
+   "destinationId": "samarkand-db800",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0213",
+   "exactMatch": "Almaty and the Tian Shan, Kazakhstan",
+   "destinationId": "almaty-and-the-tian-shan-2f36b",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0214",
+   "exactMatch": "Kyrgyzstan's Song-Kol Lake, Kyrgyzstan",
+   "destinationId": "kyrgyzstan-s-song-kol-lake-c7879",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 0,
+   "restaurants": 0,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options",
+    "4+ activities"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "no verified restaurants",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0215",
+   "exactMatch": "Dubai, United Arab Emirates",
+   "destinationId": "DXB",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0216",
+   "exactMatch": "Muscat, Oman",
+   "destinationId": "muscat-c14c3",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0217",
+   "exactMatch": "Wadi Shab, Oman",
+   "destinationId": "wadi-shab-c14c3",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0218",
+   "exactMatch": "Petra, Jordan",
+   "destinationId": "wadi-musa-67402",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0219",
+   "exactMatch": "Wadi Rum, Jordan",
+   "destinationId": "wadi-rum-67402",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "setting tag"
+   ],
+   "reachable": false,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0220",
+   "exactMatch": "Jerusalem, Israel",
+   "destinationId": "jerusalem-4c197",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0221",
+   "exactMatch": "Beirut, Lebanon",
+   "destinationId": "beirut-5caa7",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0222",
+   "exactMatch": "AlUla, Saudi Arabia",
+   "destinationId": "alula-6f49c",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 13,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0223",
+   "exactMatch": "Sydney, Australia",
+   "destinationId": "SYD",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0224",
+   "exactMatch": "Melbourne, Australia",
+   "destinationId": "melbourne-ceafb",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0225",
+   "exactMatch": "Great Barrier Reef, Australia",
+   "destinationId": "great-barrier-reef-ceafb",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 5,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0226",
+   "exactMatch": "Tasmania, Australia",
+   "destinationId": "tasmania-ceafb",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 0,
+   "restaurants": 0,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options",
+    "4+ activities"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "no verified restaurants",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0227",
+   "exactMatch": "Uluru, Australia",
+   "destinationId": "uluru-ceafb",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0228",
+   "exactMatch": "Perth and Rottnest Island, Australia",
+   "destinationId": "perth-and-rottnest-island-ceafb",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 1,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0229",
+   "exactMatch": "Auckland, New Zealand",
+   "destinationId": "auckland-a2238",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0230",
+   "exactMatch": "Queenstown, New Zealand",
+   "destinationId": "queenstown-a2238",
+   "linkedBy": "name_and_country",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 24,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0231",
+   "exactMatch": "Fiordland National Park, New Zealand",
+   "destinationId": "fiordland-national-park-a2238",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 7,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0232",
+   "exactMatch": "Wellington, New Zealand",
+   "destinationId": "wellington-a2238",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 60,
+   "activities": 8,
+   "restaurants": 4,
+   "costModel": "local_prices",
+   "climate": true,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
+   "flags": [
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "quiz_ready"
+  },
+  {
+   "outcomeId": "GT-0233",
+   "exactMatch": "Rarotonga, Cook Islands",
+   "destinationId": "rarotonga-4bacf",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 5,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0234",
+   "exactMatch": "Viti Levu, Fiji",
+   "destinationId": "viti-levu-bbb7e",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 0,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options",
+    "4+ activities"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0235",
+   "exactMatch": "Savai'i, Samoa",
+   "destinationId": "savai-i-f5680",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 2,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options",
+    "4+ activities"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0236",
+   "exactMatch": "Espiritu Santo, Vanuatu",
+   "destinationId": "espiritu-santo-d16ad",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 4,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 6 verified activities",
+    "fewer than 9 catalog stays",
+    "no observed fares to this airport",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  },
+  {
+   "outcomeId": "GT-0237",
+   "exactMatch": "Palau, Palau",
+   "destinationId": "palau-e5e0b",
+   "linkedBy": "master_list_record",
+   "photo": true,
+   "imageAlt": true,
+   "stays": 0,
+   "activities": 6,
+   "restaurants": 4,
+   "costModel": "price_band",
+   "climate": true,
+   "quizReady": false,
+   "missing": [
+    "3+ accommodation options"
+   ],
+   "reachable": false,
+   "flags": [
+    "fewer than 9 catalog stays",
+    "per-property prices, ratings and photos need the Booking Demand API"
+   ],
+   "status": "needs_data"
+  }
+ ]
+}

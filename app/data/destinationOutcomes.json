@@ -1,0 +1,4272 @@
+{
+ "source": "globtrek_destination_master_list.xlsx",
+ "importedFrom": "2026-11-15",
+ "outcomes": [
+  {
+   "outcomeId": "GT-0001",
+   "exactMatch": "Oregon Coast, Oregon",
+   "destination": "Oregon Coast",
+   "stateProvince": "Oregon",
+   "country": "United States",
+   "region": "United States",
+   "destinationType": "Coastal region",
+   "recognition": "Known",
+   "bestFor": [
+    "coast",
+    "road trip",
+    "small towns"
+   ],
+   "scope": "US",
+   "destinationId": "oregon-coast-76868",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0002",
+   "exactMatch": "Sedona, Arizona",
+   "destination": "Sedona",
+   "stateProvince": "Arizona",
+   "country": "United States",
+   "region": "United States",
+   "destinationType": "Small city",
+   "recognition": "Known",
+   "bestFor": [
+    "hiking",
+    "wellness",
+    "scenery"
+   ],
+   "scope": "US",
+   "destinationId": "sedona-76868",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0003",
+   "exactMatch": "San Francisco, California",
+   "destination": "San Francisco",
+   "stateProvince": "California",
+   "country": "United States",
+   "region": "United States",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "culture",
+    "landmarks"
+   ],
+   "scope": "US",
+   "destinationId": "san-francisco-76868",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0004",
+   "exactMatch": "Austin, Texas",
+   "destination": "Austin",
+   "stateProvince": "Texas",
+   "country": "United States",
+   "region": "United States",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "music",
+    "food",
+    "nightlife"
+   ],
+   "scope": "US",
+   "destinationId": "austin-76868",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0005",
+   "exactMatch": "New York City, New York",
+   "destination": "New York City",
+   "stateProvince": "New York",
+   "country": "United States",
+   "region": "United States",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "culture",
+    "food",
+    "nightlife"
+   ],
+   "scope": "US",
+   "destinationId": "JFK",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0006",
+   "exactMatch": "Seattle, Washington",
+   "destination": "Seattle",
+   "stateProvince": "Washington",
+   "country": "United States",
+   "region": "United States",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "music",
+    "waterfront"
+   ],
+   "scope": "US",
+   "destinationId": "seattle-76868",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0007",
+   "exactMatch": "Denali National Park, Alaska",
+   "destination": "Denali National Park",
+   "stateProvince": "Alaska",
+   "country": "United States",
+   "region": "United States",
+   "destinationType": "National park",
+   "recognition": "Known",
+   "bestFor": [
+    "wildlife",
+    "mountains",
+    "hiking"
+   ],
+   "scope": "US",
+   "destinationId": "denali-national-park-76868",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0008",
+   "exactMatch": "Maui, Hawaii",
+   "destination": "Maui",
+   "stateProvince": "Hawaii",
+   "country": "United States",
+   "region": "United States",
+   "destinationType": "Island",
+   "recognition": "Known",
+   "bestFor": [
+    "beaches",
+    "road trip",
+    "romance"
+   ],
+   "scope": "US",
+   "destinationId": "OGG",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0009",
+   "exactMatch": "Zion National Park, Utah",
+   "destination": "Zion National Park",
+   "stateProvince": "Utah",
+   "country": "United States",
+   "region": "United States",
+   "destinationType": "National park",
+   "recognition": "Known",
+   "bestFor": [
+    "hiking",
+    "canyons",
+    "scenery"
+   ],
+   "scope": "US",
+   "destinationId": "zion-national-park-76868",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0010",
+   "exactMatch": "Rocky Mountain National Park, Colorado",
+   "destination": "Rocky Mountain National Park",
+   "stateProvince": "Colorado",
+   "country": "United States",
+   "region": "United States",
+   "destinationType": "National park",
+   "recognition": "Known",
+   "bestFor": [
+    "hiking",
+    "wildlife",
+    "scenery"
+   ],
+   "scope": "US",
+   "destinationId": "rocky-mountain-national-park-76868",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0011",
+   "exactMatch": "Yellowstone National Park, Wyoming",
+   "destination": "Yellowstone National Park",
+   "stateProvince": "Wyoming",
+   "country": "United States",
+   "region": "United States",
+   "destinationType": "National park",
+   "recognition": "Known",
+   "bestFor": [
+    "wildlife",
+    "geothermal",
+    "road trip"
+   ],
+   "scope": "US",
+   "destinationId": "yellowstone-national-park-76868",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0012",
+   "exactMatch": "Glacier National Park, Montana",
+   "destination": "Glacier National Park",
+   "stateProvince": "Montana",
+   "country": "United States",
+   "region": "United States",
+   "destinationType": "National park",
+   "recognition": "Known",
+   "bestFor": [
+    "hiking",
+    "wildlife",
+    "scenery"
+   ],
+   "scope": "US",
+   "destinationId": "glacier-national-park-76868",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0013",
+   "exactMatch": "Las Vegas, Nevada",
+   "destination": "Las Vegas",
+   "stateProvince": "Nevada",
+   "country": "United States",
+   "region": "United States",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "nightlife",
+    "food",
+    "entertainment"
+   ],
+   "scope": "US",
+   "destinationId": "las-vegas-76868",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0014",
+   "exactMatch": "Miami and Miami Beach, Florida",
+   "destination": "Miami and Miami Beach",
+   "stateProvince": "Florida",
+   "country": "United States",
+   "region": "United States",
+   "destinationType": "Metro area",
+   "recognition": "Known",
+   "bestFor": [
+    "beaches",
+    "nightlife",
+    "food"
+   ],
+   "scope": "US",
+   "destinationId": "miami-76868",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0015",
+   "exactMatch": "New Orleans, Louisiana",
+   "destination": "New Orleans",
+   "stateProvince": "Louisiana",
+   "country": "United States",
+   "region": "United States",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "music",
+    "food",
+    "culture"
+   ],
+   "scope": "US",
+   "destinationId": "new-orleans-76868",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0016",
+   "exactMatch": "Nashville, Tennessee",
+   "destination": "Nashville",
+   "stateProvince": "Tennessee",
+   "country": "United States",
+   "region": "United States",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "music",
+    "food",
+    "nightlife"
+   ],
+   "scope": "US",
+   "destinationId": "nashville-76868",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0017",
+   "exactMatch": "Chicago, Illinois",
+   "destination": "Chicago",
+   "stateProvince": "Illinois",
+   "country": "United States",
+   "region": "United States",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "architecture",
+    "food",
+    "culture"
+   ],
+   "scope": "US",
+   "destinationId": "chicago-76868",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0018",
+   "exactMatch": "Boston, Massachusetts",
+   "destination": "Boston",
+   "stateProvince": "Massachusetts",
+   "country": "United States",
+   "region": "United States",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "food",
+    "culture"
+   ],
+   "scope": "US",
+   "destinationId": "boston-76868",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0019",
+   "exactMatch": "Acadia National Park, Maine",
+   "destination": "Acadia National Park",
+   "stateProvince": "Maine",
+   "country": "United States",
+   "region": "United States",
+   "destinationType": "National park",
+   "recognition": "Known",
+   "bestFor": [
+    "hiking",
+    "coast",
+    "scenery"
+   ],
+   "scope": "US",
+   "destinationId": "acadia-national-park-76868",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0020",
+   "exactMatch": "Charleston, South Carolina",
+   "destination": "Charleston",
+   "stateProvince": "South Carolina",
+   "country": "United States",
+   "region": "United States",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "history",
+    "architecture"
+   ],
+   "scope": "US",
+   "destinationId": "charleston-76868",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0021",
+   "exactMatch": "Savannah, Georgia",
+   "destination": "Savannah",
+   "stateProvince": "Georgia",
+   "country": "United States",
+   "region": "United States",
+   "destinationType": "Small city",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "food",
+    "romance"
+   ],
+   "scope": "US",
+   "destinationId": "savannah-76868",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0022",
+   "exactMatch": "Asheville, North Carolina",
+   "destination": "Asheville",
+   "stateProvince": "North Carolina",
+   "country": "United States",
+   "region": "United States",
+   "destinationType": "Small city",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "arts",
+    "mountains"
+   ],
+   "scope": "US",
+   "destinationId": "asheville-76868",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0023",
+   "exactMatch": "Mackinac Island, Michigan",
+   "destination": "Mackinac Island",
+   "stateProvince": "Michigan",
+   "country": "United States",
+   "region": "United States",
+   "destinationType": "Island",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "biking",
+    "summer"
+   ],
+   "scope": "US",
+   "destinationId": "mackinac-island-76868",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0024",
+   "exactMatch": "Philadelphia, Pennsylvania",
+   "destination": "Philadelphia",
+   "stateProvince": "Pennsylvania",
+   "country": "United States",
+   "region": "United States",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "food",
+    "culture"
+   ],
+   "scope": "US",
+   "destinationId": "philadelphia-76868",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0025",
+   "exactMatch": "Santa Fe, New Mexico",
+   "destination": "Santa Fe",
+   "stateProvince": "New Mexico",
+   "country": "United States",
+   "region": "United States",
+   "destinationType": "Small city",
+   "recognition": "Known",
+   "bestFor": [
+    "arts",
+    "food",
+    "history"
+   ],
+   "scope": "US",
+   "destinationId": "santa-fe-76868",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0026",
+   "exactMatch": "Sun Valley, Idaho",
+   "destination": "Sun Valley",
+   "stateProvince": "Idaho",
+   "country": "United States",
+   "region": "United States",
+   "destinationType": "Mountain town",
+   "recognition": "Known",
+   "bestFor": [
+    "skiing",
+    "luxury",
+    "hiking"
+   ],
+   "scope": "US",
+   "destinationId": "sun-valley-76868",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0027",
+   "exactMatch": "Vancouver, Canada",
+   "destination": "Vancouver",
+   "stateProvince": null,
+   "country": "Canada",
+   "region": "North America",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "nature",
+    "neighborhoods"
+   ],
+   "scope": "International",
+   "destinationId": "YVR",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0028",
+   "exactMatch": "Victoria, British Columbia, Canada",
+   "destination": "Victoria, British Columbia",
+   "stateProvince": null,
+   "country": "Canada",
+   "region": "North America",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "gardens",
+    "food",
+    "coast"
+   ],
+   "scope": "International",
+   "destinationId": "victoria-cd6a7",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0029",
+   "exactMatch": "Tofino, Canada",
+   "destination": "Tofino",
+   "stateProvince": null,
+   "country": "Canada",
+   "region": "North America",
+   "destinationType": "Coastal town",
+   "recognition": "Known",
+   "bestFor": [
+    "surfing",
+    "wildlife",
+    "quiet"
+   ],
+   "scope": "International",
+   "destinationId": "tofino-cd6a7",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0030",
+   "exactMatch": "Banff National Park, Canada",
+   "destination": "Banff National Park",
+   "stateProvince": null,
+   "country": "Canada",
+   "region": "North America",
+   "destinationType": "National park",
+   "recognition": "Known",
+   "bestFor": [
+    "mountains",
+    "hiking",
+    "skiing"
+   ],
+   "scope": "International",
+   "destinationId": "YYC",
+   "linkedBy": "manual"
+  },
+  {
+   "outcomeId": "GT-0031",
+   "exactMatch": "Jasper National Park, Canada",
+   "destination": "Jasper National Park",
+   "stateProvince": null,
+   "country": "Canada",
+   "region": "North America",
+   "destinationType": "National park",
+   "recognition": "Known",
+   "bestFor": [
+    "wildlife",
+    "hiking",
+    "scenery"
+   ],
+   "scope": "International",
+   "destinationId": "jasper-national-park-cd6a7",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0032",
+   "exactMatch": "Quebec City, Canada",
+   "destination": "Quebec City",
+   "stateProvince": null,
+   "country": "Canada",
+   "region": "North America",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "food",
+    "winter"
+   ],
+   "scope": "International",
+   "destinationId": "quebec-city-cd6a7",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0033",
+   "exactMatch": "Montreal, Canada",
+   "destination": "Montreal",
+   "stateProvince": null,
+   "country": "Canada",
+   "region": "North America",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "culture",
+    "nightlife"
+   ],
+   "scope": "International",
+   "destinationId": "montreal-cd6a7",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0034",
+   "exactMatch": "Toronto, Canada",
+   "destination": "Toronto",
+   "stateProvince": null,
+   "country": "Canada",
+   "region": "North America",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "culture",
+    "neighborhoods"
+   ],
+   "scope": "International",
+   "destinationId": "toronto-cd6a7",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0035",
+   "exactMatch": "Fogo Island, Canada",
+   "destination": "Fogo Island",
+   "stateProvince": null,
+   "country": "Canada",
+   "region": "North America",
+   "destinationType": "Island",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "design",
+    "quiet",
+    "coast"
+   ],
+   "scope": "International",
+   "destinationId": "fogo-island-cd6a7",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0036",
+   "exactMatch": "Gros Morne National Park, Canada",
+   "destination": "Gros Morne National Park",
+   "stateProvince": null,
+   "country": "Canada",
+   "region": "North America",
+   "destinationType": "National park",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "hiking",
+    "geology",
+    "scenery"
+   ],
+   "scope": "International",
+   "destinationId": "gros-morne-national-park-cd6a7",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0037",
+   "exactMatch": "Mexico City, Mexico",
+   "destination": "Mexico City",
+   "stateProvince": null,
+   "country": "Mexico",
+   "region": "North America",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "art",
+    "history"
+   ],
+   "scope": "International",
+   "destinationId": "MEX",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0038",
+   "exactMatch": "Oaxaca City, Mexico",
+   "destination": "Oaxaca City",
+   "stateProvince": null,
+   "country": "Mexico",
+   "region": "North America",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "culture",
+    "crafts"
+   ],
+   "scope": "International",
+   "destinationId": "oaxaca-city-41937",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0039",
+   "exactMatch": "San Miguel de Allende, Mexico",
+   "destination": "San Miguel de Allende",
+   "stateProvince": null,
+   "country": "Mexico",
+   "region": "North America",
+   "destinationType": "Small city",
+   "recognition": "Known",
+   "bestFor": [
+    "art",
+    "architecture",
+    "romance"
+   ],
+   "scope": "International",
+   "destinationId": "san-miguel-de-allende-41937",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0040",
+   "exactMatch": "Merida, Mexico",
+   "destination": "Merida",
+   "stateProvince": null,
+   "country": "Mexico",
+   "region": "North America",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "culture",
+    "history"
+   ],
+   "scope": "International",
+   "destinationId": "merida-41937",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0041",
+   "exactMatch": "Tulum, Mexico",
+   "destination": "Tulum",
+   "stateProvince": null,
+   "country": "Mexico",
+   "region": "North America",
+   "destinationType": "Coastal town",
+   "recognition": "Known",
+   "bestFor": [
+    "beaches",
+    "ruins",
+    "wellness"
+   ],
+   "scope": "International",
+   "destinationId": "TQO",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0042",
+   "exactMatch": "Isla Holbox, Mexico",
+   "destination": "Isla Holbox",
+   "stateProvince": null,
+   "country": "Mexico",
+   "region": "North America",
+   "destinationType": "Island",
+   "recognition": "Known",
+   "bestFor": [
+    "beaches",
+    "wildlife",
+    "quiet"
+   ],
+   "scope": "International",
+   "destinationId": "isla-holbox-41937",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0043",
+   "exactMatch": "Guanajuato, Mexico",
+   "destination": "Guanajuato",
+   "stateProvince": null,
+   "country": "Mexico",
+   "region": "North America",
+   "destinationType": "City",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "architecture",
+    "culture",
+    "festivals"
+   ],
+   "scope": "International",
+   "destinationId": "guanajuato-41937",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0044",
+   "exactMatch": "Copper Canyon, Mexico",
+   "destination": "Copper Canyon",
+   "stateProvince": null,
+   "country": "Mexico",
+   "region": "North America",
+   "destinationType": "Scenic region",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "rail journey",
+    "hiking",
+    "scenery"
+   ],
+   "scope": "International",
+   "destinationId": "copper-canyon-41937",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0045",
+   "exactMatch": "Bacalar, Mexico",
+   "destination": "Bacalar",
+   "stateProvince": null,
+   "country": "Mexico",
+   "region": "North America",
+   "destinationType": "Lake town",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "lagoon",
+    "paddling",
+    "quiet"
+   ],
+   "scope": "International",
+   "destinationId": "bacalar-41937",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0046",
+   "exactMatch": "Todos Santos, Mexico",
+   "destination": "Todos Santos",
+   "stateProvince": null,
+   "country": "Mexico",
+   "region": "North America",
+   "destinationType": "Small town",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "surfing",
+    "art",
+    "food"
+   ],
+   "scope": "International",
+   "destinationId": "todos-santos-41937",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0047",
+   "exactMatch": "Antigua, Guatemala",
+   "destination": "Antigua",
+   "stateProvince": null,
+   "country": "Guatemala",
+   "region": "Central America",
+   "destinationType": "Historic city",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "food",
+    "volcanoes"
+   ],
+   "scope": "International",
+   "destinationId": "antigua-guatemala-11760",
+   "linkedBy": "manual"
+  },
+  {
+   "outcomeId": "GT-0048",
+   "exactMatch": "Lake Atitlan, Guatemala",
+   "destination": "Lake Atitlan",
+   "stateProvince": null,
+   "country": "Guatemala",
+   "region": "Central America",
+   "destinationType": "Lake region",
+   "recognition": "Known",
+   "bestFor": [
+    "culture",
+    "hiking",
+    "wellness"
+   ],
+   "scope": "International",
+   "destinationId": "lake-atitlan-11760",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0049",
+   "exactMatch": "Tikal, Guatemala",
+   "destination": "Tikal",
+   "stateProvince": null,
+   "country": "Guatemala",
+   "region": "Central America",
+   "destinationType": "Historic site",
+   "recognition": "Known",
+   "bestFor": [
+    "ruins",
+    "wildlife",
+    "history"
+   ],
+   "scope": "International",
+   "destinationId": "tikal-11760",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0050",
+   "exactMatch": "Caye Caulker, Belize",
+   "destination": "Caye Caulker",
+   "stateProvince": null,
+   "country": "Belize",
+   "region": "Central America",
+   "destinationType": "Island",
+   "recognition": "Known",
+   "bestFor": [
+    "snorkeling",
+    "diving",
+    "quiet"
+   ],
+   "scope": "International",
+   "destinationId": "caye-caulker-42ab0",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0051",
+   "exactMatch": "San Ignacio, Belize",
+   "destination": "San Ignacio",
+   "stateProvince": null,
+   "country": "Belize",
+   "region": "Central America",
+   "destinationType": "Small town",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "caves",
+    "ruins",
+    "adventure"
+   ],
+   "scope": "International",
+   "destinationId": "san-ignacio-42ab0",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0052",
+   "exactMatch": "Arenal and La Fortuna, Costa Rica",
+   "destination": "Arenal and La Fortuna",
+   "stateProvince": null,
+   "country": "Costa Rica",
+   "region": "Central America",
+   "destinationType": "Scenic region",
+   "recognition": "Known",
+   "bestFor": [
+    "hot springs",
+    "wildlife",
+    "adventure"
+   ],
+   "scope": "International",
+   "destinationId": "arenal-and-la-fortuna-1bf42",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0053",
+   "exactMatch": "Monteverde, Costa Rica",
+   "destination": "Monteverde",
+   "stateProvince": null,
+   "country": "Costa Rica",
+   "region": "Central America",
+   "destinationType": "Forest region",
+   "recognition": "Known",
+   "bestFor": [
+    "wildlife",
+    "hiking",
+    "ziplining"
+   ],
+   "scope": "International",
+   "destinationId": "monteverde-1bf42",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0054",
+   "exactMatch": "Osa Peninsula, Costa Rica",
+   "destination": "Osa Peninsula",
+   "stateProvince": null,
+   "country": "Costa Rica",
+   "region": "Central America",
+   "destinationType": "Scenic region",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "wildlife",
+    "beaches",
+    "rainforest"
+   ],
+   "scope": "International",
+   "destinationId": "osa-peninsula-1bf42",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0055",
+   "exactMatch": "Panama City, Panama",
+   "destination": "Panama City",
+   "stateProvince": null,
+   "country": "Panama",
+   "region": "Central America",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "history",
+    "canal"
+   ],
+   "scope": "International",
+   "destinationId": "panama-city-1e36b",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0056",
+   "exactMatch": "Bocas del Toro, Panama",
+   "destination": "Bocas del Toro",
+   "stateProvince": null,
+   "country": "Panama",
+   "region": "Central America",
+   "destinationType": "Island region",
+   "recognition": "Known",
+   "bestFor": [
+    "beaches",
+    "surfing",
+    "wildlife"
+   ],
+   "scope": "International",
+   "destinationId": "bocas-del-toro-1e36b",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0057",
+   "exactMatch": "Havana, Cuba",
+   "destination": "Havana",
+   "stateProvince": null,
+   "country": "Cuba",
+   "region": "Caribbean",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "music",
+    "history",
+    "architecture"
+   ],
+   "scope": "International",
+   "destinationId": "havana-c484b",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0058",
+   "exactMatch": "Trinidad, Cuba",
+   "destination": "Trinidad",
+   "stateProvince": null,
+   "country": "Cuba",
+   "region": "Caribbean",
+   "destinationType": "Historic town",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "music",
+    "beaches"
+   ],
+   "scope": "International",
+   "destinationId": "trinidad-c484b",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0059",
+   "exactMatch": "Old San Juan, Puerto Rico",
+   "destination": "Old San Juan",
+   "stateProvince": null,
+   "country": "Puerto Rico",
+   "region": "Caribbean",
+   "destinationType": "Historic city",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "history",
+    "nightlife"
+   ],
+   "scope": "International",
+   "destinationId": "san-juan-fe23c",
+   "linkedBy": "manual"
+  },
+  {
+   "outcomeId": "GT-0060",
+   "exactMatch": "Vieques, Puerto Rico",
+   "destination": "Vieques",
+   "stateProvince": null,
+   "country": "Puerto Rico",
+   "region": "Caribbean",
+   "destinationType": "Island",
+   "recognition": "Known",
+   "bestFor": [
+    "beaches",
+    "bioluminescence",
+    "quiet"
+   ],
+   "scope": "International",
+   "destinationId": "vieques-fe23c",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0061",
+   "exactMatch": "Santo Domingo, Dominican Republic",
+   "destination": "Santo Domingo",
+   "stateProvince": null,
+   "country": "Dominican Republic",
+   "region": "Caribbean",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "food",
+    "nightlife"
+   ],
+   "scope": "International",
+   "destinationId": "santo-domingo-8a4bf",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0062",
+   "exactMatch": "Samana Peninsula, Dominican Republic",
+   "destination": "Samana Peninsula",
+   "stateProvince": null,
+   "country": "Dominican Republic",
+   "region": "Caribbean",
+   "destinationType": "Coastal region",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "whales",
+    "beaches",
+    "waterfalls"
+   ],
+   "scope": "International",
+   "destinationId": "samana-peninsula-8a4bf",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0063",
+   "exactMatch": "Kingston, Jamaica",
+   "destination": "Kingston",
+   "stateProvince": null,
+   "country": "Jamaica",
+   "region": "Caribbean",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "music",
+    "food",
+    "culture"
+   ],
+   "scope": "International",
+   "destinationId": "kingston-5eedd",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0064",
+   "exactMatch": "Port Antonio, Jamaica",
+   "destination": "Port Antonio",
+   "stateProvince": null,
+   "country": "Jamaica",
+   "region": "Caribbean",
+   "destinationType": "Coastal town",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "beaches",
+    "waterfalls",
+    "quiet"
+   ],
+   "scope": "International",
+   "destinationId": "port-antonio-5eedd",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0065",
+   "exactMatch": "Curacao, Curacao",
+   "destination": "Curacao",
+   "stateProvince": null,
+   "country": "Curacao",
+   "region": "Caribbean",
+   "destinationType": "Island",
+   "recognition": "Known",
+   "bestFor": [
+    "diving",
+    "architecture",
+    "beaches"
+   ],
+   "scope": "International",
+   "destinationId": "willemstad-9461d",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0066",
+   "exactMatch": "Dominica, Dominica",
+   "destination": "Dominica",
+   "stateProvince": null,
+   "country": "Dominica",
+   "region": "Caribbean",
+   "destinationType": "Island",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "hiking",
+    "diving",
+    "nature"
+   ],
+   "scope": "International",
+   "destinationId": "dominica-bc1cd",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0067",
+   "exactMatch": "Cartagena, Colombia",
+   "destination": "Cartagena",
+   "stateProvince": null,
+   "country": "Colombia",
+   "region": "South America",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "food",
+    "nightlife"
+   ],
+   "scope": "International",
+   "destinationId": "cartagena-2f737",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0068",
+   "exactMatch": "Medellin, Colombia",
+   "destination": "Medellin",
+   "stateProvince": null,
+   "country": "Colombia",
+   "region": "South America",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "design",
+    "day trips"
+   ],
+   "scope": "International",
+   "destinationId": "medellin-2f737",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0069",
+   "exactMatch": "Salento and Cocora Valley, Colombia",
+   "destination": "Salento and Cocora Valley",
+   "stateProvince": null,
+   "country": "Colombia",
+   "region": "South America",
+   "destinationType": "Scenic region",
+   "recognition": "Known",
+   "bestFor": [
+    "hiking",
+    "coffee",
+    "scenery"
+   ],
+   "scope": "International",
+   "destinationId": "salento-and-cocora-valley-2f737",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0070",
+   "exactMatch": "Quito, Ecuador",
+   "destination": "Quito",
+   "stateProvince": null,
+   "country": "Ecuador",
+   "region": "South America",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "food",
+    "gateway"
+   ],
+   "scope": "International",
+   "destinationId": "quito-09f19",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0071",
+   "exactMatch": "Galapagos Islands, Ecuador",
+   "destination": "Galapagos Islands",
+   "stateProvince": null,
+   "country": "Ecuador",
+   "region": "South America",
+   "destinationType": "Island region",
+   "recognition": "Known",
+   "bestFor": [
+    "wildlife",
+    "cruising",
+    "snorkeling"
+   ],
+   "scope": "International",
+   "destinationId": "galapagos-islands-09f19",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0072",
+   "exactMatch": "Cuenca, Ecuador",
+   "destination": "Cuenca",
+   "stateProvince": null,
+   "country": "Ecuador",
+   "region": "South America",
+   "destinationType": "City",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "architecture",
+    "food",
+    "culture"
+   ],
+   "scope": "International",
+   "destinationId": "cuenca-09f19",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0073",
+   "exactMatch": "Lima, Peru",
+   "destination": "Lima",
+   "stateProvince": null,
+   "country": "Peru",
+   "region": "South America",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "museums",
+    "coast"
+   ],
+   "scope": "International",
+   "destinationId": "lima-36c57",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0074",
+   "exactMatch": "Cusco and the Sacred Valley, Peru",
+   "destination": "Cusco and the Sacred Valley",
+   "stateProvince": null,
+   "country": "Peru",
+   "region": "South America",
+   "destinationType": "Scenic region",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "hiking",
+    "culture"
+   ],
+   "scope": "International",
+   "destinationId": "cusco-36c57",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0075",
+   "exactMatch": "Machu Picchu, Peru",
+   "destination": "Machu Picchu",
+   "stateProvince": null,
+   "country": "Peru",
+   "region": "South America",
+   "destinationType": "Historic site",
+   "recognition": "Known",
+   "bestFor": [
+    "ruins",
+    "hiking",
+    "scenery"
+   ],
+   "scope": "International",
+   "destinationId": "machu-picchu-36c57",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0076",
+   "exactMatch": "Arequipa and Colca Canyon, Peru",
+   "destination": "Arequipa and Colca Canyon",
+   "stateProvince": null,
+   "country": "Peru",
+   "region": "South America",
+   "destinationType": "Scenic region",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "history",
+    "hiking",
+    "wildlife"
+   ],
+   "scope": "International",
+   "destinationId": "arequipa-36c57",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0077",
+   "exactMatch": "La Paz, Bolivia",
+   "destination": "La Paz",
+   "stateProvince": null,
+   "country": "Bolivia",
+   "region": "South America",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "culture",
+    "food",
+    "mountains"
+   ],
+   "scope": "International",
+   "destinationId": "la-paz-a001a",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0078",
+   "exactMatch": "Uyuni Salt Flats, Bolivia",
+   "destination": "Uyuni Salt Flats",
+   "stateProvince": null,
+   "country": "Bolivia",
+   "region": "South America",
+   "destinationType": "Natural landmark",
+   "recognition": "Known",
+   "bestFor": [
+    "photography",
+    "scenery",
+    "adventure"
+   ],
+   "scope": "International",
+   "destinationId": "uyuni-a001a",
+   "linkedBy": "manual"
+  },
+  {
+   "outcomeId": "GT-0079",
+   "exactMatch": "Santiago, Chile",
+   "destination": "Santiago",
+   "stateProvince": null,
+   "country": "Chile",
+   "region": "South America",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "wine",
+    "mountains"
+   ],
+   "scope": "International",
+   "destinationId": "santiago-34950",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0080",
+   "exactMatch": "Atacama Desert, Chile",
+   "destination": "Atacama Desert",
+   "stateProvince": null,
+   "country": "Chile",
+   "region": "South America",
+   "destinationType": "Desert region",
+   "recognition": "Known",
+   "bestFor": [
+    "stargazing",
+    "geology",
+    "adventure"
+   ],
+   "scope": "International",
+   "destinationId": "atacama-desert-34950",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0081",
+   "exactMatch": "Torres del Paine National Park, Chile",
+   "destination": "Torres del Paine National Park",
+   "stateProvince": null,
+   "country": "Chile",
+   "region": "South America",
+   "destinationType": "National park",
+   "recognition": "Known",
+   "bestFor": [
+    "hiking",
+    "wildlife",
+    "scenery"
+   ],
+   "scope": "International",
+   "destinationId": "torres-del-paine-national-park-34950",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0082",
+   "exactMatch": "Valparaiso, Chile",
+   "destination": "Valparaiso",
+   "stateProvince": null,
+   "country": "Chile",
+   "region": "South America",
+   "destinationType": "Coastal city",
+   "recognition": "Known",
+   "bestFor": [
+    "art",
+    "architecture",
+    "food"
+   ],
+   "scope": "International",
+   "destinationId": "valparaiso-34950",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0083",
+   "exactMatch": "Buenos Aires, Argentina",
+   "destination": "Buenos Aires",
+   "stateProvince": null,
+   "country": "Argentina",
+   "region": "South America",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "nightlife",
+    "culture"
+   ],
+   "scope": "International",
+   "destinationId": "EZE",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0084",
+   "exactMatch": "Mendoza, Argentina",
+   "destination": "Mendoza",
+   "stateProvince": null,
+   "country": "Argentina",
+   "region": "South America",
+   "destinationType": "Wine region",
+   "recognition": "Known",
+   "bestFor": [
+    "wine",
+    "food",
+    "mountains"
+   ],
+   "scope": "International",
+   "destinationId": "mendoza-354bf",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0085",
+   "exactMatch": "El Chalten, Argentina",
+   "destination": "El Chalten",
+   "stateProvince": null,
+   "country": "Argentina",
+   "region": "South America",
+   "destinationType": "Mountain town",
+   "recognition": "Known",
+   "bestFor": [
+    "hiking",
+    "scenery",
+    "adventure"
+   ],
+   "scope": "International",
+   "destinationId": "el-chalten-354bf",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0086",
+   "exactMatch": "Iguazu Falls, Argentina and Brazil",
+   "destination": "Iguazu Falls",
+   "stateProvince": null,
+   "country": "Argentina and Brazil",
+   "region": "South America",
+   "destinationType": "Natural landmark",
+   "recognition": "Known",
+   "bestFor": [
+    "waterfalls",
+    "wildlife",
+    "sightseeing"
+   ],
+   "scope": "International",
+   "destinationId": "iguazu-falls-c213f",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0087",
+   "exactMatch": "Rio de Janeiro, Brazil",
+   "destination": "Rio de Janeiro",
+   "stateProvince": null,
+   "country": "Brazil",
+   "region": "South America",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "beaches",
+    "culture",
+    "scenery"
+   ],
+   "scope": "International",
+   "destinationId": "GIG",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0088",
+   "exactMatch": "Sao Paulo, Brazil",
+   "destination": "Sao Paulo",
+   "stateProvince": null,
+   "country": "Brazil",
+   "region": "South America",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "art",
+    "nightlife"
+   ],
+   "scope": "International",
+   "destinationId": "sao-paulo-37497",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0089",
+   "exactMatch": "Salvador, Brazil",
+   "destination": "Salvador",
+   "stateProvince": null,
+   "country": "Brazil",
+   "region": "South America",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "culture",
+    "music",
+    "food"
+   ],
+   "scope": "International",
+   "destinationId": "salvador-37497",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0090",
+   "exactMatch": "Lençóis Maranhenses National Park, Brazil",
+   "destination": "Lençóis Maranhenses National Park",
+   "stateProvince": null,
+   "country": "Brazil",
+   "region": "South America",
+   "destinationType": "National park",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "dunes",
+    "lagoons",
+    "photography"
+   ],
+   "scope": "International",
+   "destinationId": "lencois-maranhenses-national-park-37497",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0091",
+   "exactMatch": "Montevideo, Uruguay",
+   "destination": "Montevideo",
+   "stateProvince": null,
+   "country": "Uruguay",
+   "region": "South America",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "waterfront",
+    "culture"
+   ],
+   "scope": "International",
+   "destinationId": "montevideo-66b98",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0092",
+   "exactMatch": "Jose Ignacio, Uruguay",
+   "destination": "Jose Ignacio",
+   "stateProvince": null,
+   "country": "Uruguay",
+   "region": "South America",
+   "destinationType": "Coastal town",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "beaches",
+    "food",
+    "quiet"
+   ],
+   "scope": "International",
+   "destinationId": "jose-ignacio-66b98",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0093",
+   "exactMatch": "Paramaribo, Suriname",
+   "destination": "Paramaribo",
+   "stateProvince": null,
+   "country": "Suriname",
+   "region": "South America",
+   "destinationType": "City",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "architecture",
+    "food",
+    "culture"
+   ],
+   "scope": "International",
+   "destinationId": "paramaribo-b17fc",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0094",
+   "exactMatch": "Kaieteur Falls, Guyana",
+   "destination": "Kaieteur Falls",
+   "stateProvince": null,
+   "country": "Guyana",
+   "region": "South America",
+   "destinationType": "Natural landmark",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "waterfalls",
+    "wildlife",
+    "adventure"
+   ],
+   "scope": "International",
+   "destinationId": "kaieteur-falls-bc88a",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0095",
+   "exactMatch": "London, United Kingdom",
+   "destination": "London",
+   "stateProvince": null,
+   "country": "United Kingdom",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "culture",
+    "history",
+    "food"
+   ],
+   "scope": "International",
+   "destinationId": "LHR",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0096",
+   "exactMatch": "Edinburgh, United Kingdom",
+   "destination": "Edinburgh",
+   "stateProvince": null,
+   "country": "United Kingdom",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "festivals",
+    "food"
+   ],
+   "scope": "International",
+   "destinationId": "edinburgh-97691",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0097",
+   "exactMatch": "Isle of Skye, United Kingdom",
+   "destination": "Isle of Skye",
+   "stateProvince": null,
+   "country": "United Kingdom",
+   "region": "Europe",
+   "destinationType": "Island",
+   "recognition": "Known",
+   "bestFor": [
+    "hiking",
+    "scenery",
+    "road trip"
+   ],
+   "scope": "International",
+   "destinationId": "isle-of-skye-97691",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0098",
+   "exactMatch": "Bath, United Kingdom",
+   "destination": "Bath",
+   "stateProvince": null,
+   "country": "United Kingdom",
+   "region": "Europe",
+   "destinationType": "Historic city",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "architecture",
+    "wellness"
+   ],
+   "scope": "International",
+   "destinationId": "bath-97691",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0099",
+   "exactMatch": "Dublin, Ireland",
+   "destination": "Dublin",
+   "stateProvince": null,
+   "country": "Ireland",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "music",
+    "history",
+    "nightlife"
+   ],
+   "scope": "International",
+   "destinationId": "dublin-eb213",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0100",
+   "exactMatch": "Wild Atlantic Way, Ireland",
+   "destination": "Wild Atlantic Way",
+   "stateProvince": null,
+   "country": "Ireland",
+   "region": "Europe",
+   "destinationType": "Scenic route",
+   "recognition": "Known",
+   "bestFor": [
+    "road trip",
+    "coast",
+    "small towns"
+   ],
+   "scope": "International",
+   "destinationId": "wild-atlantic-way-eb213",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0101",
+   "exactMatch": "Paris, France",
+   "destination": "Paris",
+   "stateProvince": null,
+   "country": "France",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "art",
+    "food",
+    "romance"
+   ],
+   "scope": "International",
+   "destinationId": "CDG",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0102",
+   "exactMatch": "French Riviera, France",
+   "destination": "French Riviera",
+   "stateProvince": null,
+   "country": "France",
+   "region": "Europe",
+   "destinationType": "Coastal region",
+   "recognition": "Known",
+   "bestFor": [
+    "beaches",
+    "food",
+    "luxury"
+   ],
+   "scope": "International",
+   "destinationId": "nice-e3772",
+   "linkedBy": "manual"
+  },
+  {
+   "outcomeId": "GT-0103",
+   "exactMatch": "Alsace Wine Route, France",
+   "destination": "Alsace Wine Route",
+   "stateProvince": null,
+   "country": "France",
+   "region": "Europe",
+   "destinationType": "Wine region",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "wine",
+    "villages",
+    "road trip"
+   ],
+   "scope": "International",
+   "destinationId": "alsace-wine-route-e3772",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0104",
+   "exactMatch": "Annecy, France",
+   "destination": "Annecy",
+   "stateProvince": null,
+   "country": "France",
+   "region": "Europe",
+   "destinationType": "Lake town",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "lake",
+    "food",
+    "outdoors"
+   ],
+   "scope": "International",
+   "destinationId": "annecy-e3772",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0105",
+   "exactMatch": "Amsterdam, Netherlands",
+   "destination": "Amsterdam",
+   "stateProvince": null,
+   "country": "Netherlands",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "art",
+    "cycling",
+    "nightlife"
+   ],
+   "scope": "International",
+   "destinationId": "amsterdam-fb61c",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0106",
+   "exactMatch": "Rotterdam, Netherlands",
+   "destination": "Rotterdam",
+   "stateProvince": null,
+   "country": "Netherlands",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "design",
+    "architecture",
+    "food"
+   ],
+   "scope": "International",
+   "destinationId": "rotterdam-fb61c",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0107",
+   "exactMatch": "Bruges, Belgium",
+   "destination": "Bruges",
+   "stateProvince": null,
+   "country": "Belgium",
+   "region": "Europe",
+   "destinationType": "Historic city",
+   "recognition": "Known",
+   "bestFor": [
+    "architecture",
+    "food",
+    "romance"
+   ],
+   "scope": "International",
+   "destinationId": "bruges-5cb4c",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0108",
+   "exactMatch": "Berlin, Germany",
+   "destination": "Berlin",
+   "stateProvince": null,
+   "country": "Germany",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "art",
+    "nightlife"
+   ],
+   "scope": "International",
+   "destinationId": "berlin-17d53",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0109",
+   "exactMatch": "Munich, Germany",
+   "destination": "Munich",
+   "stateProvince": null,
+   "country": "Germany",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "culture",
+    "day trips"
+   ],
+   "scope": "International",
+   "destinationId": "munich-17d53",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0110",
+   "exactMatch": "Black Forest, Germany",
+   "destination": "Black Forest",
+   "stateProvince": null,
+   "country": "Germany",
+   "region": "Europe",
+   "destinationType": "Scenic region",
+   "recognition": "Known",
+   "bestFor": [
+    "hiking",
+    "villages",
+    "road trip"
+   ],
+   "scope": "International",
+   "destinationId": "black-forest-17d53",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0111",
+   "exactMatch": "Copenhagen, Denmark",
+   "destination": "Copenhagen",
+   "stateProvince": null,
+   "country": "Denmark",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "design",
+    "food",
+    "cycling"
+   ],
+   "scope": "International",
+   "destinationId": "copenhagen-89da1",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0112",
+   "exactMatch": "Stockholm, Sweden",
+   "destination": "Stockholm",
+   "stateProvince": null,
+   "country": "Sweden",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "design",
+    "food",
+    "islands"
+   ],
+   "scope": "International",
+   "destinationId": "stockholm-72ddd",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0113",
+   "exactMatch": "Lofoten Islands, Norway",
+   "destination": "Lofoten Islands",
+   "stateProvince": null,
+   "country": "Norway",
+   "region": "Europe",
+   "destinationType": "Island region",
+   "recognition": "Known",
+   "bestFor": [
+    "hiking",
+    "scenery",
+    "photography"
+   ],
+   "scope": "International",
+   "destinationId": "lofoten-98845",
+   "linkedBy": "manual"
+  },
+  {
+   "outcomeId": "GT-0114",
+   "exactMatch": "Faroe Islands, Faroe Islands",
+   "destination": "Faroe Islands",
+   "stateProvince": null,
+   "country": "Faroe Islands",
+   "region": "Europe",
+   "destinationType": "Island region",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "hiking",
+    "scenery",
+    "quiet"
+   ],
+   "scope": "International",
+   "destinationId": "faroe-islands-1082f",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0115",
+   "exactMatch": "Reykjavik and the South Coast, Iceland",
+   "destination": "Reykjavik and the South Coast",
+   "stateProvince": null,
+   "country": "Iceland",
+   "region": "Europe",
+   "destinationType": "Scenic region",
+   "recognition": "Known",
+   "bestFor": [
+    "waterfalls",
+    "hot springs",
+    "road trip"
+   ],
+   "scope": "International",
+   "destinationId": "reykjavik-b3c92",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0116",
+   "exactMatch": "Westfjords, Iceland",
+   "destination": "Westfjords",
+   "stateProvince": null,
+   "country": "Iceland",
+   "region": "Europe",
+   "destinationType": "Scenic region",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "wildlife",
+    "road trip",
+    "solitude"
+   ],
+   "scope": "International",
+   "destinationId": "westfjords-b3c92",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0117",
+   "exactMatch": "Helsinki, Finland",
+   "destination": "Helsinki",
+   "stateProvince": null,
+   "country": "Finland",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "design",
+    "food",
+    "saunas"
+   ],
+   "scope": "International",
+   "destinationId": "helsinki-c909b",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0118",
+   "exactMatch": "Tallinn, Estonia",
+   "destination": "Tallinn",
+   "stateProvince": null,
+   "country": "Estonia",
+   "region": "Europe",
+   "destinationType": "Historic city",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "food",
+    "design"
+   ],
+   "scope": "International",
+   "destinationId": "tallinn-f0a96",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0119",
+   "exactMatch": "Riga, Latvia",
+   "destination": "Riga",
+   "stateProvince": null,
+   "country": "Latvia",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "architecture",
+    "food",
+    "nightlife"
+   ],
+   "scope": "International",
+   "destinationId": "riga-c5f5b",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0120",
+   "exactMatch": "Vilnius, Lithuania",
+   "destination": "Vilnius",
+   "stateProvince": null,
+   "country": "Lithuania",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "history",
+    "food",
+    "arts"
+   ],
+   "scope": "International",
+   "destinationId": "vilnius-74a78",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0121",
+   "exactMatch": "Prague, Czechia",
+   "destination": "Prague",
+   "stateProvince": null,
+   "country": "Czechia",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "food",
+    "nightlife"
+   ],
+   "scope": "International",
+   "destinationId": "prague-1fef4",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0122",
+   "exactMatch": "Krakow, Poland",
+   "destination": "Krakow",
+   "stateProvince": null,
+   "country": "Poland",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "food",
+    "culture"
+   ],
+   "scope": "International",
+   "destinationId": "krakow-5ff03",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0123",
+   "exactMatch": "Wroclaw, Poland",
+   "destination": "Wroclaw",
+   "stateProvince": null,
+   "country": "Poland",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "architecture",
+    "food",
+    "weekend"
+   ],
+   "scope": "International",
+   "destinationId": "wroclaw-5ff03",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0124",
+   "exactMatch": "Budapest, Hungary",
+   "destination": "Budapest",
+   "stateProvince": null,
+   "country": "Hungary",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "baths",
+    "food",
+    "nightlife"
+   ],
+   "scope": "International",
+   "destinationId": "budapest-f14e4",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0125",
+   "exactMatch": "Vienna, Austria",
+   "destination": "Vienna",
+   "stateProvince": null,
+   "country": "Austria",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "music",
+    "art",
+    "food"
+   ],
+   "scope": "International",
+   "destinationId": "vienna-59390",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0126",
+   "exactMatch": "Salzburg, Austria",
+   "destination": "Salzburg",
+   "stateProvince": null,
+   "country": "Austria",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "music",
+    "history",
+    "mountains"
+   ],
+   "scope": "International",
+   "destinationId": "salzburg-59390",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0127",
+   "exactMatch": "Slovenian Alps and Lake Bled, Slovenia",
+   "destination": "Slovenian Alps and Lake Bled",
+   "stateProvince": null,
+   "country": "Slovenia",
+   "region": "Europe",
+   "destinationType": "Scenic region",
+   "recognition": "Known",
+   "bestFor": [
+    "hiking",
+    "lake",
+    "scenery"
+   ],
+   "scope": "International",
+   "destinationId": "bled-mtn",
+   "linkedBy": "manual"
+  },
+  {
+   "outcomeId": "GT-0128",
+   "exactMatch": "Ljubljana, Slovenia",
+   "destination": "Ljubljana",
+   "stateProvince": null,
+   "country": "Slovenia",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "food",
+    "design",
+    "day trips"
+   ],
+   "scope": "International",
+   "destinationId": "ljubljana-d1aa0",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0129",
+   "exactMatch": "Dubrovnik, Croatia",
+   "destination": "Dubrovnik",
+   "stateProvince": null,
+   "country": "Croatia",
+   "region": "Europe",
+   "destinationType": "Coastal city",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "coast",
+    "sightseeing"
+   ],
+   "scope": "International",
+   "destinationId": "dubrovnik-d7e04",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0130",
+   "exactMatch": "Split and Hvar, Croatia",
+   "destination": "Split and Hvar",
+   "stateProvince": null,
+   "country": "Croatia",
+   "region": "Europe",
+   "destinationType": "Coastal region",
+   "recognition": "Known",
+   "bestFor": [
+    "beaches",
+    "history",
+    "nightlife"
+   ],
+   "scope": "International",
+   "destinationId": "split-d7e04",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0131",
+   "exactMatch": "Kotor, Montenegro",
+   "destination": "Kotor",
+   "stateProvince": null,
+   "country": "Montenegro",
+   "region": "Europe",
+   "destinationType": "Coastal town",
+   "recognition": "Known",
+   "bestFor": [
+    "scenery",
+    "history",
+    "hiking"
+   ],
+   "scope": "International",
+   "destinationId": "kotor-479fb",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0132",
+   "exactMatch": "Sarajevo, Bosnia and Herzegovina",
+   "destination": "Sarajevo",
+   "stateProvince": null,
+   "country": "Bosnia and Herzegovina",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "history",
+    "food",
+    "culture"
+   ],
+   "scope": "International",
+   "destinationId": "sarajevo-62ac5",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0133",
+   "exactMatch": "Mostar, Bosnia and Herzegovina",
+   "destination": "Mostar",
+   "stateProvince": null,
+   "country": "Bosnia and Herzegovina",
+   "region": "Europe",
+   "destinationType": "Historic city",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "architecture",
+    "day trips"
+   ],
+   "scope": "International",
+   "destinationId": "mostar-62ac5",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0134",
+   "exactMatch": "Berat, Albania",
+   "destination": "Berat",
+   "stateProvince": null,
+   "country": "Albania",
+   "region": "Europe",
+   "destinationType": "Historic town",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "history",
+    "food",
+    "scenery"
+   ],
+   "scope": "International",
+   "destinationId": "berat-79b9d",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0135",
+   "exactMatch": "Athens, Greece",
+   "destination": "Athens",
+   "stateProvince": null,
+   "country": "Greece",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "food",
+    "nightlife"
+   ],
+   "scope": "International",
+   "destinationId": "athens-4902a",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0136",
+   "exactMatch": "Santorini, Greece",
+   "destination": "Santorini",
+   "stateProvince": null,
+   "country": "Greece",
+   "region": "Europe",
+   "destinationType": "Island",
+   "recognition": "Known",
+   "bestFor": [
+    "views",
+    "romance",
+    "food"
+   ],
+   "scope": "International",
+   "destinationId": "JTR",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0137",
+   "exactMatch": "Naxos, Greece",
+   "destination": "Naxos",
+   "stateProvince": null,
+   "country": "Greece",
+   "region": "Europe",
+   "destinationType": "Island",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "beaches",
+    "food",
+    "hiking"
+   ],
+   "scope": "International",
+   "destinationId": "naxos-4902a",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0138",
+   "exactMatch": "Rome, Italy",
+   "destination": "Rome",
+   "stateProvince": null,
+   "country": "Italy",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "food",
+    "art"
+   ],
+   "scope": "International",
+   "destinationId": "FCO",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0139",
+   "exactMatch": "Florence, Italy",
+   "destination": "Florence",
+   "stateProvince": null,
+   "country": "Italy",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "art",
+    "food",
+    "history"
+   ],
+   "scope": "International",
+   "destinationId": "FLR",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0140",
+   "exactMatch": "Venice, Italy",
+   "destination": "Venice",
+   "stateProvince": null,
+   "country": "Italy",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "architecture",
+    "romance",
+    "history"
+   ],
+   "scope": "International",
+   "destinationId": "venice-ad79e",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0141",
+   "exactMatch": "Dolomites, Italy",
+   "destination": "Dolomites",
+   "stateProvince": null,
+   "country": "Italy",
+   "region": "Europe",
+   "destinationType": "Mountain region",
+   "recognition": "Known",
+   "bestFor": [
+    "hiking",
+    "skiing",
+    "scenery"
+   ],
+   "scope": "International",
+   "destinationId": "dolomites-ad79e",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0142",
+   "exactMatch": "Puglia, Italy",
+   "destination": "Puglia",
+   "stateProvince": null,
+   "country": "Italy",
+   "region": "Europe",
+   "destinationType": "Coastal region",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "beaches",
+    "road trip"
+   ],
+   "scope": "International",
+   "destinationId": "puglia-ad79e",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0143",
+   "exactMatch": "Lisbon, Portugal",
+   "destination": "Lisbon",
+   "stateProvince": null,
+   "country": "Portugal",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "history",
+    "nightlife"
+   ],
+   "scope": "International",
+   "destinationId": "LIS",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0144",
+   "exactMatch": "Porto and the Douro Valley, Portugal",
+   "destination": "Porto and the Douro Valley",
+   "stateProvince": null,
+   "country": "Portugal",
+   "region": "Europe",
+   "destinationType": "Wine region",
+   "recognition": "Known",
+   "bestFor": [
+    "wine",
+    "food",
+    "scenery"
+   ],
+   "scope": "International",
+   "destinationId": "porto-a4951",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0145",
+   "exactMatch": "Madeira, Portugal",
+   "destination": "Madeira",
+   "stateProvince": null,
+   "country": "Portugal",
+   "region": "Europe",
+   "destinationType": "Island",
+   "recognition": "Known",
+   "bestFor": [
+    "hiking",
+    "scenery",
+    "food"
+   ],
+   "scope": "International",
+   "destinationId": "funchal-a4951",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0146",
+   "exactMatch": "Barcelona, Spain",
+   "destination": "Barcelona",
+   "stateProvince": null,
+   "country": "Spain",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "architecture",
+    "food",
+    "beaches"
+   ],
+   "scope": "International",
+   "destinationId": "BCN",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0147",
+   "exactMatch": "Madrid, Spain",
+   "destination": "Madrid",
+   "stateProvince": null,
+   "country": "Spain",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "art",
+    "food",
+    "nightlife"
+   ],
+   "scope": "International",
+   "destinationId": "madrid-20a8d",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0148",
+   "exactMatch": "Seville, Spain",
+   "destination": "Seville",
+   "stateProvince": null,
+   "country": "Spain",
+   "region": "Europe",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "food",
+    "music"
+   ],
+   "scope": "International",
+   "destinationId": "seville-20a8d",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0149",
+   "exactMatch": "San Sebastian, Spain",
+   "destination": "San Sebastian",
+   "stateProvince": null,
+   "country": "Spain",
+   "region": "Europe",
+   "destinationType": "Coastal city",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "beaches",
+    "culture"
+   ],
+   "scope": "International",
+   "destinationId": "san-sebastian-20a8d",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0150",
+   "exactMatch": "Mallorca, Spain",
+   "destination": "Mallorca",
+   "stateProvince": null,
+   "country": "Spain",
+   "region": "Europe",
+   "destinationType": "Island",
+   "recognition": "Known",
+   "bestFor": [
+    "beaches",
+    "cycling",
+    "food"
+   ],
+   "scope": "International",
+   "destinationId": "mallorca-20a8d",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0151",
+   "exactMatch": "Tbilisi, Georgia",
+   "destination": "Tbilisi",
+   "stateProvince": null,
+   "country": "Georgia",
+   "region": "Europe and Asia",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "wine",
+    "culture"
+   ],
+   "scope": "International",
+   "destinationId": "tbilisi-9113c",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0152",
+   "exactMatch": "Svaneti, Georgia",
+   "destination": "Svaneti",
+   "stateProvince": null,
+   "country": "Georgia",
+   "region": "Europe and Asia",
+   "destinationType": "Mountain region",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "hiking",
+    "culture",
+    "scenery"
+   ],
+   "scope": "International",
+   "destinationId": "mestia-9113c",
+   "linkedBy": "manual"
+  },
+  {
+   "outcomeId": "GT-0153",
+   "exactMatch": "Istanbul, Türkiye",
+   "destination": "Istanbul",
+   "stateProvince": null,
+   "country": "Türkiye",
+   "region": "Europe and Asia",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "history",
+    "culture"
+   ],
+   "scope": "International",
+   "destinationId": "istanbul-d7153",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0154",
+   "exactMatch": "Cappadocia, Türkiye",
+   "destination": "Cappadocia",
+   "stateProvince": null,
+   "country": "Türkiye",
+   "region": "Asia",
+   "destinationType": "Scenic region",
+   "recognition": "Known",
+   "bestFor": [
+    "balloons",
+    "hiking",
+    "history"
+   ],
+   "scope": "International",
+   "destinationId": "cappadocia-d7153",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0155",
+   "exactMatch": "Marrakech, Morocco",
+   "destination": "Marrakech",
+   "stateProvince": null,
+   "country": "Morocco",
+   "region": "Africa",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "markets",
+    "design"
+   ],
+   "scope": "International",
+   "destinationId": "RAK",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0156",
+   "exactMatch": "Fes, Morocco",
+   "destination": "Fes",
+   "stateProvince": null,
+   "country": "Morocco",
+   "region": "Africa",
+   "destinationType": "Historic city",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "crafts",
+    "food"
+   ],
+   "scope": "International",
+   "destinationId": "fes-32e08",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0157",
+   "exactMatch": "Chefchaouen, Morocco",
+   "destination": "Chefchaouen",
+   "stateProvince": null,
+   "country": "Morocco",
+   "region": "Africa",
+   "destinationType": "Small town",
+   "recognition": "Known",
+   "bestFor": [
+    "photography",
+    "hiking",
+    "culture"
+   ],
+   "scope": "International",
+   "destinationId": "chefchaouen-32e08",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0158",
+   "exactMatch": "Sahara Desert at Merzouga, Morocco",
+   "destination": "Sahara Desert at Merzouga",
+   "stateProvince": null,
+   "country": "Morocco",
+   "region": "Africa",
+   "destinationType": "Desert region",
+   "recognition": "Known",
+   "bestFor": [
+    "desert",
+    "camping",
+    "adventure"
+   ],
+   "scope": "International",
+   "destinationId": "sahara-desert-at-merzouga-32e08",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0159",
+   "exactMatch": "Cairo and Giza, Egypt",
+   "destination": "Cairo and Giza",
+   "stateProvince": null,
+   "country": "Egypt",
+   "region": "Africa",
+   "destinationType": "Metro area",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "museums",
+    "landmarks"
+   ],
+   "scope": "International",
+   "destinationId": "cairo-1c39a",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0160",
+   "exactMatch": "Luxor, Egypt",
+   "destination": "Luxor",
+   "stateProvince": null,
+   "country": "Egypt",
+   "region": "Africa",
+   "destinationType": "Historic city",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "archaeology",
+    "cruising"
+   ],
+   "scope": "International",
+   "destinationId": "luxor-1c39a",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0161",
+   "exactMatch": "Cape Town, South Africa",
+   "destination": "Cape Town",
+   "stateProvince": null,
+   "country": "South Africa",
+   "region": "Africa",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "scenery",
+    "beaches"
+   ],
+   "scope": "International",
+   "destinationId": "CPT",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0162",
+   "exactMatch": "Garden Route, South Africa",
+   "destination": "Garden Route",
+   "stateProvince": null,
+   "country": "South Africa",
+   "region": "Africa",
+   "destinationType": "Scenic route",
+   "recognition": "Known",
+   "bestFor": [
+    "road trip",
+    "wildlife",
+    "coast"
+   ],
+   "scope": "International",
+   "destinationId": "garden-route-35fda",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0163",
+   "exactMatch": "Kruger National Park, South Africa",
+   "destination": "Kruger National Park",
+   "stateProvince": null,
+   "country": "South Africa",
+   "region": "Africa",
+   "destinationType": "National park",
+   "recognition": "Known",
+   "bestFor": [
+    "safari",
+    "wildlife",
+    "photography"
+   ],
+   "scope": "International",
+   "destinationId": "kruger-national-park-35fda",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0164",
+   "exactMatch": "Namib Desert, Namibia",
+   "destination": "Namib Desert",
+   "stateProvince": null,
+   "country": "Namibia",
+   "region": "Africa",
+   "destinationType": "Desert region",
+   "recognition": "Known",
+   "bestFor": [
+    "dunes",
+    "wildlife",
+    "photography"
+   ],
+   "scope": "International",
+   "destinationId": "sossusvlei-bfe79",
+   "linkedBy": "manual"
+  },
+  {
+   "outcomeId": "GT-0165",
+   "exactMatch": "Okavango Delta, Botswana",
+   "destination": "Okavango Delta",
+   "stateProvince": null,
+   "country": "Botswana",
+   "region": "Africa",
+   "destinationType": "Wetland region",
+   "recognition": "Known",
+   "bestFor": [
+    "safari",
+    "wildlife",
+    "boating"
+   ],
+   "scope": "International",
+   "destinationId": "okavango-delta-180c8",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0166",
+   "exactMatch": "Victoria Falls, Zambia and Zimbabwe",
+   "destination": "Victoria Falls",
+   "stateProvince": null,
+   "country": "Zambia and Zimbabwe",
+   "region": "Africa",
+   "destinationType": "Natural landmark",
+   "recognition": "Known",
+   "bestFor": [
+    "waterfalls",
+    "adventure",
+    "wildlife"
+   ],
+   "scope": "International",
+   "destinationId": "victoria-falls-5922f",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0167",
+   "exactMatch": "Zanzibar, Tanzania",
+   "destination": "Zanzibar",
+   "stateProvince": null,
+   "country": "Tanzania",
+   "region": "Africa",
+   "destinationType": "Island",
+   "recognition": "Known",
+   "bestFor": [
+    "beaches",
+    "food",
+    "history"
+   ],
+   "scope": "International",
+   "destinationId": "zanzibar-city-7e380",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0168",
+   "exactMatch": "Serengeti National Park, Tanzania",
+   "destination": "Serengeti National Park",
+   "stateProvince": null,
+   "country": "Tanzania",
+   "region": "Africa",
+   "destinationType": "National park",
+   "recognition": "Known",
+   "bestFor": [
+    "safari",
+    "wildlife",
+    "photography"
+   ],
+   "scope": "International",
+   "destinationId": "serengeti-national-park-7e380",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0169",
+   "exactMatch": "Lamu, Kenya",
+   "destination": "Lamu",
+   "stateProvince": null,
+   "country": "Kenya",
+   "region": "Africa",
+   "destinationType": "Island town",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "history",
+    "beaches",
+    "culture"
+   ],
+   "scope": "International",
+   "destinationId": "lamu-a84f5",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0170",
+   "exactMatch": "Bwindi Impenetrable Forest, Uganda",
+   "destination": "Bwindi Impenetrable Forest",
+   "stateProvince": null,
+   "country": "Uganda",
+   "region": "Africa",
+   "destinationType": "National park",
+   "recognition": "Known",
+   "bestFor": [
+    "gorillas",
+    "hiking",
+    "wildlife"
+   ],
+   "scope": "International",
+   "destinationId": "bwindi-impenetrable-forest-e9290",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0171",
+   "exactMatch": "Kigali, Rwanda",
+   "destination": "Kigali",
+   "stateProvince": null,
+   "country": "Rwanda",
+   "region": "Africa",
+   "destinationType": "City",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "food",
+    "history",
+    "culture"
+   ],
+   "scope": "International",
+   "destinationId": "kigali-7266a",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0172",
+   "exactMatch": "Simien Mountains, Ethiopia",
+   "destination": "Simien Mountains",
+   "stateProvince": null,
+   "country": "Ethiopia",
+   "region": "Africa",
+   "destinationType": "National park",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "hiking",
+    "wildlife",
+    "scenery"
+   ],
+   "scope": "International",
+   "destinationId": "simien-mountains-3d91f",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0173",
+   "exactMatch": "Dakar, Senegal",
+   "destination": "Dakar",
+   "stateProvince": null,
+   "country": "Senegal",
+   "region": "Africa",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "music",
+    "food",
+    "art"
+   ],
+   "scope": "International",
+   "destinationId": "dakar-d8973",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0174",
+   "exactMatch": "Sao Tome, Sao Tome and Principe",
+   "destination": "Sao Tome",
+   "stateProvince": null,
+   "country": "Sao Tome and Principe",
+   "region": "Africa",
+   "destinationType": "Island",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "beaches",
+    "wildlife",
+    "quiet"
+   ],
+   "scope": "International",
+   "destinationId": "sao-tome-6ddcb",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0175",
+   "exactMatch": "Tokyo, Japan",
+   "destination": "Tokyo",
+   "stateProvince": null,
+   "country": "Japan",
+   "region": "Asia",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "culture",
+    "design"
+   ],
+   "scope": "International",
+   "destinationId": "HND",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0176",
+   "exactMatch": "Kyoto, Japan",
+   "destination": "Kyoto",
+   "stateProvince": null,
+   "country": "Japan",
+   "region": "Asia",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "food",
+    "gardens"
+   ],
+   "scope": "International",
+   "destinationId": "KIX",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0177",
+   "exactMatch": "Naoshima, Japan",
+   "destination": "Naoshima",
+   "stateProvince": null,
+   "country": "Japan",
+   "region": "Asia",
+   "destinationType": "Island",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "art",
+    "design",
+    "quiet"
+   ],
+   "scope": "International",
+   "destinationId": "naoshima-fcf29",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0178",
+   "exactMatch": "Hokkaido, Japan",
+   "destination": "Hokkaido",
+   "stateProvince": null,
+   "country": "Japan",
+   "region": "Asia",
+   "destinationType": "Island region",
+   "recognition": "Known",
+   "bestFor": [
+    "skiing",
+    "food",
+    "nature"
+   ],
+   "scope": "International",
+   "destinationId": "hokkaido-fcf29",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0179",
+   "exactMatch": "Seoul, South Korea",
+   "destination": "Seoul",
+   "stateProvince": null,
+   "country": "South Korea",
+   "region": "Asia",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "design",
+    "nightlife"
+   ],
+   "scope": "International",
+   "destinationId": "ICN",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0180",
+   "exactMatch": "Jeju Island, South Korea",
+   "destination": "Jeju Island",
+   "stateProvince": null,
+   "country": "South Korea",
+   "region": "Asia",
+   "destinationType": "Island",
+   "recognition": "Known",
+   "bestFor": [
+    "hiking",
+    "food",
+    "beaches"
+   ],
+   "scope": "International",
+   "destinationId": "jeju-island-04653",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0181",
+   "exactMatch": "Beijing, China",
+   "destination": "Beijing",
+   "stateProvince": null,
+   "country": "China",
+   "region": "Asia",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "food",
+    "landmarks"
+   ],
+   "scope": "International",
+   "destinationId": "beijing-d2eaf",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0182",
+   "exactMatch": "Shanghai, China",
+   "destination": "Shanghai",
+   "stateProvince": null,
+   "country": "China",
+   "region": "Asia",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "design",
+    "nightlife"
+   ],
+   "scope": "International",
+   "destinationId": "shanghai-d2eaf",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0183",
+   "exactMatch": "Guilin and Yangshuo, China",
+   "destination": "Guilin and Yangshuo",
+   "stateProvince": null,
+   "country": "China",
+   "region": "Asia",
+   "destinationType": "Scenic region",
+   "recognition": "Known",
+   "bestFor": [
+    "scenery",
+    "cycling",
+    "river"
+   ],
+   "scope": "International",
+   "destinationId": "guilin-and-yangshuo-d2eaf",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0184",
+   "exactMatch": "Taipei, Taiwan",
+   "destination": "Taipei",
+   "stateProvince": null,
+   "country": "Taiwan",
+   "region": "Asia",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "culture",
+    "hiking"
+   ],
+   "scope": "International",
+   "destinationId": "taipei-094d5",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0185",
+   "exactMatch": "Hanoi, Vietnam",
+   "destination": "Hanoi",
+   "stateProvince": null,
+   "country": "Vietnam",
+   "region": "Asia",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "history",
+    "street life"
+   ],
+   "scope": "International",
+   "destinationId": "HAN",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0186",
+   "exactMatch": "Ha Giang Loop, Vietnam",
+   "destination": "Ha Giang Loop",
+   "stateProvince": null,
+   "country": "Vietnam",
+   "region": "Asia",
+   "destinationType": "Scenic route",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "motorbike",
+    "scenery",
+    "culture"
+   ],
+   "scope": "International",
+   "destinationId": "ha-giang-loop-68110",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0187",
+   "exactMatch": "Hoi An, Vietnam",
+   "destination": "Hoi An",
+   "stateProvince": null,
+   "country": "Vietnam",
+   "region": "Asia",
+   "destinationType": "Historic town",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "history",
+    "beaches"
+   ],
+   "scope": "International",
+   "destinationId": "hoi-an-68110",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0188",
+   "exactMatch": "Bangkok, Thailand",
+   "destination": "Bangkok",
+   "stateProvince": null,
+   "country": "Thailand",
+   "region": "Asia",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "nightlife",
+    "culture"
+   ],
+   "scope": "International",
+   "destinationId": "BKK",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0189",
+   "exactMatch": "Chiang Mai, Thailand",
+   "destination": "Chiang Mai",
+   "stateProvince": null,
+   "country": "Thailand",
+   "region": "Asia",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "temples",
+    "mountains"
+   ],
+   "scope": "International",
+   "destinationId": "CNX",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0190",
+   "exactMatch": "Koh Lanta, Thailand",
+   "destination": "Koh Lanta",
+   "stateProvince": null,
+   "country": "Thailand",
+   "region": "Asia",
+   "destinationType": "Island",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "beaches",
+    "diving",
+    "quiet"
+   ],
+   "scope": "International",
+   "destinationId": "koh-lanta-a2b7c",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0191",
+   "exactMatch": "Luang Prabang, Laos",
+   "destination": "Luang Prabang",
+   "stateProvince": null,
+   "country": "Laos",
+   "region": "Asia",
+   "destinationType": "Historic city",
+   "recognition": "Known",
+   "bestFor": [
+    "culture",
+    "waterfalls",
+    "food"
+   ],
+   "scope": "International",
+   "destinationId": "luang-prabang-7998b",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0192",
+   "exactMatch": "Siem Reap and Angkor, Cambodia",
+   "destination": "Siem Reap and Angkor",
+   "stateProvince": null,
+   "country": "Cambodia",
+   "region": "Asia",
+   "destinationType": "Historic site",
+   "recognition": "Known",
+   "bestFor": [
+    "ruins",
+    "history",
+    "food"
+   ],
+   "scope": "International",
+   "destinationId": "siem-reap-314cc",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0193",
+   "exactMatch": "Singapore, Singapore",
+   "destination": "Singapore",
+   "stateProvince": null,
+   "country": "Singapore",
+   "region": "Asia",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "design",
+    "family"
+   ],
+   "scope": "International",
+   "destinationId": "SIN",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0194",
+   "exactMatch": "Kuala Lumpur, Malaysia",
+   "destination": "Kuala Lumpur",
+   "stateProvince": null,
+   "country": "Malaysia",
+   "region": "Asia",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "culture",
+    "architecture"
+   ],
+   "scope": "International",
+   "destinationId": "kuala-lumpur-ff3ea",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0195",
+   "exactMatch": "George Town, Penang, Malaysia",
+   "destination": "George Town, Penang",
+   "stateProvince": null,
+   "country": "Malaysia",
+   "region": "Asia",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "art",
+    "history"
+   ],
+   "scope": "International",
+   "destinationId": "george-town-ff3ea",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0196",
+   "exactMatch": "Borneo Rainforest, Malaysia and Indonesia",
+   "destination": "Borneo Rainforest",
+   "stateProvince": null,
+   "country": "Malaysia and Indonesia",
+   "region": "Asia",
+   "destinationType": "Forest region",
+   "recognition": "Known",
+   "bestFor": [
+    "wildlife",
+    "trekking",
+    "adventure"
+   ],
+   "scope": "International",
+   "destinationId": "borneo-rainforest-7c3c7",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0197",
+   "exactMatch": "Bali, Indonesia",
+   "destination": "Bali",
+   "stateProvince": null,
+   "country": "Indonesia",
+   "region": "Asia",
+   "destinationType": "Island",
+   "recognition": "Known",
+   "bestFor": [
+    "beaches",
+    "culture",
+    "wellness"
+   ],
+   "scope": "International",
+   "destinationId": "DPS",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0198",
+   "exactMatch": "Komodo National Park, Indonesia",
+   "destination": "Komodo National Park",
+   "stateProvince": null,
+   "country": "Indonesia",
+   "region": "Asia",
+   "destinationType": "National park",
+   "recognition": "Known",
+   "bestFor": [
+    "wildlife",
+    "diving",
+    "boating"
+   ],
+   "scope": "International",
+   "destinationId": "komodo-national-park-35536",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0199",
+   "exactMatch": "Yogyakarta, Indonesia",
+   "destination": "Yogyakarta",
+   "stateProvince": null,
+   "country": "Indonesia",
+   "region": "Asia",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "culture",
+    "food",
+    "temples"
+   ],
+   "scope": "International",
+   "destinationId": "yogyakarta-35536",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0200",
+   "exactMatch": "Manila, Philippines",
+   "destination": "Manila",
+   "stateProvince": null,
+   "country": "Philippines",
+   "region": "Asia",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "history",
+    "nightlife"
+   ],
+   "scope": "International",
+   "destinationId": "manila-80673",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0201",
+   "exactMatch": "Palawan, Philippines",
+   "destination": "Palawan",
+   "stateProvince": null,
+   "country": "Philippines",
+   "region": "Asia",
+   "destinationType": "Island region",
+   "recognition": "Known",
+   "bestFor": [
+    "beaches",
+    "diving",
+    "boating"
+   ],
+   "scope": "International",
+   "destinationId": "el-nido-80673",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0202",
+   "exactMatch": "Banaue Rice Terraces, Philippines",
+   "destination": "Banaue Rice Terraces",
+   "stateProvince": null,
+   "country": "Philippines",
+   "region": "Asia",
+   "destinationType": "Scenic region",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "hiking",
+    "culture",
+    "scenery"
+   ],
+   "scope": "International",
+   "destinationId": "banaue-rice-terraces-80673",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0203",
+   "exactMatch": "Kathmandu Valley, Nepal",
+   "destination": "Kathmandu Valley",
+   "stateProvince": null,
+   "country": "Nepal",
+   "region": "Asia",
+   "destinationType": "Historic region",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "food",
+    "gateway"
+   ],
+   "scope": "International",
+   "destinationId": "kathmandu-valley-0e1d5",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0204",
+   "exactMatch": "Annapurna Circuit, Nepal",
+   "destination": "Annapurna Circuit",
+   "stateProvince": null,
+   "country": "Nepal",
+   "region": "Asia",
+   "destinationType": "Trekking region",
+   "recognition": "Known",
+   "bestFor": [
+    "hiking",
+    "mountains",
+    "adventure"
+   ],
+   "scope": "International",
+   "destinationId": "annapurna-circuit-0e1d5",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0205",
+   "exactMatch": "Bhutan, Bhutan",
+   "destination": "Bhutan",
+   "stateProvince": null,
+   "country": "Bhutan",
+   "region": "Asia",
+   "destinationType": "Country journey",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "culture",
+    "hiking",
+    "mountains"
+   ],
+   "scope": "International",
+   "destinationId": "bhutan-bb225",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0206",
+   "exactMatch": "Delhi and Agra, India",
+   "destination": "Delhi and Agra",
+   "stateProvince": null,
+   "country": "India",
+   "region": "Asia",
+   "destinationType": "Historic region",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "food",
+    "landmarks"
+   ],
+   "scope": "International",
+   "destinationId": "delhi-967ce",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0207",
+   "exactMatch": "Rajasthan, India",
+   "destination": "Rajasthan",
+   "stateProvince": null,
+   "country": "India",
+   "region": "Asia",
+   "destinationType": "Cultural region",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "food",
+    "architecture"
+   ],
+   "scope": "International",
+   "destinationId": "rajasthan-967ce",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0208",
+   "exactMatch": "Kerala Backwaters, India",
+   "destination": "Kerala Backwaters",
+   "stateProvince": null,
+   "country": "India",
+   "region": "Asia",
+   "destinationType": "Scenic region",
+   "recognition": "Known",
+   "bestFor": [
+    "boating",
+    "food",
+    "wellness"
+   ],
+   "scope": "International",
+   "destinationId": "kerala-backwaters-967ce",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0209",
+   "exactMatch": "Varanasi, India",
+   "destination": "Varanasi",
+   "stateProvince": null,
+   "country": "India",
+   "region": "Asia",
+   "destinationType": "Historic city",
+   "recognition": "Known",
+   "bestFor": [
+    "culture",
+    "history",
+    "spirituality"
+   ],
+   "scope": "International",
+   "destinationId": "varanasi-967ce",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0210",
+   "exactMatch": "Sri Lanka Cultural Triangle, Sri Lanka",
+   "destination": "Sri Lanka Cultural Triangle",
+   "stateProvince": null,
+   "country": "Sri Lanka",
+   "region": "Asia",
+   "destinationType": "Historic region",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "wildlife",
+    "food"
+   ],
+   "scope": "International",
+   "destinationId": "sri-lanka-cultural-triangle-19704",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0211",
+   "exactMatch": "Maldives, Maldives",
+   "destination": "Maldives",
+   "stateProvince": null,
+   "country": "Maldives",
+   "region": "Asia",
+   "destinationType": "Island nation",
+   "recognition": "Known",
+   "bestFor": [
+    "beaches",
+    "diving",
+    "luxury"
+   ],
+   "scope": "International",
+   "destinationId": "MLE",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0212",
+   "exactMatch": "Samarkand, Uzbekistan",
+   "destination": "Samarkand",
+   "stateProvince": null,
+   "country": "Uzbekistan",
+   "region": "Asia",
+   "destinationType": "Historic city",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "architecture",
+    "food"
+   ],
+   "scope": "International",
+   "destinationId": "samarkand-db800",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0213",
+   "exactMatch": "Almaty and the Tian Shan, Kazakhstan",
+   "destination": "Almaty and the Tian Shan",
+   "stateProvince": null,
+   "country": "Kazakhstan",
+   "region": "Asia",
+   "destinationType": "Scenic region",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "hiking",
+    "food",
+    "mountains"
+   ],
+   "scope": "International",
+   "destinationId": "almaty-and-the-tian-shan-2f36b",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0214",
+   "exactMatch": "Kyrgyzstan's Song-Kol Lake, Kyrgyzstan",
+   "destination": "Kyrgyzstan's Song-Kol Lake",
+   "stateProvince": null,
+   "country": "Kyrgyzstan",
+   "region": "Asia",
+   "destinationType": "Lake region",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "horse trekking",
+    "culture",
+    "solitude"
+   ],
+   "scope": "International",
+   "destinationId": "kyrgyzstan-s-song-kol-lake-c7879",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0215",
+   "exactMatch": "Dubai, United Arab Emirates",
+   "destination": "Dubai",
+   "stateProvince": null,
+   "country": "United Arab Emirates",
+   "region": "Middle East",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "luxury",
+    "food",
+    "architecture"
+   ],
+   "scope": "International",
+   "destinationId": "DXB",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0216",
+   "exactMatch": "Muscat, Oman",
+   "destination": "Muscat",
+   "stateProvince": null,
+   "country": "Oman",
+   "region": "Middle East",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "culture",
+    "coast",
+    "food"
+   ],
+   "scope": "International",
+   "destinationId": "muscat-c14c3",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0217",
+   "exactMatch": "Wadi Shab, Oman",
+   "destination": "Wadi Shab",
+   "stateProvince": null,
+   "country": "Oman",
+   "region": "Middle East",
+   "destinationType": "Scenic region",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "hiking",
+    "swimming",
+    "scenery"
+   ],
+   "scope": "International",
+   "destinationId": "wadi-shab-c14c3",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0218",
+   "exactMatch": "Petra, Jordan",
+   "destination": "Petra",
+   "stateProvince": null,
+   "country": "Jordan",
+   "region": "Middle East",
+   "destinationType": "Historic site",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "hiking",
+    "architecture"
+   ],
+   "scope": "International",
+   "destinationId": "wadi-musa-67402",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0219",
+   "exactMatch": "Wadi Rum, Jordan",
+   "destination": "Wadi Rum",
+   "stateProvince": null,
+   "country": "Jordan",
+   "region": "Middle East",
+   "destinationType": "Desert region",
+   "recognition": "Known",
+   "bestFor": [
+    "desert",
+    "camping",
+    "adventure"
+   ],
+   "scope": "International",
+   "destinationId": "wadi-rum-67402",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0220",
+   "exactMatch": "Jerusalem, Israel",
+   "destination": "Jerusalem",
+   "stateProvince": null,
+   "country": "Israel",
+   "region": "Middle East",
+   "destinationType": "Historic city",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "culture",
+    "food"
+   ],
+   "scope": "International",
+   "destinationId": "jerusalem-4c197",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0221",
+   "exactMatch": "Beirut, Lebanon",
+   "destination": "Beirut",
+   "stateProvince": null,
+   "country": "Lebanon",
+   "region": "Middle East",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "nightlife",
+    "history"
+   ],
+   "scope": "International",
+   "destinationId": "beirut-5caa7",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0222",
+   "exactMatch": "AlUla, Saudi Arabia",
+   "destination": "AlUla",
+   "stateProvince": null,
+   "country": "Saudi Arabia",
+   "region": "Middle East",
+   "destinationType": "Historic region",
+   "recognition": "Known",
+   "bestFor": [
+    "history",
+    "desert",
+    "luxury"
+   ],
+   "scope": "International",
+   "destinationId": "alula-6f49c",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0223",
+   "exactMatch": "Sydney, Australia",
+   "destination": "Sydney",
+   "stateProvince": null,
+   "country": "Australia",
+   "region": "Oceania",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "beaches",
+    "food",
+    "landmarks"
+   ],
+   "scope": "International",
+   "destinationId": "SYD",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0224",
+   "exactMatch": "Melbourne, Australia",
+   "destination": "Melbourne",
+   "stateProvince": null,
+   "country": "Australia",
+   "region": "Oceania",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "art",
+    "sports"
+   ],
+   "scope": "International",
+   "destinationId": "melbourne-ceafb",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0225",
+   "exactMatch": "Great Barrier Reef, Australia",
+   "destination": "Great Barrier Reef",
+   "stateProvince": null,
+   "country": "Australia",
+   "region": "Oceania",
+   "destinationType": "Reef region",
+   "recognition": "Known",
+   "bestFor": [
+    "diving",
+    "wildlife",
+    "boating"
+   ],
+   "scope": "International",
+   "destinationId": "great-barrier-reef-ceafb",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0226",
+   "exactMatch": "Tasmania, Australia",
+   "destination": "Tasmania",
+   "stateProvince": null,
+   "country": "Australia",
+   "region": "Oceania",
+   "destinationType": "Island",
+   "recognition": "Known",
+   "bestFor": [
+    "hiking",
+    "food",
+    "wildlife"
+   ],
+   "scope": "International",
+   "destinationId": "tasmania-ceafb",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0227",
+   "exactMatch": "Uluru, Australia",
+   "destination": "Uluru",
+   "stateProvince": null,
+   "country": "Australia",
+   "region": "Oceania",
+   "destinationType": "Natural landmark",
+   "recognition": "Known",
+   "bestFor": [
+    "culture",
+    "desert",
+    "scenery"
+   ],
+   "scope": "International",
+   "destinationId": "uluru-ceafb",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0228",
+   "exactMatch": "Perth and Rottnest Island, Australia",
+   "destination": "Perth and Rottnest Island",
+   "stateProvince": null,
+   "country": "Australia",
+   "region": "Oceania",
+   "destinationType": "Coastal region",
+   "recognition": "Known",
+   "bestFor": [
+    "beaches",
+    "wildlife",
+    "food"
+   ],
+   "scope": "International",
+   "destinationId": "perth-and-rottnest-island-ceafb",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0229",
+   "exactMatch": "Auckland, New Zealand",
+   "destination": "Auckland",
+   "stateProvince": null,
+   "country": "New Zealand",
+   "region": "Oceania",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "islands",
+    "gateway"
+   ],
+   "scope": "International",
+   "destinationId": "auckland-a2238",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0230",
+   "exactMatch": "Queenstown, New Zealand",
+   "destination": "Queenstown",
+   "stateProvince": null,
+   "country": "New Zealand",
+   "region": "Oceania",
+   "destinationType": "Mountain town",
+   "recognition": "Known",
+   "bestFor": [
+    "adventure",
+    "skiing",
+    "scenery"
+   ],
+   "scope": "International",
+   "destinationId": "queenstown-a2238",
+   "linkedBy": "name_and_country"
+  },
+  {
+   "outcomeId": "GT-0231",
+   "exactMatch": "Fiordland National Park, New Zealand",
+   "destination": "Fiordland National Park",
+   "stateProvince": null,
+   "country": "New Zealand",
+   "region": "Oceania",
+   "destinationType": "National park",
+   "recognition": "Known",
+   "bestFor": [
+    "hiking",
+    "cruising",
+    "scenery"
+   ],
+   "scope": "International",
+   "destinationId": "fiordland-national-park-a2238",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0232",
+   "exactMatch": "Wellington, New Zealand",
+   "destination": "Wellington",
+   "stateProvince": null,
+   "country": "New Zealand",
+   "region": "Oceania",
+   "destinationType": "City",
+   "recognition": "Known",
+   "bestFor": [
+    "food",
+    "culture",
+    "film"
+   ],
+   "scope": "International",
+   "destinationId": "wellington-a2238",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0233",
+   "exactMatch": "Rarotonga, Cook Islands",
+   "destination": "Rarotonga",
+   "stateProvince": null,
+   "country": "Cook Islands",
+   "region": "Oceania",
+   "destinationType": "Island",
+   "recognition": "Known",
+   "bestFor": [
+    "beaches",
+    "hiking",
+    "lagoon"
+   ],
+   "scope": "International",
+   "destinationId": "rarotonga-4bacf",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0234",
+   "exactMatch": "Viti Levu, Fiji",
+   "destination": "Viti Levu",
+   "stateProvince": null,
+   "country": "Fiji",
+   "region": "Oceania",
+   "destinationType": "Island",
+   "recognition": "Known",
+   "bestFor": [
+    "beaches",
+    "culture",
+    "diving"
+   ],
+   "scope": "International",
+   "destinationId": "viti-levu-bbb7e",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0235",
+   "exactMatch": "Savai'i, Samoa",
+   "destination": "Savai'i",
+   "stateProvince": null,
+   "country": "Samoa",
+   "region": "Oceania",
+   "destinationType": "Island",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "beaches",
+    "culture",
+    "quiet"
+   ],
+   "scope": "International",
+   "destinationId": "savai-i-f5680",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0236",
+   "exactMatch": "Espiritu Santo, Vanuatu",
+   "destination": "Espiritu Santo",
+   "stateProvince": null,
+   "country": "Vanuatu",
+   "region": "Oceania",
+   "destinationType": "Island",
+   "recognition": "Hidden gem",
+   "bestFor": [
+    "diving",
+    "beaches",
+    "adventure"
+   ],
+   "scope": "International",
+   "destinationId": "espiritu-santo-d16ad",
+   "linkedBy": "master_list_record"
+  },
+  {
+   "outcomeId": "GT-0237",
+   "exactMatch": "Palau, Palau",
+   "destination": "Palau",
+   "stateProvince": null,
+   "country": "Palau",
+   "region": "Oceania",
+   "destinationType": "Island nation",
+   "recognition": "Known",
+   "bestFor": [
+    "diving",
+    "wildlife",
+    "boating"
+   ],
+   "scope": "International",
+   "destinationId": "palau-e5e0b",
+   "linkedBy": "master_list_record"
+  }
+ ]
+}

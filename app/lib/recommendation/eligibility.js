@@ -52,7 +52,7 @@ const CHECKS = [
   ["flight estimate support", (d) => (d.latitude != null && d.longitude != null && Number.isFinite(Number(d.latitude)) && Number.isFinite(Number(d.longitude))) || LAUNCH_SET.includes(d.id)],
   [`${MIN_STAYS}+ accommodation options`, (d) => stayCount(d.id) >= MIN_STAYS],
   [`${MIN_ACTIVITIES}+ activities`, (d) => activityCount(d.id) >= MIN_ACTIVITIES],
-  ["destination-specific daily costs", (d) => ["city", "local_prices"].includes(d.planningAverages?.model)],
+  ["destination-specific daily costs", (d) => ["city", "local_prices", "price_band"].includes(d.planningAverages?.model)],
   ["data timestamp", (d) => Boolean(d.budgetEditorial?.reviewed || d.dataReviewed || d.dataCheckedAt)],
   ["fact source", (d) => Boolean(d.verificationSource || d.factSource || d.budgetEditorial?.sources?.length || LAUNCH_SET.includes(d.id))],
   ["entry and advisory links", (d) => Boolean(travelInfoFor(d.country))],

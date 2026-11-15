@@ -1,0 +1,3061 @@
+[
+  {
+    "outcomeId": "GT-0001",
+    "exactMatch": "Oregon Coast, Oregon",
+    "name": "Oregon Coast",
+    "country": "United States",
+    "region": "Oregon",
+    "destinationType": "Coastal region",
+    "nearestAirport": "PDX",
+    "wikiTitle": "Oregon Coast",
+    "interestTags": [
+      "coast",
+      "nature",
+      "food"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Oregon Coast"
+    ],
+    "searchTerms": [
+      "Oregon Coast",
+      "Oregon",
+      "United States"
+    ]
+  },
+  {
+    "outcomeId": "GT-0007",
+    "exactMatch": "Denali National Park, Alaska",
+    "name": "Denali National Park",
+    "country": "United States",
+    "region": "Alaska",
+    "destinationType": "National park",
+    "nearestAirport": "FAI",
+    "wikiTitle": "Denali National Park and Preserve",
+    "interestTags": [
+      "nature",
+      "mountains",
+      "wildlife",
+      "hiking"
+    ],
+    "knownnessScore": 70,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Denali National Park",
+      "Denali National Park and Preserve"
+    ],
+    "searchTerms": [
+      "Denali National Park",
+      "Alaska",
+      "United States"
+    ]
+  },
+  {
+    "outcomeId": "GT-0009",
+    "exactMatch": "Zion National Park, Utah",
+    "name": "Zion National Park",
+    "country": "United States",
+    "region": "Utah",
+    "destinationType": "National park",
+    "nearestAirport": "LAS",
+    "wikiTitle": "Zion National Park",
+    "interestTags": [
+      "nature",
+      "hiking",
+      "mountains",
+      "adventure"
+    ],
+    "knownnessScore": 85,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Zion National Park"
+    ],
+    "searchTerms": [
+      "Zion National Park",
+      "Utah",
+      "United States"
+    ]
+  },
+  {
+    "outcomeId": "GT-0010",
+    "exactMatch": "Rocky Mountain National Park, Colorado",
+    "name": "Rocky Mountain National Park",
+    "country": "United States",
+    "region": "Colorado",
+    "destinationType": "National park",
+    "nearestAirport": "DEN",
+    "wikiTitle": "Rocky Mountain National Park",
+    "interestTags": [
+      "nature",
+      "hiking",
+      "mountains",
+      "wildlife"
+    ],
+    "knownnessScore": 75,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Rocky Mountain National Park"
+    ],
+    "searchTerms": [
+      "Rocky Mountain National Park",
+      "Colorado",
+      "United States"
+    ]
+  },
+  {
+    "outcomeId": "GT-0011",
+    "exactMatch": "Yellowstone National Park, Wyoming",
+    "name": "Yellowstone National Park",
+    "country": "United States",
+    "region": "Wyoming",
+    "destinationType": "National park",
+    "nearestAirport": "BZN",
+    "wikiTitle": "Yellowstone National Park",
+    "interestTags": [
+      "nature",
+      "wildlife",
+      "hiking"
+    ],
+    "knownnessScore": 92,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Yellowstone National Park"
+    ],
+    "searchTerms": [
+      "Yellowstone National Park",
+      "Wyoming",
+      "United States"
+    ]
+  },
+  {
+    "outcomeId": "GT-0012",
+    "exactMatch": "Glacier National Park, Montana",
+    "name": "Glacier National Park",
+    "country": "United States",
+    "region": "Montana",
+    "destinationType": "National park",
+    "nearestAirport": "FCA",
+    "wikiTitle": "Glacier National Park (U.S.)",
+    "interestTags": [
+      "nature",
+      "hiking",
+      "mountains",
+      "lakes"
+    ],
+    "knownnessScore": 78,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Glacier National Park",
+      "Glacier National Park (U.S.)"
+    ],
+    "searchTerms": [
+      "Glacier National Park",
+      "Montana",
+      "United States"
+    ]
+  },
+  {
+    "outcomeId": "GT-0019",
+    "exactMatch": "Acadia National Park, Maine",
+    "name": "Acadia National Park",
+    "country": "United States",
+    "region": "Maine",
+    "destinationType": "National park",
+    "nearestAirport": "BGR",
+    "wikiTitle": "Acadia National Park",
+    "interestTags": [
+      "nature",
+      "coast",
+      "hiking"
+    ],
+    "knownnessScore": 65,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Acadia National Park"
+    ],
+    "searchTerms": [
+      "Acadia National Park",
+      "Maine",
+      "United States"
+    ]
+  },
+  {
+    "outcomeId": "GT-0022",
+    "exactMatch": "Asheville, North Carolina",
+    "name": "Asheville",
+    "country": "United States",
+    "region": "North Carolina",
+    "destinationType": "Small city",
+    "nearestAirport": "AVL",
+    "wikiTitle": "Asheville, North Carolina",
+    "interestTags": [
+      "food",
+      "mountains",
+      "art",
+      "music"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Asheville",
+      "Asheville, North Carolina"
+    ],
+    "searchTerms": [
+      "Asheville",
+      "North Carolina",
+      "United States"
+    ]
+  },
+  {
+    "outcomeId": "GT-0023",
+    "exactMatch": "Mackinac Island, Michigan",
+    "name": "Mackinac Island",
+    "country": "United States",
+    "region": "Michigan",
+    "destinationType": "Island",
+    "nearestAirport": "PLN",
+    "wikiTitle": "Mackinac Island",
+    "interestTags": [
+      "history",
+      "nature",
+      "family"
+    ],
+    "knownnessScore": 40,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Mackinac Island"
+    ],
+    "searchTerms": [
+      "Mackinac Island",
+      "Michigan",
+      "United States"
+    ]
+  },
+  {
+    "outcomeId": "GT-0024",
+    "exactMatch": "Philadelphia, Pennsylvania",
+    "name": "Philadelphia",
+    "country": "United States",
+    "region": "Pennsylvania",
+    "destinationType": "City",
+    "nearestAirport": "PHL",
+    "wikiTitle": "Philadelphia",
+    "interestTags": [
+      "history",
+      "food",
+      "culture",
+      "city"
+    ],
+    "knownnessScore": 80,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Philadelphia"
+    ],
+    "searchTerms": [
+      "Philadelphia",
+      "Pennsylvania",
+      "United States"
+    ]
+  },
+  {
+    "outcomeId": "GT-0026",
+    "exactMatch": "Sun Valley, Idaho",
+    "name": "Sun Valley",
+    "country": "United States",
+    "region": "Idaho",
+    "destinationType": "Mountain town",
+    "nearestAirport": "SUN",
+    "wikiTitle": "Sun Valley, Idaho",
+    "interestTags": [
+      "mountains",
+      "winter",
+      "hiking",
+      "luxury"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Sun Valley",
+      "Sun Valley, Idaho"
+    ],
+    "searchTerms": [
+      "Sun Valley",
+      "Idaho",
+      "United States"
+    ]
+  },
+  {
+    "outcomeId": "GT-0029",
+    "exactMatch": "Tofino, Canada",
+    "name": "Tofino",
+    "country": "Canada",
+    "region": "North America",
+    "destinationType": "Coastal town",
+    "nearestAirport": "YVR",
+    "wikiTitle": "Tofino",
+    "interestTags": [
+      "coast",
+      "nature",
+      "adventure",
+      "wellness"
+    ],
+    "knownnessScore": 40,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Tofino"
+    ],
+    "searchTerms": [
+      "Tofino",
+      "Canada"
+    ]
+  },
+  {
+    "outcomeId": "GT-0031",
+    "exactMatch": "Jasper National Park, Canada",
+    "name": "Jasper National Park",
+    "country": "Canada",
+    "region": "North America",
+    "destinationType": "National park",
+    "nearestAirport": "YEG",
+    "wikiTitle": "Jasper National Park",
+    "interestTags": [
+      "nature",
+      "mountains",
+      "wildlife",
+      "hiking"
+    ],
+    "knownnessScore": 60,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Jasper National Park"
+    ],
+    "searchTerms": [
+      "Jasper National Park",
+      "Canada"
+    ]
+  },
+  {
+    "outcomeId": "GT-0035",
+    "exactMatch": "Fogo Island, Canada",
+    "name": "Fogo Island",
+    "country": "Canada",
+    "region": "North America",
+    "destinationType": "Island",
+    "nearestAirport": "YQX",
+    "wikiTitle": "Fogo Island, Newfoundland and Labrador",
+    "interestTags": [
+      "nature",
+      "coast",
+      "design",
+      "luxury"
+    ],
+    "knownnessScore": 15,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "solo"
+    ],
+    "aliases": [
+      "Fogo Island",
+      "Fogo Island, Newfoundland and Labrador"
+    ],
+    "searchTerms": [
+      "Fogo Island",
+      "Canada"
+    ]
+  },
+  {
+    "outcomeId": "GT-0036",
+    "exactMatch": "Gros Morne National Park, Canada",
+    "name": "Gros Morne National Park",
+    "country": "Canada",
+    "region": "North America",
+    "destinationType": "National park",
+    "nearestAirport": "YDF",
+    "wikiTitle": "Gros Morne National Park",
+    "interestTags": [
+      "nature",
+      "hiking",
+      "coast"
+    ],
+    "knownnessScore": 25,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Gros Morne National Park"
+    ],
+    "searchTerms": [
+      "Gros Morne National Park",
+      "Canada"
+    ]
+  },
+  {
+    "outcomeId": "GT-0042",
+    "exactMatch": "Isla Holbox, Mexico",
+    "name": "Isla Holbox",
+    "country": "Mexico",
+    "region": "North America",
+    "destinationType": "Island",
+    "nearestAirport": "CUN",
+    "wikiTitle": "Isla Holbox",
+    "interestTags": [
+      "beaches",
+      "wildlife",
+      "relaxation"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Isla Holbox"
+    ],
+    "searchTerms": [
+      "Isla Holbox",
+      "Mexico"
+    ]
+  },
+  {
+    "outcomeId": "GT-0043",
+    "exactMatch": "Guanajuato, Mexico",
+    "name": "Guanajuato",
+    "country": "Mexico",
+    "region": "North America",
+    "destinationType": "City",
+    "nearestAirport": "BJX",
+    "wikiTitle": "Guanajuato (city)",
+    "interestTags": [
+      "culture",
+      "architecture",
+      "history",
+      "art"
+    ],
+    "knownnessScore": 40,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Guanajuato",
+      "Guanajuato (city)"
+    ],
+    "searchTerms": [
+      "Guanajuato",
+      "Mexico"
+    ]
+  },
+  {
+    "outcomeId": "GT-0044",
+    "exactMatch": "Copper Canyon, Mexico",
+    "name": "Copper Canyon",
+    "country": "Mexico",
+    "region": "North America",
+    "destinationType": "Scenic region",
+    "nearestAirport": "CUU",
+    "wikiTitle": "Copper Canyon",
+    "interestTags": [
+      "nature",
+      "adventure",
+      "hiking"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Copper Canyon"
+    ],
+    "searchTerms": [
+      "Copper Canyon",
+      "Mexico"
+    ]
+  },
+  {
+    "outcomeId": "GT-0045",
+    "exactMatch": "Bacalar, Mexico",
+    "name": "Bacalar",
+    "country": "Mexico",
+    "region": "North America",
+    "destinationType": "Lake town",
+    "nearestAirport": "CTM",
+    "wikiTitle": "Bacalar",
+    "interestTags": [
+      "lakes",
+      "water",
+      "relaxation",
+      "nature"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Bacalar"
+    ],
+    "searchTerms": [
+      "Bacalar",
+      "Mexico"
+    ]
+  },
+  {
+    "outcomeId": "GT-0046",
+    "exactMatch": "Todos Santos, Mexico",
+    "name": "Todos Santos",
+    "country": "Mexico",
+    "region": "North America",
+    "destinationType": "Small town",
+    "nearestAirport": "SJD",
+    "wikiTitle": "Todos Santos, Baja California Sur",
+    "interestTags": [
+      "beaches",
+      "art",
+      "food"
+    ],
+    "knownnessScore": 30,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Todos Santos",
+      "Todos Santos, Baja California Sur"
+    ],
+    "searchTerms": [
+      "Todos Santos",
+      "Mexico"
+    ]
+  },
+  {
+    "outcomeId": "GT-0048",
+    "exactMatch": "Lake Atitlan, Guatemala",
+    "name": "Lake Atitlan",
+    "country": "Guatemala",
+    "region": "Central America",
+    "destinationType": "Lake region",
+    "nearestAirport": "GUA",
+    "wikiTitle": "Lake Atitlán",
+    "interestTags": [
+      "lakes",
+      "culture",
+      "nature",
+      "hiking"
+    ],
+    "knownnessScore": 50,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Lake Atitlan",
+      "Lake Atitlán"
+    ],
+    "searchTerms": [
+      "Lake Atitlan",
+      "Guatemala"
+    ]
+  },
+  {
+    "outcomeId": "GT-0049",
+    "exactMatch": "Tikal, Guatemala",
+    "name": "Tikal",
+    "country": "Guatemala",
+    "region": "Central America",
+    "destinationType": "Historic site",
+    "nearestAirport": "FRS",
+    "wikiTitle": "Tikal",
+    "interestTags": [
+      "history",
+      "nature",
+      "wildlife"
+    ],
+    "knownnessScore": 60,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Tikal"
+    ],
+    "searchTerms": [
+      "Tikal",
+      "Guatemala"
+    ]
+  },
+  {
+    "outcomeId": "GT-0050",
+    "exactMatch": "Caye Caulker, Belize",
+    "name": "Caye Caulker",
+    "country": "Belize",
+    "region": "Central America",
+    "destinationType": "Island",
+    "nearestAirport": "BZE",
+    "wikiTitle": "Caye Caulker",
+    "interestTags": [
+      "beaches",
+      "diving",
+      "relaxation"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Caye Caulker"
+    ],
+    "searchTerms": [
+      "Caye Caulker",
+      "Belize"
+    ]
+  },
+  {
+    "outcomeId": "GT-0051",
+    "exactMatch": "San Ignacio, Belize",
+    "name": "San Ignacio",
+    "country": "Belize",
+    "region": "Central America",
+    "destinationType": "Small town",
+    "nearestAirport": "BZE",
+    "wikiTitle": "San Ignacio, Belize",
+    "interestTags": [
+      "adventure",
+      "history",
+      "nature"
+    ],
+    "knownnessScore": 25,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "San Ignacio",
+      "San Ignacio, Belize"
+    ],
+    "searchTerms": [
+      "San Ignacio",
+      "Belize"
+    ]
+  },
+  {
+    "outcomeId": "GT-0052",
+    "exactMatch": "Arenal and La Fortuna, Costa Rica",
+    "name": "Arenal and La Fortuna",
+    "country": "Costa Rica",
+    "region": "Central America",
+    "destinationType": "Scenic region",
+    "nearestAirport": "SJO",
+    "wikiTitle": "Arenal Volcano",
+    "interestTags": [
+      "nature",
+      "adventure",
+      "wellness"
+    ],
+    "knownnessScore": 70,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Arenal and La Fortuna",
+      "Arenal Volcano"
+    ],
+    "searchTerms": [
+      "Arenal and La Fortuna",
+      "Costa Rica"
+    ]
+  },
+  {
+    "outcomeId": "GT-0053",
+    "exactMatch": "Monteverde, Costa Rica",
+    "name": "Monteverde",
+    "country": "Costa Rica",
+    "region": "Central America",
+    "destinationType": "Forest region",
+    "nearestAirport": "SJO",
+    "wikiTitle": "Monteverde",
+    "interestTags": [
+      "nature",
+      "wildlife",
+      "hiking"
+    ],
+    "knownnessScore": 60,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Monteverde"
+    ],
+    "searchTerms": [
+      "Monteverde",
+      "Costa Rica"
+    ]
+  },
+  {
+    "outcomeId": "GT-0054",
+    "exactMatch": "Osa Peninsula, Costa Rica",
+    "name": "Osa Peninsula",
+    "country": "Costa Rica",
+    "region": "Central America",
+    "destinationType": "Scenic region",
+    "nearestAirport": "SJO",
+    "wikiTitle": "Osa Peninsula",
+    "interestTags": [
+      "wildlife",
+      "nature",
+      "beaches",
+      "adventure"
+    ],
+    "knownnessScore": 30,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Osa Peninsula"
+    ],
+    "searchTerms": [
+      "Osa Peninsula",
+      "Costa Rica"
+    ]
+  },
+  {
+    "outcomeId": "GT-0056",
+    "exactMatch": "Bocas del Toro, Panama",
+    "name": "Bocas del Toro",
+    "country": "Panama",
+    "region": "Central America",
+    "destinationType": "Island region",
+    "nearestAirport": "BOC",
+    "wikiTitle": "Bocas del Toro Archipelago",
+    "interestTags": [
+      "beaches",
+      "diving",
+      "nightlife"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Bocas del Toro",
+      "Bocas del Toro Archipelago"
+    ],
+    "searchTerms": [
+      "Bocas del Toro",
+      "Panama"
+    ]
+  },
+  {
+    "outcomeId": "GT-0058",
+    "exactMatch": "Trinidad, Cuba",
+    "name": "Trinidad",
+    "country": "Cuba",
+    "region": "Caribbean",
+    "destinationType": "Historic town",
+    "nearestAirport": "HAV",
+    "wikiTitle": "Trinidad, Cuba",
+    "interestTags": [
+      "history",
+      "culture",
+      "music",
+      "architecture"
+    ],
+    "knownnessScore": 40,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Trinidad",
+      "Trinidad, Cuba"
+    ],
+    "searchTerms": [
+      "Trinidad",
+      "Cuba"
+    ]
+  },
+  {
+    "outcomeId": "GT-0060",
+    "exactMatch": "Vieques, Puerto Rico",
+    "name": "Vieques",
+    "country": "Puerto Rico",
+    "region": "Caribbean",
+    "destinationType": "Island",
+    "nearestAirport": "SJU",
+    "wikiTitle": "Vieques, Puerto Rico",
+    "interestTags": [
+      "beaches",
+      "nature",
+      "relaxation"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Vieques",
+      "Vieques, Puerto Rico"
+    ],
+    "searchTerms": [
+      "Vieques",
+      "Puerto Rico"
+    ]
+  },
+  {
+    "outcomeId": "GT-0062",
+    "exactMatch": "Samana Peninsula, Dominican Republic",
+    "name": "Samana Peninsula",
+    "country": "Dominican Republic",
+    "region": "Caribbean",
+    "destinationType": "Coastal region",
+    "nearestAirport": "AZS",
+    "wikiTitle": "Samaná Peninsula",
+    "interestTags": [
+      "beaches",
+      "nature"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Samana Peninsula",
+      "Samaná Peninsula"
+    ],
+    "searchTerms": [
+      "Samana Peninsula",
+      "Dominican Republic"
+    ]
+  },
+  {
+    "outcomeId": "GT-0063",
+    "exactMatch": "Kingston, Jamaica",
+    "name": "Kingston",
+    "country": "Jamaica",
+    "region": "Caribbean",
+    "destinationType": "City",
+    "nearestAirport": "KIN",
+    "wikiTitle": "Kingston, Jamaica",
+    "interestTags": [
+      "music",
+      "culture",
+      "food"
+    ],
+    "knownnessScore": 50,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Kingston",
+      "Kingston, Jamaica"
+    ],
+    "searchTerms": [
+      "Kingston",
+      "Jamaica"
+    ]
+  },
+  {
+    "outcomeId": "GT-0064",
+    "exactMatch": "Port Antonio, Jamaica",
+    "name": "Port Antonio",
+    "country": "Jamaica",
+    "region": "Caribbean",
+    "destinationType": "Coastal town",
+    "nearestAirport": "KIN",
+    "wikiTitle": "Port Antonio",
+    "interestTags": [
+      "beaches",
+      "nature",
+      "relaxation"
+    ],
+    "knownnessScore": 25,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Port Antonio"
+    ],
+    "searchTerms": [
+      "Port Antonio",
+      "Jamaica"
+    ]
+  },
+  {
+    "outcomeId": "GT-0066",
+    "exactMatch": "Dominica, Dominica",
+    "name": "Dominica",
+    "country": "Dominica",
+    "region": "Caribbean",
+    "destinationType": "Island",
+    "nearestAirport": "DOM",
+    "wikiTitle": "Dominica",
+    "interestTags": [
+      "nature",
+      "hiking",
+      "diving",
+      "adventure"
+    ],
+    "knownnessScore": 25,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Dominica"
+    ],
+    "searchTerms": [
+      "Dominica",
+      "Dominica"
+    ]
+  },
+  {
+    "outcomeId": "GT-0069",
+    "exactMatch": "Salento and Cocora Valley, Colombia",
+    "name": "Salento and Cocora Valley",
+    "country": "Colombia",
+    "region": "South America",
+    "destinationType": "Scenic region",
+    "nearestAirport": "PEI",
+    "wikiTitle": "Salento, Quindío",
+    "interestTags": [
+      "nature",
+      "hiking",
+      "food"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Salento and Cocora Valley",
+      "Salento, Quindío"
+    ],
+    "searchTerms": [
+      "Salento and Cocora Valley",
+      "Colombia"
+    ]
+  },
+  {
+    "outcomeId": "GT-0072",
+    "exactMatch": "Cuenca, Ecuador",
+    "name": "Cuenca",
+    "country": "Ecuador",
+    "region": "South America",
+    "destinationType": "City",
+    "nearestAirport": "CUE",
+    "wikiTitle": "Cuenca, Ecuador",
+    "interestTags": [
+      "architecture",
+      "culture",
+      "history"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Cuenca",
+      "Cuenca, Ecuador"
+    ],
+    "searchTerms": [
+      "Cuenca",
+      "Ecuador"
+    ]
+  },
+  {
+    "outcomeId": "GT-0075",
+    "exactMatch": "Machu Picchu, Peru",
+    "name": "Machu Picchu",
+    "country": "Peru",
+    "region": "South America",
+    "destinationType": "Historic site",
+    "nearestAirport": "CUZ",
+    "wikiTitle": "Machu Picchu",
+    "interestTags": [
+      "history",
+      "hiking",
+      "mountains"
+    ],
+    "knownnessScore": 95,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Machu Picchu"
+    ],
+    "searchTerms": [
+      "Machu Picchu",
+      "Peru"
+    ]
+  },
+  {
+    "outcomeId": "GT-0081",
+    "exactMatch": "Torres del Paine National Park, Chile",
+    "name": "Torres del Paine National Park",
+    "country": "Chile",
+    "region": "South America",
+    "destinationType": "National park",
+    "nearestAirport": "PUQ",
+    "wikiTitle": "Torres del Paine National Park",
+    "interestTags": [
+      "hiking",
+      "mountains",
+      "nature",
+      "adventure"
+    ],
+    "knownnessScore": 70,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Torres del Paine National Park"
+    ],
+    "searchTerms": [
+      "Torres del Paine National Park",
+      "Chile"
+    ]
+  },
+  {
+    "outcomeId": "GT-0085",
+    "exactMatch": "El Chalten, Argentina",
+    "name": "El Chalten",
+    "country": "Argentina",
+    "region": "South America",
+    "destinationType": "Mountain town",
+    "nearestAirport": "FTE",
+    "wikiTitle": "El Chaltén",
+    "interestTags": [
+      "hiking",
+      "mountains",
+      "adventure"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "El Chalten",
+      "El Chaltén"
+    ],
+    "searchTerms": [
+      "El Chalten",
+      "Argentina"
+    ]
+  },
+  {
+    "outcomeId": "GT-0086",
+    "exactMatch": "Iguazu Falls, Argentina and Brazil",
+    "name": "Iguazu Falls",
+    "country": "Argentina and Brazil",
+    "region": "South America",
+    "destinationType": "Natural landmark",
+    "nearestAirport": "IGR",
+    "wikiTitle": "Iguazu Falls",
+    "interestTags": [
+      "nature",
+      "water",
+      "adventure"
+    ],
+    "knownnessScore": 85,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Iguazu Falls"
+    ],
+    "searchTerms": [
+      "Iguazu Falls",
+      "Argentina and Brazil"
+    ]
+  },
+  {
+    "outcomeId": "GT-0090",
+    "exactMatch": "Lençóis Maranhenses National Park, Brazil",
+    "name": "Lençóis Maranhenses National Park",
+    "country": "Brazil",
+    "region": "South America",
+    "destinationType": "National park",
+    "nearestAirport": "SLZ",
+    "wikiTitle": "Lençóis Maranhenses National Park",
+    "interestTags": [
+      "nature",
+      "desert",
+      "adventure",
+      "photography"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Lençóis Maranhenses National Park"
+    ],
+    "searchTerms": [
+      "Lençóis Maranhenses National Park",
+      "Brazil"
+    ]
+  },
+  {
+    "outcomeId": "GT-0092",
+    "exactMatch": "Jose Ignacio, Uruguay",
+    "name": "Jose Ignacio",
+    "country": "Uruguay",
+    "region": "South America",
+    "destinationType": "Coastal town",
+    "nearestAirport": "MVD",
+    "wikiTitle": "José Ignacio, Uruguay",
+    "interestTags": [
+      "beaches",
+      "luxury",
+      "food"
+    ],
+    "knownnessScore": 25,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Jose Ignacio",
+      "José Ignacio, Uruguay"
+    ],
+    "searchTerms": [
+      "Jose Ignacio",
+      "Uruguay"
+    ]
+  },
+  {
+    "outcomeId": "GT-0093",
+    "exactMatch": "Paramaribo, Suriname",
+    "name": "Paramaribo",
+    "country": "Suriname",
+    "region": "South America",
+    "destinationType": "City",
+    "nearestAirport": "PBM",
+    "wikiTitle": "Paramaribo",
+    "interestTags": [
+      "culture",
+      "architecture",
+      "food",
+      "history"
+    ],
+    "knownnessScore": 15,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Paramaribo"
+    ],
+    "searchTerms": [
+      "Paramaribo",
+      "Suriname"
+    ]
+  },
+  {
+    "outcomeId": "GT-0094",
+    "exactMatch": "Kaieteur Falls, Guyana",
+    "name": "Kaieteur Falls",
+    "country": "Guyana",
+    "region": "South America",
+    "destinationType": "Natural landmark",
+    "nearestAirport": "GEO",
+    "wikiTitle": "Kaieteur Falls",
+    "interestTags": [
+      "nature",
+      "adventure",
+      "water"
+    ],
+    "knownnessScore": 15,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Kaieteur Falls"
+    ],
+    "searchTerms": [
+      "Kaieteur Falls",
+      "Guyana"
+    ]
+  },
+  {
+    "outcomeId": "GT-0100",
+    "exactMatch": "Wild Atlantic Way, Ireland",
+    "name": "Wild Atlantic Way",
+    "country": "Ireland",
+    "region": "Europe",
+    "destinationType": "Scenic route",
+    "nearestAirport": "SNN",
+    "wikiTitle": "Cliffs of Moher",
+    "interestTags": [
+      "coast",
+      "nature",
+      "food",
+      "music"
+    ],
+    "knownnessScore": 65,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Wild Atlantic Way",
+      "Cliffs of Moher"
+    ],
+    "searchTerms": [
+      "Wild Atlantic Way",
+      "Ireland"
+    ]
+  },
+  {
+    "outcomeId": "GT-0103",
+    "exactMatch": "Alsace Wine Route, France",
+    "name": "Alsace Wine Route",
+    "country": "France",
+    "region": "Europe",
+    "destinationType": "Wine region",
+    "nearestAirport": "SXB",
+    "wikiTitle": "Riquewihr",
+    "interestTags": [
+      "wine",
+      "food",
+      "architecture"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends"
+    ],
+    "aliases": [
+      "Alsace Wine Route",
+      "Riquewihr"
+    ],
+    "searchTerms": [
+      "Alsace Wine Route",
+      "France"
+    ]
+  },
+  {
+    "outcomeId": "GT-0110",
+    "exactMatch": "Black Forest, Germany",
+    "name": "Black Forest",
+    "country": "Germany",
+    "region": "Europe",
+    "destinationType": "Scenic region",
+    "nearestAirport": "BSL",
+    "wikiTitle": "Black Forest",
+    "interestTags": [
+      "nature",
+      "hiking",
+      "food"
+    ],
+    "knownnessScore": 65,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Black Forest"
+    ],
+    "searchTerms": [
+      "Black Forest",
+      "Germany"
+    ]
+  },
+  {
+    "outcomeId": "GT-0114",
+    "exactMatch": "Faroe Islands, Faroe Islands",
+    "name": "Faroe Islands",
+    "country": "Faroe Islands",
+    "region": "Europe",
+    "destinationType": "Island region",
+    "nearestAirport": "FAE",
+    "wikiTitle": "Faroe Islands",
+    "interestTags": [
+      "nature",
+      "hiking",
+      "photography"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Faroe Islands"
+    ],
+    "searchTerms": [
+      "Faroe Islands",
+      "Faroe Islands"
+    ]
+  },
+  {
+    "outcomeId": "GT-0116",
+    "exactMatch": "Westfjords, Iceland",
+    "name": "Westfjords",
+    "country": "Iceland",
+    "region": "Europe",
+    "destinationType": "Scenic region",
+    "nearestAirport": "KEF",
+    "wikiTitle": "Westfjords",
+    "interestTags": [
+      "nature",
+      "hiking",
+      "photography"
+    ],
+    "knownnessScore": 25,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Westfjords"
+    ],
+    "searchTerms": [
+      "Westfjords",
+      "Iceland"
+    ]
+  },
+  {
+    "outcomeId": "GT-0120",
+    "exactMatch": "Vilnius, Lithuania",
+    "name": "Vilnius",
+    "country": "Lithuania",
+    "region": "Europe",
+    "destinationType": "City",
+    "nearestAirport": "VNO",
+    "wikiTitle": "Vilnius",
+    "interestTags": [
+      "architecture",
+      "culture",
+      "food"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Vilnius"
+    ],
+    "searchTerms": [
+      "Vilnius",
+      "Lithuania"
+    ]
+  },
+  {
+    "outcomeId": "GT-0122",
+    "exactMatch": "Krakow, Poland",
+    "name": "Krakow",
+    "country": "Poland",
+    "region": "Europe",
+    "destinationType": "City",
+    "nearestAirport": "KRK",
+    "wikiTitle": "Kraków",
+    "interestTags": [
+      "history",
+      "architecture",
+      "food",
+      "nightlife"
+    ],
+    "knownnessScore": 80,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Krakow",
+      "Kraków"
+    ],
+    "searchTerms": [
+      "Krakow",
+      "Poland"
+    ]
+  },
+  {
+    "outcomeId": "GT-0123",
+    "exactMatch": "Wroclaw, Poland",
+    "name": "Wroclaw",
+    "country": "Poland",
+    "region": "Europe",
+    "destinationType": "City",
+    "nearestAirport": "WRO",
+    "wikiTitle": "Wrocław",
+    "interestTags": [
+      "architecture",
+      "culture",
+      "nightlife"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Wroclaw",
+      "Wrocław"
+    ],
+    "searchTerms": [
+      "Wroclaw",
+      "Poland"
+    ]
+  },
+  {
+    "outcomeId": "GT-0133",
+    "exactMatch": "Mostar, Bosnia and Herzegovina",
+    "name": "Mostar",
+    "country": "Bosnia and Herzegovina",
+    "region": "Europe",
+    "destinationType": "Historic city",
+    "nearestAirport": "SJJ",
+    "wikiTitle": "Mostar",
+    "interestTags": [
+      "history",
+      "architecture",
+      "culture"
+    ],
+    "knownnessScore": 50,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Mostar"
+    ],
+    "searchTerms": [
+      "Mostar",
+      "Bosnia and Herzegovina"
+    ]
+  },
+  {
+    "outcomeId": "GT-0134",
+    "exactMatch": "Berat, Albania",
+    "name": "Berat",
+    "country": "Albania",
+    "region": "Europe",
+    "destinationType": "Historic town",
+    "nearestAirport": "TIA",
+    "wikiTitle": "Berat",
+    "interestTags": [
+      "history",
+      "architecture",
+      "culture"
+    ],
+    "knownnessScore": 25,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Berat"
+    ],
+    "searchTerms": [
+      "Berat",
+      "Albania"
+    ]
+  },
+  {
+    "outcomeId": "GT-0137",
+    "exactMatch": "Naxos, Greece",
+    "name": "Naxos",
+    "country": "Greece",
+    "region": "Europe",
+    "destinationType": "Island",
+    "nearestAirport": "JNX",
+    "wikiTitle": "Naxos",
+    "interestTags": [
+      "beaches",
+      "food",
+      "history"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Naxos"
+    ],
+    "searchTerms": [
+      "Naxos",
+      "Greece"
+    ]
+  },
+  {
+    "outcomeId": "GT-0141",
+    "exactMatch": "Dolomites, Italy",
+    "name": "Dolomites",
+    "country": "Italy",
+    "region": "Europe",
+    "destinationType": "Mountain region",
+    "nearestAirport": "VCE",
+    "wikiTitle": "Dolomites",
+    "interestTags": [
+      "mountains",
+      "hiking",
+      "winter",
+      "nature"
+    ],
+    "knownnessScore": 85,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Dolomites"
+    ],
+    "searchTerms": [
+      "Dolomites",
+      "Italy"
+    ]
+  },
+  {
+    "outcomeId": "GT-0142",
+    "exactMatch": "Puglia, Italy",
+    "name": "Puglia",
+    "country": "Italy",
+    "region": "Europe",
+    "destinationType": "Coastal region",
+    "nearestAirport": "BRI",
+    "wikiTitle": "Apulia",
+    "interestTags": [
+      "beaches",
+      "food",
+      "architecture"
+    ],
+    "knownnessScore": 70,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Puglia",
+      "Apulia"
+    ],
+    "searchTerms": [
+      "Puglia",
+      "Italy"
+    ]
+  },
+  {
+    "outcomeId": "GT-0150",
+    "exactMatch": "Mallorca, Spain",
+    "name": "Mallorca",
+    "country": "Spain",
+    "region": "Europe",
+    "destinationType": "Island",
+    "nearestAirport": "PMI",
+    "wikiTitle": "Mallorca",
+    "interestTags": [
+      "beaches",
+      "nightlife",
+      "food",
+      "hiking"
+    ],
+    "knownnessScore": 88,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Mallorca"
+    ],
+    "searchTerms": [
+      "Mallorca",
+      "Spain"
+    ]
+  },
+  {
+    "outcomeId": "GT-0158",
+    "exactMatch": "Sahara Desert at Merzouga, Morocco",
+    "name": "Sahara Desert at Merzouga",
+    "country": "Morocco",
+    "region": "Africa",
+    "destinationType": "Desert region",
+    "nearestAirport": "RAK",
+    "wikiTitle": "Merzouga",
+    "interestTags": [
+      "desert",
+      "adventure",
+      "stargazing"
+    ],
+    "knownnessScore": 70,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Sahara Desert at Merzouga",
+      "Merzouga"
+    ],
+    "searchTerms": [
+      "Sahara Desert at Merzouga",
+      "Morocco"
+    ]
+  },
+  {
+    "outcomeId": "GT-0162",
+    "exactMatch": "Garden Route, South Africa",
+    "name": "Garden Route",
+    "country": "South Africa",
+    "region": "Africa",
+    "destinationType": "Scenic route",
+    "nearestAirport": "GRJ",
+    "wikiTitle": "Knysna",
+    "interestTags": [
+      "coast",
+      "nature",
+      "adventure"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Garden Route",
+      "Knysna"
+    ],
+    "searchTerms": [
+      "Garden Route",
+      "South Africa"
+    ]
+  },
+  {
+    "outcomeId": "GT-0163",
+    "exactMatch": "Kruger National Park, South Africa",
+    "name": "Kruger National Park",
+    "country": "South Africa",
+    "region": "Africa",
+    "destinationType": "National park",
+    "nearestAirport": "MQP",
+    "wikiTitle": "Kruger National Park",
+    "interestTags": [
+      "wildlife",
+      "nature",
+      "adventure"
+    ],
+    "knownnessScore": 85,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Kruger National Park"
+    ],
+    "searchTerms": [
+      "Kruger National Park",
+      "South Africa"
+    ]
+  },
+  {
+    "outcomeId": "GT-0165",
+    "exactMatch": "Okavango Delta, Botswana",
+    "name": "Okavango Delta",
+    "country": "Botswana",
+    "region": "Africa",
+    "destinationType": "Wetland region",
+    "nearestAirport": "MUB",
+    "wikiTitle": "Okavango Delta",
+    "interestTags": [
+      "wildlife",
+      "nature",
+      "luxury",
+      "adventure"
+    ],
+    "knownnessScore": 70,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "family"
+    ],
+    "aliases": [
+      "Okavango Delta"
+    ],
+    "searchTerms": [
+      "Okavango Delta",
+      "Botswana"
+    ]
+  },
+  {
+    "outcomeId": "GT-0169",
+    "exactMatch": "Lamu, Kenya",
+    "name": "Lamu",
+    "country": "Kenya",
+    "region": "Africa",
+    "destinationType": "Island town",
+    "nearestAirport": "LAU",
+    "wikiTitle": "Lamu Island",
+    "interestTags": [
+      "beaches",
+      "culture",
+      "history",
+      "relaxation"
+    ],
+    "knownnessScore": 25,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Lamu",
+      "Lamu Island"
+    ],
+    "searchTerms": [
+      "Lamu",
+      "Kenya"
+    ]
+  },
+  {
+    "outcomeId": "GT-0170",
+    "exactMatch": "Bwindi Impenetrable Forest, Uganda",
+    "name": "Bwindi Impenetrable Forest",
+    "country": "Uganda",
+    "region": "Africa",
+    "destinationType": "National park",
+    "nearestAirport": "EBB",
+    "wikiTitle": "Bwindi Impenetrable National Park",
+    "interestTags": [
+      "wildlife",
+      "hiking",
+      "adventure"
+    ],
+    "knownnessScore": 50,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Bwindi Impenetrable Forest",
+      "Bwindi Impenetrable National Park"
+    ],
+    "searchTerms": [
+      "Bwindi Impenetrable Forest",
+      "Uganda"
+    ]
+  },
+  {
+    "outcomeId": "GT-0172",
+    "exactMatch": "Simien Mountains, Ethiopia",
+    "name": "Simien Mountains",
+    "country": "Ethiopia",
+    "region": "Africa",
+    "destinationType": "National park",
+    "nearestAirport": "GDQ",
+    "wikiTitle": "Simien Mountains National Park",
+    "interestTags": [
+      "mountains",
+      "hiking",
+      "wildlife"
+    ],
+    "knownnessScore": 25,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Simien Mountains",
+      "Simien Mountains National Park"
+    ],
+    "searchTerms": [
+      "Simien Mountains",
+      "Ethiopia"
+    ]
+  },
+  {
+    "outcomeId": "GT-0174",
+    "exactMatch": "Sao Tome, Sao Tome and Principe",
+    "name": "Sao Tome",
+    "country": "Sao Tome and Principe",
+    "region": "Africa",
+    "destinationType": "Island",
+    "nearestAirport": "TMS",
+    "wikiTitle": "São Tomé Island",
+    "interestTags": [
+      "beaches",
+      "nature",
+      "relaxation"
+    ],
+    "knownnessScore": 10,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Sao Tome",
+      "São Tomé Island"
+    ],
+    "searchTerms": [
+      "Sao Tome",
+      "Sao Tome and Principe"
+    ]
+  },
+  {
+    "outcomeId": "GT-0177",
+    "exactMatch": "Naoshima, Japan",
+    "name": "Naoshima",
+    "country": "Japan",
+    "region": "Asia",
+    "destinationType": "Island",
+    "nearestAirport": "OKJ",
+    "wikiTitle": "Naoshima",
+    "interestTags": [
+      "art",
+      "design",
+      "coast"
+    ],
+    "knownnessScore": 40,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Naoshima"
+    ],
+    "searchTerms": [
+      "Naoshima",
+      "Japan"
+    ]
+  },
+  {
+    "outcomeId": "GT-0178",
+    "exactMatch": "Hokkaido, Japan",
+    "name": "Hokkaido",
+    "country": "Japan",
+    "region": "Asia",
+    "destinationType": "Island region",
+    "nearestAirport": "CTS",
+    "wikiTitle": "Hokkaido",
+    "interestTags": [
+      "nature",
+      "food",
+      "winter",
+      "hiking"
+    ],
+    "knownnessScore": 75,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Hokkaido"
+    ],
+    "searchTerms": [
+      "Hokkaido",
+      "Japan"
+    ]
+  },
+  {
+    "outcomeId": "GT-0183",
+    "exactMatch": "Guilin and Yangshuo, China",
+    "name": "Guilin and Yangshuo",
+    "country": "China",
+    "region": "Asia",
+    "destinationType": "Scenic region",
+    "nearestAirport": "KWL",
+    "wikiTitle": "Yangshuo County",
+    "interestTags": [
+      "nature",
+      "hiking",
+      "culture"
+    ],
+    "knownnessScore": 60,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Guilin and Yangshuo",
+      "Yangshuo County"
+    ],
+    "searchTerms": [
+      "Guilin and Yangshuo",
+      "China"
+    ]
+  },
+  {
+    "outcomeId": "GT-0186",
+    "exactMatch": "Ha Giang Loop, Vietnam",
+    "name": "Ha Giang Loop",
+    "country": "Vietnam",
+    "region": "Asia",
+    "destinationType": "Scenic route",
+    "nearestAirport": "HAN",
+    "wikiTitle": "Mã Pí Lèng Pass",
+    "interestTags": [
+      "adventure",
+      "mountains",
+      "culture"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Ha Giang Loop",
+      "Mã Pí Lèng Pass"
+    ],
+    "searchTerms": [
+      "Ha Giang Loop",
+      "Vietnam"
+    ]
+  },
+  {
+    "outcomeId": "GT-0187",
+    "exactMatch": "Hoi An, Vietnam",
+    "name": "Hoi An",
+    "country": "Vietnam",
+    "region": "Asia",
+    "destinationType": "Historic town",
+    "nearestAirport": "DAD",
+    "wikiTitle": "Japanese Covered Bridge",
+    "interestTags": [
+      "culture",
+      "food",
+      "architecture",
+      "beaches"
+    ],
+    "knownnessScore": 80,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Hoi An",
+      "Japanese Covered Bridge"
+    ],
+    "searchTerms": [
+      "Hoi An",
+      "Vietnam"
+    ]
+  },
+  {
+    "outcomeId": "GT-0190",
+    "exactMatch": "Koh Lanta, Thailand",
+    "name": "Koh Lanta",
+    "country": "Thailand",
+    "region": "Asia",
+    "destinationType": "Island",
+    "nearestAirport": "KBV",
+    "wikiTitle": "Ko Lanta Yai",
+    "interestTags": [
+      "beaches",
+      "diving",
+      "relaxation"
+    ],
+    "knownnessScore": 50,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Koh Lanta",
+      "Ko Lanta Yai"
+    ],
+    "searchTerms": [
+      "Koh Lanta",
+      "Thailand"
+    ]
+  },
+  {
+    "outcomeId": "GT-0196",
+    "exactMatch": "Borneo Rainforest, Malaysia and Indonesia",
+    "name": "Borneo Rainforest",
+    "country": "Malaysia and Indonesia",
+    "region": "Asia",
+    "destinationType": "Forest region",
+    "nearestAirport": "BKI",
+    "wikiTitle": "Danum Valley Conservation Area",
+    "interestTags": [
+      "wildlife",
+      "nature",
+      "adventure"
+    ],
+    "knownnessScore": 50,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Borneo Rainforest",
+      "Danum Valley Conservation Area"
+    ],
+    "searchTerms": [
+      "Borneo Rainforest",
+      "Malaysia and Indonesia"
+    ]
+  },
+  {
+    "outcomeId": "GT-0198",
+    "exactMatch": "Komodo National Park, Indonesia",
+    "name": "Komodo National Park",
+    "country": "Indonesia",
+    "region": "Asia",
+    "destinationType": "National park",
+    "nearestAirport": "LBJ",
+    "wikiTitle": "Komodo National Park",
+    "interestTags": [
+      "wildlife",
+      "diving",
+      "beaches",
+      "adventure"
+    ],
+    "knownnessScore": 70,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Komodo National Park"
+    ],
+    "searchTerms": [
+      "Komodo National Park",
+      "Indonesia"
+    ]
+  },
+  {
+    "outcomeId": "GT-0199",
+    "exactMatch": "Yogyakarta, Indonesia",
+    "name": "Yogyakarta",
+    "country": "Indonesia",
+    "region": "Asia",
+    "destinationType": "City",
+    "nearestAirport": "YIA",
+    "wikiTitle": "Yogyakarta",
+    "interestTags": [
+      "culture",
+      "history",
+      "food"
+    ],
+    "knownnessScore": 60,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Yogyakarta"
+    ],
+    "searchTerms": [
+      "Yogyakarta",
+      "Indonesia"
+    ]
+  },
+  {
+    "outcomeId": "GT-0200",
+    "exactMatch": "Manila, Philippines",
+    "name": "Manila",
+    "country": "Philippines",
+    "region": "Asia",
+    "destinationType": "City",
+    "nearestAirport": "MNL",
+    "wikiTitle": "Manila",
+    "interestTags": [
+      "city",
+      "food",
+      "history",
+      "nightlife"
+    ],
+    "knownnessScore": 70,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Manila"
+    ],
+    "searchTerms": [
+      "Manila",
+      "Philippines"
+    ]
+  },
+  {
+    "outcomeId": "GT-0202",
+    "exactMatch": "Banaue Rice Terraces, Philippines",
+    "name": "Banaue Rice Terraces",
+    "country": "Philippines",
+    "region": "Asia",
+    "destinationType": "Scenic region",
+    "nearestAirport": "MNL",
+    "wikiTitle": "Banaue Rice Terraces",
+    "interestTags": [
+      "hiking",
+      "culture",
+      "nature"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Banaue Rice Terraces"
+    ],
+    "searchTerms": [
+      "Banaue Rice Terraces",
+      "Philippines"
+    ]
+  },
+  {
+    "outcomeId": "GT-0203",
+    "exactMatch": "Kathmandu Valley, Nepal",
+    "name": "Kathmandu Valley",
+    "country": "Nepal",
+    "region": "Asia",
+    "destinationType": "Historic region",
+    "nearestAirport": "KTM",
+    "wikiTitle": "Kathmandu Valley",
+    "interestTags": [
+      "culture",
+      "history",
+      "hiking"
+    ],
+    "knownnessScore": 75,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Kathmandu Valley"
+    ],
+    "searchTerms": [
+      "Kathmandu Valley",
+      "Nepal"
+    ]
+  },
+  {
+    "outcomeId": "GT-0204",
+    "exactMatch": "Annapurna Circuit, Nepal",
+    "name": "Annapurna Circuit",
+    "country": "Nepal",
+    "region": "Asia",
+    "destinationType": "Trekking region",
+    "nearestAirport": "KTM",
+    "wikiTitle": "Thorong La",
+    "interestTags": [
+      "hiking",
+      "mountains",
+      "adventure"
+    ],
+    "knownnessScore": 65,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Annapurna Circuit",
+      "Thorong La"
+    ],
+    "searchTerms": [
+      "Annapurna Circuit",
+      "Nepal"
+    ]
+  },
+  {
+    "outcomeId": "GT-0205",
+    "exactMatch": "Bhutan, Bhutan",
+    "name": "Bhutan",
+    "country": "Bhutan",
+    "region": "Asia",
+    "destinationType": "Country journey",
+    "nearestAirport": "PBH",
+    "wikiTitle": "Paro Taktsang",
+    "interestTags": [
+      "culture",
+      "mountains",
+      "hiking",
+      "wellness"
+    ],
+    "knownnessScore": 60,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "solo"
+    ],
+    "aliases": [
+      "Bhutan",
+      "Paro Taktsang"
+    ],
+    "searchTerms": [
+      "Bhutan",
+      "Bhutan"
+    ]
+  },
+  {
+    "outcomeId": "GT-0207",
+    "exactMatch": "Rajasthan, India",
+    "name": "Rajasthan",
+    "country": "India",
+    "region": "Asia",
+    "destinationType": "Cultural region",
+    "nearestAirport": "JAI",
+    "wikiTitle": "Jaipur",
+    "interestTags": [
+      "culture",
+      "history",
+      "architecture",
+      "food"
+    ],
+    "knownnessScore": 80,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Rajasthan",
+      "Jaipur"
+    ],
+    "searchTerms": [
+      "Rajasthan",
+      "India"
+    ]
+  },
+  {
+    "outcomeId": "GT-0208",
+    "exactMatch": "Kerala Backwaters, India",
+    "name": "Kerala Backwaters",
+    "country": "India",
+    "region": "Asia",
+    "destinationType": "Scenic region",
+    "nearestAirport": "COK",
+    "wikiTitle": "Kerala backwaters",
+    "interestTags": [
+      "nature",
+      "relaxation",
+      "food"
+    ],
+    "knownnessScore": 60,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Kerala Backwaters",
+      "Kerala backwaters"
+    ],
+    "searchTerms": [
+      "Kerala Backwaters",
+      "India"
+    ]
+  },
+  {
+    "outcomeId": "GT-0209",
+    "exactMatch": "Varanasi, India",
+    "name": "Varanasi",
+    "country": "India",
+    "region": "Asia",
+    "destinationType": "Historic city",
+    "nearestAirport": "VNS",
+    "wikiTitle": "Varanasi",
+    "interestTags": [
+      "culture",
+      "history",
+      "photography"
+    ],
+    "knownnessScore": 75,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Varanasi"
+    ],
+    "searchTerms": [
+      "Varanasi",
+      "India"
+    ]
+  },
+  {
+    "outcomeId": "GT-0210",
+    "exactMatch": "Sri Lanka Cultural Triangle, Sri Lanka",
+    "name": "Sri Lanka Cultural Triangle",
+    "country": "Sri Lanka",
+    "region": "Asia",
+    "destinationType": "Historic region",
+    "nearestAirport": "CMB",
+    "wikiTitle": "Sigiriya",
+    "interestTags": [
+      "history",
+      "culture",
+      "nature"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Sri Lanka Cultural Triangle",
+      "Sigiriya"
+    ],
+    "searchTerms": [
+      "Sri Lanka Cultural Triangle",
+      "Sri Lanka"
+    ]
+  },
+  {
+    "outcomeId": "GT-0212",
+    "exactMatch": "Samarkand, Uzbekistan",
+    "name": "Samarkand",
+    "country": "Uzbekistan",
+    "region": "Asia",
+    "destinationType": "Historic city",
+    "nearestAirport": "SKD",
+    "wikiTitle": "Samarkand",
+    "interestTags": [
+      "history",
+      "architecture",
+      "culture"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Samarkand"
+    ],
+    "searchTerms": [
+      "Samarkand",
+      "Uzbekistan"
+    ]
+  },
+  {
+    "outcomeId": "GT-0213",
+    "exactMatch": "Almaty and the Tian Shan, Kazakhstan",
+    "name": "Almaty and the Tian Shan",
+    "country": "Kazakhstan",
+    "region": "Asia",
+    "destinationType": "Scenic region",
+    "nearestAirport": "ALA",
+    "wikiTitle": "Almaty",
+    "interestTags": [
+      "mountains",
+      "hiking",
+      "city",
+      "food"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Almaty and the Tian Shan",
+      "Almaty"
+    ],
+    "searchTerms": [
+      "Almaty and the Tian Shan",
+      "Kazakhstan"
+    ]
+  },
+  {
+    "outcomeId": "GT-0214",
+    "exactMatch": "Kyrgyzstan's Song-Kol Lake, Kyrgyzstan",
+    "name": "Kyrgyzstan's Song-Kol Lake",
+    "country": "Kyrgyzstan",
+    "region": "Asia",
+    "destinationType": "Lake region",
+    "nearestAirport": "BSZ",
+    "wikiTitle": "Song-Köl",
+    "interestTags": [
+      "nature",
+      "adventure",
+      "lakes"
+    ],
+    "knownnessScore": 15,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Kyrgyzstan's Song-Kol Lake",
+      "Song-Köl"
+    ],
+    "searchTerms": [
+      "Kyrgyzstan's Song-Kol Lake",
+      "Kyrgyzstan"
+    ]
+  },
+  {
+    "outcomeId": "GT-0217",
+    "exactMatch": "Wadi Shab, Oman",
+    "name": "Wadi Shab",
+    "country": "Oman",
+    "region": "Middle East",
+    "destinationType": "Scenic region",
+    "nearestAirport": "MCT",
+    "wikiTitle": "Tiwi, Oman",
+    "interestTags": [
+      "nature",
+      "water",
+      "hiking",
+      "adventure"
+    ],
+    "knownnessScore": 30,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Wadi Shab",
+      "Tiwi, Oman"
+    ],
+    "searchTerms": [
+      "Wadi Shab",
+      "Oman"
+    ]
+  },
+  {
+    "outcomeId": "GT-0219",
+    "exactMatch": "Wadi Rum, Jordan",
+    "name": "Wadi Rum",
+    "country": "Jordan",
+    "region": "Middle East",
+    "destinationType": "Desert region",
+    "nearestAirport": "AQJ",
+    "wikiTitle": "Wadi Rum",
+    "interestTags": [
+      "desert",
+      "adventure",
+      "stargazing"
+    ],
+    "knownnessScore": 70,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Wadi Rum"
+    ],
+    "searchTerms": [
+      "Wadi Rum",
+      "Jordan"
+    ]
+  },
+  {
+    "outcomeId": "GT-0225",
+    "exactMatch": "Great Barrier Reef, Australia",
+    "name": "Great Barrier Reef",
+    "country": "Australia",
+    "region": "Oceania",
+    "destinationType": "Reef region",
+    "nearestAirport": "CNS",
+    "wikiTitle": "Great Barrier Reef",
+    "interestTags": [
+      "diving",
+      "beaches",
+      "nature",
+      "wildlife"
+    ],
+    "knownnessScore": 92,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Great Barrier Reef"
+    ],
+    "searchTerms": [
+      "Great Barrier Reef",
+      "Australia"
+    ]
+  },
+  {
+    "outcomeId": "GT-0226",
+    "exactMatch": "Tasmania, Australia",
+    "name": "Tasmania",
+    "country": "Australia",
+    "region": "Oceania",
+    "destinationType": "Island",
+    "nearestAirport": "HBA",
+    "wikiTitle": "Tasmania",
+    "interestTags": [
+      "nature",
+      "food",
+      "hiking",
+      "wildlife"
+    ],
+    "knownnessScore": 60,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Tasmania"
+    ],
+    "searchTerms": [
+      "Tasmania",
+      "Australia"
+    ]
+  },
+  {
+    "outcomeId": "GT-0227",
+    "exactMatch": "Uluru, Australia",
+    "name": "Uluru",
+    "country": "Australia",
+    "region": "Oceania",
+    "destinationType": "Natural landmark",
+    "nearestAirport": "AYQ",
+    "wikiTitle": "Uluru",
+    "interestTags": [
+      "desert",
+      "culture",
+      "nature"
+    ],
+    "knownnessScore": 80,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Uluru"
+    ],
+    "searchTerms": [
+      "Uluru",
+      "Australia"
+    ]
+  },
+  {
+    "outcomeId": "GT-0228",
+    "exactMatch": "Perth and Rottnest Island, Australia",
+    "name": "Perth and Rottnest Island",
+    "country": "Australia",
+    "region": "Oceania",
+    "destinationType": "Coastal region",
+    "nearestAirport": "PER",
+    "wikiTitle": "Rottnest Island",
+    "interestTags": [
+      "beaches",
+      "wildlife",
+      "city"
+    ],
+    "knownnessScore": 50,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Perth and Rottnest Island",
+      "Rottnest Island"
+    ],
+    "searchTerms": [
+      "Perth and Rottnest Island",
+      "Australia"
+    ]
+  },
+  {
+    "outcomeId": "GT-0229",
+    "exactMatch": "Auckland, New Zealand",
+    "name": "Auckland",
+    "country": "New Zealand",
+    "region": "Oceania",
+    "destinationType": "City",
+    "nearestAirport": "AKL",
+    "wikiTitle": "Auckland",
+    "interestTags": [
+      "city",
+      "food",
+      "coast"
+    ],
+    "knownnessScore": 75,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Auckland"
+    ],
+    "searchTerms": [
+      "Auckland",
+      "New Zealand"
+    ]
+  },
+  {
+    "outcomeId": "GT-0231",
+    "exactMatch": "Fiordland National Park, New Zealand",
+    "name": "Fiordland National Park",
+    "country": "New Zealand",
+    "region": "Oceania",
+    "destinationType": "National park",
+    "nearestAirport": "ZQN",
+    "wikiTitle": "Fiordland National Park",
+    "interestTags": [
+      "nature",
+      "hiking",
+      "mountains"
+    ],
+    "knownnessScore": 70,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Fiordland National Park"
+    ],
+    "searchTerms": [
+      "Fiordland National Park",
+      "New Zealand"
+    ]
+  },
+  {
+    "outcomeId": "GT-0232",
+    "exactMatch": "Wellington, New Zealand",
+    "name": "Wellington",
+    "country": "New Zealand",
+    "region": "Oceania",
+    "destinationType": "City",
+    "nearestAirport": "WLG",
+    "wikiTitle": "Wellington",
+    "interestTags": [
+      "food",
+      "culture",
+      "city"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Wellington"
+    ],
+    "searchTerms": [
+      "Wellington",
+      "New Zealand"
+    ]
+  },
+  {
+    "outcomeId": "GT-0233",
+    "exactMatch": "Rarotonga, Cook Islands",
+    "name": "Rarotonga",
+    "country": "Cook Islands",
+    "region": "Oceania",
+    "destinationType": "Island",
+    "nearestAirport": "RAR",
+    "wikiTitle": "Rarotonga",
+    "interestTags": [
+      "beaches",
+      "relaxation",
+      "diving"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Rarotonga"
+    ],
+    "searchTerms": [
+      "Rarotonga",
+      "Cook Islands"
+    ]
+  },
+  {
+    "outcomeId": "GT-0234",
+    "exactMatch": "Viti Levu, Fiji",
+    "name": "Viti Levu",
+    "country": "Fiji",
+    "region": "Oceania",
+    "destinationType": "Island",
+    "nearestAirport": "NAN",
+    "wikiTitle": "Viti Levu",
+    "interestTags": [
+      "beaches",
+      "relaxation",
+      "diving"
+    ],
+    "knownnessScore": 60,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Viti Levu"
+    ],
+    "searchTerms": [
+      "Viti Levu",
+      "Fiji"
+    ]
+  },
+  {
+    "outcomeId": "GT-0235",
+    "exactMatch": "Savai'i, Samoa",
+    "name": "Savai'i",
+    "country": "Samoa",
+    "region": "Oceania",
+    "destinationType": "Island",
+    "nearestAirport": "APW",
+    "wikiTitle": "Savaiʻi",
+    "interestTags": [
+      "beaches",
+      "nature",
+      "culture"
+    ],
+    "knownnessScore": 10,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Savai'i",
+      "Savaiʻi"
+    ],
+    "searchTerms": [
+      "Savai'i",
+      "Samoa"
+    ]
+  },
+  {
+    "outcomeId": "GT-0236",
+    "exactMatch": "Espiritu Santo, Vanuatu",
+    "name": "Espiritu Santo",
+    "country": "Vanuatu",
+    "region": "Oceania",
+    "destinationType": "Island",
+    "nearestAirport": "SON",
+    "wikiTitle": "Espiritu Santo",
+    "interestTags": [
+      "diving",
+      "beaches",
+      "nature"
+    ],
+    "knownnessScore": 15,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Espiritu Santo"
+    ],
+    "searchTerms": [
+      "Espiritu Santo",
+      "Vanuatu"
+    ]
+  },
+  {
+    "outcomeId": "GT-0237",
+    "exactMatch": "Palau, Palau",
+    "name": "Palau",
+    "country": "Palau",
+    "region": "Oceania",
+    "destinationType": "Island nation",
+    "nearestAirport": "ROR",
+    "wikiTitle": "Palau",
+    "interestTags": [
+      "diving",
+      "beaches",
+      "nature"
+    ],
+    "knownnessScore": 40,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Palau"
+    ],
+    "searchTerms": [
+      "Palau",
+      "Palau"
+    ]
+  }
+]

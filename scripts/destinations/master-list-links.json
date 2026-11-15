@@ -1,0 +1,18 @@
+{
+  "_note": "Outcome ID → existing GlobTrek destination id, where automatic name matching is wrong or misses. null forces 'new destination'. Reviewed by hand 2026-11-15.",
+  "links": {
+    "GT-0043": null,
+    "GT-0030": "YYC",
+    "GT-0047": "antigua-guatemala-11760",
+    "GT-0059": "san-juan-fe23c",
+    "GT-0078": "uyuni-a001a",
+    "GT-0113": "lofoten-98845",
+    "GT-0127": "bled-mtn",
+    "GT-0152": "mestia-9113c",
+    "GT-0217": null,
+    "GT-0219": null,
+    "GT-0236": null,
+    "GT-0164": "sossusvlei-bfe79",
+    "GT-0102": "nice-e3772"
+  }
+}

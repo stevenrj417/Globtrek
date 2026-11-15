@@ -129,7 +129,7 @@ const legacyDestinations = catalog.map(([city, country, airport, photo, style, s
 }));
 
 function titleTag(value) { return String(value || "").replace(/(^|_)\w/g, (match) => match.replace("_", " ").toUpperCase()); }
-const verifiedExpansion = [...(verifiedBatch01.records || verifiedBatch01), ...(verifiedBatch02.records || verifiedBatch02), ...(verifiedBatch03.records || verifiedBatch03), ...(verifiedBatch04.records || verifiedBatch04)]
+const verifiedExpansion = [...(verifiedBatch01.records || verifiedBatch01), ...(verifiedBatch02.records || verifiedBatch02), ...(verifiedBatch03.records || verifiedBatch03), ...(verifiedBatch04.records || verifiedBatch04), ...verifiedBatch05.records]
   .filter((item) => !(item.name === "Marrakesh" && item.country === "Morocco"))
   .map((item) => ({
   id: item.id,
@@ -147,6 +147,7 @@ const verifiedExpansion = [...(verifiedBatch01.records || verifiedBatch01), ...(
   tags: [...(item.interestTags || []), ...(item.travelerTypeTags || [])].map(titleTag),
   aliases: [...(item.aliases || []), ...(item.searchTerms || []), item.region, item.wikiTitle].filter(Boolean),
   why: `${item.name} is a verified GlobTrek destination. Its identity, location, imagery, and baseline cost profile are grounded; hotel and activity depth remain subject to readiness gates.`,
+  outcomeType: item.destinationType || null,
   itinerary: [], dining: [], costProfile: item.costProfile, seasonality: item.seasonality,
   climateProfile: item.climateProfile, tripLengthFit: item.tripLengthFit,
   accessibilityProfile: item.accessibilityProfile, imageLicenseMetadata: item.imageLicenseMetadata,
@@ -192,10 +193,20 @@ function withFacts(destination) {
   };
 }
 
+// Master destination list (scripts/destinations/import-master-list.mjs): the
+// Outcome ID is the permanent key and Exact Match the quiz-result string.
+function outcomeFields(id) {
+  const entry = OUTCOME_INDEX[id];
+  if (!entry) return {};
+  const [outcomeId, exactMatch, outcomeType, scope] = entry;
+  return { outcomeId, exactMatch, outcomeType, outcomeScope: scope };
+}
+
 const legacyNames = new Set(legacyDestinations.map((item) => `${item.city}|${item.country}`));
 export const destinations = [...legacyDestinations, ...verifiedExpansion.filter((item) => !legacyNames.has(`${item.city}|${item.country}`)), ...MOUNTAIN_BASE].map(applyBudgetEditorial).map(enrichDestinationIntelligence).map(withFacts).map(withEditorialTags).map((destination) => ({
   ...destination,
   imageAlt: destination.imageAlt || IMAGE_ALTS[destination.id] || destination.facts?.imageAlt || null,
+  ...outcomeFields(destination.id),
   // Launch cities priced from hand-checked lodging and food (see cheapStays.js).
   dataReviewed: destination.dataReviewed || (LAUNCH_SET.includes(destination.id) ? CHEAP_STAYS_CHECKED : null),
 }));
@@ -316,6 +327,8 @@ import verifiedBatch01 from "../../scripts/destinations/verified-batch-01.json" 
 import verifiedBatch02 from "../../scripts/destinations/verified-batch-02.json" with { type: "json" };
 import verifiedBatch03 from "../../scripts/destinations/verified-batch-03.json" with { type: "json" };
 import verifiedBatch04 from "../../scripts/destinations/verified-batch-04.json" with { type: "json" };
+import verifiedBatch05 from "../../scripts/destinations/verified-batch-05.json" with { type: "json" };
+import OUTCOME_INDEX from "./destinationOutcomeIndex.json" with { type: "json" };
 import { enrichDestinationIntelligence } from "./destinationIntelligence.js";
 import { applyBudgetEditorial } from "./budgetDestinations.js";
 import { MOUNTAIN_BASE } from "./mountainDestinations.js";
@@ -324,3 +337,10 @@ import destinationFacts from "./destinationFacts.json" with { type: "json" };
 import { LAUNCH_SET } from "./launchSet.js";
 import { CHEAP_STAYS_CHECKED } from "./cheapStays.js";
 import { CJ_HOSTS, CJ_LINKS, cjTracked } from "../lib/booking/cj.js";
+
+// Exact lookups for the master list. No trimming, case folding or fuzzy
+// matching: a quiz result string either is an Exact Match or it isn't.
+const BY_EXACT_MATCH = new Map(destinations.filter((item) => item.exactMatch).map((item) => [item.exactMatch, item]));
+const BY_OUTCOME_ID = new Map(destinations.filter((item) => item.outcomeId).map((item) => [item.outcomeId, item]));
+export function destinationByExactMatch(value) { return BY_EXACT_MATCH.get(value) || null; }
+export function destinationByOutcomeId(outcomeId) { return BY_OUTCOME_ID.get(outcomeId) || null; }
