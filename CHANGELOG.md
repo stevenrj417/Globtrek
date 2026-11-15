@@ -47,6 +47,10 @@ Book everything, budget-first trips, DOT fares, the launch set and three perfect
 - New `/book` page ("Book everything"): one button opens every booking in its own tab; links travel in the URL and are re-validated. The trip email links to it at the top and bottom.
 - Blocked-tab guidance on results and `/book` explains how to allow pop-ups so one click opens everything.
 
+## Contact address on the domain (2026-11-15)
+
+- The footer, Contact, Privacy, Terms, extension privacy page and Organization JSON-LD now show contact@glob-trek.com (via `CONTACT_EMAIL`), forwarded by Porkbun to the owner's inbox.
+
 ## Brand, contact and legal details (2026-11-02)
 
 - Booking.com logo beside Booking.com mentions (owner-confirmed permission).
@@ -123,7 +127,7 @@ Results page: not scored. It needs a quiz in localStorage, and locally it lacks 
 ### Needs the owner
 
 1. ~~Replace the Lisbon photo~~ Done 2026-11-02.
-2. ~~Contact address~~ contact.globtrek.com@gmail.com (2026-11-02). Optional: a reply-time promise via `CONTACT_REPLY_TIME`.
+2. ~~Contact address~~ contact@glob-trek.com (2026-11-15), forwarded by Porkbun; was contact.globtrek.com@gmail.com from 2026-11-02. Optional: a reply-time promise via `CONTACT_REPLY_TIME`.
 3. ~~Legal name~~ GlobTrek. Still needed: governing law, notice address and dispute process for Terms and Privacy.
 4. ~~Booking.com logo~~ Done.
 5. ~~Social accounts~~ Instagram linked.
