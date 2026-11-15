@@ -4,7 +4,7 @@ import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { destinations } from "../app/data/destinations.js";
 import { normalizeTravelerProfile } from "../app/lib/recommendation/travelerProfile.js";
-import { closestOverBudget, compareMatches, hardFilterFailure, matchExplanation, MATCH_ALGORITHM_VERSION, rankDestinations, validateMatch } from "../app/lib/recommendation/destinationEngine.js";
+import { closestOverBudget, compareMatches, hardFilterFailure, matchExplanation, MATCH_ALGORITHM_VERSION, rankDestinations, thinData, validateMatch } from "../app/lib/recommendation/destinationEngine.js";
 import { destinationReadiness } from "../app/lib/recommendation/eligibility.js";
 import { matchReasons } from "../app/lib/recommendation/whyThisFits.js";
 import { tripLengthRange } from "../app/lib/recommendation/eligibility.js";
@@ -90,11 +90,14 @@ test("the explanation records the version, the winner's score parts and why it b
   assert.ok(explanation.reason.length > 10);
 });
 
-test("incomplete destinations are never recommended", () => {
-  const incomplete = destinations.filter((item) => !destinationReadiness(item).eligible);
-  assert.ok(incomplete.length > 0);
-  for (const destination of incomplete.slice(0, 40)) assert.equal(hardFilterFailure(destination, normalizeTravelerProfile(quiz({}))), "incomplete", destination.id);
-  assert.equal(destinationReadiness(destinations.find((item) => item.id === "kazbegi-mtn")).eligible, false, "Kazbegi has no stays yet");
+test("every destination can be recommended; places with full data rank first", () => {
+  assert.equal(destinations.filter((item) => !destinationReadiness(item).eligible).length, 0);
+  const kazbegi = destinations.find((item) => item.id === "kazbegi-mtn");
+  assert.equal(destinationReadiness(kazbegi).eligible, true, "Kazbegi is bookable through a Booking.com search");
+  assert.equal(thinData(kazbegi), 1, "but it ranks after places with checked stays");
+  const full = { travelFeasibility: { status: "ok" }, destinationMatchScore: 10, budgetPlan: { budgetCheckTotal: 900 }, id: "LIS", planningAverages: destinations.find((item) => item.id === "LIS").planningAverages };
+  const thin = { travelFeasibility: { status: "ok" }, destinationMatchScore: 99, budgetPlan: { budgetCheckTotal: 100 }, id: "kazbegi-mtn", planningAverages: kazbegi.planningAverages };
+  assert.ok(compareMatches(full, thin) < 0, "a full place beats a thin one with a higher score");
 });
 
 test("at least ten complete mountain destinations, each with stays, activities and a reviewed season", () => {

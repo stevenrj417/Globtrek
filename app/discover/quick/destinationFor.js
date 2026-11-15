@@ -15,5 +15,5 @@ export function destinationFor(id) {
   const item = id ? catalog.find((entry) => entry.id === id) : null;
   if (!item) return null;
   const tags = item.tags || [];
-  return { name: displayName(item.city), answers: { alive: tags.includes("Ocean") ? "Ocean" : tags.includes("Mountains") ? "Mountains" : tags.includes("Culture") ? "Culture" : "Cities", escape: "Balanced days", hotel: "Boutique hotel", luxury: tags.includes("Food") ? "Food" : tags.includes("Nature") ? "Nature" : "Culture" } };
+  return { name: displayName(item.city), answers: { alive: tags.includes("Ocean") ? "Ocean" : tags.includes("Mountains") ? "Mountains" : tags.includes("Culture") ? "Culture" : tags.includes("Wild") && !tags.includes("Cities") ? "Wild" : "Cities", escape: "Balanced days", hotel: "Boutique hotel", luxury: tags.includes("Food") ? "Food" : tags.includes("Nature") ? "Nature" : "Culture" } };
 }

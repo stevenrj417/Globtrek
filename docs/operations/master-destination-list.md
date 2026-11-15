@@ -54,3 +54,15 @@ Resort economies (the Maldives, Seychelles, Maui, Tahiti, Bora Bora and St. Bart
 - **Per-property hotel prices, ratings and photos** need Booking Demand API access (`BOOKING_DEMAND_API_TOKEN`, `BOOKING_AFFILIATE_ID`). Stays shown now come from the CJ Booking.com feed: real properties, but not live availability.
 - **Live fares.** Flights are observed Aviasales prices through Travelpayouts (`TRAVELPAYOUTS_TOKEN`, server-side), labeled as observed fares. Airports with no observations use the distance model, labeled as an estimate. Collection works per origin, so remote airports may never appear.
 - **Restaurants** come only from Google Places results that are operating and have enough reviews. None are written by hand.
+
+## Readiness policy (2026-11-15)
+
+Every catalog destination can be recommended. The old hard gates (3+ catalog stays, 4+ activities, destination-specific costs) are gone:
+
+- **Few or no checked stays:** results link to a Booking.com search through the CJ tracking link, with the trip's dates and party.
+- **Few activities:** results show only the verified ones; an empty section is hidden.
+- **No local prices:** costs use the labeled planning average. Resort islands add that real resort rates often run far higher.
+
+Places with full data (3+ stays, 4+ activities, local or banded costs) still rank ahead of thinner ones; see `thinData` in `destinationEngine.js`.
+
+The quiz has a sixth setting, **Nature & wildlife** (`Wild` tag), for national parks, deserts, safaris, rainforests, waterfalls and lakes.

@@ -161,6 +161,14 @@ export const PHOTO_CREDITS = [
     "source": "https://commons.wikimedia.org/wiki/File:Fruit_Stall_in_Barcelona_Market.jpg"
   },
   {
+    "image": "/quiz/v2/wild.jpg",
+    "subject": "Elephants in the Okavango Delta, Botswana",
+    "artist": "Diego Delso",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "source": "https://commons.wikimedia.org/wiki/File:Elefantes_africanos_de_sabana_(Loxodonta_africana),_delta_del_Okavango,_Botsuana,_2018-07-31,_DD_04.jpg"
+  },
+  {
     "image": "/quiz/v2/nature.jpg",
     "subject": "Moraine Lake, Banff National Park",
     "artist": "Gorgo",

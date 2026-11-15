@@ -48,7 +48,7 @@ export function DestinationSearchPanel({ onClose }) {
   function launch() {
     if (!destination) return;
     const answers = {
-      alive: destination.tags.includes("Ocean") ? "Ocean" : destination.tags.includes("Mountains") ? "Mountains" : destination.tags.includes("Culture") ? "Culture" : "Cities",
+      alive: destination.tags.includes("Ocean") ? "Ocean" : destination.tags.includes("Mountains") ? "Mountains" : destination.tags.includes("Culture") ? "Culture" : destination.tags.includes("Wild") && !destination.tags.includes("Cities") ? "Wild" : "Cities",
       escape: pace,
       self: "Couple",
       duration: "One Week",

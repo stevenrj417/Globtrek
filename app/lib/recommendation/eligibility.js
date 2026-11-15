@@ -11,7 +11,7 @@ import { travelInfoFor } from "../../data/travelInfo.js";
 // checks read structured catalog data only; nothing an AI writes can make a
 // destination eligible or change its setting.
 
-export const MATCH_ALGORITHM_VERSION = "2026-11-11.1";
+export const MATCH_ALGORITHM_VERSION = "2026-11-15.1";
 
 // Quiz setting answer -> the catalog tag a destination must carry.
 export const SETTING_REQUIREMENTS = Object.freeze({
@@ -19,6 +19,7 @@ export const SETTING_REQUIREMENTS = Object.freeze({
   Mountains: { tag: "Mountains", label: "Mountain setting" },
   Cities: { tag: "Cities", label: "City setting" },
   Culture: { tag: "Culture", label: "History & culture" },
+  Wild: { tag: "Wild", label: "Nature & wildlife" },
 });
 
 export const INTEREST_TAGS = ["Food", "Nature", "Culture", "Nightlife", "Wellness", "Shopping"];
@@ -50,9 +51,11 @@ const CHECKS = [
   ["trip-length range", (d) => tripLengthRange(d).max >= tripLengthRange(d).min],
   ["seasonal guidance", (d) => Boolean(d.season) && !/requires .*review/i.test(d.season)],
   ["flight estimate support", (d) => (d.latitude != null && d.longitude != null && Number.isFinite(Number(d.latitude)) && Number.isFinite(Number(d.longitude))) || LAUNCH_SET.includes(d.id)],
-  [`${MIN_STAYS}+ accommodation options`, (d) => stayCount(d.id) >= MIN_STAYS],
-  [`${MIN_ACTIVITIES}+ activities`, (d) => activityCount(d.id) >= MIN_ACTIVITIES],
-  ["destination-specific daily costs", (d) => ["city", "local_prices", "price_band"].includes(d.planningAverages?.model)],
+  // Every destination can be booked: places without checked catalog stays get
+  // a tracked Booking.com search for their dates instead (StayChoices). Thin
+  // activity lists show what is verified and nothing invented. Costs fall back
+  // to a labeled planning average. These counts now only rank, never exclude.
+  ["daily cost estimate", (d) => Boolean(d.planningAverages?.model)],
   ["data timestamp", (d) => Boolean(d.budgetEditorial?.reviewed || d.dataReviewed || d.dataCheckedAt)],
   ["fact source", (d) => Boolean(d.verificationSource || d.factSource || d.budgetEditorial?.sources?.length || LAUNCH_SET.includes(d.id))],
   ["entry and advisory links", (d) => Boolean(travelInfoFor(d.country))],

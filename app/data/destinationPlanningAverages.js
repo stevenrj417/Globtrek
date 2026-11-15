@@ -100,7 +100,9 @@ export function buildDestinationPlanningAverages(destination = {}) {
       ? `Modeled from ${local.restaurants} local restaurants' price ranges on Google Maps (checked ${local.checkedAt}) and the country price level (World Bank); typical error about ${local.area ? `${AREA_LODGING_ERROR_PCT}% for lodging outside cities` : "20%"}. Not a live quote.`
       : band
         ? `Lodging: typical nightly price for a well-reviewed budget hotel, an estimated yearly average for a regional price band shared by ${band.sharedBy} places on GlobTrek's destination list.${meals ? ` Food modeled from ${meals.restaurants} local restaurants' price ranges on Google Maps (checked ${meals.checkedAt}).` : ""} Not a live quote.`
-        : "Modeled good-value planning average; not a live quote or guaranteed price",
+        : RESORT_ECONOMIES.has(destination.id)
+          ? "Modeled good-value planning average. Resort prices here often run far higher; check live rates before you budget. Not a live quote."
+          : "Modeled good-value planning average; not a live quote or guaranteed price",
     // "city": an editorial city baseline; "local_prices": modeled from observed
     // local prices; "price_band": regional lodging band plus observed local
     // meal prices; "price_band_partial": the band without local meal prices;

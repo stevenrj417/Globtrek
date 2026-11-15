@@ -3,7 +3,7 @@
   "checkedAt": "2026-11-15",
   "outcomes": 237,
   "inCatalog": 237,
-  "quizReady": 160,
+  "quizReady": 237,
   "withPhotoAndAlt": 237,
   "sixPlusActivities": 202,
   "ninePlusStays": 162,
@@ -16,12 +16,7 @@
    "tier": 2,
    "price_band_partial": 5
   },
-  "missingByCheck": {
-   "3+ accommodation options": 71,
-   "4+ activities": 16,
-   "destination-specific daily costs": 7,
-   "setting tag": 12
-  },
+  "missingByCheck": {},
   "complete": false,
   "completeNote": "No outcome is complete under the spec until verified per-property lodging (9+ with prices, ratings and photos) is available; that needs Booking Demand API access."
  },
@@ -38,17 +33,15 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0002",
@@ -164,12 +157,9 @@
    "restaurants": 0,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options",
-    "4+ activities"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
@@ -177,7 +167,7 @@
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0008",
@@ -191,15 +181,13 @@
    "restaurants": 4,
    "costModel": "tier",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "destination-specific daily costs"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0009",
@@ -213,16 +201,14 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0010",
@@ -236,16 +222,14 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0011",
@@ -259,17 +243,15 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0012",
@@ -283,17 +265,15 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0013",
@@ -428,16 +408,14 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0020",
@@ -512,17 +490,15 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0024",
@@ -577,19 +553,16 @@
    "restaurants": 4,
    "costModel": "local_prices",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options",
-    "4+ activities"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0027",
@@ -684,17 +657,15 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0032",
@@ -771,18 +742,16 @@
    "restaurants": 2,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0036",
@@ -796,17 +765,15 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0037",
@@ -920,17 +887,15 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0043",
@@ -964,18 +929,16 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0045",
@@ -989,16 +952,14 @@
    "restaurants": 4,
    "costModel": "local_prices",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "setting tag"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0046",
@@ -1053,16 +1014,14 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0049",
@@ -1140,16 +1099,14 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0053",
@@ -1163,16 +1120,14 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0054",
@@ -1186,17 +1141,15 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0055",
@@ -1251,16 +1204,14 @@
    "restaurants": 4,
    "costModel": "local_prices",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0058",
@@ -1274,17 +1225,14 @@
    "restaurants": 4,
    "costModel": "price_band_partial",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options",
-    "destination-specific daily costs"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0059",
@@ -1358,17 +1306,15 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0063",
@@ -1442,17 +1388,15 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0067",
@@ -1506,16 +1450,14 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0070",
@@ -1753,16 +1695,14 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0082",
@@ -1857,17 +1797,14 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "setting tag",
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0087",
@@ -1943,18 +1880,15 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "setting tag",
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0091",
@@ -2009,18 +1943,15 @@
    "restaurants": 4,
    "costModel": "price_band_partial",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options",
-    "destination-specific daily costs"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0094",
@@ -2034,20 +1965,16 @@
    "restaurants": 0,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "setting tag",
-    "3+ accommodation options",
-    "4+ activities"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
     "no verified restaurants",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0095",
@@ -2163,19 +2090,16 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options",
-    "4+ activities"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0101",
@@ -2371,17 +2295,15 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0111",
@@ -2456,16 +2378,14 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0115",
@@ -2500,19 +2420,16 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options",
-    "4+ activities"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0117",
@@ -2586,16 +2503,14 @@
    "restaurants": 4,
    "costModel": "local_prices",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0121",
@@ -2930,17 +2845,15 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0138",
@@ -3015,16 +2928,14 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0142",
@@ -3038,18 +2949,15 @@
    "restaurants": 2,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options",
-    "4+ activities"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0143",
@@ -3204,16 +3112,14 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0151",
@@ -3227,16 +3133,14 @@
    "restaurants": 4,
    "costModel": "local_prices",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0152",
@@ -3250,16 +3154,14 @@
    "restaurants": 4,
    "costModel": "local_prices",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0153",
@@ -3373,16 +3275,14 @@
    "restaurants": 4,
    "costModel": "local_prices",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "setting tag"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0159",
@@ -3456,18 +3356,16 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0163",
@@ -3481,20 +3379,16 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "setting tag",
-    "3+ accommodation options",
-    "4+ activities"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0164",
@@ -3508,18 +3402,15 @@
    "restaurants": 2,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "setting tag",
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0165",
@@ -3533,14 +3424,9 @@
    "restaurants": 0,
    "costModel": "price_band_partial",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "setting tag",
-    "3+ accommodation options",
-    "4+ activities",
-    "destination-specific daily costs"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
@@ -3548,7 +3434,7 @@
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0166",
@@ -3602,18 +3488,15 @@
    "restaurants": 2,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "setting tag",
-    "4+ activities"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0169",
@@ -3649,18 +3532,15 @@
    "restaurants": 3,
    "costModel": "price_band_partial",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options",
-    "destination-specific daily costs"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0171",
@@ -3694,12 +3574,9 @@
    "restaurants": 0,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options",
-    "4+ activities"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
@@ -3707,7 +3584,7 @@
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0173",
@@ -3742,19 +3619,16 @@
    "restaurants": 4,
    "costModel": "price_band_partial",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options",
-    "destination-specific daily costs"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0175",
@@ -3830,19 +3704,16 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options",
-    "4+ activities"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0179",
@@ -3939,17 +3810,15 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0184",
@@ -4003,16 +3872,14 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0187",
@@ -4207,20 +4074,16 @@
    "restaurants": 0,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "setting tag",
-    "3+ accommodation options",
-    "4+ activities"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
     "no verified restaurants",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0197",
@@ -4254,17 +4117,15 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0199",
@@ -4339,16 +4200,14 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0203",
@@ -4362,16 +4221,14 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0204",
@@ -4385,16 +4242,14 @@
    "restaurants": 3,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0205",
@@ -4408,16 +4263,14 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0206",
@@ -4472,17 +4325,14 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "setting tag",
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0209",
@@ -4516,16 +4366,14 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0211",
@@ -4539,16 +4387,14 @@
    "restaurants": 4,
    "costModel": "tier",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "destination-specific daily costs"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0212",
@@ -4562,16 +4408,14 @@
    "restaurants": 4,
    "costModel": "local_prices",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0213",
@@ -4585,16 +4429,14 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0214",
@@ -4608,19 +4450,16 @@
    "restaurants": 0,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options",
-    "4+ activities"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
     "no verified restaurants",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0215",
@@ -4674,16 +4513,14 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0218",
@@ -4718,16 +4555,14 @@
    "restaurants": 4,
    "costModel": "local_prices",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "setting tag"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0220",
@@ -4843,17 +4678,15 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0226",
@@ -4867,19 +4700,16 @@
    "restaurants": 0,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options",
-    "4+ activities"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
     "no verified restaurants",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0227",
@@ -4893,16 +4723,14 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0228",
@@ -4916,16 +4744,14 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0229",
@@ -4979,16 +4805,14 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0232",
@@ -5022,17 +4846,15 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0234",
@@ -5046,18 +4868,15 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options",
-    "4+ activities"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0235",
@@ -5071,19 +4890,16 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options",
-    "4+ activities"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0236",
@@ -5097,18 +4913,16 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 6 verified activities",
     "fewer than 9 catalog stays",
     "no observed fares to this airport",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   },
   {
    "outcomeId": "GT-0237",
@@ -5122,16 +4936,14 @@
    "restaurants": 4,
    "costModel": "price_band",
    "climate": true,
-   "quizReady": false,
-   "missing": [
-    "3+ accommodation options"
-   ],
-   "reachable": false,
+   "quizReady": true,
+   "missing": [],
+   "reachable": true,
    "flags": [
     "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
-   "status": "needs_data"
+   "status": "quiz_ready"
   }
  ]
 }

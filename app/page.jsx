@@ -10,6 +10,7 @@ const vibes = [
   ["Mountains", "Mountains", "/quiz/v2/mountains.jpg", "Lago di Carezza below the Latemar, Dolomites"],
   ["City", "Cities", "/quiz/v2/cities.jpg", "Paris and the Eiffel Tower from above"],
   ["History & culture", "Culture", "/quiz/v2/culture.jpg", "Kinkaku-ji reflected in its pond, Kyoto"],
+  ["Nature & wildlife", "Wild", "/quiz/v2/wild.jpg", "Elephants at the water's edge in the Okavango Delta, Botswana"],
   ["Surprise me", "Surprise Me", "/quiz/v2/surprise-me.jpg", "Hot-air balloons lifting off over Cappadocia"],
 ];
 

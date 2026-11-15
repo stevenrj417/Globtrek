@@ -10,6 +10,7 @@ const SETTING = {
   Cities: ["city life", ["Cities", "City", "Urban"]],
   Culture: ["history and culture", ["Culture", "History", "Architecture"]],
   "Road Trips": ["road trips", ["Road Trips", "Road Trip"]],
+  Wild: ["nature and wildlife", ["Wild"]],
 };
 const PACE = { "Slow mornings": "a relaxed pace", "Balanced days": "a balanced pace", "Packed schedule": "a full schedule", "Mostly relaxing": "downtime", "Adventure days": "active days" };
 const PRIORITY = { Food: "food", Nature: "nature", Culture: "culture", Nightlife: "nightlife", Wellness: "wellness", Shopping: "shopping" };
@@ -49,7 +50,7 @@ export function whyThisFits({ answers = {}, exactBudget, budgetPlan, trip }) {
   return [first, known].filter(Boolean).join(" ");
 }
 
-const SETTING_LABEL = { Ocean: ["Coastal setting", "Ocean"], Mountains: ["Mountain setting", "Mountains"], Cities: ["City setting", "Cities"], Culture: ["History & culture", "Culture"] };
+const SETTING_LABEL = { Ocean: ["Coastal setting", "Ocean"], Mountains: ["Mountain setting", "Mountains"], Cities: ["City setting", "Cities"], Culture: ["History & culture", "Culture"], Wild: ["Nature & wildlife", "Wild"] };
 const PACE_LABEL = { "Slow mornings": "Relaxed pace", "Balanced days": "Balanced pace", "Packed schedule": "Packed schedule", "Mostly relaxing": "Plenty of downtime", "Adventure days": "Active days" };
 const NIGHT_WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"];
 

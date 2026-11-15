@@ -1,7 +1,7 @@
 import { buildBudgetPlan } from "./budgetEngine.js";
 import { assessTravelFeasibility } from "./travelFeasibility.js";
 import { destinationMatchesTravelArea } from "./travelArea.js";
-import { MATCH_ALGORITHM_VERSION, destinationReadiness, matchesSetting, seasonSuitable, tripLengthRange, validateMatch } from "./eligibility.js";
+import { MATCH_ALGORITHM_VERSION, MIN_ACTIVITIES, MIN_STAYS, activityCount, destinationReadiness, matchesSetting, seasonSuitable, stayCount, tripLengthRange, validateMatch } from "./eligibility.js";
 
 export { MATCH_ALGORITHM_VERSION, validateMatch };
 
@@ -93,9 +93,17 @@ export function hardFilterFailure(destination, profile) {
   return null;
 }
 
+// Places with checked stays, enough activities and local costs come before
+// places that only have a Booking.com search, few activities or a planning
+// average; those still win when nothing fuller matches.
+export function thinData(item) {
+  return stayCount(item.id) < MIN_STAYS || activityCount(item.id) < MIN_ACTIVITIES || !["city", "local_prices", "price_band"].includes(item.planningAverages?.model) ? 1 : 0;
+}
+
 export function compareMatches(a, b) {
   const unreasonable = (item) => (item.travelFeasibility.status === "unreasonable" ? 1 : 0);
   return unreasonable(a) - unreasonable(b)
+    || thinData(a) - thinData(b)
     || b.destinationMatchScore - a.destinationMatchScore
     || a.budgetPlan.budgetCheckTotal - b.budgetPlan.budgetCheckTotal
     || String(a.id).localeCompare(String(b.id));

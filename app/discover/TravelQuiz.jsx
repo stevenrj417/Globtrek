@@ -25,6 +25,7 @@ const questions = [
       // Set hidden to false to restore Road Trips to the setting question.
       { label: "Road Trips", display: "Road trip", image: "/quiz/road-trips.jpg", alt: "An open road through a dramatic desert landscape", hidden: true },
       { label: "Culture", display: "History & culture", image: "/quiz/v2/culture.jpg", alt: "Kinkaku-ji reflected in its pond, Kyoto" },
+      { label: "Wild", display: "Nature & wildlife", image: "/quiz/v2/wild.jpg", alt: "Elephants at the water's edge in the Okavango Delta, Botswana" },
       { label: "Surprise Me", display: "No preference", image: "/quiz/v2/surprise-me.jpg", alt: "Hot-air balloons lifting off over Cappadocia" },
     ].filter((option) => !option.hidden),
   },

@@ -167,6 +167,8 @@ const EDITORIAL_TAGS = {
   OGG: ["Nature"],
   PPT: ["Nature"],
   "bora-bora-40f39": ["Nature"],
+  // Lagoons, canals and palm-lined backwaters: a nature trip, not a city or beach one.
+  "kerala-backwaters-967ce": ["Wild"],
 };
 function withEditorialTags(destination) {
   const extra = (EDITORIAL_TAGS[destination.id] || []).filter((tag) => !destination.tags?.includes(tag));
@@ -195,6 +197,16 @@ function withFacts(destination) {
 
 // Master destination list (scripts/destinations/import-master-list.mjs): the
 // Outcome ID is the permanent key and Exact Match the quiz-result string.
+// "Nature & wildlife" quiz setting: parks, deserts, safaris, rainforests,
+// waterfalls and lakes, from the catalog's own type and tags.
+const WILD_TAGS = new Set(["Wildlife", "Safari", "Desert", "Rainforest", "Jungle", "Waterfalls", "Lakes", "National Parks"]);
+const WILD_OUTCOME_TYPES = new Set(["National park", "Natural landmark", "Desert region", "Forest region", "Wetland region", "Reef region", "Lake region", "Trekking region"]);
+function withWildTag(destination) {
+  if (destination.tags?.includes("Wild")) return destination;
+  const wild = destination.destinationType === "nature_area" || WILD_OUTCOME_TYPES.has(destination.outcomeType) || (destination.tags || []).some((tag) => WILD_TAGS.has(tag));
+  return wild ? { ...destination, tags: [...(destination.tags || []), "Wild"] } : destination;
+}
+
 function outcomeFields(id) {
   const entry = OUTCOME_INDEX[id];
   if (!entry) return {};
@@ -209,7 +221,7 @@ export const destinations = [...legacyDestinations, ...verifiedExpansion.filter(
   ...outcomeFields(destination.id),
   // Launch cities priced from hand-checked lodging and food (see cheapStays.js).
   dataReviewed: destination.dataReviewed || (LAUNCH_SET.includes(destination.id) ? CHEAP_STAYS_CHECKED : null),
-}));
+})).map(withWildTag);
 
 export function scoreDestination(destination, answers) {
   const weights = { alive: 9, duration: 7, memory: 6, luxury: 6, hotel: 5, escape: 4, self: 3 };
