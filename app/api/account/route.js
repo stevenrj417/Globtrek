@@ -1,5 +1,6 @@
 import { createClient } from "../../lib/supabase/server";
 import { createAdminClient } from "../../lib/supabase/admin";
+import { accountPayload } from "../../lib/account/accountPayload";
 
 const AIRPORT_RE = /^[A-Z]{3}$/;
 const CURRENCY_RE = /^[A-Z]{3}$/;
@@ -7,12 +8,17 @@ const CURRENCY_RE = /^[A-Z]{3}$/;
 async function authenticatedClient() {
   const supabase = await createClient();
   const { data, error } = await supabase.auth.getUser();
-  return { supabase, user: error ? null : data.user };
+  return { supabase, user: error ? null : data.user, authError: error };
 }
 
-export async function GET() {
-  const { supabase, user } = await authenticatedClient();
-  if (!user) return Response.json({ error: "Unauthorized" }, { status: 401 });
+export async function GET(request) {
+  const { supabase, user, authError } = await authenticatedClient();
+  if (!user) {
+    // A session cookie that Supabase rejects means an expired or broken sign-in, not a new account.
+    const hadSession = /(?:^|;\s*)sb-[^=]*-auth-token/.test(request.headers.get("cookie") || "");
+    if (hadSession) console.error(JSON.stringify({ level: "warn", msg: "account_session_rejected", route: "/api/account", code: authError?.code || null, status: authError?.status || null }));
+    return Response.json({ error: "Unauthorized" }, { status: 401, headers: { "Cache-Control": "private, no-store" } });
+  }
 
   const metadata = user.user_metadata || {};
   await supabase.from("profiles").upsert({
@@ -22,23 +28,18 @@ export async function GET() {
     updated_at: new Date().toISOString(),
   }, { onConflict: "id", ignoreDuplicates: true });
 
-  const [profileResult, tripsResult, savedResult, recentResult, searchesResult] = await Promise.all([
+  // RLS already limits every table to auth.uid(); the user_id filters say so explicitly too.
+  const [profile, trips, saved, recent, recentSearches] = await Promise.all([
     supabase.from("profiles").select("*").eq("id", user.id).maybeSingle(),
-    supabase.from("saved_trips").select("*").order("updated_at", { ascending: false }),
-    supabase.from("saved_items").select("*").order("updated_at", { ascending: false }),
-    supabase.from("recent_views").select("*").order("viewed_at", { ascending: false }).limit(12),
-    supabase.from("recent_searches").select("*").order("searched_at", { ascending: false }).limit(8),
+    supabase.from("saved_trips").select("*").eq("user_id", user.id).order("updated_at", { ascending: false }),
+    supabase.from("saved_items").select("*").eq("user_id", user.id).order("updated_at", { ascending: false }),
+    supabase.from("recent_views").select("*").eq("user_id", user.id).order("viewed_at", { ascending: false }).limit(12),
+    supabase.from("recent_searches").select("*").eq("user_id", user.id).order("searched_at", { ascending: false }).limit(8),
   ]);
-  const error = profileResult.error || tripsResult.error || savedResult.error || recentResult.error || searchesResult.error;
-  if (error) return Response.json({ error: error.message }, { status: 500 });
-  return Response.json({
-    user: { email: user.email, provider: user.app_metadata?.provider || "email" },
-    profile: profileResult.data,
-    trips: tripsResult.data || [],
-    saved: savedResult.data || [],
-    recent: recentResult.data || [],
-    recentSearches: searchesResult.data || [],
-  });
+  const result = accountPayload(user, { profile, trips, saved, recent, recentSearches });
+  // Table name and Postgres error only: no user details in logs.
+  for (const failure of result.failures) console.error(JSON.stringify({ level: "error", msg: "account_query_failed", route: "/api/account", ...failure }));
+  return Response.json(result.body, { status: result.status, headers: { "Cache-Control": "private, no-store" } });
 }
 
 export async function PATCH(request) {

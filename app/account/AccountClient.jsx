@@ -102,19 +102,27 @@ export function AccountClient() {
   const [form, setForm] = useState({ displayName: "", homeAirport: "", currency: "USD" });
   const [status, setStatus] = useState("");
   const [marketingConsent, setMarketingConsent] = useState(false);
+  const [loadError, setLoadError] = useState(null);
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
     if (loading) return;
     if (!user) return;
     let active = true;
-    fetch("/api/account").then((response) => response.json()).then((next) => {
+    fetch("/api/account", { cache: "no-store" }).then(async (response) => {
+      const next = await response.json().catch(() => ({}));
+      // Never fall through to "no trips yet" when the account didn't load.
+      if (!response.ok) throw Object.assign(new Error(next.error || "Account unavailable"), { status: response.status });
+      return next;
+    }).then((next) => {
       if (!active) return;
+      setLoadError(null);
       setData(next);
       setForm({ displayName: next.profile?.display_name || "", homeAirport: next.profile?.home_airport || "", currency: next.profile?.currency || "USD" });
-    }).finally(() => active && setFetching(false));
+    }).catch((error) => { if (active) setLoadError(error.status === 401 ? "session" : "unavailable"); }).finally(() => active && setFetching(false));
     fetch("/api/email/preferences").then((response) => response.ok ? response.json() : null).then((preferences) => { if (active && preferences) setMarketingConsent(Boolean(preferences.marketingConsent)); }).catch(() => {});
     return () => { active = false; };
-  }, [loading, user]);
+  }, [loading, user, attempt]);
 
   const saved = useMemo(() => data?.saved || [], [data]);
   const savedDestinations = useMemo(() => saved.filter((item) => item.item_type === "destination"), [saved]);
@@ -168,7 +176,8 @@ export function AccountClient() {
     if (!response.ok) { setMarketingConsent(!nextValue); setStatus("Could not update email preference"); } else setStatus("Email preference saved");
   }
 
-  if (!loading && !user) return <>
+  // Signed in on this device, but the server rejected the session: ask to sign in again.
+  if ((!loading && !user) || loadError === "session") return <>
     <SignedOut onSignIn={() => setAuthOpen(true)} />
     <AuthSheet open={authOpen} onClose={() => setAuthOpen(false)} returnTo="/account" />
   </>;
@@ -197,7 +206,7 @@ export function AccountClient() {
       </div>
     </nav>
 
-    {fetching ? <div className="mx-auto grid max-w-[1500px] gap-5 px-5 py-16 sm:grid-cols-3 sm:px-8" aria-label="Loading your account">{[0, 1, 2].map((index) => <div key={index} className="aspect-[4/3] animate-pulse bg-placeholder" />)}</div> : <div className="mx-auto max-w-[1500px] px-5 pb-24 sm:px-8">
+    {fetching ? <div className="mx-auto grid max-w-[1500px] gap-5 px-5 py-16 sm:grid-cols-3 sm:px-8" aria-label="Loading your account">{[0, 1, 2].map((index) => <div key={index} className="aspect-[4/3] animate-pulse bg-placeholder" />)}</div> : loadError ? <div role="alert" className="mx-auto max-w-[1500px] px-5 py-20 sm:px-8"><h2 className="font-serif text-3xl tracking-tight-2">Your trips didn&apos;t load.</h2><p className="mt-3 max-w-[var(--width-reading)] text-muted">Your saved trips are safe. We couldn&apos;t reach them just now.</p><button type="button" onClick={() => { setLoadError(null); setFetching(true); setAttempt((value) => value + 1); }} className="btn btn-secondary mt-6 min-h-11 px-6">Try again</button></div> : <div className="mx-auto max-w-[1500px] px-5 pb-24 sm:px-8">
       <section id="trips" className="scroll-mt-40 py-14 sm:py-20">
         <SectionHeading title="Your trips" note={trips.length ? "Open a trip to book it, share it or change the dates." : null} action={trips.length ? <Link href="/discover" className="text-micro uppercase tracking-label">New trip <span aria-hidden="true">→</span></Link> : null} />
         {trips.length ? <div className="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">{trips.map((trip) => <article key={trip.id} className="group">
