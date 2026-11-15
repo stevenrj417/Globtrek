@@ -63,6 +63,15 @@ test("?destination=HAN shows Hanoi even when the browser saved an Oaxaca trip", 
   assert.equal(pickTrip({ destinationId: "ZZZ", matches: [oaxaca], catalog: [], plan: () => null }), null, "an unknown destination never falls back to another one");
 });
 
+test("the canonical Wadi Rum id opens Wadi Rum directly and a spreadsheet outcome id never falls back to another destination", () => {
+  const wadiRum = destinations.find((item) => item.id === "wadi-rum-67402");
+  assert.equal(wadiRum?.city, "WADI RUM");
+  const direct = pickTrip({ destinationId: "wadi-rum-67402", matches: [], catalog: destinations, plan: (item) => item });
+  assert.equal(direct?.id, "wadi-rum-67402");
+  const guessed = pickTrip({ destinationId: "GT-0219", matches: [destinations.find((item) => item.id === "tikal-11760")], catalog: destinations, plan: (item) => item });
+  assert.equal(guessed, null, "unknown outcome ids must not silently show the current top match");
+});
+
 test("a shared trip link is deterministic and ignores everything saved in the browser", () => {
   const payload = encodeSharedTrip({ quiz: { tripStart: "2027-03-01", tripEnd: "2027-03-06", answers: {} }, destination: "LIS", stay: "cj-42" });
   const fresh = resolveResultsState({ search: `?trip=${payload}` });

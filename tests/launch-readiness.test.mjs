@@ -19,7 +19,7 @@ import { scrubMessage } from "../app/lib/security/scrub.js";
 import { AFFILIATE_DISCLOSURE } from "../app/lib/site.js";
 
 const quiz = (answers, extra = {}) => ({ answers: { duration: "Five Nights", hotel: "Whatever's cheapest", ...answers }, exactBudget: extra.budget ?? 1500, guestCount: "1", isFlexible: true, originAirport: "LAX", originDetails: structuredOrigin("LAX"), travelAreaPreference: "anywhere", ...extra });
-const SETTING_TAG = { Ocean: "Ocean", Mountains: "Mountains", Cities: "Cities", Culture: "Culture" };
+const SETTING_TAG = { Ocean: "Ocean", Mountains: "Mountains", Cities: "Cities", Culture: "Culture", Wild: "Wild" };
 
 // The twelve combinations from the launch checklist.
 const COMBINATIONS = [
@@ -33,6 +33,7 @@ const COMBINATIONS = [
   ["Cities", "Culture", "Packed schedule", 1500],
   ["Cities", "Shopping", "Balanced days", 5000],
   ["Culture", "Culture", "Slow mornings", 1500],
+  ["Wild", "Nature", "Adventure days", 1500],
   ["Surprise Me", "Food", "Surprise me", 600],
   ["Surprise Me", "Nature", "Surprise me", 6000],
 ];
