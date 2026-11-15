@@ -27,7 +27,10 @@ export default function Home() {
           <div className="rise absolute inset-x-0 bottom-0 flex flex-col items-center px-5 pb-12 text-center sm:pb-16 lg:pb-20">
             <h1 className="max-w-4xl font-serif text-[clamp(2.6rem,7vw,6.5rem)] font-normal leading-[0.92] tracking-tight-3 text-white [text-shadow:0_2px_24px_rgba(0,0,0,.35)]">Where to next?</h1>
             <p className="mt-5 max-w-md text-base leading-7 text-white/90">Tell us how you like to travel. We&apos;ll find the place.</p>
-            <Link href="/discover" className="mt-8 inline-flex min-h-12 items-center gap-2 bg-white px-7 text-micro font-medium uppercase tracking-label text-black transition-opacity hover:opacity-90">Find my trip <span aria-hidden="true">→</span></Link>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <Link href="/discover" className="inline-flex min-h-12 min-w-[13rem] items-center justify-center gap-2 bg-white px-7 text-micro font-medium uppercase tracking-label text-black transition-opacity hover:opacity-90">Find my trip <span aria-hidden="true">→</span></Link>
+              <Link href="/destinations" prefetch={false} className="inline-flex min-h-12 min-w-[13rem] items-center justify-center border border-white/70 px-7 text-micro font-medium uppercase tracking-label text-white transition-colors hover:bg-white/10">Browse trips</Link>
+            </div>
           </div>
         </div>
       </section>
