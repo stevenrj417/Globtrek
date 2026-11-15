@@ -9,7 +9,7 @@ import { sharedRateLimit } from "../../lib/security/rateLimit";
 
 // Under the thinking screen's 8s cap (app/thinking/page.jsx MAX_MS) so its prefetch lands and
 // the results page never pays for a second call.
-const AI_PLAN_TIMEOUT_MS = 5500;
+const AI_PLAN_TIMEOUT_MS = 4500;
 
 const resultCache = new Map();
 const CACHE_TTL = 24 * 60 * 60 * 1000;
@@ -290,7 +290,8 @@ export async function POST(request) {
   try {
     const response = await fetch("https://api.openai.com/v1/responses", {
       // The destination is already chosen; the AI only writes the day plan. Past this,
-      // travelers get the standard plan instead of waiting (with web search it took 18–24s).
+      // travelers get the standard plan instead of waiting (with web search it took 18–24s;
+      // the rest of this route adds about 1.7s, so the total stays near 6s).
       signal: AbortSignal.timeout(AI_PLAN_TIMEOUT_MS),
       method: "POST",
       headers: {

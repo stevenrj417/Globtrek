@@ -28,5 +28,5 @@ test("the AI day plan can't hold the traveler past the thinking screen", () => {
   const cap = Number(thinking.match(/const MAX_MS = (\d+)/)[1]);
   assert.match(route, /signal: AbortSignal\.timeout\(AI_PLAN_TIMEOUT_MS\)/);
   assert.match(route, /aiStatus: "timeout"/);
-  assert.ok(timeout + 1500 <= cap, `AI cap ${timeout}ms leaves room under the ${cap}ms screen cap`);
+  assert.ok(timeout + 2500 <= cap, `AI cap ${timeout}ms leaves room under the ${cap}ms screen cap`);
 });
