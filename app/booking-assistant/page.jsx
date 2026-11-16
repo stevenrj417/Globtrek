@@ -6,6 +6,7 @@ import { AFFILIATE_DISCLOSURE } from "../lib/site";
 export const metadata = {
   title: "Booking Assistant for Chrome",
   description: "Book your whole GlobTrek trip from one tab: the assistant opens each booking on the partner's site and fills your details where the partner allows it. You review and pay on their site.",
+  alternates: { canonical: "/booking-assistant" },
 };
 
 const STEPS = [

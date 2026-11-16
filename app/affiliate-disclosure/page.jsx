@@ -4,7 +4,8 @@ import { AFFILIATE_DISCLOSURE } from "../lib/site";
 
 export const metadata = {
   title: "Affiliate disclosure",
-  description: "How affiliate links may support GlobTrek.",
+  description: "How GlobTrek earns money: affiliate commissions from Booking.com (through CJ Affiliate) and WeGoTrip (through Travelpayouts). Free to use; you pay the provider directly.",
+  alternates: { canonical: "/affiliate-disclosure" },
 };
 
 export default function AffiliateDisclosurePage() {
@@ -12,12 +13,12 @@ export default function AffiliateDisclosurePage() {
     <EditorialPage updated="2026-11-11"
       eyebrow="Affiliate disclosure"
       title="A clear route to booking."
-      intro="GlobTrek participates in the Booking.com Affiliate Partner Program. We make that relationship clear before you leave the site."
+      intro="GlobTrek is a Booking.com affiliate through the CJ Affiliate network. We make that relationship clear before you leave the site."
     >
       <BookingPartnerBadge className="mb-12" />
       <EditorialSection number="01" title="Our Booking.com relationship">
         <p>
-          <strong>{AFFILIATE_DISCLOSURE}</strong> GlobTrek is a Booking.com affiliate partner: we may receive a commission when a traveler follows an eligible Booking.com link and completes a qualifying booking. Tour and ticket links go to WeGoTrip through the Travelpayouts partner network, and may earn a commission the same way. Compensation supports GlobTrek and does not turn GlobTrek into the booking provider. You pay the travel provider directly.
+          <strong>{AFFILIATE_DISCLOSURE}</strong> GlobTrek is a Booking.com affiliate through the CJ Affiliate network: we may receive a commission when a traveler follows an eligible Booking.com link and completes a qualifying booking. Tour and ticket links go to WeGoTrip through the Travelpayouts partner network, and may earn a commission the same way. Being an affiliate is not an endorsement by Booking.com or WeGoTrip. Compensation supports GlobTrek and does not turn GlobTrek into the booking provider. You pay the travel provider directly.
         </p>
       </EditorialSection>
       <EditorialSection number="02" title="Pricing and decisions">

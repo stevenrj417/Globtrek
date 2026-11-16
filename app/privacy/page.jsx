@@ -5,6 +5,7 @@ import { CONTACT_EMAIL, LEGAL_NAME } from "../lib/site";
 export const metadata = {
   title: "Privacy",
   description: "What GlobTrek collects, where it goes, how long it's kept, and how to see or delete it.",
+  alternates: { canonical: "/privacy" },
 };
 
 const link = "text-ink underline decoration-black/25 underline-offset-4";

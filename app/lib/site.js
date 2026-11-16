@@ -11,3 +11,7 @@ export const CONTACT_EMAIL = process.env.CONTACT_EMAIL || "";
 
 // The one affiliate disclosure, word for word everywhere it appears.
 export const AFFILIATE_DISCLOSURE = "GlobTrek may earn a commission from qualifying bookings. Compare the provider's final price, fees and terms before booking.";
+
+// When the public pages' content last changed. The sitemap uses it instead of
+// the build time, so every deploy doesn't look like a site-wide update.
+export const CONTENT_UPDATED = "2026-11-16";

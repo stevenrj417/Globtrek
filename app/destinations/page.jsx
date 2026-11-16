@@ -3,6 +3,7 @@ import { SiteFooter, SiteHeader } from "../components/SiteChrome";
 import { CONTINENTS, SETTING_FILTERS, publishedDestinations } from "../data/destinationCatalog";
 import { DestinationBrowser } from "./DestinationBrowser";
 import { BookingLogo } from "../components/PartnerLogo";
+import { SITE_URL } from "../lib/site";
 
 export const metadata = {
   title: "Destinations on a budget",
@@ -10,9 +11,32 @@ export const metadata = {
   alternates: { canonical: "/destinations" },
 };
 
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": `${SITE_URL}/destinations`,
+      url: `${SITE_URL}/destinations`,
+      name: "Destinations on a budget",
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+      mainEntity: {
+        "@type": "ItemList",
+        numberOfItems: publishedDestinations.length,
+        itemListElement: publishedDestinations.map((item, index) => ({ "@type": "ListItem", position: index + 1, name: `${item.name}, ${item.country}`, url: `${SITE_URL}/destinations/${item.slug}` })),
+      },
+    },
+    { "@type": "BreadcrumbList", itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Destinations", item: `${SITE_URL}/destinations` },
+    ] },
+  ],
+};
+
 export default function DestinationsPage() {
   return (
     <main className="min-h-screen bg-bg text-ink">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <SiteHeader />
       <div className="mx-auto max-w-[1520px] px-5 py-[var(--section-space)] sm:px-8">
         <nav aria-label="Breadcrumb" className="text-sm text-subtle"><Link href="/" className="hover:text-ink">Home</Link> <span aria-hidden="true">›</span> <span aria-current="page">Destinations</span></nav>

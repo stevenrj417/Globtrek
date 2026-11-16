@@ -55,7 +55,8 @@ export default async function DestinationPage({ params }) {
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
-      { "@type": "TouristDestination", name: `${item.name}, ${item.country}`, url: `${SITE_URL}/destinations/${item.slug}`, image: item.image, description: `${item.name} is known for ${item.knownFor}.` },
+      { "@type": "TouristDestination", "@id": `${SITE_URL}/destinations/${item.slug}#destination`, name: `${item.name}, ${item.country}`, url: `${SITE_URL}/destinations/${item.slug}`, image: item.image, description: `${item.name} is known for ${item.knownFor}.`, containedInPlace: { "@type": "Country", name: item.country } },
+      { "@type": "WebPage", "@id": `${SITE_URL}/destinations/${item.slug}`, url: `${SITE_URL}/destinations/${item.slug}`, name: `${item.name} on a budget: 5-night trip`, isPartOf: { "@id": `${SITE_URL}/#website` }, about: { "@id": `${SITE_URL}/destinations/${item.slug}#destination` }, ...(item.modelDate ? { dateModified: item.modelDate } : {}) },
       { "@type": "BreadcrumbList", itemListElement: [
         { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
         { "@type": "ListItem", position: 2, name: "Destinations", item: `${SITE_URL}/destinations` },

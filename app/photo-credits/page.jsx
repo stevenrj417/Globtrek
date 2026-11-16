@@ -4,6 +4,7 @@ import { PHOTO_CREDITS } from "../lib/photoCredits";
 export const metadata = {
   title: "Photo credits",
   description: "Photographers and licenses for the images used on GlobTrek.",
+  alternates: { canonical: "/photo-credits" },
 };
 
 const link = "underline decoration-black/25 underline-offset-4 hover:decoration-black";

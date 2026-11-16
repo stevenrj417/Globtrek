@@ -5,6 +5,7 @@ import { AFFILIATE_DISCLOSURE, CONTACT_EMAIL, LEGAL_NAME } from "../lib/site";
 export const metadata = {
   title: "Terms",
   description: "The terms for using GlobTrek's free trip planner.",
+  alternates: { canonical: "/terms" },
 };
 
 export default function TermsPage() {

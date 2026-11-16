@@ -5,6 +5,11 @@ import { EmailSignup } from "./components/EmailSignup";
 import { TripCard } from "./components/TripCard";
 import { trendingTrips } from "./data/trending";
 
+export const metadata = {
+  description: "Free trip planner: answer seven quick questions and get one affordable trip that fits your budget, with an estimated cost, places to stay and things to do.",
+  alternates: { canonical: "/" },
+};
+
 const vibes = [
   ["Coast", "Ocean", "/quiz/v2/ocean.jpg", "Atrani on the Amalfi Coast, Italy"],
   ["Mountains", "Mountains", "/quiz/v2/mountains.jpg", "Lago di Carezza below the Latemar, Dolomites"],

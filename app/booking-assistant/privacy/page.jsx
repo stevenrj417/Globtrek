@@ -5,6 +5,7 @@ import { CONTACT_EMAIL, LEGAL_NAME } from "../../lib/site";
 export const metadata = {
   title: "Booking Assistant privacy policy",
   description: "How the GlobTrek Booking Assistant Chrome extension handles traveler details: stored on your device, never sent to GlobTrek, never sold.",
+  alternates: { canonical: "/booking-assistant/privacy" },
 };
 
 const link = "text-ink underline decoration-black/25 underline-offset-4";
