@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "../Photo";
+import { nightlyLine } from "../../lib/format";
 
 function money(value) {
   return `$${Math.round(value || 0).toLocaleString("en-US")}`;
@@ -36,6 +37,7 @@ export function Alternatives({ alternatives, current, answers }) {
           <div className="flex flex-1 flex-col p-4">
             <h3 className="font-serif text-xl leading-tight">{title(item.city)}<span className="block font-sans text-xs text-black/55">{title(item.country)}</span></h3>
             <p className="tabular mt-2 text-sm">{money(item.budgetPlan.budgetCheckTotal)} estimated</p>
+            {item.budgetPlan.lodging?.perUnit && item.budgetPlan.includedBudgetCategories?.hotel ? <p className="tabular text-xs text-black/60">Stay about {nightlyLine(item.budgetPlan.lodging.perUnit, item.budgetPlan.lodging.unit)}</p> : null}
             <ul className="mt-2 space-y-1 text-xs text-black/70">{compareToCurrent(item, current, answers).map((note) => <li key={note}>· {note}</li>)}</ul>
             {/* A full page load: the results page reads its destination once, on load. */}
             <a href={`/results?destination=${encodeURIComponent(key)}`} className="mt-auto inline-flex min-h-11 items-center pt-3 text-sm underline decoration-black/30 underline-offset-4 hover:decoration-ink">See this trip <span aria-hidden="true" className="ml-1">→</span></a>

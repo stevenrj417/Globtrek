@@ -1,7 +1,7 @@
 import Image from "./Photo";
 import Link from "next/link";
 import { EstimateDetails } from "./EstimateDetails";
-import { estimateLine, formatNights } from "../lib/recommendation/tripEstimate";
+import { estimateLine, formatNights, nightlyLine } from "../lib/recommendation/tripEstimate";
 
 export function TripCard({ trip, href, sizes = "(min-width: 768px) 33vw, 85vw", priority = false }) {
   return (
@@ -18,6 +18,7 @@ export function TripCard({ trip, href, sizes = "(min-width: 768px) 33vw, 85vw", 
           <h3 className="text-xl font-medium tracking-tight-2 sm:text-2xl">{trip.name}</h3>
           <p className="mt-1 text-xs text-subtle">{trip.country}</p>
           <p className="tabular mt-3 text-sm font-medium">{estimateLine(trip.estimate).split(" · ")[0]}</p>
+          {trip.estimate.perNight ? <p className="tabular mt-1 text-xs text-ink/80">Stay about {nightlyLine(trip.estimate.perNight, trip.estimate.nightUnit)}</p> : null}
           <p className="tabular mt-1 text-xs text-subtle">{estimateLine(trip.estimate).split(" · ").slice(1).join(" · ")}</p>
         </div>
       </Link>

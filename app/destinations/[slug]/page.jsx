@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { SiteFooter, SiteHeader } from "../../components/SiteChrome";
 import { EstimateDetails } from "../../components/EstimateDetails";
 import { destinationBySlug, publishedDestinations } from "../../data/destinationCatalog";
-import { estimateLine, formatMoney, formatRange } from "../../lib/recommendation/tripEstimate";
+import { estimateLine, formatMoney, formatRange, nightlyLine } from "../../lib/recommendation/tripEstimate";
 import { SITE_URL } from "../../lib/site";
 import { BookingLogo } from "../../components/PartnerLogo";
 import { LaunchSections } from "./LaunchSections";
@@ -84,6 +84,7 @@ export default async function DestinationPage({ params }) {
             <h1 className="mt-2 text-[clamp(2.75rem,7vw,5.5rem)] font-semibold leading-[1.02] tracking-tight-3">{item.name}</h1>
             <p className="mt-3 text-lg text-muted">Known for {item.knownFor}.</p>
             <p className="tabular mt-4 text-sm">{estimateLine(item.estimate)} <EstimateDetails estimate={item.estimate} align="left" /></p>
+            {item.estimate.perNight ? <p className="tabular mt-1 text-sm text-black/65">Stay about {nightlyLine(item.estimate.perNight, item.estimate.nightUnit)}</p> : null}
           </div>
           <div className="flex flex-col items-start gap-2 lg:items-end">
             <Link href={planHref} className="btn btn-primary">Make this my trip</Link>

@@ -31,6 +31,8 @@ export function estimateTrip(destination, { nights = 5, travelers = 1, startDate
     high: breakdown.reduce((sum, item) => sum + item.high, 0),
     nights,
     travelers,
+    perNight: plan.lodging?.perUnit || null,
+    nightUnit: plan.lodging?.unit || "room",
     breakdown,
     excludes: ["Flights"],
     basis: plan.lodging?.type === "hostel_bed"
@@ -41,4 +43,4 @@ export function estimateTrip(destination, { nights = 5, travelers = 1, startDate
   };
 }
 
-export { estimateLine, formatMoney, formatNights, formatRange } from "../format.js";
+export { estimateLine, formatMoney, formatNights, formatRange, nightlyLine } from "../format.js";

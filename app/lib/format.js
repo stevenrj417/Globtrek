@@ -18,6 +18,13 @@ export function estimateLine(estimate) {
   return `Est. ${formatRange(estimate.low, estimate.high)} · ${estimate.travelers} traveler${estimate.travelers === 1 ? "" : "s"} · ${formatNights(estimate.nights)} · before flights`;
 }
 
+// "$144 a night for a room" / "$32 a night for a dorm bed": the stay part of an estimate.
+export function nightlyLine(perNight, unit = "room") {
+  const value = Math.round(Number(perNight) || 0);
+  if (!value) return null;
+  return `${formatMoney(value)} a night for a ${unit === "bed" ? "dorm bed" : unit === "campsite" ? "campsite" : "room"}`;
+}
+
 // Wikimedia originals can be huge; request one of its standard thumbnail widths instead.
 export function sizedPhoto(url, width = 1280) {
   const match = String(url || "").match(/^https:\/\/upload\.wikimedia\.org\/wikipedia\/commons\/([0-9a-f])\/([0-9a-f]{2})\/([^?#/]+)/);
