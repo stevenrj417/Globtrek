@@ -7,6 +7,9 @@ import airportCoords from "../../data/airportCoords.json" with { type: "json" };
 import climate from "../../../scripts/destinations/climate.json" with { type: "json" };
 import fareIndex from "../../data/pricing/fareIndex.json" with { type: "json" };
 import lodgingBands from "../../data/lodgingPriceBands.json" with { type: "json" };
+import guideStays from "../../data/guideStays.json" with { type: "json" };
+import guideTownData from "../../data/guideTownData.json" with { type: "json" };
+import { GUIDE_TOWNS, COST_TWINS, COST_TWIN_LABEL, US_BAND_SOURCE, townId } from "../../data/guideTowns.js";
 import { destinations } from "../../data/destinations.js";
 import { publishedDestinations } from "../../data/destinationCatalog.js";
 import { GUIDES, GUIDE_CENTERS } from "../../data/guides.js";
@@ -24,6 +27,21 @@ const MAX_TRAVELERS = 8;
 
 const byId = new Map(destinations.map((item) => [item.id, item]));
 const pageById = new Map(publishedDestinations.map((item) => [item.id, item]));
+
+// Towns outside the catalog: their own location, airport, photo, stays and
+// weather; food, activities and transport from the matching US cost profile.
+const townStays = new Map();
+for (const [key, town] of Object.entries(GUIDE_TOWNS)) {
+  const id = townId(key);
+  const twin = byId.get(COST_TWINS[town.costs]);
+  const data = guideTownData.towns?.[key] || {};
+  if (!twin || !data.image) continue;
+  byId.set(id, { ...twin, id, town: key, name: `${town.name.toUpperCase()}, UNITED STATES`, city: town.name.toUpperCase(), latitude: town.latitude, longitude: town.longitude, airport: town.airport, image: data.image.url, avoidMonths: [], costTwin: twin.id });
+  pageById.set(id, { id, name: town.name, slug: pageById.get(town.parent)?.slug || null, alt: `${town.name}, ${town.state}`, country: "United States", continent: "North America", state: town.state, parent: town.parent || null, credit: data.image });
+  townStays.set(id, guideStays.towns?.[key]?.stays || []);
+}
+const staysFor = (id) => townStays.get(id) || feedStays.stays?.[id] || [];
+const climateFor = (id) => climate.climate?.[id] || guideTownData.towns?.[byId.get(id)?.town]?.climate || null;
 
 export function km(a, b) {
   if (!a || !b || a.latitude == null || b.latitude == null) return null;
@@ -69,6 +87,8 @@ const HIGHLIGHTS = [
 
 const BUDGET_TYPES = /hostel|guest ?house|inn|motel|capsule|bed and breakfast|homestay|aparthotel|hotel|lodge|apartment/i;
 const LUXURY = /resort|villa|luxury/i;
+// Rental listings named like an ad ("Cozy 1BR Retreat Near Downtown"), not a property.
+const LISTING = /\b\d\s?BR\b|\bretreat\b|\bw\/? (dedicated|private|hot tub|king)|\bEZ ?access\b| - .+ - |^(cozy|modern|charming|spacious|bright|stylish)\b/i;
 const STRIP = [{ latitude: 36.0905, longitude: -115.1745 }, { latitude: 36.1475, longitude: -115.1566 }];
 
 function distanceToStrip(point) {
@@ -118,7 +138,7 @@ function stayType(stay) {
 // The master list's lodging band for a place, by stay type (yearly averages).
 function bandFor(destination) {
   if (RESORT_ECONOMIES.has(destination.id)) return null;
-  return lodgingBands.bands?.[destination.id] || null;
+  return lodgingBands.bands?.[destination.town ? US_BAND_SOURCE : destination.id] || null;
 }
 
 function nightPrice(stay, destination, month) {
@@ -137,16 +157,17 @@ function nightPrice(stay, destination, month) {
 }
 
 function pickStays(guide, destination, center, month) {
-  const all = (feedStays.stays?.[destination.id] || []).filter((stay) => stay.photos?.length && (stay.cjClickUrl || stay.bookingUrl));
+  const all = staysFor(destination.id).filter((stay) => stay.photos?.length && (stay.cjClickUrl || stay.bookingUrl));
   let pool = all;
   if (guide.area?.town) pool = pool.filter((stay) => stay.city === guide.area.town);
   else if (guide.area?.radiusKm) pool = pool.filter((stay) => km(guide.area, stay) != null && km(guide.area, stay) <= guide.area.radiusKm);
   const feature = guide.feature ? FEATURES[guide.feature] : null;
   const scored = pool
     .map((stay) => ({ stay, evidence: feature ? feature(stay) : null, distance: km(center, stay) }))
-    .filter(({ stay, evidence }) => (!feature || evidence) && BUDGET_TYPES.test(stay.category || "hotel") && !LUXURY.test(stay.category || "") && !(Number(stay.starRating) > 4));
+    .filter(({ stay, evidence }) => (!feature || evidence) && !LISTING.test(stay.name) && BUDGET_TYPES.test(stay.category || "hotel") && !LUXURY.test(stay.category || "") && !(Number(stay.starRating) > 4));
   // Budget first; among equals, closer to the area.
-  scored.sort((a, b) => (b.stay.budgetScore || 0) - (a.stay.budgetScore || 0) || (a.distance ?? 99) - (b.distance ?? 99));
+  // Budget first (4-star stays only when there aren't enough cheaper ones); among equals, closer to the area.
+  scored.sort((a, b) => (Number(a.stay.starRating) >= 4) - (Number(b.stay.starRating) >= 4) || (b.stay.budgetScore || 0) - (a.stay.budgetScore || 0) || (a.distance ?? 99) - (b.distance ?? 99));
   // Mix types where possible: no more than two hostels.
   const picks = [];
   for (const entry of scored) {
@@ -307,7 +328,11 @@ function costGrid(destination, month) {
     grid.push(row);
   }
   const labels = estimateTrip(destination, { nights: 2, travelers: 2, startDate }).breakdown.map((item) => item.label);
-  return { labels, grid, lodgingSource: band ? `Lodging uses the master list's budget-hotel band for this region (shared by ${band.sharedBy} place${band.sharedBy === 1 ? "" : "s"}), one room per two travelers.` : "Lodging uses GlobTrek's cost model for this place." };
+  const town = destination.town ? GUIDE_TOWNS[destination.town] : null;
+  const lodgingSource = town
+    ? `Lodging uses the master list's general US budget-hotel band (shared by ${band.sharedBy} US places), one room per two travelers. Food, activities and local transport use GlobTrek's estimate for ${COST_TWIN_LABEL[town.costs]}.`
+    : band ? `Lodging uses the master list's budget-hotel band for this region (shared by ${band.sharedBy} place${band.sharedBy === 1 ? "" : "s"}), one room per two travelers.` : "Lodging uses GlobTrek's cost model for this place.";
+  return { labels, grid, lodgingSource };
 }
 
 function bestMonth(destination) {
@@ -321,13 +346,13 @@ function bestMonth(destination) {
 }
 
 function temperature(destinationId, month) {
-  const value = climate.climate?.[destinationId]?.t2m?.[month - 1];
+  const value = climateFor(destinationId)?.t2m?.[month - 1];
   return value == null ? null : Math.round(value);
 }
 
 // Per-place climate (NASA POWER averages): warmest, coolest and wettest months.
 function weather(destinationId) {
-  const data = climate.climate?.[destinationId];
+  const data = climateFor(destinationId);
   if (!data?.t2m?.length) return null;
   const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   const months = data.t2m.map((temp, index) => ({ month: index + 1, temp: Math.round(temp), rain: Math.round((data.precip?.[index] || 0) * days[index]) }));
@@ -339,7 +364,7 @@ function weather(destinationId) {
 }
 
 function goodWeather(destinationId, month) {
-  const data = climate.climate?.[destinationId];
+  const data = climateFor(destinationId);
   if (!data?.t2m) return false;
   const temp = data.t2m[month - 1];
   return temp >= 15 && temp <= 32 && (data.precip?.[month - 1] ?? 0) < 4;
@@ -371,6 +396,10 @@ function relatedFor(guide) {
     const otherPage = pageById.get(other.destinationId);
     if (page && otherPage && otherPage.country === page.country) points += 3;
     if (page && otherPage && otherPage.continent === page.continent) points += 1;
+    // Towns: same state, or the catalog destination they belong to.
+    if (page?.state && otherPage?.state === page.state) points += 3;
+    if (page?.parent && (other.destinationId === page.parent || otherPage?.parent === page.parent)) points += 2;
+    if (otherPage?.parent && other.destinationId !== guide.destinationId && guide.destinationId === otherPage.parent) points += 2;
     if (other.kind === guide.kind) points += 1;
     if (!destination && other.kind === "list") points += 2;
     return points;
@@ -423,7 +452,7 @@ function placeGuide(guide) {
   const quick = (["hotels", "feature"].includes(guide.kind) ? [whereLine, pickLine, hotelLine] : [costLine, whereLine, pickLine]).filter((line) => line && line !== ".");
 
   const faqs = [];
-  faqs.push([`How much does a ${tripName(guide, nights)} cost?`, `About ${fmt(low, high)} for ${people(travelers)} in ${MONTHS[month - 1]}: ${costs.labels.map((label, index) => `${label.toLowerCase()} ${fmt(...costs.grid[nights - 1][travelers - 1][index])}`).join(", ")}. That's before flights or driving there, from GlobTrek's cost model for ${page.name}; live prices are on Booking.com.`]);
+  faqs.push([`How much does a ${tripName(guide, nights)} cost?`, `About ${fmt(low, high)} for ${people(travelers)} in ${MONTHS[month - 1]}: ${costs.labels.map((label, index) => `${label.toLowerCase()} ${fmt(...costs.grid[nights - 1][travelers - 1][index])}`).join(", ")}. That's before flights or driving there, from GlobTrek's cost model for ${destination.town ? `${COST_TWIN_LABEL[GUIDE_TOWNS[destination.town].costs]} with US hotel prices` : page.name}; live prices are on Booking.com.`]);
   const sky = weather(destination.id);
   if (sky) faqs.push([`What's the weather like in ${guide.place}?`, `Warmest in ${MONTHS[sky.warm.month - 1]} (about ${sky.warm.temp} °C on average) and coolest in ${MONTHS[sky.cool.month - 1]} (about ${sky.cool.temp} °C). ${MONTHS[sky.wet.month - 1]} is the wettest month, with about ${sky.wet.rain} mm of rain, and ${MONTHS[sky.dry.month - 1]} the driest. ${MONTHS[month - 1]} averages ${sky.months[month - 1].temp} °C. Averages from NASA POWER, 2001–2025.`]);
   if (guide.feature === "oceanfront" || guide.feature === "romantic") {
@@ -442,7 +471,7 @@ function placeGuide(guide) {
     description: `${guide.title}: ${fmt(low, high)} for ${people(travelers)}, ${nights} nights, before travel. ${stays.picks.length} real budget stays${guide.area ? ` ${guide.area.town ? "in" : "near"} ${guide.area.name}` : ""}, cheap dinners and a ${plan.length}-day plan.`,
     image: sizedPhoto(destination.image, 1600),
     imageAlt: page.alt,
-    country: page.country,
+    country: page.state ? `${page.state}, ${page.country}` : page.country,
     destinationSlug: page.slug,
     quick,
     stays: stays.picks,
@@ -453,7 +482,8 @@ function placeGuide(guide) {
     costs: { ...costs, nights, travelers, month: MONTHS[month - 1] },
     faqs: faqs.slice(0, 5),
     related: relatedFor(guide),
-    quizHref: `/discover/quick?destination=${destination.id}&destinationName=${encodeURIComponent(page.name)}&source=guide`,
+    quizHref: destination.town ? (page.parent ? `/discover/quick?destination=${page.parent}&destinationName=${encodeURIComponent(pageById.get(page.parent)?.name || page.name)}&source=guide` : "/discover") : `/discover/quick?destination=${destination.id}&destinationName=${encodeURIComponent(page.name)}&source=guide`,
+    imageCredit: page.credit ? { artist: page.credit.artist, license: page.credit.license, licenseUrl: page.credit.licenseUrl, source: page.credit.source } : null,
   };
 }
 
@@ -471,7 +501,7 @@ function observedFare(origin, airport) {
 }
 
 function topStay(destinationId) {
-  const stay = (feedStays.stays?.[destinationId] || []).filter((item) => item.photos?.length).sort((a, b) => (b.budgetScore || 0) - (a.budgetScore || 0))[0];
+  const stay = staysFor(destinationId).filter((item) => item.photos?.length).sort((a, b) => (b.budgetScore || 0) - (a.budgetScore || 0))[0];
   return stay ? { name: stay.name, type: stayType(stay), bookingUrl: stay.bookingUrl, cjTrackingBaseUrl: stay.cjTrackingBaseUrl || null } : null;
 }
 

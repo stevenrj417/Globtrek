@@ -12,6 +12,7 @@
 //   versus    two places side by side
 //
 // area: hotels within radiusKm of a landmark, or in one feed town (town).
+// town: a place outside the destination catalog, from app/data/guideTowns.js.
 
 const AREA = {
   amsterdamCentral: { name: "Amsterdam Centraal", latitude: 52.3791, longitude: 4.9003, radiusKm: 1.5 },
@@ -28,6 +29,7 @@ const AREA = {
   eiffelTower: { name: "the Eiffel Tower", latitude: 48.8584, longitude: 2.2945, radiusKm: 1.8 },
   downtownPortland: { name: "downtown Portland", latitude: 45.5189, longitude: -122.6794, radiusKm: 1.5 },
   pdx: { name: "PDX airport", latitude: 45.5898, longitude: -122.5951, radiusKm: 6 },
+  downtownHoodRiver: { name: "downtown Hood River", latitude: 45.7097, longitude: -121.5143, radiusKm: 2 },
 };
 
 // City centers for older catalog records that have no coordinates.
@@ -38,6 +40,9 @@ export const GUIDE_CENTERS = {
   BKK: { latitude: 13.7563, longitude: 100.5018 },
   HAN: { latitude: 21.0285, longitude: 105.8542 },
 };
+
+// Guides for towns outside the catalog use the town's own stays and data.
+const town = (key, place) => ({ town: key, destinationId: `town:${key}`, place });
 
 export const GUIDES = [
   // Oregon coast and the Pacific Northwest
@@ -124,37 +129,37 @@ export const GUIDES = [
   { slug: "best-budget-cities-in-europe-for-first-timers", phrase: "best budget cities in europe for first timers", title: "Best budget cities in Europe for first-timers", kind: "list", list: { continent: "Europe", city: true, minKnownness: 75 } },
   { slug: "cheapest-beach-vacations-in-the-us", phrase: "cheapest beach vacations in the us", title: "Cheapest beach vacations in the US", kind: "list", list: { country: "United States", beach: true } },
   { slug: "cheap-international-trips-from-the-west-coast", phrase: "cheap international trips from the west coast", title: "Cheap international trips from the West Coast", kind: "list", list: { fromWestCoast: true } },
+  // Towns outside the catalog (app/data/guideTowns.js)
+  { slug: "weekend-in-seaside-oregon", phrase: "weekend in seaside oregon", title: "Weekend in Seaside, Oregon", kind: "weekend", ...town("seaside-or", "Seaside") },
+  { slug: "cheap-hotels-seaside-oregon", phrase: "cheap hotels seaside oregon", title: "Cheap hotels in Seaside, Oregon", kind: "hotels", ...town("seaside-or", "Seaside") },
+  { slug: "weekend-in-florence-oregon", phrase: "weekend in florence oregon", title: "Weekend in Florence, Oregon", kind: "weekend", ...town("florence-or", "Florence") },
+  { slug: "weekend-in-bandon-oregon", phrase: "weekend in bandon oregon", title: "Weekend in Bandon, Oregon", kind: "weekend", ...town("bandon-or", "Bandon") },
+  { slug: "weekend-in-hood-river", phrase: "weekend in hood river", title: "Weekend in Hood River", kind: "weekend", ...town("hood-river-or", "Hood River") },
+  { slug: "hood-river-hotels-near-downtown", phrase: "hood river hotels near downtown", title: "Hood River hotels near downtown", kind: "hotels", ...town("hood-river-or", "downtown Hood River"), area: AREA.downtownHoodRiver },
+  { slug: "weekend-in-bend-oregon", phrase: "weekend in bend oregon", title: "Weekend in Bend, Oregon", kind: "weekend", ...town("bend-or", "Bend") },
+  { slug: "cheap-hotels-in-bend-oregon", phrase: "cheap hotels in bend oregon", title: "Cheap hotels in Bend, Oregon", kind: "hotels", ...town("bend-or", "Bend") },
+  { slug: "weekend-in-sisters-oregon", phrase: "weekend in sisters oregon", title: "Weekend in Sisters, Oregon", kind: "weekend", ...town("sisters-or", "Sisters") },
+  { slug: "weekend-in-ashland-oregon", phrase: "weekend in ashland oregon", title: "Weekend in Ashland, Oregon", kind: "weekend", ...town("ashland-or", "Ashland") },
+  { slug: "weekend-in-leavenworth-wa", phrase: "weekend in leavenworth wa", title: "Weekend in Leavenworth, WA", kind: "weekend", ...town("leavenworth-wa", "Leavenworth") },
+  { slug: "cheap-hotels-in-leavenworth-wa", phrase: "cheap hotels in leavenworth wa", title: "Cheap hotels in Leavenworth, WA", kind: "hotels", ...town("leavenworth-wa", "Leavenworth") },
+  { slug: "cheap-weekend-in-lake-tahoe", phrase: "cheap weekend in lake tahoe", title: "Cheap weekend in Lake Tahoe", kind: "weekend", ...town("lake-tahoe", "Lake Tahoe") },
+  { slug: "weekend-in-boise-idaho", phrase: "weekend in boise idaho", title: "Weekend in Boise, Idaho", kind: "weekend", ...town("boise-id", "Boise") },
+  { slug: "weekend-in-denver-on-a-budget", phrase: "weekend in denver on a budget", title: "Weekend in Denver on a budget", kind: "weekend", ...town("denver-co", "Denver") },
 ];
 
-// Searches from the first-100 list that have no page, and why.
 export const SKIPPED_GUIDES = [
-  ["weekend in cannon beach", "No hotel data for Cannon Beach yet"],
-  ["cannon beach hotels with hot tub", "No hotel data for Cannon Beach yet"],
-  ["cheap hotels in cannon beach", "No hotel data for Cannon Beach yet"],
-  ["dog friendly hotels cannon beach", "No hotel data for Cannon Beach yet"],
-  ["weekend in seaside oregon", "No hotel data for Seaside yet"],
-  ["cheap hotels seaside oregon", "No hotel data for Seaside yet"],
-  ["weekend in astoria oregon", "No hotel data for Astoria yet"],
-  ["astoria hotels with river view", "No hotel data for Astoria yet"],
-  ["weekend in pacific city oregon", "No hotel data for Pacific City yet"],
+  ["weekend in cannon beach", "Only 3 hotels in Cannon Beach in our Booking.com data; most listings there are vacation rentals"],
+  ["cannon beach hotels with hot tub", "Only 3 hotels in Cannon Beach in our Booking.com data; most listings there are vacation rentals"],
+  ["cheap hotels in cannon beach", "Only 3 hotels in Cannon Beach in our Booking.com data; most listings there are vacation rentals"],
+  ["dog friendly hotels cannon beach", "Only 3 hotels in Cannon Beach in our Booking.com data; most listings there are vacation rentals"],
+  ["weekend in astoria oregon", "No hotels or motels in Astoria in our Booking.com data yet"],
+  ["astoria hotels with river view", "No hotels or motels in Astoria in our Booking.com data yet"],
+  ["weekend in pacific city oregon", "Only 1 hotel in Pacific City in our Booking.com data"],
   ["depoe bay hotels with ocean view", "Only 2 Depoe Bay stays show an ocean view"],
-  ["weekend in florence oregon", "No hotel data for Florence, Oregon yet"],
-  ["weekend in bandon oregon", "No hotel data for Bandon yet"],
-  ["weekend in hood river", "No hotel data for Hood River yet"],
-  ["hood river hotels near downtown", "No hotel data for Hood River yet"],
-  ["weekend in bend oregon", "No hotel data for Bend yet"],
-  ["cheap hotels in bend oregon", "No hotel data for Bend yet"],
-  ["weekend in sisters oregon", "No hotel data for Sisters yet"],
-  ["weekend in ashland oregon", "No hotel data for Ashland yet"],
-  ["weekend in joseph oregon", "No hotel data for Joseph yet"],
-  ["where to stay near crater lake", "No hotel data for Crater Lake yet"],
-  ["weekend in leavenworth wa", "No hotel data for Leavenworth yet"],
-  ["cheap hotels in leavenworth wa", "No hotel data for Leavenworth yet"],
+  ["weekend in joseph oregon", "Only 2 stays in Joseph in our Booking.com data"],
+  ["where to stay near crater lake", "Only 2 stays near Crater Lake in our Booking.com data"],
   ["cheapest oregon coast towns to stay", "No per-town hotel prices to rank towns honestly"],
   ["best oregon coast hotels under $150", "No per-hotel prices to check the $150 cap"],
-  ["cheap weekend in lake tahoe", "No hotel data for Lake Tahoe yet"],
-  ["weekend in boise idaho", "No hotel data for Boise yet"],
-  ["weekend in denver on a budget", "No hotel data for Denver yet"],
 ];
 
 export function guideBySlug(slug) {

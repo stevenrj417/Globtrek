@@ -126,6 +126,7 @@ function Hero({ guide, eyebrow }) {
       <div className="relative aspect-[16/10] overflow-hidden bg-placeholder sm:aspect-[21/9]">
         <Image src={guide.image} alt={guide.imageAlt} fill priority className="object-cover" sizes="(min-width: 1280px) 1280px, 100vw" quality={80} />
       </div>
+      {guide.imageCredit ? <p className="mt-2 text-xs text-subtle">Photo: <a href={guide.imageCredit.source} target="_blank" rel="noopener" className="underline decoration-black/25 underline-offset-4 hover:decoration-ink">{guide.imageCredit.artist}</a>, {guide.imageCredit.licenseUrl ? <a href={guide.imageCredit.licenseUrl} target="_blank" rel="noopener" className="underline decoration-black/25 underline-offset-4 hover:decoration-ink">{guide.imageCredit.license}</a> : guide.imageCredit.license}, via Wikimedia Commons</p> : null}
       <p className="eyebrow mt-8">{eyebrow}</p>
       <h1 className="mt-2 max-w-4xl text-balance text-[clamp(2.25rem,6vw,4.5rem)] font-semibold leading-[1.04] tracking-tight-3">{guide.title}</h1>
       <div className="mt-6 max-w-[var(--width-reading)] space-y-3 border-l-2 border-ink pl-5 text-lg leading-8">

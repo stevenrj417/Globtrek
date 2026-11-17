@@ -5,6 +5,8 @@ import { GUIDES, SKIPPED_GUIDES } from "../app/data/guides.js";
 import { buildGuide, publishedGuides } from "../app/lib/guides/buildGuide.js";
 
 const feed = JSON.parse(readFileSync(new URL("../app/data/feedStays.json", import.meta.url), "utf8")).stays;
+const townStays = JSON.parse(readFileSync(new URL("../app/data/guideStays.json", import.meta.url), "utf8")).towns;
+const staysFor = (guide) => guide.town ? townStays[guide.town]?.stays || [] : feed[guide.destinationId] || [];
 const guides = publishedGuides();
 
 test("every guide is published or listed as skipped, with one URL each", () => {
@@ -17,7 +19,7 @@ test("every guide is published or listed as skipped, with one URL each", () => {
 test("place guides show 4 real feed stays and never a made-up price", () => {
   for (const guide of guides.filter((item) => item.stays)) {
     assert.equal(guide.stays.length, 4, guide.slug);
-    const real = new Map((feed[guide.destinationId] || []).map((stay) => [stay.id, stay]));
+    const real = new Map(staysFor(guide).map((stay) => [stay.id, stay]));
     for (const stay of guide.stays) {
       const source = real.get(stay.id);
       assert.ok(source, `${guide.slug}: ${stay.name} is in the feed`);
@@ -59,6 +61,16 @@ test("Book links stay on Booking.com through CJ tracking", () => {
       assert.match(stay.bookingUrl, /^https:\/\/www\.booking\.com\//, `${guide.slug} ${stay.name}`);
       if (stay.cjTrackingBaseUrl) assert.match(stay.cjTrackingBaseUrl, /^https:\/\/www\.(kqzyfj|dpbolvw|jdoqocy|tkqlhce|anrdoezrs)\.(com|net)\/click-101801755-/);
     }
+  }
+});
+
+test("town guides use the town's own stays, photo credit and weather", () => {
+  const towns = guides.filter((guide) => guide.town);
+  assert.ok(towns.length >= 12, `${towns.length} town guides`);
+  for (const guide of towns) {
+    assert.ok(guide.imageCredit?.artist && guide.imageCredit.license && guide.imageCredit.source.startsWith("https://commons.wikimedia.org/"), guide.slug);
+    assert.ok(guide.faqs.some(([question]) => /weather/.test(question)), `${guide.slug} has weather`);
+    assert.match(guide.costs.lodgingSource, /general US budget-hotel band/, guide.slug);
   }
 });
 

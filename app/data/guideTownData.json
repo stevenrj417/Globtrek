@@ -1,0 +1,713 @@
+{
+ "towns": {
+  "seaside-or": {
+   "climate": {
+    "latitude": 45.9932,
+    "longitude": -123.9226,
+    "t2m": [
+     5.49,
+     5.5,
+     6.83,
+     8.36,
+     11.09,
+     13.2,
+     15.07,
+     15.29,
+     14.01,
+     10.95,
+     7.69,
+     5.21
+    ],
+    "precip": [
+     8.73,
+     5.95,
+     6.85,
+     4.62,
+     2.69,
+     1.83,
+     0.58,
+     0.89,
+     2.35,
+     5.56,
+     9.19,
+     9.33
+    ]
+   },
+   "image": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/f/fd/Seaside%2C_OR_Town_-_panoramio.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "width": 3648,
+    "height": 2736,
+    "source": "https://commons.wikimedia.org/wiki/File:Seaside,_OR_Town_-_panoramio.jpg",
+    "artist": "Dieter F",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "description": "Seaside, OR Town"
+   }
+  },
+  "cannon-beach-or": {
+   "climate": {
+    "latitude": 45.8918,
+    "longitude": -123.9615,
+    "t2m": [
+     5.49,
+     5.5,
+     6.83,
+     8.36,
+     11.09,
+     13.2,
+     15.07,
+     15.29,
+     14.01,
+     10.95,
+     7.69,
+     5.21
+    ],
+    "precip": [
+     8.73,
+     5.95,
+     6.85,
+     4.62,
+     2.69,
+     1.83,
+     0.58,
+     0.89,
+     2.35,
+     5.56,
+     9.19,
+     9.33
+    ]
+   },
+   "image": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/e/e3/Haystack_Rock%2C_Oregon_%28drone_photograph%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "width": 3992,
+    "height": 2992,
+    "source": "https://commons.wikimedia.org/wiki/File:Haystack_Rock,_Oregon_(drone_photograph).jpg",
+    "artist": "Dima Sergiyenko",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Aerial photograph of Haystack Rock in Cannon Beach, Oregon."
+   }
+  },
+  "astoria-or": {
+   "climate": {
+    "latitude": 46.1879,
+    "longitude": -123.8313,
+    "t2m": [
+     5.49,
+     5.5,
+     6.83,
+     8.36,
+     11.09,
+     13.2,
+     15.07,
+     15.29,
+     14.01,
+     10.95,
+     7.69,
+     5.21
+    ],
+    "precip": [
+     8.73,
+     5.95,
+     6.85,
+     4.62,
+     2.69,
+     1.83,
+     0.58,
+     0.89,
+     2.35,
+     5.56,
+     9.19,
+     9.33
+    ]
+   },
+   "image": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/7/7a/Astoria_Oregon.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "width": 653,
+    "height": 365,
+    "source": "https://commons.wikimedia.org/wiki/File:Astoria_Oregon.jpg",
+    "artist": "BeachcombersNW",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "description": "View of the Astoria-Megler bridge connecting Oregon and Washington"
+   }
+  },
+  "pacific-city-or": {
+   "climate": {
+    "latitude": 45.2023,
+    "longitude": -123.9626,
+    "t2m": [
+     5.34,
+     5.31,
+     6.65,
+     8.16,
+     11.04,
+     13.25,
+     15.35,
+     15.4,
+     13.94,
+     10.67,
+     7.32,
+     4.95
+    ],
+    "precip": [
+     7.9,
+     5.59,
+     6.1,
+     4.01,
+     2.28,
+     1.51,
+     0.43,
+     0.58,
+     1.96,
+     4.43,
+     7.96,
+     9
+    ]
+   },
+   "image": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/c/c7/Aerial_View_of_Pacific_City%2C_Oregon.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "width": 6016,
+    "height": 4000,
+    "source": "https://commons.wikimedia.org/wiki/File:Aerial_View_of_Pacific_City,_Oregon.JPG",
+    "artist": "Meronim",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "description": "Aerial View of Pacific City, Oregon"
+   }
+  },
+  "florence-or": {
+   "climate": {
+    "latitude": 43.9826,
+    "longitude": -124.0998,
+    "t2m": [
+     8.52,
+     8.24,
+     8.8,
+     9.64,
+     11.61,
+     13.43,
+     14.73,
+     15.06,
+     14.59,
+     12.62,
+     10.35,
+     8.54
+    ],
+    "precip": [
+     6.82,
+     5.23,
+     5.47,
+     3.69,
+     1.99,
+     1.25,
+     0.34,
+     0.48,
+     1.53,
+     3.57,
+     6.85,
+     8.5
+    ]
+   },
+   "image": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/0/0a/Florence_OR_aerial.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "width": 4120,
+    "height": 2736,
+    "source": "https://commons.wikimedia.org/wiki/File:Florence_OR_aerial.jpg",
+    "artist": "Sam Beebe",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "description": "Aerial view of Florence, Oregon, USA"
+   }
+  },
+  "bandon-or": {
+   "climate": {
+    "latitude": 43.119,
+    "longitude": -124.4084,
+    "t2m": [
+     7.77,
+     7.49,
+     8.22,
+     9.19,
+     11.42,
+     13.5,
+     15.62,
+     16.06,
+     15.24,
+     12.54,
+     9.63,
+     7.55
+    ],
+    "precip": [
+     6.1,
+     5.05,
+     5.29,
+     3.38,
+     1.72,
+     1.04,
+     0.21,
+     0.33,
+     1.2,
+     2.79,
+     6.1,
+     8.3
+    ]
+   },
+   "image": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/7/70/Bandon_Historic_District_%28Bandon%2C_Oregon%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "width": 4608,
+    "height": 3072,
+    "source": "https://commons.wikimedia.org/wiki/File:Bandon_Historic_District_(Bandon,_Oregon).jpg",
+    "artist": "Visitor7",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "description": "Bandon Historic District (Bandon, Oregon)"
+   }
+  },
+  "hood-river-or": {
+   "climate": {
+    "latitude": 45.7054,
+    "longitude": -121.5215,
+    "t2m": [
+     -0.13,
+     1.2,
+     4.16,
+     7.07,
+     11.51,
+     14.41,
+     18.26,
+     18.21,
+     14.46,
+     8.67,
+     3.18,
+     -0.45
+    ],
+    "precip": [
+     4.39,
+     3.31,
+     3.56,
+     2.52,
+     1.9,
+     1.33,
+     0.26,
+     0.46,
+     1.1,
+     2.72,
+     4.37,
+     5.28
+    ]
+   },
+   "image": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Hood_River_OR_-_aerial.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "width": 4288,
+    "height": 2848,
+    "source": "https://commons.wikimedia.org/wiki/File:Hood_River_OR_-_aerial.jpg",
+    "artist": "Sam Beebe",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "description": "Aerial view of Hood River, Oregon, USA"
+   }
+  },
+  "bend-or": {
+   "climate": {
+    "latitude": 44.0582,
+    "longitude": -121.3153,
+    "t2m": [
+     -0.91,
+     -0.2,
+     2.34,
+     5.06,
+     10.04,
+     13.75,
+     18.73,
+     17.86,
+     13.74,
+     7.59,
+     2.03,
+     -1.52
+    ],
+    "precip": [
+     2.65,
+     2.15,
+     2.24,
+     1.76,
+     1.52,
+     1.05,
+     0.26,
+     0.35,
+     0.73,
+     1.47,
+     2.61,
+     3.53
+    ]
+   },
+   "image": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/1/11/20210803_03_Bend%2C_Oregon.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "width": 3648,
+    "height": 2736,
+    "source": "https://commons.wikimedia.org/wiki/File:20210803_03_Bend,_Oregon.jpg",
+    "artist": "David Wilson",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "description": "20210803 03 Bend, Oregon"
+   }
+  },
+  "sisters-or": {
+   "climate": {
+    "latitude": 44.291,
+    "longitude": -121.5492,
+    "t2m": [
+     0.07,
+     1.16,
+     4.03,
+     6.86,
+     11.77,
+     15.24,
+     19.94,
+     19.24,
+     15.12,
+     8.89,
+     3.12,
+     -0.55
+    ],
+    "precip": [
+     2.4,
+     2.22,
+     2.08,
+     1.91,
+     1.51,
+     1.1,
+     0.23,
+     0.37,
+     0.78,
+     1.67,
+     2.39,
+     3.16
+    ]
+   },
+   "image": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/0/01/Sisters_main_street.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "width": 1704,
+    "height": 1140,
+    "source": "https://commons.wikimedia.org/wiki/File:Sisters_main_street.jpg",
+    "artist": "Finetooth",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "description": "Looking east along Cascade Avenue, the main street in Sisters, Oregon, United States."
+   }
+  },
+  "ashland-or": {
+   "climate": {
+    "latitude": 42.1946,
+    "longitude": -122.7095,
+    "t2m": [
+     0.09,
+     1.18,
+     3.54,
+     5.92,
+     10.64,
+     15.18,
+     21.17,
+     20.51,
+     16.26,
+     9.73,
+     3.5,
+     -0.24
+    ],
+    "precip": [
+     3.02,
+     2.87,
+     2.77,
+     1.88,
+     1.39,
+     0.66,
+     0.24,
+     0.24,
+     0.54,
+     1.48,
+     2.88,
+     4.31
+    ]
+   },
+   "image": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/0/01/Demi-Ashland%2COR-Plaza-EW-20050305.jpeg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "width": 2560,
+    "height": 1920,
+    "source": "https://commons.wikimedia.org/wiki/File:Demi-Ashland,OR-Plaza-EW-20050305.jpeg",
+    "artist": "Demi~commonswiki",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+    "description": "View of Plaza in Ashland, OR facing East to West. This photograph was taken by me on March 5, 2005."
+   }
+  },
+  "joseph-or": {
+   "climate": {
+    "latitude": 45.3543,
+    "longitude": -117.2296,
+    "t2m": [
+     -3.85,
+     -2.47,
+     1.2,
+     4.46,
+     9.71,
+     13.61,
+     19.49,
+     18.85,
+     14.04,
+     6.94,
+     0.54,
+     -4
+    ],
+    "precip": [
+     2.37,
+     2.26,
+     2.52,
+     2.08,
+     2.17,
+     1.76,
+     0.36,
+     0.54,
+     0.77,
+     1.58,
+     2.23,
+     2.87
+    ]
+   },
+   "image": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/7/73/Joseph_OR_-_aerial.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "width": 4288,
+    "height": 2848,
+    "source": "https://commons.wikimedia.org/wiki/File:Joseph_OR_-_aerial.jpg",
+    "artist": "Sam Beebe",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "description": "Aerial view of Joseph, Oregon, USA"
+   }
+  },
+  "crater-lake-or": {
+   "climate": {
+    "latitude": 42.9446,
+    "longitude": -122.109,
+    "t2m": [
+     -2.47,
+     -2.03,
+     0.19,
+     2.96,
+     7.86,
+     11.62,
+     16.61,
+     16.03,
+     12.24,
+     6.29,
+     0.62,
+     -2.86
+    ],
+    "precip": [
+     4.21,
+     3.51,
+     3.77,
+     2.65,
+     1.96,
+     1.12,
+     0.31,
+     0.4,
+     0.97,
+     2.11,
+     4.17,
+     5.75
+    ]
+   },
+   "image": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/5/51/Crater_Lake_National_Park_%282023%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "width": 6000,
+    "height": 4000,
+    "source": "https://commons.wikimedia.org/wiki/File:Crater_Lake_National_Park_(2023).jpg",
+    "artist": "John Manard",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+    "description": "Crater Lake National Park"
+   }
+  },
+  "leavenworth-wa": {
+   "climate": {
+    "latitude": 47.5962,
+    "longitude": -120.6615,
+    "t2m": [
+     -4.06,
+     -2.71,
+     0.55,
+     3.93,
+     9.61,
+     13.17,
+     17.46,
+     17.2,
+     12.78,
+     6.09,
+     -0.11,
+     -4.38
+    ],
+    "precip": [
+     3.9,
+     2.71,
+     2.85,
+     1.82,
+     1.62,
+     1.13,
+     0.42,
+     0.55,
+     1.07,
+     2.62,
+     3.91,
+     4.04
+    ]
+   },
+   "image": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/3/39/Main_street_in_Leavenworth%2C_Washington_%282023-06-18%29_%28cropped%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "width": 2135,
+    "height": 1478,
+    "source": "https://commons.wikimedia.org/wiki/File:Main_street_in_Leavenworth,_Washington_(2023-06-18)_(cropped).jpg",
+    "artist": "Roc0ast3r",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "description": "Main street in Leavenworth, Washington"
+   }
+  },
+  "lake-tahoe": {
+   "climate": {
+    "latitude": 38.9399,
+    "longitude": -119.9772,
+    "t2m": [
+     -1.27,
+     -0.45,
+     2.02,
+     4.92,
+     9.94,
+     15.54,
+     20.66,
+     19.63,
+     15.6,
+     9.19,
+     2.98,
+     -1.63
+    ],
+    "precip": [
+     2.93,
+     3.49,
+     3.02,
+     1.84,
+     1.21,
+     0.39,
+     0.26,
+     0.21,
+     0.29,
+     1.27,
+     2.25,
+     3.92
+    ]
+   },
+   "image": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/d/da/Tahoe_North_Shore_from_the_East_Shore.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "width": 5372,
+    "height": 3581,
+    "source": "https://commons.wikimedia.org/wiki/File:Tahoe_North_Shore_from_the_East_Shore.jpg",
+    "artist": "Lara Farhadi",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "description": "Image of the South Shore of the Lake from the West Shore. Heavenly Valley's ski runs can be seen quite clearly, as can just a bit of Job's Peak on the right."
+   }
+  },
+  "boise-id": {
+   "climate": {
+    "latitude": 43.615,
+    "longitude": -116.2023,
+    "t2m": [
+     -1.71,
+     0.72,
+     5.04,
+     8.65,
+     14.29,
+     19.37,
+     25.68,
+     24.52,
+     18.78,
+     10.58,
+     3.44,
+     -1.6
+    ],
+    "precip": [
+     1.65,
+     1.26,
+     1.52,
+     1.17,
+     1.21,
+     0.76,
+     0.21,
+     0.23,
+     0.46,
+     0.87,
+     1.34,
+     2.11
+    ]
+   },
+   "image": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/a/a6/Boise%2C_Idaho.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "width": 3600,
+    "height": 2504,
+    "source": "https://commons.wikimedia.org/wiki/File:Boise,_Idaho.jpg",
+    "artist": "Jyoni Shuler",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "Downtown Boise in the winter of 2021"
+   }
+  },
+  "denver-co": {
+   "climate": {
+    "latitude": 39.7392,
+    "longitude": -104.9903,
+    "t2m": [
+     -1.68,
+     -1.37,
+     3.17,
+     7.15,
+     12.47,
+     19.45,
+     22.33,
+     20.68,
+     16.36,
+     8.73,
+     2.83,
+     -2.06
+    ],
+    "precip": [
+     0.55,
+     0.76,
+     1.1,
+     1.69,
+     1.87,
+     1.41,
+     2,
+     1.68,
+     1.19,
+     0.97,
+     0.6,
+     0.6
+    ]
+   },
+   "image": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/3/37/Denver%2C_Colorado_skyline_%28cropped_3x5%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "width": 6782,
+    "height": 4069,
+    "source": "https://commons.wikimedia.org/wiki/File:Denver,_Colorado_skyline_(cropped_3x5).jpg",
+    "artist": "Quintin Soloviev",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "description": "Skyline of Denver, Colorado, the 19th-most populous city in the United States (715,522)."
+   }
+  }
+ },
+ "source": {
+  "climate": "NASA POWER climatology API v2 (T2M, PRECTOTCORR; 2001–2025)",
+  "image": "Wikipedia lead image, Wikimedia Commons license"
+ },
+ "checkedAt": "2026-11-17"
+}

@@ -12,6 +12,7 @@ for (const line of (await readFile(new URL("../../.env.local", import.meta.url),
 
 const { GUIDES, GUIDE_CENTERS } = await import("../../app/data/guides.js");
 const { destinations } = await import("../../app/data/destinations.js");
+const { GUIDE_TOWNS } = await import("../../app/data/guideTowns.js");
 const { GooglePlacesDiscoveryProvider } = await import("../../app/lib/google-places/GooglePlacesDiscoveryProvider.js");
 
 const args = process.argv.slice(2);
@@ -63,9 +64,11 @@ for (const guide of GUIDES) {
 
 for (const [key, guide] of areas) {
   if (!force && file.areas[key]) { console.log(`skip ${key}`); continue; }
-  const destination = destinations.find((item) => item.id === guide.destinationId);
+  // Towns outside the catalog stand in with their own name and location.
+  const town = guide.town ? GUIDE_TOWNS[guide.town] : null;
+  const destination = town ? { id: guide.destinationId, city: town.name, country: "UNITED STATES", latitude: town.latitude, longitude: town.longitude } : destinations.find((item) => item.id === guide.destinationId);
   const center = guide.area?.latitude ? guide.area : destination.latitude != null ? destination : GUIDE_CENTERS[destination.id];
-  const name = guide.area?.name && !guide.area.town ? `${guide.area.name}, ${guide.place}` : guide.place;
+  const name = town ? `${guide.area?.name || town.name}, ${town.state}` : guide.area?.name && !guide.area.town ? `${guide.area.name}, ${guide.place}` : guide.place;
   const maxKm = guide.area?.radiusKm ? Math.max(2, guide.area.radiusKm * 1.6) : guide.area?.town ? 12 : 25;
   const search = { ...destination, latitude: center.latitude, longitude: center.longitude, hotelSearchRadiusKm: Math.max(5, maxKm) };
   const near = (item) => item.latitude == null || km(center, item) <= maxKm;
