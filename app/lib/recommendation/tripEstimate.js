@@ -36,7 +36,7 @@ export function estimateTrip(destination, { nights = 5, travelers = 1, startDate
     breakdown,
     excludes: ["Flights"],
     basis: plan.lodging?.type === "hostel_bed"
-      ? `Rock bottom: a bed at ${plan.lodging.name} (Booking.com, taxes in), fast food and street food, transit and free things to do. Not a live quote.`
+      ? `Lowest cost: a bed at ${plan.lodging.name} (Booking.com, taxes in), fast food and street food, transit and free things to do. Not a live quote.`
       : "Modeled good-value estimate for a clean, well-reviewed budget or simple three-star stay. Not a live quote.",
     source: plan.estimates.hotel.source,
     lastUpdated: plan.estimates.hotel.lastUpdated,

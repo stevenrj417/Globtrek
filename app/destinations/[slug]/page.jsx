@@ -49,7 +49,7 @@ export default async function DestinationPage({ params }) {
   const may = months[4];
   const planHref = `/discover/quick?destination=${item.id}&destinationName=${encodeURIComponent(item.name)}&source=destination`;
   const facts = [
-    ["5 nights, 1 traveler", `${formatRange(item.estimate.low, item.estimate.high)}`, "Before flights, rock bottom"],
+    ["5 nights, 1 traveler", `${formatRange(item.estimate.low, item.estimate.high)}`, "Lowest-cost estimate, before flights"],
     ["Nearest airport", item.airport, null],
     item.knownness != null ? ["Knownness", `${item.knownness} / 100`, item.knownness < 40 ? "Off the radar" : item.knownness < 70 ? "Known, not crowded" : "Well known"] : null,
   ].filter(Boolean);

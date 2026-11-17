@@ -65,7 +65,7 @@ function FlightPlan({ trip, profile, estimate, preferences, range, onUpdate, sea
 
 const OBSERVED_FARE_SOURCES = ["aviasales_observed_biweekly", "aviasales_observed_monthly", "google_flights_snapshot", "us_dot_average_fare_paid"];
 
-const SPEND_LABELS = { cheapest: "Rock bottom", value: "Cheap but sane", comfortable: "A little comfort" };
+const SPEND_LABELS = { cheapest: "Lowest cost", value: "Cheap but sane", comfortable: "A little comfort" };
 const LABELS = { hotel: "Stay", flights: "Flights", food: "Dining", activities: "Experiences", transportation: "Transportation", miscBuffer: "Buffer" };
 
 // Where the lodging line's price comes from, in the same words everywhere.
@@ -117,7 +117,7 @@ function CostSection({ budgetPlan, trip, nights, travelers, missingPriceStay, sn
     <dl className="divide-y divide-black/10">{Object.entries(budgetPlan.estimates).map(([key, item]) => { const included = key === "miscBuffer" || budgetPlan.includedBudgetCategories[key]; return <div key={key} className="grid grid-cols-[1fr_auto] items-center gap-6 px-6 py-4 sm:px-8"><dt className="text-sm">{LABELS[key] || key}{included && notes[key] ? <span className="mt-0.5 block text-xs text-black/55">{notes[key]}</span> : null}{!included ? <span className="mt-0.5 block text-xs text-black/55">Not included</span> : null}</dt><dd className="tabular font-serif text-lg">{included ? money(item.average) : "—"}</dd></div>; })}<div className="grid grid-cols-[1fr_auto] items-center gap-6 bg-surface px-6 py-4 sm:px-8"><dt className="text-micro font-medium uppercase tracking-label">Estimated total</dt><dd className="tabular font-serif text-lg">{money(grand)}</dd></div></dl>
   </div>
   <details className="group mt-4 border-b border-black/10"><summary className="flex min-h-12 cursor-pointer list-none items-center justify-between text-sm text-black/65">How we estimate <span aria-hidden="true" className="transition-transform duration-200 group-open:rotate-45">+</span></summary><div className="max-w-3xl space-y-2 pb-5 text-xs leading-5 text-black/65">
-    <p>{cheapest ? "Rock bottom: the cheapest fare for your month, a hostel bed, street food, transit and free things to do." : "Economy flights, a simple room, everyday meals, local transport and activities for your travel month."} These are GlobTrek estimates, not live prices.</p>
+    <p>{cheapest ? "Lowest cost: the cheapest fare for your month, a hostel bed, street food, transit and free things to do." : "Economy flights, a simple room, everyday meals, local transport and activities for your travel month."} These are GlobTrek estimates, not live prices.</p>
     {flights?.basis ? <p>Flights: {flights.basis}.</p> : null}
     {budgetPlan.lodging?.total ? <p>Stay: {lodgingSource(budgetPlan.lodging)}.</p> : null}
     <p>Range {money(budgetPlan.estimatedTripLow)}–{money(budgetPlan.estimatedTripHigh)}.{generated ? ` Estimated ${generated}.` : ""}{snapshot?.resultId ? ` Result ${snapshot.resultId}.` : ""}</p>

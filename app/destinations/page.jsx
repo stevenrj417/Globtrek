@@ -40,7 +40,7 @@ export default function DestinationsPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <SiteHeader />
       <Breadcrumb items={[["Home", "/"], ["Destinations", null]]} width="max-w-[1520px]" />
-      <PageHero short centered image="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1" alt="A bright alpine lake and green mountains" chips={[`${publishedDestinations.length} places`]} title="Destinations" subtitle="Rock-bottom estimates for one person, 5 nights, before flights. Open one to see what's included and make it your trip." />
+      <PageHero short centered image="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1" alt="A bright alpine lake and green mountains" chips={[`${publishedDestinations.length} places`]} title="Destinations" subtitle="Lowest-cost estimates for one person, 5 nights, before flights. Open one to see what's included and make it your trip." />
       <div className="mx-auto max-w-[1520px] px-5 pb-[var(--section-space)] sm:px-8">
         <p className="mt-8 text-center text-sm text-subtle">Book stays, flights and attractions on <BookingLogo className="h-3.5 w-auto" /></p>
         <div className="mt-12">
