@@ -5,7 +5,7 @@
 //   node scripts/guides/fetch-town-data.mjs [--force]
 import { readFile, writeFile } from "node:fs/promises";
 
-const { GUIDE_TOWNS } = await import("../../app/data/guideTowns.js");
+const { GUIDE_TOWNS, GUIDE_PHOTOS } = await import("../../app/data/guideTowns.js");
 const fileUrl = new URL("../../app/data/guideTownData.json", import.meta.url);
 const force = process.argv.includes("--force");
 const file = JSON.parse(await readFile(fileUrl, "utf8").catch(() => '{"towns":{}}'));
@@ -67,6 +67,15 @@ for (const [key, town] of Object.entries(GUIDE_TOWNS)) {
   await writeFile(fileUrl, `${JSON.stringify(file, null, 1)}\n`);
   await sleep(3000);
   console.log(`${key.padEnd(18)} ${entry.climate ? "climate" : "NO CLIMATE"}  ${entry.image ? `${entry.image.source.split("File:")[1]} (${entry.image.license})` : "NO IMAGE"}`);
+}
+
+file.photos ||= {};
+for (const [key, title] of Object.entries(GUIDE_PHOTOS)) {
+  if (!force && file.photos[key]) continue;
+  const found = await image(title, OVERRIDES[key]);
+  if (found.url) file.photos[key] = found; else console.log(`${key}: lead image ${found.rejected} isn't usable; add an override`);
+  console.log(`${key.padEnd(18)} photo ${found.url ? `${found.source.split("File:")[1]} (${found.license})` : "NO IMAGE"}`);
+  await sleep(3000);
 }
 
 file.source = { climate: "NASA POWER climatology API v2 (T2M, PRECTOTCORR; 2001–2025)", image: "Wikipedia lead image, Wikimedia Commons license" };

@@ -33,4 +33,11 @@ export const COST_TWIN_LABEL = { town: "small US towns and parks", city: "mid-si
 // The master list's general US lodging band (shared by 14 US places).
 export const US_BAND_SOURCE = "seattle-76868";
 
+// Photos for guides about a town inside a bigger catalog destination, so each
+// guide shows its own place (guide.photo → Wikipedia page).
+export const GUIDE_PHOTOS = {
+  "lincoln-city": "Lincoln City, Oregon",
+  "newport-or": "Newport, Oregon",
+};
+
 export const townId = (key) => `town:${key}`;

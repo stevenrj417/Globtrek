@@ -709,5 +709,27 @@
   "climate": "NASA POWER climatology API v2 (T2M, PRECTOTCORR; 2001–2025)",
   "image": "Wikipedia lead image, Wikimedia Commons license"
  },
- "checkedAt": "2026-11-17"
+ "checkedAt": "2026-11-17",
+ "photos": {
+  "lincoln-city": {
+   "url": "https://upload.wikimedia.org/wikipedia/commons/1/18/Portion_of_the_Lincoln_City_coastline.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "width": 3968,
+   "height": 2976,
+   "source": "https://commons.wikimedia.org/wiki/File:Portion_of_the_Lincoln_City_coastline.jpg",
+   "artist": "Lonelystudentwithtoomuchtime",
+   "license": "CC BY-SA 4.0",
+   "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+   "description": "Represents the part of the Lincoln City, Oregon coastline looking North towards the previous community of Roads End."
+  },
+  "newport-or": {
+   "url": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Newport.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "width": 1632,
+   "height": 1224,
+   "source": "https://commons.wikimedia.org/wiki/File:Newport.jpg",
+   "artist": "Becherka",
+   "license": "Public domain",
+   "licenseUrl": null,
+   "description": "Newport, Oregon - view at the bridge from the port"
+  }
+ }
 }

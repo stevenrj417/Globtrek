@@ -23,6 +23,7 @@ const MONTHS = ["January", "February", "March", "April", "May", "June", "July", 
 const NIGHTS = { weekend: 2, hotels: 2, feature: 2, budget: 4 };
 const DAY_NAMES = { weekend: ["Saturday", "Sunday"], hotels: ["Saturday", "Sunday"], feature: ["Saturday", "Sunday"] };
 const MAX_NIGHTS = 14;
+const KIND_LABEL = { weekend: "Weekend", hotels: "Cheap hotels", feature: "Hotels", budget: "On a budget", list: "List", versus: "Side by side" };
 const MAX_TRAVELERS = 8;
 
 const byId = new Map(destinations.map((item) => [item.id, item]));
@@ -41,6 +42,8 @@ for (const [key, town] of Object.entries(GUIDE_TOWNS)) {
   townStays.set(id, guideStays.towns?.[key]?.stays || []);
 }
 const staysFor = (id) => townStays.get(id) || feedStays.stays?.[id] || [];
+// A guide's own photo (app/data/guideTowns.js GUIDE_PHOTOS), else its place's.
+const guidePhoto = (guide) => guide.photo ? guideTownData.photos?.[guide.photo] || null : null;
 const climateFor = (id) => climate.climate?.[id] || guideTownData.towns?.[byId.get(id)?.town]?.climate || null;
 
 export function km(a, b) {
@@ -469,9 +472,17 @@ function placeGuide(guide) {
     ...guide,
     h1: guide.title,
     description: `${guide.title}: ${fmt(low, high)} for ${people(travelers)}, ${nights} nights, before travel. ${stays.picks.length} real budget stays${guide.area ? ` ${guide.area.town ? "in" : "near"} ${guide.area.name}` : ""}, cheap dinners and a ${plan.length}-day plan.`,
-    image: sizedPhoto(destination.image, 1600),
-    imageAlt: page.alt,
-    country: page.state ? `${page.state}, ${page.country}` : page.country,
+    image: sizedPhoto(guidePhoto(guide)?.url || destination.image, 1600),
+    imageAlt: guidePhoto(guide) ? `${guide.place}, ${page.state || page.country}` : page.alt,
+    label: KIND_LABEL[guide.kind],
+    chips: [`${nights} nights`, KIND_LABEL[guide.kind]],
+    estimate: { low, high, nights, travelers },
+    facts: [
+      [tripName(guide, nights).replace(/^./, (letter) => letter.toUpperCase()), `${fmt(low, high)}`, `${people(travelers)}, before travel`],
+      cheapest ? [cheapest.dorms ? "Dorm bed" : `Typical ${cheapest.price.kind} room`, `about ${formatMoney(cheapest.price.value)}`, "a night, not a quote"] : null,
+      ["Top pick", top.name, top.type],
+    ].filter(Boolean),
+    country: page.state ? `${page.state}, ${page.country}` : page.country === "United States" && destination.region && !/united states/i.test(destination.region) ? `${destination.region}, ${page.country}` : page.country,
     destinationSlug: page.slug,
     quick,
     stays: stays.picks,
@@ -483,7 +494,7 @@ function placeGuide(guide) {
     faqs: faqs.slice(0, 5),
     related: relatedFor(guide),
     quizHref: destination.town ? (page.parent ? `/discover/quick?destination=${page.parent}&destinationName=${encodeURIComponent(pageById.get(page.parent)?.name || page.name)}&source=guide` : "/discover") : `/discover/quick?destination=${destination.id}&destinationName=${encodeURIComponent(page.name)}&source=guide`,
-    imageCredit: page.credit ? { artist: page.credit.artist, license: page.credit.license, licenseUrl: page.credit.licenseUrl, source: page.credit.source } : null,
+    imageCredit: (({ artist, license, licenseUrl, source } = {}) => artist ? { artist, license, licenseUrl, source } : null)(guidePhoto(guide) || page.credit || undefined),
   };
 }
 
@@ -591,6 +602,13 @@ function listGuide(guide) {
     description: `${guide.title}, ranked by estimated cost: ${items.slice(0, 3).map((item) => item.name).join(", ")} and ${items.length - 3} more, with real stays and trip estimates.`,
     image: items[0].image.replace(/\/800px-/, "/1600px-"),
     imageAlt: items[0].alt,
+    label: KIND_LABEL.list,
+    chips: [`${items.length} places`, `${nights} nights`],
+    facts: [
+      ["Cheapest", first.page.name, `about ${fmt(first.estimate.low, first.estimate.high)}`],
+      ["Ranked", `${items.length} places`, `${nights} nights, one traveler`],
+      ["Runner-up", ranked[1].page.name, `about ${fmt(ranked[1].estimate.low, ranked[1].estimate.high)}`],
+    ],
     quick,
     items,
     nights,
@@ -644,6 +662,13 @@ function versusGuide(guide) {
     description: `${guide.title}: ${cheaper.name} costs about ${gap}% less for 5 nights. Rooms, food, best months, real stays and cheap dinners in both, side by side.`,
     image: a.image,
     imageAlt: a.alt,
+    label: KIND_LABEL.versus,
+    chips: [`${a.name} vs ${b.name}`],
+    facts: [
+      [`Weekend in ${a.name}`, fmt(...a.weekend), "2 travelers, before travel"],
+      [`Weekend in ${b.name}`, fmt(...b.weekend), "2 travelers, before travel"],
+      ["Cheaper", cheaper.name, `about ${gap}% less for 5 nights`],
+    ],
     quick: quick.filter(Boolean), sides, faqs,
     related: relatedFor(guide),
     quizHref: "/discover",
@@ -651,6 +676,13 @@ function versusGuide(guide) {
 }
 
 const cache = new Map();
+
+// What a guide card shows: photo, labels and one line of numbers.
+export function guideCard(built) {
+  if (!built) return null;
+  const meta = built.estimate ? `${fmt(built.estimate.low, built.estimate.high)} · ${people(built.estimate.travelers)}` : built.items ? `From ${built.items[0].name}, ${built.items[0].estimate}` : built.sides ? built.sides.map((side) => side.name).join(" or ") : null;
+  return { slug: built.slug, title: built.title, image: built.image, imageAlt: built.imageAlt, chips: built.chips || [], label: built.label, place: built.country || built.label, meta };
+}
 
 export function buildGuide(guide) {
   if (!guide) return null;

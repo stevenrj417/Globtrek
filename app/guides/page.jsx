@@ -1,7 +1,8 @@
-import Image from "../components/Photo";
+import Image from "next/image";
 import Link from "next/link";
+import { GuideCard } from "./GuideCard";
 import { SiteFooter, SiteHeader } from "../components/SiteChrome";
-import { publishedGuides } from "../lib/guides/buildGuide";
+import { guideCard, publishedGuides } from "../lib/guides/buildGuide";
 import { SITE_URL } from "../lib/site";
 
 export const metadata = {
@@ -11,10 +12,10 @@ export const metadata = {
 };
 
 const GROUPS = [
-  ["Weekends", (guide) => guide.kind === "weekend"],
-  ["Cheap hotels", (guide) => guide.kind === "hotels" || guide.kind === "feature"],
-  ["On a budget", (guide) => guide.kind === "budget" || guide.kind === "versus"],
-  ["Where to go", (guide) => guide.kind === "list"],
+  ["weekends", "Weekends", "Two nights, a Saturday and Sunday plan, and what it all costs.", (guide) => guide.kind === "weekend"],
+  ["hotels", "Cheap hotels", "Budget stays near the places people want to be.", (guide) => guide.kind === "hotels" || guide.kind === "feature"],
+  ["budget", "On a budget", "Longer trips, day by day, on as little as possible.", (guide) => guide.kind === "budget" || guide.kind === "versus"],
+  ["lists", "Where to go", "The cheapest places for a month, a season or a starting point.", (guide) => guide.kind === "list"],
 ];
 
 export default function GuidesPage() {
@@ -31,24 +32,32 @@ export default function GuidesPage() {
     <main className="min-h-screen bg-bg text-ink">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <SiteHeader />
-      <div className="mx-auto max-w-[1280px] px-5 py-[var(--section-space)] sm:px-8">
-        <nav aria-label="Breadcrumb" className="text-sm text-subtle"><Link href="/" className="hover:text-ink">Home</Link> <span aria-hidden="true">›</span> <span aria-current="page">Guides</span></nav>
-        <h1 className="mt-6 font-serif text-[clamp(2.5rem,5.4vw,5rem)] font-normal leading-[1.02] tracking-tight-2">Guides</h1>
-        <p className="mt-4 max-w-[var(--width-reading)] text-lg leading-8 text-muted">Real budget stays, cheap dinners, a day-by-day plan and what the trip costs, for {guides.length} trips people search for.</p>
-        {GROUPS.map(([title, test]) => {
+      <div className="mx-auto max-w-[1520px] px-5 pt-6 sm:px-8">
+        <nav aria-label="Breadcrumb" className="text-sm text-subtle"><Link href="/" className="hover:text-ink">Home</Link> <span aria-hidden="true">›</span> <span aria-current="page" className="text-ink">Guides</span></nav>
+      </div>
+      <section className="px-4 pt-4 sm:px-6">
+        <div className="relative mx-auto min-h-[48svh] max-w-[1880px] overflow-hidden bg-placeholder sm:min-h-[56svh]">
+          <Image src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1" alt="A bright alpine lake and green mountains" fill priority className="image-calm object-cover" sizes="(min-width: 1880px) 1880px, 100vw" quality={70} />
+          <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black/70 via-black/30 to-transparent" aria-hidden="true" />
+          <div className="rise absolute inset-x-0 bottom-0 flex flex-col items-center px-5 pb-12 text-center sm:pb-16">
+            <p className="text-micro font-semibold uppercase tracking-caps text-white/80">{guides.length} guides</p>
+            <h1 className="mt-3 max-w-4xl font-serif text-[clamp(2.6rem,7vw,6rem)] font-normal leading-[0.95] tracking-tight-3 text-white [text-shadow:0_2px_24px_rgba(0,0,0,.35)]">Budget travel guides</h1>
+            <p className="mt-5 max-w-lg text-base leading-7 text-white/90">Real stays, cheap dinners, a day-by-day plan and what the trip costs, for the trips people search for.</p>
+          </div>
+        </div>
+      </section>
+      <nav aria-label="Guide types" className="mx-auto mt-10 flex max-w-[1520px] flex-wrap justify-center gap-2 px-5 sm:px-8">
+        {GROUPS.map(([id, title, , test]) => <a key={id} href={`#${id}`} className="inline-flex min-h-10 items-center gap-2 border border-black/15 px-4 text-micro font-medium uppercase tracking-label transition-colors hover:border-ink">{title} <span className="tabular text-subtle">{guides.filter(test).length}</span></a>)}
+      </nav>
+      <div className="mx-auto max-w-[1520px] px-5 pb-[var(--section-space)] sm:px-8">
+        {GROUPS.map(([id, title, intro, test]) => {
           const items = guides.filter(test);
           if (!items.length) return null;
-          return <section key={title} aria-labelledby={`${title}-heading`} className="mt-[var(--section-space)]">
-            <h2 id={`${title}-heading`} className="text-2xl font-semibold tracking-tight-2">{title}</h2>
-            <ul className="mt-6 grid gap-px border border-black/10 bg-black/10 sm:grid-cols-2 lg:grid-cols-4">
-              {items.map((guide, index) => <li key={guide.slug} className="bg-bg">
-                <Link href={`/guides/${guide.slug}`} className="group flex h-full flex-col">
-                  <div className="relative aspect-[4/3] overflow-hidden bg-placeholder">
-                    <Image src={guide.image} alt={guide.imageAlt} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.02]" sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" loading={index < 4 ? "eager" : "lazy"} />
-                  </div>
-                  <p className="flex flex-1 items-start justify-between gap-3 p-4 font-medium tracking-tight-1">{guide.title} <span aria-hidden="true">→</span></p>
-                </Link>
-              </li>)}
+          return <section key={id} id={id} aria-labelledby={`${id}-heading`} className="reveal mt-[var(--section-space)] scroll-mt-24">
+            <h2 id={`${id}-heading`} className="font-serif text-3xl tracking-tight-3 sm:text-5xl">{title}</h2>
+            <p className="mt-3 max-w-[var(--width-reading)] text-base text-muted">{intro}</p>
+            <ul className="mt-10 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+              {items.map((guide, index) => <li key={guide.slug}><GuideCard card={guideCard(guide)} eager={id === "weekends" && index < 4} /></li>)}
             </ul>
           </section>;
         })}
