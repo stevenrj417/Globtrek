@@ -46,11 +46,11 @@ export function PageHero({ image, alt, title, chips = [], credit, subtitle, cent
 
 // The answer up top, with the key numbers in a panel beside it.
 export function Summary({ eyebrow = "The short answer", lines = [], facts = [], jump = [], children }) {
-  return <section aria-label={eyebrow} className="mx-auto mt-12 grid max-w-[1280px] gap-10 px-5 sm:mt-16 sm:px-8 lg:grid-cols-[1.25fr_1fr] lg:gap-16">
+  return <section aria-label={eyebrow} className={`mx-auto mt-10 grid max-w-[1280px] gap-10 px-5 sm:mt-12 sm:px-8 ${facts.length ? "lg:grid-cols-[1.25fr_1fr] lg:gap-16" : ""}`}>
     <div>
       <p className="eyebrow">{eyebrow}</p>
-      <div className="mt-4 space-y-4 text-lg leading-8 tracking-tight-1 sm:text-2xl sm:leading-10">
-        {lines.map((line, index) => <p key={line} className={index ? "text-muted" : ""}>{line}</p>)}
+      <div className="mt-3 max-w-2xl space-y-2 text-base leading-7 text-ink sm:text-lg sm:leading-8">
+        {lines.map((line) => <p key={line}>{line}</p>)}
       </div>
       {children}
       {jump.length ? <nav aria-label="On this page" className="mt-8 flex flex-wrap gap-2">
@@ -99,6 +99,24 @@ export function NumberedPlaces({ places, linkLabel = "Map and hours ↗" }) {
       </div>
     </li>)}
   </ol>;
+}
+
+// Places as photo cards (photo, name, rating, map link). Places without a photo
+// get a quiet panel with the name instead of a stock picture.
+export function PhotoPlaces({ places }) {
+  return <ul className="-mx-5 mt-10 flex snap-x snap-mandatory scroll-px-5 gap-5 overflow-x-auto px-5 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 sm:overflow-visible sm:px-0 lg:grid-cols-3">
+    {places.map((place) => <li key={place.key || place.name} className="flex w-[78%] shrink-0 snap-start flex-col sm:w-auto">
+      <div className="relative aspect-[4/3] overflow-hidden bg-surface">
+        <a href={place.href} target="_blank" rel="noopener" tabIndex={-1} aria-hidden="true" className="group absolute inset-0">
+          {place.photo ? <Image src={place.photo.url} alt="" fill className="image-calm object-cover transition-transform duration-500 group-hover:scale-[1.02]" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 80vw" /> : <span className="grid h-full place-items-center p-8 text-center font-serif text-2xl leading-tight text-subtle">{place.name}</span>}
+        </a>
+        {place.eyebrow ? <div className="pointer-events-none absolute left-3 top-3"><Chip>{place.eyebrow}</Chip></div> : null}
+        {place.photo ? <PhotoCredit credit={place.photo} /> : null}
+      </div>
+      <a href={place.href} target="_blank" rel="noopener" className="mt-4 text-lg font-medium leading-snug tracking-tight-1 hover:underline">{place.name}</a>
+      <p className="mt-1 flex items-center justify-between gap-3 text-sm text-muted">{place.rating ? <Stars rating={place.rating} reviews={place.reviewCount} /> : <span />}<span>{place.linkLabel || "Map ↗"}</span></p>
+    </li>)}
+  </ul>;
 }
 
 // Things to do as tiles that open the map (or tickets).

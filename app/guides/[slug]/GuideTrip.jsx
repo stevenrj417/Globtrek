@@ -33,18 +33,53 @@ function bookUrl(stay, { travelers, nights, checkin }) {
   return cjTracked(click, target.toString());
 }
 
-export function GuideTrip({ stays, costs, children }) {
+const round10 = (value) => Math.round(value / 10) * 10;
+
+// budgets: [{ key, label, sign, stayIds, lodging: [low, high] per room night }].
+export function GuideTrip({ stays, costs, budgets = [], children }) {
   const [travelers, setTravelers] = useState(costs.travelers);
   const [nights, setNights] = useState(costs.nights);
   const [checkin, setCheckin] = useState("");
-  const [stayId, setStayId] = useState(stays[0]?.id);
+  const [budget, setBudgetKey] = useState(budgets[0]?.key || null);
+  const [stayId, setStayId] = useState(budgets[0]?.stayIds[0] || stays[0]?.id);
   const value = useMemo(() => {
-    const rows = costs.grid[nights - 1][travelers - 1];
+    const level = budgets.find((item) => item.key === budget);
+    // The lodging row follows the chosen budget: typical nightly price for that kind of hotel.
+    const rows = costs.grid[nights - 1][travelers - 1].map((row, index) => (level?.lodging && index === costs.lodgingIndex ? [round10(level.lodging[0] * nights * Math.ceil(travelers / 2)), round10(level.lodging[1] * nights * Math.ceil(travelers / 2))] : row));
     const total = rows.reduce((sum, [low, high]) => [sum[0] + low, sum[1] + high], [0, 0]);
     const stay = stays.find((item) => item.id === stayId) || stays[0];
-    return { travelers, setTravelers, nights, setNights, checkin, setCheckin, stayId, setStayId, rows, total, stay, labels: costs.labels, href: stay ? bookUrl(stay, { travelers, nights, checkin }) : null };
-  }, [travelers, nights, checkin, stayId, stays, costs]);
+    const setBudget = (key) => {
+      setBudgetKey(key);
+      const next = budgets.find((item) => item.key === key);
+      if (next && !next.stayIds.includes(stayId)) setStayId(next.stayIds[0]);
+    };
+    return { travelers, setTravelers, nights, setNights, checkin, setCheckin, stayId, setStayId, budget, setBudget, budgets, rows, total, stay, labels: costs.labels, href: stay ? bookUrl(stay, { travelers, nights, checkin }) : null };
+  }, [travelers, nights, checkin, stayId, budget, budgets, stays, costs]);
   return <TripContext.Provider value={value}>{children}</TripContext.Provider>;
+}
+
+// Budget, Mid-range or Splurge: the page shows only that level's hotels and dinners.
+export function BudgetPicker({ place }) {
+  const trip = useContext(TripContext);
+  if (trip.budgets.length < 2) return null;
+  return <div className="mx-auto max-w-[1280px] px-5 sm:px-8">
+    <div role="group" aria-label={`Your budget in ${place}`} className="-mt-7 relative z-10 grid grid-cols-3 bg-ink p-1 sm:inline-grid sm:min-w-[30rem]">
+      {trip.budgets.map((level) => {
+        const active = level.key === trip.budget;
+        return <button key={level.key} type="button" onClick={() => trip.setBudget(level.key)} aria-pressed={active} className={`flex min-h-12 flex-col items-center justify-center px-3 py-1.5 text-center transition-colors ${active ? "bg-white text-ink" : "text-white/80 hover:text-white"}`}>
+          <span className="text-micro font-semibold uppercase tracking-caps">{level.label}</span>
+          <span className="tabular text-[11px] opacity-70">{level.sign}</span>
+        </button>;
+      })}
+    </div>
+  </div>;
+}
+
+// Shows its children only while that budget level is chosen. Every level is in
+// the page's HTML; the others are just hidden.
+export function ForBudget({ level, children }) {
+  const trip = useContext(TripContext);
+  return <div hidden={trip.budget !== level}>{children}</div>;
 }
 
 function Stepper({ label, value, min, max, onChange, unit }) {
@@ -74,15 +109,15 @@ export function TripControls() {
 export function StayCards({ stays, note }) {
   const trip = useContext(TripContext);
   return <>
-    <ul className="-mx-5 mt-10 flex snap-x snap-mandatory scroll-px-5 gap-5 overflow-x-auto px-5 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 sm:overflow-visible sm:px-0 lg:grid-cols-4">
+    <ul className="-mx-5 mt-10 flex snap-x snap-mandatory scroll-px-5 gap-5 overflow-x-auto px-5 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 sm:overflow-visible sm:px-0 lg:grid-cols-3">
       {stays.map((stay, index) => {
         const chosen = stay.id === trip.stay?.id;
         const href = bookUrl(stay, trip);
         const chips = [stay.type, ...(stay.dorms ? ["Dorm beds"] : [])];
         const tags = [...(stay.freeCancellation ? ["Free cancellation on some rates"] : []), ...(stay.breakfast ? ["Breakfast on some rates"] : []), ...stay.highlights].slice(0, 4);
         return <li key={stay.id} className="flex w-[78%] shrink-0 snap-start flex-col sm:w-auto">
-          <div className={`relative aspect-[4/5] overflow-hidden bg-placeholder ${chosen ? "outline outline-2 outline-offset-4 outline-ink" : ""}`}>
-            <Image src={stay.photo} alt={`${stay.name}, photo from Booking.com`} fill className="image-calm object-cover" sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 80vw" loading={index < 2 ? "eager" : "lazy"} />
+          <div className={`relative aspect-[4/3] overflow-hidden bg-placeholder ${chosen ? "outline outline-2 outline-offset-4 outline-ink" : ""}`}>
+            <Image src={stay.photo} alt={`${stay.name}, photo from Booking.com`} fill className="image-calm object-cover" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 80vw" loading={index < 2 ? "eager" : "lazy"} />
             <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
               {chips.map((chip) => <span key={chip} className="bg-surface/92 px-2.5 py-1 text-micro font-semibold uppercase tracking-caps text-ink backdrop-blur-sm">{chip}</span>)}
             </div>
@@ -91,7 +126,7 @@ export function StayCards({ stays, note }) {
           <div className="flex flex-1 flex-col pt-4">
             <h3 className="text-xl font-medium leading-snug tracking-tight-2">{stay.name}</h3>
             {stay.distance ? <p className="mt-1 text-xs text-subtle">{stay.distance}</p> : stay.address ? <p className="mt-1 line-clamp-2 text-xs text-subtle">{stay.address}</p> : null}
-            {stay.price ? <p className="tabular mt-3 text-sm"><span className="font-medium">About {money(stay.price.value)}</span> a night{stay.price.unit === "dorm bed" ? " per bed" : ""}<span className="block text-xs text-subtle">Typical for this kind of stay, not this hotel&apos;s rate</span></p> : <p className="mt-3 text-sm text-subtle">See today&apos;s price on Booking.com</p>}
+            {stay.price ? <p className="tabular mt-3 text-sm"><span className="font-medium">About {stay.price.high ? range([stay.price.value, stay.price.high]) : money(stay.price.value)}</span> a night{stay.price.unit === "dorm bed" ? " per bed" : ""}<span className="block text-xs text-subtle">Typical for this kind of stay, not this hotel&apos;s rate</span></p> : <p className="mt-3 text-sm text-subtle">See today&apos;s price on Booking.com</p>}
             {stay.evidence ? <p className="mt-2 text-sm">✓ {stay.evidence}</p> : null}
             {tags.length ? <ul className="mt-3 flex flex-wrap gap-1.5 text-xs">
               {tags.map((tag) => <li key={tag} className="border border-black/15 px-2 py-0.5">{tag}</li>)}

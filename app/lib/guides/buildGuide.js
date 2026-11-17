@@ -10,6 +10,7 @@ import lodgingBands from "../../data/lodgingPriceBands.json" with { type: "json"
 import guideStays from "../../data/guideStays.json" with { type: "json" };
 import guideTownData from "../../data/guideTownData.json" with { type: "json" };
 import guideHotelPicks from "../../data/guideHotelPicks.json" with { type: "json" };
+import guidePlacePhotos from "../../data/guidePlacePhotos.json" with { type: "json" };
 import { GUIDE_TOWNS, COST_TWINS, COST_TWIN_LABEL, US_BAND_SOURCE, townId } from "../../data/guideTowns.js";
 import { destinations } from "../../data/destinations.js";
 import { publishedDestinations } from "../../data/destinationCatalog.js";
@@ -184,6 +185,62 @@ function hotelPicks(guide, destination) {
   return tiers.length >= 2 ? { tiers, checkedAt: guideHotelPicks.checkedAt } : null;
 }
 
+const DINNER = (guide, center) => (item) => ({
+  name: item.name,
+  category: titleCase(item.category),
+  rating: item.rating,
+  reviewCount: item.reviewCount,
+  price: mealPrice(item.priceRange) || { ...PRICE, PRICE_LEVEL_EXPENSIVE: "$$$", PRICE_LEVEL_VERY_EXPENSIVE: "$$$$" }[item.priceLevel] || null,
+  distance: guide.area && !guide.area.town ? from(km(center, item), guide.area.name) : null,
+  googleMapsUrl: item.googleMapsUrl,
+});
+const cheapMeal = (item) => item.priceLevel === "PRICE_LEVEL_INEXPENSIVE" || Boolean(item.priceRange?.high && item.priceRange.high <= 20 && ["USD", "EUR", "GBP", "CAD", "AUD", "CHF"].includes(item.priceRange.currency));
+
+// The page's budget switch: Budget, Mid-range and Splurge each get their own
+// hotels and dinners. Hotel prices are the place's typical nightly price for
+// that kind of hotel, never a hotel's own rate.
+function budgetLevels(guide, destination, center, stays) {
+  const band = bandFor(destination);
+  const own = areaPlaces(guide);
+  const city = guidePlaces.areas?.[`${guide.destinationId}:all`] || {};
+  const dinners = dedupe([...(own.dinners || []), ...nearest(city.dinners || [], center, 10)]).filter((item) => item.googleMapsUrl);
+  const splurgeDinners = dedupe([...(own.splurgeDinners || []), ...nearest(city.splurgeDinners || [], center, 10)]).filter((item) => item.googleMapsUrl);
+  const cheap = dinners.filter(cheapMeal);
+  const middle = dinners.filter((item) => !cheapMeal(item));
+  const picks = hotelPicks(guide, destination);
+  const pickStays = (key, price) => (picks?.tiers.find((tier) => tier.key === key)?.hotels || []).map((hotel) => ({
+    id: hotel.id,
+    name: hotel.name,
+    type: hotel.starRating ? `${hotel.starRating}-star ${String(hotel.category || "hotel").toLowerCase()}` : hotel.category || "Hotel",
+    photo: hotel.photos[0],
+    address: hotel.address,
+    distance: null,
+    evidence: null,
+    highlights: [],
+    freeCancellation: hotel.catalogFreeCancellation === true,
+    breakfast: hotel.catalogFreeBreakfast === true,
+    dorms: false,
+    price,
+    bookingUrl: hotel.bookingUrl,
+    cjTrackingBaseUrl: (() => { try { const url = new URL(hotel.cjClickUrl); return `${url.origin}${url.pathname}`; } catch { return null; } })(),
+  }));
+  // Budget shows budget stays only, never a hotel that's in another level.
+  const upper = new Set([...pickStays("average", null), ...pickStays("expensive", null)].map((stay) => stay.name.toLowerCase()));
+  const notUpper = stays.picks.filter((stay) => !upper.has(stay.name.toLowerCase()));
+  const budgetOnly = notUpper.filter((stay) => !/3-star|4-star/.test(stay.price?.kind || ""));
+  const budgetStays = (budgetOnly.length >= 2 ? budgetOnly : notUpper.length >= 2 ? notUpper : stays.picks).slice(0, 3);
+  const budgetDinners = [...cheap, ...middle].slice(0, 3);
+  const shown = new Set(budgetDinners.map((item) => item.name));
+  const midDinners = [...middle, ...cheap].filter((item) => !shown.has(item.name));
+  const night = (value, high, kind) => (band && value ? { value: Math.round(value), high: high ? Math.round(high) : null, unit: "room", kind } : null);
+  const levels = [
+    { key: "budget", label: "Budget", sign: "$", stays: budgetStays, dinners: budgetDinners, lodging: band ? [band.budgetHotelRange?.[0] || band.budgetHotel, band.budgetHotel] : null },
+    { key: "mid", label: "Mid-range", sign: "$$", stays: pickStays("average", night(band?.threeStar, null, "3-star")), dinners: (midDinners.length ? midDinners : budgetDinners).slice(0, 3), lodging: band ? [band.threeStar, band.threeStar] : null },
+    { key: "splurge", label: "Splurge", sign: "$$$", stays: pickStays("expensive", night(band?.fourStar, band?.luxury, "4-star to luxury")), dinners: (splurgeDinners.length ? splurgeDinners : middle).slice(0, 3), lodging: band ? [band.fourStar, band.luxury] : null },
+  ];
+  return levels.filter((level) => level.stays.length).map((level) => ({ ...level, dinners: level.dinners.map(DINNER(guide, center)) }));
+}
+
 function pickStays(guide, destination, center, month) {
   const all = staysFor(destination.id).filter((stay) => stay.photos?.length && (stay.cjClickUrl || stay.bookingUrl));
   let pool = all;
@@ -288,8 +345,11 @@ function activitiesFor(guide, center) {
   const own = areaPlaces(guide).activities || [];
   const city = guidePlaces.areas?.[`${guide.destinationId}:all`]?.activities || [];
   const curated = curatedActivities(guide.destinationId);
-  return dedupe([...own, ...nearest([...city, ...curated], center, 12)]).slice(0, 10).map((item) => ({
+  const list = dedupe([...own, ...nearest([...city, ...curated], center, 12)]).slice(0, 10);
+  const photoOf = (item) => guidePlacePhotos.photos?.[item.googlePlaceId] || null;
+  return [...list.filter(photoOf), ...list.filter((item) => !photoOf(item))].map((item) => ({
     name: item.name,
+    photo: photoOf(item) ? { url: sizedPhoto(photoOf(item).url, 800), artist: photoOf(item).artist, license: photoOf(item).license, licenseUrl: photoOf(item).licenseUrl, source: photoOf(item).source } : null,
     category: titleCase(item.category),
     rating: item.rating,
     reviewCount: item.reviewCount,
@@ -360,7 +420,8 @@ function costGrid(destination, month) {
   const lodgingSource = town
     ? `Lodging uses the master list's general US budget-hotel band (shared by ${band.sharedBy} US places), one room per two travelers. Food, activities and local transport use GlobTrek's estimate for ${COST_TWIN_LABEL[town.costs]}.`
     : band ? `Lodging uses the master list's budget-hotel band for this region (shared by ${band.sharedBy} place${band.sharedBy === 1 ? "" : "s"}), one room per two travelers.` : "Lodging uses GlobTrek's cost model for this place.";
-  return { labels, grid, lodgingSource };
+  const lodgingIndex = estimateTrip(destination, { nights: 2, travelers: 2, startDate }).breakdown.findIndex((item) => item.key === "hotel");
+  return { labels, grid, lodgingSource, lodgingIndex };
 }
 
 function bestMonth(destination) {
@@ -512,6 +573,7 @@ function placeGuide(guide) {
     quick,
     stays: stays.picks,
     hotelPicks: hotelPicks(guide, destination),
+    budgets: budgetLevels(guide, destination, center, stays).map(({ stays: levelStays, ...level }) => ({ ...level, stays: levelStays.map(({ latitude, longitude, ...stay }) => stay) })),
     stayNote: `Prices are typical nights for this kind of stay in ${page.name} (${bandFor(destination) ? "yearly averages from GlobTrek's regional price bands" : `GlobTrek's ${MONTHS[month - 1]} estimate`}), not the property's own rate. Dorm prices are per bed. Tap through for today's price.`,
     plan,
     dinners,

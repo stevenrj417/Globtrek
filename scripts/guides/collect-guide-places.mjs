@@ -1,7 +1,9 @@
 // Cheap dinner spots and things to do around each guide's area, from Google
 // Places: two text searches per area, kept only when OPERATIONAL, with enough
 // reviews, and inside the area. Writes app/data/guidePlaces.json.
-//   node scripts/guides/collect-guide-places.mjs [--only slug,slug] [--force]
+//   node scripts/guides/collect-guide-places.mjs [--only slug,slug] [--force] [--splurge]
+// --splurge adds one search per saved area for nicer dinners (Google's $$$ and
+// $$$$ price levels, or a per-person range from $30) without redoing the rest.
 // Needs NEXT_PUBLIC_GOOGLE_MAPS_API_KEY in the environment or .env.local.
 import { readFile, writeFile } from "node:fs/promises";
 
@@ -18,6 +20,7 @@ const { GooglePlacesDiscoveryProvider } = await import("../../app/lib/google-pla
 const args = process.argv.slice(2);
 const only = args.includes("--only") ? args[args.indexOf("--only") + 1].split(",") : null;
 const force = args.includes("--force");
+const splurge = args.includes("--splurge");
 const fileUrl = new URL("../../app/data/guidePlaces.json", import.meta.url);
 const file = JSON.parse(await readFile(fileUrl, "utf8").catch(() => '{"areas":{}}'));
 const today = new Date().toISOString().slice(0, 10);
@@ -56,6 +59,31 @@ const place = (item, kind) => ({
   verifiedAt: today,
 });
 
+function where(guide) {
+  // Towns outside the catalog stand in with their own name and location.
+  const town = guide.town ? GUIDE_TOWNS[guide.town] : null;
+  const destination = town ? { id: guide.destinationId, city: town.name, country: "UNITED STATES", latitude: town.latitude, longitude: town.longitude } : destinations.find((item) => item.id === guide.destinationId);
+  const center = guide.area?.latitude ? guide.area : destination.latitude != null ? destination : GUIDE_CENTERS[destination.id];
+  const name = town ? `${guide.area?.name || town.name}, ${town.state}` : guide.area?.name && !guide.area.town ? `${guide.area.name}, ${guide.place}` : guide.place;
+  const maxKm = guide.area?.radiusKm ? Math.max(2, guide.area.radiusKm * 1.6) : guide.area?.town ? 12 : 25;
+  return { center, name, maxKm, search: { ...destination, latitude: center.latitude, longitude: center.longitude, hotelSearchRadiusKm: Math.max(5, maxKm) } };
+}
+
+async function addSplurge(key, guide) {
+  const { center, name, maxKm, search } = where(guide);
+  try {
+    const nice = (await provider.searchNearby(search, { textQuery: `best upscale restaurants for a special dinner near ${name}`, includedType: "restaurant", limit: 12, allowedTypes: RESTAURANT_TYPES }))
+      .filter((item) => item.businessStatus === "OPERATIONAL" && (item.userRatingCount || 0) >= 80)
+      .map((item) => place(item, "dinner"))
+      .filter((item) => (item.latitude == null || km(center, item) <= maxKm) && (EXPENSIVE.has(item.priceLevel) || (item.priceRange?.low || 0) >= 30))
+      .sort((a, b) => (b.rating || 0) - (a.rating || 0) || (b.reviewCount || 0) - (a.reviewCount || 0));
+    file.areas[key].splurgeDinners = nice.slice(0, 6);
+    console.log(`${key.padEnd(44)} ${nice.length} splurge dinners`);
+  } catch (error) {
+    console.log(`${key.padEnd(44)} failed: ${error instanceof Error ? error.message : "unknown"}`);
+  }
+}
+
 const areas = new Map();
 for (const guide of GUIDES) {
   if (!guide.destinationId || (only && !only.includes(guide.slug))) continue;
@@ -63,6 +91,7 @@ for (const guide of GUIDES) {
 }
 
 for (const [key, guide] of areas) {
+  if (splurge) { if (file.areas[key] && (force || !file.areas[key].splurgeDinners)) await addSplurge(key, guide); continue; }
   if (!force && file.areas[key]) { console.log(`skip ${key}`); continue; }
   // Towns outside the catalog stand in with their own name and location.
   const town = guide.town ? GUIDE_TOWNS[guide.town] : null;

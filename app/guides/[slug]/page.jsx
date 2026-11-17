@@ -6,9 +6,9 @@ import { BookingLogo } from "../../components/PartnerLogo";
 import { guideBySlug } from "../../data/guides";
 import { buildGuide, guideCard, publishedGuides } from "../../lib/guides/buildGuide";
 import { GuideCard } from "../GuideCard";
-import { Breadcrumb, CardRow, CardRowItem, Chip, CtaBand, NumberedPlaces, PageHero, PlaceTiles, Section, Summary, textLink } from "../../components/TravelPage";
+import { Breadcrumb, CardRow, CardRowItem, CtaBand, NumberedPlaces, PageHero, PhotoPlaces, Section, Stars, Summary, textLink } from "../../components/TravelPage";
 import { AFFILIATE_DISCLOSURE, SITE_URL } from "../../lib/site";
-import { CostPanel, GuideTrip, MobileBookBar, StayCards } from "./GuideTrip";
+import { BudgetPicker, CostPanel, ForBudget, GuideTrip, MobileBookBar, StayCards } from "./GuideTrip";
 
 export const dynamicParams = false;
 
@@ -51,8 +51,22 @@ function Dinners({ dinners }) {
   return <NumberedPlaces places={dinners.map((place) => ({ name: place.name, category: place.category, price: place.price, rating: place.rating, reviewCount: place.reviewCount, note: place.distance, href: place.googleMapsUrl }))} />;
 }
 
+// Photo cards for the places with a photo; the rest as a short list, never an empty box.
 function Activities({ activities }) {
-  return <PlaceTiles places={activities.map((place) => ({ name: place.name, eyebrow: place.category, rating: place.rating, reviewCount: place.reviewCount, href: place.googleMapsUrl }))} />;
+  const card = (place) => ({ name: place.name, eyebrow: place.category, rating: place.rating, reviewCount: place.reviewCount, href: place.googleMapsUrl, photo: place.photo });
+  const withPhoto = activities.filter((place) => place.photo);
+  const rest = activities.filter((place) => !place.photo);
+  return <>
+    {withPhoto.length ? <PhotoPlaces places={withPhoto.map(card)} /> : null}
+    {rest.length ? <ul className={`${withPhoto.length ? "mt-10" : "mt-8"} divide-y divide-black/10 border-y border-black/10`}>
+      {rest.map((place) => <li key={place.name}>
+        <a href={place.googleMapsUrl} target="_blank" rel="noopener" className="group flex min-h-16 items-center justify-between gap-6 py-4">
+          <span><span className="block text-lg font-medium leading-snug tracking-tight-1 group-hover:underline">{place.name}</span><span className="text-sm text-muted">{place.category}</span></span>
+          <span className="shrink-0 text-sm text-muted">{place.rating ? <Stars rating={place.rating} reviews={place.reviewCount} /> : null} <span aria-hidden="true">↗</span></span>
+        </a>
+      </li>)}
+    </ul> : null}
+  </>;
 }
 
 function Faq({ faqs }) {
@@ -91,57 +105,41 @@ function Hero({ guide, eyebrow, jump = [] }) {
   </>;
 }
 
-function HotelPicks({ picks, place }) {
-  return <div className="mt-10 space-y-14">
-    {picks.tiers.map((tier) => <div key={tier.key}>
-      <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-t border-black/10 pt-5">
-        <h3 className="font-serif text-2xl tracking-tight-2 sm:text-3xl">{tier.label}</h3>
-        {tier.price ? <p className="tabular text-sm text-muted">Typical for {tier.price.kind} in {tier.price.where || place}: <span className="font-medium text-ink">about ${tier.price.low}{tier.price.high !== tier.price.low ? `–$${tier.price.high}` : ""} a night</span></p> : null}
-      </div>
-      <CardRow columns="lg:grid-cols-3">
-        {tier.hotels.map((hotel) => <CardRowItem key={hotel.id}>
-          <a href={hotel.cjClickUrl} target="_blank" rel="noopener sponsored" className="group flex flex-1 flex-col">
-            <div className="relative aspect-[4/3] overflow-hidden bg-placeholder">
-              <Image src={hotel.photos[0]} alt={`${hotel.name}, photo from Booking.com`} fill className="image-calm object-cover transition-transform duration-500 group-hover:scale-[1.02]" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 80vw" />
-              <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
-                <Chip>{hotel.starRating ? `${hotel.starRating}-star ${String(hotel.category || "stay").toLowerCase()}` : hotel.category || "Stay"}</Chip>
-                {hotel.catalogFreeBreakfast ? <Chip>Breakfast options</Chip> : null}
-              </div>
-            </div>
-            <p className="mt-4 text-lg font-medium leading-snug tracking-tight-1">{hotel.name}</p>
-            {hotel.address ? <p className="mt-1 line-clamp-1 text-xs text-subtle">{hotel.address}</p> : null}
-            <p className={`mt-3 text-sm ${textLink}`}>See rooms and prices ↗</p>
-          </a>
-        </CardRowItem>)}
-      </CardRow>
-    </div>)}
-    <p className="text-xs text-subtle">{"Prices shown are typical nightly prices for each kind of hotel here (yearly averages from GlobTrek's price bands), not these hotels' own rates. Listings on "}<BookingLogo className="h-3 w-auto" />{`, checked ${picks.checkedAt}. Tap through for today's price.`}</p>
-  </div>;
-}
-
 function PlaceGuide({ guide }) {
-  const clientStays = guide.stays.map(({ latitude, longitude, ...stay }) => stay);
-  const jump = [["stay", "Where to stay"], guide.hotelPicks ? ["budget", "By budget"] : null, guide.plan.length ? ["plan", "The plan"] : null, guide.dinners.length ? ["eat", "Cheap dinners"] : null, ["cost", "Costs"], ["faq", "Questions"]].filter(Boolean);
-  return <GuideTrip stays={clientStays} costs={guide.costs}>
-    <Hero guide={guide} eyebrow={guide.country} jump={jump} />
-    <Section id="stay-heading" eyebrow="From Booking.com" title={guide.kind === "feature" ? "The hotels" : "Where to stay"} intro={guide.area ? `Budget and mid-range stays ${guide.area.town ? `in ${guide.area.name}` : `within ${guide.area.radiusKm} km of ${guide.area.name}`}. Pick one for your trip and the costs below follow it.` : "Budget and mid-range stays. Pick one for your trip and the costs below follow it."}>
-      <StayCards stays={clientStays} note={guide.stayNote} />
+  const strip = ({ latitude, longitude, ...stay }) => stay;
+  const levels = guide.budgets?.length ? guide.budgets : [{ key: "budget", label: "Budget", sign: "$", stays: guide.stays.slice(0, 3), dinners: guide.dinners.slice(0, 3), lodging: null }];
+  const stays = [...new Map(levels.flatMap((level) => level.stays).map((stay) => [stay.id, strip(stay)])).values()];
+  const budgets = levels.map(({ key, label, sign, stays: levelStays, lodging }) => ({ key, label, sign, lodging, stayIds: levelStays.map((stay) => stay.id) }));
+  const lines = [guide.quick[0], guide.quick.find((line) => line.startsWith("Top pick"))].filter((line, index, all) => line && all.indexOf(line) === index);
+  const where = guide.area ? (guide.area.town ? ` in ${guide.area.name}` : ` near ${guide.area.name}`) : "";
+  return <GuideTrip stays={stays} costs={guide.costs} budgets={budgets}>
+    <Breadcrumb items={[["Home", "/"], ["Guides", "/guides"], [guide.title, null]]} />
+    <PageHero image={guide.image} alt={guide.imageAlt} title={guide.title} chips={[guide.country, ...(guide.chips || [])]} credit={guide.imageCredit} />
+    <BudgetPicker place={guide.place} />
+    <Summary lines={lines} />
+    <Section id="stay-heading" eyebrow="From Booking.com" title={guide.kind === "feature" ? "The hotels" : "Where to stay"}>
+      {levels.map((level) => <ForBudget key={level.key} level={level.key}>
+        <StayCards stays={level.stays.map(strip)} note={guide.stayNote} />
+      </ForBudget>)}
     </Section>
-    {guide.hotelPicks ? <Section id="budget-heading" eyebrow="Hand-picked" title="Hotels at every budget" intro={`${guide.hotelPicks.tiers.map((tier) => tier.label.toLowerCase()).join(", ").replace(/, ([^,]*)$/, " and $1").replace(/^./, (letter) => letter.toUpperCase())} hotels in ${guide.place}, matched to their Booking.com listings.`}>
-      <HotelPicks picks={guide.hotelPicks} place={guide.place} />
+    {levels.some((level) => level.dinners.length) ? <Section id="eat-heading" eyebrow="From Google Maps" title="Where to eat" intro={`Well-reviewed and open${where}. Prices are Google's per-person ranges where it shows one.`}>
+      {levels.map((level) => <ForBudget key={level.key} level={level.key}><Dinners dinners={level.dinners} /></ForBudget>)}
     </Section> : null}
-    {guide.plan.length ? <Section id="plan-heading" eyebrow="Day by day" title={guide.plan.length === 2 ? "A 2-day plan" : `A ${guide.plan.length}-day plan`} intro="Each stop follows on from the last, with how far it is. Tap a stop for the map.">
-      <Plan plan={guide.plan} />
-    </Section> : null}
-    {guide.dinners.length ? <Section id="eat-heading" eyebrow="From Google Maps" title={`${guide.dinners.length} cheap dinner spots`} intro="Casual, well-reviewed and open. Prices are Google's per-person ranges where it shows one.">
-      <Dinners dinners={guide.dinners} />
-    </Section> : null}
-    {guide.activities.length > 4 ? <Section id="do-heading" eyebrow="Optional extras" title="More things to do" intro="Ranked by how many people have reviewed them on Google Maps.">
+    {guide.activities.length ? <Section id="do-heading" eyebrow="From Google Maps" title="Things to do">
       <Activities activities={guide.activities.slice(0, 6)} />
     </Section> : null}
-    <Section id="cost-heading" eyebrow="Your numbers" title="What it costs" intro="Change the travelers and nights; the totals and the Book link update.">
+    <Section id="cost-heading" eyebrow="Your numbers" title="What it costs" intro="Change the travelers and nights; the totals follow your budget and the Book link updates.">
       <div className="mt-10 bg-surface p-6 sm:p-10"><CostPanel source={guide.costs.lodgingSource} month={guide.costs.month} place={guide.place} /></div>
     </Section>
+    {guide.plan.length ? <section id="plan" className="mx-auto mt-[var(--section-space)] max-w-[1280px] px-5 sm:px-8">
+      <details className="group border-y border-black/10">
+        <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-6 py-5 [&::-webkit-details-marker]:hidden">
+          <span className="font-serif text-2xl tracking-tight-2 sm:text-3xl">{guide.plan.length === 2 ? "See a 2-day plan" : `See a ${guide.plan.length}-day plan`}</span>
+          <span aria-hidden="true" className="text-2xl font-light text-subtle transition-transform duration-200 group-open:rotate-45">+</span>
+        </summary>
+        <div className="pb-8"><Plan plan={guide.plan} /></div>
+      </details>
+    </section> : null}
     <FaqSection faqs={guide.faqs} />
     <Closing guide={guide} />
     <div className="h-20 sm:hidden" aria-hidden="true" />

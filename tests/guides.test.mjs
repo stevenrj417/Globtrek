@@ -95,3 +95,14 @@ test("hand-picked hotels are real feed listings with tier prices, never per-hote
   const town = buildGuide(GUIDES.find((item) => item.slug === "weekend-in-bend-oregon"));
   assert.equal(town.hotelPicks.tiers[0].price.where, "this region");
 });
+
+test("budget levels never share a hotel, and lodging rises from budget to splurge", () => {
+  for (const guide of publishedGuides().filter((item) => item.budgets?.length === 3)) {
+    const names = guide.budgets.flatMap((level) => level.stays.map((stay) => stay.name.toLowerCase()));
+    assert.equal(new Set(names).size, names.length, `${guide.slug} repeats a hotel across budgets`);
+    const [budget, mid, splurge] = guide.budgets;
+    assert.deepEqual([budget.key, mid.key, splurge.key], ["budget", "mid", "splurge"]);
+    if (budget.lodging) assert.ok(budget.lodging[1] <= mid.lodging[0] && mid.lodging[1] <= splurge.lodging[0], guide.slug);
+    for (const level of guide.budgets) assert.ok(level.stays.length >= 1 && level.stays.length <= 3, guide.slug);
+  }
+});
