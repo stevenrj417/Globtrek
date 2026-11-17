@@ -77,3 +77,21 @@ test("town guides use the town's own stays, photo credit and weather", () => {
 test("a guide without 4 matching stays isn't published", () => {
   assert.equal(buildGuide({ slug: "test-no-stays", title: "Test", kind: "weekend", destinationId: "oregon-coast-76868", place: "Nowhere", area: { name: "Nowhere", town: "Nowhere" } }), null);
 });
+
+test("hand-picked hotels are real feed listings with tier prices, never per-hotel rates", () => {
+  const guide = buildGuide(GUIDES.find((item) => item.slug === "weekend-in-lisbon-on-a-budget"));
+  assert.ok(guide.hotelPicks, "Lisbon has hotel picks");
+  assert.deepEqual(guide.hotelPicks.tiers.map((tier) => tier.key), ["cheap", "average", "expensive"]);
+  for (const tier of guide.hotelPicks.tiers) {
+    assert.ok(tier.price.low > 0 && tier.price.high >= tier.price.low);
+    for (const hotel of tier.hotels) {
+      assert.match(hotel.cjClickUrl, /^https:\/\/www\.(kqzyfj|dpbolvw|anrdoezrs|jdoqocy|tkqlhce)\.(com|net)\//);
+      assert.match(hotel.bookingUrl, /^https:\/\/www\.booking\.com\/hotel\//);
+      assert.ok(hotel.photos.length);
+      assert.equal(hotel.pickedAs, undefined);
+      assert.equal(hotel.price, undefined);
+    }
+  }
+  const town = buildGuide(GUIDES.find((item) => item.slug === "weekend-in-bend-oregon"));
+  assert.equal(town.hotelPicks.tiers[0].price.where, "this region");
+});

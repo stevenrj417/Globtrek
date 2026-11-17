@@ -9,6 +9,7 @@ import fareIndex from "../../data/pricing/fareIndex.json" with { type: "json" };
 import lodgingBands from "../../data/lodgingPriceBands.json" with { type: "json" };
 import guideStays from "../../data/guideStays.json" with { type: "json" };
 import guideTownData from "../../data/guideTownData.json" with { type: "json" };
+import guideHotelPicks from "../../data/guideHotelPicks.json" with { type: "json" };
 import { GUIDE_TOWNS, COST_TWINS, COST_TWIN_LABEL, US_BAND_SOURCE, townId } from "../../data/guideTowns.js";
 import { destinations } from "../../data/destinations.js";
 import { publishedDestinations } from "../../data/destinationCatalog.js";
@@ -157,6 +158,30 @@ function nightPrice(stay, destination, month) {
   if (isDorm(stay) || stars >= 4) return null;
   const night = destination.planningAverages?.monthly?.[month - 1]?.hotelNight;
   return night ? { value: Math.round(night), unit: "room", kind: "good-value" } : null;
+}
+
+// Hand-picked hotels for this guide's place (3 cheap, 3 mid-range, 3 splurge),
+// matched to Booking.com listings in the CJ feed. Prices are the place's typical
+// nightly price for each tier, never the hotel's own rate.
+const PICK_TIERS = [
+  ["cheap", "Cheap", ["budgetHotel"], "a budget hotel"],
+  ["average", "Mid-range", ["threeStar"], "a 3-star hotel"],
+  ["expensive", "Splurge", ["fourStar", "luxury"], "a 4-star to luxury hotel"],
+];
+function hotelPicks(guide, destination) {
+  const place = Object.values(guideHotelPicks.places || {}).find((item) => item.guides.includes(guide.slug));
+  if (!place || place.hotels.length < 3) return null;
+  const band = bandFor(destination);
+  const tiers = PICK_TIERS.map(([key, label, fields, kind]) => {
+    const values = fields.map((field) => Math.round(band?.[field] || 0)).filter(Boolean);
+    return {
+      key,
+      label,
+      price: values.length === fields.length ? { low: values[0], high: values.at(-1), kind, where: destination.town ? "this region" : null } : null,
+      hotels: place.hotels.filter((hotel) => hotel.tier === key && hotel.photos?.length && hotel.cjClickUrl).map(({ pickedAs, latitude, longitude, ...hotel }) => hotel),
+    };
+  }).filter((tier) => tier.hotels.length);
+  return tiers.length >= 2 ? { tiers, checkedAt: guideHotelPicks.checkedAt } : null;
 }
 
 function pickStays(guide, destination, center, month) {
@@ -486,6 +511,7 @@ function placeGuide(guide) {
     destinationSlug: page.slug,
     quick,
     stays: stays.picks,
+    hotelPicks: hotelPicks(guide, destination),
     stayNote: `Prices are typical nights for this kind of stay in ${page.name} (${bandFor(destination) ? "yearly averages from GlobTrek's regional price bands" : `GlobTrek's ${MONTHS[month - 1]} estimate`}), not the property's own rate. Dorm prices are per bed. Tap through for today's price.`,
     plan,
     dinners,

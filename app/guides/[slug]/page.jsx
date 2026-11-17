@@ -6,7 +6,7 @@ import { BookingLogo } from "../../components/PartnerLogo";
 import { guideBySlug } from "../../data/guides";
 import { buildGuide, guideCard, publishedGuides } from "../../lib/guides/buildGuide";
 import { GuideCard } from "../GuideCard";
-import { Breadcrumb, CardRow, CardRowItem, CtaBand, NumberedPlaces, PageHero, PlaceTiles, Section, Summary, textLink } from "../../components/TravelPage";
+import { Breadcrumb, CardRow, CardRowItem, Chip, CtaBand, NumberedPlaces, PageHero, PlaceTiles, Section, Summary, textLink } from "../../components/TravelPage";
 import { AFFILIATE_DISCLOSURE, SITE_URL } from "../../lib/site";
 import { CostPanel, GuideTrip, MobileBookBar, StayCards } from "./GuideTrip";
 
@@ -91,14 +91,45 @@ function Hero({ guide, eyebrow, jump = [] }) {
   </>;
 }
 
+function HotelPicks({ picks, place }) {
+  return <div className="mt-10 space-y-14">
+    {picks.tiers.map((tier) => <div key={tier.key}>
+      <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-t border-black/10 pt-5">
+        <h3 className="font-serif text-2xl tracking-tight-2 sm:text-3xl">{tier.label}</h3>
+        {tier.price ? <p className="tabular text-sm text-muted">Typical for {tier.price.kind} in {tier.price.where || place}: <span className="font-medium text-ink">about ${tier.price.low}{tier.price.high !== tier.price.low ? `–$${tier.price.high}` : ""} a night</span></p> : null}
+      </div>
+      <CardRow columns="lg:grid-cols-3">
+        {tier.hotels.map((hotel) => <CardRowItem key={hotel.id}>
+          <a href={hotel.cjClickUrl} target="_blank" rel="noopener sponsored" className="group flex flex-1 flex-col">
+            <div className="relative aspect-[4/3] overflow-hidden bg-placeholder">
+              <Image src={hotel.photos[0]} alt={`${hotel.name}, photo from Booking.com`} fill className="image-calm object-cover transition-transform duration-500 group-hover:scale-[1.02]" sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 80vw" />
+              <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
+                <Chip>{hotel.starRating ? `${hotel.starRating}-star ${String(hotel.category || "stay").toLowerCase()}` : hotel.category || "Stay"}</Chip>
+                {hotel.catalogFreeBreakfast ? <Chip>Breakfast options</Chip> : null}
+              </div>
+            </div>
+            <p className="mt-4 text-lg font-medium leading-snug tracking-tight-1">{hotel.name}</p>
+            {hotel.address ? <p className="mt-1 line-clamp-1 text-xs text-subtle">{hotel.address}</p> : null}
+            <p className={`mt-3 text-sm ${textLink}`}>See rooms and prices ↗</p>
+          </a>
+        </CardRowItem>)}
+      </CardRow>
+    </div>)}
+    <p className="text-xs text-subtle">{"Prices shown are typical nightly prices for each kind of hotel here (yearly averages from GlobTrek's price bands), not these hotels' own rates. Listings on "}<BookingLogo className="h-3 w-auto" />{`, checked ${picks.checkedAt}. Tap through for today's price.`}</p>
+  </div>;
+}
+
 function PlaceGuide({ guide }) {
   const clientStays = guide.stays.map(({ latitude, longitude, ...stay }) => stay);
-  const jump = [["stay", "Where to stay"], guide.plan.length ? ["plan", "The plan"] : null, guide.dinners.length ? ["eat", "Cheap dinners"] : null, ["cost", "Costs"], ["faq", "Questions"]].filter(Boolean);
+  const jump = [["stay", "Where to stay"], guide.hotelPicks ? ["budget", "By budget"] : null, guide.plan.length ? ["plan", "The plan"] : null, guide.dinners.length ? ["eat", "Cheap dinners"] : null, ["cost", "Costs"], ["faq", "Questions"]].filter(Boolean);
   return <GuideTrip stays={clientStays} costs={guide.costs}>
     <Hero guide={guide} eyebrow={guide.country} jump={jump} />
     <Section id="stay-heading" eyebrow="From Booking.com" title={guide.kind === "feature" ? "The hotels" : "Where to stay"} intro={guide.area ? `Budget and mid-range stays ${guide.area.town ? `in ${guide.area.name}` : `within ${guide.area.radiusKm} km of ${guide.area.name}`}. Pick one for your trip and the costs below follow it.` : "Budget and mid-range stays. Pick one for your trip and the costs below follow it."}>
       <StayCards stays={clientStays} note={guide.stayNote} />
     </Section>
+    {guide.hotelPicks ? <Section id="budget-heading" eyebrow="Hand-picked" title="Hotels at every budget" intro={`${guide.hotelPicks.tiers.map((tier) => tier.label.toLowerCase()).join(", ").replace(/, ([^,]*)$/, " and $1").replace(/^./, (letter) => letter.toUpperCase())} hotels in ${guide.place}, matched to their Booking.com listings.`}>
+      <HotelPicks picks={guide.hotelPicks} place={guide.place} />
+    </Section> : null}
     {guide.plan.length ? <Section id="plan-heading" eyebrow="Day by day" title={guide.plan.length === 2 ? "A 2-day plan" : `A ${guide.plan.length}-day plan`} intro="Each stop follows on from the last, with how far it is. Tap a stop for the map.">
       <Plan plan={guide.plan} />
     </Section> : null}
