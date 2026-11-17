@@ -39,7 +39,7 @@ export const AREA_LODGING_ERROR_PCT = 31;
 // Island economies where visitor prices are set by resort tourism, far above
 // the local price level the model learns from (the model gives the Seychelles
 // a $53 room and the Maldives a $49 one). They wait for real property prices.
-const RESORT_ECONOMIES = new Set(["MLE", "seychelles-3d2d7", "OGG", "PPT", "bora-bora-40f39", "st-barts-e3772"]);
+export const RESORT_ECONOMIES = new Set(["MLE", "seychelles-3d2d7", "OGG", "PPT", "bora-bora-40f39", "st-barts-e3772"]);
 export function localPrices(destination) {
   const local = destinationCosts.destinations[destination.id];
   if (!local) return null;

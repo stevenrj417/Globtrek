@@ -151,7 +151,7 @@ const verifiedExpansion = [...(verifiedBatch01.records || verifiedBatch01), ...(
   itinerary: [], dining: [], costProfile: item.costProfile, seasonality: item.seasonality,
   climateProfile: item.climateProfile, tripLengthFit: item.tripLengthFit,
   accessibilityProfile: item.accessibilityProfile, imageLicenseMetadata: item.imageLicenseMetadata,
-  recommendationReady: false, catalogStatus: "verified_destination_only", verificationSource: item.verificationSource,
+  recommendationReady: true, catalogStatus: "verified_destination", verificationSource: item.verificationSource,
 }));
 
 // Quiz tags the original records left out, set from what each place is:

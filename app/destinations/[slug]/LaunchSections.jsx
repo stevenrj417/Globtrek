@@ -4,8 +4,17 @@ import { bookingPropertyUrl } from "../../data/destinations";
 import { LAUNCH_DATA, rideshareUrl } from "../../data/launchSet";
 import { FEED_STAYS_CHECKED, launchHotels } from "../../data/launchStays";
 import { cjActivitySearchUrl } from "../../lib/booking/cj";
+import { curatedActivities, curatedRestaurants } from "../../lib/places/curated";
 
 const PRICE = { 1: "$", 2: "$$", 3: "$$$" };
+const PRICE_LEVEL = { PRICE_LEVEL_INEXPENSIVE: "$", PRICE_LEVEL_MODERATE: "$$", PRICE_LEVEL_EXPENSIVE: "$$$", PRICE_LEVEL_VERY_EXPENSIVE: "$$$$" };
+const titleCase = (value) => String(value || "").replace(/\b\w/g, (letter) => letter.toUpperCase());
+
+// Verified Google Places results (scripts/activities/curate-places.mjs), the same
+// ones trips use, for guides without a hand-picked list.
+function placeRows(places, limit) {
+  return places.filter((place) => place.businessStatus !== "CLOSED_PERMANENTLY" && place.googleMapsUrl).slice(0, limit);
+}
 const MONTH_INITIALS = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
 const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -38,7 +47,9 @@ function todaysHours(hours) {
 export function LaunchSections({ item }) {
   const data = LAUNCH_DATA[item.id] || {};
   const hotels = launchHotels(item.id);
-  if (!LAUNCH_DATA[item.id] && !hotels.length) return null;
+  const places = data.activities?.length ? [] : placeRows(curatedActivities(item.id), 9);
+  const eats = data.dinners?.length ? [] : placeRows(curatedRestaurants(item.id), 6);
+  if (!LAUNCH_DATA[item.id] && !hotels.length && !places.length && !eats.length) return null;
   const destination = { city: item.name, country: item.country };
   const firstHotel = data.hotels?.[0];
   const uber = rideshareUrl(data.airportRide, firstHotel);
@@ -87,6 +98,19 @@ export function LaunchSections({ item }) {
       </ul>
     </Section> : null}
 
+    {eats.length ? <Section id="eat-heading" title="Where to eat">
+      <ul className="mt-6 divide-y divide-black/10 border-y border-black/10">
+        {eats.map((place) => <li key={place.id} className="grid gap-1 py-4 sm:grid-cols-[1fr_auto] sm:items-center sm:gap-6">
+          <div>
+            <p className="font-medium">{place.name} <span className="text-subtle">{PRICE_LEVEL[place.priceLevel] || ""}</span></p>
+            {place.category ? <p className="text-sm text-muted">{titleCase(place.category)}</p> : null}
+            {place.rating ? <p className="tabular text-xs text-subtle">{place.rating} on Google · {place.reviewCount?.toLocaleString("en-US")} reviews</p> : null}
+          </div>
+          <a href={place.googleMapsUrl} target="_blank" rel="noopener" className="text-sm underline decoration-black/25 underline-offset-4 hover:decoration-ink">Map and hours ↗</a>
+        </li>)}
+      </ul>
+    </Section> : null}
+
     {data.activities?.length ? <Section id="do-heading" title="Things to do">
       <ul className="mt-6 grid gap-px border border-black/10 bg-black/10 sm:grid-cols-2 lg:grid-cols-3">
         {data.activities.map((activity) => <li key={activity.id} className="flex flex-col justify-between gap-3 bg-bg p-5">
@@ -98,6 +122,19 @@ export function LaunchSections({ item }) {
           {activity.isFree ? <a href={activity.googleMapsUri} target="_blank" rel="noopener" className="text-sm underline decoration-black/25 underline-offset-4 hover:decoration-ink">Map ↗</a>
             : activity.payAtGate ? <a href={activity.officialWebsiteUrl || activity.googleMapsUri} target="_blank" rel="noopener" className="text-sm underline decoration-black/25 underline-offset-4 hover:decoration-ink">Pay at the gate · official site ↗</a>
             : <a href={cjActivitySearchUrl(activity.name, destination)} target="_blank" rel="noopener sponsored" className="text-sm underline decoration-black/25 underline-offset-4 hover:decoration-ink">Tickets on <BookingLogo className="h-3 w-auto" /> ↗</a>}
+        </li>)}
+      </ul>
+    </Section> : null}
+
+    {places.length ? <Section id="do-heading" title="Things to do">
+      <ul className="mt-6 grid gap-px border border-black/10 bg-black/10 sm:grid-cols-2 lg:grid-cols-3">
+        {places.map((place) => <li key={place.id} className="flex flex-col justify-between gap-3 bg-bg p-5">
+          <div>
+            {place.category ? <p className="eyebrow">{titleCase(place.category)}</p> : null}
+            <p className="mt-2 font-medium">{place.name}</p>
+            {place.rating ? <p className="tabular mt-1 text-sm text-muted">{place.rating} on Google · {place.reviewCount?.toLocaleString("en-US")} reviews</p> : null}
+          </div>
+          <a href={place.googleMapsUrl} target="_blank" rel="noopener" className="text-sm underline decoration-black/25 underline-offset-4 hover:decoration-ink">Map ↗</a>
         </li>)}
       </ul>
     </Section> : null}

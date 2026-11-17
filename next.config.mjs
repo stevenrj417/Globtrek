@@ -48,6 +48,11 @@ const nextConfig = {
       { source: "/cruises/:path*", destination: "/", permanent: false },
       { source: "/road-trips", destination: "/", permanent: false },
       { source: "/road-trips/:path*", destination: "/", permanent: false },
+      // Guide unpublished until the Booking.com feed lists stays in Stepantsminda.
+      { source: "/destinations/kazbegi", destination: "/destinations", permanent: false },
+      { source: "/destinations/maldives", destination: "/destinations", permanent: false },
+      // Accents now drop out of guide URLs instead of splitting them.
+      { source: "/destinations/bra-ov", destination: "/destinations/brasov", permanent: true },
     ];
   },
   images: {
