@@ -698,3 +698,9 @@ export function publishedGuides() {
 }
 
 export { displayName };
+
+// Guide cards for a catalog destination: its own guides and its towns' guides.
+export function guidesFor(destinationId) {
+  return GUIDES.filter((guide) => guide.destinationId === destinationId || pageById.get(guide.destinationId)?.parent === destinationId)
+    .map((guide) => guideCard(buildGuide(guide))).filter(Boolean);
+}

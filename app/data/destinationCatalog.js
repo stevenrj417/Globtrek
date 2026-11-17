@@ -62,6 +62,13 @@ export function completeness(destination) {
   return { missing, publishable: missing.length === 0 };
 }
 
+// Who took the hero photo and its license, when the record has it.
+function photoCredit(meta) {
+  const artist = String(meta?.author || "").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+  if (!artist || !meta?.licenseName) return null;
+  return { artist: artist.slice(0, 60), license: meta.licenseName, licenseUrl: meta.licenseUrl || null, source: meta.sourcePageUrl || null };
+}
+
 function toPage(destination) {
   const tags = destination.tags || [];
   const estimate = estimateTrip(destination, { nights: 5, travelers: 1 });
@@ -80,6 +87,7 @@ function toPage(destination) {
     knownness: Number.isFinite(destination.recognition) ? destination.recognition : null,
     image: sizedPhoto(destination.image, 1920),
     alt: `${displayName(destination.city)}, ${displayName(destination.country)}`,
+    credit: photoCredit(destination.imageLicenseMetadata),
     estimate,
     planning: destination.planningAverages,
     modelDate: estimate.lastUpdated || null,

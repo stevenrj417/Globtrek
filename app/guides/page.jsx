@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import { GuideCard } from "./GuideCard";
+import { Breadcrumb, PageHero } from "../components/TravelPage";
 import { SiteFooter, SiteHeader } from "../components/SiteChrome";
 import { guideCard, publishedGuides } from "../lib/guides/buildGuide";
 import { SITE_URL } from "../lib/site";
@@ -32,20 +32,8 @@ export default function GuidesPage() {
     <main className="min-h-screen bg-bg text-ink">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <SiteHeader />
-      <div className="mx-auto max-w-[1520px] px-5 pt-6 sm:px-8">
-        <nav aria-label="Breadcrumb" className="text-sm text-subtle"><Link href="/" className="hover:text-ink">Home</Link> <span aria-hidden="true">›</span> <span aria-current="page" className="text-ink">Guides</span></nav>
-      </div>
-      <section className="px-4 pt-4 sm:px-6">
-        <div className="relative mx-auto min-h-[48svh] max-w-[1880px] overflow-hidden bg-placeholder sm:min-h-[56svh]">
-          <Image src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1" alt="A bright alpine lake and green mountains" fill priority className="image-calm object-cover" sizes="(min-width: 1880px) 1880px, 100vw" quality={70} />
-          <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black/70 via-black/30 to-transparent" aria-hidden="true" />
-          <div className="rise absolute inset-x-0 bottom-0 flex flex-col items-center px-5 pb-12 text-center sm:pb-16">
-            <p className="text-micro font-semibold uppercase tracking-caps text-white/80">{guides.length} guides</p>
-            <h1 className="mt-3 max-w-4xl font-serif text-[clamp(2.6rem,7vw,6rem)] font-normal leading-[0.95] tracking-tight-3 text-white [text-shadow:0_2px_24px_rgba(0,0,0,.35)]">Budget travel guides</h1>
-            <p className="mt-5 max-w-lg text-base leading-7 text-white/90">Real stays, cheap dinners, a day-by-day plan and what the trip costs, for the trips people search for.</p>
-          </div>
-        </div>
-      </section>
+      <Breadcrumb items={[["Home", "/"], ["Guides", null]]} width="max-w-[1520px]" />
+      <PageHero short centered image="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1" alt="A bright alpine lake and green mountains" chips={[`${guides.length} guides`]} title="Budget travel guides" subtitle="Real stays, cheap dinners, a day-by-day plan and what the trip costs, for the trips people search for." />
       <nav aria-label="Guide types" className="mx-auto mt-10 flex max-w-[1520px] flex-wrap justify-center gap-2 px-5 sm:px-8">
         {GROUPS.map(([id, title, , test]) => <a key={id} href={`#${id}`} className="inline-flex min-h-10 items-center gap-2 border border-black/15 px-4 text-micro font-medium uppercase tracking-label transition-colors hover:border-ink">{title} <span className="tabular text-subtle">{guides.filter(test).length}</span></a>)}
       </nav>

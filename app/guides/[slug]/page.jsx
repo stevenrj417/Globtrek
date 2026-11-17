@@ -6,6 +6,7 @@ import { BookingLogo } from "../../components/PartnerLogo";
 import { guideBySlug } from "../../data/guides";
 import { buildGuide, guideCard, publishedGuides } from "../../lib/guides/buildGuide";
 import { GuideCard } from "../GuideCard";
+import { Breadcrumb, CardRow, CardRowItem, CtaBand, NumberedPlaces, PageHero, PlaceTiles, Section, Summary, textLink } from "../../components/TravelPage";
 import { AFFILIATE_DISCLOSURE, SITE_URL } from "../../lib/site";
 import { CostPanel, GuideTrip, MobileBookBar, StayCards } from "./GuideTrip";
 
@@ -27,21 +28,7 @@ export async function generateMetadata({ params }) {
   };
 }
 
-function Section({ id, title, children, intro, eyebrow, width = "max-w-[1280px]" }) {
-  return <section id={id?.replace(/-heading$/, "")} aria-labelledby={id} className={`reveal mx-auto mt-[var(--section-space)] scroll-mt-24 px-5 sm:px-8 ${width}`}>
-    {eyebrow ? <p className="eyebrow mb-3">{eyebrow}</p> : null}
-    <h2 id={id} className="font-serif text-3xl font-normal tracking-tight-3 sm:text-5xl">{title}</h2>
-    {intro ? <p className="mt-4 max-w-[var(--width-reading)] text-base leading-7 text-muted">{intro}</p> : null}
-    {children}
-  </section>;
-}
-
-const link = "underline decoration-black/25 underline-offset-4 hover:decoration-ink";
-
-function Stars({ rating, reviews }) {
-  if (!rating) return null;
-  return <span className="tabular">★ {rating}{reviews ? ` · ${reviews.toLocaleString("en-US")} reviews` : ""}</span>;
-}
+const link = textLink;
 
 function Plan({ plan }) {
   return <div className={`mt-10 grid gap-6 ${plan.length > 2 ? "md:grid-cols-2 xl:grid-cols-4" : "md:grid-cols-2"}`}>
@@ -61,35 +48,11 @@ function Plan({ plan }) {
 }
 
 function Dinners({ dinners }) {
-  return <ol className="mt-10 grid gap-x-8 sm:grid-cols-2 lg:grid-cols-3">
-    {dinners.map((place, index) => <li key={place.name} className="flex gap-5 border-t border-black/10 py-6">
-      <span aria-hidden="true" className="tabular font-serif text-4xl leading-none text-subtle">{String(index + 1).padStart(2, "0")}</span>
-      <div className="min-w-0">
-        <p className="text-lg font-medium leading-snug tracking-tight-1">{place.name}</p>
-        <p className="mt-1 text-sm text-muted">{place.category}</p>
-        <div className="mt-3 flex flex-wrap items-center gap-1.5 text-xs">
-          {place.price ? <span className="tabular border border-black/15 px-2 py-0.5">{place.price}</span> : null}
-          {place.rating ? <span className="border border-black/15 px-2 py-0.5"><Stars rating={place.rating} reviews={place.reviewCount} /></span> : null}
-        </div>
-        {place.distance ? <p className="mt-2 text-xs text-subtle">{place.distance}</p> : null}
-        <a href={place.googleMapsUrl} target="_blank" rel="noopener" className={`mt-3 inline-block text-sm ${link}`}>Map and hours ↗</a>
-      </div>
-    </li>)}
-  </ol>;
+  return <NumberedPlaces places={dinners.map((place) => ({ name: place.name, category: place.category, price: place.price, rating: place.rating, reviewCount: place.reviewCount, note: place.distance, href: place.googleMapsUrl }))} />;
 }
 
 function Activities({ activities }) {
-  return <ul className="mt-10 grid gap-px border border-black/10 bg-black/10 sm:grid-cols-2 lg:grid-cols-3">
-    {activities.map((place) => <li key={place.name} className="bg-bg">
-      <a href={place.googleMapsUrl} target="_blank" rel="noopener" className="group flex h-full flex-col justify-between gap-6 p-6 transition-colors hover:bg-surface">
-        <div>
-          <p className="eyebrow">{place.category}</p>
-          <p className="mt-2 text-lg font-medium leading-snug tracking-tight-1">{place.name}</p>
-        </div>
-        <p className="flex items-center justify-between text-sm text-muted"><Stars rating={place.rating} reviews={place.reviewCount} /><span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">↗</span></p>
-      </a>
-    </li>)}
-  </ul>;
+  return <PlaceTiles places={activities.map((place) => ({ name: place.name, eyebrow: place.category, rating: place.rating, reviewCount: place.reviewCount, href: place.googleMapsUrl }))} />;
 }
 
 function Faq({ faqs }) {
@@ -111,18 +74,9 @@ function FaqSection({ faqs }) {
 function Closing({ guide }) {
   const related = guide.related.map((item) => guideCard(buildGuide(guideBySlug(item.slug)))).filter(Boolean).slice(0, 4);
   return <>
-    <section className="reveal mx-auto mt-[var(--section-space)] max-w-[1280px] px-5 sm:px-8">
-      <div className="relative overflow-hidden bg-ink px-6 py-14 text-white sm:px-14 sm:py-20">
-        <p className="text-micro font-semibold uppercase tracking-caps text-white/60">Free · 7 questions</p>
-        <h2 className="mt-3 max-w-2xl font-serif text-[clamp(2rem,4.5vw,3.75rem)] font-normal leading-[1.02] tracking-tight-3">Not sure this is the trip? Take the quiz.</h2>
-        <p className="mt-4 max-w-xl text-white/70">Tell us your budget and how you like to travel, and GlobTrek picks the one trip that fits.</p>
-        <Link href={guide.quizHref} className="mt-8 inline-flex min-h-12 min-w-[13rem] items-center justify-center gap-2 bg-white px-7 text-micro font-medium uppercase tracking-label text-black transition-opacity hover:opacity-90">Take the quiz <span aria-hidden="true">→</span></Link>
-      </div>
-    </section>
+    <CtaBand eyebrow="Free · 7 questions" title="Not sure this is the trip? Take the quiz." body="Tell us your budget and how you like to travel, and GlobTrek picks the one trip that fits." href={guide.quizHref} label="Take the quiz" />
     {related.length ? <Section id="related-heading" title="More guides like this">
-      <div className="-mx-5 mt-10 flex snap-x snap-mandatory scroll-px-5 gap-5 overflow-x-auto px-5 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 sm:overflow-visible sm:px-0 lg:grid-cols-4">
-        {related.map((card) => <div key={card.slug} className="w-[72%] shrink-0 snap-start sm:w-auto"><GuideCard card={card} /></div>)}
-      </div>
+      <CardRow>{related.map((card) => <CardRowItem key={card.slug}><GuideCard card={card} /></CardRowItem>)}</CardRow>
       <p className="mt-8 text-center"><Link href="/guides" className="btn btn-secondary">All guides</Link></p>
     </Section> : null}
     <p className="mx-auto mt-16 max-w-[1280px] px-5 text-xs text-subtle sm:px-8">{AFFILIATE_DISCLOSURE} <Link href="/affiliate-disclosure" className={link}>How this works</Link>.</p>
@@ -131,43 +85,9 @@ function Closing({ guide }) {
 
 function Hero({ guide, eyebrow, jump = [] }) {
   return <>
-    <div className="mx-auto max-w-[1280px] px-5 pt-6 sm:px-8">
-      <nav aria-label="Breadcrumb" className="text-sm text-subtle">
-        <Link href="/" className="hover:text-ink">Home</Link> <span aria-hidden="true">›</span> <Link href="/guides" className="hover:text-ink">Guides</Link> <span aria-hidden="true">›</span> <span aria-current="page" className="text-ink">{guide.title}</span>
-      </nav>
-    </div>
-    <section className="px-4 pt-4 sm:px-6">
-      <div className="relative mx-auto min-h-[58svh] max-w-[1880px] overflow-hidden bg-placeholder sm:min-h-[66svh]">
-        <Image src={guide.image} alt={guide.imageAlt} fill priority fetchPriority="high" className="image-calm object-cover" sizes="(min-width: 1880px) 1880px, 100vw" quality={80} />
-        <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black/75 via-black/30 to-transparent" aria-hidden="true" />
-        <div className="rise absolute inset-x-0 bottom-0 mx-auto max-w-[1280px] px-5 pb-10 sm:px-8 sm:pb-14">
-          <div className="flex flex-wrap gap-1.5">
-            <span className="bg-surface/92 px-2.5 py-1 text-micro font-semibold uppercase tracking-caps text-ink backdrop-blur-sm">{eyebrow}</span>
-            {(guide.chips || []).map((chip) => <span key={chip} className="tabular bg-surface/92 px-2.5 py-1 text-micro font-semibold uppercase tracking-caps text-ink backdrop-blur-sm">{chip}</span>)}
-          </div>
-          <h1 className="mt-4 max-w-4xl text-balance font-serif text-[clamp(2.6rem,6.5vw,6rem)] font-normal leading-[0.95] tracking-tight-3 text-white [text-shadow:0_2px_24px_rgba(0,0,0,.35)]">{guide.title}</h1>
-        </div>
-        {guide.imageCredit ? <p className="absolute bottom-2 right-3 max-w-[60%] truncate text-[10px] text-white/70">Photo: <a href={guide.imageCredit.source} target="_blank" rel="noopener" className="underline decoration-white/40 underline-offset-2 hover:text-white">{guide.imageCredit.artist}</a>, {guide.imageCredit.licenseUrl ? <a href={guide.imageCredit.licenseUrl} target="_blank" rel="noopener" className="underline decoration-white/40 underline-offset-2 hover:text-white">{guide.imageCredit.license}</a> : guide.imageCredit.license}</p> : null}
-      </div>
-    </section>
-    <section aria-label="The short answer" className="mx-auto mt-12 grid max-w-[1280px] gap-10 px-5 sm:mt-16 sm:px-8 lg:grid-cols-[1.25fr_1fr] lg:gap-16">
-      <div>
-        <p className="eyebrow">The short answer</p>
-        <div className="mt-4 space-y-4 text-lg leading-8 tracking-tight-1 sm:text-2xl sm:leading-10">
-          {guide.quick.map((line, index) => <p key={line} className={index ? "text-muted" : ""}>{line}</p>)}
-        </div>
-        {jump.length ? <nav aria-label="On this page" className="mt-8 flex flex-wrap gap-2">
-          {jump.map(([href, label]) => <a key={href} href={`#${href}`} className="inline-flex min-h-10 items-center border border-black/15 px-4 text-micro font-medium uppercase tracking-label transition-colors hover:border-ink">{label}</a>)}
-        </nav> : null}
-      </div>
-      {guide.facts?.length ? <dl className="self-start divide-y divide-black/10 bg-surface px-6 sm:px-8">
-        {guide.facts.map(([label, value, note]) => <div key={label} className="py-5">
-          <dt className="eyebrow">{label}</dt>
-          <dd className="tabular mt-1 text-2xl font-medium tracking-tight-2">{value}</dd>
-          {note ? <dd className="mt-0.5 text-xs text-subtle">{note}</dd> : null}
-        </div>)}
-      </dl> : null}
-    </section>
+    <Breadcrumb items={[["Home", "/"], ["Guides", "/guides"], [guide.title, null]]} />
+    <PageHero image={guide.image} alt={guide.imageAlt} title={guide.title} chips={[eyebrow, ...(guide.chips || [])]} credit={guide.imageCredit} />
+    <Summary lines={guide.quick} facts={guide.facts || []} jump={jump} />
   </>;
 }
 

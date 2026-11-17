@@ -4,6 +4,7 @@ import { CONTINENTS, SETTING_FILTERS, publishedDestinations } from "../data/dest
 import { DestinationBrowser } from "./DestinationBrowser";
 import { BookingLogo } from "../components/PartnerLogo";
 import { SITE_URL } from "../lib/site";
+import { Breadcrumb, PageHero } from "../components/TravelPage";
 
 export const metadata = {
   title: "Destinations on a budget",
@@ -38,11 +39,10 @@ export default function DestinationsPage() {
     <main className="min-h-screen bg-bg text-ink">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <SiteHeader />
-      <div className="mx-auto max-w-[1520px] px-5 py-[var(--section-space)] sm:px-8">
-        <nav aria-label="Breadcrumb" className="text-sm text-subtle"><Link href="/" className="hover:text-ink">Home</Link> <span aria-hidden="true">›</span> <span aria-current="page">Destinations</span></nav>
-        <h1 className="mt-6 font-serif text-[clamp(2.5rem,5.4vw,5rem)] font-normal leading-[1.02] tracking-tight-2">Destinations</h1>
-        <p className="mt-4 max-w-[var(--width-reading)] text-lg leading-8 text-muted">Rock-bottom estimates for one person, 5 nights, before flights: a hostel bed, cheap eats and free things to do. Open one to see what&apos;s included and plan it as your trip.</p>
-        <p className="mt-2 text-sm text-subtle">Book stays, flights and attractions on <BookingLogo className="h-3.5 w-auto" /></p>
+      <Breadcrumb items={[["Home", "/"], ["Destinations", null]]} width="max-w-[1520px]" />
+      <PageHero short centered image="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1" alt="A bright alpine lake and green mountains" chips={[`${publishedDestinations.length} places`]} title="Destinations" subtitle="Rock-bottom estimates for one person, 5 nights, before flights. Open one to see what's included and make it your trip." />
+      <div className="mx-auto max-w-[1520px] px-5 pb-[var(--section-space)] sm:px-8">
+        <p className="mt-8 text-center text-sm text-subtle">Book stays, flights and attractions on <BookingLogo className="h-3.5 w-auto" /></p>
         <div className="mt-12">
           <DestinationBrowser destinations={publishedDestinations} continents={CONTINENTS} settings={SETTING_FILTERS} />
         </div>

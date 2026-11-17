@@ -5,6 +5,7 @@ import { LAUNCH_DATA, rideshareUrl } from "../../data/launchSet";
 import { FEED_STAYS_CHECKED, launchHotels } from "../../data/launchStays";
 import { cjActivitySearchUrl } from "../../lib/booking/cj";
 import { curatedActivities, curatedRestaurants } from "../../lib/places/curated";
+import { CardRow, CardRowItem, Chip, NumberedPlaces, PlaceTiles, Section, textLink } from "../../components/TravelPage";
 
 const PRICE = { 1: "$", 2: "$$", 3: "$$$" };
 const PRICE_LEVEL = { PRICE_LEVEL_INEXPENSIVE: "$", PRICE_LEVEL_MODERATE: "$$", PRICE_LEVEL_EXPENSIVE: "$$$", PRICE_LEVEL_VERY_EXPENSIVE: "$$$$" };
@@ -32,13 +33,6 @@ function MonthlyBeds({ prices }) {
   </div>;
 }
 
-function Section({ id, title, children }) {
-  return <section aria-labelledby={id} className="mx-auto mt-[var(--section-space)] max-w-[1280px] px-5 sm:px-8">
-    <h2 id={id} className="text-2xl font-semibold tracking-tight-2">{title}</h2>
-    {children}
-  </section>;
-}
-
 function todaysHours(hours) {
   return hours?.length ? hours[0].replace(/^Monday:\s*/, "Mon ") : null;
 }
@@ -54,7 +48,7 @@ export function LaunchSections({ item }) {
   const firstHotel = data.hotels?.[0];
   const uber = rideshareUrl(data.airportRide, firstHotel);
   return <>
-    {data.gallery?.length ? <section aria-label={`Photos of ${item.name}`} className="mx-auto mt-6 max-w-[1280px] px-5 sm:px-8">
+    {data.gallery?.length ? <section aria-label={`Photos of ${item.name}`} className="mx-auto mt-[var(--section-space)] max-w-[1280px] px-5 sm:px-8">
       <ul className="grid grid-cols-2 gap-2 sm:grid-cols-4">
         {data.gallery.map((photo) => <li key={photo.src} className="relative aspect-[4/3] overflow-hidden bg-placeholder">
           <Image src={photo.src} alt={photo.alt} fill className="object-cover" sizes="(min-width: 640px) 25vw, 50vw" />
@@ -63,88 +57,63 @@ export function LaunchSections({ item }) {
       <p className="mt-2 text-xs text-subtle">Photos: {[...new Set(data.gallery.map((photo) => photo.credit))].join(" · ")}</p>
     </section> : null}
 
-    {hotels.length ? <Section id="stay-heading" title="Where to stay">
-      <p className="mt-2 text-sm text-muted">Hostels and budget stays only, from <BookingLogo className="h-3 w-auto" /> listings (checked {FEED_STAYS_CHECKED || data.verified}). Check current prices and availability on Booking.com.</p>
-      <ul className="mt-6 grid gap-px border border-black/10 bg-black/10 sm:grid-cols-2">
-        {hotels.map((hotel) => <li key={hotel.id} className="flex flex-col justify-between gap-4 bg-bg p-5">
-          <div>
-            {hotel.photos?.[0] ? <div className="relative mb-4 aspect-[16/9] overflow-hidden bg-placeholder">
-              <Image src={hotel.photos[0]} alt={`${hotel.name}, photo from Booking.com`} fill className="object-cover" sizes="(min-width: 640px) 40vw, 100vw" />
-            </div> : null}
-            <p className="text-lg font-medium tracking-tight-1">{hotel.name}</p>
-            <p className="mt-1 text-sm text-subtle">{[hotel.priceTier === "hostel" ? hotel.category || "Hostel" : hotel.category, hotel.starRating ? `${hotel.starRating}-star` : null, hotel.neighborhood, hotel.address].filter(Boolean).join(" · ") || "Hostel · cheapest well-reviewed bed"}</p>
-            {hotel.rating ? <p className="tabular mt-1 text-sm">{hotel.rating.toFixed(1)} / 10 · {hotel.reviewCount.toLocaleString("en-US")} Booking.com reviews</p> : null}
-            {hotel.bedNight ? <p className="tabular mt-2 text-sm font-medium">Dorm beds seen from about ${hotel.bedNight} a night, taxes in{hotel.verifiedAt ? ` (checked ${hotel.verifiedAt})` : ""}; not a live price</p> : hotel.fromFeed ? null : <p className="mt-2 text-sm text-muted">{hotel.note}</p>}
-            {hotel.tags?.length ? <ul className="mt-3 flex flex-wrap gap-1.5 text-xs">{hotel.tags.map((tag) => <li key={tag} className="border border-black/15 px-2 py-0.5">{tag}</li>)}</ul> : null}
-            {hotel.roomTypes?.length ? <p className="mt-3 text-sm text-muted">Rooms: {hotel.roomTypes.slice(0, 3).join(" · ")}{hotel.roomTypes.length > 3 ? ` · +${hotel.roomTypes.length - 3} more` : ""}</p> : null}
-            {hotel.maxGuests && !hotel.dorms ? <p className="text-xs text-subtle">Sleeps up to {hotel.maxGuests}{hotel.bedsDescription ? ` · ${hotel.bedsDescription}` : ""}</p> : null}
-            <MonthlyBeds prices={hotel.monthlyNight} />
-          </div>
-          <a href={bookingPropertyUrl({ ...hotel, providerLinkVerified: true }, {})} target="_blank" rel="noopener sponsored" className="btn btn-secondary self-start">See rooms and prices ↗</a>
-        </li>)}
-      </ul>
+    {hotels.length ? <Section id="stay-heading" eyebrow="From Booking.com" title="Where to stay" intro={`Hostels and budget stays, from Booking.com listings checked ${FEED_STAYS_CHECKED || data.verified}. Check current prices and availability on Booking.com.`}>
+      <CardRow>
+        {hotels.map((hotel, index) => {
+          const kind = hotel.priceTier === "hostel" ? hotel.category || "Hostel" : hotel.category;
+          const chips = [hotel.starRating ? `${hotel.starRating}-star ${String(kind || "stay").toLowerCase()}` : kind, hotel.dorms ? "Dorm beds" : null].filter(Boolean);
+          return <CardRowItem key={hotel.id}>
+            <div className="relative aspect-[4/5] overflow-hidden bg-placeholder">
+              {hotel.photos?.[0] ? <Image src={hotel.photos[0]} alt={`${hotel.name}, photo from Booking.com`} fill className="image-calm object-cover" sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 80vw" loading={index < 2 ? "eager" : "lazy"} /> : null}
+              {chips.length ? <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">{chips.map((chip) => <Chip key={chip}>{chip}</Chip>)}</div> : null}
+            </div>
+            <div className="flex flex-1 flex-col pt-4">
+              <h3 className="text-xl font-medium leading-snug tracking-tight-2">{hotel.name}</h3>
+              {hotel.neighborhood || hotel.address ? <p className="mt-1 line-clamp-2 text-xs text-subtle">{[hotel.neighborhood, hotel.address].filter(Boolean).join(" · ")}</p> : null}
+              {hotel.rating ? <p className="tabular mt-2 text-sm">{hotel.rating.toFixed(1)} / 10 <span className="text-subtle">· {hotel.reviewCount.toLocaleString("en-US")} reviews</span></p> : null}
+              {hotel.bedNight ? <p className="tabular mt-2 text-sm"><span className="font-medium">Beds from about ${hotel.bedNight}</span> a night, taxes in<span className="block text-xs text-subtle">{hotel.verifiedAt ? `Seen ${hotel.verifiedAt}; ` : ""}not a live price</span></p> : hotel.fromFeed ? null : hotel.note ? <p className="mt-2 text-sm text-muted">{hotel.note}</p> : null}
+              {hotel.tags?.filter((tag) => !/dorm/i.test(tag)).length ? <ul className="mt-3 flex flex-wrap gap-1.5 text-xs">{hotel.tags.filter((tag) => !/dorm/i.test(tag)).slice(0, 4).map((tag) => <li key={tag} className="border border-black/15 px-2 py-0.5">{tag}</li>)}</ul> : null}
+              {hotel.maxGuests && !hotel.dorms ? <p className="mt-2 text-xs text-subtle">Sleeps up to {hotel.maxGuests}</p> : null}
+              <MonthlyBeds prices={hotel.monthlyNight} />
+              <div className="mt-auto pt-5">
+                <a href={bookingPropertyUrl({ ...hotel, providerLinkVerified: true }, {})} target="_blank" rel="noopener sponsored" className="btn btn-primary w-full">See rooms and prices ↗</a>
+              </div>
+            </div>
+          </CardRowItem>;
+        })}
+      </CardRow>
+      <p className="mt-6 text-xs text-subtle">Listings on <BookingLogo className="h-3 w-auto" />. You book and pay on Booking.com.</p>
     </Section> : null}
 
-    {data.dinners?.length ? <Section id="eat-heading" title="Where to eat">
-      <ul className="mt-6 divide-y divide-black/10 border-y border-black/10">
-        {data.dinners.map((place) => <li key={place.id} className="grid gap-1 py-4 sm:grid-cols-[1fr_auto] sm:items-center sm:gap-6">
-          <div>
-            <p className="font-medium">{place.name} <span className="text-subtle">{PRICE[place.priceLevel] || ""}</span></p>
-            <p className="text-sm text-muted">{place.order}</p>
-            <p className="tabular text-xs text-subtle">{place.rating} on Google · {place.reviewCount?.toLocaleString("en-US")} reviews · {place.reservations === "walk-in" ? "Walk in" : "Takes reservations"}{todaysHours(place.hours) ? ` · ${todaysHours(place.hours)}` : ""}</p>
-          </div>
-          <a href={place.officialWebsiteUrl || place.googleMapsUri} target="_blank" rel="noopener" className="text-sm underline decoration-black/25 underline-offset-4 hover:decoration-ink">{place.reservations === "walk-in" ? "Map and hours ↗" : "Reserve ↗"}</a>
-        </li>)}
-      </ul>
+    {data.dinners?.length ? <Section id="eat-heading" eyebrow="From Google Maps" title="Where to eat">
+      <NumberedPlaces places={data.dinners.map((place) => ({ key: place.id, name: place.name, category: place.order, price: PRICE[place.priceLevel] || null, rating: place.rating, reviewCount: place.reviewCount, tags: [place.reservations === "walk-in" ? "Walk in" : "Takes reservations"], note: todaysHours(place.hours), href: place.officialWebsiteUrl || place.googleMapsUri, linkLabel: place.reservations === "walk-in" ? "Map and hours ↗" : "Reserve ↗" }))} />
     </Section> : null}
 
-    {eats.length ? <Section id="eat-heading" title="Where to eat">
-      <ul className="mt-6 divide-y divide-black/10 border-y border-black/10">
-        {eats.map((place) => <li key={place.id} className="grid gap-1 py-4 sm:grid-cols-[1fr_auto] sm:items-center sm:gap-6">
-          <div>
-            <p className="font-medium">{place.name} <span className="text-subtle">{PRICE_LEVEL[place.priceLevel] || ""}</span></p>
-            {place.category ? <p className="text-sm text-muted">{titleCase(place.category)}</p> : null}
-            {place.rating ? <p className="tabular text-xs text-subtle">{place.rating} on Google · {place.reviewCount?.toLocaleString("en-US")} reviews</p> : null}
-          </div>
-          <a href={place.googleMapsUrl} target="_blank" rel="noopener" className="text-sm underline decoration-black/25 underline-offset-4 hover:decoration-ink">Map and hours ↗</a>
-        </li>)}
-      </ul>
+    {eats.length ? <Section id="eat-heading" eyebrow="From Google Maps" title="Where to eat" intro="Well-reviewed and open, near the center.">
+      <NumberedPlaces places={eats.map((place) => ({ key: place.id, name: place.name, category: place.category ? titleCase(place.category) : null, price: PRICE_LEVEL[place.priceLevel] || null, rating: place.rating, reviewCount: place.reviewCount, href: place.googleMapsUrl }))} />
     </Section> : null}
 
-    {data.activities?.length ? <Section id="do-heading" title="Things to do">
-      <ul className="mt-6 grid gap-px border border-black/10 bg-black/10 sm:grid-cols-2 lg:grid-cols-3">
-        {data.activities.map((activity) => <li key={activity.id} className="flex flex-col justify-between gap-3 bg-bg p-5">
-          <div>
-            <p className="eyebrow">{activity.isFree ? "Free" : `About $${activity.estimatedCostLow}–${activity.estimatedCostHigh}`} · {Math.round(activity.durationMinutes / 15) * 15 >= 60 ? `${Math.round(activity.durationMinutes / 60 * 10) / 10} hr` : `${activity.durationMinutes} min`}</p>
-            <p className="mt-2 font-medium">{activity.name}</p>
-            <p className="mt-1 text-sm text-muted">{activity.description}</p>
-          </div>
-          {activity.isFree ? <a href={activity.googleMapsUri} target="_blank" rel="noopener" className="text-sm underline decoration-black/25 underline-offset-4 hover:decoration-ink">Map ↗</a>
-            : activity.payAtGate ? <a href={activity.officialWebsiteUrl || activity.googleMapsUri} target="_blank" rel="noopener" className="text-sm underline decoration-black/25 underline-offset-4 hover:decoration-ink">Pay at the gate · official site ↗</a>
-            : <a href={cjActivitySearchUrl(activity.name, destination)} target="_blank" rel="noopener sponsored" className="text-sm underline decoration-black/25 underline-offset-4 hover:decoration-ink">Tickets on <BookingLogo className="h-3 w-auto" /> ↗</a>}
-        </li>)}
-      </ul>
+    {data.activities?.length ? <Section id="do-heading" eyebrow="Picked for you" title="Things to do">
+      <PlaceTiles places={data.activities.map((activity) => ({
+        key: activity.id,
+        name: activity.name,
+        description: activity.description,
+        eyebrow: `${activity.isFree ? "Free" : `About $${activity.estimatedCostLow}–${activity.estimatedCostHigh}`} · ${Math.round(activity.durationMinutes / 15) * 15 >= 60 ? `${Math.round(activity.durationMinutes / 60 * 10) / 10} hr` : `${activity.durationMinutes} min`}`,
+        href: activity.isFree ? activity.googleMapsUri : activity.payAtGate ? activity.officialWebsiteUrl || activity.googleMapsUri : cjActivitySearchUrl(activity.name, destination),
+        sponsored: !activity.isFree && !activity.payAtGate,
+        linkLabel: activity.isFree ? "Map" : activity.payAtGate ? "Pay at the gate · official site" : "Tickets on Booking.com",
+      }))} />
     </Section> : null}
 
-    {places.length ? <Section id="do-heading" title="Things to do">
-      <ul className="mt-6 grid gap-px border border-black/10 bg-black/10 sm:grid-cols-2 lg:grid-cols-3">
-        {places.map((place) => <li key={place.id} className="flex flex-col justify-between gap-3 bg-bg p-5">
-          <div>
-            {place.category ? <p className="eyebrow">{titleCase(place.category)}</p> : null}
-            <p className="mt-2 font-medium">{place.name}</p>
-            {place.rating ? <p className="tabular mt-1 text-sm text-muted">{place.rating} on Google · {place.reviewCount?.toLocaleString("en-US")} reviews</p> : null}
-          </div>
-          <a href={place.googleMapsUrl} target="_blank" rel="noopener" className="text-sm underline decoration-black/25 underline-offset-4 hover:decoration-ink">Map ↗</a>
-        </li>)}
-      </ul>
+    {places.length ? <Section id="do-heading" eyebrow="From Google Maps" title="Things to do" intro="Ranked by how many people have reviewed them.">
+      <PlaceTiles places={places.map((place) => ({ key: place.id, name: place.name, eyebrow: place.category ? titleCase(place.category) : null, rating: place.rating, reviewCount: place.reviewCount, href: place.googleMapsUrl }))} />
     </Section> : null}
 
-    {data.airportRide ? <Section id="airport-heading" title="From the airport">
-      <dl className="mt-6 grid gap-px border border-black/10 bg-black/10 sm:grid-cols-2">
-        <div className="bg-bg p-5"><dt className="eyebrow">Public transit</dt><dd className="mt-2 text-sm">{data.airportRide.transit.summary}. {data.airportRide.transit.fare}.</dd><dd className="mt-1 text-xs text-subtle">{data.airportRide.transit.note}. <a href={data.airportRide.transit.checkUrl} target="_blank" rel="noopener" className="underline underline-offset-2">{data.airportRide.transit.checkLabel || "Check current fares"}</a></dd></div>
-        <div className="bg-bg p-5"><dt className="eyebrow">Rideshare</dt><dd className="mt-2 text-sm">{data.airportRide.rideshare.summary}. {data.airportRide.rideshare.fare}.</dd>{uber ? <dd className="mt-3"><a href={uber} target="_blank" rel="noopener" className="btn btn-secondary">Uber to {firstHotel.name} ↗</a></dd> : null}</div>
+    {data.airportRide ? <Section id="airport-heading" eyebrow="Getting in" title="From the airport" intro={`${data.airportRide.airport} is about ${data.airportRide.miles} miles from ${data.airportRide.toCenterLabel || "the city center"}.`}>
+      <dl className="mt-10 grid gap-6 sm:grid-cols-2">
+        <div className="bg-surface p-6 sm:p-8"><dt className="font-serif text-2xl tracking-tight-2">Public transit</dt><dd className="mt-3 text-base">{data.airportRide.transit.summary}. {data.airportRide.transit.fare}.</dd><dd className="mt-2 text-xs text-subtle">{data.airportRide.transit.note}. <a href={data.airportRide.transit.checkUrl} target="_blank" rel="noopener" className={textLink}>{data.airportRide.transit.checkLabel || "Check current fares"}</a></dd></div>
+        <div className="bg-surface p-6 sm:p-8"><dt className="font-serif text-2xl tracking-tight-2">Rideshare</dt><dd className="mt-3 text-base">{data.airportRide.rideshare.summary}. {data.airportRide.rideshare.fare}.</dd>{uber ? <dd className="mt-5"><a href={uber} target="_blank" rel="noopener" className="btn btn-secondary">Uber to {firstHotel.name} ↗</a></dd> : null}</div>
       </dl>
-      <p className="mt-2 text-xs text-subtle">{data.airportRide.airport} is about {data.airportRide.miles} miles from {data.airportRide.toCenterLabel || "the city center"}.</p>
     </Section> : null}
   </>;
 }
