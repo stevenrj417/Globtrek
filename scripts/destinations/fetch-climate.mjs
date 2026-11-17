@@ -14,7 +14,8 @@ const MONTHS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 let fetched = 0;
 for (const destination of destinations) {
-  const location = Number.isFinite(Number(destination.latitude)) ? { latitude: Number(destination.latitude), longitude: Number(destination.longitude) } : flagships[destination.id];
+  // Number(null) is 0, so check for a real value first (it once sent six cities to 0°, 0°).
+  const location = destination.latitude != null && Number.isFinite(Number(destination.latitude)) ? { latitude: Number(destination.latitude), longitude: Number(destination.longitude) } : flagships[destination.id];
   if (!location || file.climate[destination.id]) continue;
   const url = `https://power.larc.nasa.gov/api/temporal/climatology/point?parameters=T2M,PRECTOTCORR&community=RE&longitude=${location.longitude}&latitude=${location.latitude}&format=JSON`;
   try {

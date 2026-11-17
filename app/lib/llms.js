@@ -8,6 +8,7 @@ import { AFFILIATE_DISCLOSURE, CONTENT_UPDATED, INSTAGRAM_URL, SITE_URL } from "
 const pages = [
   ["Find your trip", "/discover", "The seven-question planner. Free, no account needed."],
   ["Destinations on a budget", "/destinations", `${publishedDestinations.length} destination guides with estimated 5-night costs before flights, best months and nearest airport.`],
+  ["Guides", "/guides", "Weekend plans, cheap hotels near landmarks and lists of the cheapest places to go, built from real stays and GlobTrek's estimates."],
   ["How it works", "/how-it-works", "The questions, how destinations are matched and priced, and how booking works."],
   ["Help", "/help", "Answers on cost estimates, booking, accounts and how GlobTrek makes money."],
   ["About", "/about", "Why GlobTrek recommends one trip instead of a long list."],

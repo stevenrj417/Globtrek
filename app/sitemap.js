@@ -1,4 +1,5 @@
 import { publishedDestinations } from "./data/destinationCatalog";
+import { publishedGuides } from "./lib/guides/buildGuide";
 import { CONTENT_UPDATED, SITE_URL } from "./lib/site";
 
 const routes = [
@@ -9,6 +10,7 @@ const routes = [
   // "/road-trips",
   // "/road-trips/quiz",
   "/destinations",
+  "/guides",
   "/about",
   "/how-it-works",
   "/help",
@@ -33,6 +35,12 @@ export default function sitemap() {
     ...publishedDestinations.map((item) => ({
       url: `${SITE_URL}/destinations/${item.slug}`,
       lastModified: item.modelDate ? new Date(`${item.modelDate}T00:00:00Z`) : new Date(`${CONTENT_UPDATED}T00:00:00Z`),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    })),
+    ...publishedGuides().map((guide) => ({
+      url: `${SITE_URL}/guides/${guide.slug}`,
+      lastModified: new Date(`${CONTENT_UPDATED}T00:00:00Z`),
       changeFrequency: "monthly",
       priority: 0.7,
     })),

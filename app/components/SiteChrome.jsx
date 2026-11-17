@@ -11,7 +11,7 @@ import { BookingPartnerBadge } from "./PartnerLogo";
 const navigation = [["Trips", "/#trips"], ["Quiz", "/discover"], ["Destinations", "/destinations"], ["How it works", "/how-it-works"], ["About", "/about"]];
 
 const footerGroups = [
-  ["Plan", [["Find my trip", "/discover"], ["Destinations", "/destinations"], ["How it works", "/how-it-works"]]],
+  ["Plan", [["Find my trip", "/discover"], ["Destinations", "/destinations"], ["Guides", "/guides"], ["How it works", "/how-it-works"]]],
   ["Company", [["About", "/about"], ["Help", "/help"], ["Contact", "/contact"]]],
   ["Policies", [["Privacy", "/privacy"], ["Terms", "/terms"], ["Affiliate disclosure", "/affiliate-disclosure"], ["Photo credits", "/photo-credits"]]],
 ];
