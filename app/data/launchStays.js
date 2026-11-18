@@ -6,6 +6,7 @@ import feedStays from "./feedStays.json" with { type: "json" };
 import { CHEAP_STAYS, CHEAP_STAYS_CHECKED, stayMonthly } from "./cheapStays.js";
 import { LAUNCH_AIRPORTS, LAUNCH_DATA } from "./launchSet.js";
 import { snapshotProperties } from "../lib/inventory/CjCatalogHotelProvider.js";
+import { stayDisplayName } from "../lib/stays/displayName.js";
 
 // The rock-bottom plan prices a specific hostel, so it leads the list.
 function cheapestBed(destinationId) {
@@ -64,6 +65,7 @@ export function launchHotels(destinationId, { limit = 8 } = {}) {
     image: hotel.image || hotel.photos?.[0] || null,
     imageSource: hotel.image ? hotel.imageSource : hotel.photos?.length ? "Booking.com" : undefined,
     amenities: hotel.amenities || [],
-    tags: [hotel.dorms ? "dorm beds" : null, hotel.catalogFreeCancellation ? "free cancellation on some rates" : null, hotel.catalogFreeWifi ? "free Wi-Fi" : null, hotel.catalogFreeBreakfast ? "breakfast on some rates" : null].filter(Boolean),
+    name: stayDisplayName(hotel.name),
+    tags: [hotel.dorms ? "Dorm beds" : null, hotel.catalogFreeCancellation ? "Free cancellation on some rates" : null, hotel.catalogFreeWifi ? "Free Wi-Fi" : null, hotel.catalogFreeBreakfast ? "Breakfast on some rates" : null].filter(Boolean),
   }));
 }

@@ -12,7 +12,7 @@ export function BookableTours({ tours, destination, interest }) {
     <div className="mx-auto max-w-[1180px]">
       <p className="text-micro uppercase tracking-editorial">Book ahead</p>
       <h2 id="tours-heading" className="mt-4 font-serif text-[clamp(2rem,3vw,2.75rem)] leading-[.94] tracking-tight-2">Tours and tickets in {destination.city.toLowerCase().replace(/(^|[\s&-])\S/g, (letter) => letter.toUpperCase())}</h2>
-      <p className="mt-3 max-w-2xl text-xs leading-5">{interest && matching ? `${matching} picked for your interest in ${interest.toLowerCase()}. ` : interest ? `No ${interest.toLowerCase()} tours listed here yet, so these are the best-rated options. ` : ""}Listed prices are per person from WeGoTrip; the provider confirms the final price and availability.</p>
+      <p className="mt-3 max-w-2xl text-xs leading-5">{interest && matching ? `${matching} picked for your interest in ${interest.toLowerCase()}. ` : interest ? `No ${interest.toLowerCase()} tours listed here yet, so these are the best-rated options. ` : ""}Listed prices are per person from WeGoTrip; the provider confirms the final price and availability. GlobTrek may earn a commission when you book.</p>
       <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {tours.map((tour) => <li key={tour.id} className="flex flex-col overflow-hidden border border-black/15 bg-white">
           {tour.image ? <div className="relative aspect-[3/2] bg-placeholder"><Image src={tour.image} alt="" fill sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" className="object-cover" /></div> : null}

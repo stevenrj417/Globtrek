@@ -24,7 +24,7 @@ export async function generateMetadata({ params }) {
   if (!item) return {};
   return {
     title: `${item.name} on a budget: 5-night trip`,
-    description: `${item.name}, ${item.country}: ${estimateLine(item.estimate)}. Best time to go: ${item.season.toLowerCase()}.`,
+    description: `${item.name}, ${item.country}: ${estimateLine(item.estimate)}. Best time to go: ${seasonLine(item.season).toLowerCase()}`,
     alternates: { canonical: `/destinations/${item.slug}` },
   };
 }
@@ -32,6 +32,11 @@ export async function generateMetadata({ params }) {
 const LEVEL = { value: "low-cost", moderate: "mid-priced", expensive: "higher-cost", very_expensive: "premium" };
 const ENTRY_URL = "https://travel.state.gov/content/travel/en/international-travel/International-Travel-Country-Information-Pages.html";
 const ADVISORY_URL = "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories.html";
+
+// The climate source is credited in the small print, not in the main line.
+function seasonLine(season) {
+  return String(season || "").replace(/\s*Averages from NASA POWER, [\d–-]+\.?$/, "");
+}
 
 function monthYear(value) {
   if (!value) return null;
@@ -44,6 +49,7 @@ export default async function DestinationPage({ params }) {
   if (!item) notFound();
 
   const months = item.planning.monthly;
+  const season = seasonLine(item.season);
   const nights = months.map((month) => month.hotelNight);
   const maxNight = Math.max(...nights);
   const may = months[4];
@@ -51,7 +57,7 @@ export default async function DestinationPage({ params }) {
   const facts = [
     ["5 nights, 1 traveler", `${formatRange(item.estimate.low, item.estimate.high)}`, "Lowest-cost estimate, before flights"],
     ["Nearest airport", item.airport, null],
-    item.knownness != null ? ["Knownness", `${item.knownness} / 100`, item.knownness < 40 ? "Off the radar" : item.knownness < 70 ? "Known, not crowded" : "Well known"] : null,
+    item.knownness != null ? ["How well known", `${item.knownness} / 100`, item.knownness < 40 ? "Off the radar" : item.knownness < 70 ? "Known, not crowded" : "Well known"] : null,
   ].filter(Boolean);
 
   const schema = {
@@ -79,7 +85,7 @@ export default async function DestinationPage({ params }) {
       <Breadcrumb items={[["Home", "/"], ["Destinations", "/destinations"], ...(item.continent ? [[item.continent, null]] : []), [item.name, null]]} />
       <PageHero image={item.image} alt={item.alt} title={item.name} chips={[item.country, ...(item.vibe ? [item.vibe] : [])]} credit={item.credit} subtitle={`Known for ${item.knownFor}.`} />
 
-      <Summary eyebrow="The trip at a glance" lines={[`${estimateLine(item.estimate)}.`, ...(item.estimate.perNight ? [`Stay about ${nightlyLine(item.estimate.perNight, item.estimate.nightUnit)}.`] : []), `Best time to go: ${item.season}`]} facts={facts} jump={jump}>
+      <Summary eyebrow="The trip at a glance" lines={[`${estimateLine(item.estimate)}.`, ...(item.estimate.perNight ? [`Stay about ${nightlyLine(item.estimate.perNight, item.estimate.nightUnit)}.`] : []), `Best time to go: ${season}`]} facts={facts} jump={jump}>
         <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
           <Link href={planHref} className="btn btn-primary">Make this my trip</Link>
           <EstimateDetails estimate={item.estimate} align="left" />
@@ -114,7 +120,7 @@ export default async function DestinationPage({ params }) {
           </div>
         </div>
         <p className="mt-6 max-w-[var(--width-reading)] text-xs leading-5 text-subtle">
-          {item.costModel === "city" ? `GlobTrek's ${item.name} cost model` : `Typical costs for a ${LEVEL[item.costLevel] || "mid-priced"} destination; not yet modeled for ${item.name} specifically`}{item.modelDate ? `, dated ${monthYear(item.modelDate)}` : ""}. Estimates, not live prices. Check live rates with the booking partner.
+          {item.costModel === "city" ? `GlobTrek's ${item.name} cost model` : `Typical costs for a ${LEVEL[item.costLevel] || "mid-priced"} destination; not yet modeled for ${item.name} specifically`}{item.modelDate ? `, dated ${monthYear(item.modelDate)}` : ""}. Estimates, not live prices. Check live rates with the booking partner.{item.season !== season ? " Best months to go come from 2001–2025 climate averages (NASA POWER)." : ""}
         </p>
         <ul className="mt-6 flex flex-wrap gap-x-8 gap-y-3 text-sm">
           <li><a href={ENTRY_URL} rel="noopener" className={textLink}>Check entry requirements</a> <span className="text-subtle">(U.S. Department of State)</span></li>

@@ -250,9 +250,10 @@ function pickStays(guide, destination, center, month) {
   const scored = pool
     .map((stay) => ({ stay, evidence: feature ? feature(stay) : null, distance: km(center, stay) }))
     .filter(({ stay, evidence }) => (!feature || evidence) && !LISTING.test(stay.name) && BUDGET_TYPES.test(stay.category || "hotel") && !LUXURY.test(stay.category || "") && !(Number(stay.starRating) > 4));
-  // Budget first; among equals, closer to the area.
-  // Budget first (4-star stays only when there aren't enough cheaper ones); among equals, closer to the area.
-  scored.sort((a, b) => (Number(a.stay.starRating) >= 4) - (Number(b.stay.starRating) >= 4) || (b.stay.budgetScore || 0) - (a.stay.budgetScore || 0) || (a.distance ?? 99) - (b.distance ?? 99));
+  // Budget first (4-star stays only when there aren't enough cheaper ones; 1-star
+  // stays after 2- and 3-star ones, so a basic motel is never the top pick); among equals, closer to the area.
+  const oneStar = (stay) => Number(stay.starRating) === 1;
+  scored.sort((a, b) => (Number(a.stay.starRating) >= 4) - (Number(b.stay.starRating) >= 4) || oneStar(a.stay) - oneStar(b.stay) || (b.stay.budgetScore || 0) - (a.stay.budgetScore || 0) || (a.distance ?? 99) - (b.distance ?? 99));
   // Mix types where possible: no more than two hostels.
   const picks = [];
   for (const entry of scored) {
@@ -529,7 +530,7 @@ function placeGuide(guide) {
   const priced = stays.picks.find((pick) => pick.price?.unit === "room")?.price || stays.picks.find((pick) => pick.price)?.price;
 
   const where = guide.area
-    ? `${stays.matching} budget stays ${guide.area.town ? `in ${guide.area.name}` : `within ${guide.area.radiusKm} km of ${guide.area.name}`} are on Booking.com in our data`
+    ? `${stays.matching} budget stays ${guide.area.town ? `in ${guide.area.name}` : `within ${guide.area.radiusKm} km of ${guide.area.name}`} are listed on Booking.com`
     : near ? `The cheapest well-equipped stays cluster around ${near.name}: ${near.within} of the ${near.of} we rank highest are within 1.5 km of it` : null;
   const featureNote = guide.feature === "oceanfront" ? `${stays.matching} of them show oceanfront or ocean-view rooms` : guide.feature === "romantic" ? `${stays.matching} have a hot tub, an ocean-view room or a fireplace` : guide.feature === "offStrip" ? `${stays.matching} are 1 to 15 km off the Strip` : null;
   const costLine = `A ${tripName(guide, nights)} costs about ${fmt(low, high)} for ${people(travelers)} before getting there, with ${priced ? `${priced.unit === "dorm bed" ? "dorm beds" : `${priced.kind} rooms`} typically around ${formatMoney(priced.value)} a night` : "budget stays"}.`;
@@ -574,7 +575,7 @@ function placeGuide(guide) {
     stays: stays.picks,
     hotelPicks: hotelPicks(guide, destination),
     budgets: budgetLevels(guide, destination, center, stays).map(({ stays: levelStays, ...level }) => ({ ...level, stays: levelStays.map(({ latitude, longitude, ...stay }) => stay) })),
-    stayNote: `Prices are typical nights for this kind of stay in ${page.name} (${bandFor(destination) ? "yearly averages from GlobTrek's regional price bands" : `GlobTrek's ${MONTHS[month - 1]} estimate`}), not the property's own rate. Dorm prices are per bed. Tap through for today's price.`,
+    stayNote: `Nightly prices are what this kind of stay typically costs here (${bandFor(destination) ? "yearly averages from GlobTrek's regional price bands" : `GlobTrek's ${MONTHS[month - 1]} estimate`}), not each hotel's own rate. Dorm prices are per bed.`,
     plan,
     dinners,
     activities,
@@ -682,7 +683,7 @@ function listGuide(guide) {
     [`How is this list ranked?`, `${rule.month ? `First by weather: only places averaging 15–32 °C with under about 4 mm of rain a day in ${MONTHS[month - 1]} (NASA POWER climate averages). Then b` : "B"}y GlobTrek's estimate for ${nights} nights for one traveler${rule.month || rule.warmWinter ? ` in ${MONTHS[month - 1]}` : ""}: lodging, food, activities and local transport${rule.fromWestCoast ? ", plus the cheapest round-trip fare seen from a West Coast airport" : ", before flights"}. Only places with at least 3 listed stays are included.`],
     [`What's the cheapest place on the list?`, `${first.page.name}, at about ${fmt(first.estimate.low, first.estimate.high)}${first.fare ? ` plus about ${formatMoney(first.fare.median)} in flights from ${first.fare.origin}` : ""}.`],
     [`Are these prices live?`, `No. They're planning estimates from GlobTrek's cost models${rule.fromWestCoast ? " and fares travelers found on Aviasales" : ""}. Booking.com shows the live price for each stay.`],
-    [`Where should I stay in ${first.page.name}?`, items[0].stay ? `${items[0].stay.name} (${items[0].stay.type.toLowerCase()}) is the top budget pick in our data. The ${first.page.name} guide lists more.` : `See the ${first.page.name} guide for stays.`],
+    [`Where should I stay in ${first.page.name}?`, items[0].stay ? `${items[0].stay.name} (${items[0].stay.type.toLowerCase()}) is our top budget pick. The ${first.page.name} guide lists more.` : `See the ${first.page.name} guide for stays.`],
   ];
   return {
     ...guide,

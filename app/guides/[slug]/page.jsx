@@ -8,7 +8,7 @@ import { buildGuide, guideCard, publishedGuides } from "../../lib/guides/buildGu
 import { GuideCard } from "../GuideCard";
 import { Breadcrumb, CardRow, CardRowItem, CtaBand, NumberedPlaces, PageHero, PhotoPlaces, Section, Stars, Summary, textLink } from "../../components/TravelPage";
 import { AFFILIATE_DISCLOSURE, SITE_URL } from "../../lib/site";
-import { BudgetPicker, CostPanel, ForBudget, GuideTrip, MobileBookBar, StayCards } from "./GuideTrip";
+import { BudgetPicker, CostPanel, ForBudget, GuideTrip, MobileBookBar, StayCards, StayNote } from "./GuideTrip";
 
 export const dynamicParams = false;
 
@@ -119,11 +119,15 @@ function PlaceGuide({ guide }) {
     <Summary lines={lines} />
     <Section id="stay-heading" eyebrow="From Booking.com" title={guide.kind === "feature" ? "The hotels" : "Where to stay"}>
       {levels.map((level) => <ForBudget key={level.key} level={level.key}>
-        <StayCards stays={level.stays.map(strip)} note={guide.stayNote} />
+        <StayCards stays={level.stays.map(strip)} label={levels.length > 1 ? `${level.label} stays` : null} />
       </ForBudget>)}
+      <StayNote note={guide.stayNote} />
     </Section>
     {levels.some((level) => level.dinners.length) ? <Section id="eat-heading" eyebrow="From Google Maps" title="Where to eat" intro={`Well-reviewed and open${where}. Prices are Google's per-person ranges where it shows one.`}>
-      {levels.map((level) => <ForBudget key={level.key} level={level.key}><Dinners dinners={level.dinners} /></ForBudget>)}
+      {levels.map((level) => <ForBudget key={level.key} level={level.key}>
+        {levels.length > 1 ? <p className="eyebrow mt-10">{level.label} dinners</p> : null}
+        <Dinners dinners={level.dinners} />
+      </ForBudget>)}
     </Section> : null}
     {guide.activities.length ? <Section id="do-heading" eyebrow="From Google Maps" title="Things to do">
       <Activities activities={guide.activities.slice(0, 6)} />
@@ -230,7 +234,7 @@ export default async function GuidePage({ params }) {
   return (
     <main className="min-h-screen bg-bg pb-16 text-ink">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-      <SiteHeader actionHref={guide.quizHref} actionLabel="Plan my trip" />
+      <SiteHeader actionHref={guide.quizHref} actionLabel="Find my trip" />
       {guide.kind === "list" ? <ListGuide guide={guide} /> : guide.kind === "versus" ? <VersusGuide guide={guide} /> : <PlaceGuide guide={guide} />}
       <SiteFooter />
     </main>

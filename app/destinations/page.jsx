@@ -34,6 +34,10 @@ const schema = {
   ],
 };
 
+// Only what the cards and filters use: the full records (monthly planning data,
+// photo credits, climate text) would ship to the browser for all of them.
+const cards = publishedDestinations.map(({ id, slug, name, country, continent, settings, vibe, image, alt, knownness, estimate: { source, lastUpdated, ...estimate } }) => ({ id, slug, name, country, continent, settings, vibe, image, alt, knownness, estimate }));
+
 export default function DestinationsPage() {
   return (
     <main className="min-h-screen bg-bg text-ink">
@@ -44,7 +48,7 @@ export default function DestinationsPage() {
       <div className="mx-auto max-w-[1520px] px-5 pb-[var(--section-space)] sm:px-8">
         <p className="mt-8 text-center text-sm text-subtle">Book stays, flights and attractions on <BookingLogo className="h-3.5 w-auto" /></p>
         <div className="mt-12">
-          <DestinationBrowser destinations={publishedDestinations} continents={CONTINENTS} settings={SETTING_FILTERS} />
+          <DestinationBrowser destinations={cards} continents={CONTINENTS} settings={SETTING_FILTERS} />
         </div>
       </div>
       <SiteFooter />
