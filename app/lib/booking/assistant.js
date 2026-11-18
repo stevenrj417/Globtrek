@@ -11,8 +11,8 @@ export const ASSISTANT_CHANNEL = "globtrek-booking-assistant";
 export const ASSISTANT_PROTOCOL = 1;
 const MAX_ITEMS = 12;
 
-// Placeholder until the Chrome Web Store assigns the listing URL.
-export const ASSISTANT_INSTALL_URL = process.env.NEXT_PUBLIC_GLOBTREK_EXTENSION_URL || "/booking-assistant#install";
+// The Chrome Web Store listing (accepted 2026-11-18); NEXT_PUBLIC_GLOBTREK_EXTENSION_URL overrides it.
+export const ASSISTANT_INSTALL_URL = process.env.NEXT_PUBLIC_GLOBTREK_EXTENSION_URL || "https://chromewebstore.google.com/detail/globtrek-one-tab-booking/bokbebgaaaclmamhmcmkebbjdbbddoao";
 
 // Hosts the extension accepts, mirrored from extension/src/shared/partners.ts.
 const ASSISTANT_HOSTS = [
@@ -144,3 +144,31 @@ export const ASSISTANT_STATUS_LABELS = {
   user_complete: "Marked complete",
   failed_safely: "Stopped safely",
 };
+
+/** Whether this installed version can open every booking straight from the site (0.2.0 and later). */
+export function supportsOpenAll(version) {
+  const [major = 0, minor = 0] = String(version || "").split(".").map((part) => Number.parseInt(part, 10) || 0);
+  return major > 0 || minor >= 2;
+}
+
+// The trip on the current page, shared with the small site-wide prompt so it can
+// offer the same "Book my trip" without a second copy of the logic.
+let sharedTrip = null;
+const tripListeners = new Set();
+
+/** Shares this page's trip with the prompt; returns a function that withdraws it. */
+export function shareAssistantTrip(value) {
+  sharedTrip = value;
+  tripListeners.forEach((listener) => listener(sharedTrip));
+  return () => {
+    if (sharedTrip !== value) return;
+    sharedTrip = null;
+    tripListeners.forEach((listener) => listener(null));
+  };
+}
+
+export function subscribeAssistantTrip(listener) {
+  tripListeners.add(listener);
+  listener(sharedTrip);
+  return () => tripListeners.delete(listener);
+}

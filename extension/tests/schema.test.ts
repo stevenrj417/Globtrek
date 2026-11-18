@@ -85,6 +85,12 @@ test("the website cannot smuggle code, selectors, HTML or commands", () => {
 test("envelope checks: channel, version, request id, size", () => {
   assert.equal(validateWebRequest(request({ type: "PING" })).type, "PING");
   assert.equal(validateWebRequest(request({ type: "START_SESSION", trip: validTrip })).type, "START_SESSION");
+  const plain = validateWebRequest(request({ type: "START_SESSION", trip: validTrip }));
+  assert.equal(plain.type === "START_SESSION" && plain.openAll, false);
+  const openAll = validateWebRequest(request({ type: "START_SESSION", trip: validTrip, openAll: true }));
+  assert.equal(openAll.type === "START_SESSION" && openAll.openAll, true);
+  assert.throws(() => validateWebRequest(request({ type: "START_SESSION", trip: validTrip, openAll: "yes" })), /true or false/);
+  assert.throws(() => validateWebRequest(request({ type: "PING", openAll: true })), /not an expected field/);
   assert.throws(() => validateWebRequest({ ...request({ type: "PING" }), channel: "other" }));
   assert.throws(() => validateWebRequest({ ...request({ type: "PING" }), v: 2 }), /version/);
   assert.throws(() => validateWebRequest({ ...request({ type: "PING" }), requestId: "x" }));

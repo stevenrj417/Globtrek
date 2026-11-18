@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
+import { AssistantPrompt } from "./components/AssistantPrompt";
 import { AuthProvider } from "./components/AuthProvider";
 import { OfflineNotice } from "./components/OfflineNotice";
 import { CONTACT_EMAIL, INSTAGRAM_URL, LEGAL_NAME, SITE_URL } from "./lib/site";
@@ -50,6 +51,7 @@ export default function RootLayout({ children }) {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }} />
         <AuthProvider>{children}</AuthProvider>
         <OfflineNotice />
+        <AssistantPrompt />
         <Analytics />
       </body>
     </html>

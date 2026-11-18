@@ -47,7 +47,7 @@ export type WebRequest =
   | { channel: typeof CHANNEL; v: 1; kind: "request"; requestId: string; type: "PING" }
   | { channel: typeof CHANNEL; v: 1; kind: "request"; requestId: string; type: "GET_STATUS"; sessionId: string }
   | { channel: typeof CHANNEL; v: 1; kind: "request"; requestId: string; type: "OPEN_SESSION"; sessionId: string }
-  | { channel: typeof CHANNEL; v: 1; kind: "request"; requestId: string; type: "START_SESSION"; trip: TripPayload };
+  | { channel: typeof CHANNEL; v: 1; kind: "request"; requestId: string; type: "START_SESSION"; trip: TripPayload; openAll: boolean };
 
 /** What the website may learn about a session: statuses only, never traveler data. */
 export interface PublicSessionStatus {
@@ -175,7 +175,7 @@ export function byteLength(value: unknown): number {
 /** Validates a request from the website. Throws SchemaError with a safe message. */
 export function validateWebRequest(value: unknown, { dev = false }: { dev?: boolean } = {}): WebRequest {
   if (byteLength(value) > MAX_MESSAGE_BYTES) throw new SchemaError("message", "is too large");
-  const base = exactKeys(value, "message", ["channel", "v", "kind", "requestId", "type"], ["trip", "sessionId"]);
+  const base = exactKeys(value, "message", ["channel", "v", "kind", "requestId", "type"], ["trip", "sessionId", "openAll"]);
   if (base.channel !== CHANNEL) throw new SchemaError("message.channel", "is not the booking assistant channel");
   if (base.v !== PROTOCOL_VERSION) throw new SchemaError("message.v", "is an unsupported protocol version");
   if (base.kind !== "request") throw new SchemaError("message.kind", "must be request");
@@ -191,8 +191,10 @@ export function validateWebRequest(value: unknown, { dev = false }: { dev?: bool
       exactKeys(value, "message", ["channel", "v", "kind", "requestId", "type", "sessionId"]);
       return { channel: CHANNEL, v: 1, kind: "request", requestId, type: "OPEN_SESSION", sessionId: str(base.sessionId, "message.sessionId", { max: 42, pattern: SESSION_ID }) };
     case "START_SESSION":
-      exactKeys(value, "message", ["channel", "v", "kind", "requestId", "type", "trip"]);
-      return { channel: CHANNEL, v: 1, kind: "request", requestId, type: "START_SESSION", trip: validateTrip(base.trip, { dev }) };
+      exactKeys(value, "message", ["channel", "v", "kind", "requestId", "type", "trip"], ["openAll"]);
+      // openAll (0.2.0+): the traveler accepted on the site, so open every booking now instead of waiting in the assistant tab.
+      if ("openAll" in base && typeof base.openAll !== "boolean") throw new SchemaError("message.openAll", "must be true or false");
+      return { channel: CHANNEL, v: 1, kind: "request", requestId, type: "START_SESSION", trip: validateTrip(base.trip, { dev }), openAll: base.openAll === true };
     default:
       throw new SchemaError("message.type", "is not a supported request");
   }

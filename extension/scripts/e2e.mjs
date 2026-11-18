@@ -115,6 +115,10 @@ try {
       await audit(page, `site: ${path}`);
     }
     step("Website detects the extension is absent", "Book my trip opens the install explanation with the Chrome Web Store placeholder");
+    await page.goto(`${SITE}/help`, { waitUntil: "networkidle0" });
+    await waitText(page, "Book your whole trip from one tab.", 10000);
+    await audit(page, "site: /help with the install prompt");
+    step("Every page offers the assistant in a small corner card", "dismissible; links to the Chrome Web Store");
     const phone = await browser.newPage();
     await phone.emulate({ userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/131.0 Mobile/15E148 Safari/604.1", viewport: { width: 390, height: 844, isMobile: true, hasTouch: true } });
     await phone.goto(bookUrl, { waitUntil: "networkidle0" });
@@ -174,7 +178,7 @@ try {
   // ---------- 4. Website with the extension: detection, session, multiple tabs, statuses
   const site = await browser.newPage();
   await site.goto(bookUrl, { waitUntil: "networkidle0" });
-  await waitText(site, "Open all 3 bookings from one place");
+  await waitText(site, "Open all 3 bookings at once");
   step("Website detects the installed extension", "PING answered through the glob-trek bridge");
   const assistantOpened = browser.waitForTarget((t) => t.url().includes("assistant.html#/session/"), { timeout: 10000 });
   await clickText(site, "button", "Book my trip");
@@ -264,6 +268,24 @@ try {
   const filledSession = await sw.evaluate(async () => Object.values((await chrome.storage.local.get("sessions")).sessions).find((s) => s.trip.tripId === "dev-demo"));
   await writeFile(join(evidence, "session-after-fill.json"), JSON.stringify(filledSession.items.map(({ name, status, note, filled, needsManual, selectorsVersion }) => ({ name, status, note, filled, needsManual, selectorsVersion })), null, 2));
   step("Per-booking report recorded", filledSession.items.map((i) => `${i.partnerName}: ${i.status} (${i.filled.length} filled)`).join("; "));
+
+  // ---------- 6b. The site-wide prompt: one Accept opens every booking
+  {
+    const second = await browser.newPage();
+    await second.goto(bookUrl, { waitUntil: "networkidle0" });
+    await waitText(second, "Book this trip from one tab?", 10000);
+    await audit(second, "site: /book with the accept prompt");
+    const beforeAccept = new Set((await browser.pages()).map((p) => p.target()._targetId));
+    await clickText(second, "aside button", "Accept");
+    await sleep(2500);
+    const acceptedTabs = (await browser.targets()).filter((t) => t.type() === "page" && !beforeAccept.has(t._targetId)).map((t) => t.url());
+    assert.ok(acceptedTabs.some((url) => url.includes("assistant.html#/session/")), "assistant tab opened");
+    for (const url of expected) assert.ok(acceptedTabs.includes(url), `accept opened ${url}`);
+    await second.bringToFront();
+    await waitText(second, "The GlobTrek Assistant tab has your checklist", 10000);
+    step("One Accept on the site opens every booking", `${expected.length} partner tabs and the assistant tab, no further clicks`);
+    await second.close();
+  }
 
   // ---------- 7. Privacy screen, popup, full deletion
   await sessionPage.bringToFront();

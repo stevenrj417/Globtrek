@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { track } from "@vercel/analytics";
-import { ASSISTANT_INSTALL_URL, assistantRequest, assistantTrip, canUseExtension, onAssistantStatus } from "../lib/booking/assistant";
+import { ASSISTANT_INSTALL_URL, assistantRequest, assistantTrip, canUseExtension, onAssistantStatus, shareAssistantTrip, supportsOpenAll } from "../lib/booking/assistant";
 
 const SESSION_KEY = (tripKey) => `globtrek:assistant-session:${tripKey}`;
 
@@ -15,8 +15,11 @@ export function BookingAssistant({ entries, trip, tripKey, onStatuses }) {
   const [session, setSession] = useState(null);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [version, setVersion] = useState("");
   const dialog = useRef(null);
+  const startRef = useRef(null);
   const payload = assistantTrip({ entries, ...trip });
+  const itemCount = payload?.items.length ?? 0;
 
   useEffect(() => {
     let cancelled = false;
@@ -34,6 +37,7 @@ export function BookingAssistant({ entries, trip, tripKey, onStatuses }) {
       if (cancelled) return;
       if (!pong?.ok) { setState("absent"); return; }
       setState("present");
+      setVersion(typeof pong.version === "string" ? pong.version : "");
       const existing = readSession();
       if (existing) {
         const status = await assistantRequest("GET_STATUS", { sessionId: existing });
@@ -43,7 +47,13 @@ export function BookingAssistant({ entries, trip, tripKey, onStatuses }) {
     return () => { cancelled = true; unsubscribe(); };
   }, [tripKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  async function start() {
+  // Offer this trip to the site-wide prompt while the checklist is on the page.
+  useEffect(() => {
+    if (!itemCount) return undefined;
+    return shareAssistantTrip({ tripKey, items: itemCount, state, session, busy, start: (options) => startRef.current?.(options) });
+  }, [tripKey, itemCount, state, session, busy]);
+
+  async function start({ openAll = false } = {}) {
     if (state !== "present") { dialog.current?.showModal(); track("assistant_install_prompt", { state }); return; }
     if (!payload) return;
     if (session) {
@@ -53,14 +63,16 @@ export function BookingAssistant({ entries, trip, tripKey, onStatuses }) {
     }
     setBusy(true);
     setError("");
-    const response = await assistantRequest("START_SESSION", { trip: payload }, { timeoutMs: 5000 });
+    // openAll opens every booking tab straight away; older versions open the assistant tab and let the traveler choose.
+    const response = await assistantRequest("START_SESSION", { trip: payload, ...(openAll && supportsOpenAll(version) ? { openAll: true } : {}) }, { timeoutMs: 8000 });
     setBusy(false);
     if (!response?.ok) { setError("The assistant couldn't start. Open each booking below instead."); return; }
     try { window.sessionStorage.setItem(SESSION_KEY(tripKey), response.sessionId); } catch {}
     setSession(response.status);
     onStatuses?.(response.status);
-    track("assistant_session_started", { items: payload.items.length });
+    track("assistant_session_started", { items: payload.items.length, openAll });
   }
+  useEffect(() => { startRef.current = start; });
 
   if (!payload) return null;
   const done = session ? session.items.filter((item) => item.status === "user_complete").length : 0;
@@ -77,7 +89,7 @@ export function BookingAssistant({ entries, trip, tripKey, onStatuses }) {
           : <p className="mt-2 max-w-xl text-sm leading-6">Open {payload.items.length === 1 ? "your booking" : `all ${payload.items.length} bookings`} at once. You pay each provider on their site.</p>}
         {error ? <p role="alert" className="mt-2 text-sm text-danger">{error}</p> : null}
       </div>
-      <button type="button" onClick={start} disabled={state === "checking" || busy} aria-haspopup={state === "present" ? undefined : "dialog"} className="inline-flex min-h-12 items-center justify-center gap-2 bg-black px-6 text-micro font-medium uppercase tracking-label text-white disabled:opacity-40">
+      <button type="button" onClick={() => start()} disabled={state === "checking" || busy} aria-haspopup={state === "present" ? undefined : "dialog"} className="inline-flex min-h-12 items-center justify-center gap-2 bg-black px-6 text-micro font-medium uppercase tracking-label text-white disabled:opacity-40">
         {state === "checking" ? "Checking…" : busy ? "Opening…" : session ? "Open the assistant again" : "Book my trip"} <span aria-hidden="true">→</span>
       </button>
     </div>}

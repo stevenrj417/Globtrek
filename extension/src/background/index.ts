@@ -93,14 +93,16 @@ async function handleWebRequest(raw: unknown, sender: chrome.runtime.MessageSend
       return { ok: true, status: publicStatus(session) };
     }
     case "START_SESSION": {
-      const session = createSession(request.trip, { origin, sourceTabId: sender.tab.id ?? null, dev: IS_DEV });
+      const session = { ...createSession(request.trip, { origin, sourceTabId: sender.tab.id ?? null, dev: IS_DEV }), ...(request.openAll ? { mode: "all" as const } : {}) };
       await mutate((sessions) => ({ sessions: { ...sessions, [session.id]: session }, result: null }));
-      const assistantTab: chrome.tabs.CreateProperties = { url: chrome.runtime.getURL(`assistant.html#/session/${session.id}`), active: true };
+      const assistantTab: chrome.tabs.CreateProperties = { url: chrome.runtime.getURL(`assistant.html#/session/${session.id}`), active: !request.openAll };
       if (sender.tab.index !== undefined) assistantTab.index = sender.tab.index + 1;
       if (sender.tab.windowId !== undefined) assistantTab.windowId = sender.tab.windowId;
       await chrome.tabs.create(assistantTab);
-      logEvent("session_started", { items: session.items.length });
-      return { ok: true, sessionId: session.id, status: publicStatus(session) };
+      // Partner tabs open at the exact approved links and fill on load where allowed; nothing is submitted.
+      const latest = request.openAll ? await openItems(session.id, session.items.map((item) => item.id)) : null;
+      logEvent("session_started", { items: session.items.length, openAll: request.openAll });
+      return { ok: true, sessionId: session.id, status: publicStatus(latest ?? session) };
     }
   }
 }

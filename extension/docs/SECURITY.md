@@ -14,7 +14,7 @@ No analytics, crash reporting or network requests exist in the extension; the bu
 ## Website ↔ extension
 
 - Bridge content script on `https://www.glob-trek.com/*` only (dev builds add localhost and `globtrek-potr-*.vercel.app`; both are compiled into dev builds only and still checked in code).
-- Messages: `{ channel, v: 1, kind: "request", requestId, type }` with types `PING`, `START_SESSION`, `GET_STATUS`, `OPEN_SESSION`. Validation (`src/shared/schema.ts`) rejects unknown origins, unknown fields at every level, wrong versions, payloads over 16 KB, more than 12 items, bad dates, control characters, and any URL that isn't https on an allowlisted partner host (no credentials, ports or IP hosts; CJ links only when their `url` target is Booking.com; raw Booking.com refused so affiliate tracking can't be stripped).
+- Messages: `{ channel, v: 1, kind: "request", requestId, type }` with types `PING`, `START_SESSION`, `GET_STATUS`, `OPEN_SESSION`. `START_SESSION` may carry `openAll: true` (0.2.0+) after the traveler presses Accept on the site; it only opens the trip's own validated links and never submits anything. Validation (`src/shared/schema.ts`) rejects unknown origins, unknown fields at every level, wrong versions, payloads over 16 KB, more than 12 items, bad dates, control characters, and any URL that isn't https on an allowlisted partner host (no credentials, ports or IP hosts; CJ links only when their `url` target is Booking.com; raw Booking.com refused so affiliate tracking can't be stripped).
 - The website can't send code, selectors, HTML or commands; adapters are compiled into the package.
 - A page may read or reopen only sessions its own origin started. The site receives statuses and generic notes, never details.
 

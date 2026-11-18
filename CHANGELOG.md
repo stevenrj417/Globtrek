@@ -1,6 +1,11 @@
 # Changelog
 
-## Booking Assistant for Chrome (2026-11-09, branch only — not deployed)
+## Booking Assistant: one Accept from any page (2026-11-18)
+
+- Site: a small corner card on every page (desktop Chrome only, dismissible). Without the assistant it links to the Chrome Web Store; with it and a trip on the page it asks "Book this trip from one tab?" and one Accept opens every booking. The look of the site is unchanged.
+- Extension 0.2.0: `START_SESSION` takes an optional `openAll` flag, so Accept opens every partner tab at GlobTrek's exact links and fills on load where the partner allows; it still stops before payment. Version 0.1.0 keeps working (it opens the assistant tab and the traveler chooses).
+
+## Booking Assistant for Chrome (2026-11-09; live, accepted to the Chrome Web Store)
 
 - New Manifest V3 extension in `extension/`: one-tab booking from the GlobTrek checklist. Opens each booking with GlobTrek's exact (CJ-tracked) link, guided or all at once; fills the traveler's own details where the partner allows it; reports Opened / Filling / Filled / Needs attention / Ready to review / Ready to pay / Marked complete / Stopped safely; never submits, accepts terms or pays.
 - No account: profile saved on the device or "use once and forget"; stored-field list, export, delete passports, forget everything. Optional passport storage, off by default, AES-GCM with a passphrase and auto-lock. Card numbers, CVV, passwords and one-time codes are refused.
