@@ -10,7 +10,7 @@ export function BookableTours({ tours, destination }) {
   return <section id="tours" className="scroll-mt-24 border-t border-black/15 px-6 py-12 sm:px-12" aria-labelledby="tours-heading">
     <div className="mx-auto max-w-[1180px]">
       <h2 id="tours-heading" className="font-serif text-[clamp(2rem,3.2vw,3rem)] leading-[.95] tracking-tight-3">Tours</h2>
-      <p className="mt-3 text-xs">Per-person prices from WeGoTrip. Final price and availability on WeGoTrip.</p>
+      <p className="mt-3 text-xs">Per-person prices from WeGoTrip. Final price and availability on WeGoTrip. GlobTrek may earn a commission when you book.</p>
       <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {tours.map((tour) => <li key={tour.id} className="flex flex-col overflow-hidden border border-black/15 bg-white">
           {tour.image ? <div className="relative aspect-[3/2] bg-placeholder"><Image src={tour.image} alt="" fill sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" className="object-cover" /></div> : null}

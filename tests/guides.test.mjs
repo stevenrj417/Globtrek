@@ -28,7 +28,7 @@ test("place guides show 4 real feed stays and never a made-up price", () => {
       if (stay.price) assert.ok(stay.price.value > 0 && ["room", "dorm bed"].includes(stay.price.unit));
       if (stay.evidence) assert.ok(stay.evidence.length > 3);
     }
-    assert.ok(/not the property's own rate/.test(guide.stayNote), `${guide.slug} labels prices as typical`);
+    assert.ok(/not each hotel's own rate/.test(guide.stayNote), `${guide.slug} labels prices as typical`);
   }
 });
 

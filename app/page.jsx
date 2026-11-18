@@ -35,7 +35,7 @@ export default function Home() {
             <p className="mt-5 max-w-md text-base leading-7 text-white/90">Tell us how you like to travel. We&apos;ll find the place.</p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Link href="/discover" className="inline-flex min-h-12 min-w-[13rem] items-center justify-center gap-2 bg-white px-7 text-micro font-medium uppercase tracking-label text-black transition-opacity hover:opacity-90">Find my trip <span aria-hidden="true">→</span></Link>
-              <Link href="/destinations" prefetch={false} className="inline-flex min-h-12 min-w-[13rem] items-center justify-center border border-white/70 px-7 text-micro font-medium uppercase tracking-label text-white transition-colors hover:bg-white/10">Browse trips</Link>
+              <Link href="/destinations" prefetch={false} className="inline-flex min-h-12 min-w-[13rem] items-center justify-center border border-white/70 px-7 text-micro font-medium uppercase tracking-label text-white transition-colors hover:bg-white/10">Browse destinations</Link>
             </div>
           </div>
         </div>
@@ -43,7 +43,7 @@ export default function Home() {
 
       <section id="trips" aria-labelledby="trips-heading" className="reveal scroll-mt-24 py-[var(--section-space)]">
         <div className="mx-auto max-w-[1520px] px-5 sm:px-8">
-          <h2 id="trips-heading" className="mb-10 font-serif text-3xl tracking-tight-3 sm:mb-14 sm:text-5xl">Going well this season</h2>
+          <h2 id="trips-heading" className="mb-10 font-serif text-3xl tracking-tight-3 sm:mb-14 sm:text-5xl">Popular this season</h2>
           <div className="-mx-5 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-2 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-3 md:gap-x-6 md:overflow-visible md:px-0 lg:gap-x-8">
             {trendingTrips.map((trip) => (
               <div key={trip.id} className="w-[82%] shrink-0 snap-start md:w-auto">
@@ -60,11 +60,11 @@ export default function Home() {
             <h2 id="vibe-heading" className="font-serif text-3xl tracking-tight-3 sm:text-5xl">Start with a setting</h2>
             <Link href="/destinations" className="text-sm text-muted underline decoration-black/25 underline-offset-4 hover:text-ink">All destinations</Link>
           </div>
-          <div className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-5 md:overflow-visible md:px-0">
+          <div className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-3 md:overflow-visible lg:grid-cols-6 md:px-0">
             {vibes.map(([label, setting, image, alt]) => (
               <Link key={setting} href={`/discover?setting=${encodeURIComponent(setting)}`} className="group w-[44%] shrink-0 snap-start md:w-auto">
                 <div className="relative aspect-[3/4] overflow-hidden bg-placeholder">
-                  <Image src={image} alt={alt} fill className="image-calm object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" sizes="(min-width: 768px) 20vw, 44vw" />
+                  <Image src={image} alt={alt} fill className="image-calm object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" sizes="(min-width: 1024px) 16vw, (min-width: 768px) 33vw, 44vw" />
                 </div>
                 <p className="mt-3 text-sm font-medium">{label} <span aria-hidden="true" className="text-subtle">→</span></p>
               </Link>

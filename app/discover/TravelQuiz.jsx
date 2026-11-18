@@ -8,6 +8,7 @@ import { TRAVEL_AREA_OPTIONS } from "../lib/recommendation/travelAreaOptions";
 import { cheapestTrip } from "../lib/quiz/cheapestTrip";
 import { DURATION_NIGHTS, nightsBetween, nightsRange } from "../lib/trip/schedule";
 import { TripDatePicker } from "../components/TripDatePicker";
+import { BrandWordmark } from "../components/BrandMark";
 import { photoCredit } from "../lib/photoCredits";
 import { AirportAutocomplete } from "../components/AirportAutocomplete";
 
@@ -122,7 +123,7 @@ function VisualQuestion({ question, value, onChoose, step, status = {}, note = n
 
   return (
     <div className="quiz-stage grid min-h-[calc(100svh-5rem)] grid-rows-[auto_1fr_auto] px-5 pb-6 pt-9 sm:px-8 lg:px-10">
-      <div className="flex items-center justify-between"><span className="text-xl font-semibold uppercase tracking-tight-3">GlobTrek</span><Progress step={step} /></div>
+      <div className="flex items-center justify-between"><BrandWordmark className="text-xl" /><Progress step={step} /></div>
       <div className="grid items-center gap-9 py-8 lg:grid-cols-[30%_70%] lg:gap-0 lg:py-8">
         <div className="relative z-10 lg:pr-12">
           <p className="mb-6 text-micro uppercase tracking-editorial text-subtle">The GlobTrek quiz</p>
@@ -161,7 +162,7 @@ function BudgetQuestion({ value, includes, onValueChange, onToggle, onBack, onCo
   const valid = budget !== null && Object.values(includes).some(Boolean);
   const formatted = value ? Number(String(value).replace(/\D/g, "")).toLocaleString("en-US") : "";
   return <div className="quiz-stage flex min-h-[calc(100svh-5rem)] flex-col bg-canvas px-5 pb-8 pt-9 sm:px-8 lg:px-10">
-    <div className="flex items-center justify-between"><span className="text-xl font-semibold uppercase tracking-tight-3">GlobTrek</span><Progress step={step} /></div>
+    <div className="flex items-center justify-between"><BrandWordmark className="text-xl" /><Progress step={step} /></div>
     <form onSubmit={(event) => { event.preventDefault(); if (valid) onContinue(budget); }} className="mx-auto flex w-full max-w-3xl flex-1 flex-col justify-center py-10 text-center">
       <h1 className="mx-auto max-w-3xl text-[clamp(2.6rem,5.6vw,5.75rem)] font-medium leading-[0.92] tracking-tight-4">How much do you want to spend?</h1>
       <p className="mx-auto mt-5 max-w-md text-sm leading-6 text-muted">Your total for the whole trip. We&apos;ll plan the most comfortable trip it covers.</p>
@@ -191,7 +192,7 @@ function DiscoveryQuestion({ value, onChange, onBack, onContinue }) {
   const mood = level < 20 ? "Off the radar" : level < 40 ? "Less discovered" : level < 65 ? "A mix of both" : level < 85 ? "Well known" : "The classics";
 
   return <div className="quiz-stage flex min-h-[calc(100svh-5rem)] flex-col bg-canvas px-5 pb-8 pt-9 sm:px-8 lg:px-10">
-    <div className="flex items-center justify-between"><span className="text-xl font-semibold uppercase tracking-tight-3">GlobTrek</span><Progress step={questions.length} /></div>
+    <div className="flex items-center justify-between"><BrandWordmark className="text-xl" /><Progress step={questions.length} /></div>
     <div className="mx-auto flex w-full max-w-[1450px] flex-1 flex-col justify-center py-14">
       <p className="text-center text-micro uppercase tracking-editorial text-subtle">How well known should it be?</p>
       <h1 className="mx-auto mt-8 max-w-5xl text-center text-[clamp(3.2rem,7.5vw,8.5rem)] font-medium leading-[0.86] tracking-tight-4">{mood}</h1>
@@ -225,7 +226,7 @@ function DateQuestion({ answers, setAnswers, tripStart, tripEnd, isFlexible, set
 
   return <form onSubmit={onSubmit} className="quiz-stage grid min-h-svh bg-canvas lg:grid-cols-2">
     <div className="flex min-h-svh flex-col px-5 pb-8 pt-8 sm:px-10 lg:px-14 lg:py-10">
-      <div className="flex items-center justify-between"><span className="text-xl font-semibold uppercase tracking-tight-3">GlobTrek</span><p className="text-micro uppercase tracking-editorial text-subtle">Trip details</p></div>
+      <div className="flex items-center justify-between"><BrandWordmark className="text-xl" /><p className="text-micro uppercase tracking-editorial text-subtle">Trip details</p></div>
       <div className="flex flex-1 flex-col justify-center py-10 sm:py-14 lg:py-8">
         <p className="text-micro uppercase tracking-editorial text-subtle">Final step</p>
         <h1 className="mt-5 max-w-xl text-[clamp(3rem,5.4vw,5.8rem)] font-medium leading-[0.9] tracking-tight-4">When and from where?</h1>

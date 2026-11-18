@@ -106,10 +106,22 @@ export function TripControls() {
   </div>;
 }
 
-export function StayCards({ stays, note }) {
+const priceText = (price) => (price.high ? range([price.value, price.high]) : money(price.value));
+const priceKind = (price) => (price.unit === "dorm bed" ? "dorm bed" : `${price.kind} room`);
+
+// When every stay in a group carries the same typical price (it's the price for
+// that kind of stay, not each hotel's rate), say it once above the cards instead
+// of repeating the same number on every card.
+export function StayCards({ stays, label }) {
   const trip = useContext(TripContext);
+  const first = stays[0]?.price;
+  const shared = stays.length > 1 && first && stays.every((stay) => stay.price && priceText(stay.price) === priceText(first) && stay.price.unit === first.unit) ? first : null;
   return <>
-    <ul className="-mx-5 mt-10 flex snap-x snap-mandatory scroll-px-5 gap-5 overflow-x-auto px-5 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 sm:overflow-visible sm:px-0 lg:grid-cols-3">
+    {label || shared ? <p className="tabular mt-10 text-sm">
+      {label ? <span className="eyebrow mr-3">{label}</span> : null}
+      {shared ? <>A typical {priceKind(shared)} here is about <span className="font-medium">{priceText(shared)}</span> a night.</> : null}
+    </p> : null}
+    <ul className={`-mx-5 ${label || shared ? "mt-6" : "mt-10"} flex snap-x snap-mandatory scroll-px-5 gap-5 overflow-x-auto px-5 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 sm:overflow-visible sm:px-0 lg:grid-cols-3`}>
       {stays.map((stay, index) => {
         const chosen = stay.id === trip.stay?.id;
         const href = bookUrl(stay, trip);
@@ -126,7 +138,7 @@ export function StayCards({ stays, note }) {
           <div className="flex flex-1 flex-col pt-4">
             <h3 className="text-xl font-medium leading-snug tracking-tight-2">{stay.name}</h3>
             {stay.distance ? <p className="mt-1 text-xs text-subtle">{stay.distance}</p> : stay.address ? <p className="mt-1 line-clamp-2 text-xs text-subtle">{stay.address}</p> : null}
-            {stay.price ? <p className="tabular mt-3 text-sm"><span className="font-medium">About {stay.price.high ? range([stay.price.value, stay.price.high]) : money(stay.price.value)}</span> a night{stay.price.unit === "dorm bed" ? " per bed" : ""}<span className="block text-xs text-subtle">Typical for this kind of stay, not this hotel&apos;s rate</span></p> : <p className="mt-3 text-sm text-subtle">See today&apos;s price on Booking.com</p>}
+            {shared ? <p className="mt-3 text-sm text-subtle">Today&apos;s price on Booking.com</p> : stay.price ? <p className="tabular mt-3 text-sm"><span className="font-medium">About {stay.price.high ? range([stay.price.value, stay.price.high]) : money(stay.price.value)}</span> a night{stay.price.unit === "dorm bed" ? " per bed" : ""}<span className="block text-xs text-subtle">Typical for this kind of stay, not this hotel&apos;s rate</span></p> : <p className="mt-3 text-sm text-subtle">See today&apos;s price on Booking.com</p>}
             {stay.evidence ? <p className="mt-2 text-sm">✓ {stay.evidence}</p> : null}
             {tags.length ? <ul className="mt-3 flex flex-wrap gap-1.5 text-xs">
               {tags.map((tag) => <li key={tag} className="border border-black/15 px-2 py-0.5">{tag}</li>)}
@@ -139,8 +151,14 @@ export function StayCards({ stays, note }) {
         </li>;
       })}
     </ul>
-    <p className="mt-6 max-w-[var(--width-reading)] text-xs leading-5 text-subtle">{note} Book now opens Booking.com with your travelers{trip.checkin ? " and dates" : ""}; you pay Booking.com directly.</p>
   </>;
+}
+
+// Said once under all the stay groups, not after each one.
+export function StayNote({ note }) {
+  const trip = useContext(TripContext);
+  const opens = `Book now opens Booking.com with your ${trip.checkin ? "travelers and dates" : "travelers"}, and you pay Booking.com directly.`;
+  return <p className="mt-8 max-w-[var(--width-reading)] text-xs leading-5 text-subtle">{`${note} ${opens}`}</p>;
 }
 
 export function CostPanel({ source, month, place }) {

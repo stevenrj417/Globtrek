@@ -8,7 +8,7 @@ import { AFFILIATE_DISCLOSURE, CONTACT_EMAIL, INSTAGRAM_URL, LEGAL_NAME } from "
 import { BookingLogo } from "./PartnerLogo";
 import { BookingPartnerBadge } from "./PartnerLogo";
 
-const navigation = [["Trips", "/#trips"], ["Quiz", "/discover"], ["Destinations", "/destinations"], ["How it works", "/how-it-works"], ["About", "/about"]];
+const navigation = [["Popular trips", "/#trips"], ["Destinations", "/destinations"], ["Guides", "/guides"], ["How it works", "/how-it-works"], ["About", "/about"]];
 
 const footerGroups = [
   ["Plan", [["Find my trip", "/discover"], ["Destinations", "/destinations"], ["Guides", "/guides"], ["How it works", "/how-it-works"]]],
@@ -68,7 +68,7 @@ export function SiteFooter() {
         <div className="mt-12 flex flex-col gap-3 border-t border-black/10 pt-6 text-xs leading-5 text-subtle sm:flex-row sm:items-start sm:justify-between">
           <p className="tabular">© <CurrentYear /> {LEGAL_NAME}</p>
           <p className="max-w-2xl sm:text-right">
-            GlobTrek is a Booking.com affiliate partner. {AFFILIATE_DISCLOSURE} <Link href="/affiliate-disclosure" className="underline decoration-black/25 hover:decoration-black">How this works</Link>
+            GlobTrek is an affiliate of Booking.com and, for tours and tickets, WeGoTrip. {AFFILIATE_DISCLOSURE} <Link href="/affiliate-disclosure" className="underline decoration-black/25 hover:decoration-black">How this works</Link>
           </p>
         </div>
       </div>
