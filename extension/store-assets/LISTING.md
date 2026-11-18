@@ -24,7 +24,7 @@ Plan a trip on GlobTrek, choose **Book my trip**, and the assistant takes it fro
 - Your details stay on your computer — or choose "Use once and forget".
 - Card numbers, security codes, bank logins and partner passwords are never stored or read.
 - No analytics, no tracking, nothing sent to GlobTrek.
-- Passport storage is optional, off by default, and encrypted with your passphrase.
+- It asks only for what booking forms need: names, email, phone and an optional note.
 - Export your data or forget everything with one button.
 
 **Affiliate disclosure.** GlobTrek is a Booking.com affiliate partner and may earn a commission on qualifying bookings made through its links, at no extra cost to you. The assistant opens the same links shown on your GlobTrek trip page, and only when you click.
@@ -43,7 +43,7 @@ Help a traveler book the trip they planned on GlobTrek: open each booking GlobTr
 
 ## Privacy practices (dashboard answers — draft)
 Data the extension handles (entered by the user, stored only on their device, never transmitted to GlobTrek):
-- **Personally identifiable information — Yes:** names, date of birth, email, phone, home address, nationality, emergency contact, Known Traveler/redress numbers, loyalty numbers, passport details (only if the user turns passport storage on).
+- **Personally identifiable information — Yes:** traveler names, email and phone (0.2.0). Version 0.1.0 also offered optional birth dates, address, loyalty and Known Traveler numbers and passport storage; data saved there stays local until the user deletes it.
 - **Health information — Yes, if the user enters it:** accessibility or mobility-assistance requests.
 - **Financial and payment information — No.** Never collected; card-shaped input is refused.
 - **Authentication information — No.** No passwords or codes.
@@ -65,7 +65,7 @@ Privacy policy URL: https://www.glob-trek.com/booking-assistant/privacy
   1. `01-trip-checklist.png` — the trip checklist mid-booking: Booking.com opened with copy buttons, GetYourGuide filled and ready to review.
   2. `02-before-anything-opens.png` — exactly which details go to which partner, and guided vs open-everything.
   3. `03-traveler-profile.png` — the one-time traveler form.
-  4. `04-privacy-and-data.png` — stored-field list, storage choice, passports, export, forget all.
+  4. `04-privacy-and-data.png` — stored-field list, storage choice, export, forget all.
   5. `05-welcome.png` — first run: what it does and never does.
   6. `06-globtrek-checklist-status.png` — the GlobTrek trip page with live assistant status.
   Screenshots were captured from the development build against a local, sanitized stand-in for the GetYourGuide checkout (see `tests/fixtures/README.md`); the Booking.com and OpenTable rows show production behaviour (copy buttons only). No partner site was contacted.

@@ -27,7 +27,7 @@ test("a session keeps exact URLs, knows each partner, and applies partner policy
   assert.equal(byId["hotel-0"]!.partnerName, "Booking.com");
   assert.equal(byId["hotel-0"]!.affiliate, true);
   assert.equal(byId["hotel-0"]!.autofill, false, "Booking.com autofill is off pending written permission");
-  assert.match(byId["hotel-0"]!.autofillNote!, /terms/);
+  assert.match(byId["hotel-0"]!.autofillNote!, /fill in its forms yourself/);
   assert.equal(byId["flight-0"]!.partnerName, "Booking.com", "Booking.com Flights via CJ: deep link + copy");
   assert.equal(byId["experience-0"]!.autofill, true);
   assert.equal(byId["restaurant-0"]!.autofill, false);

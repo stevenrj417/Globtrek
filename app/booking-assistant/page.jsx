@@ -12,7 +12,7 @@ export const metadata = {
 const STEPS = [
   ["Plan on GlobTrek", "Choose your stay, flight, activities and dinners. Nothing changes about how you plan."],
   ["Choose Book my trip", "The assistant opens next to GlobTrek and shows exactly which details it will use and which sites will receive them."],
-  ["Enter your details once", "Names, contact details and preferences for everyone traveling — saved on your computer, or used once and forgotten."],
+  ["Enter your details once", "Names, email and phone, the things a booking form asks for. Saved on your computer, or used once and forgotten."],
   ["Open, fill, review", "Each booking opens with GlobTrek's exact link. Where the partner allows it, your details are filled in; everywhere else, copy buttons do it in a click."],
   ["You pay the partner", "The assistant stops before anything is booked. Review and pay on the partner's site, then tick it off."],
 ];
@@ -21,7 +21,6 @@ const PARTNERS = [
   ["GetYourGuide activities", "Fills lead-traveler name, email, phone and notes on the checkout page.", "Fills details"],
   ["Booking.com stays, flights and attractions", "Opens GlobTrek's exact link with your dates and party size. Booking.com's terms don't allow automated assistants without permission, so the assistant gives you copy buttons instead.", "Copy buttons"],
   ["OpenTable dinners", "Opens the restaurant with your party size. OpenTable's terms don't allow browser assistants, so you get copy buttons.", "Copy buttons"],
-  ["GlobTrek flight checkout", "Planned. Not live yet.", "Coming later"],
 ];
 
 export default function BookingAssistantPage() {

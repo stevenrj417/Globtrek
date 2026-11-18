@@ -11,17 +11,18 @@ export const metadata = {
 const link = "text-ink underline decoration-black/25 underline-offset-4";
 
 export default function AssistantPrivacyPage() {
-  return <EditorialPage updated="2026-11-09"
+  return <EditorialPage updated="2026-11-18"
     eyebrow="Booking Assistant · Privacy"
     title="Your details stay on your device."
     intro="This policy covers the GlobTrek One Tab Booking Assistant, a Chrome extension. The website's own practices are in the main privacy notice."
   >
     <EditorialSection number="01" title="What the extension stores">
-      <p>Only what you enter: legal names, preferred names, dates of birth, gender (only where an airline requires it), relationship or guardian, email, phone, home address, country of residence, nationality, emergency contact, accessibility and mobility requests, Known Traveler and redress numbers, airline and hotel loyalty numbers, dietary, seat, room, bed and arrival preferences, special requests, flight preferences, and traveler groups. It also keeps trip checklists you start from GlobTrek (destination, dates, party size, partner links and booking statuses) for up to 14 days.</p>
+      <p>Only what you enter: each traveler&apos;s first and last name, an email address, a phone number and an optional note for partners. It also keeps trip checklists you start from GlobTrek (destination, dates, party size, partner links and booking statuses) for up to 14 days.</p>
+      <p>Version 0.1.0 also offered optional fields such as birth dates, home address, loyalty and Known Traveler numbers and flight preferences. Anything you saved there stays on your computer until you delete it, and it is erased by <strong>Forget all my information</strong>.</p>
       <p>With <strong>Save on this device</strong>, this is kept in the extension&apos;s Chrome storage on your computer. With <strong>Use once and forget</strong>, it is held in memory and erased when Chrome closes. It is not synced to other devices or uploaded anywhere.</p>
     </EditorialSection>
     <EditorialSection number="02" title="Passports">
-      <p>Passport storage is optional and off by default. If you turn it on, you choose between this browser session only, or encrypted storage on your device (AES-256-GCM with a key derived from a passphrase only you know; GlobTrek cannot recover it). Saved passports lock automatically after inactivity. Passport details are typed into a page only after you confirm for that page, and are never put in links, logs or analytics. Extension storage is not a password manager.</p>
+      <p>The assistant does not ask for passport details. Version 0.1.0 offered optional passport storage, off by default; anything saved with it is encrypted on your device (AES-256-GCM with a key from a passphrase only you know) and can be deleted in Privacy &amp; data.</p>
     </EditorialSection>
     <EditorialSection number="03" title="What it never stores or reads">
       <p>Card numbers, CVV or security codes, online-banking credentials, partner-site passwords and one-time codes. The extension refuses to save anything that looks like a card number, never reads payment fields on partner pages, and never clicks a book, reserve, confirm, agree or pay button. Payment is made on the partner&apos;s site, where Chrome&apos;s own payment autofill can help if you use it.</p>

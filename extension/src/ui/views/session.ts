@@ -161,7 +161,7 @@ export async function renderSession({ root, state, navigate }: ViewContext, sess
     const values = state.profile ? resolveFields(state.profile, keys) : {};
     const partners = [...new Set(fillable.map((item) => item.partnerName))];
     const copyOnly = [...new Set(current.items.filter((item) => !item.autofill).map((item) => item.partnerName))];
-    return h("section", { class: "panel panel-raised stack", "aria-labelledby": "preflight" },
+    return h("section", { class: "panel stack", "aria-labelledby": "preflight" },
       h("h2", { id: "preflight", class: "title" }, "Before anything opens"),
       partners.length
         ? h("p", { class: "small muted" }, `These details will be typed into ${partners.join(", ")} — only on pages you open, and only into the form you're looking at:`)

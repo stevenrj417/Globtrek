@@ -36,9 +36,12 @@ export class PaymentDataError extends Error {
   }
 }
 
+// Field names as the details screen labels them.
+const LABELS: Record<string, string> = { specialRequests: "anything partners should know", legalFirstName: "first name", legalLastName: "last name", phoneNumber: "phone" };
+
 function where(path: string): string {
   const last = path.split(".").pop()?.replace(/\[\d+\]$/, "") ?? "";
-  return last.replace(/([a-z])([A-Z])/g, "$1 $2").toLowerCase();
+  return LABELS[last] ?? last.replace(/([a-z])([A-Z])/g, "$1 $2").toLowerCase();
 }
 
 /** Throws if any key or string value in `value` looks like payment or credential data. */

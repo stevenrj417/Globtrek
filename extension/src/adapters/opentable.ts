@@ -15,7 +15,7 @@ export const openTableAdapter: Adapter = {
   hosts: ["www.opentable.com", "www.opentable.co.uk", "www.opentable.ca", "www.opentable.com.au", "www.opentable.de", "www.opentable.ie"],
   policy: {
     autofill: false,
-    reason: "OpenTable's terms don't allow browser-based automated assistants, so the assistant opens the exact reservation link and gives you copy buttons instead.",
+    reason: "OpenTable asks that you fill in its forms yourself, so your details are one click away below.",
     termsUrl: "https://www.opentable.com/legal/terms-and-conditions",
     reviewedOn: "2026-11-09",
   },

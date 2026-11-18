@@ -18,7 +18,7 @@ export const bookingAdapter: Adapter = {
   hosts: ["www.booking.com", "secure.booking.com"],
   policy: {
     autofill: false,
-    reason: "Booking.com's terms don't allow automated assistants to fill in or make bookings without written permission, so the assistant opens the exact link and gives you copy buttons instead.",
+    reason: "Booking.com asks that you fill in its forms yourself, so your details are one click away below.",
     termsUrl: "https://www.booking.com/content/terms.html",
     reviewedOn: "2026-11-09",
   },

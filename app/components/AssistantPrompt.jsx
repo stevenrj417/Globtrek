@@ -17,9 +17,10 @@ function remember(storage, key) {
   try { window[storage].setItem(key, "1"); } catch {}
 }
 
-// The small corner card on every page, desktop Chrome only. With the assistant
-// installed and a trip on the page it asks once whether to book it from one tab;
-// without the assistant it says it exists. Either can be dismissed for good.
+// The small corner card on trip pages, desktop Chrome only. With the assistant
+// installed it asks once whether to book the trip from one tab; without it, it
+// says the assistant exists. Never on other pages: an install pitch everywhere
+// reads as an ad. Either card can be dismissed.
 export function AssistantPrompt() {
   const pathname = usePathname();
   const [installed, setInstalled] = useState(null);
@@ -42,7 +43,7 @@ export function AssistantPrompt() {
 
   const mode = installed === null || pathname?.startsWith("/booking-assistant") ? null
     : installed ? (trip?.state === "present" && !trip.session && trip.items ? "accept" : opened ? "opened" : null)
-    : remembered("localStorage", INSTALL_DISMISSED) ? null : "install";
+    : trip?.items && !remembered("localStorage", INSTALL_DISMISSED) ? "install" : null;
   const tripKey = trip?.tripKey || "";
 
   useEffect(() => {

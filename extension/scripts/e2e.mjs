@@ -115,10 +115,13 @@ try {
       await audit(page, `site: ${path}`);
     }
     step("Website detects the extension is absent", "Book my trip opens the install explanation with the Chrome Web Store placeholder");
-    await page.goto(`${SITE}/help`, { waitUntil: "networkidle0" });
+    await page.goto(bookUrl, { waitUntil: "networkidle0" });
     await waitText(page, "Book your whole trip from one tab.", 10000);
-    await audit(page, "site: /help with the install prompt");
-    step("Every page offers the assistant in a small corner card", "dismissible; links to the Chrome Web Store");
+    await audit(page, "site: /book with the install card");
+    await page.goto(`${SITE}/help`, { waitUntil: "networkidle0" });
+    await sleep(2500);
+    assert.equal(await page.$('aside[aria-label="GlobTrek Booking Assistant"]'), null, "no install card on pages without a trip");
+    step("Trip pages offer the assistant in a small corner card", "dismissible; links to the Chrome Web Store; absent from other pages");
     const phone = await browser.newPage();
     await phone.emulate({ userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/131.0 Mobile/15E148 Safari/604.1", viewport: { width: 390, height: 844, isMobile: true, hasTouch: true } });
     await phone.goto(bookUrl, { waitUntil: "networkidle0" });
@@ -147,30 +150,23 @@ try {
   await waitText(app, "Enter it once.");
 
   // ---------- 3. One traveler form (and the card guard)
-  await typeField(app, "Legal first name", "Ana");
-  await typeField(app, "Legal last name", "Costa");
-  await clickText(app, "[role=tab]", "Contact");
+  await typeField(app, "First name", "Ana");
+  await typeField(app, "Last name", "Costa");
   await typeField(app, "Email", "ana.costa@example.com");
-  await typeField(app, "Phone country code", "+351");
-  await typeField(app, "Phone number", "912 345 678");
-  await typeField(app, "Address line 1", "Rua Augusta 1");
-  await typeField(app, "City", "Lisboa");
-  await typeField(app, "Postal code", "1100-048");
-  await typeField(app, "Country", "Portugal");
-  await clickText(app, "[role=tab]", "Stay & dining");
-  await typeField(app, "Usual arrival time", "3 PM");
-  await typeField(app, "Special requests", "Card 4111 1111 1111 1111");
+  await typeField(app, "Code", "+351");
+  await typeField(app, "Phone", "912 345 678");
+  await typeField(app, "Anything partners should know", "Card 4111 1111 1111 1111");
   await clickText(app, "button", "Save my details");
   await waitText(app, "looks like a payment card number, so it wasn't saved");
   let stored = JSON.stringify(await storage());
   assert.ok(!stored.includes("4111"), "card number never reached storage");
   step("Card numbers are refused, not stored", "profile save rejected; storage scanned for the card digits: none");
-  await typeField(app, "Special requests", "Quiet room, high floor");
-  await clickText(app, "[role=tab]", "Travelers");
-  await app.screenshot({ path: join(shots, "03-traveler-profile.png") });
+  await typeField(app, "Anything partners should know", "Quiet room, high floor");
   await audit(app, "assistant: profile editor");
   await clickText(app, "button", "Save my details");
   await waitText(app, "Saved on this device.");
+  await app.evaluate(() => window.scrollTo(0, 0));
+  await app.screenshot({ path: join(shots, "03-traveler-profile.png") });
   stored = await storage();
   assert.equal(stored.local.profile.contact.email, "ana.costa@example.com");
   step("One traveler form saved locally", "stored in chrome.storage.local; the build guard rejects any fetch() in the bundle");
@@ -247,8 +243,6 @@ try {
   const bookingForm = checks["/booking/book.html"];
   assert.equal(bookingForm.values.firstname, "Ana");
   assert.equal(bookingForm.values.email_confirm, "ana.costa@example.com");
-  assert.equal(bookingForm.values.cc1, "pt");
-  assert.equal(bookingForm.values.checkin_eta_hour, "15");
   assert.equal(bookingForm.values.password, "");
   assert.equal(checks["/getyourguide/checkout/fixture"].values.phoneCountryCode, "+351");
   assert.equal(checks["/opentable/booking/details"].values.phoneNumber, "912 345 678");

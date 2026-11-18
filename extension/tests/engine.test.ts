@@ -98,7 +98,7 @@ test("late-rendered forms are filled via MutationObserver within the timeout", a
   assert.equal((document.querySelector("[name=firstName]") as HTMLInputElement).value, "Ana");
   assert.equal((document.querySelector("[name=phoneCountryCode]") as HTMLSelectElement).value, "+351");
   assert.equal((document.querySelector("[name=phoneNumber]") as HTMLInputElement).value, "912 345 678");
-  assert.equal((document.querySelector("[name=comment]") as HTMLTextAreaElement).value, "Step-free room please");
+  assert.equal((document.querySelector("[name=comment]") as HTMLTextAreaElement).value, "Step-free room please. Quiet room", "the activity note carries the traveler's own request too");
   window.close();
 });
 

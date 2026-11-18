@@ -16,7 +16,7 @@ async function render(): Promise<void> {
   const session = response.ok ? response.sessions?.[0] : undefined;
   const main = h("main", { class: "stack" },
     h("div", { class: "row between" },
-      h("span", { class: "wordmark" }, h("img", { src: "icons/icon-32.png", alt: "" }), "GlobTrek"),
+      h("span", { class: "wordmark" }, "globtrek", h("img", { src: "icons/brand-g.png", alt: "" })),
       h("span", { class: "micro" }, "Booking assistant"),
     ),
     !settings.onboarded

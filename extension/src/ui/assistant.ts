@@ -32,7 +32,7 @@ function shell(active: string): HTMLElement {
     h("a", { href: "#main", class: "sr-only", on: { click: (event: Event) => { event.preventDefault(); main.focus(); } } }, "Skip to content"),
     h("div", { class: "shell" },
       h("header", { class: "topbar" },
-        h("a", { class: "wordmark", href: "#/", "aria-label": "GlobTrek Booking Assistant, home" }, h("img", { src: "icons/icon-48.png", alt: "" }), "GlobTrek"),
+        h("a", { class: "wordmark", href: "#/", "aria-label": "GlobTrek Booking Assistant, home" }, "globtrek", h("img", { src: "icons/brand-g.png", alt: "" })),
         h("nav", { "aria-label": "Assistant" }, NAV.map(([href, label]) => h("a", { href, "aria-current": active === href ? "page" : undefined }, label))),
       ),
       main,
