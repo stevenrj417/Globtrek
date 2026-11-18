@@ -41,9 +41,9 @@ export function RecentFares({ origin, destination, depart, ret, months, nights, 
     <div className="mx-auto max-w-[1180px]">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <h3 id="recent-fares-heading" className="text-micro uppercase tracking-editorial">Fares travelers found recently · {origin} → {destination}</h3>
-        {state.checkedAt ? <p className="text-micro text-black/55">Checked {time(state.checkedAt)}</p> : null}
+        {state.checkedAt ? <p className="text-micro text-ink">Checked {time(state.checkedAt)}</p> : null}
       </div>
-      {state.status === "loading" ? <p className="mt-4 text-xs text-black/55">Looking up recent fares…</p> : state.fares.length ? <ul className="mt-4 grid gap-3 sm:grid-cols-3">
+      {state.status === "loading" ? <p className="mt-4 text-xs text-ink">Looking up recent fares…</p> : state.fares.length ? <ul className="mt-4 grid gap-3 sm:grid-cols-3">
         {state.fares.map((fare) => <li key={`${fare.departDate}-${fare.returnDate}-${fare.pricePerPerson}`} className="flex flex-col justify-between border border-black/15 bg-white p-4">
           <div>
             <p className="tabular font-serif text-2xl">{money(fare.pricePerPerson)} <span className="font-sans text-xs">per person, round trip</span></p>
@@ -55,7 +55,7 @@ export function RecentFares({ origin, destination, depart, ret, months, nights, 
           <a href={fare.bookingUrl} target="_blank" rel="noopener sponsored" onClick={() => track("recent_fare_opened", { route: `${origin}-${destination}`, exact: fare.exactDates })} className="mt-4 inline-flex min-h-11 items-center justify-center border border-black px-4 text-micro uppercase tracking-label hover:bg-black hover:text-white">Check this fare on Aviasales <span className="ml-2" aria-hidden="true">↗</span></a>
         </li>)}
       </ul> : <p className="mt-4 text-xs">No recent fares seen for this route{exact ? " on your dates" : ""}. Use the flight search above for current prices.</p>}
-      <p className="mt-4 max-w-2xl text-xs leading-5 text-black/55">Cached fares from Aviasales searches in the last few days, not live prices. They may have changed or sold out; the airline or agency shows the current price before you pay.{exact ? "" : " Dates shown are the cheapest found in your travel period."}</p>
+      <p className="mt-4 max-w-2xl text-xs leading-5 text-ink">Cached fares from Aviasales searches in the last few days, not live prices. They may have changed or sold out; the airline or agency shows the current price before you pay.{exact ? "" : " Dates shown are the cheapest found in your travel period."}</p>
     </div>
   </section>;
 }

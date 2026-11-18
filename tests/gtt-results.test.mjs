@@ -10,7 +10,8 @@ test("GTT results use a single proposal booking action instead of search section
   assert.match(page, /onBook={goToBooking}/);
   assert.doesNotMatch(page, /FlightSearchSection|Search flights|Search hotels|Search restaurants|Search activities/);
   assert.match(page, /bookingPropertyUrl\(stay, stayLinkContext\(context, stay\)\)/);
-  assert.match(page, /<BookingChecklist entries=\{bookingManifestEntries\(bookingManifest\)\}/);
+  assert.match(page, /bookingPageUrl\(bookingManifest, window\.location\.origin\)/, "Start booking opens the booking page");
+  assert.doesNotMatch(page, /<BookingChecklist /, "the checklist lives on the booking page, not the results page");
   assert.doesNotMatch(page, /launchBookingManifest|window\.open/);
 });
 
@@ -27,9 +28,8 @@ test("sticky trip action always reflects current selections and flight logistics
   assert.doesNotMatch(page, /finalActionsVisible|aria-hidden={finalActionsVisible}/);
 });
 
-test("itinerary is curated horizontally and dining and experiences are separate selectable edits", () => {
-  assert.match(sections, /days\.slice\(0, 3\)/);
-  assert.match(sections, /A first look at your/);
+test("no itinerary on results; dining and experiences are separate selectable edits", () => {
+  assert.doesNotMatch(sections + page, /ProposalItinerary|id="itinerary"/);
   assert.match(sections, /id="dining"/);
   assert.match(sections, /id="experiences"/);
   assert.match(sections, /aria-pressed={selected}/);
@@ -39,7 +39,7 @@ test("itinerary is curated horizontally and dining and experiences are separate 
 
 test("flight card prices only from recent fares, offers one search action, and keeps the fare basis in details", () => {
   assert.match(page, /const observed = OBSERVED_FARE_SOURCES\.includes\(estimate\?\.source\)/);
-  assert.match(page, /No recent fares for this route yet/);
+  assert.match(page, /Typical round trip per person/);
   assert.match(page, /Check flights/);
   assert.match(page, /Flights: \{flights\.basis\}/);
   assert.match(page, /Update flight options/);
@@ -64,12 +64,5 @@ test("final visual refinement keeps a cinematic hero and removes the redundant c
   assert.match(page, /data-trip-hero/);
   assert.match(page, /Estimated price · final prices confirmed by providers/);
   assert.doesNotMatch(page, /Ready when you are/);
-  assert.match(page, /href="#booking-center"/);
-});
-
-test("itinerary preview uses three distinct grounded presentation slots", () => {
-  assert.match(sections, /Arrival & settle/);
-  assert.match(sections, /Historic neighborhoods/);
-  assert.match(sections, /Local experiences/);
-  assert.match(sections, /text\.includes\(String\(item\.name\)\.toLowerCase\(\)\)/, "a day shows a photo of a place it mentions");
+  assert.match(page, /onClick=\{goToBooking\}/);
 });

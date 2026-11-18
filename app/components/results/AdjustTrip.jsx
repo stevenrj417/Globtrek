@@ -110,13 +110,13 @@ export function AdjustTrip({ quiz, profile, currentTotal, currentId = null, curr
   return <section id="adjust" aria-labelledby="adjust-heading" className="scroll-mt-24 border-t border-black/15 px-6 py-10 sm:px-12">
     <div className="mx-auto max-w-[1180px]">
       <div className="flex flex-wrap items-end justify-between gap-3">
-        <div><h2 id="adjust-heading" className="font-serif text-[clamp(1.8rem,3vw,2.5rem)] leading-[.95] tracking-tight-2">Adjust this trip</h2><p className="mt-2 text-sm text-black/65">Currently {money(currentTotal)}.</p></div>
+        <div><h2 id="adjust-heading" className="font-serif text-[clamp(1.8rem,3vw,2.5rem)] leading-[.95] tracking-tight-2">Adjust this trip</h2><p className="mt-2 text-sm text-ink">Currently {money(currentTotal)}.</p></div>
         {history.length ? <button type="button" onClick={undo} className="inline-flex min-h-11 items-center border border-black/25 px-4 text-sm hover:border-black">↶ Undo last change</button> : null}
       </div>
       <ul className="mt-6 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">{options.map((option) => <li key={option.id}>
         <button type="button" disabled={!option.result} onClick={() => apply(option.quiz, option.id, option.result)} className="flex min-h-16 w-full items-center justify-between gap-3 border border-black/20 bg-white px-4 py-2 text-left hover:border-black disabled:cursor-not-allowed disabled:opacity-55">
           <span className="font-medium">{option.label}</span>
-          <span className="tabular text-right text-xs text-black/65">{option.result ? <>{option.result.same ? sameTripLabel(option.result.style, currentStyle) : option.result.city}<br />{money(option.result.total)}{option.result.total !== currentTotal ? ` (${option.result.total < currentTotal ? "−" : "+"}${money(Math.abs(option.result.total - currentTotal))})` : ""}</> : "No trip fits"}</span>
+          <span className="tabular text-right text-xs text-ink">{option.result ? <>{option.result.same ? sameTripLabel(option.result.style, currentStyle) : option.result.city}<br />{money(option.result.total)}{option.result.total !== currentTotal ? ` (${option.result.total < currentTotal ? "−" : "+"}${money(Math.abs(option.result.total - currentTotal))})` : ""}</> : "No trip fits"}</span>
         </button>
       </li>)}
         <li><a href="#alternatives" className="flex min-h-16 w-full items-center justify-between border border-black/20 bg-white px-4 py-2 font-medium hover:border-black">Different destination <span aria-hidden="true">↓</span></a></li>
@@ -131,7 +131,7 @@ export function AdjustTrip({ quiz, profile, currentTotal, currentId = null, curr
           <label className="text-sm font-medium">Accommodation<select value={draft.lodging} onChange={set("lodging")} className={field}><option>Whatever&apos;s cheapest</option><option>Hostel bed</option><option>Private room</option></select></label>
           <label className="flex min-h-11 items-center gap-3 self-end text-sm font-medium"><input type="checkbox" checked={draft.flights} onChange={set("flights")} className="h-5 w-5 accent-black" />Budget includes flights</label>
         </div>
-        <p className="mt-2 text-xs text-black/60">To change dates, use the calendar in the flight section.</p>
+        <p className="mt-2 text-xs text-ink">To change dates, use the calendar in the flight section.</p>
         <div aria-live="polite" className="mt-4 text-sm">{editedResult ? <p><span className="font-medium">With these details:</span> <span className="tabular">{editedResult.city} at about {money(editedResult.total)}</span></p> : <p><span className="font-medium">No trip fits these details.</span> Try a larger budget or fewer nights.</p>}</div>
         <button type="button" disabled={!editedResult} onClick={() => apply(edited, "editor", editedResult)} className="mt-4 inline-flex min-h-11 items-center bg-black px-5 text-micro uppercase tracking-label text-white disabled:opacity-40">Update my trip</button>
       </div> : null}

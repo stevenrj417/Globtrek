@@ -22,7 +22,7 @@ export function FeedbackPanel({ resultId, destinationId, algorithmVersion }) {
 
   if (status === "sent") return <p role="status" className="text-sm">Thanks. That helps us improve matches.</p>;
   return <div>
-    <h2 className="text-micro uppercase tracking-label text-black/60">Was this a good match?</h2>
+    <h2 className="text-micro uppercase tracking-label text-ink">Was this a good match?</h2>
     <div className="mt-2 flex flex-wrap gap-2">
       <button type="button" onClick={() => send("great_match")} className="inline-flex min-h-11 items-center border border-black/25 px-4 text-sm hover:border-black">Great match</button>
       <button type="button" aria-expanded={mode === "not_for_me"} onClick={() => setMode(mode === "not_for_me" ? null : "not_for_me")} className="inline-flex min-h-11 items-center border border-black/25 px-4 text-sm hover:border-black">Not for me</button>
@@ -35,7 +35,7 @@ export function FeedbackPanel({ resultId, destinationId, algorithmVersion }) {
     </fieldset> : null}
     {mode === "wrong" ? <div className="mt-3">
       <label htmlFor="feedback-message" className="text-sm font-medium">What looks wrong?</label>
-      <p id="feedback-hint" className="text-xs text-black/60">For example a closed place, a wrong price or a broken link. Please don&apos;t include your name, email or other personal details.</p>
+      <p id="feedback-hint" className="text-xs text-ink">For example a closed place, a wrong price or a broken link. Please don&apos;t include your name, email or other personal details.</p>
       <textarea id="feedback-message" aria-describedby="feedback-hint" value={message} maxLength={500} onChange={(event) => setMessage(event.target.value)} rows={3} className="mt-2 block w-full max-w-xl border border-black/20 bg-white p-3 text-base" />
       <button type="button" disabled={!message.trim() || status === "sending"} onClick={() => send("something_wrong", { message })} className="mt-3 inline-flex min-h-11 items-center bg-black px-5 text-sm text-white disabled:opacity-40">Send</button>
     </div> : null}

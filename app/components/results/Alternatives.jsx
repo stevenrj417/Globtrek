@@ -35,10 +35,10 @@ export function Alternatives({ alternatives, current, answers }) {
         return <li key={key} className="flex flex-col border border-black/15 bg-white">
           <div className="relative aspect-[16/10] bg-placeholder">{item.image ? <Image src={item.image} alt={item.imageAlt || `${title(item.city)}, ${title(item.country)}`} fill sizes="(min-width:640px) 30vw, 100vw" className="object-cover" /> : null}</div>
           <div className="flex flex-1 flex-col p-4">
-            <h3 className="font-serif text-xl leading-tight">{title(item.city)}<span className="block font-sans text-xs text-black/55">{title(item.country)}</span></h3>
+            <h3 className="font-serif text-xl leading-tight">{title(item.city)}<span className="block font-sans text-xs text-ink">{title(item.country)}</span></h3>
             <p className="tabular mt-2 text-sm">{money(item.budgetPlan.budgetCheckTotal)} estimated</p>
-            {item.budgetPlan.lodging?.perUnit && item.budgetPlan.includedBudgetCategories?.hotel ? <p className="tabular text-xs text-black/60">Stay about {nightlyLine(item.budgetPlan.lodging.perUnit, item.budgetPlan.lodging.unit)}</p> : null}
-            <ul className="mt-2 space-y-1 text-xs text-black/70">{compareToCurrent(item, current, answers).map((note) => <li key={note}>· {note}</li>)}</ul>
+            {item.budgetPlan.lodging?.perUnit && item.budgetPlan.includedBudgetCategories?.hotel ? <p className="tabular text-xs text-ink">Stay about {nightlyLine(item.budgetPlan.lodging.perUnit, item.budgetPlan.lodging.unit)}</p> : null}
+            <ul className="mt-2 space-y-1 text-xs text-ink">{compareToCurrent(item, current, answers).map((note) => <li key={note}>· {note}</li>)}</ul>
             {/* A full page load: the results page reads its destination once, on load. */}
             <a href={`/results?destination=${encodeURIComponent(key)}`} className="mt-auto inline-flex min-h-11 items-center pt-3 text-sm underline decoration-black/30 underline-offset-4 hover:decoration-ink">See this trip <span aria-hidden="true" className="ml-1">→</span></a>
           </div>
