@@ -54,13 +54,13 @@ export function BookingChecklist({ entries, tripKey, details = null, id = "booki
 
   const count = items.filter((item) => done[item.id]).length;
   return <section id={id} className="scroll-mt-24" aria-labelledby={`${id}-heading`}>
-    <div className="flex flex-wrap items-end justify-between gap-3">
+    {trip && datesSet ? <BookingAssistant entries={entries} trip={trip} tripKey={tripKey} onStatuses={(status) => setAssistant(Object.fromEntries(status.items.map((entry) => [entry.id, entry])))} /> : null}
+    <div className={`flex flex-wrap items-end justify-between gap-3 ${trip && datesSet ? "mt-14" : ""}`}>
       <h2 id={`${id}-heading`} className="font-serif text-[clamp(1.8rem,3vw,2.5rem)] leading-[.95] tracking-tight-2">{heading}</h2>
-      {items.length ? <p className="tabular text-sm text-black/60" aria-live="polite">{count} of {items.length} booked</p> : null}
+      {items.length ? <p className="tabular text-sm text-ink" aria-live="polite">{count} of {items.length} booked</p> : null}
     </div>
     {datesSet && datesLabel ? <p className="tabular mt-3 text-sm font-medium">For {datesLabel}</p> : null}
     {!datesSet ? <p className="mt-3 max-w-2xl border-l-2 border-warning pl-3 text-sm leading-6">Flexible dates: links open without dates. Pick dates above to fill them in.</p> : null}
-    {trip && datesSet ? <BookingAssistant entries={entries} trip={trip} tripKey={tripKey} onStatuses={(status) => setAssistant(Object.fromEntries(status.items.map((entry) => [entry.id, entry])))} /> : null}
     {details}
     {items.length ? <ol className="mt-5 divide-y divide-black/12 border-y border-black/12">
       {items.map((item) => {
@@ -70,10 +70,10 @@ export function BookingChecklist({ entries, tripKey, details = null, id = "booki
         return <li key={`${item.type}:${item.id}`} className="grid gap-3 py-4 sm:grid-cols-[auto_1fr_auto] sm:items-center sm:gap-5">
           <input id={checkboxId} type="checkbox" checked={checked} onChange={() => toggle(item.id)} className="h-5 w-5 accent-black" />
           <label htmlFor={checkboxId} className="cursor-pointer">
-            <span className="block text-micro uppercase tracking-label text-black/60">{LABELS[item.type]}{checked ? " · booked" : ""}</span>
-            <span className={`mt-0.5 block text-base font-medium ${checked ? "text-black/45 line-through" : ""}`}>{item.name}</span>
-            <span className="block text-xs text-black/55">on {partner(item.exactUrl)}{item.type === "flight" && item.departureDate ? ` · ${item.departureDate} → ${item.returnDate || "one way"}` : ""}</span>
-            {live ? <span className="mt-1 block text-xs font-medium" aria-live="polite">Assistant: {ASSISTANT_STATUS_LABELS[live.status] || "Opened"}{live.note ? <span className="font-normal text-black/55"> · {live.note}</span> : null}</span> : null}
+            <span className="block text-micro uppercase tracking-label text-ink">{LABELS[item.type]}{checked ? " · booked" : ""}</span>
+            <span className={`mt-0.5 block text-base font-medium ${checked ? "text-ink line-through" : ""}`}>{item.name}</span>
+            <span className="block text-xs text-ink">on {partner(item.exactUrl)}{item.type === "flight" && item.departureDate ? ` · ${item.departureDate} → ${item.returnDate || "one way"}` : ""}</span>
+            {live ? <span className="mt-1 block text-xs font-medium" aria-live="polite">Assistant: {ASSISTANT_STATUS_LABELS[live.status] || "Opened"}{live.note ? <span className="font-normal text-ink"> · {live.note}</span> : null}</span> : null}
           </label>
           <a href={item.exactUrl} target="_blank" rel="noopener sponsored" onClick={() => track("booking_item_opened", { type: item.type })} className="inline-flex min-h-11 items-center justify-center border border-black/25 px-4 text-sm hover:border-black">{ACTIONS[item.type] || "Open"} <span aria-hidden="true" className="ml-1">↗</span><span className="sr-only"> (opens in a new tab)</span></a>
         </li>;

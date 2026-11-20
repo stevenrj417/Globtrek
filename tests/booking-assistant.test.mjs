@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { buildBookingManifest, bookingManifestEntries } from "../app/lib/booking/manifest.js";
-import { assistantEntries, assistantTrip, canUseExtension, isAssistantUrl, shareAssistantTrip, subscribeAssistantTrip, supportsOpenAll } from "../app/lib/booking/assistant.js";
+import { assistantEntries, assistantTrip, canUseExtension, isAssistantUrl, supportsOpenAll } from "../app/lib/booking/assistant.js";
 
 const manifest = buildBookingManifest({
   destination: { city: "Lisbon", country: "Portugal", airport: "LIS" },
@@ -64,16 +64,4 @@ test("only 0.2.0 and later are asked to open every booking at once", () => {
   assert.equal(supportsOpenAll("0.2.0"), true);
   assert.equal(supportsOpenAll("0.10.1"), true);
   assert.equal(supportsOpenAll("1.0.0"), true);
-});
-
-test("the site-wide prompt sees the page's trip until the page withdraws it", () => {
-  const seen = [];
-  const unsubscribe = subscribeAssistantTrip((value) => seen.push(value?.tripKey ?? null));
-  const withdraw = shareAssistantTrip({ tripKey: "lisbon", items: 3 });
-  const stale = shareAssistantTrip({ tripKey: "porto", items: 2 });
-  withdraw();
-  stale();
-  unsubscribe();
-  shareAssistantTrip({ tripKey: "after", items: 1 })();
-  assert.deepEqual(seen, [null, "lisbon", "porto", null]);
 });

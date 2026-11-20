@@ -150,25 +150,3 @@ export function supportsOpenAll(version) {
   const [major = 0, minor = 0] = String(version || "").split(".").map((part) => Number.parseInt(part, 10) || 0);
   return major > 0 || minor >= 2;
 }
-
-// The trip on the current page, shared with the small site-wide prompt so it can
-// offer the same "Book my trip" without a second copy of the logic.
-let sharedTrip = null;
-const tripListeners = new Set();
-
-/** Shares this page's trip with the prompt; returns a function that withdraws it. */
-export function shareAssistantTrip(value) {
-  sharedTrip = value;
-  tripListeners.forEach((listener) => listener(sharedTrip));
-  return () => {
-    if (sharedTrip !== value) return;
-    sharedTrip = null;
-    tripListeners.forEach((listener) => listener(null));
-  };
-}
-
-export function subscribeAssistantTrip(listener) {
-  tripListeners.add(listener);
-  listener(sharedTrip);
-  return () => tripListeners.delete(listener);
-}
