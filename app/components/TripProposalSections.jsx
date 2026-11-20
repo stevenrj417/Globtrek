@@ -22,7 +22,7 @@ function safeImage(item) {
 function CatalogCard({ item, selected, onToggle, kind, destination }) {
   const verifiedImage = safeImage(item);
   const meta = kind === "restaurant"
-    ? [Array.isArray(item.cuisine) ? item.cuisine.slice(0, 2).join(" · ") : item.cuisine, item.neighborhood, item.rating ? `${item.rating} rating` : null, item.priceRange ? `${item.priceRange.currency} ${item.priceRange.low}${item.priceRange.high ? `–${item.priceRange.high}` : "+"} per person (Google Maps)` : null]
+    ? [Array.isArray(item.cuisine) ? item.cuisine.slice(0, 2).join(" · ") : item.cuisine, item.neighborhood, item.rating ? `${item.rating} rating` : null, item.priceRange ? `${item.priceRange.currency} ${item.priceRange.low}${item.priceRange.high ? `–${item.priceRange.high}` : "+"} per person (Google Maps)` : LEVEL_SIGN[item.priceLevel] || null]
     : [item.category ? String(item.category).replace(/_/g, " ") : null, item.isFree ? "Free" : null];
   const description = item.description || null;
   const sourceUrl = item.imageSourceUrl || item.imageLicenseMetadata?.sourcePageUrl || null;
@@ -36,10 +36,35 @@ function CatalogCard({ item, selected, onToggle, kind, destination }) {
   </button>{verifiedImage && sourceUrl ? <a href={sourceUrl} target="_blank" rel="noopener" className="absolute left-2 top-2 z-10 inline-flex min-h-6 items-center bg-black/65 px-2 text-micro text-white">Photo: Google ↗<span className="sr-only"> (opens in a new tab)</span></a> : null}</article>;
 }
 
+// Places collected in price tiers (scripts/activities/curate-places.mjs --tiers),
+// shown cheapest first so the spread is plain.
+const TIERS = {
+  restaurant: [["budget", "Cheap eats", "$"], ["mid", "Mid-range", "$$"], ["high", "Splurge", "$$$"]],
+  activity: [["free", "Free to explore", null], ["ticketed", "Museums and attractions", null]],
+};
+const LEVEL_SIGN = { PRICE_LEVEL_INEXPENSIVE: "$", PRICE_LEVEL_MODERATE: "$$", PRICE_LEVEL_EXPENSIVE: "$$$", PRICE_LEVEL_VERY_EXPENSIVE: "$$$$" };
+
+function TierGroups({ items, kind, renderCard }) {
+  const groups = TIERS[kind].map(([tier, label, sign]) => ({ tier, label, sign, items: items.filter((item) => item.tier === tier) })).filter((group) => group.items.length);
+  const other = items.filter((item) => !TIERS[kind].some(([tier]) => tier === item.tier));
+  if (other.length) groups.push({ tier: "other", label: kind === "restaurant" ? "More local favorites" : "More to see", sign: null, items: other.slice(0, 3) });
+  return <div className="space-y-8">{groups.map((group) => <div key={group.tier}>
+    <h3 className="mb-3 flex items-baseline gap-2 text-micro uppercase tracking-label">{group.label}{group.sign ? <span className="tabular text-subtle" aria-hidden="true">{group.sign}</span> : null}</h3>
+    <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">{group.items.map(renderCard)}</div>
+  </div>)}</div>;
+}
+
 function CuratedSection({ id, title, items, selections, onToggle, kind, destination, status, onRetry, initialLimit = null }) {
   const [expanded, setExpanded] = useState(false);
   // Nothing to show once loaded: leave the section out instead of an empty block.
   if (status === "ready" && !items.length) return null;
+  const tiered = items.some((item) => item.tier);
+  const card = (item) => <CatalogCard key={item.id || item.name} item={item} destination={destination} kind={kind} selected={selections.some((selected) => (selected.id || selected.name) === (item.id || item.name))} onToggle={onToggle} />;
+  if (status === "ready" && tiered) {
+    return <section id={id} className="scroll-mt-24 border-t border-black/15 px-6 py-8 sm:px-12 sm:py-10" aria-labelledby={`${id}-heading`}><div className="mx-auto grid max-w-[1180px] gap-7 lg:grid-cols-[.48fr_1.52fr]"><header><h2 id={`${id}-heading`} className="max-w-xs font-serif text-[clamp(2rem,3.2vw,3rem)] leading-[.95] tracking-tight-3">{title}</h2></header>
+      <TierGroups items={items} kind={kind} renderCard={card} />
+    </div></section>;
+  }
   const visibleLimit = initialLimit ? (expanded ? Math.min(items.length, initialLimit * 2) : initialLimit) : items.length;
   const visibleItems = items.slice(0, visibleLimit);
   const noun = kind === "restaurant" ? "restaurants" : "experiences";

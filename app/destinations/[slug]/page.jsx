@@ -76,6 +76,10 @@ export default async function DestinationPage({ params }) {
   const guides = guidesFor(item.id);
   const launch = LAUNCH_DATA[item.id] || {};
   const jump = [["stay", "Where to stay"], ["eat", "Where to eat"], ["do", "Things to do"], launch.airportRide ? ["airport", "From the airport"] : null, ["costs", "Costs"], guides.length ? ["guides", "Guides"] : null].filter(Boolean);
+  // Government per diem lodging: what a business-standard hotel is allowed to cost here.
+  const standard = item.planning.standardHotel && months.every((month) => month.standardHotelNight);
+  const standardLow = standard ? Math.min(...months.map((month) => month.standardHotelNight)) : null;
+  const standardHigh = standard ? Math.max(...months.map((month) => month.standardHotelNight)) : null;
   const cheapMonth = months.reduce((low, month) => (month.hotelNight < low.hotelNight ? month : low), months[0]);
 
   return (
@@ -100,7 +104,7 @@ export default async function DestinationPage({ params }) {
           <div className="bg-surface p-6 sm:p-8">
             <h3 className="font-serif text-2xl tracking-tight-2">Everyday costs in May</h3>
             <dl className="mt-4 divide-y divide-black/10 border-y border-black/10 text-sm">
-              {[["Good-value room, per night", may.hotelNight], ["Food, per person per day", may.foodPerPersonDay], ["Things to do, per person per day", may.activitiesPerPersonDay], ["Getting around, per day", may.localTransportDay]].map(([label, value]) => (
+              {[["Good-value room, per night", may.hotelNight], may.standardHotelNight ? ["Standard business hotel, per night", may.standardHotelNight] : null, ["Food, per person per day", may.foodPerPersonDay], ["Things to do, per person per day", may.activitiesPerPersonDay], ["Getting around, per day", may.localTransportDay]].filter(Boolean).map(([label, value]) => (
                 <div key={label} className="flex justify-between gap-4 py-3"><dt className="text-muted">{label}</dt><dd className="tabular font-medium">~{formatMoney(value)}</dd></div>
               ))}
             </dl>
@@ -117,10 +121,11 @@ export default async function DestinationPage({ params }) {
                 </li>
               ))}
             </ol>
+            {standard ? <p className="mt-5 text-sm text-muted">Standard business hotel: {standardLow === standardHigh ? `about ${formatMoney(standardLow)}` : `${formatMoney(standardLow)}–${formatMoney(standardHigh)}`} a night through the year, the {item.planning.standardHotel.label} for {item.planning.standardHotel.area}{item.planning.standardHotel.matchType === "country_other" || item.planning.standardHotel.matchType === "state_standard" ? " (the general rate, not one set for this town)" : ""}.</p> : null}
           </div>
         </div>
         <p className="mt-6 max-w-[var(--width-reading)] text-xs leading-5 text-subtle">
-          {item.costModel === "city" ? `GlobTrek's ${item.name} cost model` : `Typical costs for a ${LEVEL[item.costLevel] || "mid-priced"} destination; not yet modeled for ${item.name} specifically`}{item.modelDate ? `, dated ${monthYear(item.modelDate)}` : ""}. Estimates, not live prices. Check live rates with the booking partner.{item.season !== season ? " Best months to go come from 2001–2025 climate averages (NASA POWER)." : ""}
+          {item.costModel === "city" ? `GlobTrek's ${item.name} cost model` : item.costModel === "us_lodging_rate" ? `Room prices follow the GSA lodging rate for ${item.planning.standardHotel?.area || item.name} month by month, at the share GlobTrek's reviewed US city budgets pay for a good-value room` : `Typical costs for a ${LEVEL[item.costLevel] || "mid-priced"} destination; not yet modeled for ${item.name} specifically`}{item.modelDate ? `, dated ${monthYear(item.modelDate)}` : ""}. Estimates, not live prices. Check live rates with the booking partner.{item.season !== season ? " Best months to go come from 2001–2025 climate averages (NASA POWER)." : ""}
         </p>
         <ul className="mt-6 flex flex-wrap gap-x-8 gap-y-3 text-sm">
           <li><a href={ENTRY_URL} rel="noopener" className={textLink}>Check entry requirements</a> <span className="text-subtle">(U.S. Department of State)</span></li>

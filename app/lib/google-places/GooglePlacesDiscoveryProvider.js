@@ -31,11 +31,11 @@ function priceRange(place) {
 }
 
 export class GooglePlacesDiscoveryProvider extends GooglePlacesHotelProvider {
-  async searchNearby(destination, { textQuery, includedType, limit, allowedTypes, useLocationBias = true }) {
+  async searchNearby(destination, { textQuery, includedType, limit, allowedTypes, useLocationBias = true, priceLevels }) {
     const hasCoordinates = useLocationBias && Number.isFinite(Number(destination.latitude)) && Number.isFinite(Number(destination.longitude));
     const radius = Math.min(50000, Math.max(5000, Number(destination.hotelSearchRadiusKm || 40) * 1000));
     const locationBias = hasCoordinates ? { circle: { center: { latitude: Number(destination.latitude), longitude: Number(destination.longitude) }, radius } } : undefined;
-    const payload = await this.request("/places:searchText", { method: "POST", body: { textQuery, includedType, strictTypeFiltering: false, maxResultCount: Math.min(20, Math.max(limit * 2, limit)), ...(locationBias ? { locationBias } : {}) }, fieldMask: "places.id,places.displayName,places.formattedAddress,places.location,places.types,places.primaryType,places.businessStatus,places.rating,places.userRatingCount,places.priceLevel,places.priceRange,places.googleMapsUri,places.websiteUri,places.photos" });
+    const payload = await this.request("/places:searchText", { method: "POST", body: { textQuery, includedType, strictTypeFiltering: false, maxResultCount: Math.min(20, Math.max(limit * 2, limit)), ...(priceLevels?.length ? { priceLevels } : {}), ...(locationBias ? { locationBias } : {}) }, fieldMask: "places.id,places.displayName,places.formattedAddress,places.location,places.types,places.primaryType,places.businessStatus,places.rating,places.userRatingCount,places.priceLevel,places.priceRange,places.googleMapsUri,places.websiteUri,places.photos" });
     return (payload.places || []).filter((place) => placeName(place) && (!place.businessStatus || place.businessStatus === "OPERATIONAL") && (place.types || []).some((type) => allowedTypes.has(type)) && (hasCoordinates ? (distanceMeters(destination, place.location) ?? 0) <= 60000 : matchesCityWithoutCoordinates(destination, place))).sort((a, b) => score(b) - score(a)).slice(0, limit);
   }
 

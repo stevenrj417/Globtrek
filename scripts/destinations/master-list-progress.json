@@ -1,19 +1,19 @@
 {
  "summary": {
-  "checkedAt": "2026-11-16",
+  "checkedAt": "2026-11-20",
   "outcomes": 237,
   "inCatalog": 237,
   "quizReady": 237,
   "withPhotoAndAlt": 237,
   "sixPlusActivities": 210,
-  "ninePlusStays": 198,
-  "threePlusStays": 203,
+  "ninePlusStays": 199,
+  "threePlusStays": 204,
   "withRestaurants": 236,
   "costModels": {
-   "local_prices": 183,
+   "local_prices": 184,
    "city": 19,
    "tier": 2,
-   "price_band": 29,
+   "price_band": 28,
    "price_band_partial": 4
   },
   "missingByCheck": {},
@@ -4319,16 +4319,15 @@
    "linkedBy": "master_list_record",
    "photo": true,
    "imageAlt": true,
-   "stays": 0,
+   "stays": 19,
    "activities": 8,
    "restaurants": 4,
-   "costModel": "price_band",
+   "costModel": "local_prices",
    "climate": true,
    "quizReady": true,
    "missing": [],
    "reachable": true,
    "flags": [
-    "fewer than 9 catalog stays",
     "per-property prices, ratings and photos need the Booking Demand API"
    ],
    "status": "quiz_ready"
@@ -4858,7 +4857,7 @@
    "linkedBy": "master_list_record",
    "photo": true,
    "imageAlt": true,
-   "stays": 0,
+   "stays": 1,
    "activities": 4,
    "restaurants": 4,
    "costModel": "price_band",

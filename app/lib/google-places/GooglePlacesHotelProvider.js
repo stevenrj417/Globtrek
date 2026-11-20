@@ -114,6 +114,14 @@ function retryDelay(response, attempt) {
   return Number.isFinite(retryAfter) && retryAfter >= 0 ? Math.min(5000, retryAfter * 1000) : Math.min(4000, 250 * (2 ** attempt));
 }
 
+function livePriceRange(place) {
+  const low = Number(place?.priceRange?.startPrice?.units);
+  const high = Number(place?.priceRange?.endPrice?.units);
+  const currency = place?.priceRange?.startPrice?.currencyCode;
+  if (!Number.isFinite(low) || !currency) return null;
+  return { low, high: Number.isFinite(high) ? high : null, currency, source: "Google Maps price range per person" };
+}
+
 export class GooglePlacesHotelProvider {
   constructor({ apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY, fetchImpl = fetch, sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms)), maxRetries = 3 } = {}) {
     this.apiKey = apiKey;
@@ -192,10 +200,12 @@ export class GooglePlacesHotelProvider {
     return { status: "matched", verified: true, needsReview: false, candidates: candidates.length, placeId: best.place.id, confidence: best.confidence, evidence: best.evidence };
   }
 
-  async getPlaceDetails(placeId, { includePhotos = true } = {}) {
+  async getPlaceDetails(placeId, { includePhotos = true, includePrice = false } = {}) {
     if (!placeId || /[/?#]/.test(placeId)) throw new GooglePlacesError("invalid_google_place_id");
     const fields = ["id", "displayName", "formattedAddress", "location", "types", "businessStatus", "googleMapsUri", "attributions", "rating", "userRatingCount"];
     if (includePhotos) fields.push("photos");
+    // Restaurants: Google's own per-person price range, read live and never stored.
+    if (includePrice) fields.push("priceLevel", "priceRange");
     return this.request(`/places/${encodeURIComponent(placeId)}`, { fieldMask: fields.join(",") });
   }
 
@@ -210,8 +220,8 @@ export class GooglePlacesHotelProvider {
     return this.request(`/${photoName}/media?maxWidthPx=${Math.min(4800, Math.max(400, maxWidthPx))}&skipHttpRedirect=true`);
   }
 
-  async getPhotoManifest(placeId, { limit = 3, maxWidthPx = 1200 } = {}) {
-    const place = await this.getPlaceDetails(placeId, { includePhotos: true });
+  async getPhotoManifest(placeId, { limit = 3, maxWidthPx = 1200, includePrice = false } = {}) {
+    const place = await this.getPlaceDetails(placeId, { includePhotos: true, includePrice });
     const photos = Array.isArray(place.photos) ? place.photos.slice(0, Math.max(0, Math.min(10, limit))) : [];
     const resolved = [];
     for (const photo of photos) {
@@ -236,6 +246,7 @@ export class GooglePlacesHotelProvider {
         formattedAddress: place.formattedAddress || null,
         rating: Number.isFinite(Number(place.rating)) ? Number(place.rating) : null,
         reviewCount: Number.isFinite(Number(place.userRatingCount)) ? Number(place.userRatingCount) : null,
+        ...(includePrice ? { priceRange: livePriceRange(place) } : {}),
       },
     };
   }

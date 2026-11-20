@@ -38,11 +38,13 @@ export async function POST(request) {
       : Promise.resolve([]);
     const [catalog, curated] = await Promise.all([new CjCatalogHotelProvider({ supabase }).listProperties(destination.id), curatedSearch]);
     const candidates = [...verifiedStays(destination.id), ...catalog.properties.map((property) => ({ ...property, source: "catalog", dataUpdatedAt: property.importedAt })), ...curated];
-    const { choices, notice, considered } = buildStayShortlist({ candidates, profile, destination, budgetPlan, accessibleOnly: Boolean(body.accessibleOnly) });
+    const { choices, notice, considered, tiers } = buildStayShortlist({ candidates, profile, destination, budgetPlan, accessibleOnly: Boolean(body.accessibleOnly) });
     return NextResponse.json({
       hotels: choices.map((choice) => ({ ...choice, type: "hotel", provider: "booking.com", providerLinkVerified: true, image: choice.image || choice.photos?.[0] || null })),
       notice,
       considered,
+      // Three more per price tier for comparing; trimmed to what a card needs.
+      tiers: Object.fromEntries(Object.entries(tiers).map(([tier, list]) => [tier, list.map((stay) => ({ id: stay.id, name: stay.name, category: stay.category || null, starRating: stay.starRating || null, dorms: Boolean(stay.dorms), rating: stay.rating || null, reviewCount: stay.reviewCount || null, distanceKm: stay.distanceKm ?? null, bookingUrl: stay.bookingUrl, cjTrackingBaseUrl: stay.cjTrackingBaseUrl || null, providerPropertyId: stay.providerPropertyId || null, image: stay.image || stay.photos?.[0] || null, price: stay.price, tier }))])),
       catalog: { source: catalog.source, checkedAt: catalog.checkedAt },
       liveRates: BookingComDemandHotelProvider.isConfigured(),
       budget: { month: budgetPlan.lodging.month, perNight: budgetPlan.lodging.perNight, unit: budgetPlan.lodging.unit, units: budgetPlan.lodging.units, nights: budgetPlan.lodging.nights, total: budgetPlan.lodging.total, priceKind: budgetPlan.lodging.priceKind, name: budgetPlan.lodging.name },
