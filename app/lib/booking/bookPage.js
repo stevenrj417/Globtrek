@@ -7,6 +7,8 @@ import { isBookingComUrl, isCjUrl } from "./cj.js";
 // restaurants and free places may point at their own https page.
 
 const MAX_ITEMS = 20;
+// A dinner's or activity's local date and time, e.g. 2027-04-10T19:30.
+const WHEN = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
 const TYPES = new Set(["hotel", "flight", "experience", "restaurant"]);
 
 function toBase64Url(text) {
@@ -41,6 +43,7 @@ export function encodeBookingPage(manifest) {
     n: text(entry.name),
     u: entry.exactUrl,
     ...(entry.officialUrl && entry.officialUrl !== entry.exactUrl ? { o: entry.officialUrl } : {}),
+    ...(WHEN.test(entry.reservationTime || entry.scheduledAt || "") ? { w: entry.reservationTime || entry.scheduledAt } : {}),
   }));
   if (!items.length) return null;
   const payload = {
@@ -50,6 +53,7 @@ export function encodeBookingPage(manifest) {
     s: manifest?.dates?.start || null,
     e: manifest?.dates?.end || null,
     p: Number(manifest?.travelers?.total) || Number(manifest?.travelers?.adults) || null,
+    ...(manifest?.dates?.suggested ? { f: 1 } : {}),
     i: items,
   };
   return toBase64Url(JSON.stringify(payload));
@@ -72,7 +76,8 @@ export function decodeBookingPage(value) {
     // Anything Booking.com sells must leave through GlobTrek's CJ link.
     if ((type === "hotel" || type === "flight") && !isCjUrl(url)) return [];
     if (isBookingComUrl(url)) return [];
-    return [{ id: `${type}-${index}`, type, name: text(item.n) || "Booking", exactUrl: url, officialUrl: safeHttps(item.o), reservation: type === "restaurant" }];
+    const when = WHEN.test(item?.w || "") ? item.w : null;
+    return [{ id: `${type}-${index}`, type, name: text(item.n) || "Booking", exactUrl: url, officialUrl: safeHttps(item.o), reservation: type === "restaurant", ...(when && type === "restaurant" ? { reservationTime: when } : {}), ...(when && type === "experience" ? { scheduledAt: when } : {}) }];
   });
   if (!items.length) return null;
   const date = (value) => (typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value) ? value : null);
@@ -82,6 +87,7 @@ export function decodeBookingPage(value) {
     start: date(payload.s),
     end: date(payload.e),
     travelers: Number.isInteger(payload.p) && payload.p > 0 && payload.p <= 30 ? payload.p : null,
-    items,
+    suggested: payload.f === 1,
+    items: items.map((item) => (item.type === "flight" && date(payload.s) ? { ...item, departureDate: date(payload.s), returnDate: date(payload.e) } : item)),
   };
 }

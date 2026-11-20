@@ -32,6 +32,7 @@ import { BookingLogo } from "../components/PartnerLogo";
 import { NoMatchPanel } from "../components/NoMatchPanel";
 import { pickTrip, resolveResultsState, encodeSharedTrip } from "../lib/results/resolveResults";
 import { nightsBetween, nightsLabel, nightsRange, tripSchedule } from "../lib/trip/schedule";
+import { spreadOverStay, suggestedDates } from "../lib/trip/period";
 import { TripDatePicker } from "../components/TripDatePicker";
 import { stayBudgetOption, PRICE_KIND_LABEL } from "../lib/pricing/stayPrice";
 
@@ -41,7 +42,7 @@ function titleCase(value) { return String(value || "").toLowerCase().replace(/(^
 function money(value) { return `$${Math.round(value || 0).toLocaleString("en-US")}`; }
 function airportCode(value) { return String(value || "").replace(/[^a-z]/gi, "").slice(0, 3).toUpperCase(); }
 
-function FlightPlan({ trip, profile, estimate, preferences, range, onUpdate, searchUrl, datesLabel }) {
+function FlightPlan({ trip, profile, estimate, preferences, range, onUpdate, searchUrl, datesLabel, suggestedDates }) {
   const origin = profile.originDetails?.displayName || profile.originDetails?.airportName || profile.origin || "Departure origin";
   const [draft, setDraft] = useState(preferences);
   const [picking, setPicking] = useState(false);
@@ -67,7 +68,7 @@ function FlightPlan({ trip, profile, estimate, preferences, range, onUpdate, sea
           <span aria-hidden="true" className="pt-3 text-3xl sm:pt-5">→</span><span className="sr-only"> to </span>
           <span><span className="block font-serif text-[clamp(2.75rem,6vw,4.5rem)] leading-none tracking-tight-2">{preferences.arrivalAirport}</span><span className="mt-2 block text-sm">{trip.city}</span></span>
         </p>
-        <p className="tabular mt-6 text-sm">{datesLabel} · Round trip · {people} traveler{people === 1 ? "" : "s"}</p>
+        <p className="tabular mt-6 text-sm">{suggestedDates ? `${formatDate(suggestedDates.start, false)} – ${formatDate(suggestedDates.end)}` : datesLabel} · Round trip · {people} traveler{people === 1 ? "" : "s"}</p>{suggestedDates ? <p className="mt-1 text-sm">Suggested in your season, since your dates are flexible. Change them below.</p> : null}
       </div>
       <div className="md:border-l md:border-black/10 md:pl-10">
         {perPerson ? <><p className="tabular font-serif text-4xl">{money(perPerson)}</p><p className="mt-1 text-sm">{observed ? "Round trip per person, recent fares" : "Typical round trip per person"}</p></> : null}
@@ -164,14 +165,21 @@ function buildView({ quiz, trip, flightPreferences, selectedHotel, selectedResta
   const fareDepart = activeProfile.dates?.start && !activeProfile.dates?.flexible ? activeProfile.dates.start : "";
   const fareQuery = activeProfile.origin && flightDestination.airport ? new URLSearchParams({ origin: activeProfile.origin, destination: flightDestination.airport, ...(fareDepart ? { depart: fareDepart } : {}), months: fareMonths.join(",") }).toString() : null;
   const budgetPlan = buildBudgetPlan(activeProfile, flightDestination, { stay: stayOption, observedFare: observedFare?.query === fareQuery ? observedFare.fare : null });
-  const flightUrl = bookingFlightUrl(flightDestination, context);
-  const flightSelection = { selected: Boolean(prefs.departureAirport && prefs.arrivalAirport), origin: prefs.departureAirport, destination: prefs.arrivalAirport, departureDate: schedule.start, returnDate: schedule.end, adults: prefs.adults, children: prefs.children, cabin: prefs.cabin || "ECONOMY", timing: prefs.timing, preferredDeparture: prefs.timing, selectedItinerary: prefs.selectedItinerary || null };
+  // Flexible trips still book on real dates: a weekend start in the priced month of their season.
+  const bookingDates = schedule.flexible ? suggestedDates({ period: activeProfile.dates?.period, pricedMonth: budgetPlan.pricedMonth, nights: schedule.nights, seed: `${destinationKey}:${schedule.nights}:${quiz.answers?.season || ""}` }) : { start: schedule.start, end: schedule.end, suggested: false };
+  const datedContext = schedule.flexible ? { ...context, tripStart: bookingDates.start, tripEnd: bookingDates.end, isFlexible: false } : context;
+  const dinnerTimes = spreadOverStay(selectedRestaurants.length, { start: bookingDates.start, nights: schedule.nights }, "19:30");
+  const activityTimes = spreadOverStay(selectedActivities.length, { start: bookingDates.start, nights: schedule.nights }, "10:00");
+  const datedRestaurants = selectedRestaurants.map((item, index) => ({ ...item, reservationTime: item.reservationTime || dinnerTimes[index] || null }));
+  const datedActivities = selectedActivities.map((item, index) => ({ ...item, scheduledAt: item.scheduledAt || activityTimes[index] || null }));
+  const flightUrl = bookingFlightUrl(flightDestination, datedContext);
+  const flightSelection = { selected: Boolean(prefs.departureAirport && prefs.arrivalAirport), origin: prefs.departureAirport, destination: prefs.arrivalAirport, departureDate: bookingDates.start, returnDate: bookingDates.end, adults: prefs.adults, children: prefs.children, cabin: prefs.cabin || "ECONOMY", timing: prefs.timing, preferredDeparture: prefs.timing, selectedItinerary: prefs.selectedItinerary || null };
   const stayForManifest = stay ? { ...stay, photoUrl: stay.image || stay.photos?.[0] || null, priceEstimate: stayOption ? `${money(budgetPlan.lodging.total)} ${PRICE_KIND_LABEL[stay.price.kind].toLowerCase()} for ${schedule.nights} nights` : "Price not available; check Booking.com" } : null;
   const sharedPayload = encodeSharedTrip({ quiz: context, destination: destinationKey, stay: stay?.id || null });
-  const bookingManifest = buildBookingManifest({ tripId: `${destinationKey}:${sharedPayload.slice(0, 120)}`, destination: { id: destinationKey, city: trip.city, country: trip.country, airport: trip.airport, image: trip.image }, dates: { start: schedule.start, end: schedule.end }, travelers: { adults: prefs.adults, children: prefs.children, total: travelers }, hotels: stayForManifest ? [stayForManifest] : [], hotelExactUrls: [stay ? bookingPropertyUrl(stay, stayLinkContext(context, stay)) : null], restaurants: selectedRestaurants, experiences: selectedActivities, flight: flightSelection, flightDeepLink: flightUrl });
+  const bookingManifest = buildBookingManifest({ tripId: `${destinationKey}:${sharedPayload.slice(0, 120)}`, destination: { id: destinationKey, city: trip.city, country: trip.country, airport: trip.airport, image: trip.image }, dates: { start: bookingDates.start, end: bookingDates.end, suggested: bookingDates.suggested }, travelers: { adults: prefs.adults, children: prefs.children, total: travelers }, hotels: stayForManifest ? [stayForManifest] : [], hotelExactUrls: [stay ? bookingPropertyUrl(stay, stayLinkContext(datedContext, stay)) : null], restaurants: datedRestaurants, experiences: datedActivities, flight: flightSelection, flightDeepLink: flightUrl });
   const providerLinks = { hotel: bookingManifest.hotelBookings[0]?.exactUrl || null, flight: bookingManifest.flightBooking?.deepLink || null, restaurants: bookingManifest.restaurantBookings.map((item) => ({ name: item.name, url: item.exactUrl })), activities: bookingManifest.experienceBookings.map((item) => ({ name: item.name, url: item.exactUrl })) };
-  const savedTrip = { clientTripKey: bookingManifest.tripId, sharePath: `/results?destination=${encodeURIComponent(destinationKey)}`, destination: bookingManifest.destination, trip: context, schedule, travelerProfile: activeProfile, preferences: { pace: activeProfile.pace, budget: activeProfile.exactBudget, travelAreaPreference: activeProfile.travelAreaPreference, originCountryCode: activeProfile.originCountryCode, flightTimingPreference: prefs.timing, quizAnswers: activeProfile.otherExistingQuizPreferences }, exactBudget: activeProfile.exactBudget, includedBudgetCategories: activeProfile.includedBudgetCategories, itinerary: trip.plan || null, estimatedCosts: budgetPlan, costConfidence: budgetPlan.confidence ?? null, bookingManifest, bookingLinks: providerLinks, selections: { hotel: stayForManifest, flight: flightSelection, restaurants: selectedRestaurants, activities: selectedActivities } };
-  return { fareQuery, profile, prefs, nightsAllowed, travelers, context, schedule, activeProfile, budgetPlan, stay, stayMissingPrice: stay?.price?.kind === "unavailable", sharedPayload, bookingManifest, savedTrip, destinationKey };
+  const savedTrip = { clientTripKey: bookingManifest.tripId, sharePath: `/results?destination=${encodeURIComponent(destinationKey)}`, destination: bookingManifest.destination, trip: context, schedule, travelerProfile: activeProfile, preferences: { pace: activeProfile.pace, budget: activeProfile.exactBudget, travelAreaPreference: activeProfile.travelAreaPreference, originCountryCode: activeProfile.originCountryCode, flightTimingPreference: prefs.timing, quizAnswers: activeProfile.otherExistingQuizPreferences }, exactBudget: activeProfile.exactBudget, includedBudgetCategories: activeProfile.includedBudgetCategories, itinerary: trip.plan || null, estimatedCosts: budgetPlan, costConfidence: budgetPlan.confidence ?? null, bookingManifest, bookingLinks: providerLinks, selections: { hotel: stayForManifest, flight: flightSelection, restaurants: datedRestaurants, activities: datedActivities } };
+  return { fareQuery, profile, prefs, nightsAllowed, travelers, context, schedule, bookingDates, flightUrl, activeProfile, budgetPlan, stay, stayMissingPrice: stay?.price?.kind === "unavailable", sharedPayload, bookingManifest, savedTrip, destinationKey };
 }
 
 // shareToken is set when the trip was opened from a short share link (/s/…).
@@ -306,7 +314,7 @@ export default function ResultsPage({ shareToken = null }) {
     </section>
     <section aria-label="About this result" className="px-6 py-6 sm:px-12"><div className="mx-auto max-w-[1240px] space-y-4"><OverBudgetNotice budgetPlan={trip.budgetPlan} /><WhyThisMatches reasons={reasons} /><EstimateStatus current={currentEstimate} snapshot={snapshot} changed={changed} onRefresh={refreshEstimates} /></div></section>
     <StayChoices key={`stay-${destinationKey}`} destination={trip} tripContext={context} selectedStayId={preferredStayId} onSelected={chooseStay} />
-    <FlightPlan key={`flight-${destinationKey}`} trip={trip} profile={profile} estimate={budgetPlan.estimates?.flights} searchUrl={bookingFlightUrl({ ...trip, airport: prefs.arrivalAirport || trip.airport }, context)} datesLabel={datesLine} preferences={prefs} range={view.nightsAllowed} onUpdate={updateFlightPreferences} />
+    <FlightPlan key={`flight-${destinationKey}`} trip={trip} profile={profile} estimate={budgetPlan.estimates?.flights} searchUrl={view.flightUrl} datesLabel={datesLine} suggestedDates={view.bookingDates.suggested ? view.bookingDates : null} preferences={prefs} range={view.nightsAllowed} onUpdate={updateFlightPreferences} />
     <CuratedTripChoices destination={trip} quiz={quiz} restaurants={selectedRestaurants} activities={selectedActivities} onRestaurantsChange={setSelectedRestaurants} onActivitiesChange={setSelectedActivities} />
     <BeforeYouGo trip={trip} seasonWarning={!seasonSuitable(trip, view.activeProfile)} />
     <CostSection budgetPlan={budgetPlan} trip={trip} nights={schedule.nights} travelers={travelers} missingPriceStay={view.stayMissingPrice ? view.stay.name : null} snapshot={snapshot} onBook={goToBooking} />

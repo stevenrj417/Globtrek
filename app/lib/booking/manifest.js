@@ -101,6 +101,8 @@ function prefilledRestaurantUrl(item, travelers) {
   if (/(^|\.)opentable\.[a-z.]+$/i.test(url.hostname) && !url.searchParams.has("covers")) {
     const party = Number(travelers?.total) || Number(travelers?.adults) || 0;
     if (party > 0) url.searchParams.set("covers", String(Math.min(20, party)));
+    const when = String(item.reservationTime || "");
+    if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(when) && !url.searchParams.has("dateTime")) url.searchParams.set("dateTime", when);
   }
   return url.toString();
 }

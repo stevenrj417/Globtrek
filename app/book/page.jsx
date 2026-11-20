@@ -41,7 +41,7 @@ export default async function BookPage({ searchParams }) {
   const flight = items.find((item) => item.type === "flight");
   const plans = [["experience", "activity", "activities"], ["restaurant", "dinner", "dinners"]].map(([type, one, many]) => { const count = items.filter((item) => item.type === type).length; return count ? `${count} ${count === 1 ? one : many}` : null; }).filter(Boolean).join(", ");
   const overview = [
-    ["When", when, nights ? `${nights} night${nights === 1 ? "" : "s"}` : null],
+    ["When", when, [nights ? `${nights} night${nights === 1 ? "" : "s"}` : null, trip.suggested ? "suggested in your season" : null].filter(Boolean).join(", ") || null],
     ["Who", trip.travelers ? `${trip.travelers} traveler${trip.travelers === 1 ? "" : "s"}` : "Travelers", null],
     ["Stay", stay?.name || "Your own place", stay ? "Booking.com" : null],
     flight ? ["Flight", flight.name, "Round trip"] : plans ? ["Plans", plans, null] : null,
@@ -66,7 +66,8 @@ export default async function BookPage({ searchParams }) {
           {note ? <dd className="mt-1 text-sm">{note}</dd> : null}
         </div>)}
       </dl>
-      <p className="mt-6 max-w-2xl text-sm leading-6">Prices on GlobTrek are estimates. You book and pay on each partner&apos;s site; GlobTrek never sees your card.</p>
+      {trip.suggested ? <p className="mt-6 max-w-2xl text-sm leading-6">Your dates were flexible, so we picked a weekend in your season. Every link below opens on these dates; change them on the partner&apos;s site if another week suits you.</p> : null}
+      <p className={`${trip.suggested ? "mt-2" : "mt-6"} max-w-2xl text-sm leading-6`}>Prices on GlobTrek are estimates. You book and pay on each partner&apos;s site; GlobTrek never sees your card.</p>
       <div className="mt-2"><BookingChecklist entries={items} tripKey={`book:${trip.city}:${trip.start || ""}:${items.map((item) => item.exactUrl.length).join("-")}`} heading="Your bookings" details={<TravelerDetails />} trip={{ city: trip.city, country: trip.country, start: trip.start, end: trip.end, adults: trip.travelers }} /></div>
       {items.some((item) => item.officialUrl) ? <ul className="mt-4 space-y-1 text-xs">{items.filter((item) => item.officialUrl).map((item) => <li key={item.id}>{item.name}: <a href={item.officialUrl} rel="noopener" target="_blank" className="underline underline-offset-2">official site</a></li>)}</ul> : null}
     </section>

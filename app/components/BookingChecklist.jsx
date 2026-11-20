@@ -12,6 +12,21 @@ export { checklistItems };
 const LABELS = { hotel: "Stay", flight: "Flight", experience: "Activity", restaurant: "Dinner reservation" };
 const ACTIONS = { hotel: "View stay", flight: "Check flights", experience: "Explore activity", restaurant: "View restaurant" };
 
+// "Sat, Apr 10" for a date, "Sat, Apr 10, 7:30 PM" for a date and time (local to the trip).
+function dayLabel(value) {
+  const [date, time] = String(value || "").split("T");
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return null;
+  const day = new Intl.DateTimeFormat("en-US", { weekday: "short", month: "short", day: "numeric", timeZone: "UTC" }).format(new Date(`${date}T00:00:00Z`));
+  if (!/^\d{2}:\d{2}$/.test(time || "")) return day;
+  const [hour, minute] = time.split(":").map(Number);
+  return `${day}, ${hour % 12 || 12}:${String(minute).padStart(2, "0")} ${hour < 12 ? "AM" : "PM"}`;
+}
+
+function whenLabel(item) {
+  if (item.type === "flight" && item.departureDate) return `${dayLabel(item.departureDate)} → ${item.returnDate ? dayLabel(item.returnDate) : "one way"}`;
+  return dayLabel(item.reservationTime || item.scheduledAt);
+}
+
 function partner(url) {
   if (isCjUrl(url)) return "Booking.com";
   try { return new URL(url).hostname.replace(/^www\./, ""); } catch { return "partner site"; }
@@ -72,7 +87,7 @@ export function BookingChecklist({ entries, tripKey, details = null, id = "booki
           <label htmlFor={checkboxId} className="cursor-pointer">
             <span className="block text-micro uppercase tracking-label text-ink">{LABELS[item.type]}{checked ? " · booked" : ""}</span>
             <span className={`mt-0.5 block text-base font-medium ${checked ? "text-ink line-through" : ""}`}>{item.name}</span>
-            <span className="block text-xs text-ink">on {partner(item.exactUrl)}{item.type === "flight" && item.departureDate ? ` · ${item.departureDate} → ${item.returnDate || "one way"}` : ""}</span>
+            <span className="block text-xs text-ink">on {partner(item.exactUrl)}{whenLabel(item) ? ` · ${whenLabel(item)}` : ""}</span>
             {live ? <span className="mt-1 block text-xs font-medium" aria-live="polite">Assistant: {ASSISTANT_STATUS_LABELS[live.status] || "Opened"}{live.note ? <span className="font-normal text-ink"> · {live.note}</span> : null}</span> : null}
           </label>
           <a href={item.exactUrl} target="_blank" rel="noopener sponsored" onClick={() => track("booking_item_opened", { type: item.type })} className="col-span-2 inline-flex min-h-11 items-center justify-center border border-black/25 px-4 text-sm hover:border-black sm:col-span-1">{ACTIONS[item.type] || "Open"} <span aria-hidden="true" className="ml-1">↗</span><span className="sr-only"> (opens in a new tab)</span></a>
