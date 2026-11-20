@@ -15,7 +15,7 @@ Plan a trip on GlobTrek, choose **Book my trip**, and the assistant takes it fro
 - **One list, every booking.** Your stay, flight, activities and dinners appear in one checklist, each with the exact link GlobTrek chose.
 - **See before anything happens.** Before a tab opens, the assistant shows which of your details it will use and which sites will receive them.
 - **Guided or all at once.** Open bookings one at a time (recommended) or all together.
-- **Fills where partners allow it.** On GetYourGuide checkout, your name, email and phone are filled in for you. Booking.com and OpenTable don't allow automated assistants, so for them the assistant opens the exact link and puts your details one click away with copy buttons.
+- **Fills your details.** On Booking.com hotel checkout, OpenTable and GetYourGuide, your name, email and phone are filled in for you. Everywhere else the assistant opens the exact link and puts your details one click away with copy buttons.
 - **You stay in charge.** The assistant never books, reserves, accepts terms or pays. It stops at the review step and says "Review and pay on the partner site."
 - **Clear status.** Each booking shows Opened, Filled, Needs attention, Ready to review or Ready to pay — in the assistant and on your GlobTrek trip page.
 
@@ -62,13 +62,13 @@ Privacy policy URL: https://www.glob-trek.com/booking-assistant/privacy
 ## Graphics
 - Store icon: `store-icon-128.png` (96×96 artwork, 16 px transparent padding), from GlobTrek's app icon.
 - Screenshots (1280×800) in `screenshots/`:
-  1. `01-trip-checklist.png` — the trip checklist mid-booking: Booking.com opened with copy buttons, GetYourGuide filled and ready to review.
+  1. `01-trip-checklist.png` — the trip checklist mid-booking: Booking.com opened and ready to fill, GetYourGuide filled and ready to review.
   2. `02-before-anything-opens.png` — exactly which details go to which partner, and guided vs open-everything.
   3. `03-traveler-profile.png` — the one-time traveler form.
   4. `04-privacy-and-data.png` — stored-field list, storage choice, export, forget all.
   5. `05-welcome.png` — first run: what it does and never does.
   6. `06-globtrek-checklist-status.png` — the GlobTrek trip page with live assistant status.
-  Screenshots were captured from the development build against a local, sanitized stand-in for the GetYourGuide checkout (see `tests/fixtures/README.md`); the Booking.com and OpenTable rows show production behaviour (copy buttons only). No partner site was contacted.
+  Screenshots were captured from the development build against a local, sanitized stand-in for the GetYourGuide checkout (see `tests/fixtures/README.md`); the Booking.com and OpenTable rows show production behaviour before the traveler allows those sites. No partner site was contacted.
 - Small promo tile (440×280) and marquee (1400×560): not yet made — optional.
 
 ## Test instructions for Chrome reviewers
@@ -76,7 +76,7 @@ No account or login is needed.
 1. Install the extension. The welcome page opens; choose **Save on this device** and **Continue to my details**.
 2. Enter a first and last name; on **Contact** enter an email and phone; **Save my details**. (Try typing `4111 1111 1111 1111` into Special requests and saving: it is refused.)
 3. Visit https://www.glob-trek.com, choose **Find my trip**, finish the short quiz and open your trip. Scroll to **Book your trip** and choose **Book my trip**. The assistant opens in a new tab and lists what it will use and which sites receive it.
-4. Choose **Open everything**. Each booking opens on the partner's site with GlobTrek's exact link. Booking.com and OpenTable rows offer **Copy my details** (their terms don't allow automated filling). Back on the GlobTrek tab, each booking shows an **Assistant:** status.
+4. Choose **Open everything**. Each booking opens on the partner's site with GlobTrek's exact link. On Booking.com's "Enter your details" step and OpenTable's "Diner details" step, your name, email and phone are filled in; review and finish on their page. Back on the GlobTrek tab, each booking shows an **Assistant:** status.
 5. To see filling: if a trip includes a GetYourGuide activity, open it, proceed to checkout, and choose **Fill this page**; Chrome asks for access to getyourguide.com first. The assistant fills name, email and phone and stops; it never clicks a payment or confirm button.
 6. **Privacy & data → Forget all my information** erases everything.
 

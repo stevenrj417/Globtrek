@@ -44,21 +44,21 @@ export function TravelerDetails() {
 
   const filled = FIELDS.filter((field) => details[field.key]);
   const all = filled.map((field) => `${field.label}: ${details[field.key]}`).join("\n");
-  return <details className="mt-6 border border-black/15 p-5" open>
-    <summary className="cursor-pointer font-semibold">Your details, ready to paste</summary>
-    <p className="mt-2 text-sm text-muted">Saved on this device only. GlobTrek never sends them anywhere. Copy each one into the partner&apos;s checkout when it asks.</p>
+  return <details className="group mt-6 bg-white p-6 sm:p-8">
+    <summary className="flex cursor-pointer list-none items-center justify-between gap-4"><span className="font-serif text-2xl tracking-tight-2">Your details, ready to paste</span><span aria-hidden="true" className="text-xl transition-transform group-open:rotate-45">+</span></summary>
+    <p className="mt-2 text-sm">Saved on this device only. GlobTrek never sends them anywhere. Copy each one into the partner&apos;s checkout when it asks.</p>
     <div className="mt-4 grid gap-3 sm:grid-cols-2">
       {FIELDS.map((field) => <label key={field.key} className="block text-sm">
-        <span className="text-subtle">{field.label}</span>
+        <span className="text-micro uppercase tracking-label">{field.label}</span>
         <span className="mt-1 flex gap-2">
-          <input type={field.type || "text"} autoComplete={field.autoComplete} placeholder={field.placeholder} value={details[field.key] || ""} onChange={(event) => update(field.key, event.target.value)} className="min-h-11 w-full border border-black/20 bg-bg px-3" />
+          <input type={field.type || "text"} autoComplete={field.autoComplete} placeholder={field.placeholder} value={details[field.key] || ""} onChange={(event) => update(field.key, event.target.value)} className="min-h-11 w-full border-0 border-b border-black/30 bg-transparent px-0 outline-none focus:border-black" />
           <button type="button" disabled={!details[field.key]} onClick={() => copy(field.key, details[field.key])} className="btn btn-secondary shrink-0 px-3 text-xs disabled:opacity-40">{copied === field.key ? "Copied" : "Copy"}</button>
         </span>
       </label>)}
     </div>
     <div className="mt-4 flex flex-wrap gap-3 text-sm">
       <button type="button" disabled={!filled.length} onClick={() => copy("all", all)} className="btn btn-secondary disabled:opacity-40">{copied === "all" ? "Copied" : "Copy all"}</button>
-      {filled.length ? <button type="button" onClick={forget} className="underline decoration-black/25 underline-offset-4 hover:decoration-ink">Forget my details</button> : null}
+      {filled.length ? <button type="button" onClick={forget} className="underline underline-offset-4">Forget my details</button> : null}
     </div>
   </details>;
 }

@@ -9,7 +9,7 @@ const restaurantRoute = await readFile(new URL("../app/api/restaurants/recommend
 test("GTT results use a single proposal booking action instead of search sections", () => {
   assert.match(page, /onBook={goToBooking}/);
   assert.doesNotMatch(page, /FlightSearchSection|Search flights|Search hotels|Search restaurants|Search activities/);
-  assert.match(page, /bookingPropertyUrl\(stay, stayLinkContext\(context, stay\)\)/);
+  assert.match(page, /bookingPropertyUrl\(stay, stayLinkContext\(datedContext, stay\)\)/, "the stay link carries the trip dates, suggested ones for flexible trips");
   assert.match(page, /bookingPageUrl\(bookingManifest, window\.location\.origin\)/, "Start booking opens the booking page");
   assert.doesNotMatch(page, /<BookingChecklist /, "the checklist lives on the booking page, not the results page");
   assert.doesNotMatch(page, /launchBookingManifest|window\.open/);

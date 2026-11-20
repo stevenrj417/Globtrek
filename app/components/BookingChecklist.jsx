@@ -12,6 +12,21 @@ export { checklistItems };
 const LABELS = { hotel: "Stay", flight: "Flight", experience: "Activity", restaurant: "Dinner reservation" };
 const ACTIONS = { hotel: "View stay", flight: "Check flights", experience: "Explore activity", restaurant: "View restaurant" };
 
+// "Sat, Apr 10" for a date, "Sat, Apr 10, 7:30 PM" for a date and time (local to the trip).
+function dayLabel(value) {
+  const [date, time] = String(value || "").split("T");
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return null;
+  const day = new Intl.DateTimeFormat("en-US", { weekday: "short", month: "short", day: "numeric", timeZone: "UTC" }).format(new Date(`${date}T00:00:00Z`));
+  if (!/^\d{2}:\d{2}$/.test(time || "")) return day;
+  const [hour, minute] = time.split(":").map(Number);
+  return `${day}, ${hour % 12 || 12}:${String(minute).padStart(2, "0")} ${hour < 12 ? "AM" : "PM"}`;
+}
+
+function whenLabel(item) {
+  if (item.type === "flight" && item.departureDate) return `${dayLabel(item.departureDate)} → ${item.returnDate ? dayLabel(item.returnDate) : "one way"}`;
+  return dayLabel(item.reservationTime || item.scheduledAt);
+}
+
 function partner(url) {
   if (isCjUrl(url)) return "Booking.com";
   try { return new URL(url).hostname.replace(/^www\./, ""); } catch { return "partner site"; }
@@ -54,28 +69,28 @@ export function BookingChecklist({ entries, tripKey, details = null, id = "booki
 
   const count = items.filter((item) => done[item.id]).length;
   return <section id={id} className="scroll-mt-24" aria-labelledby={`${id}-heading`}>
-    <div className="flex flex-wrap items-end justify-between gap-3">
+    {trip && datesSet ? <BookingAssistant entries={entries} trip={trip} tripKey={tripKey} onStatuses={(status) => setAssistant(Object.fromEntries(status.items.map((entry) => [entry.id, entry])))} /> : null}
+    <div className={`flex flex-wrap items-end justify-between gap-3 ${trip && datesSet ? "mt-14" : ""}`}>
       <h2 id={`${id}-heading`} className="font-serif text-[clamp(1.8rem,3vw,2.5rem)] leading-[.95] tracking-tight-2">{heading}</h2>
-      {items.length ? <p className="tabular text-sm text-black/60" aria-live="polite">{count} of {items.length} booked</p> : null}
+      {items.length ? <p className="tabular text-sm text-ink" aria-live="polite">{count} of {items.length} booked</p> : null}
     </div>
     {datesSet && datesLabel ? <p className="tabular mt-3 text-sm font-medium">For {datesLabel}</p> : null}
     {!datesSet ? <p className="mt-3 max-w-2xl border-l-2 border-warning pl-3 text-sm leading-6">Flexible dates: links open without dates. Pick dates above to fill them in.</p> : null}
-    {trip && datesSet ? <BookingAssistant entries={entries} trip={trip} tripKey={tripKey} onStatuses={(status) => setAssistant(Object.fromEntries(status.items.map((entry) => [entry.id, entry])))} /> : null}
     {details}
     {items.length ? <ol className="mt-5 divide-y divide-black/12 border-y border-black/12">
       {items.map((item) => {
         const checked = Boolean(done[item.id]);
         const checkboxId = `${id}-${item.type}-${String(item.id).replace(/[^a-z0-9_-]/gi, "")}`;
         const live = assistant[assistantIds.get(item.exactUrl)];
-        return <li key={`${item.type}:${item.id}`} className="grid gap-3 py-4 sm:grid-cols-[auto_1fr_auto] sm:items-center sm:gap-5">
-          <input id={checkboxId} type="checkbox" checked={checked} onChange={() => toggle(item.id)} className="h-5 w-5 accent-black" />
+        return <li key={`${item.type}:${item.id}`} className="grid grid-cols-[auto_1fr] items-start gap-x-4 gap-y-3 py-4 sm:grid-cols-[auto_1fr_auto] sm:items-center sm:gap-5">
+          <input id={checkboxId} type="checkbox" checked={checked} onChange={() => toggle(item.id)} className="mt-4 h-5 w-5 accent-black sm:mt-0" />
           <label htmlFor={checkboxId} className="cursor-pointer">
-            <span className="block text-micro uppercase tracking-label text-black/60">{LABELS[item.type]}{checked ? " · booked" : ""}</span>
-            <span className={`mt-0.5 block text-base font-medium ${checked ? "text-black/45 line-through" : ""}`}>{item.name}</span>
-            <span className="block text-xs text-black/55">on {partner(item.exactUrl)}{item.type === "flight" && item.departureDate ? ` · ${item.departureDate} → ${item.returnDate || "one way"}` : ""}</span>
-            {live ? <span className="mt-1 block text-xs font-medium" aria-live="polite">Assistant: {ASSISTANT_STATUS_LABELS[live.status] || "Opened"}{live.note ? <span className="font-normal text-black/55"> · {live.note}</span> : null}</span> : null}
+            <span className="block text-micro uppercase tracking-label text-ink">{LABELS[item.type]}{checked ? " · booked" : ""}</span>
+            <span className={`mt-0.5 block text-base font-medium ${checked ? "text-ink line-through" : ""}`}>{item.name}</span>
+            <span className="block text-xs text-ink">on {partner(item.exactUrl)}{whenLabel(item) ? ` · ${whenLabel(item)}` : ""}</span>
+            {live ? <span className="mt-1 block text-xs font-medium" aria-live="polite">Assistant: {ASSISTANT_STATUS_LABELS[live.status] || "Opened"}{live.note ? <span className="font-normal text-ink"> · {live.note}</span> : null}</span> : null}
           </label>
-          <a href={item.exactUrl} target="_blank" rel="noopener sponsored" onClick={() => track("booking_item_opened", { type: item.type })} className="inline-flex min-h-11 items-center justify-center border border-black/25 px-4 text-sm hover:border-black">{ACTIONS[item.type] || "Open"} <span aria-hidden="true" className="ml-1">↗</span><span className="sr-only"> (opens in a new tab)</span></a>
+          <a href={item.exactUrl} target="_blank" rel="noopener sponsored" onClick={() => track("booking_item_opened", { type: item.type })} className="col-span-2 inline-flex min-h-11 items-center justify-center border border-black/25 px-4 text-sm hover:border-black sm:col-span-1">{ACTIONS[item.type] || "Open"} <span aria-hidden="true" className="ml-1">↗</span><span className="sr-only"> (opens in a new tab)</span></a>
         </li>;
       })}
     </ol> : <p className="mt-5 border border-black/15 bg-surface p-4 text-sm">Pick a stay or flight to start.</p>}

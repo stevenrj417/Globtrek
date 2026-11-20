@@ -147,7 +147,9 @@ async function fillItem(sessionId: string, itemId: string, passportsInput: unkno
   }
   const tab = await chrome.tabs.get(item.tabId).catch(() => null);
   if (!tab?.url) {
-    return changeItem(sessionId, itemId, { status: "needs_attention", note: automatic ? null : "The assistant needs your permission for this site, or the tab was closed." });
+    // Chrome hides the URL until the traveler allows the site; opened from the website there's no click to ask with.
+    if (automatic) return changeItem(sessionId, itemId, { status: "opened", note: `Press Fill this page to let the assistant fill ${adapter.name} for you.` });
+    return changeItem(sessionId, itemId, { status: "needs_attention", note: "The assistant needs your permission for this site, or the tab was closed." });
   }
   const tabUrl = new URL(tab.url);
   const onFixture = IS_DEV && tabUrl.origin === DEV_FIXTURE_ORIGIN && tabUrl.pathname.startsWith(`/${adapter.id}/`);
@@ -155,6 +157,8 @@ async function fillItem(sessionId: string, itemId: string, passportsInput: unkno
     return automatic ? session : changeItem(sessionId, itemId, { status: "opened", note: `Still on the way to ${adapter.name}. Press Fill once the page has loaded.` });
   }
   if (!(await hasHostAccess(tab.url))) {
+    // Opened from the website there's no click to ask Chrome for access, so leave it calm and point at Fill.
+    if (automatic) return changeItem(sessionId, itemId, { status: "opened", note: `Press Fill this page to let the assistant fill ${adapter.name} for you.` });
     return changeItem(sessionId, itemId, { status: "needs_attention", note: `Allow the assistant on ${adapter.name} to fill this page.` });
   }
   const profile = await loadProfile(areas);

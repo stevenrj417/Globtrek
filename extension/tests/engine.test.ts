@@ -30,15 +30,13 @@ test("Booking.com fixture: every mapped field fills; terms, password and hidden 
   assert.equal(get("#email"), "ana@example.com");
   assert.equal(get("#email_confirm"), "ana@example.com");
   assert.equal(get("#phone"), "+351 912 345 678");
-  assert.equal(get("#address1"), "Rua Augusta 1");
-  assert.equal(get("#zip"), "1100-048");
-  assert.equal(get("#cc1"), "pt");
-  assert.equal(get("#checkin_eta_hour"), "15");
+  // Only name, email, phone and the note: GlobTrek doesn't ask for an address or arrival time.
+  assert.equal(get("#address1"), "");
   assert.match(get("#remarks"), /King bed/);
   assert.equal((document.querySelector("[name=agree_terms]") as HTMLInputElement).checked, false);
   assert.equal(get("#account_password"), "");
   assert.equal(get("[name=hotel_id]"), "fixture");
-  assert.equal(report.filled.length, 11);
+  assert.equal(report.filled.length, 6);
   assert.deepEqual(report.skipped, []);
   assert.deepEqual(events.filter((event) => event === "submit" || event === "click:BUTTON"), []);
   assert.equal(document.body.dataset.submitted, undefined);

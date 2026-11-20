@@ -35,7 +35,8 @@ export interface UnsupportedField {
 export interface AdapterPolicy {
   /** Whether autofill may run on the live partner site. */
   autofill: boolean;
-  reason: string;
+  /** Shown to the traveler when autofill is off. */
+  reason?: string;
   termsUrl: string;
   reviewedOn: string;
 }

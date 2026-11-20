@@ -2,20 +2,18 @@ import type { Adapter } from "./types.ts";
 
 // OpenTable reservation details ("Diner details").
 //
-// DISABLED on the live site. OpenTable's Terms of Use (reviewed 2026-11-09) bar
-// using "automated assistants" or AI that "operate by interacting with or
-// otherwise making use of your browser" to access any portion of the Services.
-// The assistant opens the exact OpenTable link (party size pre-filled by
-// GlobTrek) and offers copy buttons. GlobTrek's pending OpenTable partner
-// application (docs/opentable.md) is the route to an approved flow.
+// ENABLED on the live site by the owner's decision (2026-11-20), knowing that
+// OpenTable's Terms of Use bar "automated assistants" that operate through the
+// user's browser. The assistant only fills the diner's own name, phone and email
+// on the "Diner details" step; it never picks a time, opts into marketing,
+// enters a card hold, or completes the reservation.
 export const openTableAdapter: Adapter = {
   id: "opentable",
   name: "OpenTable",
   selectorsVersion: "2026-11-09.1",
   hosts: ["www.opentable.com", "www.opentable.co.uk", "www.opentable.ca", "www.opentable.com.au", "www.opentable.de", "www.opentable.ie"],
   policy: {
-    autofill: false,
-    reason: "OpenTable asks that you fill in its forms yourself, so your details are one click away below.",
+    autofill: true,
     termsUrl: "https://www.opentable.com/legal/terms-and-conditions",
     reviewedOn: "2026-11-09",
   },

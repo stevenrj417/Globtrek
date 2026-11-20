@@ -57,3 +57,68 @@ export function pricingMonth(profile, fareMonth = null) {
   if (fareMonth && (!period?.months?.length || period.months.includes(fareMonth))) return Number(String(fareMonth).slice(5, 7));
   return period?.planningMonth || null;
 }
+
+const DAY = 86400000;
+
+function seedNumber(seed) {
+  let hash = 2166136261;
+  for (const character of String(seed)) hash = Math.imul(hash ^ character.charCodeAt(0), 16777619) >>> 0;
+  // Final mix so similar seeds land far apart.
+  hash = Math.imul(hash ^ (hash >>> 16), 2246822507) >>> 0;
+  return Math.imul(hash ^ (hash >>> 13), 3266489909) >>> 0;
+}
+
+function isoDate(time) {
+  return new Date(time).toISOString().slice(0, 10);
+}
+
+// Real dates for a flexible trip, so partner links and the booking assistant have
+// something to book. The start is a Friday or Saturday in the month the estimate
+// is priced for (inside the chosen season), at least three weeks out, and the same
+// every time for the same seed so links don't change between visits.
+export function suggestedDates({ period = null, pricedMonth = null, nights = 7, seed = "" } = {}, now = new Date()) {
+  const earliest = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()) + 21 * DAY;
+  const firstYear = new Date(earliest).getUTCFullYear();
+  const firstMonth = new Date(earliest).getUTCMonth() + 1;
+  // The months to try, in order: the priced month first, then the rest of the season,
+  // or for an open trip the next twelve months.
+  let months = period?.months?.length ? [...period.months] : Array.from({ length: 12 }, (_, index) => {
+    const month = ((firstMonth - 1 + index) % 12) + 1;
+    return yearMonth(firstYear + Math.floor((firstMonth - 1 + index) / 12), month);
+  });
+  const priced = months.find((value) => Number(value.slice(5, 7)) === Number(pricedMonth));
+  if (priced) months = [priced, ...months.filter((value) => value !== priced)];
+  const pick = seedNumber(seed);
+  for (const value of months) {
+    let [year, month] = value.split("-").map(Number);
+    // A season month already past (or too soon) moves to next year.
+    if (Date.UTC(year, month, 0) < earliest) year += 1;
+    const days = new Date(Date.UTC(year, month, 0)).getUTCDate();
+    const starts = [];
+    for (let day = 1; day <= days; day += 1) {
+      const time = Date.UTC(year, month - 1, day);
+      const weekday = new Date(time).getUTCDay();
+      // No stay over Christmas and New Year (Dec 20–Jan 2), when prices and availability are at their worst.
+      const end = time + nights * DAY;
+      const holidays = [year - 1, year].some((y) => time <= Date.UTC(y + 1, 0, 2) && end >= Date.UTC(y, 11, 20));
+      if (time >= earliest && (weekday === 5 || weekday === 6) && !holidays) starts.push(time);
+    }
+    if (starts.length) {
+      const start = starts[Math.floor((pick / 2 ** 32) * starts.length)];
+      return { start: isoDate(start), end: isoDate(start + nights * DAY), suggested: true };
+    }
+  }
+  return { start: isoDate(earliest), end: isoDate(earliest + nights * DAY), suggested: true };
+}
+
+// Spreads dinners (evenings) or activities (mornings) evenly over the stay, e.g.
+// two dinners in five nights land on the 2nd and 4th evenings. Returns one
+// "YYYY-MM-DDTHH:MM" per item.
+export function spreadOverStay(count, { start, nights }, time) {
+  const base = Date.parse(`${start}T00:00:00Z`);
+  if (!count || !Number.isFinite(base) || !nights) return [];
+  return Array.from({ length: count }, (_, index) => {
+    const offset = Math.min(nights - 1, Math.max(0, Math.floor(((index + 1) * nights) / (count + 1))));
+    return `${isoDate(base + offset * DAY)}T${time}`;
+  });
+}
