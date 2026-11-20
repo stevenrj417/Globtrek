@@ -67,15 +67,15 @@ export function BookingChecklist({ entries, tripKey, details = null, id = "booki
         const checked = Boolean(done[item.id]);
         const checkboxId = `${id}-${item.type}-${String(item.id).replace(/[^a-z0-9_-]/gi, "")}`;
         const live = assistant[assistantIds.get(item.exactUrl)];
-        return <li key={`${item.type}:${item.id}`} className="grid gap-3 py-4 sm:grid-cols-[auto_1fr_auto] sm:items-center sm:gap-5">
-          <input id={checkboxId} type="checkbox" checked={checked} onChange={() => toggle(item.id)} className="h-5 w-5 accent-black" />
+        return <li key={`${item.type}:${item.id}`} className="grid grid-cols-[auto_1fr] items-start gap-x-4 gap-y-3 py-4 sm:grid-cols-[auto_1fr_auto] sm:items-center sm:gap-5">
+          <input id={checkboxId} type="checkbox" checked={checked} onChange={() => toggle(item.id)} className="mt-4 h-5 w-5 accent-black sm:mt-0" />
           <label htmlFor={checkboxId} className="cursor-pointer">
             <span className="block text-micro uppercase tracking-label text-ink">{LABELS[item.type]}{checked ? " · booked" : ""}</span>
             <span className={`mt-0.5 block text-base font-medium ${checked ? "text-ink line-through" : ""}`}>{item.name}</span>
             <span className="block text-xs text-ink">on {partner(item.exactUrl)}{item.type === "flight" && item.departureDate ? ` · ${item.departureDate} → ${item.returnDate || "one way"}` : ""}</span>
             {live ? <span className="mt-1 block text-xs font-medium" aria-live="polite">Assistant: {ASSISTANT_STATUS_LABELS[live.status] || "Opened"}{live.note ? <span className="font-normal text-ink"> · {live.note}</span> : null}</span> : null}
           </label>
-          <a href={item.exactUrl} target="_blank" rel="noopener sponsored" onClick={() => track("booking_item_opened", { type: item.type })} className="inline-flex min-h-11 items-center justify-center border border-black/25 px-4 text-sm hover:border-black">{ACTIONS[item.type] || "Open"} <span aria-hidden="true" className="ml-1">↗</span><span className="sr-only"> (opens in a new tab)</span></a>
+          <a href={item.exactUrl} target="_blank" rel="noopener sponsored" onClick={() => track("booking_item_opened", { type: item.type })} className="col-span-2 inline-flex min-h-11 items-center justify-center border border-black/25 px-4 text-sm hover:border-black sm:col-span-1">{ACTIONS[item.type] || "Open"} <span aria-hidden="true" className="ml-1">↗</span><span className="sr-only"> (opens in a new tab)</span></a>
         </li>;
       })}
     </ol> : <p className="mt-5 border border-black/15 bg-surface p-4 text-sm">Pick a stay or flight to start.</p>}
