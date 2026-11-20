@@ -28,7 +28,7 @@ export default function PrivacyPage() {
           The quiz asks for your travel setting, interests, pace, accommodation preference, budget, trip length, dates or season, number of travelers, departure airport and whether to stay in your own country. It never asks for your name, email or payment details.
         </p>
         <p>
-          If you choose to, you can also give us an email address (to email yourself a trip or subscribe to updates), create an account, save trips, or send feedback about a result. GlobTrek never takes payments: you book and pay each travel provider directly on their site.
+          If you choose to, you can also give us an email address (to email yourself a trip or subscribe to updates), create an account, save trips, or send feedback about a result or the site. GlobTrek never takes payments: you book and pay each travel provider directly on their site.
         </p>
       </EditorialSection>
       <EditorialSection number="02" title="What stays in your browser">
@@ -64,7 +64,7 @@ export default function PrivacyPage() {
           GlobTrek uses Vercel Web Analytics, which doesn&apos;t use cookies, to count page views and actions such as finishing the quiz, opening a booking link or adjusting a trip. These events never include names, emails or phone numbers; the site strips anything that looks like one before sending.
         </p>
         <p>
-          Our hosting provider, Vercel, keeps server logs (request details such as IP address, browser and time, plus error reports) for a limited period set by our hosting plan. Feedback you send about a result is written to these logs with the result&apos;s id; emails and phone numbers in feedback text are removed first. Logs aren&apos;t used for advertising.
+          Our hosting provider, Vercel, keeps server logs (request details such as IP address, browser and time, plus error reports) for a limited period set by our hosting plan. Feedback you send (about a result, or through the feedback form) is saved in our database and written to these logs, with the result&apos;s id or the page it was about but no IP address or account; emails and phone numbers in feedback text are removed first. Logs aren&apos;t used for advertising.
         </p>
       </EditorialSection>
       <EditorialSection number="08" title="Other services involved">
@@ -82,7 +82,7 @@ export default function PrivacyPage() {
       </EditorialSection>
       <EditorialSection number="10" title="How long we keep things">
         <p>
-          Browser storage: until you clear it. Share links: 90 days. Saved trips and account data: until you delete them or your account. Email subscriptions: until you unsubscribe. Server logs and feedback: the hosting plan&apos;s log retention period. Aggregate analytics: kept as counts that don&apos;t identify anyone.
+          Browser storage: until you clear it. Share links: 90 days. Saved trips and account data: until you delete them or your account. Email subscriptions: until you unsubscribe. Server logs: the hosting plan&apos;s log retention period. Feedback: up to 2 years. Aggregate analytics: kept as counts that don&apos;t identify anyone.
         </p>
       </EditorialSection>
       <EditorialSection number="11" title="Your choices and requests">

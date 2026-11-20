@@ -24,7 +24,7 @@ export async function generateMetadata({ params }) {
     title: guide.title,
     description: guide.description,
     alternates: { canonical: `/guides/${guide.slug}` },
-    openGraph: { title: guide.title, description: guide.description, url: `/guides/${guide.slug}`, images: guide.image ? [{ url: guide.image, alt: guide.imageAlt }] : undefined },
+    openGraph: { title: guide.title, description: guide.description, url: `/guides/${guide.slug}` },
   };
 }
 
@@ -93,7 +93,7 @@ function Closing({ guide }) {
       <CardRow>{related.map((card) => <CardRowItem key={card.slug}><GuideCard card={card} /></CardRowItem>)}</CardRow>
       <p className="mt-8 text-center"><Link href="/guides" className="btn btn-secondary">All guides</Link></p>
     </Section> : null}
-    <p className="mx-auto mt-16 max-w-[1280px] px-5 text-xs text-subtle sm:px-8">{AFFILIATE_DISCLOSURE} <Link href="/affiliate-disclosure" className={link}>How this works</Link>.</p>
+    <p className="mx-auto mt-16 max-w-[1280px] px-5 text-xs text-subtle sm:px-8">{AFFILIATE_DISCLOSURE} <Link href="/affiliate-disclosure" className={link}>How this works</Link>. Something wrong on this page? <Link href={`/feedback?from=/guides/${guide.slug}`} className={link}>Send feedback</Link>.</p>
   </>;
 }
 

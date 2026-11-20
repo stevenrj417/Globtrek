@@ -12,7 +12,7 @@ const navigation = [["Popular trips", "/#trips"], ["Destinations", "/destination
 
 const footerGroups = [
   ["Plan", [["Find my trip", "/discover"], ["Destinations", "/destinations"], ["Guides", "/guides"], ["How it works", "/how-it-works"]]],
-  ["Company", [["About", "/about"], ["Help", "/help"], ["Contact", "/contact"]]],
+  ["Company", [["About", "/about"], ["Help", "/help"], ["Contact", "/contact"], ["Send feedback", "/feedback"]]],
   ["Policies", [["Privacy", "/privacy"], ["Terms", "/terms"], ["Affiliate disclosure", "/affiliate-disclosure"], ["Photo credits", "/photo-credits"]]],
 ];
 

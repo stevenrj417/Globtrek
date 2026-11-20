@@ -33,6 +33,11 @@ export default function ContactPage() {
           You can also find us on <a className="text-ink underline decoration-black/25 underline-offset-4" href={INSTAGRAM_URL} rel="me noopener">Instagram</a>.
         </p>
       </EditorialSection>
+      <EditorialSection number="03" title="Something broken or wrong">
+        <p>
+          Use the <Link className="text-ink underline decoration-black/25 underline-offset-4" href="/feedback">feedback form</Link>. It takes a minute and needs no email.
+        </p>
+      </EditorialSection>
       <div className="pt-12">
         <Link className="btn btn-primary" href="/discover">Find my trip</Link>
       </div>

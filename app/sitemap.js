@@ -15,6 +15,7 @@ const routes = [
   "/how-it-works",
   "/help",
   "/contact",
+  "/feedback",
   "/privacy",
   "/booking-assistant",
   "/booking-assistant/privacy",
