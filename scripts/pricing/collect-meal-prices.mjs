@@ -31,9 +31,9 @@ const FOOD = new Set(["restaurant", "cafe", "bakery", "meal_takeaway", "food_cou
 const money = (value) => (value ? Number(value.units || 0) + Number(value.nanos || 0) / 1e9 : null);
 const percentile = (values, p) => { const sorted = [...values].sort((a, b) => a - b); return sorted[Math.min(sorted.length - 1, Math.floor(p * sorted.length))]; };
 
-async function search(destination, textQuery) {
+async function search(destination, textQuery, radius = 15000) {
   const lat = Number(destination.latitude); const lng = Number(destination.longitude);
-  const body = { textQuery, maxResultCount: 20, ...(Number.isFinite(lat) && Number.isFinite(lng) && destination.latitude != null ? { locationBias: { circle: { center: { latitude: lat, longitude: lng }, radius: 15000 } } } : {}) };
+  const body = { textQuery, maxResultCount: 20, ...(Number.isFinite(lat) && Number.isFinite(lng) && destination.latitude != null ? { locationBias: { circle: { center: { latitude: lat, longitude: lng }, radius } } } : {}) };
   const reply = await fetch("https://places.googleapis.com/v1/places:searchText", { method: "POST", headers: { "Content-Type": "application/json", "X-Goog-Api-Key": key, "X-Goog-FieldMask": "places.id,places.types,places.businessStatus,places.priceRange,places.userRatingCount" }, body: JSON.stringify(body), signal: AbortSignal.timeout(15000) });
   const json = await reply.json();
   if (!reply.ok) throw new Error(json?.error?.status || `http_${reply.status}`);
@@ -47,6 +47,12 @@ for (const destination of targets) {
     const found = new Map();
     for (const query of [`cheap eats, street food and casual restaurants in ${place}`, `restaurants in ${place}`]) {
       for (const item of await search(destination, query)) if (!found.has(item.id)) found.set(item.id, item);
+    }
+    // Small towns and parks: look wider (40 km) and include cafes before giving up.
+    if ([...found.values()].filter((item) => item.priceRange?.startPrice).length < 5) {
+      for (const query of [`cafes and local food in ${place}`, `places to eat near ${place}`]) {
+        for (const item of await search(destination, query, 40000)) if (!found.has(item.id)) found.set(item.id, item);
+      }
     }
     const ranged = [];
     for (const item of found.values()) {

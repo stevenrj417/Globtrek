@@ -58,6 +58,37 @@ function StayCard({ stay, destination, trip, selected, onSelect, priority }) {
   </li>;
 }
 
+// Three more stays at each price tier, compact, for comparing beyond the main three.
+const STAY_TIERS = [["budget", "Budget", "Hostels, guest houses and simple hotels"], ["mid", "Mid-range", "Three-star hotels, inns and B&Bs"], ["upscale", "Upscale", "Four- and five-star hotels"]];
+
+function TierStays({ tiers, destination, trip, selectedStayId, onSelected }) {
+  const groups = STAY_TIERS.map(([tier, label, hint]) => ({ tier, label, hint, stays: tiers?.[tier] || [] })).filter((group) => group.stays.length);
+  if (!groups.length) return null;
+  return <div className="mt-12 border-t border-black/10 pt-8">
+    <h3 className="font-serif text-2xl leading-tight tracking-tight-2">Compare by price</h3>
+    <div className="mt-6 grid gap-8 lg:grid-cols-3">{groups.map((group) => <div key={group.tier}>
+      <p className="text-micro uppercase tracking-label">{group.label}</p>
+      <p className="mt-1 text-xs text-subtle">{group.hint}</p>
+      <ul className="mt-3 divide-y divide-black/10 border-y border-black/10">{group.stays.map((stay) => {
+        const url = bookingPropertyUrl({ ...stay, providerLinkVerified: true }, stayLinkContext(trip, stay));
+        const scale = Number(stay.rating) > 5 ? 10 : 5;
+        const selected = stay.id === selectedStayId;
+        return <li key={stay.id} className="flex gap-3 py-3">
+          {stay.image ? <span className="relative h-16 w-20 shrink-0 overflow-hidden bg-placeholder"><Image src={stay.image} alt={`${stay.name}, photo from Booking.com`} fill sizes="80px" className="object-cover" /></span> : null}
+          <span className="min-w-0 flex-1">
+            <span className="block truncate font-medium">{stay.name}</span>
+            <span className="block text-xs text-subtle">{[kindLabel(stay), stay.rating && stay.reviewCount ? `${Number(stay.rating).toFixed(1)}/${scale}` : null, stay.distanceKm !== null && stay.distanceKm !== undefined ? `${stay.distanceKm} km from center` : null].filter(Boolean).join(" · ")}</span>
+            <span className="mt-1 flex items-center gap-4 text-xs">
+              <button type="button" aria-pressed={selected} onClick={() => { onSelected({ ...stay, role: group.label }, { automatic: false }); track("hotel_selected", { destination: destination.city, role: `tier_${group.tier}` }); }} className="min-h-8 underline underline-offset-4">{selected ? "Selected ✓" : "Select"}</button>
+              {url ? <a href={url} target="_blank" rel="noopener sponsored" aria-label={`${stay.name} on Booking.com (opens in a new tab)`} onClick={() => track("stay_partner_opened", { destination: destination.city, role: `tier_${group.tier}` })} className="inline-flex min-h-8 items-center gap-1 underline underline-offset-4"><BookingLogo className="h-2.5 w-auto" /> ↗</a> : null}
+            </span>
+          </span>
+        </li>;
+      })}</ul>
+    </div>)}</div>
+  </div>;
+}
+
 // No checked stays for this place yet: hand off to a Booking.com search with the trip's dates and party.
 function EmptyStays({ destination, trip }) {
   const city = String(destination.city || "").toLowerCase().replace(/(^|[\s'(-])\p{L}/gu, (letter) => letter.toUpperCase());
@@ -79,7 +110,7 @@ export function StayChoices({ destination, tripContext, selectedStayId, onSelect
       .then(async (response) => { if (!response.ok) throw new Error("unavailable"); return response.json(); })
       .then((payload) => {
         const checked = payload.catalog?.checkedAt ? Date.parse(`${payload.catalog.checkedAt}T00:00:00Z`) : null;
-        setState({ status: "ready", hotels: Array.isArray(payload.hotels) ? payload.hotels : [], notice: payload.notice || null, catalog: payload.catalog || null, stale: Boolean(checked && Date.now() - checked > STALE_DAYS * 86400000) });
+        setState({ status: "ready", hotels: Array.isArray(payload.hotels) ? payload.hotels : [], tiers: payload.tiers || null, notice: payload.notice || null, catalog: payload.catalog || null, stale: Boolean(checked && Date.now() - checked > STALE_DAYS * 86400000) });
       })
       .catch((error) => { if (error.name !== "AbortError") setState({ status: "error", hotels: [], notice: null, catalog: null }); });
     return () => controller.abort();
@@ -89,7 +120,7 @@ export function StayChoices({ destination, tripContext, selectedStayId, onSelect
   useEffect(() => {
     // "I already have a place to stay" holds until the traveler picks a stay.
     if (state.status !== "ready" || !state.hotels.length || selectedStayId === "none") return;
-    const current = state.hotels.find((stay) => stay.id === selectedStayId);
+    const current = [...state.hotels, ...Object.values(state.tiers || {}).flat()].find((stay) => stay.id === selectedStayId);
     onSelected(current || state.hotels[0], { automatic: !current });
   }, [state]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -111,6 +142,7 @@ export function StayChoices({ destination, tripContext, selectedStayId, onSelect
         {state.status === "ready" && state.hotels.length ? <ul className="mt-8 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">{state.hotels.map((stay, index) => <StayCard key={stay.id} stay={stay} destination={destination} trip={tripContext} selected={stay.id === selectedStayId} onSelect={(choice) => { onSelected(choice, { automatic: false }); track("hotel_selected", { destination: destination.city, role: choice.role }); }} priority={index === 0} />)}</ul> : null}
         {state.status === "ready" && state.notice && (state.hotels.length || accessibleOnly) ? <p className="mt-4 text-sm">{state.notice}</p> : null}
         {state.status === "ready" && !state.hotels.length && !accessibleOnly ? <EmptyStays destination={destination} trip={tripContext} /> : null}
+        {state.status === "ready" && state.hotels.length ? <TierStays tiers={state.tiers} destination={destination} trip={tripContext} selectedStayId={selectedStayId} onSelected={onSelected} /> : null}
               </div>
       {state.status === "ready" && !state.hotels.length ? null : <p className="mt-8 text-xs">From Booking.com{state.catalog?.checkedAt ? ` on ${formatDay(state.catalog.checkedAt)}` : ""}. Not live availability.{stale ? " Over three weeks old." : ""}</p>}
       <button type="button" onClick={() => onSelected({ id: "none", type: "none", name: "No hotel needed" }, { automatic: false })} className="mt-2 min-h-11 text-sm underline underline-offset-4">I already have a place to stay</button>

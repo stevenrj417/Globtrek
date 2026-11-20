@@ -97,7 +97,7 @@ export function hardFilterFailure(destination, profile) {
 // places that only have a Booking.com search, few activities or a planning
 // average; those still win when nothing fuller matches.
 export function thinData(item) {
-  return stayCount(item.id) < MIN_STAYS || activityCount(item.id) < MIN_ACTIVITIES || !["city", "local_prices", "price_band"].includes(item.planningAverages?.model) ? 1 : 0;
+  return stayCount(item.id) < MIN_STAYS || activityCount(item.id) < MIN_ACTIVITIES || !["city", "us_lodging_rate", "local_prices", "price_band"].includes(item.planningAverages?.model) ? 1 : 0;
 }
 
 export function compareMatches(a, b) {

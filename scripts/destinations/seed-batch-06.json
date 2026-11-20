@@ -1,0 +1,4476 @@
+[
+  {
+    "name": "Santa Barbara",
+    "country": "United States",
+    "region": "California",
+    "destinationType": "City",
+    "nearestAirport": "SBA",
+    "wikiTitle": "Santa Barbara, California",
+    "interestTags": [
+      "coast",
+      "food",
+      "wine"
+    ],
+    "knownnessScore": 60,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Santa Barbara",
+      "Santa Barbara, California"
+    ],
+    "searchTerms": [
+      "Santa Barbara",
+      "California",
+      "United States"
+    ],
+    "heroFile": "Mission Santa Barbara.jpg"
+  },
+  {
+    "name": "Monterey",
+    "country": "United States",
+    "region": "California",
+    "destinationType": "Coastal town",
+    "nearestAirport": "MRY",
+    "wikiTitle": "Monterey, California",
+    "interestTags": [
+      "coast",
+      "wildlife",
+      "food"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Monterey",
+      "Monterey, California"
+    ],
+    "searchTerms": [
+      "Monterey",
+      "California",
+      "United States"
+    ]
+  },
+  {
+    "name": "Napa Valley",
+    "country": "United States",
+    "region": "California",
+    "destinationType": "Wine region",
+    "nearestAirport": "SFO",
+    "wikiTitle": "Napa Valley AVA",
+    "interestTags": [
+      "wine",
+      "food",
+      "relaxation"
+    ],
+    "knownnessScore": 75,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Napa Valley",
+      "Napa Valley AVA"
+    ],
+    "searchTerms": [
+      "Napa Valley",
+      "California",
+      "United States"
+    ],
+    "heroFile": "Vineyards in Napa Valley 7.jpg"
+  },
+  {
+    "name": "Lake Tahoe",
+    "country": "United States",
+    "region": "California",
+    "destinationType": "Lake region",
+    "nearestAirport": "RNO",
+    "wikiTitle": "Lake Tahoe",
+    "interestTags": [
+      "lakes",
+      "mountains",
+      "winter",
+      "hiking"
+    ],
+    "knownnessScore": 75,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Lake Tahoe"
+    ],
+    "searchTerms": [
+      "Lake Tahoe",
+      "California",
+      "United States"
+    ]
+  },
+  {
+    "name": "Moab",
+    "country": "United States",
+    "region": "Utah",
+    "destinationType": "Small town",
+    "nearestAirport": "GJT",
+    "wikiTitle": "Moab, Utah",
+    "interestTags": [
+      "desert",
+      "adventure",
+      "hiking"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Moab",
+      "Moab, Utah"
+    ],
+    "searchTerms": [
+      "Moab",
+      "Utah",
+      "United States"
+    ]
+  },
+  {
+    "name": "Grand Canyon",
+    "country": "United States",
+    "region": "Arizona",
+    "destinationType": "National park",
+    "nearestAirport": "FLG",
+    "wikiTitle": "Grand Canyon National Park",
+    "interestTags": [
+      "nature",
+      "hiking",
+      "photography"
+    ],
+    "knownnessScore": 95,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Grand Canyon",
+      "Grand Canyon National Park"
+    ],
+    "searchTerms": [
+      "Grand Canyon",
+      "Arizona",
+      "United States"
+    ]
+  },
+  {
+    "name": "Yosemite",
+    "country": "United States",
+    "region": "California",
+    "destinationType": "National park",
+    "nearestAirport": "FAT",
+    "wikiTitle": "Yosemite National Park",
+    "interestTags": [
+      "nature",
+      "hiking",
+      "mountains"
+    ],
+    "knownnessScore": 90,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Yosemite",
+      "Yosemite National Park"
+    ],
+    "searchTerms": [
+      "Yosemite",
+      "California",
+      "United States"
+    ]
+  },
+  {
+    "name": "Joshua Tree",
+    "country": "United States",
+    "region": "California",
+    "destinationType": "National park",
+    "nearestAirport": "PSP",
+    "wikiTitle": "Joshua Tree National Park",
+    "interestTags": [
+      "desert",
+      "stargazing",
+      "hiking"
+    ],
+    "knownnessScore": 65,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Joshua Tree",
+      "Joshua Tree National Park"
+    ],
+    "searchTerms": [
+      "Joshua Tree",
+      "California",
+      "United States"
+    ]
+  },
+  {
+    "name": "Key West",
+    "country": "United States",
+    "region": "Florida",
+    "destinationType": "Island town",
+    "nearestAirport": "EYW",
+    "wikiTitle": "Key West, Florida",
+    "interestTags": [
+      "beaches",
+      "nightlife",
+      "water"
+    ],
+    "knownnessScore": 75,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Key West",
+      "Key West, Florida"
+    ],
+    "searchTerms": [
+      "Key West",
+      "Florida",
+      "United States"
+    ]
+  },
+  {
+    "name": "St. Augustine",
+    "country": "United States",
+    "region": "Florida",
+    "destinationType": "Historic town",
+    "nearestAirport": "JAX",
+    "wikiTitle": "St. Augustine, Florida",
+    "interestTags": [
+      "history",
+      "beaches",
+      "architecture"
+    ],
+    "knownnessScore": 50,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "St. Augustine",
+      "St. Augustine, Florida"
+    ],
+    "searchTerms": [
+      "St. Augustine",
+      "Florida",
+      "United States"
+    ]
+  },
+  {
+    "name": "Minneapolis",
+    "country": "United States",
+    "region": "Minnesota",
+    "destinationType": "City",
+    "nearestAirport": "MSP",
+    "wikiTitle": "Minneapolis",
+    "interestTags": [
+      "city",
+      "lakes",
+      "food",
+      "music"
+    ],
+    "knownnessScore": 50,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Minneapolis"
+    ],
+    "searchTerms": [
+      "Minneapolis",
+      "Minnesota",
+      "United States"
+    ]
+  },
+  {
+    "name": "Denver",
+    "country": "United States",
+    "region": "Colorado",
+    "destinationType": "City",
+    "nearestAirport": "DEN",
+    "wikiTitle": "Denver",
+    "interestTags": [
+      "city",
+      "mountains",
+      "food"
+    ],
+    "knownnessScore": 65,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Denver"
+    ],
+    "searchTerms": [
+      "Denver",
+      "Colorado",
+      "United States"
+    ]
+  },
+  {
+    "name": "Salt Lake City",
+    "country": "United States",
+    "region": "Utah",
+    "destinationType": "City",
+    "nearestAirport": "SLC",
+    "wikiTitle": "Salt Lake City",
+    "interestTags": [
+      "mountains",
+      "winter",
+      "hiking"
+    ],
+    "knownnessScore": 50,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Salt Lake City"
+    ],
+    "searchTerms": [
+      "Salt Lake City",
+      "Utah",
+      "United States"
+    ]
+  },
+  {
+    "name": "Jackson Hole",
+    "country": "United States",
+    "region": "Wyoming",
+    "destinationType": "Mountain town",
+    "nearestAirport": "JAC",
+    "wikiTitle": "Jackson Hole, Wyoming",
+    "interestTags": [
+      "mountains",
+      "wildlife",
+      "winter"
+    ],
+    "knownnessScore": 60,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Jackson Hole",
+      "Jackson Hole, Wyoming"
+    ],
+    "searchTerms": [
+      "Jackson Hole",
+      "Wyoming",
+      "United States"
+    ]
+  },
+  {
+    "name": "Kauai",
+    "country": "United States",
+    "region": "Hawaii",
+    "destinationType": "Island",
+    "nearestAirport": "LIH",
+    "wikiTitle": "Kauai",
+    "interestTags": [
+      "beaches",
+      "hiking",
+      "nature"
+    ],
+    "knownnessScore": 70,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Kauai"
+    ],
+    "searchTerms": [
+      "Kauai",
+      "Hawaii",
+      "United States"
+    ],
+    "heroFile": "Na Pali Coast.jpg"
+  },
+  {
+    "name": "Hawaii Island",
+    "country": "United States",
+    "region": "Hawaii",
+    "destinationType": "Island",
+    "nearestAirport": "KOA",
+    "wikiTitle": "Hawaii (island)",
+    "interestTags": [
+      "beaches",
+      "nature",
+      "adventure"
+    ],
+    "knownnessScore": 70,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Hawaii Island",
+      "Hawaii (island)"
+    ],
+    "searchTerms": [
+      "Hawaii Island",
+      "Hawaii",
+      "United States"
+    ],
+    "heroFile": "Sulfur dioxide emissions from the Halemaumau vent 04-08-1 1.jpg"
+  },
+  {
+    "name": "Outer Banks",
+    "country": "United States",
+    "region": "North Carolina",
+    "destinationType": "Coastal region",
+    "nearestAirport": "ORF",
+    "wikiTitle": "Outer Banks",
+    "interestTags": [
+      "beaches",
+      "history",
+      "family"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Outer Banks"
+    ],
+    "searchTerms": [
+      "Outer Banks",
+      "North Carolina",
+      "United States"
+    ],
+    "heroFile": "Bodie Island Lighthouse 2008.JPG"
+  },
+  {
+    "name": "Cape Cod",
+    "country": "United States",
+    "region": "Massachusetts",
+    "destinationType": "Coastal region",
+    "nearestAirport": "BOS",
+    "wikiTitle": "Cape Cod",
+    "interestTags": [
+      "beaches",
+      "food",
+      "family"
+    ],
+    "knownnessScore": 65,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Cape Cod"
+    ],
+    "searchTerms": [
+      "Cape Cod",
+      "Massachusetts",
+      "United States"
+    ]
+  },
+  {
+    "name": "Portland Maine",
+    "country": "United States",
+    "region": "Maine",
+    "destinationType": "Small city",
+    "nearestAirport": "PWM",
+    "wikiTitle": "Portland, Maine",
+    "interestTags": [
+      "food",
+      "coast",
+      "history"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Portland Maine",
+      "Portland, Maine"
+    ],
+    "searchTerms": [
+      "Portland Maine",
+      "Maine",
+      "United States"
+    ]
+  },
+  {
+    "name": "Burlington",
+    "country": "United States",
+    "region": "Vermont",
+    "destinationType": "Small city",
+    "nearestAirport": "BTV",
+    "wikiTitle": "Burlington, Vermont",
+    "interestTags": [
+      "lakes",
+      "food",
+      "nature"
+    ],
+    "knownnessScore": 30,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Burlington",
+      "Burlington, Vermont"
+    ],
+    "searchTerms": [
+      "Burlington",
+      "Vermont",
+      "United States"
+    ]
+  },
+  {
+    "name": "Whistler",
+    "country": "Canada",
+    "region": "British Columbia",
+    "destinationType": "Mountain town",
+    "nearestAirport": "YVR",
+    "wikiTitle": "Whistler, British Columbia",
+    "interestTags": [
+      "mountains",
+      "winter",
+      "hiking",
+      "adventure"
+    ],
+    "knownnessScore": 75,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Whistler",
+      "Whistler, British Columbia"
+    ],
+    "searchTerms": [
+      "Whistler",
+      "British Columbia",
+      "Canada"
+    ],
+    "heroFile": "Summer skiing on Blackcomb Mountain (534592174).jpg"
+  },
+  {
+    "name": "Niagara Falls",
+    "country": "Canada",
+    "region": "Ontario",
+    "destinationType": "Natural landmark",
+    "nearestAirport": "YYZ",
+    "wikiTitle": "Niagara Falls",
+    "interestTags": [
+      "nature",
+      "water",
+      "family"
+    ],
+    "knownnessScore": 90,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Niagara Falls"
+    ],
+    "searchTerms": [
+      "Niagara Falls",
+      "Ontario",
+      "Canada"
+    ]
+  },
+  {
+    "name": "Prince Edward Island",
+    "country": "Canada",
+    "region": "Prince Edward Island",
+    "destinationType": "Island",
+    "nearestAirport": "YYG",
+    "wikiTitle": "Prince Edward Island",
+    "interestTags": [
+      "beaches",
+      "food",
+      "family"
+    ],
+    "knownnessScore": 40,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Prince Edward Island"
+    ],
+    "searchTerms": [
+      "Prince Edward Island",
+      "Prince Edward Island",
+      "Canada"
+    ],
+    "heroFile": "Cavendish Coast, Prince Edward Island (471112) (9447889529).jpg"
+  },
+  {
+    "name": "Kelowna",
+    "country": "Canada",
+    "region": "British Columbia",
+    "destinationType": "Small city",
+    "nearestAirport": "YLW",
+    "wikiTitle": "Kelowna",
+    "interestTags": [
+      "wine",
+      "lakes",
+      "food"
+    ],
+    "knownnessScore": 30,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Kelowna"
+    ],
+    "searchTerms": [
+      "Kelowna",
+      "British Columbia",
+      "Canada"
+    ]
+  },
+  {
+    "name": "Puebla",
+    "country": "Mexico",
+    "region": "Puebla",
+    "destinationType": "City",
+    "nearestAirport": "MEX",
+    "wikiTitle": "Puebla (city)",
+    "interestTags": [
+      "food",
+      "architecture",
+      "history"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Puebla",
+      "Puebla (city)"
+    ],
+    "searchTerms": [
+      "Puebla",
+      "Puebla",
+      "Mexico"
+    ]
+  },
+  {
+    "name": "Sayulita",
+    "country": "Mexico",
+    "region": "Nayarit",
+    "destinationType": "Coastal town",
+    "nearestAirport": "PVR",
+    "wikiTitle": "Sayulita",
+    "interestTags": [
+      "beaches",
+      "food",
+      "adventure"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Sayulita"
+    ],
+    "searchTerms": [
+      "Sayulita",
+      "Nayarit",
+      "Mexico"
+    ],
+    "heroFile": "Beach in Sayulita, Mexico.jpg"
+  },
+  {
+    "name": "Puerto Escondido",
+    "country": "Mexico",
+    "region": "Oaxaca",
+    "destinationType": "Coastal town",
+    "nearestAirport": "PXM",
+    "wikiTitle": "Puerto Escondido, Oaxaca",
+    "interestTags": [
+      "beaches",
+      "adventure",
+      "nightlife"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Puerto Escondido",
+      "Puerto Escondido, Oaxaca"
+    ],
+    "searchTerms": [
+      "Puerto Escondido",
+      "Oaxaca",
+      "Mexico"
+    ],
+    "heroFile": "Playa Carrizalillo Puerto Escondido.jpg",
+    "coordinates": [
+      15.8617,
+      -97.0726
+    ]
+  },
+  {
+    "name": "San Cristóbal de las Casas",
+    "country": "Mexico",
+    "region": "Chiapas",
+    "destinationType": "Historic town",
+    "nearestAirport": "TGZ",
+    "wikiTitle": "San Cristóbal de las Casas",
+    "interestTags": [
+      "culture",
+      "history",
+      "mountains"
+    ],
+    "knownnessScore": 40,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "San Cristóbal de las Casas",
+      "San Cristobal de las Casas"
+    ],
+    "searchTerms": [
+      "San Cristóbal de las Casas",
+      "Chiapas",
+      "Mexico"
+    ],
+    "heroFile": "San Cristóbal de las Casas, cathedral (14362887351).jpg"
+  },
+  {
+    "name": "Cozumel",
+    "country": "Mexico",
+    "region": "Quintana Roo",
+    "destinationType": "Island",
+    "nearestAirport": "CZM",
+    "wikiTitle": "Cozumel",
+    "interestTags": [
+      "diving",
+      "beaches",
+      "water"
+    ],
+    "knownnessScore": 65,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Cozumel"
+    ],
+    "searchTerms": [
+      "Cozumel",
+      "Quintana Roo",
+      "Mexico"
+    ],
+    "heroFile": "Beach Chairs In Cozumel Mexico (125160641).jpeg"
+  },
+  {
+    "name": "Granada",
+    "country": "Nicaragua",
+    "region": "Granada",
+    "destinationType": "Historic city",
+    "nearestAirport": "MGA",
+    "wikiTitle": "Granada, Nicaragua",
+    "interestTags": [
+      "history",
+      "architecture",
+      "lakes"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Granada",
+      "Granada, Nicaragua"
+    ],
+    "searchTerms": [
+      "Granada",
+      "Granada",
+      "Nicaragua"
+    ]
+  },
+  {
+    "name": "El Tunco",
+    "country": "El Salvador",
+    "region": "La Libertad",
+    "destinationType": "Coastal town",
+    "nearestAirport": "SAL",
+    "wikiTitle": "Tamanique",
+    "interestTags": [
+      "beaches",
+      "adventure",
+      "nightlife"
+    ],
+    "knownnessScore": 20,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "El Tunco",
+      "Tamanique"
+    ],
+    "searchTerms": [
+      "El Tunco",
+      "La Libertad",
+      "El Salvador"
+    ],
+    "heroFile": "El tunco.png",
+    "coordinates": [
+      13.4936,
+      -89.3833
+    ]
+  },
+  {
+    "name": "Boquete",
+    "country": "Panama",
+    "region": "Chiriquí",
+    "destinationType": "Mountain town",
+    "nearestAirport": "DAV",
+    "wikiTitle": "Boquete",
+    "interestTags": [
+      "mountains",
+      "hiking",
+      "food"
+    ],
+    "knownnessScore": 25,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Boquete"
+    ],
+    "searchTerms": [
+      "Boquete",
+      "Chiriquí",
+      "Panama"
+    ],
+    "heroFile": "Aerial view of Boquete, Panama.jpg",
+    "coordinates": [
+      8.7799,
+      -82.441
+    ]
+  },
+  {
+    "name": "St. Lucia",
+    "country": "Saint Lucia",
+    "region": "Saint Lucia",
+    "destinationType": "Island nation",
+    "nearestAirport": "UVF",
+    "wikiTitle": "Saint Lucia",
+    "interestTags": [
+      "beaches",
+      "hiking",
+      "relaxation"
+    ],
+    "knownnessScore": 65,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "St. Lucia",
+      "Saint Lucia"
+    ],
+    "searchTerms": [
+      "St. Lucia",
+      "Saint Lucia",
+      "Saint Lucia"
+    ],
+    "heroFile": "Soufriere town and the Pitons, Saint Lucia (wide view).jpg"
+  },
+  {
+    "name": "Grenada",
+    "country": "Grenada",
+    "region": "Grenada",
+    "destinationType": "Island nation",
+    "nearestAirport": "GND",
+    "wikiTitle": "Grenada",
+    "interestTags": [
+      "beaches",
+      "diving",
+      "food"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Grenada"
+    ],
+    "searchTerms": [
+      "Grenada",
+      "Grenada",
+      "Grenada"
+    ],
+    "heroFile": "Grand Anse Beach Grenada.jpg"
+  },
+  {
+    "name": "Antigua",
+    "country": "Antigua and Barbuda",
+    "region": "Antigua",
+    "destinationType": "Island",
+    "nearestAirport": "ANU",
+    "wikiTitle": "Antigua",
+    "interestTags": [
+      "beaches",
+      "water",
+      "relaxation"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Antigua"
+    ],
+    "searchTerms": [
+      "Antigua",
+      "Antigua",
+      "Antigua and Barbuda"
+    ],
+    "heroFile": "Antigua Shirley's Heights English Harbour.jpg"
+  },
+  {
+    "name": "Turks and Caicos",
+    "country": "Turks and Caicos Islands",
+    "region": "Providenciales",
+    "destinationType": "Island",
+    "nearestAirport": "PLS",
+    "wikiTitle": "Providenciales",
+    "interestTags": [
+      "beaches",
+      "diving",
+      "relaxation"
+    ],
+    "knownnessScore": 65,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Turks and Caicos",
+      "Providenciales"
+    ],
+    "searchTerms": [
+      "Turks and Caicos",
+      "Providenciales",
+      "Turks and Caicos Islands"
+    ]
+  },
+  {
+    "name": "Grand Cayman",
+    "country": "Cayman Islands",
+    "region": "Grand Cayman",
+    "destinationType": "Island",
+    "nearestAirport": "GCM",
+    "wikiTitle": "Grand Cayman",
+    "interestTags": [
+      "beaches",
+      "diving",
+      "water"
+    ],
+    "knownnessScore": 60,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Grand Cayman"
+    ],
+    "searchTerms": [
+      "Grand Cayman",
+      "Grand Cayman",
+      "Cayman Islands"
+    ],
+    "heroFile": "Seven Mile Beach Facing North.jpg"
+  },
+  {
+    "name": "Martinique",
+    "country": "Martinique",
+    "region": "Martinique",
+    "destinationType": "Island",
+    "nearestAirport": "FDF",
+    "wikiTitle": "Martinique",
+    "interestTags": [
+      "beaches",
+      "food",
+      "hiking"
+    ],
+    "knownnessScore": 40,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Martinique"
+    ],
+    "searchTerms": [
+      "Martinique",
+      "Martinique",
+      "Martinique"
+    ],
+    "heroFile": "Plage du Carbet, Martinique (janvier 1982).jpg"
+  },
+  {
+    "name": "Villa de Leyva",
+    "country": "Colombia",
+    "region": "Boyacá",
+    "destinationType": "Historic town",
+    "nearestAirport": "BOG",
+    "wikiTitle": "Villa de Leyva",
+    "interestTags": [
+      "history",
+      "architecture",
+      "nature"
+    ],
+    "knownnessScore": 25,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Villa de Leyva"
+    ],
+    "searchTerms": [
+      "Villa de Leyva",
+      "Boyacá",
+      "Colombia"
+    ]
+  },
+  {
+    "name": "Guatapé",
+    "country": "Colombia",
+    "region": "Antioquia",
+    "destinationType": "Lake town",
+    "nearestAirport": "MDE",
+    "wikiTitle": "Guatapé",
+    "interestTags": [
+      "lakes",
+      "nature",
+      "adventure"
+    ],
+    "knownnessScore": 40,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Guatapé",
+      "Guatape"
+    ],
+    "searchTerms": [
+      "Guatapé",
+      "Antioquia",
+      "Colombia"
+    ],
+    "heroFile": "Vista desde la Piedra del Penol - Colombia 02.jpg"
+  },
+  {
+    "name": "Baños",
+    "country": "Ecuador",
+    "region": "Tungurahua",
+    "destinationType": "Mountain town",
+    "nearestAirport": "UIO",
+    "wikiTitle": "Baños de Agua Santa",
+    "interestTags": [
+      "adventure",
+      "wellness",
+      "mountains"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Baños",
+      "Banos",
+      "Baños de Agua Santa"
+    ],
+    "searchTerms": [
+      "Baños",
+      "Tungurahua",
+      "Ecuador"
+    ]
+  },
+  {
+    "name": "Sacred Valley",
+    "country": "Peru",
+    "region": "Cusco",
+    "destinationType": "Scenic region",
+    "nearestAirport": "CUZ",
+    "wikiTitle": "Sacred Valley",
+    "interestTags": [
+      "history",
+      "hiking",
+      "mountains",
+      "culture"
+    ],
+    "knownnessScore": 65,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Sacred Valley"
+    ],
+    "searchTerms": [
+      "Sacred Valley",
+      "Cusco",
+      "Peru"
+    ]
+  },
+  {
+    "name": "Paracas",
+    "country": "Peru",
+    "region": "Ica",
+    "destinationType": "Coastal town",
+    "nearestAirport": "LIM",
+    "wikiTitle": "Paracas",
+    "interestTags": [
+      "wildlife",
+      "desert",
+      "coast"
+    ],
+    "knownnessScore": 30,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Paracas"
+    ],
+    "searchTerms": [
+      "Paracas",
+      "Ica",
+      "Peru"
+    ],
+    "heroFile": "Paracas National Reserve. Ica, Peru.jpg",
+    "coordinates": [
+      -13.834,
+      -76.251
+    ]
+  },
+  {
+    "name": "Puno and Lake Titicaca",
+    "country": "Peru",
+    "region": "Puno",
+    "destinationType": "Lake region",
+    "nearestAirport": "JUL",
+    "wikiTitle": "Lake Titicaca",
+    "interestTags": [
+      "lakes",
+      "culture",
+      "mountains"
+    ],
+    "knownnessScore": 60,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Puno and Lake Titicaca",
+      "Lake Titicaca"
+    ],
+    "searchTerms": [
+      "Puno and Lake Titicaca",
+      "Puno",
+      "Peru"
+    ],
+    "heroFile": "Islas flotantes de los Uros, Lago Titicaca, Perú, 2015-08-01, DD 25.JPG"
+  },
+  {
+    "name": "Sucre",
+    "country": "Bolivia",
+    "region": "Chuquisaca",
+    "destinationType": "Historic city",
+    "nearestAirport": "SRE",
+    "wikiTitle": "Sucre",
+    "interestTags": [
+      "history",
+      "architecture",
+      "culture"
+    ],
+    "knownnessScore": 30,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Sucre"
+    ],
+    "searchTerms": [
+      "Sucre",
+      "Chuquisaca",
+      "Bolivia"
+    ]
+  },
+  {
+    "name": "Pucón",
+    "country": "Chile",
+    "region": "Araucanía",
+    "destinationType": "Mountain town",
+    "nearestAirport": "ZPC",
+    "wikiTitle": "Pucón",
+    "interestTags": [
+      "adventure",
+      "lakes",
+      "mountains",
+      "wellness"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Pucón",
+      "Pucon"
+    ],
+    "searchTerms": [
+      "Pucón",
+      "Araucanía",
+      "Chile"
+    ],
+    "heroFile": "Pucón, Villarrica 01.jpg"
+  },
+  {
+    "name": "Easter Island",
+    "country": "Chile",
+    "region": "Valparaíso",
+    "destinationType": "Island",
+    "nearestAirport": "IPC",
+    "wikiTitle": "Easter Island",
+    "interestTags": [
+      "history",
+      "culture",
+      "nature"
+    ],
+    "knownnessScore": 75,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Easter Island"
+    ],
+    "searchTerms": [
+      "Easter Island",
+      "Valparaíso",
+      "Chile"
+    ]
+  },
+  {
+    "name": "Ushuaia",
+    "country": "Argentina",
+    "region": "Tierra del Fuego",
+    "destinationType": "Small city",
+    "nearestAirport": "USH",
+    "wikiTitle": "Ushuaia",
+    "interestTags": [
+      "nature",
+      "hiking",
+      "adventure"
+    ],
+    "knownnessScore": 60,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Ushuaia"
+    ],
+    "searchTerms": [
+      "Ushuaia",
+      "Tierra del Fuego",
+      "Argentina"
+    ]
+  },
+  {
+    "name": "Paraty",
+    "country": "Brazil",
+    "region": "Rio de Janeiro",
+    "destinationType": "Historic town",
+    "nearestAirport": "GIG",
+    "wikiTitle": "Paraty",
+    "interestTags": [
+      "history",
+      "beaches",
+      "architecture"
+    ],
+    "knownnessScore": 40,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Paraty"
+    ],
+    "searchTerms": [
+      "Paraty",
+      "Rio de Janeiro",
+      "Brazil"
+    ]
+  },
+  {
+    "name": "Jericoacoara",
+    "country": "Brazil",
+    "region": "Ceará",
+    "destinationType": "Coastal town",
+    "nearestAirport": "JJD",
+    "wikiTitle": "Jericoacoara",
+    "interestTags": [
+      "beaches",
+      "adventure",
+      "relaxation"
+    ],
+    "knownnessScore": 40,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Jericoacoara"
+    ],
+    "searchTerms": [
+      "Jericoacoara",
+      "Ceará",
+      "Brazil"
+    ],
+    "heroFile": "Dunas jericoacoara 01.jpg"
+  },
+  {
+    "name": "Fernando de Noronha",
+    "country": "Brazil",
+    "region": "Pernambuco",
+    "destinationType": "Island",
+    "nearestAirport": "FEN",
+    "wikiTitle": "Fernando de Noronha",
+    "interestTags": [
+      "diving",
+      "beaches",
+      "wildlife"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Fernando de Noronha"
+    ],
+    "searchTerms": [
+      "Fernando de Noronha",
+      "Pernambuco",
+      "Brazil"
+    ]
+  },
+  {
+    "name": "Ouro Preto",
+    "country": "Brazil",
+    "region": "Minas Gerais",
+    "destinationType": "Historic town",
+    "nearestAirport": "CNF",
+    "wikiTitle": "Ouro Preto",
+    "interestTags": [
+      "history",
+      "architecture",
+      "culture"
+    ],
+    "knownnessScore": 30,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Ouro Preto"
+    ],
+    "searchTerms": [
+      "Ouro Preto",
+      "Minas Gerais",
+      "Brazil"
+    ]
+  },
+  {
+    "name": "Sal",
+    "country": "Cape Verde",
+    "region": "Sal",
+    "destinationType": "Island",
+    "nearestAirport": "SID",
+    "wikiTitle": "Sal, Cape Verde",
+    "interestTags": [
+      "beaches",
+      "water",
+      "relaxation"
+    ],
+    "knownnessScore": 30,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Sal",
+      "Sal, Cape Verde"
+    ],
+    "searchTerms": [
+      "Sal",
+      "Sal",
+      "Cape Verde"
+    ],
+    "heroFile": "Fishing boats Santa Maria, Sal, Cape Verde (4334753258).jpg",
+    "coordinates": [
+      16.599,
+      -22.905
+    ]
+  },
+  {
+    "name": "Mindelo",
+    "country": "Cape Verde",
+    "region": "São Vicente",
+    "destinationType": "Small city",
+    "nearestAirport": "VXE",
+    "wikiTitle": "Mindelo",
+    "interestTags": [
+      "music",
+      "culture",
+      "beaches"
+    ],
+    "knownnessScore": 15,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Mindelo"
+    ],
+    "searchTerms": [
+      "Mindelo",
+      "São Vicente",
+      "Cape Verde"
+    ],
+    "heroFile": "Mindelo (S Vicente, Cabo Verde).JPG"
+  },
+  {
+    "name": "Cape Coast",
+    "country": "Ghana",
+    "region": "Central Region",
+    "destinationType": "Historic town",
+    "nearestAirport": "ACC",
+    "wikiTitle": "Cape Coast",
+    "interestTags": [
+      "history",
+      "beaches",
+      "culture"
+    ],
+    "knownnessScore": 30,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Cape Coast"
+    ],
+    "searchTerms": [
+      "Cape Coast",
+      "Central Region",
+      "Ghana"
+    ],
+    "heroFile": "Cape Coast Castle, Cape Coast, Ghana.JPG"
+  },
+  {
+    "name": "Banjul and the Gambian coast",
+    "country": "Gambia",
+    "region": "Banjul",
+    "destinationType": "Coastal region",
+    "nearestAirport": "BJL",
+    "wikiTitle": "Kololi",
+    "interestTags": [
+      "beaches",
+      "wildlife",
+      "relaxation"
+    ],
+    "knownnessScore": 20,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Banjul and the Gambian coast",
+      "Kololi"
+    ],
+    "searchTerms": [
+      "Banjul and the Gambian coast",
+      "Banjul",
+      "Gambia"
+    ],
+    "heroFile": "GambiaKololiBeach106 (11905120026).jpg"
+  },
+  {
+    "name": "Diani Beach",
+    "country": "Kenya",
+    "region": "Kwale",
+    "destinationType": "Coastal town",
+    "nearestAirport": "MBA",
+    "wikiTitle": "Diani Beach",
+    "interestTags": [
+      "beaches",
+      "diving",
+      "relaxation"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Diani Beach"
+    ],
+    "searchTerms": [
+      "Diani Beach",
+      "Kwale",
+      "Kenya"
+    ]
+  },
+  {
+    "name": "Arusha",
+    "country": "Tanzania",
+    "region": "Arusha",
+    "destinationType": "City",
+    "nearestAirport": "JRO",
+    "wikiTitle": "Arusha",
+    "interestTags": [
+      "wildlife",
+      "adventure",
+      "culture"
+    ],
+    "knownnessScore": 50,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Arusha"
+    ],
+    "searchTerms": [
+      "Arusha",
+      "Arusha",
+      "Tanzania"
+    ]
+  },
+  {
+    "name": "Ngorongoro",
+    "country": "Tanzania",
+    "region": "Arusha",
+    "destinationType": "National park",
+    "nearestAirport": "JRO",
+    "wikiTitle": "Ngorongoro Conservation Area",
+    "interestTags": [
+      "wildlife",
+      "nature",
+      "photography"
+    ],
+    "knownnessScore": 70,
+    "costLevel": "luxury",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Ngorongoro",
+      "Ngorongoro Conservation Area"
+    ],
+    "searchTerms": [
+      "Ngorongoro",
+      "Arusha",
+      "Tanzania"
+    ]
+  },
+  {
+    "name": "Jinja",
+    "country": "Uganda",
+    "region": "Busoga",
+    "destinationType": "Small city",
+    "nearestAirport": "EBB",
+    "wikiTitle": "Jinja, Uganda",
+    "interestTags": [
+      "adventure",
+      "water",
+      "nature"
+    ],
+    "knownnessScore": 25,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Jinja",
+      "Jinja, Uganda"
+    ],
+    "searchTerms": [
+      "Jinja",
+      "Busoga",
+      "Uganda"
+    ],
+    "heroFile": "Source of the Nile, Jinja Uganda - international tourist site.jpg"
+  },
+  {
+    "name": "Lalibela",
+    "country": "Ethiopia",
+    "region": "Amhara",
+    "destinationType": "Historic town",
+    "nearestAirport": "ADD",
+    "wikiTitle": "Lalibela",
+    "interestTags": [
+      "history",
+      "culture",
+      "architecture"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Lalibela"
+    ],
+    "searchTerms": [
+      "Lalibela",
+      "Amhara",
+      "Ethiopia"
+    ]
+  },
+  {
+    "name": "Tofo",
+    "country": "Mozambique",
+    "region": "Inhambane",
+    "destinationType": "Coastal town",
+    "nearestAirport": "INH",
+    "wikiTitle": "Tofo Beach",
+    "interestTags": [
+      "diving",
+      "beaches",
+      "wildlife"
+    ],
+    "knownnessScore": 20,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Tofo",
+      "Tofo Beach"
+    ],
+    "searchTerms": [
+      "Tofo",
+      "Inhambane",
+      "Mozambique"
+    ]
+  },
+  {
+    "name": "Lake Malawi",
+    "country": "Malawi",
+    "region": "Southern Region",
+    "destinationType": "Lake region",
+    "nearestAirport": "LLW",
+    "wikiTitle": "Lake Malawi National Park",
+    "interestTags": [
+      "lakes",
+      "diving",
+      "relaxation"
+    ],
+    "knownnessScore": 30,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Lake Malawi",
+      "Lake Malawi National Park"
+    ],
+    "searchTerms": [
+      "Lake Malawi",
+      "Southern Region",
+      "Malawi"
+    ],
+    "heroFile": "Haliaeetus vocifer -Cape Maclear, Malawi -fishing-8.jpg"
+  },
+  {
+    "name": "Livingstone",
+    "country": "Zambia",
+    "region": "Southern Province",
+    "destinationType": "Small city",
+    "nearestAirport": "LVI",
+    "wikiTitle": "Livingstone, Zambia",
+    "interestTags": [
+      "adventure",
+      "nature",
+      "wildlife"
+    ],
+    "knownnessScore": 50,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Livingstone",
+      "Livingstone, Zambia"
+    ],
+    "searchTerms": [
+      "Livingstone",
+      "Southern Province",
+      "Zambia"
+    ],
+    "heroFile": "Cataratas Victoria, Zambia-Zimbabue, 2018-07-27, DD 30-34 PAN.jpg"
+  },
+  {
+    "name": "Stellenbosch",
+    "country": "South Africa",
+    "region": "Western Cape",
+    "destinationType": "Wine region",
+    "nearestAirport": "CPT",
+    "wikiTitle": "Stellenbosch",
+    "interestTags": [
+      "wine",
+      "food",
+      "mountains"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Stellenbosch"
+    ],
+    "searchTerms": [
+      "Stellenbosch",
+      "Western Cape",
+      "South Africa"
+    ],
+    "heroFile": "Vineyards in Stellenbosch II.jpg"
+  },
+  {
+    "name": "Drakensberg",
+    "country": "South Africa",
+    "region": "KwaZulu-Natal",
+    "destinationType": "Mountain region",
+    "nearestAirport": "DUR",
+    "wikiTitle": "Drakensberg",
+    "interestTags": [
+      "hiking",
+      "mountains",
+      "nature"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Drakensberg"
+    ],
+    "searchTerms": [
+      "Drakensberg",
+      "KwaZulu-Natal",
+      "South Africa"
+    ]
+  },
+  {
+    "name": "Swakopmund",
+    "country": "Namibia",
+    "region": "Erongo",
+    "destinationType": "Coastal town",
+    "nearestAirport": "WVB",
+    "wikiTitle": "Swakopmund",
+    "interestTags": [
+      "desert",
+      "adventure",
+      "coast"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Swakopmund"
+    ],
+    "searchTerms": [
+      "Swakopmund",
+      "Erongo",
+      "Namibia"
+    ]
+  },
+  {
+    "name": "Etosha",
+    "country": "Namibia",
+    "region": "Oshana",
+    "destinationType": "National park",
+    "nearestAirport": "WDH",
+    "wikiTitle": "Etosha National Park",
+    "interestTags": [
+      "wildlife",
+      "nature",
+      "photography"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Etosha",
+      "Etosha National Park"
+    ],
+    "searchTerms": [
+      "Etosha",
+      "Oshana",
+      "Namibia"
+    ]
+  },
+  {
+    "name": "Djerba",
+    "country": "Tunisia",
+    "region": "Medenine",
+    "destinationType": "Island",
+    "nearestAirport": "DJE",
+    "wikiTitle": "Djerba",
+    "interestTags": [
+      "beaches",
+      "culture",
+      "relaxation"
+    ],
+    "knownnessScore": 40,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Djerba"
+    ],
+    "searchTerms": [
+      "Djerba",
+      "Medenine",
+      "Tunisia"
+    ],
+    "heroFile": "Djerba beach-katinalynn.jpg"
+  },
+  {
+    "name": "Dahab",
+    "country": "Egypt",
+    "region": "South Sinai",
+    "destinationType": "Coastal town",
+    "nearestAirport": "SSH",
+    "wikiTitle": "Dahab",
+    "interestTags": [
+      "diving",
+      "desert",
+      "relaxation"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Dahab"
+    ],
+    "searchTerms": [
+      "Dahab",
+      "South Sinai",
+      "Egypt"
+    ]
+  },
+  {
+    "name": "Hurghada",
+    "country": "Egypt",
+    "region": "Red Sea",
+    "destinationType": "Coastal town",
+    "nearestAirport": "HRG",
+    "wikiTitle": "Hurghada",
+    "interestTags": [
+      "diving",
+      "beaches",
+      "family"
+    ],
+    "knownnessScore": 60,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Hurghada"
+    ],
+    "searchTerms": [
+      "Hurghada",
+      "Red Sea",
+      "Egypt"
+    ],
+    "heroFile": "Sheraton Rd, Qesm Hurghada, Red Sea Governorate, Egypt - panoramio.jpg"
+  },
+  {
+    "name": "Alexandria",
+    "country": "Egypt",
+    "region": "Alexandria",
+    "destinationType": "City",
+    "nearestAirport": "HBE",
+    "wikiTitle": "Alexandria",
+    "interestTags": [
+      "history",
+      "coast",
+      "food"
+    ],
+    "knownnessScore": 70,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Alexandria"
+    ],
+    "searchTerms": [
+      "Alexandria",
+      "Alexandria",
+      "Egypt"
+    ]
+  },
+  {
+    "name": "Réunion",
+    "country": "Réunion",
+    "region": "Réunion",
+    "destinationType": "Island",
+    "nearestAirport": "RUN",
+    "wikiTitle": "Réunion",
+    "interestTags": [
+      "hiking",
+      "mountains",
+      "nature",
+      "adventure"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Réunion",
+      "Reunion"
+    ],
+    "searchTerms": [
+      "Réunion",
+      "Réunion",
+      "Réunion"
+    ],
+    "heroFile": "Piton de La Fournaise - Paysage de l'île de La Réunion.jpg"
+  },
+  {
+    "name": "Rabat",
+    "country": "Morocco",
+    "region": "Rabat-Salé-Kénitra",
+    "destinationType": "City",
+    "nearestAirport": "RBA",
+    "wikiTitle": "Rabat",
+    "interestTags": [
+      "history",
+      "architecture",
+      "coast"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Rabat"
+    ],
+    "searchTerms": [
+      "Rabat",
+      "Rabat-Salé-Kénitra",
+      "Morocco"
+    ]
+  },
+  {
+    "name": "Aqaba",
+    "country": "Jordan",
+    "region": "Aqaba",
+    "destinationType": "Coastal town",
+    "nearestAirport": "AQJ",
+    "wikiTitle": "Aqaba",
+    "interestTags": [
+      "diving",
+      "beaches",
+      "desert"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Aqaba"
+    ],
+    "searchTerms": [
+      "Aqaba",
+      "Aqaba",
+      "Jordan"
+    ],
+    "heroFile": "Red sea stony beach taba egypt.jpg"
+  },
+  {
+    "name": "Dead Sea",
+    "country": "Jordan",
+    "region": "Balqa",
+    "destinationType": "Natural landmark",
+    "nearestAirport": "AMM",
+    "wikiTitle": "Dead Sea",
+    "interestTags": [
+      "wellness",
+      "relaxation",
+      "nature"
+    ],
+    "knownnessScore": 80,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Dead Sea"
+    ],
+    "searchTerms": [
+      "Dead Sea",
+      "Balqa",
+      "Jordan"
+    ],
+    "heroFile": "Dead Sea salt crystals.jpg",
+    "coordinates": [
+      31.719,
+      35.589
+    ]
+  },
+  {
+    "name": "Byblos",
+    "country": "Lebanon",
+    "region": "Keserwan-Jbeil",
+    "destinationType": "Historic town",
+    "nearestAirport": "BEY",
+    "wikiTitle": "Byblos",
+    "interestTags": [
+      "history",
+      "coast",
+      "food"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Byblos"
+    ],
+    "searchTerms": [
+      "Byblos",
+      "Keserwan-Jbeil",
+      "Lebanon"
+    ]
+  },
+  {
+    "name": "Salalah",
+    "country": "Oman",
+    "region": "Dhofar",
+    "destinationType": "City",
+    "nearestAirport": "SLL",
+    "wikiTitle": "Salalah",
+    "interestTags": [
+      "beaches",
+      "nature",
+      "culture"
+    ],
+    "knownnessScore": 30,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Salalah"
+    ],
+    "searchTerms": [
+      "Salalah",
+      "Dhofar",
+      "Oman"
+    ]
+  },
+  {
+    "name": "Nizwa",
+    "country": "Oman",
+    "region": "Ad Dakhiliyah",
+    "destinationType": "Historic town",
+    "nearestAirport": "MCT",
+    "wikiTitle": "Nizwa",
+    "interestTags": [
+      "history",
+      "culture",
+      "mountains"
+    ],
+    "knownnessScore": 30,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Nizwa"
+    ],
+    "searchTerms": [
+      "Nizwa",
+      "Ad Dakhiliyah",
+      "Oman"
+    ]
+  },
+  {
+    "name": "Ras Al Khaimah",
+    "country": "United Arab Emirates",
+    "region": "Ras Al Khaimah",
+    "destinationType": "Coastal region",
+    "nearestAirport": "DXB",
+    "wikiTitle": "Ras Al Khaimah",
+    "interestTags": [
+      "beaches",
+      "mountains",
+      "adventure"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Ras Al Khaimah"
+    ],
+    "searchTerms": [
+      "Ras Al Khaimah",
+      "Ras Al Khaimah",
+      "United Arab Emirates"
+    ],
+    "heroFile": "Jebel Jais 01.jpg"
+  },
+  {
+    "name": "Hiroshima",
+    "country": "Japan",
+    "region": "Hiroshima",
+    "destinationType": "City",
+    "nearestAirport": "HIJ",
+    "wikiTitle": "Hiroshima",
+    "interestTags": [
+      "history",
+      "food",
+      "culture"
+    ],
+    "knownnessScore": 80,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Hiroshima"
+    ],
+    "searchTerms": [
+      "Hiroshima",
+      "Hiroshima",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Fukuoka",
+    "country": "Japan",
+    "region": "Fukuoka",
+    "destinationType": "City",
+    "nearestAirport": "FUK",
+    "wikiTitle": "Fukuoka",
+    "interestTags": [
+      "food",
+      "city",
+      "nightlife"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Fukuoka"
+    ],
+    "searchTerms": [
+      "Fukuoka",
+      "Fukuoka",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Hakone",
+    "country": "Japan",
+    "region": "Kanagawa",
+    "destinationType": "Mountain town",
+    "nearestAirport": "HND",
+    "wikiTitle": "Hakone, Kanagawa",
+    "interestTags": [
+      "wellness",
+      "mountains",
+      "art"
+    ],
+    "knownnessScore": 60,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Hakone",
+      "Hakone, Kanagawa"
+    ],
+    "searchTerms": [
+      "Hakone",
+      "Kanagawa",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Nikko",
+    "country": "Japan",
+    "region": "Tochigi",
+    "destinationType": "Historic town",
+    "nearestAirport": "HND",
+    "wikiTitle": "Nikkō, Tochigi",
+    "interestTags": [
+      "history",
+      "nature",
+      "culture"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Nikko",
+      "Nikkō, Tochigi"
+    ],
+    "searchTerms": [
+      "Nikko",
+      "Tochigi",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Okinawa",
+    "country": "Japan",
+    "region": "Okinawa",
+    "destinationType": "Island",
+    "nearestAirport": "OKA",
+    "wikiTitle": "Okinawa Island",
+    "interestTags": [
+      "beaches",
+      "diving",
+      "culture"
+    ],
+    "knownnessScore": 60,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Okinawa",
+      "Okinawa Island"
+    ],
+    "searchTerms": [
+      "Okinawa",
+      "Okinawa",
+      "Japan"
+    ],
+    "heroFile": "Furuzamami beach Okinawa Zamami.jpg"
+  },
+  {
+    "name": "Ishigaki",
+    "country": "Japan",
+    "region": "Okinawa",
+    "destinationType": "Island",
+    "nearestAirport": "ISG",
+    "wikiTitle": "Ishigaki Island",
+    "interestTags": [
+      "beaches",
+      "diving",
+      "nature"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Ishigaki",
+      "Ishigaki Island"
+    ],
+    "searchTerms": [
+      "Ishigaki",
+      "Okinawa",
+      "Japan"
+    ],
+    "heroFile": "Kabira Bay Ishigaki Island40bs3s4592.jpg"
+  },
+  {
+    "name": "Gyeongju",
+    "country": "South Korea",
+    "region": "North Gyeongsang",
+    "destinationType": "Historic city",
+    "nearestAirport": "PUS",
+    "wikiTitle": "Gyeongju",
+    "interestTags": [
+      "history",
+      "culture",
+      "food"
+    ],
+    "knownnessScore": 40,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Gyeongju"
+    ],
+    "searchTerms": [
+      "Gyeongju",
+      "North Gyeongsang",
+      "South Korea"
+    ],
+    "heroFile": "Bulguksa temple entrance gate stairs flower bed and blue sky in Gyeongju South Korea.jpg"
+  },
+  {
+    "name": "Chengdu",
+    "country": "China",
+    "region": "Sichuan",
+    "destinationType": "City",
+    "nearestAirport": "TFU",
+    "wikiTitle": "Chengdu",
+    "interestTags": [
+      "food",
+      "wildlife",
+      "culture"
+    ],
+    "knownnessScore": 65,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Chengdu"
+    ],
+    "searchTerms": [
+      "Chengdu",
+      "Sichuan",
+      "China"
+    ]
+  },
+  {
+    "name": "Xi'an",
+    "country": "China",
+    "region": "Shaanxi",
+    "destinationType": "City",
+    "nearestAirport": "XIY",
+    "wikiTitle": "Xi'an",
+    "interestTags": [
+      "history",
+      "food",
+      "culture"
+    ],
+    "knownnessScore": 75,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Xi'an"
+    ],
+    "searchTerms": [
+      "Xi'an",
+      "Shaanxi",
+      "China"
+    ]
+  },
+  {
+    "name": "Zhangjiajie",
+    "country": "China",
+    "region": "Hunan",
+    "destinationType": "National park",
+    "nearestAirport": "DYG",
+    "wikiTitle": "Zhangjiajie National Forest Park",
+    "interestTags": [
+      "nature",
+      "hiking",
+      "photography"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Zhangjiajie",
+      "Zhangjiajie National Forest Park"
+    ],
+    "searchTerms": [
+      "Zhangjiajie",
+      "Hunan",
+      "China"
+    ]
+  },
+  {
+    "name": "Lijiang",
+    "country": "China",
+    "region": "Yunnan",
+    "destinationType": "Historic town",
+    "nearestAirport": "LJG",
+    "wikiTitle": "Old Town of Lijiang",
+    "interestTags": [
+      "history",
+      "mountains",
+      "culture"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Lijiang",
+      "Old Town of Lijiang"
+    ],
+    "searchTerms": [
+      "Lijiang",
+      "Yunnan",
+      "China"
+    ]
+  },
+  {
+    "name": "Tainan",
+    "country": "Taiwan",
+    "region": "Tainan",
+    "destinationType": "City",
+    "nearestAirport": "KHH",
+    "wikiTitle": "Tainan",
+    "interestTags": [
+      "food",
+      "history",
+      "culture"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Tainan"
+    ],
+    "searchTerms": [
+      "Tainan",
+      "Tainan",
+      "Taiwan"
+    ],
+    "heroFile": "Chihkan Tower night.JPG"
+  },
+  {
+    "name": "Taroko Gorge",
+    "country": "Taiwan",
+    "region": "Hualien",
+    "destinationType": "National park",
+    "nearestAirport": "HUN",
+    "wikiTitle": "Taroko National Park",
+    "interestTags": [
+      "nature",
+      "hiking",
+      "mountains"
+    ],
+    "knownnessScore": 40,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Taroko Gorge",
+      "Taroko National Park"
+    ],
+    "searchTerms": [
+      "Taroko Gorge",
+      "Hualien",
+      "Taiwan"
+    ]
+  },
+  {
+    "name": "Ulaanbaatar",
+    "country": "Mongolia",
+    "region": "Ulaanbaatar",
+    "destinationType": "City",
+    "nearestAirport": "UBN",
+    "wikiTitle": "Ulaanbaatar",
+    "interestTags": [
+      "culture",
+      "adventure",
+      "nature"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Ulaanbaatar"
+    ],
+    "searchTerms": [
+      "Ulaanbaatar",
+      "Ulaanbaatar",
+      "Mongolia"
+    ]
+  },
+  {
+    "name": "Krabi",
+    "country": "Thailand",
+    "region": "Krabi",
+    "destinationType": "Coastal region",
+    "nearestAirport": "KBV",
+    "wikiTitle": "Krabi province",
+    "interestTags": [
+      "beaches",
+      "adventure",
+      "diving"
+    ],
+    "knownnessScore": 70,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Krabi",
+      "Krabi province"
+    ],
+    "searchTerms": [
+      "Krabi",
+      "Krabi",
+      "Thailand"
+    ]
+  },
+  {
+    "name": "Koh Samui",
+    "country": "Thailand",
+    "region": "Surat Thani",
+    "destinationType": "Island",
+    "nearestAirport": "USM",
+    "wikiTitle": "Ko Samui",
+    "interestTags": [
+      "beaches",
+      "relaxation",
+      "wellness"
+    ],
+    "knownnessScore": 75,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Koh Samui",
+      "Ko Samui"
+    ],
+    "searchTerms": [
+      "Koh Samui",
+      "Surat Thani",
+      "Thailand"
+    ],
+    "heroFile": "Koh Samui, Island, Beach, Thailand.jpg"
+  },
+  {
+    "name": "Koh Tao",
+    "country": "Thailand",
+    "region": "Surat Thani",
+    "destinationType": "Island",
+    "nearestAirport": "USM",
+    "wikiTitle": "Ko Tao",
+    "interestTags": [
+      "diving",
+      "beaches",
+      "nightlife"
+    ],
+    "knownnessScore": 50,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Koh Tao",
+      "Ko Tao"
+    ],
+    "searchTerms": [
+      "Koh Tao",
+      "Surat Thani",
+      "Thailand"
+    ],
+    "heroFile": "Koh Nang Yuan.jpg"
+  },
+  {
+    "name": "Pai",
+    "country": "Thailand",
+    "region": "Mae Hong Son",
+    "destinationType": "Small town",
+    "nearestAirport": "CNX",
+    "wikiTitle": "Pai, Thailand",
+    "interestTags": [
+      "mountains",
+      "relaxation",
+      "nature"
+    ],
+    "knownnessScore": 40,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Pai",
+      "Pai, Thailand"
+    ],
+    "searchTerms": [
+      "Pai",
+      "Mae Hong Son",
+      "Thailand"
+    ],
+    "heroFile": "Pai canyon 3.jpg"
+  },
+  {
+    "name": "Chiang Rai",
+    "country": "Thailand",
+    "region": "Chiang Rai",
+    "destinationType": "Small city",
+    "nearestAirport": "CEI",
+    "wikiTitle": "Chiang Rai",
+    "interestTags": [
+      "culture",
+      "art",
+      "mountains"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Chiang Rai"
+    ],
+    "searchTerms": [
+      "Chiang Rai",
+      "Chiang Rai",
+      "Thailand"
+    ]
+  },
+  {
+    "name": "Ho Chi Minh City",
+    "country": "Vietnam",
+    "region": "Ho Chi Minh City",
+    "destinationType": "City",
+    "nearestAirport": "SGN",
+    "wikiTitle": "Ho Chi Minh City",
+    "interestTags": [
+      "food",
+      "city",
+      "nightlife",
+      "history"
+    ],
+    "knownnessScore": 75,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Ho Chi Minh City"
+    ],
+    "searchTerms": [
+      "Ho Chi Minh City",
+      "Ho Chi Minh City",
+      "Vietnam"
+    ]
+  },
+  {
+    "name": "Hue",
+    "country": "Vietnam",
+    "region": "Thừa Thiên Huế",
+    "destinationType": "Historic city",
+    "nearestAirport": "HUI",
+    "wikiTitle": "Huế",
+    "interestTags": [
+      "history",
+      "food",
+      "culture"
+    ],
+    "knownnessScore": 50,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Hue",
+      "Huế"
+    ],
+    "searchTerms": [
+      "Hue",
+      "Thừa Thiên Huế",
+      "Vietnam"
+    ],
+    "heroFile": "Gate in Imperial City, Huế (III).jpg"
+  },
+  {
+    "name": "Phu Quoc",
+    "country": "Vietnam",
+    "region": "Kiên Giang",
+    "destinationType": "Island",
+    "nearestAirport": "PQC",
+    "wikiTitle": "Phú Quốc",
+    "interestTags": [
+      "beaches",
+      "relaxation",
+      "diving"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Phu Quoc",
+      "Phú Quốc"
+    ],
+    "searchTerms": [
+      "Phu Quoc",
+      "Kiên Giang",
+      "Vietnam"
+    ]
+  },
+  {
+    "name": "Da Lat",
+    "country": "Vietnam",
+    "region": "Lâm Đồng",
+    "destinationType": "Mountain town",
+    "nearestAirport": "DLI",
+    "wikiTitle": "Da Lat",
+    "interestTags": [
+      "mountains",
+      "food",
+      "nature"
+    ],
+    "knownnessScore": 40,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Da Lat"
+    ],
+    "searchTerms": [
+      "Da Lat",
+      "Lâm Đồng",
+      "Vietnam"
+    ],
+    "heroFile": "Da Lat - Xuan Huong Lake.jpg"
+  },
+  {
+    "name": "Ninh Binh",
+    "country": "Vietnam",
+    "region": "Ninh Bình",
+    "destinationType": "Scenic region",
+    "nearestAirport": "HAN",
+    "wikiTitle": "Tràng An",
+    "interestTags": [
+      "nature",
+      "history",
+      "photography"
+    ],
+    "knownnessScore": 50,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Ninh Binh",
+      "Tràng An"
+    ],
+    "searchTerms": [
+      "Ninh Binh",
+      "Ninh Bình",
+      "Vietnam"
+    ],
+    "heroFile": "Trang An Landscape Complex, Ninh Binh Province, Vietnam, 20240202 1447 5310.jpg"
+  },
+  {
+    "name": "Phnom Penh",
+    "country": "Cambodia",
+    "region": "Phnom Penh",
+    "destinationType": "City",
+    "nearestAirport": "KTI",
+    "wikiTitle": "Phnom Penh",
+    "interestTags": [
+      "history",
+      "food",
+      "culture"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Phnom Penh"
+    ],
+    "searchTerms": [
+      "Phnom Penh",
+      "Phnom Penh",
+      "Cambodia"
+    ]
+  },
+  {
+    "name": "Kampot",
+    "country": "Cambodia",
+    "region": "Kampot",
+    "destinationType": "Small town",
+    "nearestAirport": "KTI",
+    "wikiTitle": "Kampot (city)",
+    "interestTags": [
+      "nature",
+      "food",
+      "relaxation"
+    ],
+    "knownnessScore": 20,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Kampot",
+      "Kampot (city)"
+    ],
+    "searchTerms": [
+      "Kampot",
+      "Kampot",
+      "Cambodia"
+    ]
+  },
+  {
+    "name": "Vang Vieng",
+    "country": "Laos",
+    "region": "Vientiane Province",
+    "destinationType": "Small town",
+    "nearestAirport": "VTE",
+    "wikiTitle": "Vang Vieng",
+    "interestTags": [
+      "adventure",
+      "nature",
+      "water"
+    ],
+    "knownnessScore": 40,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Vang Vieng"
+    ],
+    "searchTerms": [
+      "Vang Vieng",
+      "Vientiane Province",
+      "Laos"
+    ],
+    "heroFile": "Red metal bridge over the Nam Song River front view in Vang Vieng Laos.jpg"
+  },
+  {
+    "name": "Lombok",
+    "country": "Indonesia",
+    "region": "West Nusa Tenggara",
+    "destinationType": "Island",
+    "nearestAirport": "LOP",
+    "wikiTitle": "Lombok",
+    "interestTags": [
+      "beaches",
+      "hiking",
+      "adventure"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Lombok"
+    ],
+    "searchTerms": [
+      "Lombok",
+      "West Nusa Tenggara",
+      "Indonesia"
+    ]
+  },
+  {
+    "name": "Gili Islands",
+    "country": "Indonesia",
+    "region": "West Nusa Tenggara",
+    "destinationType": "Island",
+    "nearestAirport": "LOP",
+    "wikiTitle": "Gili Islands",
+    "interestTags": [
+      "diving",
+      "beaches",
+      "nightlife"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Gili Islands"
+    ],
+    "searchTerms": [
+      "Gili Islands",
+      "West Nusa Tenggara",
+      "Indonesia"
+    ],
+    "heroFile": "People on the beach, Gili Trawangan (island), Indonesia.jpg"
+  },
+  {
+    "name": "Raja Ampat",
+    "country": "Indonesia",
+    "region": "Southwest Papua",
+    "destinationType": "Island region",
+    "nearestAirport": "SOQ",
+    "wikiTitle": "Raja Ampat Islands",
+    "interestTags": [
+      "diving",
+      "wildlife",
+      "nature"
+    ],
+    "knownnessScore": 50,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Raja Ampat",
+      "Raja Ampat Islands"
+    ],
+    "searchTerms": [
+      "Raja Ampat",
+      "Southwest Papua",
+      "Indonesia"
+    ],
+    "heroFile": "Wayag Island.jpg"
+  },
+  {
+    "name": "Langkawi",
+    "country": "Malaysia",
+    "region": "Kedah",
+    "destinationType": "Island",
+    "nearestAirport": "LGK",
+    "wikiTitle": "Langkawi",
+    "interestTags": [
+      "beaches",
+      "nature",
+      "relaxation"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Langkawi"
+    ],
+    "searchTerms": [
+      "Langkawi",
+      "Kedah",
+      "Malaysia"
+    ]
+  },
+  {
+    "name": "Malacca",
+    "country": "Malaysia",
+    "region": "Malacca",
+    "destinationType": "Historic city",
+    "nearestAirport": "KUL",
+    "wikiTitle": "Malacca City",
+    "interestTags": [
+      "history",
+      "food",
+      "architecture"
+    ],
+    "knownnessScore": 50,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Malacca",
+      "Malacca City"
+    ],
+    "searchTerms": [
+      "Malacca",
+      "Malacca",
+      "Malaysia"
+    ]
+  },
+  {
+    "name": "Siargao",
+    "country": "Philippines",
+    "region": "Surigao del Norte",
+    "destinationType": "Island",
+    "nearestAirport": "IAO",
+    "wikiTitle": "Siargao",
+    "interestTags": [
+      "beaches",
+      "adventure",
+      "water"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Siargao"
+    ],
+    "searchTerms": [
+      "Siargao",
+      "Surigao del Norte",
+      "Philippines"
+    ],
+    "heroFile": "Cloud 8, Siargao Island.jpg"
+  },
+  {
+    "name": "Bohol",
+    "country": "Philippines",
+    "region": "Bohol",
+    "destinationType": "Island",
+    "nearestAirport": "TAG",
+    "wikiTitle": "Bohol",
+    "interestTags": [
+      "nature",
+      "beaches",
+      "diving",
+      "wildlife"
+    ],
+    "knownnessScore": 50,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Bohol"
+    ],
+    "searchTerms": [
+      "Bohol",
+      "Bohol",
+      "Philippines"
+    ]
+  },
+  {
+    "name": "Goa",
+    "country": "India",
+    "region": "Goa",
+    "destinationType": "Coastal region",
+    "nearestAirport": "GOI",
+    "wikiTitle": "Goa",
+    "interestTags": [
+      "beaches",
+      "food",
+      "nightlife"
+    ],
+    "knownnessScore": 75,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Goa"
+    ],
+    "searchTerms": [
+      "Goa",
+      "Goa",
+      "India"
+    ]
+  },
+  {
+    "name": "Rishikesh",
+    "country": "India",
+    "region": "Uttarakhand",
+    "destinationType": "Small city",
+    "nearestAirport": "DED",
+    "wikiTitle": "Rishikesh",
+    "interestTags": [
+      "wellness",
+      "adventure",
+      "mountains"
+    ],
+    "knownnessScore": 60,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Rishikesh"
+    ],
+    "searchTerms": [
+      "Rishikesh",
+      "Uttarakhand",
+      "India"
+    ]
+  },
+  {
+    "name": "Agra",
+    "country": "India",
+    "region": "Uttar Pradesh",
+    "destinationType": "City",
+    "nearestAirport": "AGR",
+    "wikiTitle": "Agra",
+    "interestTags": [
+      "history",
+      "architecture",
+      "culture"
+    ],
+    "knownnessScore": 90,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Agra"
+    ],
+    "searchTerms": [
+      "Agra",
+      "Uttar Pradesh",
+      "India"
+    ]
+  },
+  {
+    "name": "Leh",
+    "country": "India",
+    "region": "Ladakh",
+    "destinationType": "Mountain town",
+    "nearestAirport": "IXL",
+    "wikiTitle": "Leh",
+    "interestTags": [
+      "mountains",
+      "adventure",
+      "culture"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Leh"
+    ],
+    "searchTerms": [
+      "Leh",
+      "Ladakh",
+      "India"
+    ]
+  },
+  {
+    "name": "Amritsar",
+    "country": "India",
+    "region": "Punjab",
+    "destinationType": "City",
+    "nearestAirport": "ATQ",
+    "wikiTitle": "Amritsar",
+    "interestTags": [
+      "culture",
+      "history",
+      "food"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Amritsar"
+    ],
+    "searchTerms": [
+      "Amritsar",
+      "Punjab",
+      "India"
+    ]
+  },
+  {
+    "name": "Darjeeling",
+    "country": "India",
+    "region": "West Bengal",
+    "destinationType": "Mountain town",
+    "nearestAirport": "IXB",
+    "wikiTitle": "Darjeeling",
+    "interestTags": [
+      "mountains",
+      "hiking",
+      "food"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Darjeeling"
+    ],
+    "searchTerms": [
+      "Darjeeling",
+      "West Bengal",
+      "India"
+    ]
+  },
+  {
+    "name": "Ella",
+    "country": "Sri Lanka",
+    "region": "Uva",
+    "destinationType": "Small town",
+    "nearestAirport": "CMB",
+    "wikiTitle": "Ella, Sri Lanka",
+    "interestTags": [
+      "hiking",
+      "mountains",
+      "nature"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Ella",
+      "Ella, Sri Lanka"
+    ],
+    "searchTerms": [
+      "Ella",
+      "Uva",
+      "Sri Lanka"
+    ],
+    "heroFile": "Nine arch bridge 1.jpg"
+  },
+  {
+    "name": "Galle",
+    "country": "Sri Lanka",
+    "region": "Southern Province",
+    "destinationType": "Historic town",
+    "nearestAirport": "CMB",
+    "wikiTitle": "Galle",
+    "interestTags": [
+      "history",
+      "beaches",
+      "architecture"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Galle"
+    ],
+    "searchTerms": [
+      "Galle",
+      "Southern Province",
+      "Sri Lanka"
+    ]
+  },
+  {
+    "name": "Bukhara",
+    "country": "Uzbekistan",
+    "region": "Bukhara",
+    "destinationType": "Historic city",
+    "nearestAirport": "BHK",
+    "wikiTitle": "Bukhara",
+    "interestTags": [
+      "history",
+      "architecture",
+      "culture"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Bukhara"
+    ],
+    "searchTerms": [
+      "Bukhara",
+      "Bukhara",
+      "Uzbekistan"
+    ]
+  },
+  {
+    "name": "Khiva",
+    "country": "Uzbekistan",
+    "region": "Khorezm",
+    "destinationType": "Historic town",
+    "nearestAirport": "UGC",
+    "wikiTitle": "Khiva",
+    "interestTags": [
+      "history",
+      "architecture",
+      "culture"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Khiva"
+    ],
+    "searchTerms": [
+      "Khiva",
+      "Khorezm",
+      "Uzbekistan"
+    ]
+  },
+  {
+    "name": "Tashkent",
+    "country": "Uzbekistan",
+    "region": "Tashkent",
+    "destinationType": "City",
+    "nearestAirport": "TAS",
+    "wikiTitle": "Tashkent",
+    "interestTags": [
+      "food",
+      "city",
+      "culture"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Tashkent"
+    ],
+    "searchTerms": [
+      "Tashkent",
+      "Tashkent",
+      "Uzbekistan"
+    ],
+    "heroFile": "Novza Jome masjidi.jpg",
+    "coordinates": [
+      41.2995,
+      69.2401
+    ]
+  },
+  {
+    "name": "Batumi",
+    "country": "Georgia",
+    "region": "Adjara",
+    "destinationType": "City",
+    "nearestAirport": "BUS",
+    "wikiTitle": "Batumi",
+    "interestTags": [
+      "beaches",
+      "nightlife",
+      "food"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Batumi"
+    ],
+    "searchTerms": [
+      "Batumi",
+      "Adjara",
+      "Georgia"
+    ]
+  },
+  {
+    "name": "Baku",
+    "country": "Azerbaijan",
+    "region": "Absheron",
+    "destinationType": "City",
+    "nearestAirport": "GYD",
+    "wikiTitle": "Baku",
+    "interestTags": [
+      "architecture",
+      "food",
+      "history"
+    ],
+    "knownnessScore": 45,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Baku"
+    ],
+    "searchTerms": [
+      "Baku",
+      "Absheron",
+      "Azerbaijan"
+    ]
+  },
+  {
+    "name": "Brisbane",
+    "country": "Australia",
+    "region": "Queensland",
+    "destinationType": "City",
+    "nearestAirport": "BNE",
+    "wikiTitle": "Brisbane",
+    "interestTags": [
+      "food",
+      "city",
+      "coast"
+    ],
+    "knownnessScore": 65,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Brisbane"
+    ],
+    "searchTerms": [
+      "Brisbane",
+      "Queensland",
+      "Australia"
+    ]
+  },
+  {
+    "name": "Adelaide",
+    "country": "Australia",
+    "region": "South Australia",
+    "destinationType": "City",
+    "nearestAirport": "ADL",
+    "wikiTitle": "Adelaide",
+    "interestTags": [
+      "food",
+      "wine",
+      "coast"
+    ],
+    "knownnessScore": 50,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Adelaide"
+    ],
+    "searchTerms": [
+      "Adelaide",
+      "South Australia",
+      "Australia"
+    ]
+  },
+  {
+    "name": "Gold Coast",
+    "country": "Australia",
+    "region": "Queensland",
+    "destinationType": "Coastal region",
+    "nearestAirport": "OOL",
+    "wikiTitle": "Gold Coast, Queensland",
+    "interestTags": [
+      "beaches",
+      "nightlife",
+      "family"
+    ],
+    "knownnessScore": 65,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Gold Coast",
+      "Gold Coast, Queensland"
+    ],
+    "searchTerms": [
+      "Gold Coast",
+      "Queensland",
+      "Australia"
+    ]
+  },
+  {
+    "name": "Byron Bay",
+    "country": "Australia",
+    "region": "New South Wales",
+    "destinationType": "Coastal town",
+    "nearestAirport": "BNK",
+    "wikiTitle": "Byron Bay, New South Wales",
+    "interestTags": [
+      "beaches",
+      "wellness",
+      "food"
+    ],
+    "knownnessScore": 60,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Byron Bay",
+      "Byron Bay, New South Wales"
+    ],
+    "searchTerms": [
+      "Byron Bay",
+      "New South Wales",
+      "Australia"
+    ]
+  },
+  {
+    "name": "Margaret River",
+    "country": "Australia",
+    "region": "Western Australia",
+    "destinationType": "Wine region",
+    "nearestAirport": "PER",
+    "wikiTitle": "Margaret River, Western Australia",
+    "interestTags": [
+      "wine",
+      "beaches",
+      "food"
+    ],
+    "knownnessScore": 40,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Margaret River",
+      "Margaret River, Western Australia"
+    ],
+    "searchTerms": [
+      "Margaret River",
+      "Western Australia",
+      "Australia"
+    ],
+    "heroFile": "Gralyn Winery, Margaret River, Australia.jpg"
+  },
+  {
+    "name": "Kangaroo Island",
+    "country": "Australia",
+    "region": "South Australia",
+    "destinationType": "Island",
+    "nearestAirport": "KGC",
+    "wikiTitle": "Kangaroo Island",
+    "interestTags": [
+      "wildlife",
+      "nature",
+      "food"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Kangaroo Island"
+    ],
+    "searchTerms": [
+      "Kangaroo Island",
+      "South Australia",
+      "Australia"
+    ]
+  },
+  {
+    "name": "Blue Mountains",
+    "country": "Australia",
+    "region": "New South Wales",
+    "destinationType": "Mountain region",
+    "nearestAirport": "SYD",
+    "wikiTitle": "Blue Mountains (New South Wales)",
+    "interestTags": [
+      "hiking",
+      "nature",
+      "mountains"
+    ],
+    "knownnessScore": 60,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Blue Mountains",
+      "Blue Mountains (New South Wales)"
+    ],
+    "searchTerms": [
+      "Blue Mountains",
+      "New South Wales",
+      "Australia"
+    ],
+    "heroFile": "Three Sisters, Blue Mountains (1).jpg"
+  },
+  {
+    "name": "Whitsunday Islands",
+    "country": "Australia",
+    "region": "Queensland",
+    "destinationType": "Island region",
+    "nearestAirport": "PPP",
+    "wikiTitle": "Whitsunday Islands",
+    "interestTags": [
+      "beaches",
+      "water",
+      "diving"
+    ],
+    "knownnessScore": 60,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Whitsunday Islands"
+    ],
+    "searchTerms": [
+      "Whitsunday Islands",
+      "Queensland",
+      "Australia"
+    ],
+    "heroFile": "Whitehaven Beach - Northern End.jpg",
+    "coordinates": [
+      -20.2683,
+      148.7181
+    ]
+  },
+  {
+    "name": "Rotorua",
+    "country": "New Zealand",
+    "region": "Bay of Plenty",
+    "destinationType": "Small city",
+    "nearestAirport": "ROT",
+    "wikiTitle": "Rotorua",
+    "interestTags": [
+      "culture",
+      "nature",
+      "wellness"
+    ],
+    "knownnessScore": 55,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Rotorua"
+    ],
+    "searchTerms": [
+      "Rotorua",
+      "Bay of Plenty",
+      "New Zealand"
+    ],
+    "heroFile": "ChampagnePool-Wai-O-Tapu rotated MC.jpg"
+  },
+  {
+    "name": "Bay of Islands",
+    "country": "New Zealand",
+    "region": "Northland",
+    "destinationType": "Coastal region",
+    "nearestAirport": "KKE",
+    "wikiTitle": "Bay of Islands",
+    "interestTags": [
+      "water",
+      "beaches",
+      "history"
+    ],
+    "knownnessScore": 40,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Bay of Islands"
+    ],
+    "searchTerms": [
+      "Bay of Islands",
+      "Northland",
+      "New Zealand"
+    ]
+  },
+  {
+    "name": "Wanaka",
+    "country": "New Zealand",
+    "region": "Otago",
+    "destinationType": "Lake town",
+    "nearestAirport": "ZQN",
+    "wikiTitle": "Wānaka",
+    "interestTags": [
+      "lakes",
+      "mountains",
+      "hiking"
+    ],
+    "knownnessScore": 40,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Wanaka",
+      "Wānaka"
+    ],
+    "searchTerms": [
+      "Wanaka",
+      "Otago",
+      "New Zealand"
+    ]
+  },
+  {
+    "name": "Abel Tasman",
+    "country": "New Zealand",
+    "region": "Tasman",
+    "destinationType": "National park",
+    "nearestAirport": "NSN",
+    "wikiTitle": "Abel Tasman National Park",
+    "interestTags": [
+      "hiking",
+      "beaches",
+      "nature"
+    ],
+    "knownnessScore": 40,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Abel Tasman",
+      "Abel Tasman National Park"
+    ],
+    "searchTerms": [
+      "Abel Tasman",
+      "Tasman",
+      "New Zealand"
+    ]
+  },
+  {
+    "name": "Nouméa",
+    "country": "New Caledonia",
+    "region": "South Province",
+    "destinationType": "City",
+    "nearestAirport": "NOU",
+    "wikiTitle": "Nouméa",
+    "interestTags": [
+      "beaches",
+      "food",
+      "diving"
+    ],
+    "knownnessScore": 25,
+    "costLevel": "upscale",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Nouméa",
+      "Noumea"
+    ],
+    "searchTerms": [
+      "Nouméa",
+      "South Province",
+      "New Caledonia"
+    ]
+  },
+  {
+    "name": "Port Vila",
+    "country": "Vanuatu",
+    "region": "Shefa",
+    "destinationType": "City",
+    "nearestAirport": "VLI",
+    "wikiTitle": "Port Vila",
+    "interestTags": [
+      "beaches",
+      "diving",
+      "culture"
+    ],
+    "knownnessScore": 25,
+    "costLevel": "moderate",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Port Vila"
+    ],
+    "searchTerms": [
+      "Port Vila",
+      "Shefa",
+      "Vanuatu"
+    ],
+    "heroFile": "Port Vila Harbour, Vanuatu (380280436).jpg"
+  },
+  {
+    "name": "Tirana",
+    "country": "Albania",
+    "region": "Tirana",
+    "destinationType": "City",
+    "nearestAirport": "TIA",
+    "wikiTitle": "Tirana",
+    "interestTags": [
+      "food",
+      "city",
+      "nightlife"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Tirana"
+    ],
+    "searchTerms": [
+      "Tirana",
+      "Tirana",
+      "Albania"
+    ]
+  },
+  {
+    "name": "Sarandë",
+    "country": "Albania",
+    "region": "Vlorë",
+    "destinationType": "Coastal town",
+    "nearestAirport": "TIA",
+    "wikiTitle": "Sarandë",
+    "interestTags": [
+      "beaches",
+      "history",
+      "food"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Sarandë",
+      "Sarande"
+    ],
+    "searchTerms": [
+      "Sarandë",
+      "Vlorë",
+      "Albania"
+    ]
+  },
+  {
+    "name": "Veliko Tarnovo",
+    "country": "Bulgaria",
+    "region": "Veliko Tarnovo",
+    "destinationType": "Historic town",
+    "nearestAirport": "SOF",
+    "wikiTitle": "Veliko Tarnovo",
+    "interestTags": [
+      "history",
+      "architecture",
+      "culture"
+    ],
+    "knownnessScore": 25,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Veliko Tarnovo"
+    ],
+    "searchTerms": [
+      "Veliko Tarnovo",
+      "Veliko Tarnovo",
+      "Bulgaria"
+    ],
+    "heroFile": "Tsarevets - Veliko Tarnovo - 2.jpg"
+  },
+  {
+    "name": "Cluj-Napoca",
+    "country": "Romania",
+    "region": "Cluj",
+    "destinationType": "City",
+    "nearestAirport": "CLJ",
+    "wikiTitle": "Cluj-Napoca",
+    "interestTags": [
+      "food",
+      "nightlife",
+      "culture"
+    ],
+    "knownnessScore": 30,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Cluj-Napoca"
+    ],
+    "searchTerms": [
+      "Cluj-Napoca",
+      "Cluj",
+      "Romania"
+    ]
+  },
+  {
+    "name": "Sighișoara",
+    "country": "Romania",
+    "region": "Mureș",
+    "destinationType": "Historic town",
+    "nearestAirport": "TGM",
+    "wikiTitle": "Sighișoara",
+    "interestTags": [
+      "history",
+      "architecture",
+      "culture"
+    ],
+    "knownnessScore": 35,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Sighișoara",
+      "Sighisoara"
+    ],
+    "searchTerms": [
+      "Sighișoara",
+      "Mureș",
+      "Romania"
+    ]
+  },
+  {
+    "name": "Novi Sad",
+    "country": "Serbia",
+    "region": "Vojvodina",
+    "destinationType": "City",
+    "nearestAirport": "BEG",
+    "wikiTitle": "Novi Sad",
+    "interestTags": [
+      "music",
+      "food",
+      "history"
+    ],
+    "knownnessScore": 30,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Novi Sad"
+    ],
+    "searchTerms": [
+      "Novi Sad",
+      "Vojvodina",
+      "Serbia"
+    ]
+  },
+  {
+    "name": "Prizren",
+    "country": "Kosovo",
+    "region": "Prizren",
+    "destinationType": "Historic town",
+    "nearestAirport": "PRN",
+    "wikiTitle": "Prizren",
+    "interestTags": [
+      "history",
+      "culture",
+      "mountains"
+    ],
+    "knownnessScore": 15,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Prizren"
+    ],
+    "searchTerms": [
+      "Prizren",
+      "Prizren",
+      "Kosovo"
+    ]
+  },
+  {
+    "name": "Skopje",
+    "country": "North Macedonia",
+    "region": "Skopje",
+    "destinationType": "City",
+    "nearestAirport": "SKP",
+    "wikiTitle": "Skopje",
+    "interestTags": [
+      "history",
+      "food",
+      "culture"
+    ],
+    "knownnessScore": 25,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo",
+      "family"
+    ],
+    "aliases": [
+      "Skopje"
+    ],
+    "searchTerms": [
+      "Skopje",
+      "Skopje",
+      "North Macedonia"
+    ]
+  },
+  {
+    "name": "Brno",
+    "country": "Czech Republic",
+    "region": "South Moravia",
+    "destinationType": "City",
+    "nearestAirport": "BRQ",
+    "wikiTitle": "Brno",
+    "interestTags": [
+      "food",
+      "architecture",
+      "nightlife"
+    ],
+    "knownnessScore": 25,
+    "costLevel": "affordable",
+    "travelerTypeTags": [
+      "couple",
+      "friends",
+      "solo"
+    ],
+    "aliases": [
+      "Brno"
+    ],
+    "searchTerms": [
+      "Brno",
+      "South Moravia",
+      "Czech Republic"
+    ],
+    "heroFile": "Brno, katedrála sv. Petra a Pavla.jpg"
+  }
+]

@@ -25,7 +25,11 @@ export async function POST(request) {
   // Launch destinations show only hand-verified restaurants.
   const verified = launchDinners(destination.id);
   if (verified.length) return Response.json({ restaurants: await withPlacePhotos(verified), source: "globtrek_launch_verified", availabilitySource: "not_requested" });
-  const curated = curatedRestaurants(destination.id || destination.airport).filter((restaurant) => body.spendStyle === "comfortable" || !pricey(restaurant.priceLevel));
+  // Tiered places: three cheap, three mid-range and three splurge tables, each
+  // with Google's live per-person price range, so the traveler sees the spread.
+  const all = curatedRestaurants(destination.id || destination.airport);
+  if (all.some((restaurant) => restaurant.tier)) return Response.json({ restaurants: await withPlacePhotos(all.slice(0, 9), { withPrice: true }), source: "globtrek_curated_google_places", tiered: true, availabilitySource: "not_requested" });
+  const curated = all.filter((restaurant) => body.spendStyle === "comfortable" || !pricey(restaurant.priceLevel));
   if (curated.length) return Response.json({ restaurants: await withPlacePhotos(curated.slice(0, 8)), source: "globtrek_curated_google_places", availabilitySource: "not_requested" });
   try {
     let restaurants = [];

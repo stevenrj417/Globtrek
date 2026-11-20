@@ -1,6 +1,8 @@
 import destinationCosts from "./pricing/destinationCosts.json" with { type: "json" };
 import feedStayCounts from "./feedStayCounts.json" with { type: "json" };
 import lodgingBands from "./lodgingPriceBands.json" with { type: "json" };
+import destinationMonthFactors from "./pricing/monthFactors.json" with { type: "json" };
+import perDiemLodging from "./pricing/perDiemLodging.json" with { type: "json" };
 const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 const COST_LEVELS = {
@@ -70,9 +72,46 @@ function goodValueAverage(low, high, fallback) {
   return roundMoney(minimum + (maximum - minimum) * 0.05);
 }
 
+// Government per diem lodging (scripts/pricing/fetch-per-diem-lodging.mjs): the
+// published most-allowed nightly rate for a business-standard hotel, by month,
+// from GSA in the US and the State Department abroad. Matched to the city's own
+// rate area, or the country's "Other" row / the state's standard rate.
+export function perDiemFor(destination) {
+  const rate = perDiemLodging[destination.id || destination.airport];
+  return rate?.lodgingByMonth?.length === 12 ? rate : null;
+}
+
+// GlobTrek's hand-reviewed budgets for 14 US cities put a clean, well-reviewed
+// budget room at a median 0.54 of that city's GSA lodging rate (most between 0.46
+// and 0.68). US places without a reviewed budget price their room this way, month
+// by month. Abroad the ratio swings with the country (0.16 to 0.39), so it is not used.
+export const GSA_BUDGET_ROOM_RATIO = 0.54;
+const gsaRoom = (rate) => (rate?.source === "gsa" && rate.matchType === "rate_area" ? rate.lodgingByMonth.map((night) => Math.round(night * GSA_BUDGET_ROOM_RATIO)) : null);
+
+const PER_DIEM_SOURCE = { gsa: "U.S. General Services Administration (GSA) lodging rate", state_department: "U.S. State Department lodging rate" };
+
+// A city's own per diem rate that changes through the year is a published
+// seasonal price: it shapes the month-to-month swing ahead of the climate model.
+function perDiemShape(rate) {
+  if (!rate || rate.matchType !== "city" && rate.matchType !== "rate_area") return null;
+  const nights = rate.lodgingByMonth;
+  if (new Set(nights).size < 2) return null;
+  const mean = nights.reduce((sum, value) => sum + value, 0) / 12;
+  return nights.map((value) => value / mean);
+}
+
 function monthFactors(destination) {
+  const published = perDiemShape(perDiemFor(destination));
+  if (published) return published;
+  const own = destinationMonthFactors.destinations?.[destination.id]?.factors;
+  if (own?.length === 12) return own;
   if (destination.climateProfile?.zone === "tropical") return TROPICAL_MONTH_FACTORS;
   return destination.seasonality?.hemisphere === "southern" ? SOUTHERN_MONTH_FACTORS : NORTHERN_MONTH_FACTORS;
+}
+
+function perDiemPeaks(nights, pick) {
+  const target = pick(...nights);
+  return nights.map((value, index) => (value === target ? MONTH_NAMES[index].slice(0, 3) : null)).filter(Boolean);
 }
 
 export function buildDestinationPlanningAverages(destination = {}) {
@@ -93,10 +132,15 @@ export function buildDestinationPlanningAverages(destination = {}) {
     localTransportDay: city.localTransportDay ?? goodValueAverage(profile.transportDailyLow, profile.transportDailyHigh, fallback.localTransportDay),
   };
   const factors = monthFactors(destination);
+  const perDiem = perDiemFor(destination);
+  const shaped = Boolean(perDiemShape(perDiem));
+  const usRoom = editorial ? null : gsaRoom(perDiem);
   return {
     currency: "USD",
     hotelStandard: "Clean, well-reviewed budget hotel or simple three-star",
-    basis: local
+    basis: usRoom
+      ? `Room: ${Math.round(GSA_BUDGET_ROOM_RATIO * 100)}% of the GSA lodging rate for ${perDiem.area} each month, the share GlobTrek's reviewed US city budgets pay for a good-value room.${local ? ` Food modeled from ${local.restaurants} local restaurants' price ranges on Google Maps (checked ${local.checkedAt}).` : ""} Not a live quote.`
+      : local
       ? `Modeled from ${local.restaurants} local restaurants' price ranges on Google Maps (checked ${local.checkedAt}) and the country price level (World Bank); typical error about ${local.area ? `${AREA_LODGING_ERROR_PCT}% for lodging outside cities` : "20%"}. Not a live quote.`
       : band
         ? `Lodging: typical nightly price for a well-reviewed budget hotel, an estimated yearly average for a regional price band shared by ${band.sharedBy} places on GlobTrek's destination list.${meals ? ` Food modeled from ${meals.restaurants} local restaurants' price ranges on Google Maps (checked ${meals.checkedAt}).` : ""} Not a live quote.`
@@ -107,21 +151,29 @@ export function buildDestinationPlanningAverages(destination = {}) {
     // local prices; "price_band": regional lodging band plus observed local
     // meal prices; "price_band_partial": the band without local meal prices;
     // "tier": a price-tier default only.
-    model: editorial ? "city" : local ? "local_prices" : band ? (meals ? "price_band" : "price_band_partial") : "tier",
+    // "us_lodging_rate": the room from the GSA rate (see GSA_BUDGET_ROOM_RATIO).
+    model: editorial ? "city" : usRoom ? "us_lodging_rate" : local ? "local_prices" : band ? (meals ? "price_band" : "price_band_partial") : "tier",
     lodgingBand: band,
     localPrices: local ? { checkedAt: local.checkedAt, restaurants: local.restaurants, meal: local.meal, foodDay: local.foodDay, lodging: local.lodging, activity: local.activity } : null,
     airportTransferPerPerson: Number(city.airportTransferPerPerson) || 0,
     lodgingTaxRate: Number(city.lodgingTaxRate) || 0,
     costLevel: level,
-    source: local ? "globtrek_local_prices_v1" : band ? "globtrek_destination_list_price_band" : profile.source || "globtrek_city_budget_baseline_v1",
-    confidence: local ? (local.area ? 0.4 : 0.5) : band ? 0.3 : Math.max(0.3, Number(profile.confidence) || 0.4),
+    source: usRoom ? "globtrek_gsa_lodging_rate_v1" : local ? "globtrek_local_prices_v1" : band ? "globtrek_destination_list_price_band" : profile.source || "globtrek_city_budget_baseline_v1",
+    confidence: usRoom ? 0.5 : local ? (local.area ? 0.4 : 0.5) : band ? 0.3 : Math.max(0.3, Number(profile.confidence) || 0.4),
+    // Month-to-month swing modeled from this place's own weather and holiday months
+    // (scripts/pricing/build-month-factors.mjs), when its climate is on file.
+    // The standard-hotel rate is shown beside the good-value room; in the US it is
+    // also the comfortable traveler's room (GSA sets it from mid-range hotels).
+    standardHotel: perDiem ? { source: perDiem.source, label: PER_DIEM_SOURCE[perDiem.source], area: perDiem.area, matchType: perDiem.matchType, checkedAt: perDiem.fetchedAt } : null,
+    seasonality: shaped ? { source: "government_lodging_rates", peakMonths: perDiemPeaks(perDiem.lodgingByMonth, Math.max), cheapestMonths: perDiemPeaks(perDiem.lodgingByMonth, Math.min) } : destinationMonthFactors.destinations?.[destination.id] ? { source: "local_climate_model", peakMonths: destinationMonthFactors.destinations[destination.id].peakMonths, cheapestMonths: destinationMonthFactors.destinations[destination.id].cheapestMonths } : { source: "hemisphere_curve" },
     monthly: MONTH_NAMES.map((monthName, index) => ({
       month: index + 1,
       monthName,
-      hotelNight: roundMoney(baseline.hotelNight * factors[index]),
+      hotelNight: usRoom ? usRoom[index] : roundMoney(baseline.hotelNight * factors[index]),
       foodPerPersonDay: baseline.foodDay,
       activitiesPerPersonDay: baseline.activitiesDay,
       localTransportDay: baseline.localTransportDay,
+      ...(perDiem ? { standardHotelNight: perDiem.lodgingByMonth[index] } : {}),
     })),
   };
 }

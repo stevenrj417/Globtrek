@@ -112,6 +112,30 @@ export function dormOnly(property) {
   return !rooms.some((room) => !SHARED_SLEEPING.test(room));
 }
 
+// Price tier from what the property is, since per-night prices are rarely known:
+// hostels, capsules, motels and 1–2 star places are budget; 4–5 star places are
+// upscale; three-star hotels, inns, lodges and B&Bs sit in between.
+const BUDGET_TYPES = new Set(["Hostel", "Capsule hotel", "Motel"]);
+export function stayTier(property) {
+  const stars = Number(property.starRating) || 0;
+  const type = stayType(property);
+  if (property.dorms || BUDGET_TYPES.has(type) || (stars > 0 && stars <= 2) || (type === "Guest house" && !stars)) return "budget";
+  if (stars >= 4) return "upscale";
+  return "mid";
+}
+
+// Three more stays at each price tier, best match first, after the main three.
+function staysByTier(ranked, choices) {
+  const taken = new Set(choices.map((choice) => choice.bookingUrl));
+  const tiers = { budget: [], mid: [], upscale: [] };
+  for (const property of ranked) {
+    if (taken.has(property.bookingUrl)) continue;
+    const list = tiers[stayTier(property)];
+    if (list.length < 3) list.push({ ...property, tier: stayTier(property) });
+  }
+  return tiers;
+}
+
 export function buildStayShortlist({ candidates, profile, destination, budgetPlan, accessibleOnly = false, now = Date.now() }) {
   const month = budgetPlan?.lodging?.month ?? null;
   const context = { ...profile, hotelBudget: budgetPlan?.hotelBudget };
@@ -138,5 +162,5 @@ export function buildStayShortlist({ candidates, profile, destination, budgetPla
   const notice = finished.length >= 3 ? null : finished.length
     ? `Only ${plural(finished.length, "stay")} ${finished.length === 1 ? "fits" : "fit"} this trip${accessibleOnly ? " with accessibility details listed" : ""}.`
     : accessibleOnly ? "No stay here lists accessibility features. Check with Booking.com directly." : "No stays fit this trip yet.";
-  return { choices: finished, notice, considered: pool.length };
+  return { choices: finished, notice, considered: pool.length, tiers: staysByTier(ranked, finished) };
 }

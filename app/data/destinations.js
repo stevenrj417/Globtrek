@@ -129,7 +129,7 @@ const legacyDestinations = catalog.map(([city, country, airport, photo, style, s
 }));
 
 function titleTag(value) { return String(value || "").replace(/(^|_)\w/g, (match) => match.replace("_", " ").toUpperCase()); }
-const verifiedExpansion = [...(verifiedBatch01.records || verifiedBatch01), ...(verifiedBatch02.records || verifiedBatch02), ...(verifiedBatch03.records || verifiedBatch03), ...(verifiedBatch04.records || verifiedBatch04), ...verifiedBatch05.records]
+const verifiedExpansion = [...(verifiedBatch01.records || verifiedBatch01), ...(verifiedBatch02.records || verifiedBatch02), ...(verifiedBatch03.records || verifiedBatch03), ...(verifiedBatch04.records || verifiedBatch04), ...verifiedBatch05.records, ...verifiedBatch06.records]
   .filter((item) => !(item.name === "Marrakesh" && item.country === "Morocco"))
   .map((item) => ({
   id: item.id,
@@ -340,6 +340,7 @@ import verifiedBatch02 from "../../scripts/destinations/verified-batch-02.json" 
 import verifiedBatch03 from "../../scripts/destinations/verified-batch-03.json" with { type: "json" };
 import verifiedBatch04 from "../../scripts/destinations/verified-batch-04.json" with { type: "json" };
 import verifiedBatch05 from "../../scripts/destinations/verified-batch-05.json" with { type: "json" };
+import verifiedBatch06 from "../../scripts/destinations/verified-batch-06.json" with { type: "json" };
 import OUTCOME_INDEX from "./destinationOutcomeIndex.json" with { type: "json" };
 import { enrichDestinationIntelligence } from "./destinationIntelligence.js";
 import { applyBudgetEditorial } from "./budgetDestinations.js";

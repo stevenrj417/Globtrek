@@ -85,7 +85,11 @@ function planForStyle(profile, destination, options = {}) {
   const style = SPEND_STYLE_FACTORS[profile.spendStyle] || SPEND_STYLE_FACTORS.value;
   const cityAverage = {
     ...baseCityAverage,
-    hotelNight: baseCityAverage.hotelNight * style.hotel,
+    // A comfortable US stay is priced at the GSA lodging rate for the month, which
+    // GSA sets from mid-range hotel prices in that rate area.
+    hotelNight: profile.spendStyle === "comfortable" && destination.planningAverages?.standardHotel?.source === "gsa" && baseCityAverage.standardHotelNight > 0
+      ? Math.max(baseCityAverage.standardHotelNight, baseCityAverage.hotelNight * style.hotel)
+      : baseCityAverage.hotelNight * style.hotel,
     foodPerPersonDay: baseCityAverage.foodPerPersonDay * style.food,
     activitiesPerPersonDay: baseCityAverage.activitiesPerPersonDay * style.activities,
   };
