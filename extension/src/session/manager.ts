@@ -71,7 +71,7 @@ export function createSession(trip: TripPayload, { origin, sourceTabId, dev = fa
       affiliate: classified.affiliate,
       fixture: classified.fixture,
       autofill: allowed,
-      autofillNote: adapter && !allowed ? adapter.policy.reason : adapter ? null : `GlobTrek doesn't fill forms on ${classified.partner.name}. Use the copy buttons.`,
+      autofillNote: adapter && !allowed ? (adapter.policy.reason ?? "Use the copy buttons for this booking.") : adapter ? null : `GlobTrek doesn't fill forms on ${classified.partner.name}. Use the copy buttons.`,
       status: "not_started",
       tabId: null,
       note: null,

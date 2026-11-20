@@ -26,13 +26,12 @@ test("a session keeps exact URLs, knows each partner, and applies partner policy
   assert.equal(byId["hotel-0"]!.url, CJ_HOTEL, "CJ link untouched");
   assert.equal(byId["hotel-0"]!.partnerName, "Booking.com");
   assert.equal(byId["hotel-0"]!.affiliate, true);
-  assert.equal(byId["hotel-0"]!.autofill, false, "Booking.com autofill is off pending written permission");
-  assert.match(byId["hotel-0"]!.autofillNote!, /fill in its forms yourself/);
+  assert.equal(byId["hotel-0"]!.autofill, true, "Booking.com guest details are filled (owner's decision, 2026-11-20)");
   assert.equal(byId["flight-0"]!.partnerName, "Booking.com", "Booking.com Flights via CJ: deep link + copy");
   assert.equal(byId["experience-0"]!.autofill, true);
-  assert.equal(byId["restaurant-0"]!.autofill, false);
+  assert.equal(byId["restaurant-0"]!.autofill, true);
   assert.ok(session.items.every((item) => item.status === "not_started"));
-  assert.deepEqual(session.requiredFields.sort(), ["activity.comments", "contact.email", "contact.phoneCountryCode", "contact.phoneNational", "lead.firstName", "lead.lastName"]);
+  assert.deepEqual(session.requiredFields.sort(), ["activity.comments", "contact.email", "contact.phone", "contact.phoneCountryCode", "contact.phoneNational", "dining.specialRequests", "lead.firstName", "lead.lastName", "stay.specialRequests"]);
 });
 
 function report(partial: Partial<FillReport>): FillReport {

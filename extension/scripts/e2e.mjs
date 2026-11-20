@@ -185,7 +185,11 @@ try {
   for (const url of expected) assert.ok(opened.includes(url), `tab opened with exact URL ${url}`);
   step("Every booking opens from one click on the booking page", `${expected.length} tabs, URLs identical to GlobTrek's (CJ tracking intact)`);
   await site.bringToFront();
-  await waitText(site, "Assistant: Opened", 10000);
+  await waitText(site, "Assistant: Opened", 10000).catch(async (error) => {
+    const items = await sw.evaluate(async () => Object.values((await chrome.storage.local.get("sessions")).sessions)[0].items.map(({ name, status, note, autofill }) => ({ name, status, note, autofill })));
+    const shown = await site.evaluate(() => [...document.body.innerText.matchAll(/Assistant:[^\n]*/g)].map((m) => m[0]));
+    throw new Error(`Site status not shown. Items: ${JSON.stringify(items)} Site: ${JSON.stringify(shown)}`, { cause: error });
+  });
   await site.$eval("#booking-center details", (el) => { el.open = false; }).catch(() => {});
   await site.$eval("#booking-center", (el) => el.scrollIntoView({ block: "start" }));
   await site.evaluate(() => window.scrollBy(0, -96));
@@ -201,13 +205,15 @@ try {
   await waitText(sessionPage, "Before anything opens");
   await sessionPage.screenshot({ path: join(shots, "02-before-anything-opens.png") });
   await audit(sessionPage, "assistant: trip before opening");
+  // Chrome's site-access prompt is native UI automation can't answer: act as a traveler who declines it.
+  await sessionPage.evaluate(() => { chrome.permissions.request = async () => false; });
   await clickText(sessionPage, "button", "Open everything");
   await sessionPage.bringToFront();
   await sessionPage.waitForFunction(() => document.body.textContent.includes("Ready to pay") && document.body.textContent.includes("Ready to review"), { timeout: 20000, polling: 250 });
   await sessionPage.evaluate(() => window.scrollTo(0, 0));
   await sessionPage.screenshot({ path: join(shots, "01-trip-checklist.png") });
   await audit(sessionPage, "assistant: trip checklist with statuses");
-  step("Showcase trip: copy-only partners opened, GetYourGuide filled, payment step stopped", "store screenshots 01 and 02");
+  step("Showcase trip: Booking.com and OpenTable opened, GetYourGuide filled, payment step stopped", "store screenshots 01 and 02");
 
   // ---------- 5. Fill on sanitized fixtures; stop before payment
   await sessionPage.bringToFront();

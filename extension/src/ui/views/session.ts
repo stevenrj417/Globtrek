@@ -165,7 +165,7 @@ export async function renderSession({ root, state, navigate }: ViewContext, sess
       h("h2", { id: "preflight", class: "title" }, "Before anything opens"),
       partners.length
         ? h("p", { class: "small muted" }, `These details will be typed into ${partners.join(", ")} — only on pages you open, and only into the form you're looking at:`)
-        : h("p", { class: "small muted" }, "None of this trip's partners allow automated filling, so nothing will be typed for you. Each booking opens with GlobTrek's exact link, and copy buttons put your details one click away."),
+        : h("p", { class: "small muted" }, "None of this trip's bookings have a form the assistant fills, so nothing will be typed for you. Each booking opens with GlobTrek's exact link, and copy buttons put your details one click away."),
       partners.length ? h("dl", { class: "grid-2 small", style: "margin: 0" }, keys.map((key) => h("div", null,
         h("dt", { class: "subtle" }, FIELD_LABELS[key]),
         h("dd", { style: "margin: 2px 0 0" }, values[key] ? values[key] : h("span", { class: "subtle" }, "Not in your profile — left blank")),

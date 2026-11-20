@@ -9,7 +9,7 @@ export const NAME = "GlobTrek One Tab Booking Assistant";
 export const DESCRIPTION = "Open every booking from your GlobTrek trip and fill your details where partners allow. You review and pay on their site.";
 
 /** Partner origins whose adapters are enabled (kept in sync with src/adapters by tests/manifest.test.ts). */
-export const ENABLED_PARTNER_ORIGINS = ["https://www.getyourguide.com/*"];
+export const ENABLED_PARTNER_ORIGINS = ["https://www.booking.com/*", "https://secure.booking.com/*", "https://www.getyourguide.com/*", "https://www.opentable.com/*", "https://www.opentable.co.uk/*", "https://www.opentable.ca/*", "https://www.opentable.com.au/*", "https://www.opentable.de/*", "https://www.opentable.ie/*"];
 
 export function buildManifest({ version, dev }) {
   if (DESCRIPTION.length > 132) throw new Error("Chrome Web Store descriptions must be 132 characters or fewer");

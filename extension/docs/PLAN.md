@@ -12,7 +12,7 @@
 1. The website stays the source of truth for *what* to book. It sends the extension only the checklist's exact URLs plus destination, dates and party size, through a content-script bridge on `www.glob-trek.com` (`app/lib/booking/assistant.js` ↔ `extension/src/content/bridge.ts`). The extension re-validates everything (`extension/src/shared/schema.ts`).
 2. Traveler details are entered **inside the extension** and never touch the website.
 3. Adapters are **data** (hosts, page rules, selectors); one engine fills; nothing clicks or submits.
-4. Partner terms decide whether an adapter is on (see `PARTNERS.md`). Off means: exact deep link + copy buttons.
+4. Each adapter has an on/off switch (see `PARTNERS.md` for each partner's terms and the decision). Off means: exact deep link + copy buttons.
 5. The site shows statuses (never details) on the same checklist, so GlobTrek stays the central page.
 
 ## Order followed

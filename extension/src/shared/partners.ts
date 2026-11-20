@@ -19,7 +19,7 @@ export interface PartnerInfo {
 export const PARTNERS: readonly PartnerInfo[] = [
   { id: "booking", name: "Booking.com", domains: ["booking.com"], originPatterns: ["https://www.booking.com/*", "https://secure.booking.com/*"], hasAdapter: true },
   { id: "getyourguide", name: "GetYourGuide", domains: ["getyourguide.com"], originPatterns: ["https://www.getyourguide.com/*"], hasAdapter: true },
-  { id: "opentable", name: "OpenTable", domains: ["opentable.com", "opentable.co.uk", "opentable.ca", "opentable.com.au", "opentable.de", "opentable.ie", "opentable.jp", "opentable.com.mx"], originPatterns: ["https://www.opentable.com/*"], hasAdapter: true },
+  { id: "opentable", name: "OpenTable", domains: ["opentable.com", "opentable.co.uk", "opentable.ca", "opentable.com.au", "opentable.de", "opentable.ie", "opentable.jp", "opentable.com.mx"], originPatterns: ["https://www.opentable.com/*", "https://www.opentable.co.uk/*", "https://www.opentable.ca/*", "https://www.opentable.com.au/*", "https://www.opentable.de/*", "https://www.opentable.ie/*"], hasAdapter: true },
   // GlobTrek's own (future) Duffel-powered checkout; the site is already a content-script host.
   { id: "globtrek-flights", name: "GlobTrek flight checkout", domains: ["glob-trek.com"], originPatterns: [], hasAdapter: true },
   { id: "reservation-platform", name: "Restaurant reservation site", domains: ["resy.com", "exploretock.com", "sevenrooms.com", "thefork.com", "thefork.co.uk", "thefork.it", "thefork.fr", "thefork.es", "quandoo.com", "quandoo.de", "quandoo.co.uk"], originPatterns: [], hasAdapter: false },

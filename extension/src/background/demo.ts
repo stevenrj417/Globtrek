@@ -18,7 +18,7 @@ export const DEMO_TRIP: TripPayload = {
 
 // Development builds only, for store screenshots: production behaviour on a realistic
 // trip. The stay and dinner use real partner links (Booking.com via GlobTrek's CJ link,
-// OpenTable) whose autofill is off; the activity uses the GetYourGuide fixture.
+// OpenTable); the activity uses the GetYourGuide fixture.
 export const SHOWCASE_TRIP: TripPayload = {
   tripId: "dev-showcase",
   destination: { city: "Lisbon", country: "Portugal" },

@@ -2,7 +2,7 @@
 
 Chrome Web Store: https://chromewebstore.google.com/detail/globtrek-one-tab-booking/bokbebgaaaclmamhmcmkebbjdbbddoao
 
-Manifest V3 extension that books a GlobTrek trip from one tab: it opens each booking GlobTrek selected, fills the traveler's own details where the partner allows it, tracks status, and stops before payment. Works with `www.glob-trek.com`'s booking checklist (`app/components/BookingChecklist.jsx` → `BookingAssistant.jsx`).
+Manifest V3 extension that books a GlobTrek trip from one tab: it opens each booking GlobTrek selected, fills the traveler's name, email and phone on Booking.com hotels, OpenTable and GetYourGuide, tracks status, and stops before payment. Works with `www.glob-trek.com`'s booking checklist (`app/components/BookingChecklist.jsx` → `BookingAssistant.jsx`).
 
 - Plan: [`docs/PLAN.md`](docs/PLAN.md)
 - Partners, terms and field matrix: [`docs/PARTNERS.md`](docs/PARTNERS.md)

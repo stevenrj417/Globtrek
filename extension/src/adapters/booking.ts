@@ -2,23 +2,21 @@ import type { Adapter } from "./types.ts";
 
 // Booking.com accommodation checkout ("Enter your details" step of book.html).
 //
-// DISABLED on the live site. Booking.com's Customer Terms of Service (A15.2,
-// reviewed 2026-11-09, US page updated 25 Aug 2025) say Booking.com "does not
-// authorize the use of automated means", explicitly including automated
-// assistants that operate through the customer's browser, "to make bookings or
-// reservations" without its prior written permission. Until GlobTrek has that
-// permission in writing, travelers get the exact CJ deep link plus copy buttons.
-// The field map below is kept, versioned and tested against sanitized fixtures so
-// the adapter can be switched on the day permission is granted — after its
-// selectors are re-verified on a live checkout by a person.
+// ENABLED on the live site by the owner's decision (2026-11-20), knowing that
+// Booking.com's Customer Terms (A15.2) say it "does not authorize the use of
+// automated means", including browser assistants, "to make bookings or
+// reservations" without prior written permission. The assistant only fills the
+// traveler's own details on the "Enter your details" step after the traveler
+// asks; it never chooses a room, ticks terms, submits, or touches payment.
+// Selectors are tested against sanitized fixtures; re-check them on a live
+// checkout when Booking.com changes its form.
 export const bookingAdapter: Adapter = {
   id: "booking",
   name: "Booking.com",
   selectorsVersion: "2026-11-09.1",
   hosts: ["www.booking.com", "secure.booking.com"],
   policy: {
-    autofill: false,
-    reason: "Booking.com asks that you fill in its forms yourself, so your details are one click away below.",
+    autofill: true,
     termsUrl: "https://www.booking.com/content/terms.html",
     reviewedOn: "2026-11-09",
   },
@@ -35,12 +33,7 @@ export const bookingAdapter: Adapter = {
     { key: "contact.email", selectors: ["input#email", "input[name='email']", "input[autocomplete='email']:not([name*='confirm'])"] },
     { key: "contact.email", selectors: ["input#email_confirm", "input[name='email_confirm']"] },
     { key: "contact.phone", selectors: ["input#phone", "input[name='phone']", "input[autocomplete='tel']"] },
-    { key: "contact.addressLine1", selectors: ["input#address1", "input[name='address1']", "input[autocomplete='address-line1']"], optional: true },
-    { key: "contact.city", selectors: ["input#city", "input[name='city']", "input[autocomplete='address-level2']"], optional: true },
-    { key: "contact.postalCode", selectors: ["input#zip", "input[name='zip']", "input[autocomplete='postal-code']"], optional: true },
-    { key: "contact.country", selectors: ["select#cc1", "select[name='cc1']", "select[autocomplete='country']"], control: "select", match: "country", optional: true },
     { key: "stay.specialRequests", selectors: ["textarea#remarks", "textarea[name='remarks']"], control: "textarea", optional: true },
-    { key: "stay.arrivalHour", selectors: ["select#checkin_eta_hour", "select[name='checkin_eta_hour']"], control: "select", match: "hour", optional: true },
   ],
   unsupported: [
     { label: "Room selection and price", reason: "You choose the room and see the live price on Booking.com." },
