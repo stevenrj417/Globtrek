@@ -133,6 +133,25 @@ const COUNTRIES = {
   SAMOA: { state: "Samoa", uk: "samoa", name: "Samoa" },
   VANUATU: { state: "Vanuatu", uk: "vanuatu", name: "Vanuatu" },
   PALAU: { state: "Palau", uk: "palau", name: "Palau" },
+  // Sixth destination batch: these GOV.UK pages were fetched and returned 200 on 2026-11-20.
+  NICARAGUA: { state: "Nicaragua", uk: "nicaragua", name: "Nicaragua" },
+  "EL SALVADOR": { state: "ElSalvador", uk: "el-salvador", name: "El Salvador" },
+  "SAINT LUCIA": { uk: "st-lucia", name: "Saint Lucia" },
+  GRENADA: { state: "Grenada", uk: "grenada", name: "Grenada" },
+  "ANTIGUA AND BARBUDA": { uk: "antigua-and-barbuda", name: "Antigua and Barbuda" },
+  "TURKS AND CAICOS ISLANDS": { uk: "turks-and-caicos-islands", name: "Turks and Caicos Islands" },
+  "CAYMAN ISLANDS": { uk: "cayman-islands", name: "Cayman Islands" },
+  MARTINIQUE: { uk: "martinique", name: "Martinique (France)" },
+  "CAPE VERDE": { uk: "cape-verde", name: "Cabo Verde" },
+  GAMBIA: { uk: "the-gambia", name: "The Gambia" },
+  MOZAMBIQUE: { state: "Mozambique", uk: "mozambique", name: "Mozambique" },
+  MALAWI: { state: "Malawi", uk: "malawi", name: "Malawi" },
+  ZAMBIA: { state: "Zambia", uk: "zambia", name: "Zambia" },
+  "RÉUNION": { uk: "reunion", name: "Réunion (France)" },
+  MONGOLIA: { state: "Mongolia", uk: "mongolia", name: "Mongolia" },
+  AZERBAIJAN: { state: "Azerbaijan", uk: "azerbaijan", name: "Azerbaijan" },
+  "NEW CALEDONIA": { uk: "new-caledonia", name: "New Caledonia (France)" },
+  KOSOVO: { state: "Kosovo", uk: "kosovo", name: "Kosovo" },
 };
 
 export function travelInfoFor(country) {

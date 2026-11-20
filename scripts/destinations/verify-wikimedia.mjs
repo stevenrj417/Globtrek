@@ -28,11 +28,14 @@ export async function verifyCandidate(candidate, fetchImpl = fetch) {
   wiki.search = new URLSearchParams({ action: "query", format: "json", formatversion: "2", redirects: "1", prop: "coordinates|pageimages|info", inprop: "url", piprop: "name|original", titles: candidate.wikiTitle });
   const data = await json(wiki, fetchImpl);
   const page = data.query?.pages?.[0];
-  const coordinate = page?.coordinates?.[0];
-  if (!page || page.missing || !coordinate || !page.pageimage || !page.fullurl) throw new Error("destination_or_hero_not_verified");
+  // A seed may name its hero file and coordinates by hand when the article has
+  // no lead photo or no coordinates (still checked against Commons below).
+  const coordinate = candidate.coordinates ? { lat: candidate.coordinates[0], lon: candidate.coordinates[1] } : page?.coordinates?.[0];
+  const heroFile = candidate.heroFile || page?.pageimage;
+  if (!page || page.missing || !coordinate || !heroFile || !page.fullurl) throw new Error("destination_or_hero_not_verified");
 
   const commons = new URL("https://commons.wikimedia.org/w/api.php");
-  commons.search = new URLSearchParams({ action: "query", format: "json", formatversion: "2", prop: "imageinfo", iiprop: "url|size|extmetadata", titles: `File:${page.pageimage}` });
+  commons.search = new URLSearchParams({ action: "query", format: "json", formatversion: "2", prop: "imageinfo", iiprop: "url|size|extmetadata", titles: `File:${heroFile}` });
   const media = (await json(commons, fetchImpl)).query?.pages?.[0]?.imageinfo?.[0];
   const metadata = media?.extmetadata || {};
   const licenseName = stripHtml(metadata.LicenseShortName?.value);

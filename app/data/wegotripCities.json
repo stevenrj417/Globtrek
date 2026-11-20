@@ -1,6 +1,6 @@
 {
  "source": "WeGoTrip public API v2",
- "checkedAt": "2026-11-11",
+ "checkedAt": "2026-11-20",
  "cities": {
   "KIX": {
    "id": 1857910,
@@ -28,14 +28,14 @@
    "name": "Bangkok",
    "slug": "bangkok",
    "country": "Thailand",
-   "items": 4
+   "items": 5
   },
   "SIN": {
    "id": 1880252,
    "name": "Singapore",
    "slug": "singapore",
    "country": "Singapore",
-   "items": 14
+   "items": 15
   },
   "HAN": {
    "id": 1581130,
@@ -70,7 +70,7 @@
    "name": "Paris",
    "slug": "paris",
    "country": "France",
-   "items": 113
+   "items": 115
   },
   "FCO": {
    "id": 3169070,
@@ -105,7 +105,7 @@
    "name": "Barcelona",
    "slug": "barcelona",
    "country": "Spain",
-   "items": 70
+   "items": 69
   },
   "LHR": {
    "id": 2643743,
@@ -119,7 +119,7 @@
    "name": "New York City",
    "slug": "new-york-city",
    "country": "United States",
-   "items": 47
+   "items": 48
   },
   "MEX": {
    "id": 3530597,
@@ -357,14 +357,14 @@
    "name": "Athens",
    "slug": "athens",
    "country": "Greece",
-   "items": 14
+   "items": 15
   },
   "amsterdam-fb61c": {
    "id": 2759794,
    "name": "Amsterdam",
    "slug": "amsterdam",
    "country": "Netherlands",
-   "items": 66
+   "items": 68
   },
   "prague-1fef4": {
    "id": 3067696,
@@ -378,21 +378,21 @@
    "name": "Vienna",
    "slug": "vienna",
    "country": "Austria",
-   "items": 32
+   "items": 33
   },
   "istanbul-d7153": {
    "id": 745044,
    "name": "Istanbul",
    "slug": "istanbul",
    "country": "Turkey",
-   "items": 15
+   "items": 12
   },
   "los-angeles-76868": {
    "id": 5368361,
    "name": "Los Angeles",
    "slug": "los-angeles-5368361",
    "country": "United States",
-   "items": 14
+   "items": 12
   },
   "las-vegas-76868": {
    "id": 5506956,
@@ -413,7 +413,7 @@
    "name": "Berlin",
    "slug": "berlin",
    "country": "Germany",
-   "items": 81
+   "items": 82
   },
   "cancun-41937": {
    "id": 3531673,
@@ -483,7 +483,7 @@
    "name": "Granada",
    "slug": "granada-2517117",
    "country": "Spain",
-   "items": 6
+   "items": 8
   },
   "palermo-ad79e": {
    "id": 2523920,
@@ -532,7 +532,7 @@
    "name": "Monaco",
    "slug": "monaco",
    "country": "Monaco",
-   "items": 2
+   "items": 3
   },
   "aspen-76868": {
    "id": 5412230,
@@ -588,7 +588,7 @@
    "name": "Stockholm",
    "slug": "stockholm",
    "country": "Sweden",
-   "items": 11
+   "items": 13
   },
   "munich-17d53": {
    "id": 2867714,
@@ -609,7 +609,7 @@
    "name": "Abu Dhabi",
    "slug": "abu-dhabi",
    "country": "United Arab Emirates",
-   "items": 12
+   "items": 11
   },
   "chicago-76868": {
    "id": 4887398,
@@ -658,7 +658,7 @@
    "name": "Boston",
    "slug": "boston-4930956",
    "country": "United States",
-   "items": 11
+   "items": 10
   },
   "shanghai-d2eaf": {
    "id": 1796236,
@@ -875,7 +875,7 @@
    "name": "Dresden",
    "slug": "dresden",
    "country": "Germany",
-   "items": 5
+   "items": 6
   },
   "rotterdam-fb61c": {
    "id": 2747891,
@@ -1093,6 +1093,181 @@
    "slug": "johannesburg",
    "country": "South Africa",
    "items": 1
+  },
+  "philadelphia-76868": {
+   "id": 4560349,
+   "name": "Philadelphia",
+   "slug": "philadelphia-4560349",
+   "country": "United States",
+   "items": 2
+  },
+  "vilnius-74a78": {
+   "id": 593116,
+   "name": "Vilnius",
+   "slug": "vilnius",
+   "country": "Lithuania",
+   "items": 3
+  },
+  "krakow-5ff03": {
+   "id": 3094802,
+   "name": "Kraków",
+   "slug": "krakow",
+   "country": "Poland",
+   "items": 13
+  },
+  "naxos-4902a": {
+   "id": 256632,
+   "name": "Náxos",
+   "slug": "naxos",
+   "country": "Greece",
+   "items": 1
+  },
+  "samarkand-db800": {
+   "id": 1216265,
+   "name": "Samarkand",
+   "slug": "samarkand",
+   "country": "Uzbekistan",
+   "items": 1
+  },
+  "auckland-a2238": {
+   "id": 2193733,
+   "name": "Auckland",
+   "slug": "auckland",
+   "country": "New Zealand",
+   "items": 2
+  },
+  "key-west-76868": {
+   "id": 4160812,
+   "name": "Key West",
+   "slug": "key-west",
+   "country": "United States",
+   "items": 3
+  },
+  "minneapolis-76868": {
+   "id": 5037649,
+   "name": "Minneapolis",
+   "slug": "minneapolis",
+   "country": "United States",
+   "items": 1
+  },
+  "denver-76868": {
+   "id": 5419384,
+   "name": "Denver",
+   "slug": "denver",
+   "country": "United States",
+   "items": 5
+  },
+  "niagara-falls-cd6a7": {
+   "id": 6087892,
+   "name": "Niagara Falls",
+   "slug": "niagara-falls",
+   "country": "Canada",
+   "items": 7
+  },
+  "puebla-41937": {
+   "id": 3521081,
+   "name": "Puebla",
+   "slug": "puebla",
+   "country": "Mexico",
+   "items": 2
+  },
+  "cozumel-41937": {
+   "id": 3530103,
+   "name": "Cozumel",
+   "slug": "cozumel",
+   "country": "Mexico",
+   "items": 6
+  },
+  "paraty-37497": {
+   "id": 3455036,
+   "name": "Paraty",
+   "slug": "paraty",
+   "country": "Brazil",
+   "items": 1
+  },
+  "hiroshima-fcf29": {
+   "id": 1862415,
+   "name": "Hiroshima",
+   "slug": "hiroshima",
+   "country": "Japan",
+   "items": 2
+  },
+  "ho-chi-minh-city-68110": {
+   "id": 1566083,
+   "name": "Ho Chi Minh City",
+   "slug": "ho-chi-minh-city",
+   "country": "Vietnam",
+   "items": 1
+  },
+  "phnom-penh-314cc": {
+   "id": 1821306,
+   "name": "Phnom Penh",
+   "slug": "phnom-penh",
+   "country": "Cambodia",
+   "items": 1
+  },
+  "agra-967ce": {
+   "id": 1279259,
+   "name": "Agra",
+   "slug": "agra",
+   "country": "India",
+   "items": 2
+  },
+  "bukhara-db800": {
+   "id": 1217662,
+   "name": "Bukhara",
+   "slug": "bukhara",
+   "country": "Uzbekistan",
+   "items": 3
+  },
+  "batumi-9113c": {
+   "id": 615532,
+   "name": "Batumi",
+   "slug": "batumi",
+   "country": "Georgia",
+   "items": 2
+  },
+  "baku-21359": {
+   "id": 587084,
+   "name": "Baku",
+   "slug": "baku",
+   "country": "Azerbaijan",
+   "items": 1
+  },
+  "brisbane-ceafb": {
+   "id": 2174003,
+   "name": "Brisbane",
+   "slug": "brisbane",
+   "country": "Australia",
+   "items": 8
+  },
+  "adelaide-ceafb": {
+   "id": 2078025,
+   "name": "Adelaide",
+   "slug": "adelaide",
+   "country": "Australia",
+   "items": 2
+  },
+  "tirana-79b9d": {
+   "id": 3183875,
+   "name": "Tirana",
+   "slug": "tirana",
+   "country": "Albania",
+   "items": 2
+  },
+  "cluj-napoca-d6b89": {
+   "id": 681290,
+   "name": "Cluj-Napoca",
+   "slug": "cluj-napoca",
+   "country": "Romania",
+   "items": 1
+  },
+  "tashkent-db800": {
+   "id": 1512569,
+   "name": "Tashkent",
+   "slug": "tashkent",
+   "country": "Uzbekistan",
+   "items": 3
   }
  }
 }

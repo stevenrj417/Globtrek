@@ -4,6 +4,38 @@ import { verifiedStays } from "../../data/launchStays.js";
 
 // City names the feed uses that differ from GlobTrek's (feed spelling → destination).
 const FEED_CITY_ALIASES = {
+  // Sixth destination batch: the town names Booking.com's CJ feed uses within
+  // 60 km of each place (checked against the feed on 2026-11-20).
+  "napa-valley-76868": ["Napa", "Yountville", "Calistoga", "St. Helena", "Sonoma"],
+  "lake-tahoe-76868": ["South Lake Tahoe", "Tahoe City", "Stateline", "Incline Village", "Olympic Valley", "Tahoe Vista"],
+  "grand-canyon-76868": ["Tusayan", "Grand Canyon Village", "Valle", "Williams"],
+  "yosemite-76868": ["Oakhurst", "Wawona", "Mariposa", "Groveland", "Bass Lake", "El Portal"],
+  "jackson-hole-76868": ["Jackson", "Teton Village", "Wilson"],
+  "kauai-76868": ["Koloa", "Princeville", "Kapaa", "Lihue", "Hanalei"],
+  "hawaii-island-76868": ["Kailua-Kona", "Waikoloa", "Hilo", "Volcano", "Waikoloa Village"],
+  "outer-banks-76868": ["Nags Head", "Kill Devil Hills", "Kitty Hawk", "Duck", "Corolla", "Manteo"],
+  "cape-cod-76868": ["Provincetown", "Chatham", "Falmouth", "Hyannis", "Eastham", "Wellfleet", "Yarmouth"],
+  "portland-maine-76868": ["Portland", "South Portland"],
+  "easter-island-34950": ["Hanga Roa"],
+  "lalibela-3d91f": ["Lalibela"],
+  "drakensberg-35fda": ["Underberg", "Winterton", "Champagne Valley", "Drakensberg Garden", "Cathkin Park"],
+  "etosha-bfe79": ["Okaukuejo", "Outjo", "Namutoni"],
+  "byblos-5caa7": ["Jbeil", "Byblos"],
+  "okinawa-fcf29": ["Naha", "Onna", "Chatan", "Nago", "Okinawa City"],
+  "taroko-gorge-094d5": ["Hualien City", "Xiulin", "Xincheng", "Jian"],
+  "krabi-a2b7c": ["Ao Nang Beach", "Krabi town", "Ao Nang", "Klong Muang Beach", "Ao Nam Mao"],
+  "gili-islands-35536": ["Gili Trawangan", "Gili Air", "Gili Meno"],
+  "raja-ampat-35536": ["Waisai", "Besir", "Saonek", "Fam", "Pulau Mansuar"],
+  "langkawi-ff3ea": ["Pantai Cenang", "Kuah", "Langkawi Islands", "Pantai Kok"],
+  "siargao-80673": ["General Luna", "Catangnan", "Catagnan"],
+  "rishikesh-967ce": ["Rishikesh", "Shivpuri", "Tapovan"],
+  "margaret-river-ceafb": ["Margaret River Town", "Prevelly", "Gnarabup", "Cowaramup"],
+  "kangaroo-island-ceafb": ["Kingscote", "Penneshaw", "Emu Bay", "American River"],
+  "blue-mountains-ceafb": ["Katoomba", "Leura", "Wentworth Falls", "Blackheath"],
+  "bay-of-islands-a2238": ["Paihia", "Russell", "Opua"],
+  "veliko-tarnovo-5c777": ["Veliko Tŭrnovo", "Veliko Tarnovo", "Arbanasi"],
+  "dead-sea-67402": ["Sowayma", "Sweimeh"],
+  "whitsunday-islands-ceafb": ["Airlie Beach", "Hamilton Island", "Cannonvale"],
   "los-angeles-76868": ["Hollywood", "Santa Monica", "Venice"],
   "honolulu-76868": ["Waikiki"],
   "merida-41937": ["Merida"],
@@ -100,6 +132,7 @@ const FEED_CITY_ALIASES = {
 // Where to look for stays when the destination's own point is the middle of a
 // desert or park rather than the town travelers sleep in.
 const STAY_CENTERS = {
+  "outer-banks-76868": [35.9574, -75.6241], // Nags Head
   "atacama-desert-34950": [-22.9087, -68.1997], // San Pedro de Atacama
   "sardinia-ad79e": [39.2238, 9.1217], // Cagliari
   "crete-4902a": [35.3387, 25.1442], // Heraklion

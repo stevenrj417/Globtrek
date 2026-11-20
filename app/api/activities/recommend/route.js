@@ -39,7 +39,7 @@ export async function POST(request) {
   if (verified.length) return Response.json({ activities: await withPlacePhotos(verified), bookable: await bookablePromise, source: "globtrek_launch_verified", isLive: false });
   // Then the curated list checked against Google Places for this destination.
   const curated = curatedActivities(destination.id || destination.airport);
-  if (curated.length) return Response.json({ activities: await withPlacePhotos(curated.slice(0, 12)), bookable: await bookablePromise, source: "globtrek_curated_google_places", isLive: false });
+  if (curated.length) return Response.json({ activities: await withPlacePhotos(curated.slice(0, 12)), bookable: await bookablePromise, source: "globtrek_curated_google_places", tiered: curated.some((activity) => activity.tier), isLive: false });
   try {
     const profile = normalizeTravelerProfile(body.quiz || {});
     await prefetchObservedFares(profile.origin);
