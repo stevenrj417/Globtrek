@@ -156,6 +156,11 @@ const REGION_BY_COUNTRY = {
 // homes, apartments, room shares and campsites are left out.
 const CATEGORY_WEIGHT = { Hostel: 6, "Capsule hotel": 6, "Guest house": 3.5, Motel: 3.5, Inn: 2.5, "Bed and breakfast": 2.5, Hotel: 1.5, Lodge: 1.5 };
 const MAX_STARS = 4;
+// Whole places (a house, apartment or chalet for the group). Villas are left out:
+// in these feeds they are mostly luxury rentals.
+export const HOME_TYPES = new Set(["Apartment", "Holiday home", "Chalet", "Country house", "Holiday park", "Aparthotel"]);
+export const HOMES_PER_DESTINATION = 12;
+export const isHomeCategory = (category) => HOME_TYPES.has(category);
 const DORM = /shared|dorm|bunk|capsule|\bpod\b/i;
 // Listing-style names (a room description or an event, not a property name).
 export const GENERIC_NAME = /^(private|quiet|cozy|cosy|clean|room|bed|shared|charming|change of)\b|\bminutes? (to|from)\b|\b(new years?|new year's|christmas|holiday special|getaway|vacation rental)\b/i;
@@ -217,6 +222,11 @@ export function budgetScore(row) {
   if (yes(row.freeBreakfast)) points += 1;
   points += Math.min(10, (row.additionalImageLink || []).length) / 10;
   return Math.round(points * 10) / 10;
+}
+
+export function eligibleHome(row) {
+  const stars = Number(row.starRating) || 0;
+  return HOME_TYPES.has(row.categoryName) && stars <= MAX_STARS && !GENERIC_NAME.test(cleanText(row.title) || "");
 }
 
 export function eligible(row) {
@@ -338,7 +348,8 @@ export async function importDestination(client, destination, feeds, { importedAt
     const inPlace = nearDestination(named, destination, (row) => ({ latitude: number(row.address?.latitude), longitude: number(row.address?.longitude) }));
     if (!inPlace.length) continue;
     const pinned = await pinnedRows(client, feed, destination.pinnedStays || []);
-    const picks = [...pinned, ...shortlist(inPlace.filter((row) => eligible(row) && !pinned.some((pin) => pin.id === row.id)), size)];
+    const homes = shortlist(inPlace.filter((row) => eligibleHome(row) && !pinned.some((pin) => pin.id === row.id)), HOMES_PER_DESTINATION);
+    const picks = [...pinned, ...shortlist(inPlace.filter((row) => eligible(row) && !pinned.some((pin) => pin.id === row.id)), size), ...homes];
     const records = [];
     let malformed = 0;
     for (let index = 0; index < picks.length; index += CHUNK) {
@@ -353,6 +364,32 @@ export async function importDestination(client, destination, feeds, { importedAt
     return { destinationId: destination.id, status: "ok", feed: { adId: feed.adId, name: feed.name, lastUpdated: feed.lastUpdated }, searched: seen.size, inDestination: inPlace.length, records, malformed };
   }
   return { destinationId: destination.id, status: "empty", reason: "no_listings_matched_destination", records: [] };
+}
+
+// Whole places only, for adding houses and apartments to an existing catalog
+// quickly: one search for the destination's own name, then full details.
+export async function importDestinationHomes(client, destination, feeds, { importedAt = new Date().toISOString(), size = HOMES_PER_DESTINATION } = {}) {
+  const candidates = feedsForCountry(feeds, destination.country);
+  if (!candidates.length) return { destinationId: destination.id, status: "skipped", reason: "no_feed_for_country", records: [] };
+  const places = destinationPlaces(destination);
+  for (const feed of candidates) {
+    const rows = await searchFeed(client, feed, titleCase(destination.city), 2);
+    const named = rows.filter((row) => places.includes(normalizeName(row.address?.city)));
+    const inPlace = nearDestination(named, destination, (row) => ({ latitude: number(row.address?.latitude), longitude: number(row.address?.longitude) }));
+    if (!inPlace.length) continue;
+    const picks = shortlist(inPlace.filter(eligibleHome), size);
+    const records = [];
+    for (let index = 0; index < picks.length; index += CHUNK) {
+      const ids = picks.slice(index, index + CHUNK).map((row) => JSON.stringify(String(row.id)));
+      const data = await client.query(`{ travelExperienceProducts(companyId: "${client.credentials.companyId}", adIds: ["${feed.adId}"], productIds: [${ids.join(",")}], limit: ${CHUNK}) { resultList { ${FULL_FIELDS(client.credentials.pid)} } } }`);
+      for (const row of data?.travelExperienceProducts?.resultList || []) {
+        const record = row?.joinedStatus === false ? null : normalizeRecord(row, { destinationId: destination.id, feed, importedAt });
+        if (record) records.push(record);
+      }
+    }
+    return { destinationId: destination.id, status: "ok", records };
+  }
+  return { destinationId: destination.id, status: "empty", records: [] };
 }
 
 // store: { begin(run), save(result, run), finish(run) } — see catalogStore.js.

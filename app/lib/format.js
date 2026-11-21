@@ -22,7 +22,7 @@ export function estimateLine(estimate) {
 export function nightlyLine(perNight, unit = "room") {
   const value = Math.round(Number(perNight) || 0);
   if (!value) return null;
-  return `${formatMoney(value)} a night for a ${unit === "bed" ? "dorm bed" : unit === "campsite" ? "campsite" : "room"}`;
+  return `${formatMoney(value)} a night for ${unit === "bed" ? "a dorm bed" : unit === "campsite" ? "a campsite" : unit === "home" ? "the whole place" : "a room"}`;
 }
 
 // Wikimedia originals can be huge; request one of its standard thumbnail widths instead.

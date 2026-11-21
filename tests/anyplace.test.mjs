@@ -226,6 +226,8 @@ test("stay themes come only from the facilities listed on Booking.com", () => {
   assert.deepEqual(stayThemes("Kids' club,Adults only", "Hotel"), ["calm"], "adults-only is never family");
   assert.deepEqual(stayThemes("Children's playground,Garden,Hot tub,Karaoke", "Inn"), ["lively", "family"]);
   assert.deepEqual(stayThemes(null, "Hotel"), []);
+  assert.deepEqual(stayThemes("Garden,Terrace", "Holiday home"), ["home"]);
+  assert.deepEqual(stayThemes("Kids' club", "Apartment"), ["home", "family"]);
 });
 
 test("themed stays use the same ranking among listings with that theme", async () => {

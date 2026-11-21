@@ -11,7 +11,7 @@ import { BUDGETS, BUDGET_KEYS, MIN_RATING, byScore, distanceKm, distancePenalty,
 import { LODGING_FIELDS } from "./google.js";
 import { THEME_KEYS, feedsFor, searchStays } from "./stays.js";
 
-export const PICKS_VERSION = 2;
+export const PICKS_VERSION = 3;
 export const REFRESH_DAYS = 21;
 const COUNT = 3;
 

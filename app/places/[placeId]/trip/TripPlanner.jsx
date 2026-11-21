@@ -186,6 +186,7 @@ export function TripPlanner({ placeId, destination, initial, stay, dinners, acti
               <p className="text-sm">{[stay.street, stay.city].filter(Boolean).join(" · ")}</p>
               {stay.km > townKm ? <p className="mt-1 text-sm">{km(stay.km)} km from {destination.name}</p> : null}
               <ul className="mt-4 space-y-1.5 text-sm">
+                {stay.sleeps ? <li>✓ Sleeps {stay.sleeps}{stay.bedrooms ? `, ${stay.bedrooms} bedroom${stay.bedrooms === 1 ? "" : "s"}` : ""}{trip.adults > 1 ? `: split ${trip.adults} ways when you book` : ""}</li> : null}
                 {stay.freeCancellation ? <li>✓ Free cancellation on some rooms</li> : null}
                 {stay.freeBreakfast ? <li>✓ Breakfast included on some rooms</li> : null}
                 <li>✓ You book and pay on Booking.com</li>

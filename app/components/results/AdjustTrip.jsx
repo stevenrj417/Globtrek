@@ -128,7 +128,7 @@ export function AdjustTrip({ quiz, profile, currentTotal, currentId = null, curr
           <label className="text-sm font-medium">Nights<input type="number" inputMode="numeric" min="1" max="28" value={draft.nights} onChange={set("nights")} className={field} /></label>
           <label className="text-sm font-medium">Travelers<input type="number" inputMode="numeric" min="1" max="30" value={draft.travelers} onChange={set("travelers")} className={field} /></label>
           <label className="text-sm font-medium">Departure airport (3-letter code)<input value={draft.origin} onChange={set("origin")} maxLength={3} autoCapitalize="characters" className={`${field} uppercase`} /></label>
-          <label className="text-sm font-medium">Accommodation<select value={draft.lodging} onChange={set("lodging")} className={field}><option value="Whatever's cheapest">Whatever fits my budget</option><option>Hostel bed</option><option>Private room</option></select></label>
+          <label className="text-sm font-medium">Accommodation<select value={draft.lodging} onChange={set("lodging")} className={field}><option value="Whatever's cheapest">Whatever fits my budget</option><option>Hostel bed</option><option>Private room</option><option value="Whole place">Whole house or apartment</option></select></label>
           <label className="flex min-h-11 items-center gap-3 self-end text-sm font-medium"><input type="checkbox" checked={draft.flights} onChange={set("flights")} className="h-5 w-5 accent-black" />Budget includes flights</label>
         </div>
         <p className="mt-2 text-xs text-ink">To change dates, use the calendar in the flight section.</p>

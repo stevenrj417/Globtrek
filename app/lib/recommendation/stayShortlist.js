@@ -10,7 +10,11 @@
 
 import { bookingPath, stayPrice } from "../pricing/stayPrice.js";
 
-const TYPE_RANK = { Hostel: 1, "Capsule hotel": 1, Motel: 2, "Guest house": 2, "Bed and breakfast": 3, Inn: 3, Lodge: 3, Hotel: 4 };
+const TYPE_RANK = { Hostel: 1, "Capsule hotel": 1, Motel: 2, "Guest house": 2, "Bed and breakfast": 3, Inn: 3, Lodge: 3, Hotel: 4, Apartment: 3, "Holiday home": 3, Chalet: 3, "Country house": 3, "Holiday park": 2, Aparthotel: 3 };
+const HOME_TYPES = new Set(["Apartment", "Holiday home", "Chalet", "Country house", "Holiday park", "Aparthotel"]);
+export const isHome = (property) => HOME_TYPES.has(property?.category);
+// A whole place fits the group when it sleeps everyone (or doesn't say).
+const sleepsGroup = (property, travelers) => !Number(property.maxGuests) || Number(property.maxGuests) >= travelers;
 const CALM_TYPES = new Set(["Guest house", "Bed and breakfast", "Inn"]);
 const SOCIAL = /bar|nightclub|pub crawl|happy hour|games room|karaoke/i;
 const ACCESSIBLE = /wheelchair|accessible|step-free|roll-in|elevator|lift/i;
@@ -60,7 +64,9 @@ export function scoreStay(property, { profile, destination, price, accessibleOnl
   const travelers = profile.travelers;
   const type = stayType(property);
   const lodging = profile.lodging || "either";
-  const typeFit = lodging === "hostel" ? (property.dorms ? 100 : type === "Hostel" ? 70 : 25)
+  const typeFit = lodging === "home" ? (isHome(property) ? (sleepsGroup(property, travelers) ? 100 : 45) : 15)
+    : isHome(property) ? (travelers >= 3 && sleepsGroup(property, travelers) ? 80 : 55)
+    : lodging === "hostel" ? (property.dorms ? 100 : type === "Hostel" ? 70 : 25)
     : lodging === "private" ? (property.dorms && !(property.roomTypes || []).some((room) => !SHARED_SLEEPING.test(room)) ? 15 : 95)
       : profile.spendStyle === "comfortable" ? (property.dorms ? 20 : TYPE_RANK[type] >= 3 ? 95 : 75)
       : profile.spendStyle === "value" ? (property.dorms ? 60 : TYPE_RANK[type] <= 3 ? 90 : 75)
@@ -97,6 +103,7 @@ export function whyLine(choice, role, profile) {
   const privateRooms = (choice.roomTypes || []).some((room) => !SHARED_SLEEPING.test(room));
   if (choice.dorms && !(profile.lodging === "private" && privateRooms)) facts.push("dorm beds");
   else if (choice.dorms) facts.push("private rooms as well as dorms");
+  else if (isHome(choice)) facts.push(["whole place", Number(choice.bedrooms) ? plural(Number(choice.bedrooms), "bedroom") : null, Number(choice.maxGuests) ? `sleeps ${Number(choice.maxGuests)}` : null].filter(Boolean).join(", "));
   else facts.push(`private ${stayType(choice).toLowerCase() === "hotel" ? "hotel rooms" : "rooms"}`);
   if (choice.catalogFreeBreakfast) facts.push("breakfast on some rates");
   if (choice.catalogFreeWifi) facts.push("free Wi-Fi");
@@ -142,7 +149,7 @@ export function buildStayShortlist({ candidates, profile, destination, budgetPla
   const pool = mergeCandidates([candidates]).map((property) => {
     const price = stayPrice(property, { airport: destination.airport, nights: profile.tripLength, travelers: profile.travelers, month, privateRoom: profile.lodging === "private" || budgetPlan?.lodging?.unit === "room" });
     return { ...property, price, ...scoreStay(property, { profile: context, destination, price, accessibleOnly, now }) };
-  }).filter((property) => (!accessibleOnly || isAccessible(property)) && !(profile.lodging === "private" && dormOnly(property)));
+  }).filter((property) => (!accessibleOnly || isAccessible(property)) && !((profile.lodging === "private" || profile.lodging === "home") && dormOnly(property)));
   const ranked = [...pool].sort((a, b) => b.score - a.score || Number(Boolean(b.verified)) - Number(Boolean(a.verified)) || a.name.localeCompare(b.name));
   const choices = [];
   const pick = ranked[0];
@@ -155,7 +162,7 @@ export function buildStayShortlist({ candidates, profile, destination, budgetPla
   const base = pick ? comfortRank(pick) : 0;
   const ceiling = budgetPlan?.hotelBudget > 0 ? budgetPlan.hotelBudget * 1.3 : Infinity;
   // An upgrade is private (no dorms, hostels or capsules) and a step above the pick.
-  const upgrades = rest().filter((property) => !property.dorms && property.priceTier !== "hostel" && (TYPE_RANK[stayType(property)] || 3) >= 2 && comfortRank(property) > base && (property.price.kind === "unavailable" || property.price.total <= Math.max(ceiling, (pick?.price.total || 0) * 1.8)));
+  const upgrades = rest().filter((property) => (profile.lodging !== "home" || isHome(property)) && !property.dorms && property.priceTier !== "hostel" && (TYPE_RANK[stayType(property)] || 3) >= 2 && comfortRank(property) > base && (property.price.kind === "unavailable" || property.price.total <= Math.max(ceiling, (pick?.price.total || 0) * 1.8)));
   const upgrade = upgrades.find((property) => stayType(property) !== stayType(pick || {})) || upgrades[0];
   if (upgrade) choices.push({ ...upgrade, role: "Upgrade" });
   const finished = choices.map((choice) => ({ ...choice, why: whyLine(choice, choice.role, profile) }));

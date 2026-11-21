@@ -1,7 +1,7 @@
 import feedSnapshot from "../../data/feedStays.json" with { type: "json" };
 import { fromRow } from "../catalog/catalogStore.js";
 import { nearDestination } from "../catalog/nearDestination.js";
-import { GENERIC_NAME } from "../catalog/cjBookingImporter.js";
+import { GENERIC_NAME, isHomeCategory } from "../catalog/cjBookingImporter.js";
 import { destinations } from "../../data/destinations.js";
 
 // Booking.com property catalog from GlobTrek's CJ feeds: identity, details,
@@ -42,7 +42,13 @@ export class CjCatalogHotelProvider {
     if (this.supabase) {
       try {
         const { data, error } = await this.supabase.from("cj_catalog_properties").select("*").eq("destination_id", destinationId).eq("active", true).order("budget_score", { ascending: false }).limit(80);
-        if (!error && data?.length) return { properties: nearDestination(data.map(fromRow).filter((property) => !GENERIC_NAME.test(property.name || "")), destinationFor(destinationId)), source: "supabase", checkedAt: data.reduce((latest, row) => (row.last_seen_at > latest ? row.last_seen_at : latest), "").slice(0, 10) || null };
+        if (!error && data?.length) {
+          const rows = data.map(fromRow).filter((property) => !GENERIC_NAME.test(property.name || ""));
+          // Whole places may only be in the bundled snapshot so far; add them until the daily import brings them in.
+          const known = new Set(rows.map((property) => String(property.providerPropertyId || property.sku)));
+          const homes = snapshotProperties(destinationId).filter((property) => isHomeCategory(property.category) && !known.has(String(property.providerPropertyId || property.sku)));
+          return { properties: [...nearDestination(rows, destinationFor(destinationId)), ...homes], source: "supabase", checkedAt: data.reduce((latest, row) => (row.last_seen_at > latest ? row.last_seen_at : latest), "").slice(0, 10) || null };
+        }
       } catch {}
     }
     const properties = snapshotProperties(destinationId);

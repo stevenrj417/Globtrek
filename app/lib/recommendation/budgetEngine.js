@@ -107,7 +107,8 @@ function planForStyle(profile, destination, options = {}) {
   const stayNight = cheap ? stayNightFor(destination, stayMonth) : null;
   const cityTaxRate = Number(destination.planningAverages?.lodgingTaxRate) || 0;
   const cityRoomNight = Math.round(cityAverage.hotelNight * (1 + cityTaxRate));
-  const useBeds = Boolean(cheap?.bedNight) && profile.lodging !== "private" && (profile.lodging === "hostel" || stayNight * travelers <= cityRoomNight * rooms);
+  const wantsHome = profile.lodging === "home";
+  const useBeds = !wantsHome && Boolean(cheap?.bedNight) && profile.lodging !== "private" && (profile.lodging === "hostel" || stayNight * travelers <= cityRoomNight * rooms);
   // Where no hostel's price was checked by hand, rock bottom can still plan a dorm
   // bed: GlobTrek's modeled dorm rate for the city, but only when the catalog has
   // real dorm properties there, and never for a traveler who asked for privacy.
@@ -116,9 +117,14 @@ function planForStyle(profile, destination, options = {}) {
   const modelDorm = profile.spendStyle === "cheapest" && !cheap && profile.lodging !== "private" && local?.lodging?.dormBed > 0 && (feedStayCounts.dorms?.[destination.id] || 0) > 0
     ? Math.round(local.lodging.dormBed * (local.lodging.budgetRoom > 0 ? baseCityAverage.hotelNight / local.lodging.budgetRoom : 1) * (1 + cityTaxRate))
     : null;
-  const useModelDorm = Boolean(modelDorm) && (profile.lodging === "hostel" || modelDorm * travelers <= cityRoomNight * rooms);
+  const useModelDorm = !wantsHome && Boolean(modelDorm) && (profile.lodging === "hostel" || modelDorm * travelers <= cityRoomNight * rooms);
   const chosen = options.stay?.perUnit > 0 ? options.stay : null;
-  const lodging = chosen
+  // A whole place for the group (house, apartment, chalet): one booking, priced
+  // as one local room rate per bedroom the group needs (two people a bedroom).
+  // It's an estimate from room rates, not a rental's price.
+  const lodging = wantsHome && !chosen
+    ? { type: "whole_home", unit: "home", units: 1, bedrooms: rooms, perUnit: cityRoomNight * rooms, name: null, priceKind: "home_estimate", observedAt: null, month }
+    : chosen
     ? { type: chosen.unit === "bed" ? "hostel_bed" : "private_room", unit: chosen.unit, units: chosen.unit === "bed" ? travelers : rooms, perUnit: Math.round(chosen.perUnit), name: chosen.name, propertyId: chosen.propertyId || null, priceKind: chosen.priceKind, observedAt: chosen.observedAt || null, month: stayMonth }
     : useBeds
       ? { type: "hostel_bed", unit: "bed", units: travelers, perUnit: stayNight, name: cheap.name, path: cheap.path, priceKind: cheapKind, observedAt: CHEAP_STAYS_CHECKED, month: stayMonth }
@@ -219,7 +225,7 @@ function planForStyle(profile, destination, options = {}) {
     budgetBasis: "good_value_monthly_plan_with_reserve",
     cityPlanningAverage: cityAverage,
     spendStyle: profile.spendStyle || "value",
-    lodgingTax: includes.hotel ? Math.round((lodging.priceKind === "dorm_estimate" ? lodging.perUnit / (1 + lodgingTaxRate) : cityAverage.hotelNight) * lodgingTaxRate) * lodging.units * nights : 0,
+    lodgingTax: includes.hotel ? Math.round((lodging.priceKind === "dorm_estimate" ? lodging.perUnit / (1 + lodgingTaxRate) : cityAverage.hotelNight) * lodgingTaxRate) * (lodging.unit === "home" ? lodging.bedrooms : lodging.units) * nights : 0,
     lodging,
     perTraveler: Math.round((rawAverage + planningReserve) / travelers),
     lodgingTaxRate,

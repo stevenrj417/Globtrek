@@ -53,6 +53,7 @@ function StayCard({ stay, index, chosen, onChoose, townKm, name, labels }) {
     <div className="flex flex-1 flex-col pt-4">
       <h3 className="text-xl font-medium leading-snug tracking-tight-2">{stay.name}</h3>
       <p className="mt-1 line-clamp-2 text-xs text-ink">{[stay.street, stay.city].filter(Boolean).join(" · ")}</p>
+      {stay.sleeps || stay.bedrooms ? <p className="tabular mt-2 text-sm">{[stay.sleeps ? `Sleeps ${stay.sleeps}` : null, stay.bedrooms ? `${stay.bedrooms} bedroom${stay.bedrooms === 1 ? "" : "s"}` : null].filter(Boolean).join(" · ")}</p> : null}
       {stay.km > townKm ? <p className="tabular mt-2 text-sm">{km(stay.km)} km from {name}</p> : null}
       {stay.unrated ? <p className="mt-2 text-sm">No Google reviews yet. Check guest reviews on Booking.com.</p> : null}
       {tags.length ? <ul className="mt-3 flex flex-wrap gap-1.5 text-xs">{tags.map((tag) => <li key={tag} className="border border-black/15 px-2 py-0.5">{tag}</li>)}</ul> : null}
