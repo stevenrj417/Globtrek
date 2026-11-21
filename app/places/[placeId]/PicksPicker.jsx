@@ -131,7 +131,7 @@ export function PicksPicker({ placeId, budget, name, townKm, stays, allStays, di
     <div className="fixed inset-x-0 bottom-0 z-40 border-t border-black/15 bg-white/95 backdrop-blur-sm">
       <div className="mx-auto flex max-w-[1280px] items-center justify-between gap-4 px-5 py-3 sm:px-8 sm:py-4">
         <div className="min-w-0">
-          <p className="text-micro font-medium uppercase tracking-label">Your trip to {name}</p>
+          <p className="text-micro font-medium uppercase tracking-label">Your trip<span className="hidden sm:inline"> to {name}</span></p>
           <p className="mt-0.5 truncate text-sm" aria-live="polite">{count ? summary : "Choose a stay and add a few plans"}</p>
         </div>
         {count ? <Link href={href} onClick={() => track("anyplace_book_now", { count })} className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 bg-black px-6 text-micro font-medium uppercase tracking-label text-white transition-opacity hover:opacity-90 sm:px-8">Book now <span aria-hidden="true">→</span></Link> : <span className="inline-flex min-h-12 shrink-0 items-center border border-black/15 px-6 text-micro font-medium uppercase tracking-label">Book now</span>}

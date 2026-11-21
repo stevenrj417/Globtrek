@@ -39,7 +39,7 @@ function Booked({ id, checked, onChange }) {
 
 function Step({ number, title, why, done, current, children }) {
   return <li className={`border bg-white ${current ? "border-black" : "border-black/15"}`}>
-    <div className="grid grid-cols-[auto_1fr] gap-x-5 p-6 sm:p-8">
+    <div className="grid gap-4 p-6 sm:grid-cols-[auto_1fr] sm:gap-x-5 sm:p-8">
       <span aria-hidden="true" className={`flex h-11 w-11 items-center justify-center text-sm font-semibold tabular ${done ? "bg-black text-white" : current ? "border-2 border-black" : "border border-black/30"}`}>{done ? "✓" : number}</span>
       <div>
         <p className="text-micro uppercase tracking-label">Step {number}{done ? " · done" : current ? " · start here" : ""}</p>
