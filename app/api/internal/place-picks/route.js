@@ -25,6 +25,6 @@ export async function GET(request) {
   const all = await computePicks({ places, cj: createCjClient({ minIntervalMs: 250, timeoutMs: 15000, maxAttempts: 2 }), destination, log: (entry) => logs.push(entry), debug: params.get("debug") ? (entry) => ranked.push(entry) : null });
   const computeMs = Date.now() - started;
   const shown = {};
-  for (const [budget, picks] of Object.entries(all)) shown[budget] = await hydrate(picks, places);
+  for (const [budget, picks] of Object.entries(all)) shown[budget] = await hydrate(picks, places, { photos: false });
   return Response.json({ destination: { ...destination, featured: featuredSlug(destination) }, computeMs, googleCalls: places.stats().calls, logs, ranked, picks: shown }, { headers: { "Cache-Control": "no-store" } });
 }

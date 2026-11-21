@@ -241,3 +241,41 @@ export function followupEmail({ model, step, viewUrl, stopUrl }) {
 }
 
 export { escapeHtml };
+
+// "Email my trip" from an any-place trip page: the trip laid out as numbered
+// steps (flight, stay, things to do, dinners), each with its booking link.
+// Photos: only the Booking.com stay photo (Google photos can't be copied into email).
+export function placeTripEmail({ destination, stay, stayUrl, flightUrl, airport, activities = [], dinners = [], tripUrl, dates = null, adults = 2 }) {
+  const city = destination.name;
+  const dateText = dates?.start && dates?.end ? `${dates.start} to ${dates.end} · ${adults} adult${adults === 1 ? "" : "s"}` : `Dates not set yet · ${adults} adult${adults === 1 ? "" : "s"}`;
+  let number = 0;
+  const step = (title, why, inner) => {
+    number += 1;
+    return `<section style="border-top:1px solid ${LINE};padding:30px 0 6px">
+      <table role="presentation" cellpadding="0" cellspacing="0"><tr>
+        <td valign="top" style="width:44px"><div style="width:34px;height:34px;line-height:34px;text-align:center;border:2px solid ${INK};font-family:${SANS};font-size:14px;font-weight:700;color:${INK}">${number}</div></td>
+        <td valign="top">${eyebrowHtml(number === 1 ? `Step ${number} · start here` : `Step ${number}`, INK)}<h2 style="margin:6px 0 0;font-family:${SERIF};font-size:26px;line-height:1.12;font-weight:400;color:${INK}">${escapeHtml(title)}</h2></td>
+      </tr></table>
+      <p style="margin:12px 0 0;font-family:${SANS};font-size:14px;line-height:1.65;color:${INK}">${escapeHtml(why)}</p>
+      ${inner}
+    </section>`;
+  };
+  const placeRow = (place, label, href) => `<tr><td style="padding:12px 0;border-top:1px solid ${LINE};font-family:${SANS};font-size:15px;color:${INK}"><strong style="font-weight:600">${escapeHtml(place.name)}</strong>${place.type ? `<br><span style="font-size:13px">${escapeHtml(place.type)}</span>` : ""}</td><td align="right" style="padding:12px 0;border-top:1px solid ${LINE}">${href ? textLink(label, href) : ""}</td></tr>`;
+  const flight = step(airport ? `Fly into ${airport.city}` : "Book your flight", `Do this first: fares change fastest, and your flight sets your check-in and check-out.${airport ? ` ${airport.name} (${airport.code}) is ${airport.km} km from ${city}.` : ""}`, button("See flights", flightUrl));
+  const stayStep = stay
+    ? step(`Book ${stay.name}`, stay.freeCancellation ? "Some rooms have free cancellation, so you can lock in your place now and cancel later if plans change." : "Match your dates to your flight and check the cancellation policy before you pay.", `${stay.photo ? `<div style="margin-top:18px">${emailImage(stay.photo, stay.name)}</div>` : ""}<p style="margin:14px 0 0;font-family:${SANS};font-size:14px;line-height:1.6;color:${INK}">${escapeHtml([stay.stars ? `${stay.stars}-star ${String(stay.category || "stay").toLowerCase()}` : stay.category, [stay.street, stay.city].filter(Boolean).join(", ")].filter(Boolean).join(" · "))}</p>${button("See rooms and prices", stayUrl)}`)
+    : step("Book your stay", `Pick a place near ${city} on Booking.com and match the dates to your flight.`, button("Search stays", stayUrl));
+  const things = activities.length ? step(activities.length === 1 ? "Plan your day out" : "Plan your days out", "Book anything with set times around your arrival and departure. Outdoor places are free to visit.", `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:14px">${activities.map((place) => placeRow(place, place.ticketsUrl ? "Tours and tickets →" : "Directions →", place.ticketsUrl || place.mapsUrl)).join("")}</table>`) : "";
+  const meals = dinners.length ? step(dinners.length === 1 ? "Reserve your dinner" : "Reserve your dinners", "Last, once your days are set.", `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:14px">${dinners.map((place) => placeRow(place, "Hours and reservations →", place.mapsUrl)).join("")}</table>`) : "";
+  const body = `<p style="margin:0 0 6px;font-family:${SANS};font-size:13px;color:${INK}">${escapeHtml(dateText)}</p>${flight}${stayStep}${things}${meals}<div style="margin-top:30px;padding:24px;background:${PAPER};border:1px solid ${LINE}"><p style="margin:0;font-family:${SERIF};font-size:22px;color:${INK}">Your trip page keeps track for you</p><p style="margin:8px 0 0;font-family:${SANS};font-size:14px;line-height:1.6;color:${INK}">Tick off each booking as you go, change your dates, and every link updates.</p>${button("Open your trip", tripUrl)}</div>`;
+  return shell({
+    preheader: `Your trip to ${city}, in the order to book it.`,
+    eyebrow: "Your trip",
+    title: `Your trip to ${city}`,
+    intro: "Here's everything you picked, in the order that works best. Start with step 1.",
+    hero: stay?.photo || "",
+    heroAlt: stay?.name || city,
+    body,
+    footer: footerHtml({ reason: "You asked GlobTrek to email you this trip. It does not subscribe you to anything." }),
+  });
+}

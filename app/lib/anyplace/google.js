@@ -21,7 +21,7 @@ export const SEARCH_FIELDS = ["id", "displayName", "types", "primaryType", "loca
 // Lodging searches also need the town each place is in, to search CJ by that name.
 export const LODGING_FIELDS = `${SEARCH_FIELDS},places.addressComponents`;
 // Shown on a pick's row, fetched fresh each time the page is viewed.
-export const PICK_FIELDS = "id,displayName,primaryType,primaryTypeDisplayName,rating,userRatingCount,priceLevel,googleMapsUri,businessStatus";
+export const PICK_FIELDS = "id,displayName,primaryType,primaryTypeDisplayName,rating,userRatingCount,priceLevel,googleMapsUri,businessStatus,photos";
 // The destination itself: where it is, its name and a photo for the page.
 export const DESTINATION_FIELDS = "id,displayName,formattedAddress,location,viewport,addressComponents,types,photos,googleMapsUri";
 

@@ -56,16 +56,29 @@ export async function getPicks(destination, budget, { background = (task) => tas
   return { picks: all[budget], fresh: true };
 }
 
-// Fresh Google details for the dinners and things to do being shown. Places
-// that have closed since the picks were saved are left out.
-export async function hydrate(picks, places = createPlacesClient()) {
-  const fetchOne = async (item) => {
-    try {
-      const place = await places.details(item.id, PICK_FIELDS);
-      if (!place || (place.businessStatus && place.businessStatus !== "OPERATIONAL")) return null;
-      return { ...item, name: place.displayName?.text || "", type: place.primaryTypeDisplayName?.text || null, rating: Number(place.rating) || null, reviews: Number(place.userRatingCount) || null, priceLevel: place.priceLevel || null, mapsUrl: place.googleMapsUri || null };
-    } catch { return null; }
-  };
-  const [dinners, activities] = await Promise.all([Promise.all(picks.dinners.map(fetchOne)), Promise.all(picks.activities.map(fetchOne))]);
+// Fresh Google details (and a photo) for one place being shown. Nothing here is
+// saved: the photo link is short-lived and shown with its author's credit, as
+// Google requires. Places that have closed are left out (null).
+export async function hydrateOne(item, places = createPlacesClient(), { photos = true, photoWidth = 800 } = {}) {
+  try {
+    const place = await places.details(item.id, PICK_FIELDS);
+    if (!place || (place.businessStatus && place.businessStatus !== "OPERATIONAL")) return null;
+    const first = photos ? place.photos?.[0] : null;
+    let photo = null;
+    if (first?.name) {
+      try {
+        const url = await places.photo(first.name, { maxWidthPx: photoWidth });
+        const author = first.authorAttributions?.[0];
+        if (url) photo = { url, artist: author?.displayName || null, source: author?.uri || null };
+      } catch {}
+    }
+    return { ...item, name: place.displayName?.text || "", type: place.primaryTypeDisplayName?.text || null, primaryType: place.primaryType || null, rating: Number(place.rating) || null, reviews: Number(place.userRatingCount) || null, priceLevel: place.priceLevel || null, mapsUrl: place.googleMapsUri || null, photo };
+  } catch { return null; }
+}
+
+// Fresh Google details for the dinners and things to do being shown.
+export async function hydrate(picks, places = createPlacesClient(), options = {}) {
+  const many = (list) => Promise.all((list || []).map((item) => hydrateOne(item, places, options)));
+  const [dinners, activities] = await Promise.all([many(picks.dinners), many(picks.activities)]);
   return { ...picks, dinners: dinners.filter((item) => item?.name), activities: activities.filter((item) => item?.name) };
 }
