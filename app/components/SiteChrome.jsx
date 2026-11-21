@@ -71,6 +71,13 @@ export function SiteFooter() {
             GlobTrek is an affiliate of Booking.com and, for tours and tickets, WeGoTrip. {AFFILIATE_DISCLOSURE} <Link href="/affiliate-disclosure" className="underline decoration-black/25 hover:decoration-black">How this works</Link>
           </p>
         </div>
+        {/* LaunchBuff listing badge: kept in the page for their link check, hidden from view, screen readers and keyboard. */}
+        <div className="sr-only" aria-hidden="true">
+          <a href="https://launchbuff.com/products/globtrek-one-tab-travel-s6s85u" target="_blank" rel="noopener noreferrer" title="Featured on LaunchBuff" tabIndex={-1}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="https://launchbuff.com/badge-featured-dark.svg" alt="Featured on LaunchBuff" width="256" height="80" loading="lazy" />
+          </a>
+        </div>
       </div>
     </footer>
   );
