@@ -11,7 +11,7 @@ import { BUDGETS, BUDGET_KEYS, MIN_RATING, byScore, distanceKm, distancePenalty,
 import { LODGING_FIELDS } from "./google.js";
 import { THEME_KEYS, feedsFor, searchStays } from "./stays.js";
 
-export const PICKS_VERSION = 3;
+export const PICKS_VERSION = 4;
 export const REFRESH_DAYS = 21;
 const COUNT = 3;
 
@@ -193,6 +193,7 @@ export async function computePicks({ places, cj, destination, log = () => {}, de
     const searches = [safe("dinners", places.nearby({ center, radiusM, includedTypes: ["restaurant"] }))];
     if (first) {
       searches.push(safe("dinners_cheap", places.text({ textQuery: `restaurants in ${destination.name}`, includedType: "restaurant", priceLevels: ["PRICE_LEVEL_INEXPENSIVE"], center, radiusM })));
+      searches.push(safe("dinners_fine", places.text({ textQuery: `fine dining in ${destination.name}`, includedType: "restaurant", priceLevels: ["PRICE_LEVEL_EXPENSIVE", "PRICE_LEVEL_VERY_EXPENSIVE"], center, radiusM })));
       searches.push(safe("dinners_mid", places.text({ textQuery: `restaurants in ${destination.name}`, includedType: "restaurant", priceLevels: ["PRICE_LEVEL_MODERATE", "PRICE_LEVEL_EXPENSIVE"], center, radiusM })));
     }
     for (const results of await Promise.all(searches)) add(pools.dinners, results.filter(isDinner));

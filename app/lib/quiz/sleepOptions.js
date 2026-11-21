@@ -19,6 +19,7 @@ export const SLEEP_OPTIONS = {
     { label: "Whole place", display: "A whole house or apartment", image: "/quiz/v2/cheapest.jpg", alt: "A red cottage on Arholma, Sweden" },
   ],
   roomy: [
+    { label: "Luxury", display: "Luxury hotel or villa", image: "/quiz/v2/private-room.jpg", alt: "A canopy bed in a quiet hotel suite" },
     { label: "Private room", display: "Comfortable hotel room", image: "/quiz/v2/private-room.jpg", alt: "A canopy bed in a quiet hotel suite" },
     { label: "Whatever's cheapest", display: "Whatever fits my budget", image: "/quiz/v2/cheapest.jpg", alt: "A red-cottage guesthouse on Arholma, Sweden" },
     { label: "Whole place", display: "A whole house or apartment", image: "/quiz/v2/cheapest.jpg", alt: "A red cottage on Arholma, Sweden" },

@@ -5,12 +5,13 @@ export const PRIOR_REVIEWS = 50;
 export const PRIOR_RATING = 4.2;
 export const MIN_RATING = 4.0;
 
-// Budget levels a traveler can choose. Mostly budget and mid-range; "comfort"
-// reaches a 4-star hotel at most and never luxury.
+// Budget levels a traveler can choose, cheapest first. "comfort" reaches a 4-star
+// hotel at most; only "luxury" shows 5-star hotels, resorts and villas.
 export const BUDGETS = {
   budget: { label: "Budget", stayTiers: ["budget", "mid"], dinnerPrices: ["PRICE_LEVEL_FREE", "PRICE_LEVEL_INEXPENSIVE", null], activityPrices: ["PRICE_LEVEL_FREE", "PRICE_LEVEL_INEXPENSIVE", "PRICE_LEVEL_MODERATE", null] },
   mid: { label: "Mid-range", stayTiers: ["mid", "comfort", "budget"], dinnerPrices: ["PRICE_LEVEL_INEXPENSIVE", "PRICE_LEVEL_MODERATE", null], activityPrices: ["PRICE_LEVEL_FREE", "PRICE_LEVEL_INEXPENSIVE", "PRICE_LEVEL_MODERATE", null] },
   comfort: { label: "Comfort", stayTiers: ["comfort", "mid"], dinnerPrices: ["PRICE_LEVEL_MODERATE", "PRICE_LEVEL_EXPENSIVE", null], activityPrices: ["PRICE_LEVEL_FREE", "PRICE_LEVEL_INEXPENSIVE", "PRICE_LEVEL_MODERATE", "PRICE_LEVEL_EXPENSIVE", null] },
+  luxury: { label: "Luxury", stayTiers: ["luxury", "comfort"], dinnerPrices: ["PRICE_LEVEL_VERY_EXPENSIVE", "PRICE_LEVEL_EXPENSIVE", "PRICE_LEVEL_MODERATE", null], activityPrices: ["PRICE_LEVEL_FREE", "PRICE_LEVEL_INEXPENSIVE", "PRICE_LEVEL_MODERATE", "PRICE_LEVEL_EXPENSIVE", "PRICE_LEVEL_VERY_EXPENSIVE", null] },
 };
 export const BUDGET_KEYS = Object.keys(BUDGETS);
 export function budgetKey(value) { return BUDGETS[value] ? value : "mid"; }

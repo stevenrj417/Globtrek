@@ -35,15 +35,16 @@ test("ties break by ID, so equal scores never shuffle", () => {
   assert.deepEqual([...items].reverse().sort(byScore).map((item) => item.id), ["a", "m", "z"]);
 });
 
-test("stay tiers: budget and mid-range mostly, 4-star at most, never 5-star, resorts or villas", () => {
+test("stay tiers: 5-star, resorts and villas only at the Luxury level", () => {
   assert.equal(stayTier("Hostel", null), "budget");
   assert.equal(stayTier("Hotel", 2), "budget");
   assert.equal(stayTier("Hotel", 3), "mid");
   assert.equal(stayTier("Apartment", null), "mid");
   assert.equal(stayTier("Hotel", 4), "comfort");
-  assert.equal(stayTier("Hotel", 5), null);
-  assert.equal(stayTier("Villa", 3), null);
-  assert.ok(!Object.values(BUDGETS).some((budget) => budget.stayTiers.includes("luxury")));
+  assert.equal(stayTier("Hotel", 5), "luxury");
+  assert.equal(stayTier("Villa", 3), "luxury");
+  assert.deepEqual(Object.keys(BUDGETS), ["budget", "mid", "comfort", "luxury"], "cheapest first");
+  for (const key of ["budget", "mid", "comfort"]) assert.ok(!BUDGETS[key].stayTiers.includes("luxury"), `${key} never shows luxury`);
 });
 
 test("a stay must be a real Booking.com listing with a CJ link", () => {

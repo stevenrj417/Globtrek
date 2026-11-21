@@ -161,6 +161,13 @@ const MAX_STARS = 4;
 export const HOME_TYPES = new Set(["Apartment", "Holiday home", "Chalet", "Country house", "Holiday park", "Aparthotel"]);
 export const HOMES_PER_DESTINATION = 12;
 export const isHomeCategory = (category) => HOME_TYPES.has(category);
+// Luxury stays (5-star hotels, resorts, villas), kept apart so budget trips never see them.
+export const LUXURY_TYPES = new Set(["Resort", "Villa", "Luxury tent"]);
+export const LUXURY_PER_DESTINATION = 6;
+export const isLuxuryStay = (category, stars) => LUXURY_TYPES.has(category) || (Number(stars) || 0) >= 5;
+export function eligibleLuxury(row) {
+  return isLuxuryStay(row.categoryName, row.starRating) && !GENERIC_NAME.test(cleanText(row.title) || "");
+}
 const DORM = /shared|dorm|bunk|capsule|\bpod\b/i;
 // Listing-style names (a room description or an event, not a property name).
 export const GENERIC_NAME = /^(private|quiet|cozy|cosy|clean|room|bed|shared|charming|change of)\b|\bminutes? (to|from)\b|\b(new years?|new year's|christmas|holiday special|getaway|vacation rental)\b/i;
@@ -349,7 +356,8 @@ export async function importDestination(client, destination, feeds, { importedAt
     if (!inPlace.length) continue;
     const pinned = await pinnedRows(client, feed, destination.pinnedStays || []);
     const homes = shortlist(inPlace.filter((row) => eligibleHome(row) && !pinned.some((pin) => pin.id === row.id)), HOMES_PER_DESTINATION);
-    const picks = [...pinned, ...shortlist(inPlace.filter((row) => eligible(row) && !pinned.some((pin) => pin.id === row.id)), size), ...homes];
+    const luxury = shortlist(inPlace.filter((row) => eligibleLuxury(row) && !pinned.some((pin) => pin.id === row.id)), LUXURY_PER_DESTINATION);
+    const picks = [...pinned, ...shortlist(inPlace.filter((row) => eligible(row) && !pinned.some((pin) => pin.id === row.id)), size), ...homes, ...luxury];
     const records = [];
     let malformed = 0;
     for (let index = 0; index < picks.length; index += CHUNK) {
@@ -366,7 +374,7 @@ export async function importDestination(client, destination, feeds, { importedAt
   return { destinationId: destination.id, status: "empty", reason: "no_listings_matched_destination", records: [] };
 }
 
-// Whole places only, for adding houses and apartments to an existing catalog
+// Whole places and luxury stays only, for adding them to an existing catalog
 // quickly: one search for the destination's own name, then full details.
 export async function importDestinationHomes(client, destination, feeds, { importedAt = new Date().toISOString(), size = HOMES_PER_DESTINATION } = {}) {
   const candidates = feedsForCountry(feeds, destination.country);
@@ -377,7 +385,7 @@ export async function importDestinationHomes(client, destination, feeds, { impor
     const named = rows.filter((row) => places.includes(normalizeName(row.address?.city)));
     const inPlace = nearDestination(named, destination, (row) => ({ latitude: number(row.address?.latitude), longitude: number(row.address?.longitude) }));
     if (!inPlace.length) continue;
-    const picks = shortlist(inPlace.filter(eligibleHome), size);
+    const picks = [...shortlist(inPlace.filter(eligibleHome), size), ...shortlist(inPlace.filter(eligibleLuxury), LUXURY_PER_DESTINATION)];
     const records = [];
     for (let index = 0; index < picks.length; index += CHUNK) {
       const ids = picks.slice(index, index + CHUNK).map((row) => JSON.stringify(String(row.id)));

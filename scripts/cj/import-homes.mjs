@@ -1,6 +1,7 @@
-// Add whole places (houses, apartments, chalets) to the bundled catalog snapshot
+// Add whole places (houses, apartments, chalets) and luxury stays (5-star,
+// resorts, villas) to the bundled catalog snapshot
 // (app/data/feedStays.json) without re-importing every hotel. Existing non-home
-// records are kept; each destination's homes are replaced.
+// records are kept; each destination's homes and luxury stays are replaced.
 //
 // Usage: node scripts/cj/import-homes.mjs [--destinations HAN,LIS] [--dry-run]
 import { readFile, writeFile } from "node:fs/promises";
@@ -11,7 +12,7 @@ for (const line of (await readFile(new URL("../../.env.local", import.meta.url),
 }
 
 const { createCjClient } = await import("../../app/lib/catalog/cjClient.js");
-const { discoverFeeds, importDestinationHomes, isHomeCategory } = await import("../../app/lib/catalog/cjBookingImporter.js");
+const { discoverFeeds, importDestinationHomes, isHomeCategory, isLuxuryStay } = await import("../../app/lib/catalog/cjBookingImporter.js");
 const { catalogDestinations } = await import("../../app/lib/catalog/catalogDestinations.js");
 const { stayCounts } = await import("../../app/lib/catalog/stayCounts.js");
 
@@ -29,10 +30,10 @@ for (const [index, destination] of destinations.entries()) {
   try {
     const result = await importDestinationHomes(client, destination, feeds, { importedAt });
     const homes = result.records.map(({ importedAt: at, ...record }) => ({ ...record, id: `cj-${record.providerPropertyId}`, sku: record.providerPropertyId, address: [record.streetAddress, record.city, record.provinceState, record.postalCode].filter(Boolean).join(", ") || null, importedAt: at, photos: (record.photos || []).slice(0, 5), description: record.description ? record.description.slice(0, 280) : null }));
-    const kept = (snapshot.stays[destination.id] || []).filter((record) => !isHomeCategory(record.category) && !homes.some((home) => home.sku === record.sku));
+    const kept = (snapshot.stays[destination.id] || []).filter((record) => !isHomeCategory(record.category) && !isLuxuryStay(record.category, record.starRating) && !homes.some((home) => home.sku === record.sku));
     if (homes.length || kept.length) snapshot.stays[destination.id] = [...kept, ...homes];
     total += homes.length;
-    console.log(`${String(index + 1).padStart(3)}/${destinations.length} ${destination.id.padEnd(28)} ${homes.length} homes`);
+    console.log(`${String(index + 1).padStart(3)}/${destinations.length} ${destination.id.padEnd(28)} ${homes.filter((home) => isHomeCategory(home.category)).length} homes, ${homes.filter((home) => isLuxuryStay(home.category, home.starRating)).length} luxury`);
   } catch (error) {
     console.log(`${String(index + 1).padStart(3)}/${destinations.length} ${destination.id.padEnd(28)} failed ${error.message}`);
   }

@@ -88,6 +88,7 @@ const LABELS = { hotel: "Stay", flights: "Flights", food: "Dining", activities: 
 function lodgingSource(lodging) {
   if (!lodging) return null;
   if (lodging.priceKind === "city_estimate") return "GlobTrek's city estimate for a simple room, taxes included";
+  if (lodging.priceKind === "luxury_estimate") return "GlobTrek's estimate for a luxury room: about 4 times the city's well-reviewed budget hotel, the ratio in GlobTrek's destination price bands, taxes included. Not a hotel's price";
   if (lodging.priceKind === "home_estimate") return "GlobTrek's estimate for a whole place: the city's room rate for each bedroom your group needs, taxes included. Not a rental's price";
   if (lodging.priceKind === "dorm_estimate") return "GlobTrek's modeled dorm-bed rate for this city, not a specific hostel's price";
   if (lodging.priceKind === "live") return "live price";

@@ -29,8 +29,15 @@ async function save(db, placeId, all) {
   const now = new Date();
   const refresh = new Date(now.getTime() + REFRESH_DAYS * 86400000);
   const rows = BUDGET_KEYS.map((budget) => ({ place_id: placeId, budget, picks: all[budget], computed_at: now.toISOString(), refresh_after: refresh.toISOString() }));
-  const { error } = await db.from("place_picks").upsert(rows, { onConflict: "place_id,budget" });
+  // Luxury is saved on its own, so a database that doesn't allow it yet
+  // (migration 202611220001) never stops the other levels from saving.
+  const { error } = await db.from("place_picks").upsert(rows.filter((row) => row.budget !== "luxury"), { onConflict: "place_id,budget" });
   if (error) log({ msg: "anyplace_save_failed", error: error.message });
+  const luxury = rows.find((row) => row.budget === "luxury");
+  if (luxury) {
+    const { error: luxuryError } = await db.from("place_picks").upsert([luxury], { onConflict: "place_id,budget" });
+    if (luxuryError) log({ msg: "anyplace_save_luxury_failed", error: luxuryError.message });
+  }
 }
 
 // One build per place at a time, however many visitors arrive together.

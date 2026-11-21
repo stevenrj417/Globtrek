@@ -36,3 +36,20 @@ test("asking for a whole place picks houses and apartments that sleep the group"
   assert.ok(choices.every((choice) => !choice.dorms), "never a dorm");
   assert.match(choices[0].why, /^Whole place/);
 });
+
+test("luxury is priced at four times a budget room and never reaches budget travelers", () => {
+  const room = buildBudgetPlan(profileFor("Private room", 2), lisbon).lodging;
+  const luxury = buildBudgetPlan(profileFor("Luxury", 2), lisbon).lodging;
+  assert.equal(luxury.priceKind, "luxury_estimate");
+  assert.equal(luxury.perUnit, Math.round(room.perUnit * 4));
+  const candidates = [
+    stay("guesthouse", { category: "Guest house" }),
+    stay("hotel3", { category: "Hotel", starRating: 3 }),
+    stay("five", { category: "Hotel", starRating: 5 }),
+    stay("resort", { category: "Resort", starRating: 4 }),
+  ];
+  const cheap = buildStayShortlist({ candidates, profile: profileFor("Whatever's cheapest", 2), destination: lisbon, budgetPlan: buildBudgetPlan(profileFor("Whatever's cheapest", 2), lisbon) });
+  assert.ok(cheap.choices.every((choice) => !["five", "resort"].includes(choice.id)), "no luxury unless asked for");
+  const posh = buildStayShortlist({ candidates, profile: profileFor("Luxury", 2), destination: lisbon, budgetPlan: buildBudgetPlan(profileFor("Luxury", 2), lisbon) });
+  assert.ok(["five", "resort"].includes(posh.choices[0].id), "luxury travelers get a luxury pick");
+});

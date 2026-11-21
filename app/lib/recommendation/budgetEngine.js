@@ -5,6 +5,9 @@ import { observedMonthFor } from "../pricing/stayPrice.js";
 import { CHEAP_STAYS_CHECKED, cheapStayFor, stayNightFor } from "../../data/cheapStays.js";
 import feedStayCounts from "../../data/feedStayCounts.json" with { type: "json" };
 
+// From lodgingPriceBands.json: luxury ÷ budget hotel is 4.0 in every band.
+export const LUXURY_ROOM_RATIO = 4;
+
 const CATEGORY_KEYS = ["flights", "hotel", "food", "activities", "transportation"];
 
 // Budget modes. "cheapest" is rock bottom: a hostel bed (or the cheapest room when
@@ -108,7 +111,8 @@ function planForStyle(profile, destination, options = {}) {
   const cityTaxRate = Number(destination.planningAverages?.lodgingTaxRate) || 0;
   const cityRoomNight = Math.round(cityAverage.hotelNight * (1 + cityTaxRate));
   const wantsHome = profile.lodging === "home";
-  const useBeds = !wantsHome && Boolean(cheap?.bedNight) && profile.lodging !== "private" && (profile.lodging === "hostel" || stayNight * travelers <= cityRoomNight * rooms);
+  const wantsLuxury = profile.lodging === "luxury";
+  const useBeds = !wantsHome && !wantsLuxury && Boolean(cheap?.bedNight) && profile.lodging !== "private" && (profile.lodging === "hostel" || stayNight * travelers <= cityRoomNight * rooms);
   // Where no hostel's price was checked by hand, rock bottom can still plan a dorm
   // bed: GlobTrek's modeled dorm rate for the city, but only when the catalog has
   // real dorm properties there, and never for a traveler who asked for privacy.
@@ -117,12 +121,16 @@ function planForStyle(profile, destination, options = {}) {
   const modelDorm = profile.spendStyle === "cheapest" && !cheap && profile.lodging !== "private" && local?.lodging?.dormBed > 0 && (feedStayCounts.dorms?.[destination.id] || 0) > 0
     ? Math.round(local.lodging.dormBed * (local.lodging.budgetRoom > 0 ? baseCityAverage.hotelNight / local.lodging.budgetRoom : 1) * (1 + cityTaxRate))
     : null;
-  const useModelDorm = !wantsHome && Boolean(modelDorm) && (profile.lodging === "hostel" || modelDorm * travelers <= cityRoomNight * rooms);
+  const useModelDorm = !wantsHome && !wantsLuxury && Boolean(modelDorm) && (profile.lodging === "hostel" || modelDorm * travelers <= cityRoomNight * rooms);
   const chosen = options.stay?.perUnit > 0 ? options.stay : null;
   // A whole place for the group (house, apartment, chalet): one booking, priced
   // as one local room rate per bedroom the group needs (two people a bedroom).
   // It's an estimate from room rates, not a rental's price.
-  const lodging = wantsHome && !chosen
+  // Luxury (a 5-star hotel, resort or villa): GlobTrek's destination list prices a
+  // luxury room at about 4 times a well-reviewed budget hotel in every price band.
+  const lodging = wantsLuxury && !chosen
+    ? { type: "luxury_room", unit: "room", units: rooms, perUnit: Math.round(cityRoomNight * LUXURY_ROOM_RATIO), name: null, priceKind: "luxury_estimate", observedAt: null, month }
+    : wantsHome && !chosen
     ? { type: "whole_home", unit: "home", units: 1, bedrooms: rooms, perUnit: cityRoomNight * rooms, name: null, priceKind: "home_estimate", observedAt: null, month }
     : chosen
     ? { type: chosen.unit === "bed" ? "hostel_bed" : "private_room", unit: chosen.unit, units: chosen.unit === "bed" ? travelers : rooms, perUnit: Math.round(chosen.perUnit), name: chosen.name, propertyId: chosen.propertyId || null, priceKind: chosen.priceKind, observedAt: chosen.observedAt || null, month: stayMonth }

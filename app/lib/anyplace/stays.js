@@ -16,14 +16,15 @@ const FIELDS = (pid) => `id title link imageLink categoryName starRating roomTyp
   address { city streetAddress provinceState country latitude longitude }
   linkCode(pid: "${pid}") { clickUrl }`;
 
-// Property types by budget tier. Five-star places, resorts and villas never show.
+// Property types by budget tier. Five-star places, resorts and villas are "luxury":
+// shown only when someone picks the Luxury level.
 const BUDGET_TYPES = new Set(["Hostel", "Capsule hotel", "Guest house", "Homestay", "Bed and breakfast", "Inn", "Motel", "Campsite", "Farm stay", "Lodge", "Country house", "Love hotel"]);
 const MID_TYPES = new Set(["Hotel", "Aparthotel", "Apartment", "Holiday home", "Chalet", "Holiday park", "Boat", "Ryokan", "Tented camp"]);
 const NEVER = new Set(["Villa", "Resort", "Luxury tent"]);
 
 export function stayTier(category, stars) {
   const s = Number(stars) || 0;
-  if (NEVER.has(category) || s >= 5) return null;
+  if (NEVER.has(category) || s >= 5) return "luxury"; // shown only at the Luxury level
   if (s === 4) return "comfort";
   if (category === "Hostel" || category === "Capsule hotel") return "budget"; // dorms, whatever the stars
   if (BUDGET_TYPES.has(category)) return s >= 3 ? "mid" : "budget";
