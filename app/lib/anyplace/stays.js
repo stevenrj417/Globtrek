@@ -12,7 +12,7 @@ import { cleanText, discoverFeeds, feedsForCountry } from "../catalog/cjBookingI
 import { distanceKm, normalizeText } from "./rank.js";
 
 const CJ_HOSTS = ["kqzyfj.com", "dpbolvw.net", "anrdoezrs.net", "jdoqocy.com", "tkqlhce.com", "qksrv.net"];
-const FIELDS = (pid) => `id title link imageLink categoryName starRating roomType freeCancellation freeBreakfast freeInternet isDeleted joinedStatus
+const FIELDS = (pid) => `id title link imageLink categoryName starRating roomType amenities freeCancellation freeBreakfast freeInternet isDeleted joinedStatus
   address { city streetAddress provinceState country latitude longitude }
   linkCode(pid: "${pid}") { clickUrl }`;
 
@@ -30,6 +30,33 @@ export function stayTier(category, stars) {
   if (category === "Hotel") return s && s <= 2 ? "budget" : "mid";
   if (MID_TYPES.has(category)) return "mid";
   return category ? "mid" : null;
+}
+
+// Stay themes, read only from the facilities each property lists on Booking.com.
+// Plain rules, no AI. A place can have more than one theme, or none.
+export const STAY_THEMES = {
+  lively: { label: "Lively", intro: "Stays with a bar, live music, a club night or a social scene, going by the facilities they list on Booking.com." },
+  calm: { label: "Quiet", intro: "Adults-only or soundproofed stays, or ones with a spa, sauna or garden, going by the facilities they list on Booking.com." },
+  family: { label: "Family", intro: "Stays with things for kids, like a play area, kids' pool, kids' club or babysitting, going by the facilities they list on Booking.com." },
+};
+export const THEME_KEYS = Object.keys(STAY_THEMES);
+const LIVELY = new Set(["nightclub", "dj", "karaoke", "pub crawls", "happy hour", "live music", "pool bar", "themed dinner nights", "movie nights", "live sport events (broadcast)"]);
+const SOCIAL = new Set(["games room", "board games"]);
+const CALM = new Set(["spa & wellness centre", "spa", "spa facilities", "spa lounge", "sauna", "hot tub", "massage", "yoga classes", "garden", "public bath"]);
+const KIDS = new Set(["kids' club", "children's playground", "kids' pool", "babysitting", "child services", "kids' meals", "kid-friendly buffet", "baby safety gates", "kids' outdoor play equipment", "swimming pool toys"]);
+const POOL = /\bpool\b/;
+
+export function stayThemes(amenities, category) {
+  const list = new Set(String(amenities || "").split(",").map((item) => item.trim().toLowerCase()).filter(Boolean));
+  const has = (set) => [...list].filter((item) => set.has(item)).length;
+  const dorms = /hostel|capsule/i.test(category || "");
+  const adultsOnly = list.has("adults only");
+  const lively = has(LIVELY) > 0 || (list.has("bar") && (dorms || has(SOCIAL) > 0));
+  const themes = [];
+  if (lively) themes.push("lively");
+  if (!lively && !dorms && (adultsOnly || list.has("soundproof rooms") || has(CALM) >= 2)) themes.push("calm");
+  if (!adultsOnly && !dorms && (has(KIDS) > 0 || (list.has("family rooms") && [...list].some((item) => POOL.test(item))))) themes.push("family");
+  return themes;
 }
 
 const yes = (value) => /^yes$/i.test(String(value || "").trim());
@@ -63,6 +90,7 @@ export function normalizeStay(row, center) {
     category,
     stars: stars ? Math.round(stars) : null,
     tier,
+    themes: stayThemes(row.amenities, category),
     dorms: /shared|dorm|bunk|capsule|\bpod\b/i.test(row.roomType || ""),
     freeCancellation: yes(row.freeCancellation),
     freeBreakfast: yes(row.freeBreakfast),

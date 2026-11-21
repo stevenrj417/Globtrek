@@ -9,9 +9,9 @@
 import { nameSimilarity } from "../google-places/GooglePlacesHotelProvider.js";
 import { BUDGETS, BUDGET_KEYS, MIN_RATING, byScore, distanceKm, distancePenalty, normalizeText, pickVaried, round, streetKey, weightedRating } from "./rank.js";
 import { LODGING_FIELDS } from "./google.js";
-import { feedsFor, searchStays } from "./stays.js";
+import { THEME_KEYS, feedsFor, searchStays } from "./stays.js";
 
-export const PICKS_VERSION = 1;
+export const PICKS_VERSION = 2;
 export const REFRESH_DAYS = 21;
 const COUNT = 3;
 
@@ -284,7 +284,15 @@ export async function computePicks({ places, cj, destination, log = () => {}, de
       const pool = scored(candidates, tiers).filter((stay) => usable(stay) && (key === "budget" || !/hostel|capsule/i.test(stay.category || ""))).sort(byScore);
       picks = pickVaried(pool, COUNT, stayClash, STAY_SLACK).map((stay) => (stay.rating === null ? { ...stay, unrated: true } : stay));
     }
-    result[key].stays = picks.map(({ score, weighted, rating, reviews, ...stay }) => stay);
+    const strip = ({ score, weighted, rating, reviews, ...stay }) => stay;
+    result[key].stays = picks.map(strip);
+    // Themed stays (lively, quiet, family): the same ranking, among listings with that theme.
+    result[key].themes = {};
+    for (const theme of THEME_KEYS) {
+      const pool = scored(candidates, all).filter((stay) => stay.themes?.includes(theme) && usable(stay) && (key === "budget" || !/hostel|capsule/i.test(stay.category || ""))).sort(byScore);
+      const themed = pickVaried(pool, COUNT, stayClash, STAY_SLACK).map((stay) => (stay.rating === null ? { ...stay, unrated: true } : stay));
+      if (themed.length) result[key].themes[theme] = themed.map(strip);
+    }
     result[key].labels.stays = label("stays", picks, townKm);
     result[key].steps.stays = step;
   }

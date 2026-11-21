@@ -12,6 +12,7 @@ import { getPicks, hydrate } from "../../lib/anyplace/service";
 import { featuredSlug } from "../../lib/anyplace/featured";
 import { BUDGETS, BUDGET_KEYS, budgetKey } from "../../lib/anyplace/rank";
 import { cjDestinationStaysUrl } from "../../lib/booking/cj";
+import { STAY_THEMES } from "../../lib/anyplace/stays";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -49,7 +50,7 @@ const km = (value) => (value >= 10 ? Math.round(value) : Math.round(value * 10) 
 function StayCards({ stays, townKm, name }) {
   return <CardRow columns="lg:grid-cols-3">
     {stays.map((stay, index) => {
-      const chips = [stay.stars ? `${stay.stars}-star ${String(stay.category || "stay").toLowerCase()}` : stay.category, stay.dorms ? "Dorm beds" : null].filter(Boolean);
+      const chips = [stay.stars ? `${stay.stars}-star ${String(stay.category || "stay").toLowerCase()}` : stay.category, stay.dorms ? "Dorm beds" : null, ...(stay.themes || []).map((theme) => STAY_THEMES[theme]?.label)].filter(Boolean);
       const tags = [stay.freeCancellation ? "Free cancellation on some rooms" : null, stay.freeBreakfast ? "Breakfast on some rooms" : null].filter(Boolean);
       return <CardRowItem key={stay.id}>
         <div className="relative aspect-[4/5] overflow-hidden bg-placeholder">
@@ -81,7 +82,15 @@ function Fallback({ name }) {
   </>;
 }
 
-async function Picks({ destination, budget }) {
+function ThemeSwitch({ placeId, budget, theme, available }) {
+  if (!available.length) return null;
+  const options = [[null, "Top picks"], ...available.map((key) => [key, STAY_THEMES[key].label])];
+  return <nav aria-label="Kind of stay" className="mt-6 flex flex-wrap gap-2">
+    {options.map(([key, text]) => <Link key={text} href={`/places/${placeId}?budget=${budget}${key ? `&vibe=${key}` : ""}#stay`} scroll={false} aria-current={key === theme ? "page" : undefined} className={`inline-flex min-h-10 items-center border px-4 text-micro font-medium uppercase tracking-label transition-colors ${key === theme ? "border-black bg-black text-white" : "border-black/15 hover:border-ink"}`}>{text}</Link>)}
+  </nav>;
+}
+
+async function Picks({ destination, budget, theme: wanted }) {
   let picks;
   try {
     const result = await getPicks(destination, budget, { background: (task) => after(() => task.catch(() => {})) });
@@ -92,11 +101,15 @@ async function Picks({ destination, budget }) {
   }
   const city = { city: destination.name, country: destination.country };
   const mapsSearch = (what) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${what} near ${destination.name}${destination.country ? `, ${destination.country}` : ""}`)}`;
+  const available = Object.keys(STAY_THEMES).filter((key) => picks.themes?.[key]?.length);
+  const theme = available.includes(wanted) ? wanted : null;
+  const stays = theme ? picks.themes[theme] : picks.stays;
   const intro = (kind, normal) => [picks.labels?.[kind] ? `${picks.labels[kind]}.` : null, normal].filter(Boolean).join(" ");
 
   return <>
-    <Section id="stay-heading" eyebrow="From Booking.com" title="Where to stay" intro={intro("stays", "Real Booking.com listings, picked for strong Google reviews and a good spot. Check current prices and availability on Booking.com.")}>
-      {picks.stays.length ? <StayCards stays={picks.stays} townKm={picks.townKm} name={destination.name} /> : <p className="mt-8 text-base">We couldn&apos;t find listings here yet. <a href={cjDestinationStaysUrl(city)} target="_blank" rel="noopener sponsored" className={textLink}>Search stays near {destination.name} on Booking.com ↗</a></p>}
+    <Section id="stay-heading" eyebrow="From Booking.com" title="Where to stay" intro={theme ? STAY_THEMES[theme].intro : intro("stays", "Real Booking.com listings, picked for strong Google reviews and a good spot. Check current prices and availability on Booking.com.")}>
+      <ThemeSwitch placeId={destination.placeId} budget={budget} theme={theme} available={available} />
+      {stays.length ? <StayCards stays={stays} townKm={picks.townKm} name={destination.name} /> : <p className="mt-8 text-base">We couldn&apos;t find listings here yet. <a href={cjDestinationStaysUrl(city)} target="_blank" rel="noopener sponsored" className={textLink}>Search stays near {destination.name} on Booking.com ↗</a></p>}
       <p className="mt-6 text-xs text-subtle">Listings on <BookingLogo className="h-3 w-auto" />. You book and pay on Booking.com.</p>
     </Section>
 
@@ -113,7 +126,7 @@ async function Picks({ destination, budget }) {
 
 export default async function PlacePage({ params, searchParams }) {
   const { placeId } = await params;
-  const { budget: rawBudget, s } = await searchParams;
+  const { budget: rawBudget, vibe, s } = await searchParams;
   const details = await destinationDetails(placeId, s);
   const destination = destinationFrom(details);
   if (!destination) notFound();
@@ -133,7 +146,7 @@ export default async function PlacePage({ params, searchParams }) {
       </nav>
     </Summary>
     <Suspense fallback={<Fallback name={destination.name} />}>
-      <Picks destination={destination} budget={budget} />
+      <Picks destination={destination} budget={budget} theme={typeof vibe === "string" ? vibe : null} />
     </Suspense>
     <div className="h-[var(--section-space)]" aria-hidden="true" />
     <SiteFooter />

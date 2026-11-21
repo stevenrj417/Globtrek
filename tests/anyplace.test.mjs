@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { weightedRating, pickVaried, byScore, streetKey, BUDGETS } from "../app/lib/anyplace/rank.js";
 import { computePicks, townRadiusKm, matchStay, cuisineKey, activityGroup } from "../app/lib/anyplace/picks.js";
-import { stayTier, normalizeStay } from "../app/lib/anyplace/stays.js";
+import { stayTier, normalizeStay, stayThemes } from "../app/lib/anyplace/stays.js";
 import { featuredSlug } from "../app/lib/anyplace/featured.js";
 
 const CENTER = { latitude: -21.1103, longitude: -44.1781 };
@@ -212,4 +212,38 @@ test("a listing in town without reviews beats a well-reviewed one 35 km away", a
 test("outdoor places are sorted into kinds", () => {
   assert.equal(activityGroup({ primaryType: "scenic_spot" }), "nature:viewpoint");
   assert.equal(activityGroup({ primaryType: "tourist_attraction", displayName: { text: "Wasserfall Sprutz" } }), "nature:waterfall");
+});
+
+test("stay themes come only from the facilities listed on Booking.com", () => {
+  assert.deepEqual(stayThemes("Bar,Nightclub,Free WiFi", "Hotel"), ["lively"]);
+  assert.deepEqual(stayThemes("Bar,Free WiFi", "Hotel"), [], "a hotel bar alone isn't a scene");
+  assert.deepEqual(stayThemes("Bar,Board games", "Hostel"), ["lively"]);
+  assert.deepEqual(stayThemes("Garden,Sauna", "Guest house"), ["calm"]);
+  assert.deepEqual(stayThemes("Adults only,Garden", "Hotel"), ["calm"]);
+  assert.deepEqual(stayThemes("Garden,Sauna", "Hostel"), [], "dorms are never the quiet pick");
+  assert.deepEqual(stayThemes("Family rooms,Outdoor pool", "Hotel"), ["family"]);
+  assert.deepEqual(stayThemes("Family rooms,Terrace", "Hotel"), [], "family rooms alone aren't enough");
+  assert.deepEqual(stayThemes("Kids' club,Adults only", "Hotel"), ["calm"], "adults-only is never family");
+  assert.deepEqual(stayThemes("Children's playground,Garden,Hot tub,Karaoke", "Inn"), ["lively", "family"]);
+  assert.deepEqual(stayThemes(null, "Hotel"), []);
+});
+
+test("themed stays use the same ranking among listings with that theme", async () => {
+  const { places, cj } = fakeClients();
+  const realQuery = cj.query;
+  cj.query = async (text) => {
+    const data = await realQuery(text);
+    if (text.includes("productFeeds")) return data;
+    const rows = data.travelExperienceProducts.resultList.map((row) => ({ ...row, amenities: row.categoryName === "Hostel" ? "Bar,Live music" : "Garden,Sauna" }));
+    return { travelExperienceProducts: { resultList: rows } };
+  };
+  const one = await computePicks({ places, cj, destination });
+  for (const key of ["budget", "mid", "comfort"]) {
+    for (const [theme, stays] of Object.entries(one[key].themes)) {
+      assert.ok(stays.length >= 1 && stays.length <= 3);
+      assert.ok(stays.every((stay) => stay.themes.includes(theme)), `${key} ${theme}`);
+      assert.ok(stays.every((stay) => !("rating" in stay) && !("amenities" in stay)), "no Google rating or raw feed text stored");
+    }
+  }
+  assert.ok(one.budget.themes.lively?.length && one.mid.themes.calm?.length);
 });
