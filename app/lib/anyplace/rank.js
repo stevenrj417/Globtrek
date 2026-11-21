@@ -9,7 +9,7 @@ export const MIN_RATING = 4.0;
 // reaches a 4-star hotel at most and never luxury.
 export const BUDGETS = {
   budget: { label: "Budget", stayTiers: ["budget", "mid"], dinnerPrices: ["PRICE_LEVEL_FREE", "PRICE_LEVEL_INEXPENSIVE", null], activityPrices: ["PRICE_LEVEL_FREE", "PRICE_LEVEL_INEXPENSIVE", "PRICE_LEVEL_MODERATE", null] },
-  mid: { label: "Mid-range", stayTiers: ["mid", "budget"], dinnerPrices: ["PRICE_LEVEL_INEXPENSIVE", "PRICE_LEVEL_MODERATE", null], activityPrices: ["PRICE_LEVEL_FREE", "PRICE_LEVEL_INEXPENSIVE", "PRICE_LEVEL_MODERATE", null] },
+  mid: { label: "Mid-range", stayTiers: ["mid", "comfort", "budget"], dinnerPrices: ["PRICE_LEVEL_INEXPENSIVE", "PRICE_LEVEL_MODERATE", null], activityPrices: ["PRICE_LEVEL_FREE", "PRICE_LEVEL_INEXPENSIVE", "PRICE_LEVEL_MODERATE", null] },
   comfort: { label: "Comfort", stayTiers: ["comfort", "mid"], dinnerPrices: ["PRICE_LEVEL_MODERATE", "PRICE_LEVEL_EXPENSIVE", null], activityPrices: ["PRICE_LEVEL_FREE", "PRICE_LEVEL_INEXPENSIVE", "PRICE_LEVEL_MODERATE", "PRICE_LEVEL_EXPENSIVE", null] },
 };
 export const BUDGET_KEYS = Object.keys(BUDGETS);

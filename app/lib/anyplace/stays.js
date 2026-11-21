@@ -25,6 +25,7 @@ export function stayTier(category, stars) {
   const s = Number(stars) || 0;
   if (NEVER.has(category) || s >= 5) return null;
   if (s === 4) return "comfort";
+  if (category === "Hostel" || category === "Capsule hotel") return "budget"; // dorms, whatever the stars
   if (BUDGET_TYPES.has(category)) return s >= 3 ? "mid" : "budget";
   if (category === "Hotel") return s && s <= 2 ? "budget" : "mid";
   if (MID_TYPES.has(category)) return "mid";

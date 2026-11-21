@@ -25,7 +25,7 @@ export const isDinner = (place) => place.types?.includes("restaurant") && !NOT_D
 const NOT_DINNER = new Set(["fast_food_restaurant", "cafe", "coffee_shop", "bakery", "ice_cream_shop", "dessert_shop", "dessert_restaurant", "confectionery", "juice_shop", "donut_shop", "bar", "night_club", "wine_bar", "cafeteria", "food_court", "snack_bar", "tea_house", "chocolate_shop"]);
 const SIGHT_TYPES = ["tourist_attraction", "museum", "art_gallery", "historical_landmark", "cultural_landmark", "monument", "church", "zoo", "aquarium", "amusement_park", "botanical_garden", "market", "plaza", "visitor_center"];
 const NATURE_TYPES = ["park", "national_park", "state_park", "hiking_area", "beach", "observation_deck", "wildlife_park", "wildlife_refuge"];
-const NATURE = new Set([...NATURE_TYPES, "natural_feature", "botanical_garden", "garden", "lake", "waterfall", "mountain_peak", "nature_preserve"]);
+const NATURE = new Set([...NATURE_TYPES, "scenic_spot", "natural_feature", "botanical_garden", "garden", "lake", "waterfall", "mountain_peak", "nature_preserve"]);
 const NOT_ACTIVITY = /restaurant|hotel|lodging|hostel|store|shop|agency|rental|parking|gas_station|bank|atm|school|hospital|doctor|dentist|pharmacy|office|apartment|real_estate|car_|transit|bus_station|train_station|airport|gym|spa|bar$|cafe/;
 
 const CUISINE_WORDS = ["pizza", "sushi", "burger", "taco", "ramen", "steak", "churrasc", "kebab", "curry", "bbq", "barbecue", "seafood", "marisq", "vegan", "noodle", "dumpling", "tapas", "pasta", "trattoria", "pizzeria", "chinese", "thai", "indian", "mexican", "japanese", "korean", "italian"];
@@ -74,7 +74,8 @@ const near = (a, b, km) => { const d = distanceKm(a.location || a, b.location ||
 // At most two of one cuisine (two Brazilian places in Brazil are fine; three pizzerias aren't).
 const dinnerClash = (a, b, chosen = []) => near(a, b, 0.08) || (Boolean(cuisineKey(a)) && chosen.filter((other) => cuisineKey(other) === cuisineKey(a)).length >= 2);
 export const dinnerClashForTest = dinnerClash;
-const activityClash = (a, b) => (activityGroup(a) === activityGroup(b) && activityGroup(a) !== "sight") || near(a, b, 0.15);
+// Same kind (two viewpoints), very close, or nearly the same name ("Skywalk" and "Skywalk viewpoint").
+const activityClash = (a, b) => (activityGroup(a) === activityGroup(b) && activityGroup(a) !== "sight") || near(a, b, 0.15) || nameSimilarity(a.name, b.name) >= 0.5;
 const stayClash = (a, b) => a.category === b.category || near(a, b, 0.2) || (streetKey(a.street) && streetKey(a.street) === streetKey(b.street));
 
 // At least one outdoor pick when a good one exists, so small towns get their hikes and viewpoints.
@@ -144,12 +145,18 @@ export function matchStay(stay, lodging) {
   return best?.place || null;
 }
 
+// The budget's own tier first (+0.3), its next tier after (+0.1), the last only to fill.
+// Distance counts more for a bed than for a dinner: 0.02 a km past the first, up to 0.8.
 function stayScore(stay, budget) {
-  const tierBonus = stay.tier === BUDGETS[budget].stayTiers[0] ? 0.1 : 0;
+  const index = BUDGETS[budget].stayTiers.indexOf(stay.tier);
+  const tierBonus = index === 0 ? 0.3 : index === 1 ? 0.1 : 0;
   const flags = (stay.freeCancellation ? 0.02 : 0) + (stay.freeBreakfast ? 0.01 : 0);
-  if (stay.weighted === null) return round(3.85 - distancePenalty(stay.km) + tierBonus + flags);
-  return round(stay.weighted - distancePenalty(stay.km) + tierBonus + flags);
+  const distance = stay.km == null ? 0.2 : Math.min(0.8, Math.max(0, stay.km - 1) * 0.02);
+  return round((stay.weighted ?? UNRATED_BASE) - distance + tierBonus + flags);
 }
+// Where a listing without Google reviews starts: below a well-reviewed place nearby,
+// above a well-reviewed one about 30 km or more away.
+const UNRATED_BASE = 3.95;
 
 // Searches Google and CJ step by step and returns picks for every budget.
 // debug (test route only): receives the top-ranked candidates per kind and budget.
@@ -236,21 +243,28 @@ export async function computePicks({ places, cj, destination, log = () => {}, de
 
   // Stays: real Booking.com listings, ranked by the Google rating of the same property.
   for (const key of BUDGET_KEYS) {
-    const tiers = BUDGETS[key].stayTiers;
+    const all = BUDGETS[key].stayTiers;
+    // A third tier (budget places for mid-range) is a last resort, used only when the others run out.
+    const main = all.length > 2 ? all.slice(0, 2) : all;
     let picks = [];
     let step = 0;
     let candidates = [];
+    const scored = (stays, tiers) => stays.filter((stay) => tiers.includes(stay.tier)).map((stay) => ({ ...stay, score: stayScore(stay, key) }));
     for (; step < radii.length; step += 1) {
-      candidates = (await widenStays(radii[step], step === 0)).filter((stay) => tiers.includes(stay.tier)).map((stay) => ({ ...stay, score: stayScore(stay, key) }));
-      const ranked = candidates.filter((stay) => stay.rating !== null && stay.rating >= MIN_RATING && stay.reviews >= MIN_REVIEWS.stays[step]).sort(byScore);
+      candidates = await widenStays(radii[step], step === 0);
+      const ranked = scored(candidates, main).filter((stay) => stay.rating !== null && stay.rating >= MIN_RATING && stay.reviews >= MIN_REVIEWS.stays[step]).sort(byScore);
       picks = pickVaried(ranked, COUNT, stayClash);
       if (picks.length >= COUNT) break;
     }
     step = Math.min(step, radii.length - 1);
-    if (picks.length < COUNT) {
-      // Listings without Google reviews, closest and best-matched to the budget first.
-      const unrated = candidates.filter((stay) => stay.rating === null && !picks.some((pick) => pick.id === stay.id)).sort(byScore);
-      picks = [...picks, ...pickVaried(unrated, COUNT - picks.length, stayClash).map((stay) => ({ ...stay, unrated: true }))];
+    // Not enough well-reviewed stays even after widening: listings without Google
+    // reviews compete too, so one in town can beat a rated one far away.
+    const usable = (stay) => stay.rating === null || (stay.rating >= MIN_RATING && stay.reviews >= MIN_REVIEWS.stays[step]);
+    for (const tiers of main === all ? [all] : [main, all]) {
+      if (picks.length >= COUNT) break;
+      // Dorms are for budget trips only; mid-range and comfort never fall back to a hostel.
+      const pool = scored(candidates, tiers).filter((stay) => usable(stay) && (key === "budget" || !/hostel|capsule/i.test(stay.category || ""))).sort(byScore);
+      picks = pickVaried(pool, COUNT, stayClash).map((stay) => (stay.rating === null ? { ...stay, unrated: true } : stay));
     }
     result[key].stays = picks.map(({ score, weighted, rating, reviews, ...stay }) => stay);
     result[key].labels.stays = label("stays", picks, townKm);

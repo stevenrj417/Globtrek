@@ -168,3 +168,38 @@ test("Google content is never stored and the key stays on the server", () => {
   assert.match(page, /unoptimized/);
   assert.match(page, /Google Maps/);
 });
+
+test("mid-range gets the 3-star and no hostel; budget keeps the hostel", async () => {
+  const { places, cj } = fakeClients();
+  const realQuery = cj.query;
+  cj.query = async (text) => {
+    const data = await realQuery(text);
+    if (text.includes("productFeeds")) return data;
+    const extra = { id: "g3", title: "Casa Tres", link: "https://www.booking.com/hotel/br/g3.html", categoryName: "Guest house", starRating: "3", address: { city: "Tiradentes", streetAddress: "Rua G3, 1", latitude: String(east(0.6).latitude), longitude: String(east(0.6).longitude) }, linkCode: { clickUrl: "https://www.kqzyfj.com/click-101801755-1?url=g3" } };
+    return { travelExperienceProducts: { resultList: [...data.travelExperienceProducts.resultList, extra] } };
+  };
+  const realNearby = places.nearby;
+  places.nearby = async (args) => [...(await realNearby(args)), ...(args.includedTypes.includes("hostel") ? [{ id: "l-g3", displayName: { text: "Casa Tres" }, location: east(0.6), businessStatus: "OPERATIONAL", rating: 4.5, userRatingCount: 80 }] : [])];
+  const picks = await computePicks({ places, cj, destination });
+  assert.ok(picks.mid.stays.some((stay) => stay.id === "bk:g3"), "the 3-star makes mid-range");
+  assert.ok(!picks.mid.stays.some((stay) => stay.category === "Hostel"), "no hostel for mid-range while others exist");
+  assert.ok(picks.budget.stays.some((stay) => stay.category === "Hostel"), "budget keeps the hostel");
+});
+
+test("a listing in town without reviews beats a well-reviewed one 35 km away", async () => {
+  const { places, cj } = fakeClients();
+  cj.query = async (text) => {
+    if (text.includes("productFeeds")) return { productFeeds: { resultList: [{ adId: "sa", feedName: "Feed: South America", productCount: 10, sourceFeedType: "TRAVEL" }] } };
+    const row = (id, title, km) => ({ id, title, link: `https://www.booking.com/hotel/br/${id}.html`, categoryName: "Guest house", address: { city: "X", streetAddress: `Rua ${id}`, latitude: String(east(km).latitude), longitude: String(east(km).longitude) }, linkCode: { clickUrl: `https://www.kqzyfj.com/click-1?url=${id}` } });
+    return { travelExperienceProducts: { resultList: [row("near", "Casa Perto", 0.3), row("far", "Far Inn", 35)] } };
+  };
+  places.nearby = async ({ includedTypes }) => (includedTypes.includes("hostel") ? [{ id: "g-far", displayName: { text: "Far Inn" }, location: east(35), businessStatus: "OPERATIONAL", rating: 4.6, userRatingCount: 300 }] : []);
+  places.text = async () => [];
+  const picks = await computePicks({ places, cj, destination });
+  assert.equal(picks.budget.stays[0].id, "bk:near");
+  assert.ok(picks.budget.stays[0].unrated);
+});
+
+test("two viewpoints of the same spot count once", () => {
+  assert.equal(activityGroup({ primaryType: "scenic_spot" }), "nature");
+});
