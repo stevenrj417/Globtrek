@@ -69,7 +69,7 @@ export function normalizeStay(row, center) {
     street: cleanText(row.address?.streetAddress),
     latitude,
     longitude,
-    km: distanceKm(center, { latitude, longitude }),
+    km: Math.round(distanceKm(center, { latitude, longitude }) * 100) / 100,
     photo: photo ? photo.toString() : null,
     bookingUrl: `${page.origin}${page.pathname}`,
     clickUrl: click.toString(),

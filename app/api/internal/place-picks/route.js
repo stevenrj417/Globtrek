@@ -21,9 +21,10 @@ export async function GET(request) {
   if (!placeId) return Response.json({ error: "no place" }, { status: 400 });
   const destination = destinationFrom(await places.details(placeId, DESTINATION_FIELDS));
   const started = Date.now();
-  const all = await computePicks({ places, cj: createCjClient({ minIntervalMs: 250, timeoutMs: 15000, maxAttempts: 2 }), destination, log: (entry) => logs.push(entry) });
+  const ranked = [];
+  const all = await computePicks({ places, cj: createCjClient({ minIntervalMs: 250, timeoutMs: 15000, maxAttempts: 2 }), destination, log: (entry) => logs.push(entry), debug: params.get("debug") ? (entry) => ranked.push(entry) : null });
   const computeMs = Date.now() - started;
   const shown = {};
   for (const [budget, picks] of Object.entries(all)) shown[budget] = await hydrate(picks, places);
-  return Response.json({ destination: { ...destination, featured: featuredSlug(destination) }, computeMs, googleCalls: places.stats().calls, logs, picks: shown }, { headers: { "Cache-Control": "no-store" } });
+  return Response.json({ destination: { ...destination, featured: featuredSlug(destination) }, computeMs, googleCalls: places.stats().calls, logs, ranked, picks: shown }, { headers: { "Cache-Control": "no-store" } });
 }

@@ -19,6 +19,9 @@ export const STEP_RADII_KM = [null, 10, 25, 50]; // null = the town's own size
 const MIN_REVIEWS = { dinners: [30, 15, 5, 1], activities: [30, 15, 5, 1], stays: [20, 10, 5, 1] };
 
 const LODGING_TYPES = [["hostel", "guest_house", "bed_and_breakfast", "inn", "motel", "farmstay", "cottage", "private_guest_room"], ["hotel", "lodging"]];
+// A dinner is a place whose main business is food (a campground with a restaurant isn't).
+const DINNER_PRIMARY = /restaurant|steak_house|bistro|diner|brasserie|gastropub|pub$|tavern|pizzeria|churrascaria|izakaya|trattoria|osteria|taverna|food$/;
+export const isDinner = (place) => place.types?.includes("restaurant") && !NOT_DINNER.has(place.primaryType) && (!place.primaryType || DINNER_PRIMARY.test(place.primaryType));
 const NOT_DINNER = new Set(["fast_food_restaurant", "cafe", "coffee_shop", "bakery", "ice_cream_shop", "dessert_shop", "dessert_restaurant", "confectionery", "juice_shop", "donut_shop", "bar", "night_club", "wine_bar", "cafeteria", "food_court", "snack_bar", "tea_house", "chocolate_shop"]);
 const SIGHT_TYPES = ["tourist_attraction", "museum", "art_gallery", "historical_landmark", "cultural_landmark", "monument", "church", "zoo", "aquarium", "amusement_park", "botanical_garden", "market", "plaza", "visitor_center"];
 const NATURE_TYPES = ["park", "national_park", "state_park", "hiking_area", "beach", "observation_deck", "wildlife_park", "wildlife_refuge"];
@@ -146,7 +149,8 @@ function stayScore(stay, budget) {
 }
 
 // Searches Google and CJ step by step and returns picks for every budget.
-export async function computePicks({ places, cj, destination, log = () => {} }) {
+// debug (test route only): receives the top-ranked candidates per kind and budget.
+export async function computePicks({ places, cj, destination, log = () => {}, debug = null }) {
   const { center, townKm } = destination;
   const radii = STEP_RADII_KM.map((km) => km ?? townKm);
   const pools = { dinners: new Map(), activities: new Map(), lodging: new Map() };
@@ -166,7 +170,7 @@ export async function computePicks({ places, cj, destination, log = () => {} }) 
       searches.push(safe("dinners_cheap", places.text({ textQuery: `restaurants in ${destination.name}`, includedType: "restaurant", priceLevels: ["PRICE_LEVEL_INEXPENSIVE"], center, radiusM })));
       searches.push(safe("dinners_mid", places.text({ textQuery: `restaurants in ${destination.name}`, includedType: "restaurant", priceLevels: ["PRICE_LEVEL_MODERATE", "PRICE_LEVEL_EXPENSIVE"], center, radiusM })));
     }
-    for (const results of await Promise.all(searches)) add(pools.dinners, results.filter((place) => place.types?.includes("restaurant") && !NOT_DINNER.has(place.primaryType)));
+    for (const results of await Promise.all(searches)) add(pools.dinners, results.filter(isDinner));
   }
 
   async function widenActivities(radiusKm, first) {
@@ -211,6 +215,7 @@ export async function computePicks({ places, cj, destination, log = () => {} }) 
         await widen(radii[step], step === 0);
         const ranked = rankWithin(pools[kind], radii[step], MIN_REVIEWS[kind][step], allowed);
         picks = pickVaried(ranked, COUNT, clash);
+        debug?.({ kind, budget: key, step, ranked: ranked.slice(0, 8).map((item) => ({ name: item.name, type: item.primaryType, group: kind === "activities" ? activityGroup(item) : cuisineKey(item), rating: item.rating, reviews: item.reviews, km: item.km, score: item.score })) });
         // Outdoors within 25 km counts even while the rest stays in town.
         if (kind === "activities") picks = withNature(picks, rankWithin(pools[kind], Math.max(radii[step], 25), MIN_REVIEWS[kind][step], allowed));
         if (picks.length >= COUNT) break;
