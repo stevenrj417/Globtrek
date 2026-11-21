@@ -29,10 +29,11 @@ export function PhotoCredit({ credit }) {
 }
 
 // Full-width photo with the title over it, like the homepage hero.
-export function PageHero({ image, alt, title, chips = [], credit, subtitle, centered = false, short = false }) {
+// unoptimized: load the photo straight from its source (Google Places photos must not be copied into our image cache).
+export function PageHero({ image, alt, title, chips = [], credit, subtitle, centered = false, short = false, unoptimized = false }) {
   return <section className="px-4 pt-4 sm:px-6">
     <div className={`relative mx-auto max-w-[1880px] overflow-hidden bg-placeholder ${short ? "min-h-[48svh] sm:min-h-[56svh]" : "min-h-[58svh] sm:min-h-[66svh]"}`}>
-      <Image src={image} alt={alt} fill priority fetchPriority="high" className="image-calm object-cover" sizes="(min-width: 1880px) 1880px, 100vw" quality={80} />
+      {image ? <Image src={image} alt={alt} fill priority fetchPriority="high" className="image-calm object-cover" sizes="(min-width: 1880px) 1880px, 100vw" quality={80} unoptimized={unoptimized} /> : null}
       <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black/75 via-black/30 to-transparent" aria-hidden="true" />
       <div className={`rise absolute inset-x-0 bottom-0 mx-auto max-w-[1280px] px-5 pb-10 sm:px-8 sm:pb-14 ${centered ? "flex flex-col items-center text-center" : ""}`}>
         {chips.length ? <div className={`flex flex-wrap gap-1.5 ${centered ? "justify-center" : ""}`}>{chips.map((chip) => <Chip key={chip}>{chip}</Chip>)}</div> : null}

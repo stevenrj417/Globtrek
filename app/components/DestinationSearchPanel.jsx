@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { destinations } from "../data/destinations";
 import { discoverySliderToUnknownness, legacyBudgetLabel } from "../lib/recommendation/travelerProfile";
 import { searchDestinations } from "../lib/search/destinationSearch";
+import { BUDGETS as PLACE_BUDGETS, BUDGET_KEYS } from "../lib/anyplace/rank";
 import { useAuth } from "./AuthProvider";
 
 const VIBES = ["Food", "Culture", "Nature", "Nightlife"];
@@ -26,10 +27,27 @@ export function DestinationSearchPanel({ onClose }) {
   const [included, setIncluded] = useState({ flights: true, hotel: true, food: true, activities: true, transportation: true });
   const [originAirport, setOriginAirport] = useState("");
   const { user } = useAuth();
+  // Any place in the world, from Google Places through our server (the key never reaches the browser).
+  const [places, setPlaces] = useState([]);
+  const [anywhere, setAnywhere] = useState(null);
+  const [anyBudget, setAnyBudget] = useState("mid");
+  const [sessionToken] = useState(() => (globalThis.crypto?.randomUUID?.() || String(Date.now())).replace(/-/g, ""));
 
   const suggestions = useMemo(() => {
     return searchDestinations(destinations, query);
   }, [query]);
+
+  useEffect(() => {
+    const text = query.trim();
+    if (text.length < 3) return undefined;
+    const controller = new AbortController();
+    const timer = setTimeout(() => {
+      fetch(`/api/places/autocomplete?q=${encodeURIComponent(text)}&s=${sessionToken}`, { signal: controller.signal }).then((response) => response.ok ? response.json() : { suggestions: [] }).then((payload) => setPlaces(payload.suggestions || [])).catch(() => {});
+    }, 250);
+    return () => { clearTimeout(timer); controller.abort(); };
+  }, [query, sessionToken]);
+  const featuredNames = new Set(suggestions.map((item) => String(item.city).toLowerCase()));
+  const otherPlaces = query.trim().length < 3 ? [] : places.filter((item) => !featuredNames.has(item.name.toLowerCase()));
 
   useEffect(() => { if (!open || !user || originAirport) return; fetch("/api/account").then((response) => response.ok ? response.json() : null).then((payload) => { if (payload?.profile?.home_airport) setOriginAirport(payload.profile.home_airport); }).catch(() => {}); }, [open, originAirport, user]);
 
@@ -41,6 +59,7 @@ export function DestinationSearchPanel({ onClose }) {
 
   function close() {
     setDestination(null);
+    setAnywhere(null);
     setQuery("");
     onClose();
   }
@@ -68,10 +87,14 @@ export function DestinationSearchPanel({ onClose }) {
   // so the dialog is mounted on the body to cover the real viewport.
   return createPortal(<>
     {open ? <div className="fixed inset-0 z-[120] grid place-items-center bg-black/30 px-4 py-4 backdrop-blur-[3px]" onMouseDown={close}>
-      <section role="dialog" aria-modal="true" aria-label={destination ? `Personalize ${destination.city}` : "Search destinations"} className="max-h-[calc(100dvh-2rem)] w-full max-w-2xl overflow-y-auto overscroll-contain bg-bg p-6 shadow-overlay sm:p-10" onMouseDown={(event) => event.stopPropagation()}>
-        <div className="flex items-start justify-between gap-6"><div><p className="text-micro uppercase tracking-editorial text-black/40">{destination ? "A quick edit" : "Go somewhere specific"}</p><h2 className="mt-3 font-serif text-4xl tracking-tight-3 sm:text-5xl">{destination ? titleCase(destination.city) : "Find a destination."}</h2></div><button type="button" onClick={close} aria-label="Close" className="grid h-10 w-10 place-items-center text-xl font-light">×</button></div>
-        {!destination ? <div className="mt-8"><label className="sr-only" htmlFor="destination-search">Destination</label><input id="destination-search" autoFocus value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Try Provence, Japan, coast…" className="min-h-16 w-full border-b border-black/20 bg-transparent font-serif text-2xl outline-none placeholder:text-black/25 focus:border-black" />
-          <div className="mt-3">{suggestions.map((item) => <button key={item.id || item.airport} type="button" onClick={() => setDestination(item)} className="flex w-full items-center justify-between border-b border-black/10 py-4 text-left transition hover:pl-2"><span><strong className="font-serif text-xl font-normal">{titleCase(item.city)}</strong><span className="ml-3 text-micro uppercase tracking-label text-black/40">{titleCase(item.country)}</span></span><span className="text-micro tracking-label text-black/35">{item.airport}</span></button>)}{query && !suggestions.length ? <p className="py-8 text-sm font-light text-black/45">That place is not in the GlobTrek collection yet.</p> : null}</div>
+      <section role="dialog" aria-modal="true" aria-label={destination ? `Personalize ${destination.city}` : anywhere ? `Pick a budget for ${anywhere.name}` : "Search destinations"} className="max-h-[calc(100dvh-2rem)] w-full max-w-2xl overflow-y-auto overscroll-contain bg-bg p-6 shadow-overlay sm:p-10" onMouseDown={(event) => event.stopPropagation()}>
+        <div className="flex items-start justify-between gap-6"><div><p className="text-micro uppercase tracking-editorial text-black/40">{destination ? "A quick edit" : anywhere ? "Pick your budget" : "Go somewhere specific"}</p><h2 className="mt-3 font-serif text-4xl tracking-tight-3 sm:text-5xl">{destination ? titleCase(destination.city) : anywhere ? anywhere.name : "Find a destination."}</h2></div><button type="button" onClick={close} aria-label="Close" className="grid h-10 w-10 place-items-center text-xl font-light">×</button></div>
+        {!destination && !anywhere ? <div className="mt-8"><label className="sr-only" htmlFor="destination-search">Destination</label><input id="destination-search" autoFocus value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Try Provence, Japan, coast…" className="min-h-16 w-full border-b border-black/20 bg-transparent font-serif text-2xl outline-none placeholder:text-black/25 focus:border-black" />
+          <div className="mt-3">{suggestions.map((item) => <button key={item.id || item.airport} type="button" onClick={() => setDestination(item)} className="flex w-full items-center justify-between border-b border-black/10 py-4 text-left transition hover:pl-2"><span><strong className="font-serif text-xl font-normal">{titleCase(item.city)}</strong><span className="ml-3 text-micro uppercase tracking-label text-black/40">{titleCase(item.country)}</span></span><span className="text-micro tracking-label text-black/35">{item.airport}</span></button>)}{otherPlaces.map((item) => <button key={item.placeId} type="button" onClick={() => setAnywhere(item)} className="flex w-full items-center justify-between border-b border-black/10 py-4 text-left transition hover:pl-2"><span><strong className="font-serif text-xl font-normal">{item.name}</strong><span className="ml-3 text-micro uppercase tracking-label text-black/40">{item.detail}</span></span></button>)}{otherPlaces.length ? <p className="pt-3 text-right text-[11px] text-black/45">Place search by Google Maps</p> : null}{query.trim().length >= 3 && !suggestions.length && !otherPlaces.length ? <p className="py-8 text-sm font-light text-black/45">No places match that yet. Check the spelling, or add the country.</p> : null}</div>
+        </div> : anywhere && !destination ? <div className="mt-9 grid gap-8">
+          <fieldset><legend className="text-micro uppercase tracking-editorial text-black/40">Budget</legend><div className="mt-3 flex flex-wrap gap-2">{BUDGET_KEYS.map((key) => <button key={key} type="button" aria-pressed={anyBudget === key} onClick={() => setAnyBudget(key)} className={`border px-4 py-3 text-micro uppercase tracking-label ${anyBudget === key ? "border-black bg-black text-white" : "border-black/15"}`}>{PLACE_BUDGETS[key].label}</button>)}</div></fieldset>
+          <p className="text-sm">The top 3 places to stay, eat and explore in {anywhere.name}, picked by rating.</p>
+          <div className="sticky -bottom-6 -mx-6 -mb-6 flex items-center justify-between border-t border-black/10 bg-bg px-6 pb-6 pt-4 sm:-bottom-10 sm:-mx-10 sm:-mb-10 sm:px-10 sm:pb-10 sm:pt-6"><button type="button" onClick={() => setAnywhere(null)} className="text-micro uppercase tracking-editorial text-black/45">← Back</button><button type="button" onClick={() => window.location.assign(`/places/${encodeURIComponent(anywhere.placeId)}?budget=${anyBudget}&s=${sessionToken}`)} className="min-h-14 bg-black px-7 text-micro uppercase tracking-editorial text-white">Show my picks →</button></div>
         </div> : <div className="mt-9 grid gap-8">
           <fieldset><legend className="text-micro uppercase tracking-editorial text-black/40">Exact budget</legend><div className="mt-3 flex items-center border-b border-black/20 font-serif text-3xl"><span>$</span><input type="number" inputMode="numeric" min="100" max="1000000" step="50" value={budget} onChange={(event) => setBudget(Math.max(100, Number(event.target.value) || 0))} className="min-h-14 min-w-0 flex-1 bg-transparent px-2 outline-none" /></div><div className="mt-3 flex flex-wrap gap-2">{BUDGETS.map((amount) => <button key={amount} type="button" onClick={() => setBudget(amount)} className="border border-black/12 px-3 py-2 text-micro uppercase tracking-label">${amount.toLocaleString()}</button>)}</div></fieldset>
           <fieldset><legend className="text-micro uppercase tracking-editorial text-black/40">What should that include?</legend><div className="mt-3 flex flex-wrap gap-2">{Object.keys(included).map((key) => <label key={key} className={`cursor-pointer border px-3 py-3 text-micro uppercase tracking-label ${included[key] ? "border-black bg-black text-white" : "border-black/15"}`}><input type="checkbox" checked={included[key]} onChange={() => setIncluded((current) => ({ ...current, [key]: !current[key] }))} className="sr-only" />{key}</label>)}</div></fieldset>
