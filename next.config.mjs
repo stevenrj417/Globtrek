@@ -44,6 +44,8 @@ const nextConfig = {
   async redirects() {
     // Remove these temporary redirects when Cruises and Road Trips are visible again.
     return [
+      // The Booking Assistant extension was retired 2026-11-21; its privacy page stays for installed copies.
+      { source: "/booking-assistant", destination: "/help", permanent: false },
       { source: "/cruises", destination: "/", permanent: false },
       { source: "/cruises/:path*", destination: "/", permanent: false },
       { source: "/road-trips", destination: "/", permanent: false },

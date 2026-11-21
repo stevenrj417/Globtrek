@@ -347,7 +347,7 @@ test("the booking checklist lists bookable things only and never opens tabs on i
     flightDeepLink: "https://flights.booking.com/flights/JFK.AIRPORT-LIS.AIRPORT/",
   });
   const items = checklistItems(bookingManifestEntries(manifest));
-  assert.deepEqual(items.map((item) => item.type), ["hotel", "flight", "experience", "restaurant"]);
+  assert.deepEqual(items.map((item) => item.type), ["flight", "hotel", "experience", "restaurant"]);
   assert.deepEqual(items.filter((item) => item.type === "restaurant").map((item) => item.name), ["Taberna"]);
   const source = readFileSync("app/components/BookingChecklist.jsx", "utf8");
   assert.doesNotMatch(source, /window\.open|\.submit\(|\.click\(\)/);

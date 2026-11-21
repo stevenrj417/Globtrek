@@ -8,7 +8,7 @@ const privatePaths = JSON.parse(robotsSource.match(/PRIVATE_PATHS = (\[[^\]]*\])
 
 test("robots keeps personal routes private without blocking public pages", () => {
   for (const path of ["/api/", "/account", "/my-trips", "/results", "/trip/", "/s/", "/auth/"]) assert.ok(privatePaths.includes(path), path);
-  for (const page of ["/", "/discover", "/destinations/lisbon", "/booking-assistant", "/how-it-works", "/help", "/llms.txt"]) {
+  for (const page of ["/", "/discover", "/destinations/lisbon", "/how-it-works", "/help", "/llms.txt"]) {
     assert.ok(!privatePaths.some((path) => path !== "/" && page.startsWith(path)), `${page} is crawlable`);
   }
 });

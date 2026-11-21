@@ -8,7 +8,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "build": "node scripts/build.mjs --target=production",
     "build:dev": "node scripts/build.mjs --target=development",
-    "test": "node --test --experimental-strip-types tests/*.test.ts",
+    "test": "node --test --experimental-strip-types tests/*.test.ts site-bridge/*.test.mjs",
     "test:e2e": "node scripts/e2e.mjs",
     "fixtures": "node scripts/fixture-server.mjs",
     "package": "npm run typecheck && npm test && npm run build && node scripts/package.mjs",

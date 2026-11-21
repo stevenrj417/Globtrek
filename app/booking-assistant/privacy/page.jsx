@@ -6,15 +6,16 @@ export const metadata = {
   title: "Booking Assistant privacy policy",
   description: "How the GlobTrek Booking Assistant Chrome extension handles traveler details: stored on your device, never sent to GlobTrek, never sold.",
   alternates: { canonical: "/booking-assistant/privacy" },
+  robots: { index: false, follow: true },
 };
 
 const link = "text-ink underline decoration-black/25 underline-offset-4";
 
 export default function AssistantPrivacyPage() {
-  return <EditorialPage updated="2026-11-18"
+  return <EditorialPage updated="2026-11-21"
     eyebrow="Booking Assistant · Privacy"
     title="Your details stay on your device."
-    intro="This policy covers the GlobTrek One Tab Booking Assistant, a Chrome extension. The website's own practices are in the main privacy notice."
+    intro="GlobTrek has retired the One Tab Booking Assistant Chrome extension, and the website no longer connects to it. This policy still covers copies people installed. The website's own practices are in the main privacy notice."
   >
     <EditorialSection number="01" title="What the extension stores">
       <p>Only what you enter: each traveler&apos;s first and last name, an email address, a phone number and an optional note for partners. It also keeps trip checklists you start from GlobTrek (destination, dates, party size, partner links and booking statuses) for up to 14 days.</p>

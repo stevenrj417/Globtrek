@@ -1,5 +1,5 @@
-import { CJ_HOSTS, isCjUrl } from "./cj.js";
-import { checklistItems } from "./checklist.js";
+import { CJ_HOSTS, isCjUrl } from "../../app/lib/booking/cj.js";
+import { checklistItems } from "../../app/lib/booking/checklist.js";
 
 // The website half of the GlobTrek Booking Assistant (the Chrome extension in
 // /extension). The site describes the trip — destination, dates, party size and

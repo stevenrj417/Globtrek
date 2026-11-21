@@ -4,7 +4,7 @@ import assert from "node:assert/strict";
 // @ts-expect-error — untyped JavaScript from the Next.js app
 import { buildBookingManifest, bookingManifestEntries } from "../../app/lib/booking/manifest.js";
 // @ts-expect-error — untyped JavaScript from the Next.js app
-import { assistantTrip, ASSISTANT_CHANNEL, ASSISTANT_PROTOCOL } from "../../app/lib/booking/assistant.js";
+import { assistantTrip, ASSISTANT_CHANNEL, ASSISTANT_PROTOCOL } from "../site-bridge/assistant.js";
 import { CHANNEL, PROTOCOL_VERSION, validateWebRequest } from "../src/shared/schema.ts";
 import { createSession } from "../src/session/manager.ts";
 

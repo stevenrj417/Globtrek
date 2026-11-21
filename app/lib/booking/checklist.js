@@ -1,4 +1,4 @@
-const ORDER = ["hotel", "flight", "experience", "restaurant"];
+const ORDER = ["flight", "hotel", "experience", "restaurant"];
 
 // What goes on the booking checklist: the stay, the flight, bookable activities,
 // and restaurants only when they take reservations online. https links only.

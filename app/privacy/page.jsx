@@ -95,7 +95,7 @@ export default function PrivacyPage() {
       </EditorialSection>
       <EditorialSection number="12" title="Booking Assistant extension">
         <p>
-          The optional GlobTrek Booking Assistant for Chrome keeps traveler details on your own device and never sends them to GlobTrek. See the <Link className={link} href="/booking-assistant/privacy">Booking Assistant privacy policy</Link>.
+          GlobTrek no longer offers its Chrome extension, and the website no longer connects to it. If you installed it, anything it saved stays on your computer until you remove the extension. See the <Link className={link} href="/booking-assistant/privacy">Booking Assistant privacy policy</Link>.
         </p>
       </EditorialSection>
       <EditorialSection number="13" title="Children">

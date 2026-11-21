@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { track } from "@vercel/analytics";
-import { isCjUrl } from "../lib/booking/cj";
-import { BrandMark } from "./BrandMark";
-import { ASSISTANT_INSTALL_URL, assistantRequest, assistantTrip, canUseExtension, onAssistantStatus, supportsOpenAll } from "../lib/booking/assistant";
+import { isCjUrl } from "../../app/lib/booking/cj";
+import { BrandMark } from "../../app/components/BrandMark";
+import { ASSISTANT_INSTALL_URL, assistantRequest, assistantTrip, canUseExtension, onAssistantStatus, supportsOpenAll } from "./assistant";
 
 const SESSION_KEY = (tripKey) => `globtrek:assistant-session:${tripKey}`;
 

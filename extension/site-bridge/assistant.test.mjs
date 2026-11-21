@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildBookingManifest, bookingManifestEntries } from "../app/lib/booking/manifest.js";
-import { assistantEntries, assistantTrip, canUseExtension, isAssistantUrl, supportsOpenAll } from "../app/lib/booking/assistant.js";
+import { buildBookingManifest, bookingManifestEntries } from "../../app/lib/booking/manifest.js";
+import { assistantEntries, assistantTrip, canUseExtension, isAssistantUrl, supportsOpenAll } from "./assistant.js";
 
 const manifest = buildBookingManifest({
   destination: { city: "Lisbon", country: "Portugal", airport: "LIS" },

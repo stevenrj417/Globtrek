@@ -13,7 +13,6 @@ const pages = [
   ["Help", "/help", "Answers on cost estimates, booking, accounts and how GlobTrek makes money."],
   ["About", "/about", "Why GlobTrek recommends one trip instead of a long list."],
   ["Affiliate disclosure", "/affiliate-disclosure", "Which links can earn GlobTrek a commission, and through which networks."],
-  ["Booking Assistant", "/booking-assistant", "Optional Chrome extension that opens each booking from a trip on the provider's site."],
   ["Privacy", "/privacy", "What GlobTrek stores and how to delete it."],
   ["Terms", "/terms", "Terms of use."],
   ["Contact", "/contact", "How to reach GlobTrek."],
