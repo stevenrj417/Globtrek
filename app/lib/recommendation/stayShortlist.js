@@ -9,12 +9,13 @@
 // Fewer than three trustworthy properties → fewer cards and a plain explanation.
 
 import { bookingPath, stayPrice } from "../pricing/stayPrice.js";
+import { isLuxuryStay } from "../catalog/cjBookingImporter.js";
 
 const TYPE_RANK = { Hostel: 1, "Capsule hotel": 1, Motel: 2, "Guest house": 2, "Bed and breakfast": 3, Inn: 3, Lodge: 3, Hotel: 4, Apartment: 3, "Holiday home": 3, Chalet: 3, "Country house": 3, "Holiday park": 2, Aparthotel: 3 };
 const HOME_TYPES = new Set(["Apartment", "Holiday home", "Chalet", "Country house", "Holiday park", "Aparthotel"]);
 export const isHome = (property) => HOME_TYPES.has(property?.category);
 // Luxury (5-star, resorts, villas) is only for travelers who ask for it.
-export const isLuxury = (property) => ["Resort", "Villa", "Luxury tent"].includes(property?.category) || (Number(property?.starRating) || 0) >= 5;
+export const isLuxury = (property) => isLuxuryStay(property?.category, property?.starRating);
 // A whole place fits the group when it sleeps everyone (or doesn't say).
 const sleepsGroup = (property, travelers) => !Number(property.maxGuests) || Number(property.maxGuests) >= travelers;
 const CALM_TYPES = new Set(["Guest house", "Bed and breakfast", "Inn"]);

@@ -8,7 +8,7 @@
 // inside the search radius. Quality comes from matching each listing to its
 // Google Maps place and using that place's rating (see picks.js).
 
-import { cleanText, discoverFeeds, feedsForCountry } from "../catalog/cjBookingImporter.js";
+import { cleanText, discoverFeeds, feedsForCountry, isLuxuryStay } from "../catalog/cjBookingImporter.js";
 import { distanceKm, normalizeText } from "./rank.js";
 
 const CJ_HOSTS = ["kqzyfj.com", "dpbolvw.net", "anrdoezrs.net", "jdoqocy.com", "tkqlhce.com", "qksrv.net"];
@@ -20,11 +20,10 @@ const FIELDS = (pid) => `id title link imageLink categoryName starRating roomTyp
 // shown only when someone picks the Luxury level.
 const BUDGET_TYPES = new Set(["Hostel", "Capsule hotel", "Guest house", "Homestay", "Bed and breakfast", "Inn", "Motel", "Campsite", "Farm stay", "Lodge", "Country house", "Love hotel"]);
 const MID_TYPES = new Set(["Hotel", "Aparthotel", "Apartment", "Holiday home", "Chalet", "Holiday park", "Boat", "Ryokan", "Tented camp"]);
-const NEVER = new Set(["Villa", "Resort", "Luxury tent"]);
 
 export function stayTier(category, stars) {
   const s = Number(stars) || 0;
-  if (NEVER.has(category) || s >= 5) return "luxury"; // shown only at the Luxury level
+  if (isLuxuryStay(category, s)) return "luxury"; // shown only at the Luxury level
   if (s === 4) return "comfort";
   if (category === "Hostel" || category === "Capsule hotel") return "budget"; // dorms, whatever the stars
   if (BUDGET_TYPES.has(category)) return s >= 3 ? "mid" : "budget";

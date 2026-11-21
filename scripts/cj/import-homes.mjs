@@ -29,8 +29,10 @@ let total = 0;
 for (const [index, destination] of destinations.entries()) {
   try {
     const result = await importDestinationHomes(client, destination, feeds, { importedAt });
-    const homes = result.records.map(({ importedAt: at, ...record }) => ({ ...record, id: `cj-${record.providerPropertyId}`, sku: record.providerPropertyId, address: [record.streetAddress, record.city, record.provinceState, record.postalCode].filter(Boolean).join(", ") || null, importedAt: at, photos: (record.photos || []).slice(0, 5), description: record.description ? record.description.slice(0, 280) : null }));
-    const kept = (snapshot.stays[destination.id] || []).filter((record) => !isHomeCategory(record.category) && !isLuxuryStay(record.category, record.starRating) && !homes.some((home) => home.sku === record.sku));
+    const homes = result.records.map(({ importedAt: at, ...record }) => ({ ...record, id: `cj-${record.providerPropertyId}`, sku: record.providerPropertyId, address: [record.streetAddress, record.city, record.provinceState, record.postalCode].filter(Boolean).join(", ") || null, importedAt: at, photos: (record.photos || []).slice(0, 5), description: record.description ? record.description.slice(0, 280) : null, addedBy: "homes" }));
+    // Replace only what an earlier run of this script added (tagged addedBy "homes");
+    // every stay the main import put in stays, whatever its category.
+    const kept = (snapshot.stays[destination.id] || []).filter((record) => record.addedBy !== "homes" && !homes.some((home) => home.sku === record.sku));
     if (homes.length || kept.length) snapshot.stays[destination.id] = [...kept, ...homes];
     total += homes.length;
     console.log(`${String(index + 1).padStart(3)}/${destinations.length} ${destination.id.padEnd(28)} ${homes.filter((home) => isHomeCategory(home.category)).length} homes, ${homes.filter((home) => isLuxuryStay(home.category, home.starRating)).length} luxury`);

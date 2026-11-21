@@ -162,9 +162,15 @@ export const HOME_TYPES = new Set(["Apartment", "Holiday home", "Chalet", "Count
 export const HOMES_PER_DESTINATION = 12;
 export const isHomeCategory = (category) => HOME_TYPES.has(category);
 // Luxury stays (5-star hotels, resorts, villas), kept apart so budget trips never see them.
+// A resort rated 1-3 stars (a big Las Vegas casino hotel, say) is an ordinary stay, not luxury.
 export const LUXURY_TYPES = new Set(["Resort", "Villa", "Luxury tent"]);
 export const LUXURY_PER_DESTINATION = 6;
-export const isLuxuryStay = (category, stars) => LUXURY_TYPES.has(category) || (Number(stars) || 0) >= 5;
+export const isLuxuryStay = (category, stars) => {
+  const s = Number(stars) || 0;
+  if (s >= 5) return true;
+  if (category === "Resort") return !s || s >= 4;
+  return LUXURY_TYPES.has(category);
+};
 export function eligibleLuxury(row) {
   return isLuxuryStay(row.categoryName, row.starRating) && !GENERIC_NAME.test(cleanText(row.title) || "");
 }

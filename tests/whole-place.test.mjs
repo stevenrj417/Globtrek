@@ -53,3 +53,18 @@ test("luxury is priced at four times a budget room and never reaches budget trav
   const posh = buildStayShortlist({ candidates, profile: profileFor("Luxury", 2), destination: lisbon, budgetPlan: buildBudgetPlan(profileFor("Luxury", 2), lisbon) });
   assert.ok(["five", "resort"].includes(posh.choices[0].id), "luxury travelers get a luxury pick");
 });
+
+test("a cheap resort (a 3-star Las Vegas casino hotel) is an ordinary stay, not luxury", async () => {
+  const { isLuxuryStay } = await import("../app/lib/catalog/cjBookingImporter.js");
+  const { stayTier } = await import("../app/lib/anyplace/stays.js");
+  assert.equal(isLuxuryStay("Resort", 3), false);
+  assert.equal(stayTier("Resort", 3), "mid");
+  assert.equal(isLuxuryStay("Resort", 4), true);
+  assert.equal(isLuxuryStay("Resort", null), true, "an unrated resort stays luxury, so budget trips are never surprised");
+  assert.equal(isLuxuryStay("Villa", 2), true);
+  assert.equal(isLuxuryStay("Hotel", 5), true);
+  assert.equal(isLuxuryStay("Hotel", 4), false);
+  const profile = profileFor("Whatever's cheapest", 2);
+  const { choices } = buildStayShortlist({ candidates: [stay("circus", { category: "Resort", starRating: 3 }), stay("bellagio", { category: "Resort", starRating: 5 })], profile, destination: lisbon, budgetPlan: buildBudgetPlan(profile, lisbon) });
+  assert.deepEqual(choices.map((choice) => choice.id), ["circus"]);
+});
