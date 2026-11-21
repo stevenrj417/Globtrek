@@ -14,7 +14,7 @@ const force = process.argv.includes("--force");
 const file = JSON.parse(await readFile(fileUrl, "utf8").catch(() => '{"photos":{},"none":[]}'));
 const none = new Set(force ? [] : file.none || []);
 if (force) file.photos = {};
-const HEADERS = { "User-Agent": "GlobTrekGuides/1.0 (travel guide images)" };
+const HEADERS = { "User-Agent": "GlobTrekGuidesBot/1.0 (https://www.glob-trek.com/contact)" };
 const strip = (html) => String(html || "").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
 const NOT_A_VIEW = /\b(map|locator|location|seal|flag|logo|coat[_ ]of[_ ]arms|montage|collage|diagram|plan)\b|\.svg$/i;
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

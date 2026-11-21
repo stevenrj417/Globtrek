@@ -14,7 +14,7 @@ import { SaveTripButton } from "../components/SaveTripButton";
 import { StayChoices, stayLinkContext } from "../components/StayChoices";
 import { TripDock } from "../components/TripDock";
 import { EmailTripButton } from "../components/EmailTripButton";
-import { BOOK_EVENT, TripEmailAutomation } from "../components/TripEmailAutomation";
+import { BOOK_EVENT } from "../components/TripEmailAutomation";
 import { CuratedTripChoices } from "../components/TripProposalSections";
 import { buildBookingManifest } from "../lib/booking/manifest";
 import { bookingPageUrl } from "../lib/booking/bookPage";
@@ -323,6 +323,5 @@ export default function ResultsPage({ shareToken = null }) {
     <section aria-labelledby="setting-heading" className="border-t border-black/15 px-6 py-10 sm:px-12"><div className="mx-auto max-w-[1180px]"><h2 id="setting-heading" className="text-xl font-medium tracking-tight-1">Try a different setting</h2><div className="mt-5 flex flex-wrap gap-2">{[["Coast", "Ocean"], ["Mountains", "Mountains"], ["City", "Cities"], ["History & culture", "Culture"], ["Nature & wildlife", "Wild"], ["Surprise me", "Surprise Me"]].filter(([, setting]) => setting !== quiz.answers?.alive).map(([label, setting]) => <Link key={setting} href={`/discover?setting=${encodeURIComponent(setting)}`} className="inline-flex min-h-11 items-center border border-black/20 px-4 text-sm transition-colors duration-150 hover:border-ink">{label}</Link>)}<Link href="/discover" className="inline-flex min-h-11 items-center px-4 text-sm underline decoration-black/25 underline-offset-4 hover:decoration-ink">Retake quiz</Link></div></div></section>
     <section aria-label="Feedback" className="border-t border-black/15 px-6 py-10 sm:px-12"><div className="mx-auto max-w-[1180px]"><FeedbackPanel resultId={snapshot?.resultId || null} destinationId={destinationKey} algorithmVersion={trip.algorithmVersion || snapshot?.algorithmVersion || null} /><p className="mt-6 max-w-2xl text-xs leading-5 text-ink">{AFFILIATE_DISCLOSURE}</p></div></section>
     <TripDock city={trip.city} summary={`${datesLine} · ${schedule.label} · ${travelers} ${travelers === 1 ? "traveler" : "travelers"}`} total={money(grand)} picks={[view.stay ? "stay chosen" : null, prefs.updated ? "flight set" : null, selectedRestaurants.length + selectedActivities.length ? `${selectedRestaurants.length + selectedActivities.length} plans` : null].filter(Boolean).join(" · ")} emailButton={<EmailTripButton trip={savedTrip} viewUrl={tripLink()} className="min-h-11 rounded-full border border-black/15 px-4 text-micro text-black" />} onBook={goToBooking} />
-    <TripEmailAutomation trip={savedTrip} viewUrl={tripLink} city={trip.city} />
   </main>;
 }

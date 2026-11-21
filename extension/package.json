@@ -1,6 +1,6 @@
 {
   "name": "globtrek-booking-assistant",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "description": "GlobTrek One Tab Booking Assistant — Chrome Manifest V3 extension",
   "type": "module",

@@ -5,22 +5,21 @@ import { AFFILIATE_DISCLOSURE } from "../lib/site";
 
 export const metadata = {
   title: "Booking Assistant for Chrome",
-  description: "Book your whole GlobTrek trip from one tab: the assistant opens each booking on the partner's site and fills in your name, email and phone. You review and pay on their site.",
+  description: "Book your whole GlobTrek trip from one tab: the assistant opens each booking on the partner's site with your dates and keeps a checklist. You fill in your details and pay on their site.",
   alternates: { canonical: "/booking-assistant" },
 };
 
 const STEPS = [
   ["Plan on GlobTrek", "Choose your stay, flight, activities and dinners. Nothing changes about how you plan."],
   ["Choose Book my trip", "The assistant opens next to GlobTrek and shows exactly which details it will use and which sites will receive them."],
-  ["Enter your details once", "Names, email and phone, the things a booking form asks for. Saved on your computer, or used once and forgotten."],
-  ["Open, fill, review", "Each booking opens with GlobTrek's exact link. Your name, email and phone are filled in on Booking.com hotels, OpenTable and GetYourGuide; everywhere else, copy buttons do it in a click."],
-  ["You pay the partner", "The assistant stops before anything is booked. Review and pay on the partner's site, then tick it off."],
+  ["Open each booking", "Each booking opens with GlobTrek's exact link, on your dates and party size where the partner's link allows it."],
+  ["Book on the partner's site", "You fill in your details, review and pay on the partner's own page, then tick it off. The checklist shows what's left."],
 ];
 
 const PARTNERS = [
-  ["GetYourGuide activities", "Fills lead-traveler name, email, phone and notes on the checkout page.", "Fills details"],
-  ["Booking.com stays, flights and attractions", "Opens GlobTrek's exact link with your dates and party size. On the hotel’s “Enter your details” step, your name, email and phone are filled in. Flights and attractions get copy buttons.", "Fills hotel details"],
-  ["OpenTable dinners", "Opens the restaurant on your date, time and party size, then fills your name, email and phone on the diner details step.", "Fills your details"],
+  ["Booking.com stays, flights and attractions", "Opens GlobTrek's exact link with your dates and party size. You enter your details on Booking.com.", "Opens the link"],
+  ["GetYourGuide activities", "Opens the activity. You choose the time and enter your details on GetYourGuide.", "Opens the link"],
+  ["Restaurants", "Opens the restaurant's booking page with your party size where it accepts one.", "Opens the link"],
 ];
 
 export default function BookingAssistantPage() {
@@ -31,7 +30,7 @@ export default function BookingAssistantPage() {
         <div>
           <p className="eyebrow">GlobTrek Booking Assistant · for Chrome</p>
           <h1 className="mt-5 font-serif text-[clamp(2.8rem,7vw,5.6rem)] leading-[.92] tracking-tight-3">Book your whole trip from one tab.</h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-muted">A small Chrome extension that opens every booking from your GlobTrek trip and fills in your name, email and phone. You stay in control: it never books, accepts terms or pays for you.</p>
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-muted">A small Chrome extension that opens every booking from your GlobTrek trip and keeps track of what you&apos;ve booked. It never fills in partner forms, books, accepts terms or pays for you.</p>
         </div>
         <div id="install" className="scroll-mt-24 border border-black/15 bg-surface p-6 sm:p-7">
           <p className="text-micro uppercase tracking-label text-black/55">Install</p>
@@ -56,6 +55,7 @@ export default function BookingAssistantPage() {
         <div>
           <h2 className="font-serif text-[clamp(1.9rem,3.5vw,2.8rem)] leading-none tracking-tight-2">What it never does</h2>
           <ul className="mt-8 space-y-3 text-base leading-7">
+            <li>Fill in forms on Booking.com, GetYourGuide, OpenTable or other partner sites. Their terms don&apos;t allow assistants to, so you type your own details there.</li>
             <li>Book, reserve, confirm or pay for you.</li>
             <li>Tick terms, declarations or consent boxes.</li>
             <li>Store or read card numbers, CVV codes, bank logins, partner passwords or one-time codes.</li>
@@ -67,21 +67,20 @@ export default function BookingAssistantPage() {
           <h2 className="font-serif text-[clamp(1.9rem,3.5vw,2.8rem)] leading-none tracking-tight-2">Permissions, plainly</h2>
           <dl className="mt-8 space-y-5 text-sm leading-6">
             <div><dt className="font-semibold">Storage</dt><dd className="text-muted">Keeps your details and trip checklist on your computer.</dd></div>
-            <div><dt className="font-semibold">Scripting</dt><dd className="text-muted">Lets the assistant type your details into a partner&apos;s checkout form after you ask.</dd></div>
             <div><dt className="font-semibold">www.glob-trek.com</dt><dd className="text-muted">Lets this site know the assistant is installed and show each booking&apos;s status.</dd></div>
-            <div><dt className="font-semibold">Partner sites, only when you allow them</dt><dd className="text-muted">Chrome asks the first time you fill a partner&apos;s page. You can remove access at any time.</dd></div>
+            <div><dt className="font-semibold">No partner sites</dt><dd className="text-muted">The assistant asks for no access to Booking.com, GetYourGuide, OpenTable or any other partner site.</dd></div>
           </dl>
         </div>
       </div>
     </section>
 
     <section className="mx-auto max-w-[1180px] px-6 py-[var(--section-space)] sm:px-8">
-      <h2 className="font-serif text-[clamp(1.9rem,3.5vw,2.8rem)] leading-none tracking-tight-2">What it fills today</h2>
-      <p className="mt-4 max-w-2xl text-sm leading-6 text-muted">Where the assistant can&apos;t fill a page, it opens the exact link and puts your details one click away.</p>
+      <h2 className="font-serif text-[clamp(1.9rem,3.5vw,2.8rem)] leading-none tracking-tight-2">What it opens</h2>
+      <p className="mt-4 max-w-2xl text-sm leading-6 text-muted">The assistant opens the same links as your trip page. Booking always happens on the partner&apos;s own site.</p>
       <ul className="mt-8 divide-y divide-black/12 border-y border-black/12">
         {PARTNERS.map(([name, body, tag]) => <li key={name} className="grid gap-2 py-5 sm:grid-cols-[1fr_2fr_auto] sm:items-baseline sm:gap-8"><p className="font-medium">{name}</p><p className="text-sm leading-6 text-muted">{body}</p><p className="text-micro uppercase tracking-label">{tag}</p></li>)}
       </ul>
-      <p className="mt-8 text-xs leading-5 text-subtle">GlobTrek is a Booking.com affiliate partner. {AFFILIATE_DISCLOSURE} The assistant opens the same links as the trip page and only when you click. <Link href="/affiliate-disclosure" className="underline decoration-black/25 underline-offset-2">Affiliate disclosure</Link> · <Link href="/booking-assistant/privacy" className="underline decoration-black/25 underline-offset-2">Assistant privacy policy</Link> · <Link href="/help" className="underline decoration-black/25 underline-offset-2">Help</Link></p>
+      <p className="mt-8 text-xs leading-5 text-subtle">GlobTrek is a Booking.com affiliate partner. {AFFILIATE_DISCLOSURE} The assistant opens the same links as the trip page and only when you click. GlobTrek isn&apos;t affiliated with or endorsed by GetYourGuide or OpenTable, and Booking.com doesn&apos;t endorse the assistant. <Link href="/affiliate-disclosure" className="underline decoration-black/25 underline-offset-2">Affiliate disclosure</Link> · <Link href="/booking-assistant/privacy" className="underline decoration-black/25 underline-offset-2">Assistant privacy policy</Link> · <Link href="/help" className="underline decoration-black/25 underline-offset-2">Help</Link></p>
     </section>
     <SiteFooter />
   </main>;

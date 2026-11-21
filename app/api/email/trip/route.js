@@ -47,8 +47,8 @@ async function sessionEmail() {
 // kind "requested": someone pressed Email this trip (any address).
 // kind "book" / "arrival": a signed-in traveler pressed Book or finished the
 // quiz, so it goes only to their account email, at most once a day per place.
-// Requested and booked trips get the check-in sequence; a signed-out request
-// has to confirm it from the first email before anything else is sent.
+// Requested and booked trips offer the check-in sequence; it starts only when
+// the recipient confirms from the first email.
 export async function POST(request) {
   const limited = await sharedRateLimit(request, { name: "email-trip", limit: 5 });
   if (limited) return limited;
@@ -73,7 +73,9 @@ export async function POST(request) {
   let followup = null;
   if (kind !== "arrival" && body.followups !== false && supabase) {
     try {
-      const confirmed = Boolean(accountEmail && accountEmail === email);
+      // Check-in emails always start only after the recipient confirms from the
+      // first email (explicit opt-in, Resend acceptable-use policy), signed in or not.
+      const confirmed = false;
       const row = await enrollFollowups(supabase, { email, model, viewUrl, source: kind === "book" ? "book" : "email", confirmed });
       const token = followupToken(row.id);
       if (row.status === "active") followup = { stopUrl: `${publicSiteUrl()}/trip-reminders?stop=${encodeURIComponent(token)}` };

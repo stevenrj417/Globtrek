@@ -2,12 +2,11 @@ import type { Adapter } from "./types.ts";
 
 // Booking.com accommodation checkout ("Enter your details" step of book.html).
 //
-// ENABLED on the live site by the owner's decision (2026-11-20), knowing that
+// OFF (2026-11-21, owner's decision: GlobTrek follows every partner rule).
 // Booking.com's Customer Terms (A15.2) say it "does not authorize the use of
-// automated means", including browser assistants, "to make bookings or
-// reservations" without prior written permission. The assistant only fills the
-// traveler's own details on the "Enter your details" step after the traveler
-// asks; it never chooses a room, ticks terms, submits, or touches payment.
+// automated means", including browser assistants that work through the
+// browser, "to make bookings or reservations" without prior written
+// permission. Turn this on only with that written permission.
 // Selectors are tested against sanitized fixtures; re-check them on a live
 // checkout when Booking.com changes its form.
 export const bookingAdapter: Adapter = {
@@ -16,9 +15,10 @@ export const bookingAdapter: Adapter = {
   selectorsVersion: "2026-11-09.1",
   hosts: ["www.booking.com", "secure.booking.com"],
   policy: {
-    autofill: true,
+    autofill: false,
+    reason: "Booking.com doesn't allow assistants to fill in its booking form. Your details are ready to copy.",
     termsUrl: "https://www.booking.com/content/terms.html",
-    reviewedOn: "2026-11-09",
+    reviewedOn: "2026-11-21",
   },
   pages: [
     { kind: "payment", path: /^\/book\.html/, marker: ["[autocomplete^='cc-']", "iframe[title*='payment' i]", "[data-component*='payment' i]"] },

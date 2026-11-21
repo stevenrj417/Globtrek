@@ -18,7 +18,7 @@ function Contact() {
 
 export default function PrivacyPage() {
   return (
-    <EditorialPage updated="2026-11-11"
+    <EditorialPage updated="2026-11-21"
       eyebrow="Privacy"
       title="What we collect, and what we don't."
       intro="GlobTrek works without an account. This page lists everything the site stores or sends, who processes it, how long it's kept, and how to see or delete it."
@@ -38,7 +38,7 @@ export default function PrivacyPage() {
       </EditorialSection>
       <EditorialSection number="03" title="How a trip is picked">
         <p>
-          Your answers are sent to GlobTrek&apos;s server, which picks the destination with fixed rules: the destination must match your setting, budget, trip length and travel month. To write the day-by-day plan, the server sends your quiz answers and the chosen destination (no name, email or account details) to OpenAI. OpenAI processes this under its <a className={link} href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener">privacy policy</a> and API terms. The AI can&apos;t change which destination you get.
+          Your answers are sent to GlobTrek&apos;s server, which picks the destination with fixed rules: the destination must match your setting, budget, trip length and travel month. The day-by-day plan is currently written by those same fixed rules. If AI-written plans are turned on, the page will say so, and the server would send only your quiz answers and the chosen destination (no name, email or account details) to OpenAI, which processes them under its <a className={link} href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener">privacy policy</a> and API terms. The AI can&apos;t change which destination you get.
         </p>
       </EditorialSection>
       <EditorialSection number="04" title="Share links">
@@ -56,7 +56,7 @@ export default function PrivacyPage() {
       </EditorialSection>
       <EditorialSection number="06" title="Email">
         <p>
-          If you email yourself a trip or subscribe, your email address and subscription choices are stored so we can send what you asked for. Emails are delivered by Resend. Every marketing email has an unsubscribe link, and you can change your choice from your account.
+          If you email yourself a trip or subscribe, your email address and subscription choices are stored so we can send what you asked for. Emails are delivered by Resend. We only send what you asked for: a trip you emailed yourself, the monthly email if you subscribed, and trip check-ins only after you confirm them from the first email. Every marketing email has an unsubscribe link and our postal address, and you can change your choice from your account.
         </p>
       </EditorialSection>
       <EditorialSection number="07" title="Analytics, logs and feedback">
@@ -69,7 +69,7 @@ export default function PrivacyPage() {
       </EditorialSection>
       <EditorialSection number="08" title="Other services involved">
         <p>
-          Vercel hosts the site. Supabase stores accounts and saved trips. OpenAI writes day plans. Google Maps Platform supplies place details and photos, requested by GlobTrek&apos;s server (<a className={link} href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a>). Flight fare data comes from Travelpayouts using airport codes only. Resend sends email. Photos also load from Unsplash, Wikimedia Commons and Booking.com&apos;s image servers, which see standard request details from your browser.
+          Vercel hosts the site. Supabase stores accounts and saved trips. OpenAI would write day plans if that feature is turned on (it is off now). Google Maps Platform supplies place details and photos, requested by GlobTrek&apos;s server (<a className={link} href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a>). Flight fare data comes from Travelpayouts using airport codes only. Resend sends email. Photos also load from Unsplash, Wikimedia Commons and Booking.com&apos;s image servers, which see standard request details from your browser.
         </p>
         <p>
           When you open a booking link, you leave GlobTrek. Booking.com (through our affiliate network, CJ) and other providers control their own sites, cookies, prices, payments and privacy practices.
@@ -98,7 +98,12 @@ export default function PrivacyPage() {
           The optional GlobTrek Booking Assistant for Chrome keeps traveler details on your own device and never sends them to GlobTrek. See the <Link className={link} href="/booking-assistant/privacy">Booking Assistant privacy policy</Link>.
         </p>
       </EditorialSection>
-      <EditorialSection number="13" title="Who runs GlobTrek">
+      <EditorialSection number="13" title="Children">
+        <p>
+          GlobTrek is a general-audience site and isn&apos;t directed to children under 13. We don&apos;t knowingly collect personal information from children under 13. If you believe a child has given us an email address or created an account, contact <Contact /> and we&apos;ll delete it.
+        </p>
+      </EditorialSection>
+      <EditorialSection number="14" title="Who runs GlobTrek">
         <p>
           This site is operated by {LEGAL_NAME}, based in Oregon, United States. Questions about this page: <Contact />. If this policy changes, the date at the top changes too.
         </p>

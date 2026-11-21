@@ -30,8 +30,8 @@ test("the website's Book my trip payload passes the extension's strict validator
   // Today the site routes every paid activity through Booking.com Attractions (CJ), so
   // even a GetYourGuide provider link arrives as Booking.com. Only OpenTable stays separate.
   assert.deepEqual(session.items.map((item) => item.partnerName).sort(), ["Booking.com", "Booking.com", "Booking.com", "Booking.com", "OpenTable"]);
-  assert.ok(session.items.every((item) => item.autofill), "every partner in today's trips gets the traveler's details filled");
+  assert.ok(session.items.every((item) => !item.autofill), "no partner form is filled: their terms don't allow it");
   const gyg = assistantTrip({ entries: [{ type: "experience", name: "Sintra", exactUrl: "https://www.getyourguide.com/lisbon-l42/sintra-t1234/" }], city: "Lisbon", adults: 2 });
   const accepted = validateWebRequest({ channel: CHANNEL, v: 1, kind: "request", requestId: "r0123456789abcdef", type: "START_SESSION", trip: gyg });
-  assert.equal(accepted.type === "START_SESSION" && createSession(accepted.trip, { origin: "https://www.glob-trek.com", sourceTabId: 1 }).items[0]!.autofill, true);
+  assert.equal(accepted.type === "START_SESSION" && createSession(accepted.trip, { origin: "https://www.glob-trek.com", sourceTabId: 1 }).items[0]!.autofill, false);
 });

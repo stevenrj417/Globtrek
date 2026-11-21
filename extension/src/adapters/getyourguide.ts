@@ -2,13 +2,10 @@ import type { Adapter } from "./types.ts";
 
 // GetYourGuide activity checkout ("Contact details" / "Lead traveler").
 //
-// Enabled. GetYourGuide's General Terms (reviewed 2026-11-09) prohibit "automated
-// systems or software, such as bots, scrapers, spiders, or crawlers" used to
-// access, extract, copy or index content without consent. The assistant doesn't
-// extract or index anything: it runs only in the traveler's own tab, only after
-// they ask, writes their own contact details into visible fields, and never
-// submits. That reading is a judgment call recorded in extension/docs/PARTNERS.md;
-// flip `autofill` to false if GetYourGuide says otherwise.
+// OFF (2026-11-21, owner's decision: GlobTrek follows every partner rule).
+// GetYourGuide's General Terms prohibit "automated systems or software, such as
+// bots, scrapers, spiders, or crawlers" used to access its platform without
+// prior written consent. Turn this on only with that written consent.
 //
 // GetYourGuide's markup was not captured (no scraping); selectors lean on the
 // standard autocomplete tokens and common field names and must be checked on a
@@ -19,10 +16,10 @@ export const getYourGuideAdapter: Adapter = {
   selectorsVersion: "2026-11-09.1",
   hosts: ["www.getyourguide.com"],
   policy: {
-    autofill: true,
-    reason: "Fills your contact details in your own tab when you ask. Never books or pays.",
+    autofill: false,
+    reason: "GetYourGuide doesn't allow automated tools on its site. Your details are ready to copy.",
     termsUrl: "https://www.getyourguide.com/c/general-terms-and-conditions/",
-    reviewedOn: "2026-11-09",
+    reviewedOn: "2026-11-21",
   },
   pages: [
     { kind: "payment", path: /\/(checkout|payment)/, marker: ["[autocomplete^='cc-']", "iframe[title*='payment' i]", "[data-test-id*='payment-method' i]"] },

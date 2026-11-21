@@ -1,15 +1,17 @@
 // Generates manifest.json. Production requests only what shipped features use:
 //   storage    — the traveler profile, settings and trip checklists, on this device
-//   scripting  — inject the fill script into a partner tab after the traveler asks
+//   (no scripting: partner sites don't allow form filling, 2026-11-21)
 //   content script on https://www.glob-trek.com — detect the extension and relay trip status
 //   optional host permissions — only partners whose adapter is enabled, requested at the moment of use
 // Not requested: <all_urls>, tabs, history, cookies, downloads, clipboard, debugger, webRequest.
 
 export const NAME = "GlobTrek One Tab Booking Assistant";
-export const DESCRIPTION = "Open every booking from your GlobTrek trip and fill your details where partners allow. You review and pay on their site.";
+export const DESCRIPTION = "Open every booking from your GlobTrek trip in one tab and track what you've booked. You book and pay on each partner's site.";
 
 /** Partner origins whose adapters are enabled (kept in sync with src/adapters by tests/manifest.test.ts). */
-export const ENABLED_PARTNER_ORIGINS = ["https://www.booking.com/*", "https://secure.booking.com/*", "https://www.getyourguide.com/*", "https://www.opentable.com/*", "https://www.opentable.co.uk/*", "https://www.opentable.ca/*", "https://www.opentable.com.au/*", "https://www.opentable.de/*", "https://www.opentable.ie/*"];
+// Empty: Booking.com, OpenTable and GetYourGuide do not allow assistants to fill
+// their forms (2026-11-21), so the extension asks for no access to their sites.
+export const ENABLED_PARTNER_ORIGINS = [];
 
 export function buildManifest({ version, dev }) {
   if (DESCRIPTION.length > 132) throw new Error("Chrome Web Store descriptions must be 132 characters or fewer");
@@ -26,7 +28,7 @@ export function buildManifest({ version, dev }) {
     icons: { 16: "icons/icon-16.png", 32: "icons/icon-32.png", 48: "icons/icon-48.png", 128: "icons/icon-128.png" },
     action: { default_popup: "popup.html", default_title: "GlobTrek Booking Assistant", default_icon: { 16: "icons/icon-16.png", 32: "icons/icon-32.png" } },
     background: { service_worker: "background.js", type: "module" },
-    permissions: ["storage", "scripting"],
+    permissions: dev ? ["storage", "scripting"] : ["storage"],
     optional_host_permissions: ENABLED_PARTNER_ORIGINS,
     content_scripts: [{ matches: dev ? [...siteMatches, ...devSiteMatches] : siteMatches, js: ["content/bridge.js"], run_at: "document_start", all_frames: false }],
     content_security_policy: { extension_pages: "script-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'" },

@@ -4,7 +4,7 @@ export const alt = "GlobTrek: a few quick questions, one affordable trip";
 export const size = OG_SIZE;
 export const contentType = "image/png";
 
-export default function Image() {
+export default async function Image() {
   return renderOgImage({
     title: "One Tab Travel",
     subtitle: "A few quick questions. One affordable trip.",

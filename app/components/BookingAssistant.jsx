@@ -83,7 +83,7 @@ export function BookingAssistant({ entries, trip, tripKey, onStatuses }) {
       </h2>
       {session ? <p className="tabular mt-4 text-base leading-7" aria-live="polite">Your bookings are open in Chrome.{attention ? ` ${attention} need${attention === 1 ? "s" : ""} you.` : ""} The assistant tab keeps your details one click away.</p>
         : <ul className="mt-6 space-y-3 text-base leading-6">
-          {[itemCount === 1 ? "Opens your booking with your dates and travelers" : `Opens ${all} at once, with your dates and travelers`, "Your details ready to fill or copy on each site", "Stops before payment. You review and pay yourself"].map((line) => <li key={line} className="flex gap-3"><span aria-hidden="true" className="mt-[3px] grid h-5 w-5 shrink-0 place-items-center rounded-full bg-black text-[11px] text-white">✓</span>{line}</li>)}
+          {[itemCount === 1 ? "Opens your booking with your dates and travelers" : `Opens ${all} at once, with your dates and travelers`, "A checklist of what you've booked", "Stops before payment. You review and pay yourself"].map((line) => <li key={line} className="flex gap-3"><span aria-hidden="true" className="mt-[3px] grid h-5 w-5 shrink-0 place-items-center rounded-full bg-black text-[11px] text-white">✓</span>{line}</li>)}
         </ul>}
       {error ? <p role="alert" className="mt-4 text-sm text-danger">{error}</p> : null}
       <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 lg:mt-auto lg:pt-8">

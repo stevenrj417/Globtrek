@@ -10,7 +10,7 @@ const fileUrl = new URL("../../app/data/guideTownData.json", import.meta.url);
 const force = process.argv.includes("--force");
 const file = JSON.parse(await readFile(fileUrl, "utf8").catch(() => '{"towns":{}}'));
 const MONTHS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
-const HEADERS = { "User-Agent": "GlobTrekGuides/1.0 (travel guide images)" };
+const HEADERS = { "User-Agent": "GlobTrekGuidesBot/1.0 (https://www.glob-trek.com/contact)" };
 const strip = (html) => String(html || "").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
 // Lead images that aren't a view of the place.
 const NOT_A_VIEW = /\b(map|locator|location|seal|flag|logo|coat[_ ]of[_ ]arms|county|montage|collage)\b|\.svg$/i;

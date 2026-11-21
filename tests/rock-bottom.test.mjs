@@ -30,9 +30,9 @@ test("rock bottom prices a real hostel bed, cheap food and free activities", () 
   const plan = buildBudgetPlan(normalizeTravelerProfile(quiz({ guestCount: "1", tripNights: 4 })), vegas);
   assert.equal(plan.lodging.type, "hostel_bed");
   assert.equal(plan.lodging.name, "Sin City Hostel");
-  // No dates: priced for January, the cheapest month to fly ($50 × 1.05 a bed).
-  assert.equal(plan.lodging.month, 1);
-  assert.equal(plan.estimates.hotel.average, 212);
+  // No dates: no month is assumed ($50 a bed).
+  assert.equal(plan.lodging.month, null);
+  assert.equal(plan.estimates.hotel.average, 200);
   assert.equal(plan.estimates.activities.average, 0);
   assert.equal(plan.estimates.food.average, 88);
 });
@@ -67,19 +67,16 @@ test("asking for a hostel or a private room is respected", () => {
   assert.equal(buildBudgetPlan(normalizeTravelerProfile(quiz({ guestCount: "1", tripNights: 4, answers: { hotel: "Private room" } })), vegas).lodging.type, "private_room");
 });
 
-test("flights use the real fare for the chosen month", () => {
+test("flights use licensed fare data, never Google Flights", () => {
   const december = estimateFlight(normalizeTravelerProfile(quiz({ tripStart: "2026-12-08", tripEnd: "2026-12-12" })), vegas);
-  assert.equal(december.priceSource, "google_flights_snapshot");
-  assert.equal(december.average, 233);
-  assert.match(december.basis, /December 2026/);
+  assert.equal(december.priceSource, "us_dot_average_fare_paid");
+  assert.doesNotMatch(december.basis, /Google/);
   const july = estimateFlight(normalizeTravelerProfile(quiz({ tripStart: "2027-07-13", tripEnd: "2027-07-17" })), vegas);
   assert.equal(july.priceSource, "us_dot_average_fare_paid");
 });
 
-test("with no dates, the cheapest month on file is used and named", () => {
-  const fare = snapshotFare("PDX", "LAS", null, true);
-  assert.equal(fare.month, "2027-01");
-  assert.equal(fare.cheapestMonth, true);
+test("no fares copied from Google Flights are used", () => {
+  assert.equal(snapshotFare("PDX", "LAS", null, true), null);
 });
 
 test("the cheapest trip from the traveler's airport ranks first", () => {

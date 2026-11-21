@@ -1,5 +1,5 @@
 import { buildBudgetPlan } from "../recommendation/budgetEngine.js";
-import { FARE_SNAPSHOTS } from "../../data/fareSnapshots.js";
+import fareIndex from "../../data/pricing/fareIndex.json" with { type: "json" };
 
 // What the cheapest possible trip costs, so the quiz can grey out trip lengths
 // a budget cannot cover. Deliberately generous: the cheapest destination, rock
@@ -13,10 +13,13 @@ function perCategory(destination, nights) {
   return Object.fromEntries(CATEGORIES.map((key) => [key, plan.estimates[key]?.average || 0]));
 }
 
-// Lowest round-trip fare to this destination: a fare seen on any route into it, else the planning model's cheapest.
+// Lowest round-trip fare to this destination: the cheapest typical (median) fare
+// Aviasales saw on any U.S. route into it (Travelpayouts Data API), else the planning model's cheapest.
+// U.S. departure codes in the fare index (the quiz plans trips from the U.S.).
+const US_ORIGINS = new Set("PDX SEA SFO OAK SJC LAX SAN SAC LAS PHX DEN SLC DFW HOU CHI MSP ATL NYC BOS WAS MIA AUS MSY BNA ORL BOI GEG RNO SAT ABQ TUS MKC STL DTT CLE CMH IND PHL PIT BWI CLT RDU TPA FLL MKE OMA OKC MEM SDF BDL ONT".split(" "));
 function flightFloor(destination) {
   const airport = String(destination.airport || "").toUpperCase();
-  const seen = Object.entries(FARE_SNAPSHOTS).filter(([route]) => route.endsWith(`:${airport}`)).flatMap(([, months]) => Object.values(months).map((month) => month.cheapest)).filter((fare) => fare > 0);
+  const seen = Object.entries(fareIndex.routes || {}).filter(([route]) => route.endsWith(`-${airport}`) && US_ORIGINS.has(route.split("-")[0])).flatMap(([, months]) => Object.values(months).filter(Array.isArray).map((month) => month[1])).filter((fare) => fare > 0);
   if (seen.length) return Math.min(...seen);
   const plan = buildBudgetPlan({ exactBudget: 0, tripLength: 3, travelers: 1, spendStyle: "cheapest", dates: {}, includedBudgetCategories: { ...ALL, flights: true } }, destination);
   return Math.round(plan.estimates.flights?.low || plan.estimates.flights?.average || 0);

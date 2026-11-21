@@ -9,7 +9,7 @@ const prod = buildManifest({ version: "1.0.0", dev: false });
 
 test("production manifest asks for the fewest permissions", () => {
   assert.equal(prod.manifest_version, 3);
-  assert.deepEqual(prod.permissions, ["storage", "scripting"]);
+  assert.deepEqual(prod.permissions, ["storage"]);
   assert.equal(prod.host_permissions, undefined);
   const text = JSON.stringify(prod);
   for (const banned of ["<all_urls>", "\"tabs\"", "history", "cookies", "downloads", "clipboard", "debugger", "webRequest", "*://*/*", "localhost", "vercel.app"]) assert.ok(!text.includes(banned), banned);
