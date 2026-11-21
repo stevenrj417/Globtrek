@@ -7,6 +7,7 @@ import { discoverySliderToUnknownness, legacyBudgetLabel, normalizeBudget } from
 import { TRAVEL_AREA_OPTIONS } from "../lib/recommendation/travelAreaOptions";
 import { cheapestTrip } from "../lib/quiz/cheapestTrip";
 import { DURATION_NIGHTS, nightsBetween, nightsRange } from "../lib/trip/schedule";
+import { SLEEP_OPTIONS, sleepBand } from "../lib/quiz/sleepOptions";
 import { TripDatePicker } from "../components/TripDatePicker";
 import { BrandWordmark } from "../components/BrandMark";
 import { photoCredit } from "../lib/photoCredits";
@@ -82,8 +83,9 @@ const questions = [
 
 const preferenceSteps = questions.length + 1;
 const DRAFT_KEY = "globtrekQuizDraft";
-function questionsFor() {
-  return questions;
+function questionsFor(answers) {
+  const options = SLEEP_OPTIONS[sleepBand(answers)];
+  return questions.map((question) => (question.id === "hotel" ? { ...question, options } : question));
 }
 
 function Progress({ step }) {
