@@ -42,7 +42,7 @@ export function cuisineKey(place) {
 
 // Kinds of outdoors, so a list isn't two waterfalls or two viewpoints.
 const NATURE_KINDS = [
-  ["waterfall", (types, name) => /\b(waterfall|falls?|cachoeira|cascata|cascada|cascade|wasserfall|chute|salto)\b/.test(name)],
+  ["waterfall", (types, name) => /\b(waterfall|falls?|cachoeira|cascata|cascada|cascade|chute|salto)\b|(wasser|bach)fall\b|wasserfall/.test(name)],
   ["viewpoint", (types, name, primary) => primary === "scenic_spot" || primary === "observation_deck" || /\b(viewpoint|miradouro|mirante|mirador|belvedere|aussichtspunkt|lookout|skywalk|overlook)\b/.test(name)],
   ["trail", (types, name, primary) => primary === "hiking_area" || types.has("hiking_area") || /\b(trail|trilha|sendero|wanderweg|hike)\b/.test(name)],
   ["beach", (types, name, primary) => primary === "beach" || types.has("beach") || /\b(beach|praia|playa|plage|strand)\b/.test(name)],
@@ -161,16 +161,16 @@ export function matchStay(stay, lodging) {
 }
 
 // The budget's own tier first (+0.3), its next tier after (+0.1), the last only to fill.
-// Distance counts more for a bed than for a dinner: 0.02 a km past the first, up to 0.8.
+// Distance counts more for a bed than for a dinner: 0.03 a km past the first, up to 1.0.
 function stayScore(stay, budget) {
   const index = BUDGETS[budget].stayTiers.indexOf(stay.tier);
   const tierBonus = index === 0 ? 0.3 : index === 1 ? 0.1 : 0;
   const flags = (stay.freeCancellation ? 0.02 : 0) + (stay.freeBreakfast ? 0.01 : 0);
-  const distance = stay.km == null ? 0.2 : Math.min(0.8, Math.max(0, stay.km - 1) * 0.02);
+  const distance = stay.km == null ? 0.2 : Math.min(1, Math.max(0, stay.km - 1) * 0.03);
   return round((stay.weighted ?? UNRATED_BASE) - distance + tierBonus + flags);
 }
 // Where a listing without Google reviews starts: below a well-reviewed place nearby,
-// above a well-reviewed one about 30 km or more away.
+// above a well-reviewed one about 20 km or more away.
 const UNRATED_BASE = 3.95;
 
 // Searches Google and CJ step by step and returns picks for every budget.

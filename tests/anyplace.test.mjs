@@ -82,7 +82,8 @@ test("cuisine and activity kinds drive variety", () => {
   assert.equal(cuisineKey({ primaryType: "pizza_restaurant" }), "pizza");
   assert.equal(cuisineKey({ primaryType: "restaurant", displayName: { text: "Pizzeria Bella" } }), "pizza");
   assert.equal(activityGroup({ primaryType: "hiking_area" }), "nature:trail");
-  assert.equal(activityGroup({ primaryType: "tourist_attraction", displayName: { text: "Mürrenbachfall" } }), "sight", "a name ending in -fall alone isn't enough");
+  assert.equal(activityGroup({ primaryType: "tourist_attraction", displayName: { text: "Mürrenbachfall" } }), "nature:waterfall");
+  assert.equal(activityGroup({ primaryType: "tourist_attraction", displayName: { text: "Football museum" } }), "sight");
   assert.equal(activityGroup({ primaryType: "tourist_attraction", displayName: { text: "Cachoeira do Bom Despacho" } }), "nature:waterfall");
   assert.equal(activityGroup({ primaryType: "museum" }), "museum");
 });
