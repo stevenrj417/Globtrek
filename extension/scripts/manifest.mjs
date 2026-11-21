@@ -6,7 +6,7 @@
 // Not requested: <all_urls>, tabs, history, cookies, downloads, clipboard, debugger, webRequest.
 
 export const NAME = "GlobTrek One Tab Booking Assistant";
-export const DESCRIPTION = "Open every booking from your GlobTrek trip in one tab and track what you've booked. You book and pay on each partner's site.";
+export const DESCRIPTION = "Open your GlobTrek trip's activity and restaurant bookings and track what you've booked. You book and pay on each partner's site.";
 
 /** Partner origins whose adapters are enabled (kept in sync with src/adapters by tests/manifest.test.ts). */
 // Empty: Booking.com, OpenTable and GetYourGuide do not allow assistants to fill

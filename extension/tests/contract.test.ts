@@ -27,9 +27,10 @@ test("the website's Book my trip payload passes the extension's strict validator
   assert.equal(request.type, "START_SESSION");
   if (request.type !== "START_SESSION") return;
   const session = createSession(request.trip, { origin: "https://www.glob-trek.com", sourceTabId: 1 });
-  // Today the site routes every paid activity through Booking.com Attractions (CJ), so
-  // even a GetYourGuide provider link arrives as Booking.com. Only OpenTable stays separate.
-  assert.deepEqual(session.items.map((item) => item.partnerName).sort(), ["Booking.com", "Booking.com", "Booking.com", "Booking.com", "OpenTable"]);
+  // Booking.com's CJ program bans browser extensions, so the site never hands its
+  // affiliate links (stay, flight, attractions) to the assistant. Only OpenTable remains.
+  assert.deepEqual(session.items.map((item) => item.partnerName).sort(), ["OpenTable"]);
+  assert.ok(session.items.every((item) => !/kqzyfj|dpbolvw|anrdoezrs|jdoqocy|tkqlhce|booking\.com/.test(item.url)));
   assert.ok(session.items.every((item) => !item.autofill), "no partner form is filled: their terms don't allow it");
   const gyg = assistantTrip({ entries: [{ type: "experience", name: "Sintra", exactUrl: "https://www.getyourguide.com/lisbon-l42/sintra-t1234/" }], city: "Lisbon", adults: 2 });
   const accepted = validateWebRequest({ channel: CHANNEL, v: 1, kind: "request", requestId: "r0123456789abcdef", type: "START_SESSION", trip: gyg });

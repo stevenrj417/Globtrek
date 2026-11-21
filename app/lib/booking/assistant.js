@@ -1,4 +1,4 @@
-import { CJ_HOSTS, isBookingComUrl, isCjUrl } from "./cj.js";
+import { CJ_HOSTS, isCjUrl } from "./cj.js";
 import { checklistItems } from "./checklist.js";
 
 // The website half of the GlobTrek Booking Assistant (the Chrome extension in
@@ -29,9 +29,10 @@ export function isAssistantUrl(value) {
   let url;
   try { url = new URL(value); } catch { return false; }
   if (url.protocol !== "https:" || url.username || url.password || url.port || value.length > 2048) return false;
-  if (isCjUrl(value)) {
-    try { return isBookingComUrl(new URL(url.searchParams.get("url") || "").toString()); } catch { return false; }
-  }
+  // Never hand affiliate links to the extension: Booking.com's CJ program terms
+  // say "Toolbars, browser extensions and similar, are not permitted" (read
+  // 2026-11-21). Booking.com links stay ordinary links on the trip page.
+  if (isCjUrl(value) || hostIn(url.hostname, CJ_HOSTS)) return false;
   if (hostIn(url.hostname, ["booking.com"])) return false;
   if (hostIn(url.hostname, ["google.com"])) return url.pathname.startsWith("/maps");
   return hostIn(url.hostname, ASSISTANT_HOSTS) && !hostIn(url.hostname, CJ_HOSTS);

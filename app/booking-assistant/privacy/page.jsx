@@ -38,7 +38,7 @@ export default function AssistantPrivacyPage() {
       <p>In the assistant&apos;s Privacy &amp; data screen you can see a list of every kind of detail stored, export it, delete passports, switch between saving and use-once, remove partner site access, and <strong>Forget all my information</strong>, which erases everything the extension stored. Removing the extension from Chrome also deletes its storage.</p>
     </EditorialSection>
     <EditorialSection number="07" title="Affiliate links">
-      <p>GlobTrek is a Booking.com affiliate partner. The assistant opens the same links shown on your trip page, only when you click, and may earn GlobTrek a commission on qualifying bookings at no cost to you. It never adds or replaces affiliate codes on pages you visit yourself. <Link href="/affiliate-disclosure" className={link}>Affiliate disclosure</Link>.</p>
+      <p>The assistant carries no affiliate links: Booking.com links stay on your trip page, because Booking.com&apos;s partner program doesn&apos;t allow browser extensions. It opens activity and restaurant links only when you click, and never adds or replaces affiliate codes on pages you visit. <Link href="/affiliate-disclosure" className={link}>Affiliate disclosure</Link>.</p>
     </EditorialSection>
     <EditorialSection number="08" title="Changes and contact">
       <p>If these practices change, the extension will tell you before the change applies. This extension is published by {LEGAL_NAME}, Oregon, United States.{CONTACT_EMAIL ? <> Questions: <a className={link} href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</> : <> Questions: see <Link className={link} href="/contact">Contact</Link>.</>}</p>

@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { CHANNEL, MAX_MESSAGE_BYTES, SchemaError, isAllowedWebOrigin, validateTrip, validateWebRequest, validatePublicStatus } from "../src/shared/schema.ts";
 
+const GYG = "https://www.getyourguide.com/lisbon-l42/belem-t99/?partner_id=X&date=2027-04-13";
 const CJ = "https://www.kqzyfj.com/click-101801755-17293132?url=" + encodeURIComponent("https://www.booking.com/hotel/pt/lisboa.html?checkin=2027-04-12&checkout=2027-04-17&group_adults=2");
 
 const validTrip = {
@@ -10,7 +11,7 @@ const validTrip = {
   dates: { start: "2027-04-12", end: "2027-04-17" },
   travelers: { adults: 2, children: 1 },
   items: [
-    { id: "hotel-0", type: "hotel", name: "Hotel Lisboa", url: CJ },
+    { id: "experience-1", type: "experience", name: "Belém walk", url: GYG },
     { id: "experience-0", type: "experience", name: "Sintra day trip", url: "https://www.getyourguide.com/lisbon-l42/sintra-t1234/", date: "2027-04-14", time: "09:30" },
     { id: "restaurant-0", type: "restaurant", name: "Taberna", url: "https://www.opentable.com/r/taberna-lisboa?covers=3" },
   ],
@@ -21,9 +22,9 @@ function request(extra: Record<string, unknown>) {
   return { channel: CHANNEL, v: 1, kind: "request", requestId: "req_12345678", ...extra };
 }
 
-test("a well-formed trip validates and keeps every URL exactly as sent (CJ tracking intact)", () => {
+test("a well-formed trip validates and keeps every URL exactly as sent", () => {
   const trip = validateTrip(validTrip);
-  assert.equal(trip.items[0]!.url, CJ);
+  assert.equal(trip.items[0]!.url, GYG);
   assert.equal(trip.travelers.infants, 0);
   assert.equal(trip.items[1]!.time, "09:30");
 });
@@ -47,6 +48,8 @@ test("unsafe and unapproved URLs are rejected", () => {
     "javascript:alert(1)",
     "data:text/html,hi",
     "https://www.booking.com/hotel/pt/lisboa.html",
+    CJ, // Booking.com's CJ program bans browser extensions: affiliate links never enter the assistant
+    "https://www.dpbolvw.net/click-101801755-17288982?url=" + encodeURIComponent("https://flights.booking.com/"),
     "https://www.kqzyfj.com/click-1?url=" + encodeURIComponent("https://evil.example/"),
     "https://www.kqzyfj.com/click-1?url=" + encodeURIComponent("http://www.booking.com/"),
     "https://user:pass@www.getyourguide.com/",

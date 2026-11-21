@@ -73,13 +73,10 @@ export function classifyUrl(value: string, { dev = false }: { dev?: boolean } = 
     return partner ? { partner, landingUrl: url, affiliate: false, fixture: true } : null;
   }
   if (url.protocol !== "https:" || url.username || url.password || url.port || isIpAddress(url.hostname)) return null;
-  if (hostMatches(url.hostname, CJ_HOSTS)) {
-    const target = parse(url.searchParams.get("url") ?? "");
-    if (!target || target.protocol !== "https:" || !hostMatches(target.hostname, ["booking.com"])) return null;
-    return { partner: partnerById("booking"), landingUrl: target, affiliate: true, fixture: false };
-  }
-  // Booking.com links must leave through GlobTrek's CJ link (the website's rule);
-  // a raw one would lose affiliate credit, so it is refused rather than "fixed".
+  // No affiliate links and no Booking.com at all: Booking.com's CJ program terms
+  // say "Toolbars, browser extensions and similar, are not permitted" (read
+  // 2026-11-21). The trip page opens those links itself.
+  if (hostMatches(url.hostname, CJ_HOSTS)) return null;
   if (hostMatches(url.hostname, ["booking.com"])) return null;
   const partner = PARTNERS.find((entry) => entry.id !== "booking" && hostMatches(url.hostname, entry.domains));
   if (!partner) return null;

@@ -69,7 +69,7 @@ export function BookingAssistant({ entries, trip, tripKey, onStatuses }) {
   }
 
   if (!payload || state === "checking") return payload ? <div className="mt-6 h-[22rem] bg-white" aria-hidden="true" /> : null;
-  if (state === "unsupported") return <p className="mt-5 text-sm leading-6">On a computer with Chrome, the free <Link href="/booking-assistant" className="underline underline-offset-4">GlobTrek Booking Assistant</Link> opens all of these at once.</p>;
+  if (state === "unsupported") return <p className="mt-5 text-sm leading-6">On a computer with Chrome, the free <Link href="/booking-assistant" className="underline underline-offset-4">GlobTrek Booking Assistant</Link> opens your activity and restaurant bookings at once.</p>;
   const done = session ? session.items.filter((item) => item.status === "user_complete").length : 0;
   const attention = session ? session.items.filter((item) => item.status === "needs_attention" || item.status === "failed_safely").length : 0;
   const installed = state === "present";

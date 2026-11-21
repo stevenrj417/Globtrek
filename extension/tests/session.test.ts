@@ -5,15 +5,11 @@ import { validateTrip } from "../src/shared/schema.ts";
 import { getYourGuideAdapter } from "../src/adapters/getyourguide.ts";
 import type { FillReport } from "../src/content/engine.ts";
 
-const CJ_HOTEL = "https://www.kqzyfj.com/click-101801755-17293132?url=" + encodeURIComponent("https://www.booking.com/hotel/pt/lisboa.html?checkin=2027-04-12");
-const CJ_FLIGHT = "https://www.dpbolvw.net/click-101801755-17288982?url=" + encodeURIComponent("https://flights.booking.com/flights/JFK.AIRPORT-LIS.AIRPORT/");
 const trip = validateTrip({
   destination: { city: "Lisbon", country: "Portugal" },
   dates: { start: "2027-04-12", end: "2027-04-17" },
   travelers: { adults: 2 },
   items: [
-    { id: "hotel-0", type: "hotel", name: "Hotel Lisboa", url: CJ_HOTEL },
-    { id: "flight-0", type: "flight", name: "JFK → LIS", url: CJ_FLIGHT },
     { id: "experience-0", type: "experience", name: "Sintra", url: "https://www.getyourguide.com/lisbon-l42/sintra-t1234/" },
     { id: "restaurant-0", type: "restaurant", name: "Taberna", url: "https://www.opentable.com/r/taberna?covers=2" },
   ],
@@ -23,11 +19,9 @@ test("a session keeps exact URLs, knows each partner, and applies partner policy
   const session = createSession(trip, { origin: "https://www.glob-trek.com", sourceTabId: 7 });
   assert.match(session.id, /^s_[a-z0-9]{18}$/);
   const byId = Object.fromEntries(session.items.map((item) => [item.id, item]));
-  assert.equal(byId["hotel-0"]!.url, CJ_HOTEL, "CJ link untouched");
-  assert.equal(byId["hotel-0"]!.partnerName, "Booking.com");
-  assert.equal(byId["hotel-0"]!.affiliate, true);
-  assert.equal(byId["hotel-0"]!.autofill, false, "Booking.com does not allow assistants to fill its booking form");
-  assert.equal(byId["flight-0"]!.partnerName, "Booking.com", "Booking.com Flights via CJ: deep link + copy");
+  assert.equal(byId["experience-0"]!.url, "https://www.getyourguide.com/lisbon-l42/sintra-t1234/", "link untouched");
+  assert.equal(byId["experience-0"]!.partnerName, "GetYourGuide");
+  assert.equal(byId["restaurant-0"]!.partnerName, "OpenTable");
   assert.equal(byId["experience-0"]!.autofill, false);
   assert.equal(byId["restaurant-0"]!.autofill, false);
   assert.ok(session.items.every((item) => item.status === "not_started"));

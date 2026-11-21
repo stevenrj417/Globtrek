@@ -16,13 +16,12 @@ const manifest = buildBookingManifest({
 });
 const entries = bookingManifestEntries(manifest);
 
-test("the assistant receives exact CJ-tracked links and approved partner links only", () => {
+test("the assistant never receives affiliate links, only approved non-affiliate partner links", () => {
   const trip = assistantTrip({ entries, city: "Lisbon", country: "Portugal", start: "2027-04-12", end: "2027-04-17", adults: 2, children: 1, flight: manifest.flightBooking });
   const urls = trip.items.map((item) => item.url);
   const checklistUrls = entries.map((entry) => entry.exactUrl);
   for (const url of urls) assert.ok(checklistUrls.includes(url), "unchanged from the checklist");
-  assert.ok(urls.some((url) => url.startsWith("https://www.kqzyfj.com/")), "hotel keeps CJ tracking");
-  assert.ok(urls.some((url) => url.startsWith("https://www.dpbolvw.net/")), "flight keeps CJ tracking");
+  assert.ok(!urls.some((url) => /kqzyfj|dpbolvw|anrdoezrs|jdoqocy|tkqlhce|booking\.com/.test(url)), "Booking.com's CJ terms bar browser extensions");
   assert.ok(!urls.some((url) => url.includes("miradouro.example")), "arbitrary sites are not sent to the extension");
   assert.equal(trip.items.find((item) => item.type === "restaurant").time, "19:30");
   assert.deepEqual(trip.travelers, { adults: 2, children: 1 });

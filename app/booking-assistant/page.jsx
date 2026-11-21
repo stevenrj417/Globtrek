@@ -17,9 +17,9 @@ const STEPS = [
 ];
 
 const PARTNERS = [
-  ["Booking.com stays, flights and attractions", "Opens GlobTrek's exact link with your dates and party size. You enter your details on Booking.com.", "Opens the link"],
   ["GetYourGuide activities", "Opens the activity. You choose the time and enter your details on GetYourGuide.", "Opens the link"],
   ["Restaurants", "Opens the restaurant's booking page with your party size where it accepts one.", "Opens the link"],
+  ["Booking.com stays, flights and attractions", "Not handled by the assistant. Booking.com doesn't allow browser extensions in its partner program, so these open straight from your trip page.", "Trip page only"],
 ];
 
 export default function BookingAssistantPage() {
@@ -76,11 +76,11 @@ export default function BookingAssistantPage() {
 
     <section className="mx-auto max-w-[1180px] px-6 py-[var(--section-space)] sm:px-8">
       <h2 className="font-serif text-[clamp(1.9rem,3.5vw,2.8rem)] leading-none tracking-tight-2">What it opens</h2>
-      <p className="mt-4 max-w-2xl text-sm leading-6 text-muted">The assistant opens the same links as your trip page. Booking always happens on the partner&apos;s own site.</p>
+      <p className="mt-4 max-w-2xl text-sm leading-6 text-muted">The assistant opens activity and restaurant links from your trip page. Booking always happens on the partner&apos;s own site.</p>
       <ul className="mt-8 divide-y divide-black/12 border-y border-black/12">
         {PARTNERS.map(([name, body, tag]) => <li key={name} className="grid gap-2 py-5 sm:grid-cols-[1fr_2fr_auto] sm:items-baseline sm:gap-8"><p className="font-medium">{name}</p><p className="text-sm leading-6 text-muted">{body}</p><p className="text-micro uppercase tracking-label">{tag}</p></li>)}
       </ul>
-      <p className="mt-8 text-xs leading-5 text-subtle">GlobTrek is a Booking.com affiliate partner. {AFFILIATE_DISCLOSURE} The assistant opens the same links as the trip page and only when you click. GlobTrek isn&apos;t affiliated with or endorsed by GetYourGuide or OpenTable, and Booking.com doesn&apos;t endorse the assistant. <Link href="/affiliate-disclosure" className="underline decoration-black/25 underline-offset-2">Affiliate disclosure</Link> · <Link href="/booking-assistant/privacy" className="underline decoration-black/25 underline-offset-2">Assistant privacy policy</Link> · <Link href="/help" className="underline decoration-black/25 underline-offset-2">Help</Link></p>
+      <p className="mt-8 text-xs leading-5 text-subtle">The assistant carries no affiliate links and only opens a link when you click. On your trip page: {AFFILIATE_DISCLOSURE} GlobTrek isn&apos;t affiliated with or endorsed by GetYourGuide or OpenTable, and Booking.com has no part in the assistant. <Link href="/affiliate-disclosure" className="underline decoration-black/25 underline-offset-2">Affiliate disclosure</Link> · <Link href="/booking-assistant/privacy" className="underline decoration-black/25 underline-offset-2">Assistant privacy policy</Link> · <Link href="/help" className="underline decoration-black/25 underline-offset-2">Help</Link></p>
     </section>
     <SiteFooter />
   </main>;
