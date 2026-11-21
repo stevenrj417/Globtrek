@@ -40,10 +40,22 @@ export function cuisineKey(place) {
   return word ? word.replace(/pizzeria/, "pizza").replace(/trattoria|pasta/, "italian").replace(/churrasc|barbecue/, "bbq").replace(/marisq/, "seafood") : null;
 }
 
+// Kinds of outdoors, so a list isn't two waterfalls or two viewpoints.
+const NATURE_KINDS = [
+  ["waterfall", (types, name) => /\b(waterfall|falls?|cachoeira|cascata|cascada|cascade|wasserfall|chute|salto)\b/.test(name)],
+  ["viewpoint", (types, name, primary) => primary === "scenic_spot" || primary === "observation_deck" || /\b(viewpoint|miradouro|mirante|mirador|belvedere|aussichtspunkt|lookout|skywalk|overlook)\b/.test(name)],
+  ["trail", (types, name, primary) => primary === "hiking_area" || types.has("hiking_area") || /\b(trail|trilha|sendero|wanderweg|hike)\b/.test(name)],
+  ["beach", (types, name, primary) => primary === "beach" || types.has("beach") || /\b(beach|praia|playa|plage|strand)\b/.test(name)],
+  ["lake", (types, name) => /\b(lake|lago|lagoa|laguna|lac)\b/.test(name)],
+  ["park", (types, name, primary) => NATURE.has(primary) || ["natural_feature", "national_park", "state_park"].some((type) => types.has(type))],
+];
+
 export function activityGroup(place) {
   const types = new Set([place.primaryType, ...(place.types || [])].filter(Boolean));
-  // By the main type, or a strong outdoor tag (a town square tagged "park" stays a landmark).
-  if (NATURE.has(place.primaryType) || ["natural_feature", "hiking_area", "national_park", "state_park", "beach"].some((type) => types.has(type))) return "nature";
+  // By the main type, a strong outdoor tag, or an outdoor name (a town square tagged "park" stays a landmark).
+  const name = normalizeText(placeName(place) || place.name);
+  const kind = NATURE_KINDS.find(([, test]) => test(types, name, place.primaryType))?.[0];
+  if (kind) return `nature:${kind}`;
   if (types.has("museum") || types.has("art_gallery")) return "museum";
   if (types.has("market")) return "market";
   if (types.has("zoo") || types.has("aquarium") || types.has("amusement_park")) return "family";
@@ -76,12 +88,15 @@ const dinnerClash = (a, b, chosen = []) => near(a, b, 0.08) || (Boolean(cuisineK
 export const dinnerClashForTest = dinnerClash;
 // Same kind (two viewpoints), very close, or nearly the same name ("Skywalk" and "Skywalk viewpoint").
 const activityClash = (a, b) => (activityGroup(a) === activityGroup(b) && activityGroup(a) !== "sight") || near(a, b, 0.15) || nameSimilarity(a.name, b.name) >= 0.5;
+// Variety for stays gives way when the different option is much worse (say, 30 km away).
+const STAY_SLACK = 0.25;
 const stayClash = (a, b) => a.category === b.category || near(a, b, 0.2) || (streetKey(a.street) && streetKey(a.street) === streetKey(b.street));
 
 // At least one outdoor pick when a good one exists, so small towns get their hikes and viewpoints.
 function withNature(picks, ranked) {
-  if (picks.some((item) => activityGroup(item) === "nature")) return picks;
-  const nature = ranked.find((item) => activityGroup(item) === "nature" && !picks.includes(item));
+  const outdoors = (item) => activityGroup(item).startsWith("nature");
+  if (picks.some(outdoors)) return picks;
+  const nature = ranked.find((item) => outdoors(item) && !picks.includes(item));
   if (!nature) return picks;
   const ordered = [...picks].sort(byScore);
   // Replace a repeat (a second church, say) before anything else, else the lowest-ranked pick.
@@ -195,7 +210,10 @@ export async function computePicks({ places, cj, destination, log = () => {}, de
   async function widenStays(radiusKm, first) {
     if (searchedRadius.lodging < radiusKm) {
       searchedRadius.lodging = radiusKm;
-      const results = await Promise.all(LODGING_TYPES.map((includedTypes) => safe("lodging", places.nearby({ center, radiusM: radiusKm * 1000, includedTypes, fieldMask: LODGING_FIELDS }))));
+      const searches = LODGING_TYPES.map((includedTypes) => safe("lodging", places.nearby({ center, radiusM: radiusKm * 1000, includedTypes, fieldMask: LODGING_FIELDS })));
+      // Popular-first searches favor big hotels; this finds the guest houses and simple hotels too.
+      if (first) searches.push(safe("lodging_simple", places.text({ textQuery: `guest houses and 3-star hotels in ${destination.name}`, includedType: "lodging", center, radiusM: radiusKm * 1000, fieldMask: LODGING_FIELDS })));
+      const results = await Promise.all(searches);
       for (const place of results.flat()) if (place?.id && !pools.lodging.has(place.id)) pools.lodging.set(place.id, place);
     }
     const names = first ? [destination.name, `${destination.name} hostel`, `${destination.name} guest house`, ...destination.nearbyNames] : lodgingTowns([...pools.lodging.values()]);
@@ -253,7 +271,7 @@ export async function computePicks({ places, cj, destination, log = () => {}, de
     for (; step < radii.length; step += 1) {
       candidates = await widenStays(radii[step], step === 0);
       const ranked = scored(candidates, main).filter((stay) => stay.rating !== null && stay.rating >= MIN_RATING && stay.reviews >= MIN_REVIEWS.stays[step]).sort(byScore);
-      picks = pickVaried(ranked, COUNT, stayClash);
+      picks = pickVaried(ranked, COUNT, stayClash, STAY_SLACK);
       if (picks.length >= COUNT) break;
     }
     step = Math.min(step, radii.length - 1);
@@ -264,7 +282,7 @@ export async function computePicks({ places, cj, destination, log = () => {}, de
       if (picks.length >= COUNT) break;
       // Dorms are for budget trips only; mid-range and comfort never fall back to a hostel.
       const pool = scored(candidates, tiers).filter((stay) => usable(stay) && (key === "budget" || !/hostel|capsule/i.test(stay.category || ""))).sort(byScore);
-      picks = pickVaried(pool, COUNT, stayClash).map((stay) => (stay.rating === null ? { ...stay, unrated: true } : stay));
+      picks = pickVaried(pool, COUNT, stayClash, STAY_SLACK).map((stay) => (stay.rating === null ? { ...stay, unrated: true } : stay));
     }
     result[key].stays = picks.map(({ score, weighted, rating, reviews, ...stay }) => stay);
     result[key].labels.stays = label("stays", picks, townKm);

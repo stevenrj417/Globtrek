@@ -56,14 +56,19 @@ export function streetKey(address) {
 }
 
 // Greedy pick with variety: walk the ranked list and skip anything that clashes
-// with a place already chosen. If that leaves fewer than `count`, fill from the
-// skipped ones in rank order. `clash(a, b, chosen)` says two candidates are too alike.
-export function pickVaried(ranked, count, clash) {
+// with a place already chosen, as long as a different place nearly as good
+// (within `slack` points) is still to come. If that leaves fewer than `count`,
+// fill from the skipped ones in rank order. `clash(a, b, chosen)` says two
+// candidates are too alike.
+export function pickVaried(ranked, count, clash, slack = Infinity) {
   const chosen = [];
   const skipped = [];
-  for (const item of ranked) {
+  for (const [index, item] of ranked.entries()) {
     if (chosen.length >= count) break;
-    if (chosen.some((other) => clash(item, other, chosen))) skipped.push(item);
+    const clashes = (candidate) => chosen.some((other) => clash(candidate, other, chosen));
+    if (!clashes(item)) { chosen.push(item); continue; }
+    const alternative = ranked.slice(index + 1).find((other) => !clashes(other));
+    if (alternative && alternative.score >= item.score - slack) skipped.push(item);
     else chosen.push(item);
   }
   for (const item of skipped) {

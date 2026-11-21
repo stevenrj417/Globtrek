@@ -16,6 +16,12 @@ test("weighted rating: a 4.9 with 8 reviews does not beat a 4.6 with 2,000", () 
   assert.equal(weightedRating(null, 10), null);
 });
 
+test("variety gives way when the different option is much worse", () => {
+  const items = [{ id: "a", kind: 1, score: 4.5 }, { id: "b", kind: 1, score: 4.4 }, { id: "far", kind: 2, score: 3.7 }];
+  assert.deepEqual(pickVaried(items, 2, (x, y) => x.kind === y.kind, 0.25).map((item) => item.id), ["a", "b"]);
+  assert.deepEqual(pickVaried(items, 2, (x, y) => x.kind === y.kind, 1).map((item) => item.id), ["a", "far"]);
+});
+
 test("variety: no two of a kind while others are available, filled from the rest when short", () => {
   const items = [{ id: "a", kind: 1, score: 5 }, { id: "b", kind: 1, score: 4.9 }, { id: "c", kind: 2, score: 4.5 }, { id: "d", kind: 3, score: 4.4 }];
   assert.deepEqual(pickVaried(items, 3, (x, y) => x.kind === y.kind).map((item) => item.id), ["a", "c", "d"]);
@@ -75,7 +81,9 @@ test("cuisine and activity kinds drive variety", () => {
   assert.equal(activityGroup({ primaryType: "historical_place", types: ["historical_place", "park"] }), "landmark", "a square tagged park isn't nature");
   assert.equal(cuisineKey({ primaryType: "pizza_restaurant" }), "pizza");
   assert.equal(cuisineKey({ primaryType: "restaurant", displayName: { text: "Pizzeria Bella" } }), "pizza");
-  assert.equal(activityGroup({ primaryType: "hiking_area" }), "nature");
+  assert.equal(activityGroup({ primaryType: "hiking_area" }), "nature:trail");
+  assert.equal(activityGroup({ primaryType: "tourist_attraction", displayName: { text: "Mürrenbachfall" } }), "sight", "a name ending in -fall alone isn't enough");
+  assert.equal(activityGroup({ primaryType: "tourist_attraction", displayName: { text: "Cachoeira do Bom Despacho" } }), "nature:waterfall");
   assert.equal(activityGroup({ primaryType: "museum" }), "museum");
 });
 
@@ -200,6 +208,7 @@ test("a listing in town without reviews beats a well-reviewed one 35 km away", a
   assert.ok(picks.budget.stays[0].unrated);
 });
 
-test("two viewpoints of the same spot count once", () => {
-  assert.equal(activityGroup({ primaryType: "scenic_spot" }), "nature");
+test("outdoor places are sorted into kinds", () => {
+  assert.equal(activityGroup({ primaryType: "scenic_spot" }), "nature:viewpoint");
+  assert.equal(activityGroup({ primaryType: "tourist_attraction", displayName: { text: "Wasserfall Sprutz" } }), "nature:waterfall");
 });
