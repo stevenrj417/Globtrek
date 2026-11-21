@@ -63,7 +63,16 @@ test("town size comes from the viewport, kept between 2 and 8 km", () => {
   assert.equal(townRadiusKm({ low: east(-50), high: east(50) }), 8);
 });
 
+test("never three of one cuisine", async () => {
+  const { pickVaried: pick } = await import("../app/lib/anyplace/rank.js");
+  const pizza = (id, score) => ({ id, score, primaryType: "pizza_restaurant", location: east(Number(id.slice(1))) });
+  const ranked = [pizza("p1", 5), pizza("p2", 4.9), pizza("p3", 4.8), { id: "x", score: 4.1, primaryType: "thai_restaurant", location: east(9) }];
+  const { dinnerClashForTest } = await import("../app/lib/anyplace/picks.js");
+  assert.deepEqual(pick(ranked, 3, dinnerClashForTest).map((item) => item.id), ["p1", "p2", "x"]);
+});
+
 test("cuisine and activity kinds drive variety", () => {
+  assert.equal(activityGroup({ primaryType: "historical_place", types: ["historical_place", "park"] }), "landmark", "a square tagged park isn't nature");
   assert.equal(cuisineKey({ primaryType: "pizza_restaurant" }), "pizza");
   assert.equal(cuisineKey({ primaryType: "restaurant", displayName: { text: "Pizzeria Bella" } }), "pizza");
   assert.equal(activityGroup({ primaryType: "hiking_area" }), "nature");
@@ -122,7 +131,7 @@ test("picks follow the rules: quality bar, variety, budget, nature, widening, ne
   const dinnerIds = budget.dinners.map((item) => item.id);
   assert.ok(!dinnerIds.includes("r-cafe"), "cafes aren't dinners");
   assert.ok(!dinnerIds.includes("r-tiny") || budget.dinners.find((item) => item.id === "r-tiny").belowBar, "3 reviews only fills in, labeled");
-  assert.ok(!(dinnerIds.includes("r-pizza-1") && dinnerIds.includes("r-pizza-2") && budget.dinners.length === 3 && dinnerIds.includes("r-local") === false), "not two pizza places ahead of other food");
+  assert.ok(dinnerIds.includes("r-local"), "a different cuisine makes the list");
   assert.ok(!dinnerIds.includes("r-far"), "a $$ steak house isn't a budget dinner");
   assert.ok(budget.activities.some((item) => item.id === "n-falls"), "the waterfall 18 km out makes the list");
   assert.ok(!(budget.activities.map((item) => item.id).includes("a-church") && budget.activities.map((item) => item.id).includes("a-church-2")), "not two churches");

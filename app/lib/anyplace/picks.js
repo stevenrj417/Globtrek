@@ -42,7 +42,8 @@ export function cuisineKey(place) {
 
 export function activityGroup(place) {
   const types = new Set([place.primaryType, ...(place.types || [])].filter(Boolean));
-  if ([...types].some((type) => NATURE.has(type))) return "nature";
+  // By the main type, or a strong outdoor tag (a town square tagged "park" stays a landmark).
+  if (NATURE.has(place.primaryType) || ["natural_feature", "hiking_area", "national_park", "state_park", "beach"].some((type) => types.has(type))) return "nature";
   if (types.has("museum") || types.has("art_gallery")) return "museum";
   if (types.has("market")) return "market";
   if (types.has("zoo") || types.has("aquarium") || types.has("amusement_park")) return "family";
@@ -70,7 +71,9 @@ function bestAvailable(pool, allowed) {
 }
 
 const near = (a, b, km) => { const d = distanceKm(a.location || a, b.location || b); return d !== null && d < km; };
-const dinnerClash = (a, b) => (cuisineKey(a) && cuisineKey(a) === cuisineKey(b)) || near(a, b, 0.08);
+// At most two of one cuisine (two Brazilian places in Brazil are fine; three pizzerias aren't).
+const dinnerClash = (a, b, chosen = []) => near(a, b, 0.08) || (Boolean(cuisineKey(a)) && chosen.filter((other) => cuisineKey(other) === cuisineKey(a)).length >= 2);
+export const dinnerClashForTest = dinnerClash;
 const activityClash = (a, b) => (activityGroup(a) === activityGroup(b) && activityGroup(a) !== "sight") || near(a, b, 0.15);
 const stayClash = (a, b) => a.category === b.category || near(a, b, 0.2) || (streetKey(a.street) && streetKey(a.street) === streetKey(b.street));
 
