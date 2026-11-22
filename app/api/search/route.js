@@ -25,12 +25,18 @@ export async function GET(request) {
     const places = createPlacesClient();
     // Any hotel in the world: Google's lodging search fills in what the catalog
     // doesn't have, and its page sends the traveler to that hotel on Booking.com.
-    const [found, lodging] = await Promise.allSettled([
+    // Autocomplete leans toward places near our server, so "Christ the Redeemer"
+    // finds a ballpark in New Jersey. Text search ranks by fame: its top three
+    // come first, so the world's landmarks show up for everyone.
+    const [famous, found, lodging] = await Promise.allSettled([
+      q.length >= 4 ? places.text({ textQuery: q, max: 3, fieldMask: "places.id,places.displayName,places.formattedAddress" }) : Promise.resolve([]),
       places.autocomplete(q, { sessionToken, types: ACTIVITY_TYPES }),
       hotels.length >= 4 ? Promise.resolve([]) : places.autocomplete(q, { sessionToken, types: ["lodging"] }),
     ]);
-    if (found.status === "fulfilled") activities = found.value.slice(0, 5);
-    else console.log(JSON.stringify({ level: "warn", msg: "activity_search_failed", error: found.reason?.message }));
+    const top = famous.status === "fulfilled" ? famous.value.filter((place) => place.id && place.displayName?.text).map((place) => ({ placeId: place.id, name: place.displayName.text, detail: place.formattedAddress || "" })) : [];
+    const seen = new Set(top.map((item) => item.placeId));
+    if (found.status !== "fulfilled") console.log(JSON.stringify({ level: "warn", msg: "activity_search_failed", error: found.reason?.message }));
+    activities = [...top, ...(found.status === "fulfilled" ? found.value.filter((item) => !seen.has(item.placeId)) : [])].slice(0, 6);
     if (lodging.status === "fulfilled") {
       const known = new Set(hotels.map((item) => item.name.toLowerCase()));
       moreHotels = lodging.value.filter((item) => !known.has(item.name.toLowerCase())).slice(0, 6 - Math.min(hotels.length, 6));
