@@ -4,6 +4,8 @@ import feedStayCounts from "../../data/feedStayCounts.json" with { type: "json" 
 // Counts only, like the stays: the curated places themselves stay on the server.
 import curatedPlaceCounts from "../../data/curatedPlaceCounts.json" with { type: "json" };
 import { travelInfoFor } from "../../data/travelInfo.js";
+// Monthly mean temperatures for coastal places only (NASA POWER), about 10 KB.
+import coastTemps from "../../data/coastTemps.json" with { type: "json" };
 
 // Which destinations the quiz may recommend, and why the rest can't be.
 //
@@ -11,7 +13,7 @@ import { travelInfoFor } from "../../data/travelInfo.js";
 // checks read structured catalog data only; nothing an AI writes can make a
 // destination eligible or change its setting.
 
-export const MATCH_ALGORITHM_VERSION = "2026-11-22.1";
+export const MATCH_ALGORITHM_VERSION = "2026-11-23.1";
 
 // Quiz setting answer -> the catalog tag a destination must carry.
 export const SETTING_REQUIREMENTS = Object.freeze({
@@ -82,14 +84,27 @@ export function tripMonth(profile) {
   return null;
 }
 
-// A destination may list months it should not be recommended for.
+// A coast trip should be warm enough to be by the water: a monthly mean of
+// 16 °C or more (about 20 °C afternoons). Portland, Maine in December averages
+// 2 °C, so it is skipped then. Places without climate data are not judged.
+export const WARM_COAST_C = 16;
+
+function warmEnoughForCoast(destination, profile, month) {
+  if (settingRequirement(profile?.otherExistingQuizPreferences || {})?.tag !== "Ocean") return true;
+  const temps = coastTemps.temps?.[destination.id];
+  return !temps || temps[month - 1] >= WARM_COAST_C;
+}
+
+// A destination may list months it should not be recommended for, and coast
+// trips skip months that are too cold for the coast.
 export function seasonSuitable(destination, profile) {
-  const month = tripMonth(profile);
   const avoid = destination.avoidMonths || [];
-  if (month) return !avoid.includes(month);
+  const fits = (month) => !avoid.includes(month) && warmEnoughForCoast(destination, profile, month);
+  const month = tripMonth(profile);
+  if (month) return fits(month);
   const season = profile?.dates?.season;
   const months = SEASON_MONTHS[season] || [];
-  return !months.length || months.some((value) => !avoid.includes(value));
+  return !months.length || months.some(fits);
 }
 
 export const SEASON_MONTHS = Object.freeze({
