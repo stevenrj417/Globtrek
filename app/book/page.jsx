@@ -5,6 +5,8 @@ import { SiteFooter, SiteHeader } from "../components/SiteChrome";
 import { decodeBookingPage } from "../lib/booking/bookPage";
 import { BookingChecklist } from "../components/BookingChecklist";
 import { TravelerDetails } from "./TravelerDetails";
+import { TripExtras } from "../components/TripExtras";
+import { bookExtras, bookTripKey } from "./bookExtras";
 
 export const metadata = { title: "Book your trip", robots: { index: false, follow: false } };
 
@@ -68,7 +70,8 @@ export default async function BookPage({ searchParams }) {
       </dl>
       {trip.suggested ? <p className="mt-6 max-w-2xl text-sm leading-6">Your dates were flexible, so we picked a weekend in your season. Every link below opens on these dates; change them on the partner&apos;s site if another week suits you.</p> : null}
       <p className={`${trip.suggested ? "mt-2" : "mt-6"} max-w-2xl text-sm leading-6`}>Prices on GlobTrek are estimates. You book and pay on each partner&apos;s site; GlobTrek never sees your card.</p>
-      <div className="mt-14"><BookingChecklist entries={items} tripKey={`book:${trip.city}:${trip.start || ""}:${items.map((item) => item.exactUrl.length).join("-")}`} details={<TravelerDetails />} /></div>
+      <div className="mt-14"><BookingChecklist entries={items} tripKey={bookTripKey(trip)} details={<TravelerDetails />} thanksHref={`/book/thanks?b=${encodeURIComponent(b)}`} /></div>
+      <div className="mt-16"><TripExtras sections={bookExtras(trip, city)} /></div>
       {items.some((item) => item.officialUrl) ? <ul className="mt-4 space-y-1 text-xs">{items.filter((item) => item.officialUrl).map((item) => <li key={item.id}>{item.name}: <a href={item.officialUrl} rel="noopener" target="_blank" className="underline underline-offset-2">official site</a></li>)}</ul> : null}
     </section>
     <SiteFooter />

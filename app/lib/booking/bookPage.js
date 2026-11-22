@@ -1,5 +1,6 @@
 import { bookingManifestEntries } from "./manifest.js";
 import { isBookingComUrl, isCjUrl } from "./cj.js";
+import { LEVELS, cleanInterests } from "../trip/extraInterests.js";
 
 // The /book page ("Book everything") carries its links in the URL so it works from
 // an email with no login or database. Decoding re-validates every link: hotels and
@@ -36,6 +37,13 @@ function text(value, max = 120) {
   return typeof value === "string" ? value.trim().slice(0, max) : "";
 }
 
+function point(value) {
+  const latitude = Number(value?.latitude ?? value?.[0]);
+  const longitude = Number(value?.longitude ?? value?.[1]);
+  if (!Number.isFinite(latitude) || !Number.isFinite(longitude) || Math.abs(latitude) > 90 || Math.abs(longitude) > 180 || (latitude === 0 && longitude === 0)) return null;
+  return [Math.round(latitude * 1e5) / 1e5, Math.round(longitude * 1e5) / 1e5];
+}
+
 export function encodeBookingPage(manifest) {
   // Restaurants are listed only when they take reservations online.
   const items = bookingManifestEntries(manifest).filter((entry) => entry.type !== "restaurant" || entry.reservation).slice(0, MAX_ITEMS).map((entry) => ({
@@ -54,6 +62,13 @@ export function encodeBookingPage(manifest) {
     e: manifest?.dates?.end || null,
     p: Number(manifest?.travelers?.total) || Number(manifest?.travelers?.adults) || null,
     ...(manifest?.dates?.suggested ? { f: 1 } : {}),
+    // For the "don't forget" extras: budget level, what the traveler asked help
+    // with, the arrival airport and the stay's map point (for the Uber link).
+    ...(LEVELS.includes(manifest?.level) ? { l: manifest.level } : {}),
+    ...(cleanInterests(manifest?.interests).length ? { x: cleanInterests(manifest.interests).join(",") } : {}),
+    ...(/^[A-Z]{3}$/.test(manifest?.destination?.airport || "") ? { a: manifest.destination.airport } : {}),
+    ...(point(manifest?.stayPoint) ? { h: point(manifest.stayPoint) } : {}),
+    ...(/^[A-Z]{2}$/.test(manifest?.homeCountryCode || "") ? { o: manifest.homeCountryCode } : {}),
     i: items,
   };
   return toBase64Url(JSON.stringify(payload));
@@ -88,6 +103,11 @@ export function decodeBookingPage(value) {
     end: date(payload.e),
     travelers: Number.isInteger(payload.p) && payload.p > 0 && payload.p <= 30 ? payload.p : null,
     suggested: payload.f === 1,
+    level: LEVELS.includes(payload.l) ? payload.l : null,
+    interests: cleanInterests(typeof payload.x === "string" ? payload.x.slice(0, 200) : ""),
+    airport: /^[A-Z]{3}$/.test(payload.a || "") ? payload.a : null,
+    stayPoint: point(payload.h),
+    homeCountryCode: /^[A-Z]{2}$/.test(payload.o || "") ? payload.o : null,
     items: items.map((item) => (item.type === "flight" && date(payload.s) ? { ...item, departureDate: date(payload.s), returnDate: date(payload.e) } : item)),
   };
 }

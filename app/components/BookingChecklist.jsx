@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { track } from "@vercel/analytics";
-import { isCjUrl } from "../lib/booking/cj";
+import { isCjUrl, withSid } from "../lib/booking/cj";
+import { itemStatus, useConfirmations, useTripRef } from "../lib/booking/useTripStatus";
 import { checklistItems } from "../lib/booking/checklist";
 
 export { checklistItems };
@@ -37,16 +38,24 @@ function partner(url) {
   try { return new URL(url).hostname.replace(/^www\./, ""); } catch { return "partner site"; }
 }
 
-function storageKey(tripKey) {
+// What Booking.com can report back through CJ for each kind of item.
+const KIND = { flight: "flight", hotel: "stay", experience: "activity" };
+export const checklistKind = (item) => (isCjUrl(item.exactUrl) ? KIND[item.type] || null : null);
+
+export function storageKey(tripKey) {
   return `globtrek:booked:${tripKey}`;
 }
 
 // The booking page: numbered steps, each with its bookings. The traveler opens each
 // one on the partner's site in a new tab and ticks it off. Nothing opens on its own
 // and nothing is submitted for the traveler.
-export function BookingChecklist({ entries, tripKey, details = null, id = "booking-steps", heading = "Book it in this order" }) {
+export function BookingChecklist({ entries, tripKey, details = null, id = "booking-steps", heading = "Book it in this order", thanksHref = null }) {
   const items = checklistItems(entries);
   const [done, setDone] = useState({});
+  const ref = useTripRef(tripKey);
+  const { confirmed } = useConfirmations(ref);
+  const statusOf = (item, state = done) => itemStatus({ kind: checklistKind(item), checked: Boolean(state[item.id]), confirmed });
+  const isDone = (item, state = done) => statusOf(item, state) !== "open";
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -59,26 +68,29 @@ export function BookingChecklist({ entries, tripKey, details = null, id = "booki
   }, [tripKey]);
 
   function toggle(itemId) {
-    setDone((current) => {
-      const next = { ...current, [itemId]: !current[itemId] };
-      try { window.localStorage.setItem(storageKey(tripKey), JSON.stringify(next)); } catch {}
-      return next;
-    });
+    const next = { ...done, [itemId]: !done[itemId] };
+    try { window.localStorage.setItem(storageKey(tripKey), JSON.stringify(next)); } catch {}
+    setDone(next);
+    if (thanksHref && next[itemId] && items.every((item) => isDone(item, next))) {
+      track("booking_all_booked");
+      setTimeout(() => window.location.assign(thanksHref), 700);
+    }
   }
 
   const steps = Object.keys(STEPS).map((type) => ({ type, items: items.filter((item) => item.type === type) })).filter((step) => step.items.length);
-  const count = items.filter((item) => done[item.id]).length;
-  const next = steps.find((step) => step.items.some((item) => !done[item.id]))?.type;
+  const count = items.filter((item) => isDone(item)).length;
+  const confirmedCount = items.filter((item) => statusOf(item) === "confirmed").length;
+  const next = steps.find((step) => step.items.some((item) => !isDone(item)))?.type;
 
   return <section id={id} className="scroll-mt-24" aria-labelledby={`${id}-heading`}>
     <div className="flex flex-wrap items-end justify-between gap-3">
       <h2 id={`${id}-heading`} className="font-serif text-[clamp(1.8rem,3vw,2.5rem)] leading-[.95] tracking-tight-2">{heading}</h2>
-      {items.length ? <p className="tabular text-sm text-ink" aria-live="polite">{count} of {items.length} booked</p> : null}
+      {items.length ? <p className="tabular text-sm text-ink" aria-live="polite">{count} of {items.length} booked{confirmedCount ? ` · ${confirmedCount} confirmed by Booking.com` : ""}</p> : null}
     </div>
     {details}
     {steps.length ? <ol className="mt-8 space-y-4">
       {steps.map((step, index) => {
-        const stepDone = step.items.every((item) => done[item.id]);
+        const stepDone = step.items.every((item) => isDone(item));
         const current = step.type === next;
         return <li key={step.type} className={`border bg-white p-6 sm:p-8 ${current ? "border-black" : "border-black/15"}`}>
           <div className="grid grid-cols-[auto_1fr] gap-x-5">
@@ -91,24 +103,28 @@ export function BookingChecklist({ entries, tripKey, details = null, id = "booki
           </div>
           <ul className="mt-6 divide-y divide-black/12 border-y border-black/12 sm:ml-[3.75rem]">
             {step.items.map((item) => {
-              const checked = Boolean(done[item.id]);
+              const status = statusOf(item);
+              const checked = status !== "open";
               const checkboxId = `${id}-${item.type}-${String(item.id).replace(/[^a-z0-9_-]/gi, "")}`;
               return <li key={`${item.type}:${item.id}`} className="grid grid-cols-[1fr] gap-3 py-4 sm:grid-cols-[1fr_auto] sm:items-center sm:gap-5">
                 <div>
                   <p className={`text-base font-medium ${checked ? "line-through" : ""}`}>{item.name}</p>
                   <p className="text-sm text-ink">on {partner(item.exactUrl)}{whenLabel(item) ? ` · ${whenLabel(item)}` : ""}</p>
-                  <label htmlFor={checkboxId} className="mt-2 inline-flex cursor-pointer items-center gap-2 text-sm">
+                  {status === "confirmed" ? <span className="mt-2 inline-flex items-center gap-2 bg-black px-2.5 py-1.5 text-micro uppercase tracking-label text-white">✓ Confirmed by Booking.com</span> : <label htmlFor={checkboxId} className="mt-2 inline-flex cursor-pointer items-center gap-2 text-sm">
                     <input id={checkboxId} type="checkbox" checked={checked} onChange={() => toggle(item.id)} className="h-5 w-5 accent-black" />
                     I&apos;ve booked this
-                  </label>
+                  </label>}
                 </div>
-                <a href={item.exactUrl} target="_blank" rel="noopener sponsored" onClick={() => track("booking_item_opened", { type: item.type })} className={`inline-flex min-h-11 items-center justify-center px-5 text-sm ${current && !checked ? "bg-black text-white hover:bg-black/85" : "border border-black/25 hover:border-black"}`}>{ACTIONS[item.type] || "Open"} <span aria-hidden="true" className="ml-1">↗</span><span className="sr-only"> (opens in a new tab)</span></a>
+                <a href={withSid(item.exactUrl, ref)} target="_blank" rel="noopener sponsored" onClick={() => track("booking_item_opened", { type: item.type })} className={`inline-flex min-h-11 items-center justify-center px-5 text-sm ${current && !checked ? "bg-black text-white hover:bg-black/85" : "border border-black/25 hover:border-black"}`}>{ACTIONS[item.type] || "Open"} <span aria-hidden="true" className="ml-1">↗</span><span className="sr-only"> (opens in a new tab)</span></a>
               </li>;
             })}
           </ul>
         </li>;
       })}
     </ol> : <p className="mt-5 border border-black/15 bg-surface p-4 text-sm">Pick a stay or flight to start.</p>}
-    {steps.length && count === items.length ? <p role="status" className="mt-6 border-l-2 border-black pl-4 text-base font-medium">Everything&apos;s booked. Keep each partner&apos;s confirmation email: they hold your reservations.</p> : null}
+    {steps.length && count === items.length ? <div role="status" className="mt-6 flex flex-wrap items-center justify-between gap-4 border-l-2 border-black pl-4">
+      <p className="text-base font-medium">Everything&apos;s booked. Keep each partner&apos;s confirmation email: they hold your reservations.</p>
+      {thanksHref ? <a href={thanksHref} className="inline-flex min-h-12 items-center bg-black px-6 text-micro font-medium uppercase tracking-label text-white hover:bg-black/85">See your trip summary →</a> : null}
+    </div> : steps.length && thanksHref ? <p className="mt-6 text-sm">Booked it all? <a href={thanksHref} className="underline decoration-black/25 underline-offset-4 hover:decoration-black">See your trip summary</a>. We mark a booking confirmed only once Booking.com reports it to us, which can take a few hours.</p> : null}
   </section>;
 }

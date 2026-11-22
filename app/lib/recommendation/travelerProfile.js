@@ -1,3 +1,4 @@
+import { cleanInterests } from "../trip/extraInterests.js";
 import { normalizeTravelArea, originFromTrip } from "./travelArea.js";
 import { discoverySliderToUnknownness, legacyBudgetLabel, normalizeBudget } from "./budgetInput.js";
 import { tripSchedule } from "../trip/schedule.js";
@@ -74,6 +75,8 @@ export function normalizeTravelerProfile(input = {}) {
     interests: answers.luxury ? [answers.luxury] : [],
     hotelPreference: answers.hotel || null,
     companions: answers.self || null,
+    // Extras the traveler wants help booking (rental car, airport rides, ...).
+    extras: cleanInterests(answers.extras),
     unknownness: Math.min(100, Math.max(0, Number.isFinite(Number(answers.discovery ?? input.discoveryLevel)) ? Number(answers.discovery ?? input.discoveryLevel) : 50)),
     otherExistingQuizPreferences: { ...answers },
   };

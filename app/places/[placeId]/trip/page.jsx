@@ -1,11 +1,12 @@
 import { after } from "next/server";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { SiteFooter, SiteHeader } from "../../../components/SiteChrome";
 import { Breadcrumb, PageHero } from "../../../components/TravelPage";
 import { destinationDetails, heroPhoto } from "../destination";
 import { destinationFrom } from "../../../lib/anyplace/picks";
 import { resolveTrip } from "../../../lib/anyplace/tripData";
-import { parseTripParams } from "../../../lib/anyplace/trip";
+import { newTripRef, parseTripParams, tripQuery } from "../../../lib/anyplace/trip";
+import { tripExtras } from "../../../lib/trip/extras";
 import { BUDGETS } from "../../../lib/anyplace/rank";
 import { cjDestinationStaysUrl } from "../../../lib/booking/cj";
 import { TripPlanner } from "./TripPlanner";
@@ -22,6 +23,8 @@ export async function generateMetadata({ params }) {
 export default async function PlaceTripPage({ params, searchParams }) {
   const { placeId } = await params;
   const trip = parseTripParams(await searchParams);
+  // Every trip gets a random reference first, so each Booking.com link carries it.
+  if (!trip.ref) redirect(`/places/${placeId}/trip?${tripQuery({ ...trip, ref: newTripRef() })}`);
   const details = await destinationDetails(placeId);
   const destination = destinationFrom(details);
   if (!destination) notFound();
@@ -34,6 +37,7 @@ export default async function PlaceTripPage({ params, searchParams }) {
   ]);
   const where = [destination.region, destination.country].filter((part) => part && part !== destination.name).join(", ");
   const editHref = `/places/${placeId}?budget=${trip.budget}`;
+  const extras = tripExtras({ level: trip.budget, destination: { name: destination.name, country: destination.country }, airport: resolved.airport, stay: resolved.stay, sid: trip.ref });
   const count = (resolved.stay ? 1 : 0) + resolved.dinners.length + resolved.activities.length;
 
   return <main className="min-h-screen bg-canvas text-ink">
@@ -52,6 +56,7 @@ export default async function PlaceTripPage({ params, searchParams }) {
       townKm={resolved.townKm ?? destination.townKm}
       staysSearchUrl={cjDestinationStaysUrl({ city: destination.name, country: destination.country })}
       editHref={editHref}
+      extras={extras}
     />
     <div className="h-[var(--section-space)]" aria-hidden="true" />
     <SiteFooter />

@@ -8,6 +8,7 @@ import { TRAVEL_AREA_OPTIONS } from "../lib/recommendation/travelAreaOptions";
 import { cheapestTrip } from "../lib/quiz/cheapestTrip";
 import { DURATION_NIGHTS, nightsBetween, nightsRange } from "../lib/trip/schedule";
 import { SLEEP_OPTIONS, sleepBand } from "../lib/quiz/sleepOptions";
+import { EXTRA_INTERESTS, LEVELS, levelFrom } from "../lib/trip/extraInterests";
 import { TripDatePicker } from "../components/TripDatePicker";
 import { BrandWordmark } from "../components/BrandMark";
 import { photoCredit } from "../lib/photoCredits";
@@ -215,6 +216,25 @@ function DiscoveryQuestion({ value, onChange, onBack, onContinue }) {
   </div>;
 }
 
+// Optional: what else the traveler wants help booking. Luxury extras are offered
+// only when the budget leaves room for them.
+function ExtrasField({ answers, setAnswers }) {
+  const level = levelFrom({ lodging: answers.hotel === "Luxury" ? "luxury" : null, band: sleepBand(answers) });
+  const options = EXTRA_INTERESTS.filter((option) => !option.minLevel || LEVELS.indexOf(level) >= LEVELS.indexOf(option.minLevel));
+  const chosen = new Set(answers.extras || []);
+  const toggle = (id) => setAnswers((current) => {
+    const next = new Set(current.extras || []);
+    if (next.has(id)) next.delete(id); else next.add(id);
+    return { ...current, extras: [...next] };
+  });
+  return <fieldset className="mt-9">
+    <legend className="text-micro uppercase tracking-editorial text-muted">Want help booking any of these too? <span className="normal-case tracking-normal">Optional</span></legend>
+    <div className="mt-3 flex flex-wrap gap-2">
+      {options.map((option) => <button type="button" key={option.id} aria-pressed={chosen.has(option.id)} onClick={() => toggle(option.id)} className={`min-h-11 border px-4 text-micro uppercase tracking-caps transition-colors ${chosen.has(option.id) ? "border-ink bg-ink text-white" : "border-black/20 text-black/70 hover:border-black hover:text-black"}`}>{option.label}</button>)}
+    </div>
+  </fieldset>;
+}
+
 function DateQuestion({ answers, setAnswers, tripStart, tripEnd, isFlexible, setTripStart, setTripEnd, setIsFlexible, originDetails, setOriginDetails, travelAreaPreference, setTravelAreaPreference, guestCount, setGuestCount, onBack, onSubmit, canSubmit }) {
   const [mode, setMode] = useState(isFlexible ? "flexible" : "dates");
   const range = nightsRange(answers.duration);
@@ -244,6 +264,8 @@ function DateQuestion({ answers, setAnswers, tripStart, tripEnd, isFlexible, set
             {TRAVEL_AREA_OPTIONS.map((option) => <button type="button" role="radio" key={option.value} aria-checked={travelAreaPreference === option.value} onClick={() => setTravelAreaPreference(option.value)} className={`min-h-14 border-r border-black/15 px-2 text-micro leading-4 transition-colors last:border-r-0 sm:px-3 ${travelAreaPreference === option.value ? "bg-ink text-white" : "text-black/52 hover:text-black"}`}>{option.label}</button>)}
           </div>
         </fieldset>
+
+        <ExtrasField answers={answers} setAnswers={setAnswers} />
 
         <div className="mt-9 grid grid-cols-2 border border-black/15">
           <button type="button" onClick={() => selectMode("dates")} className={`min-h-14 border-r border-black/15 px-4 text-micro font-medium uppercase tracking-caps transition-colors ${mode === "dates" ? "bg-ink text-white" : "text-muted hover:text-black"}`}>I know my dates</button>

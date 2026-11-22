@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { track } from "@vercel/analytics";
 import Image from "../../../components/Photo";
 import { Chip, PhotoCredit, Stars, textLink } from "../../../components/TravelPage";
 import { BookingLogo } from "../../../components/PartnerLogo";
 import { StartingLocationField } from "../../../components/StartingLocationField";
 import { flightLink, isFreeToVisit, nights, stayLink, ticketsLink, tripQuery } from "../../../lib/anyplace/trip";
+import { itemStatus, useConfirmations } from "../../../lib/booking/useTripStatus";
+import { TripExtras } from "../../../components/TripExtras";
 
 const PRICE = { PRICE_LEVEL_FREE: "Free", PRICE_LEVEL_INEXPENSIVE: "$", PRICE_LEVEL_MODERATE: "$$", PRICE_LEVEL_EXPENSIVE: "$$$", PRICE_LEVEL_VERY_EXPENSIVE: "$$$$" };
 const km = (value) => (value >= 10 ? Math.round(value) : Math.round(value * 10) / 10);
@@ -30,7 +32,9 @@ function Action({ href, children, primary, sponsored = true, onClick }) {
   return <a href={href} target="_blank" rel={sponsored ? "noopener sponsored" : "noopener"} onClick={onClick} className={`inline-flex min-h-12 items-center justify-center gap-2 px-6 text-micro font-medium uppercase tracking-label transition-colors ${primary ? "bg-black text-white hover:bg-black/85" : "border border-black/25 hover:border-black"}`}>{children} <span aria-hidden="true">↗</span><span className="sr-only"> (opens in a new tab)</span></a>;
 }
 
-function Booked({ id, checked, onChange }) {
+// "Confirmed" only when Booking.com reported the booking; otherwise the traveler's own tick.
+function Booked({ id, checked, onChange, confirmed = false }) {
+  if (confirmed) return <span className="inline-flex items-center gap-2 bg-black px-2.5 py-1.5 text-micro uppercase tracking-label text-white">✓ Confirmed by Booking.com</span>;
   return <label htmlFor={id} className="inline-flex cursor-pointer items-center gap-2 text-sm">
     <input id={id} type="checkbox" checked={checked} onChange={onChange} className="h-5 w-5 accent-black" />
     I&apos;ve booked this
@@ -51,13 +55,15 @@ function Step({ number, title, why, done, current, children }) {
   </li>;
 }
 
-export function TripPlanner({ placeId, destination, initial, stay, dinners, activities, airport, townKm, staysSearchUrl, editHref }) {
+export function TripPlanner({ placeId, destination, initial, stay, dinners, activities, airport, townKm, staysSearchUrl, editHref, extras = [] }) {
   const [trip, setTrip] = useState(initial);
   const [origin, setOrigin] = useState(initial.from ? { type: "airport", airportCode: initial.from, city: initial.from } : null);
   const [done, setDone] = useState({});
   const [email, setEmail] = useState("");
   const [sendState, setSendState] = useState({ status: "idle", message: "" });
   const doneKey = `globtrek:booked:place:${placeId}:${trip.stay || ""}:${trip.dinners.join(",")}:${trip.activities.join(",")}`;
+  const { confirmed } = useConfirmations(trip.ref);
+  const thanksHref = `/places/${placeId}/trip/thanks?${tripQuery(trip)}`;
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -74,11 +80,14 @@ export function TripPlanner({ placeId, destination, initial, stay, dinners, acti
   }, [placeId, trip]);
 
   function toggle(id) {
-    setDone((current) => {
-      const next = { ...current, [id]: !current[id] };
-      try { window.localStorage.setItem(doneKey, JSON.stringify(next)); } catch {}
-      return next;
-    });
+    const next = { ...done, [id]: !done[id] };
+    try { window.localStorage.setItem(doneKey, JSON.stringify(next)); } catch {}
+    setDone(next);
+    // The last box ticked: on to the thank-you page.
+    if (next[id] && items.every((item) => isDone(item, next))) {
+      track("anyplace_trip_all_booked");
+      setTimeout(() => window.location.assign(thanksHref), 700);
+    }
   }
 
   const setDates = (field, value) => setTrip((current) => {
@@ -93,22 +102,27 @@ export function TripPlanner({ placeId, destination, initial, stay, dinners, acti
   const stayNights = nights(trip);
   const dated = Boolean(trip.start && trip.end);
 
-  const items = useMemo(() => [
+  const items = [
     { id: "flight" },
     { id: "stay" },
     ...activities.map((place) => ({ id: `a:${place.id}` })),
     ...dinners.map((place) => ({ id: `d:${place.id}` })),
-  ], [activities, dinners]);
-  const bookedCount = items.filter((item) => done[item.id]).length;
+  ];
+  // Booking.com reports flights, stays and attraction tickets; dinners are always the traveler's own tick.
+  const kindOf = (id) => (id === "flight" ? "flight" : id === "stay" ? "stay" : id.startsWith("a:") ? "activity" : null);
+  const statusOf = (id, state = done) => itemStatus({ kind: kindOf(id), checked: Boolean(state[id]), confirmed });
+  function isDone(item, state = done) { return statusOf(item.id, state) !== "open"; }
+  const bookedCount = items.filter((item) => isDone(item)).length;
+  const confirmedCount = items.filter((item) => statusOf(item.id) === "confirmed").length;
   const steps = [
     { key: "flight", ids: ["flight"] },
     { key: "stay", ids: ["stay"] },
     ...(activities.length ? [{ key: "activities", ids: activities.map((place) => `a:${place.id}`) }] : []),
     ...(dinners.length ? [{ key: "dinners", ids: dinners.map((place) => `d:${place.id}`) }] : []),
   ];
-  const current = steps.find((step) => step.ids.some((id) => !done[id]))?.key;
+  const current = steps.find((step) => step.ids.some((id) => statusOf(id) === "open"))?.key;
   const numberOf = (key) => steps.findIndex((step) => step.key === key) + 1;
-  const stepDone = (key) => steps.find((step) => step.key === key)?.ids.every((id) => done[id]);
+  const stepDone = (key) => steps.find((step) => step.key === key)?.ids.every((id) => statusOf(id) !== "open");
   const open = (type) => () => track("anyplace_trip_link", { type });
 
   async function sendEmail(event) {
@@ -163,7 +177,7 @@ export function TripPlanner({ placeId, destination, initial, stay, dinners, acti
 
       <div className="mt-14 flex flex-wrap items-end justify-between gap-3">
         <h2 className="font-serif text-[clamp(2rem,3.4vw,2.8rem)] leading-[.95] tracking-tight-2">Book it in this order</h2>
-        <p className="tabular text-sm" aria-live="polite">{bookedCount} of {items.length} booked</p>
+        <p className="tabular text-sm" aria-live="polite">{bookedCount} of {items.length} booked{confirmedCount ? ` · ${confirmedCount} confirmed by Booking.com` : ""}</p>
       </div>
       <div className="mt-4 h-1 w-full bg-black/10" aria-hidden="true"><div className="h-1 bg-black transition-[width] duration-500" style={{ width: `${(bookedCount / Math.max(1, items.length)) * 100}%` }} /></div>
 
@@ -171,7 +185,7 @@ export function TripPlanner({ placeId, destination, initial, stay, dinners, acti
         <Step number={numberOf("flight")} title={airport ? `Fly into ${airport.city}` : "Book your flight"} why={`Do this first: fares change fastest, and your flight times set your check-in and check-out.${airport ? ` ${airport.name} (${airport.code}) is ${airport.km} km from ${destination.name}.` : ""}`} done={stepDone("flight")} current={current === "flight"}>
           <div className="flex flex-wrap items-center gap-4 sm:ml-16">
             <Action href={flightUrl} primary={current === "flight"} onClick={open("flight")}>{trip.from && airport ? `See flights ${trip.from} → ${airport.code}` : "See flights"}</Action>
-            <Booked id="booked-flight" checked={Boolean(done.flight)} onChange={() => toggle("flight")} />
+            <Booked id="booked-flight" checked={Boolean(done.flight)} confirmed={statusOf("flight") === "confirmed"} onChange={() => toggle("flight")} />
           </div>
           <p className="mt-3 text-xs sm:ml-16">Flights on <BookingLogo className="h-3 w-auto" />{trip.from ? "" : ". Add where you're flying from above to see your route"}.</p>
         </Step>
@@ -194,29 +208,29 @@ export function TripPlanner({ placeId, destination, initial, stay, dinners, acti
               </ul>
               <div className="mt-6 flex flex-wrap items-center gap-4">
                 <Action href={stayUrl} primary={current === "stay"} onClick={open("stay")}>{dated ? "Check rooms for your dates" : "See rooms and prices"}</Action>
-                <Booked id="booked-stay" checked={Boolean(done.stay)} onChange={() => toggle("stay")} />
+                <Booked id="booked-stay" checked={Boolean(done.stay)} confirmed={statusOf("stay") === "confirmed"} onChange={() => toggle("stay")} />
               </div>
             </div>
           </div> : <div className="flex flex-wrap items-center gap-4 sm:ml-16">
             <Action href={stayUrl} primary={current === "stay"} onClick={open("stay")}>Search stays near {destination.name}</Action>
-            <Booked id="booked-stay" checked={Boolean(done.stay)} onChange={() => toggle("stay")} />
+            <Booked id="booked-stay" checked={Boolean(done.stay)} confirmed={statusOf("stay") === "confirmed"} onChange={() => toggle("stay")} />
           </div>}
         </Step>
 
         {activities.length ? <Step number={numberOf("activities")} title={activities.length === 1 ? "Plan your day out" : "Plan your days out"} why="Book anything with set times around your arrival and departure. Outdoor places are free to visit." done={stepDone("activities")} current={current === "activities"}>
           <ul className="grid gap-6 sm:ml-16 sm:grid-cols-2">
             {activities.map((place) => {
-              const tickets = ticketsLink(place, destination);
+              const tickets = ticketsLink(place, destination, trip.ref);
               const id = `a:${place.id}`;
               return <li key={place.id} className="flex flex-col">
                 <div className="relative aspect-[4/3] overflow-hidden bg-surface"><GooglePhoto photo={place.photo} alt={place.name} /></div>
                 <p className="mt-3 text-lg font-medium leading-snug">{place.name}</p>
                 <p className="mt-1 flex flex-wrap gap-x-3 text-sm">{[place.type, place.km > townKm ? `${km(place.km)} km away` : null].filter(Boolean).join(" · ")}{place.rating ? <Stars rating={place.rating} reviews={place.reviews} /> : null}</p>
                 <div className="mt-3 flex flex-wrap items-center gap-3">
-                  {tickets ? <Action href={tickets} primary={current === "activities" && !done[id]} onClick={open("tickets")}>Tours and tickets</Action> : null}
-                  {place.mapsUrl ? <Action href={place.mapsUrl} sponsored={false} primary={!tickets && current === "activities" && !done[id]} onClick={open("map")}>{tickets ? "Map" : "Directions"}</Action> : null}
+                  {tickets ? <Action href={tickets} primary={current === "activities" && statusOf(id) === "open"} onClick={open("tickets")}>Tours and tickets</Action> : null}
+                  {place.mapsUrl ? <Action href={place.mapsUrl} sponsored={false} primary={!tickets && current === "activities" && statusOf(id) === "open"} onClick={open("map")}>{tickets ? "Map" : "Directions"}</Action> : null}
                 </div>
-                <div className="mt-3"><Booked id={`booked-${place.id}`} checked={Boolean(done[id])} onChange={() => toggle(id)} /></div>
+                <div className="mt-3"><Booked id={`booked-${place.id}`} checked={Boolean(done[id])} confirmed={statusOf(id) === "confirmed"} onChange={() => toggle(id)} /></div>
               </li>;
             })}
           </ul>
@@ -231,7 +245,7 @@ export function TripPlanner({ placeId, destination, initial, stay, dinners, acti
                 <p className="mt-3 text-lg font-medium leading-snug">{place.name}</p>
                 <p className="mt-1 flex flex-wrap gap-x-3 text-sm">{[place.type, PRICE[place.priceLevel], place.km > townKm ? `${km(place.km)} km away` : null].filter(Boolean).join(" · ")}{place.rating ? <Stars rating={place.rating} reviews={place.reviews} /> : null}</p>
                 <div className="mt-3 flex flex-wrap items-center gap-3">
-                  {place.mapsUrl ? <Action href={place.mapsUrl} sponsored={false} primary={current === "dinners" && !done[id]} onClick={open("dinner")}>Hours and reservations</Action> : null}
+                  {place.mapsUrl ? <Action href={place.mapsUrl} sponsored={false} primary={current === "dinners" && statusOf(id) === "open"} onClick={open("dinner")}>Hours and reservations</Action> : null}
                 </div>
                 <div className="mt-3"><Booked id={`booked-${place.id}`} checked={Boolean(done[id])} onChange={() => toggle(id)} /></div>
               </li>;
@@ -240,7 +254,12 @@ export function TripPlanner({ placeId, destination, initial, stay, dinners, acti
         </Step> : null}
       </ol>
 
-      {bookedCount === items.length ? <p role="status" className="mt-8 border-l-2 border-black pl-4 text-base font-medium">Everything&apos;s booked. Keep each confirmation email: they hold your reservations. Have a great trip.</p> : null}
+      {bookedCount === items.length ? <div role="status" className="mt-8 flex flex-wrap items-center justify-between gap-4 border-l-2 border-black pl-4">
+        <p className="text-base font-medium">Everything&apos;s booked. Keep each confirmation email: they hold your reservations.</p>
+        <a href={thanksHref} className="inline-flex min-h-12 items-center bg-black px-6 text-micro font-medium uppercase tracking-label text-white hover:bg-black/85">See your trip summary →</a>
+      </div> : <p className="mt-6 text-sm">Booked it all? <a href={thanksHref} className={textLink}>See your trip summary</a>. We mark a booking confirmed only once Booking.com reports it to us, which can take a few hours.</p>}
+
+      <div className="mt-16"><TripExtras sections={extras} /></div>
 
       <form onSubmit={sendEmail} className="mt-14 bg-ink p-6 text-white sm:p-10">
         <p className="text-micro uppercase tracking-label text-white/80">Not booking right now?</p>

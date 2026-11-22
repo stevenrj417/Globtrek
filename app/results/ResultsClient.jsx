@@ -18,6 +18,8 @@ import { BOOK_EVENT } from "../components/TripEmailAutomation";
 import { CuratedTripChoices } from "../components/TripProposalSections";
 import { buildBookingManifest } from "../lib/booking/manifest";
 import { bookingPageUrl } from "../lib/booking/bookPage";
+import { levelFrom } from "../lib/trip/extraInterests";
+import { sleepBand } from "../lib/quiz/sleepOptions";
 import { takePrefetchedMatches } from "../lib/matchPrefetch";
 import { matchReasons } from "../lib/recommendation/whyThisFits";
 import { seasonSuitable, tripLengthRange } from "../lib/recommendation/eligibility";
@@ -310,7 +312,8 @@ export default function ResultsPage({ shareToken = null }) {
   }
   function updateFlightPreferences(next) { setFlightPreferences({ ...next, updated: true }); track("flight_preferences_updated", { destination: trip.city, timing: next.timing, travelers: next.adults + next.children }); }
   // The booking checklist (and the booking assistant) live on their own page now.
-  function goToBooking() { window.dispatchEvent(new Event(BOOK_EVENT)); track("booking_center_viewed", { destination: trip.city }); const url = bookingPageUrl(bookingManifest, window.location.origin); if (url) window.location.assign(url); }
+  function goToBooking() { window.dispatchEvent(new Event(BOOK_EVENT)); track("booking_center_viewed", { destination: trip.city }); const answers = view.activeProfile?.otherExistingQuizPreferences || {};
+    const url = bookingPageUrl({ ...bookingManifest, level: levelFrom({ lodging: view.activeProfile?.lodging, band: sleepBand(answers) }), interests: view.activeProfile?.extras, stayPoint: view.stay ? { latitude: view.stay.latitude, longitude: view.stay.longitude } : null, homeCountryCode: view.activeProfile?.originCountryCode || null }, window.location.origin); if (url) window.location.assign(url); }
 
   return <main className="results-editorial min-h-screen bg-canvas pb-28 text-ink">
     <header className="absolute inset-x-0 top-0 z-30 flex items-center justify-between px-6 py-7 text-white sm:px-12 sm:py-10"><Link href="/" className="inline-flex min-h-11 items-center text-sm font-semibold uppercase tracking-editorial">GlobTrek</Link><div className="flex items-center gap-5"><AccountEntry compact light /><Link href="/discover" className="inline-flex min-h-11 items-center text-xs text-white/90 hover:text-white">Start over</Link></div></header>

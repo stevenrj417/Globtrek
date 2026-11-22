@@ -22,9 +22,19 @@ export function nearestAirport(center) {
     if (km == null || km > MAX_KM) continue;
     const big = HUBS.has(airport.code) || /international|intl/i.test(airport.name);
     const score = km - (big ? INTERNATIONAL_BONUS_KM : 0) + (!big && SMALL_FIELD.test(airport.name) ? SMALL_FIELD_PENALTY_KM : 0);
-    if (!best || score < best.score || (score === best.score && airport.code < best.code)) best = { code: airport.code, name: airport.name, city: airport.city || airport.name, km: Math.round(km), score };
+    if (!best || score < best.score || (score === best.score && airport.code < best.code)) best = { code: airport.code, name: airport.name, city: airport.city || airport.name, km: Math.round(km), latitude, longitude, score };
   }
   if (!best) return null;
   const { score, ...airport } = best;
   return airport;
+}
+
+// An airport by its code, with its map point and (when given a point) the distance to it.
+export function airportByCode(code, near = null) {
+  const airport = airports.find((item) => item.code === code);
+  const point = airportCoords[code];
+  if (!airport || !point) return null;
+  const [latitude, longitude] = point;
+  const km = near ? distanceKm(near, { latitude, longitude }) : null;
+  return { code, name: airport.name, city: airport.city || airport.name, latitude, longitude, km: km == null ? null : Math.round(km) };
 }

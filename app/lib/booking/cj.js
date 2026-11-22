@@ -24,8 +24,25 @@ function parse(value) {
   }
 }
 
-export function cjTracked(clickUrl, targetUrl) {
-  return `${clickUrl}?url=${encodeURIComponent(targetUrl)}`;
+// sid: an optional trip reference (letters, digits, dash, underscore). CJ reports it
+// back on any commission, which is how GlobTrek can tell a booking really happened.
+export function cjSid(value) {
+  const clean = String(value || "").replace(/[^A-Za-z0-9_-]/g, "").slice(0, 64);
+  return clean || null;
+}
+
+export function cjTracked(clickUrl, targetUrl, sid) {
+  const ref = cjSid(sid);
+  return `${clickUrl}?${ref ? `sid=${ref}&` : ""}url=${encodeURIComponent(targetUrl)}`;
+}
+
+// Adds the trip reference to a CJ click link (other links are returned as they are).
+export function withSid(value, sid) {
+  const ref = cjSid(sid);
+  const url = parse(value);
+  if (!ref || !url || !hostMatches(url.hostname, CJ_HOSTS)) return value;
+  const target = url.searchParams.get("url");
+  return target ? cjTracked(`${url.origin}${url.pathname}`, target, ref) : value;
 }
 
 export function isCjUrl(value) {
