@@ -5,7 +5,7 @@ import { Breadcrumb, Chip } from "../../components/TravelPage";
 import { BookItPanel } from "../../components/BookItPanel";
 import { BookingLogo } from "../../components/PartnerLogo";
 import { stayById } from "../../lib/search/stays";
-import { AmenityChecklist, HotelLiveDetails } from "../../components/HotelDetails";
+import { AmenityChecklist } from "../../components/HotelDetails";
 import { ExploreMap } from "../../components/ExploreMap";
 import { amenityChecklist } from "../../lib/hotels/amenities";
 
@@ -70,12 +70,8 @@ export default async function HotelPage({ params }) {
         <p className="mt-4 text-xs leading-5">As listed on Booking.com. Check the room you choose there: some facilities cost extra or apply to certain rooms only.</p>
       </div> : null}
     </section>
-    <section className="mx-auto mt-[var(--section-space)] grid max-w-[1280px] gap-10 px-5 sm:px-8 lg:grid-cols-2 lg:gap-16">
-      <div>
-        <h2 className="font-serif text-3xl font-normal tracking-tight-3 sm:text-4xl">What guests say</h2>
-        <div className="mt-6"><HotelLiveDetails id={stay.id} /></div>
-      </div>
-      <div>
+    <section className="mx-auto mt-[var(--section-space)] max-w-[1280px] px-5 sm:px-8">
+      <div className="max-w-2xl">
         <h2 className="font-serif text-3xl font-normal tracking-tight-3 sm:text-4xl">At a glance</h2>
         <div className="mt-6"><AmenityChecklist checklist={amenityChecklist(stay)} /></div>
         <p className="mt-5 text-xs leading-5">&ldquo;Not listed&rdquo; means the Booking.com listing doesn&apos;t mention it; ask the hotel if it matters.</p>

@@ -99,8 +99,8 @@ export function HotelDetailsDialog({ id, name, bookingUrl, onClose }) {
         {hotel.street ? <p className="mt-2 text-sm">{hotel.street}</p> : null}
         {bookingUrl ? <a href={bookingUrl} target="_blank" rel="noopener sponsored" className="mt-6 inline-flex min-h-12 items-center gap-2 bg-black px-6 text-micro font-medium uppercase tracking-label text-white">See rooms on <BookingLogo className="h-3 w-auto invert" /> ↗</a> : null}
 
-        <h3 className="mt-12 font-serif text-2xl tracking-tight-2">What guests say</h3>
-        <div className="mt-5"><GoogleReviews google={data.google} /></div>
+        {data.reviews ? <><h3 className="mt-12 font-serif text-2xl tracking-tight-2">What guests say</h3>
+        <div className="mt-5"><GoogleReviews google={data.google} /></div></> : null}
 
         <h3 className="mt-12 font-serif text-2xl tracking-tight-2">What it has</h3>
         <div className="mt-5"><AmenityChecklist checklist={hotel.checklist} /></div>

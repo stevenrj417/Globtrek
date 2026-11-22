@@ -13,6 +13,9 @@ export const dynamic = "force-dynamic";
 // (Google Maps Platform Terms 3.2.3); this route sends no-store.
 const REVIEW_FIELDS = "places.id,places.displayName,places.location,places.rating,places.userRatingCount,places.reviews,places.googleMapsUri";
 const noStore = { "Cache-Control": "private, no-store, max-age=0" };
+// Google ratings and reviews cost one paid search per view; switched off
+// 2026-11-22 at the owner's request. Set to true to bring them back.
+const GOOGLE_REVIEWS = false;
 
 function metersApart(a, b) {
   const rad = Math.PI / 180;
@@ -66,7 +69,7 @@ export async function GET(request, { params }) {
   const stay = (await stayById(id)) || (await stayFromDatabase(id));
   if (!stay) return Response.json({ error: "Hotel not found" }, { status: 404, headers: noStore });
   let google = null;
-  try { google = await googleReviews(stay); } catch (error) { if (!(error instanceof PlacesError)) throw error; }
+  if (GOOGLE_REVIEWS) try { google = await googleReviews(stay); } catch (error) { if (!(error instanceof PlacesError)) throw error; }
   return Response.json({
     hotel: {
       id: stay.id, name: stay.name, city: stay.city, country: stay.country, street: stay.street, stars: stay.stars, category: stay.category,
@@ -75,5 +78,6 @@ export async function GET(request, { params }) {
       mapUrl: googleMapsSearchUrl(stay),
     },
     google,
+    reviews: GOOGLE_REVIEWS,
   }, { headers: noStore });
 }

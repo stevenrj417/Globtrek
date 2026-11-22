@@ -7,6 +7,10 @@ export const dynamic = "force-dynamic";
 const NO_STORE = { "Cache-Control": "no-store" };
 // Things people book or visit: sights, museums, parks, theme parks, landmarks.
 const ACTIVITY_TYPES = ["tourist_attraction", "museum", "amusement_park", "park", "historical_landmark"];
+// Paid Google lookups added 2026-11-22, switched off the same day at the owner's
+// request (cost per search): the landmark text search and the worldwide hotel
+// autocomplete. Set to true to bring them back.
+const EXTRA_GOOGLE_SEARCH = false;
 
 // GET /api/search?q=…&s=<session token>
 // Hotels come from GlobTrek's Booking.com catalog; things to do from Google Maps
@@ -29,9 +33,9 @@ export async function GET(request) {
     // finds a ballpark in New Jersey. Text search ranks by fame: its top three
     // come first, so the world's landmarks show up for everyone.
     const [famous, found, lodging] = await Promise.allSettled([
-      q.length >= 4 ? places.text({ textQuery: q, includedType: "tourist_attraction", max: 3, fieldMask: "places.id,places.displayName,places.formattedAddress" }) : Promise.resolve([]),
+      EXTRA_GOOGLE_SEARCH && q.length >= 4 ? places.text({ textQuery: q, includedType: "tourist_attraction", max: 3, fieldMask: "places.id,places.displayName,places.formattedAddress" }) : Promise.resolve([]),
       places.autocomplete(q, { sessionToken, types: ACTIVITY_TYPES }),
-      hotels.length >= 4 ? Promise.resolve([]) : places.autocomplete(q, { sessionToken, types: ["lodging"] }),
+      !EXTRA_GOOGLE_SEARCH || hotels.length >= 4 ? Promise.resolve([]) : places.autocomplete(q, { sessionToken, types: ["lodging"] }),
     ]);
     const top = famous.status === "fulfilled" ? famous.value.filter((place) => place.id && place.displayName?.text).map((place) => ({ placeId: place.id, name: place.displayName.text, detail: place.formattedAddress || "" })) : [];
     const seen = new Set(top.map((item) => item.placeId));
