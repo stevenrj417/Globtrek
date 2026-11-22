@@ -1,6 +1,8 @@
 import { createPlacesClient, PlacesError } from "../../../../lib/anyplace/google";
 import { amenityChecklist, googleMapsSearchUrl } from "../../../../lib/hotels/amenities";
-import { stayById } from "../../../../lib/search/stays";
+import { isStayId, stayById } from "../../../../lib/search/stays";
+import { fromRow } from "../../../../lib/catalog/catalogStore";
+import { createClient } from "../../../../lib/supabase/server";
 import { sharedRateLimit } from "../../../../lib/security/rateLimit";
 
 export const runtime = "nodejs";
@@ -42,10 +44,26 @@ async function googleReviews(stay) {
   };
 }
 
+// Hotels added by the daily catalog import may not be in the bundled snapshot yet.
+async function stayFromDatabase(id) {
+  if (!isStayId(id)) return null;
+  try {
+    const supabase = await createClient();
+    const { data } = await supabase.from("cj_catalog_properties").select("*").eq("provider_property_id", String(id)).eq("active", true).limit(1).maybeSingle();
+    if (!data) return null;
+    const row = fromRow(data);
+    const stars = row.starRating ? Math.round(row.starRating) : null;
+    return { id: String(row.providerPropertyId), name: row.name, category: row.category || null, stars, description: row.description || null, street: row.address || null, city: row.city || null, country: row.country || null, latitude: row.latitude != null && Number.isFinite(Number(row.latitude)) ? Number(row.latitude) : null, longitude: row.longitude != null && Number.isFinite(Number(row.longitude)) ? Number(row.longitude) : null, photos: (row.photos || []).filter((url) => /^https:\/\/[a-z0-9-]+\.bstatic\.com\//.test(url)).slice(0, 6), amenities: row.amenities || [], accessibility: row.accessibility || [], dining: typeof row.dining === "string" ? row.dining : null, roomTypes: (row.roomTypes || []).slice(0, 8), freeBreakfast: Boolean(row.catalogFreeBreakfast), bookingUrl: row.bookingUrl };
+  } catch {
+    return null;
+  }
+}
+
 export async function GET(request, { params }) {
   const limited = await sharedRateLimit(request, { name: "hotel-details", limit: 30 });
   if (limited) return limited;
-  const stay = await stayById((await params).id);
+  const id = (await params).id;
+  const stay = (await stayById(id)) || (await stayFromDatabase(id));
   if (!stay) return Response.json({ error: "Hotel not found" }, { status: 404, headers: noStore });
   let google = null;
   try { google = await googleReviews(stay); } catch (error) { if (!(error instanceof PlacesError)) throw error; }
