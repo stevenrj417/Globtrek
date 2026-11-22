@@ -262,9 +262,9 @@ export function TripPlanner({ placeId, destination, initial, stay, dinners, acti
       <div className="mt-16"><TripExtras sections={extras} /></div>
 
       <form onSubmit={sendEmail} className="mt-14 bg-ink p-6 text-white sm:p-10">
-        <p className="text-micro uppercase tracking-label text-white/80">Not booking right now?</p>
+        <p className="text-micro uppercase tracking-label text-white">Not booking right now?</p>
         <h2 className="mt-2 max-w-xl font-serif text-[clamp(1.8rem,3vw,2.6rem)] leading-[1.02] tracking-tight-2">Email yourself this trip, laid out step by step</h2>
-        <p className="mt-3 max-w-xl text-sm leading-6 text-white/85">Every link, in the order to book, so you can pick up where you left off. One email; it doesn&apos;t sign you up for anything.</p>
+        <p className="mt-3 max-w-xl text-sm leading-6 text-white">Every link, in the order to book, so you can pick up where you left off. One email; it doesn&apos;t sign you up for anything.</p>
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
           <label htmlFor="trip-email" className="sr-only">Email address</label>
           <input id="trip-email" type="email" required autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="you@example.com" className="min-h-12 flex-1 border border-white/30 bg-transparent px-4 text-base text-white placeholder:text-white/50 focus:border-white focus:outline-none focus:ring-0" />

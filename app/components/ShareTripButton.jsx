@@ -25,7 +25,7 @@ export function ShareTripButton({ tripId, initiallyPublic = false, className = "
   }
   return <span className="inline-flex flex-col items-start">
     <button type="button" aria-expanded={open} onClick={() => setOpen((value) => !value)} className={`min-h-11 ${className}`}>{shared ? "Sharing on" : "Share trip"}</button>
-    {open ? <span className="mt-2 block max-w-xs text-xs normal-case leading-5 tracking-normal text-black/70">
+    {open ? <span className="mt-2 block max-w-xs text-xs normal-case leading-5 tracking-normal text-black">
       Anyone with the link can see this trip&apos;s destination, dates, budget, travelers and departure airport, but not your name or email. Links expire after 90 days.
       <span className="mt-2 flex flex-wrap gap-3">
         <button type="button" onClick={() => update(true)} className="min-h-11 underline underline-offset-4">{shared ? "Create a new link" : "Create link"}</button>

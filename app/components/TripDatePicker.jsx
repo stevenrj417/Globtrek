@@ -86,12 +86,12 @@ export function TripDatePicker({ start, end, onChange, minNights = 1, maxNights 
 
   return <div className="select-none" role="group" aria-label={label}>
     <div className="grid grid-cols-2 border border-black/15 bg-white">
-      <button type="button" onClick={() => { setChoosingReturn(false); if (start) moveFocus(start); }} className={`px-4 py-3 text-left transition-[background-color,box-shadow] duration-200 ${!choosingReturn ? "bg-white shadow-[inset_0_-2px_0_#111]" : "bg-white/60 text-black/60 hover:bg-white"}`} aria-pressed={!choosingReturn}>
+      <button type="button" onClick={() => { setChoosingReturn(false); if (start) moveFocus(start); }} className={`px-4 py-3 text-left transition-[background-color,box-shadow] duration-200 ${!choosingReturn ? "bg-white shadow-[inset_0_-2px_0_#111]" : "bg-white/60 text-black hover:bg-white"}`} aria-pressed={!choosingReturn}>
         <span className={`block text-micro uppercase tracking-editorial ${!choosingReturn ? "text-ink" : "text-muted"}`}>Depart</span>
         <span className="mt-1 block font-serif text-xl leading-tight">{start ? format(start, { weekday: "short", month: "short", day: "numeric" }) : "Choose a day"}</span>
       </button>
-      <button type="button" disabled={!start || fixed} onClick={() => { setChoosingReturn(true); if (end) moveFocus(end); }} className={`border-l border-black/10 px-4 py-3 text-left transition-[background-color,box-shadow] duration-200 disabled:cursor-default ${choosingReturn ? "bg-white shadow-[inset_0_-2px_0_#111]" : "bg-white/60 text-black/60 enabled:hover:bg-white"}`} aria-pressed={choosingReturn}>
-        <span className={`block text-micro uppercase tracking-editorial ${choosingReturn ? "text-ink" : "text-muted"}`}>Return{fixed ? " · set for you" : ""}</span>
+      <button type="button" disabled={!start || fixed} onClick={() => { setChoosingReturn(true); if (end) moveFocus(end); }} className={`border-l border-black/10 px-4 py-3 text-left transition-[background-color,box-shadow] duration-200 disabled:cursor-default ${choosingReturn ? "bg-white shadow-[inset_0_-2px_0_#111]" : "bg-white/60 text-black enabled:hover:bg-white"}`} aria-pressed={choosingReturn}>
+        <span className={`block text-micro uppercase tracking-editorial ${choosingReturn ? "text-ink" : "text-muted"}`}>Return{fixed ? <span className="hidden sm:inline"> · set for you</span> : null}</span>
         <span className="mt-1 block font-serif text-xl leading-tight">{end ? format(end, { weekday: "short", month: "short", day: "numeric" }) : "—"}</span>
       </button>
     </div>
@@ -120,7 +120,7 @@ export function TripDatePicker({ start, end, onChange, minNights = 1, maxNights 
             {band ? <span aria-hidden="true" className={`absolute inset-y-1 bg-black/[.06] ${bandShape}`} /> : null}
             <button type="button" data-day={day} tabIndex={day === active ? 0 : -1} aria-label={name} aria-pressed={isStart || isEnd} aria-disabled={off || undefined}
               onClick={() => { if (!off) choose(day); }} onKeyDown={(event) => onKeyDown(event, day)} onMouseEnter={() => setHover(day)} onFocus={() => setFocus(day)}
-              className={`tabular relative mx-auto grid aspect-square w-full max-w-11 place-items-center rounded-full text-sm transition-[background-color,color,box-shadow] duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black ${isStart || isEnd ? "bg-ink font-medium text-white" : inRange && off ? "cursor-default text-black/65" : off ? "cursor-not-allowed text-black/20" : option ? "font-medium text-black ring-1 ring-inset ring-black/40 hover:bg-ink hover:text-white" : "text-black hover:bg-black/[.07]"}`}>
+              className={`tabular relative mx-auto grid aspect-square w-full max-w-11 place-items-center rounded-full text-sm transition-[background-color,color,box-shadow] duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black ${isStart || isEnd ? "bg-ink font-medium text-white" : inRange && off ? "cursor-default text-black" : off ? "cursor-not-allowed text-black/20" : option ? "font-medium text-black ring-1 ring-inset ring-black/40 hover:bg-ink hover:text-white" : "text-black hover:bg-black/[.07]"}`}>
               {Number(day.slice(8))}
               {day === today ? <span aria-hidden="true" className={`absolute bottom-1.5 h-1 w-1 rounded-full ${isStart || isEnd ? "bg-white" : "bg-black/40"}`} /> : null}
             </button>

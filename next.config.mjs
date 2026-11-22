@@ -35,7 +35,13 @@ const privatePaths = ["/account/:path*", "/my-trips/:path*", "/api/account/:path
 const nextConfig = {
   poweredByHeader: false,
   // The share-story image route reads its fonts from disk.
-  outputFileTracingIncludes: { "/api/story": ["./app/lib/share/fonts/*.woff"] },
+  outputFileTracingIncludes: {
+    "/api/story": ["./app/lib/share/fonts/*.woff"],
+    // Hotel pages and trip planning read the full Booking.com catalog from disk.
+    "/hotels/*": ["./app/data/feedStays.json"],
+    "/plan": ["./app/data/feedStays.json"],
+    "/places/**": ["./app/data/feedStays.json"],
+  },
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },

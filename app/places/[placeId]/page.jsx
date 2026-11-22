@@ -12,6 +12,30 @@ import { featuredSlug } from "../../lib/anyplace/featured";
 import { BUDGETS, BUDGET_KEYS, budgetKey } from "../../lib/anyplace/rank";
 import { cjDestinationStaysUrl } from "../../lib/booking/cj";
 import { STAY_THEMES } from "../../lib/anyplace/stays";
+import { distanceKm } from "../../lib/anyplace/rank";
+import { asPickStay, stayById } from "../../lib/search/stays";
+import { parseTripParams } from "../../lib/anyplace/trip";
+
+const PIN_KM = 80;
+
+// A hotel or sight the traveler chose elsewhere on the site (search, its own
+// page): shown first and already in the trip, if it is near this place.
+async function pinnedItems(destination, trip, picks) {
+  const all = [...picks.stays, ...Object.values(picks.themes || {}).flat()];
+  let stay = trip.stay ? all.find((item) => item.id === trip.stay) || null : null;
+  if (trip.stay && !stay) {
+    const record = await stayById(trip.stay.slice(3)).catch(() => null);
+    const pick = asPickStay(record, destination.center, distanceKm);
+    if (pick && pick.km != null && pick.km <= PIN_KM) stay = pick;
+  }
+  const wanted = trip.activities[0] || null;
+  let activity = wanted ? picks.activities.find((item) => item.id === wanted) || null : null;
+  if (wanted && !activity) {
+    const [place] = await hydrate({ dinners: [], activities: [{ id: wanted }] }).then((result) => result.activities).catch(() => []);
+    if (place) activity = place;
+  }
+  return { stay, activity };
+}
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -42,7 +66,7 @@ function ThemeSwitch({ placeId, budget, theme, available }) {
   </nav>;
 }
 
-async function Picks({ destination, budget, theme: wanted }) {
+async function Picks({ destination, budget, theme: wanted, trip }) {
   let picks;
   try {
     const result = await getPicks(destination, budget, { background: (task) => after(() => task.catch(() => {})) });
@@ -58,16 +82,21 @@ async function Picks({ destination, budget, theme: wanted }) {
   const stays = theme ? picks.themes[theme] : picks.stays;
   const intro = (kind, normal) => [picks.labels?.[kind] ? `${picks.labels[kind]}.` : null, normal].filter(Boolean).join(" ");
 
-  const allStays = [...picks.stays, ...Object.values(picks.themes || {}).flat()].filter((stay, index, list) => list.findIndex((other) => other.id === stay.id) === index);
+  const pinned = await pinnedItems(destination, trip, picks);
+  const first = (item, list) => (item ? [item, ...list.filter((other) => other.id !== item.id)] : list);
+  const shownStays = first(pinned.stay, stays);
+  const allStays = first(pinned.stay, [...picks.stays, ...Object.values(picks.themes || {}).flat()]).filter((stay, index, list) => list.findIndex((other) => other.id === stay.id) === index);
   return <PicksPicker
     placeId={destination.placeId}
     budget={budget}
     name={destination.name}
     townKm={picks.townKm}
-    stays={stays}
+    stays={shownStays}
     allStays={allStays}
     dinners={picks.dinners}
-    activities={picks.activities}
+    activities={first(pinned.activity, picks.activities)}
+    pinned={{ stay: pinned.stay?.id || null, activity: pinned.activity?.id || null }}
+    carry={{ start: trip.start, end: trip.end, adults: trip.adults, from: trip.from }}
     themeLabels={Object.fromEntries(Object.entries(STAY_THEMES).map(([key, value]) => [key, value.label]))}
     intros={{
       stays: theme ? STAY_THEMES[theme].intro : intro("stays", "Real Booking.com listings, picked for strong Google reviews and a good spot. Choose the one you like; you'll book it on Booking.com."),
@@ -83,12 +112,15 @@ async function Picks({ destination, budget, theme: wanted }) {
 
 export default async function PlacePage({ params, searchParams }) {
   const { placeId } = await params;
-  const { budget: rawBudget, vibe, s } = await searchParams;
+  const query = await searchParams;
+  const { budget: rawBudget, vibe, s } = query;
+  const trip = parseTripParams(query);
   const details = await destinationDetails(placeId, s);
   const destination = destinationFrom(details);
   if (!destination) notFound();
   const slug = featuredSlug(destination);
-  if (slug) redirect(`/destinations/${slug}`);
+  // A chosen hotel or sight stays on this page; otherwise featured places have a guide.
+  if (slug && !trip.stay && !trip.activities.length) redirect(`/destinations/${slug}`);
   const budget = budgetKey(rawBudget);
   const photo = await heroPhoto(details);
   const where = [destination.region, destination.country].filter((part) => part && part !== destination.name).join(", ");
@@ -103,7 +135,7 @@ export default async function PlacePage({ params, searchParams }) {
       </nav>
     </Summary>
     <Suspense fallback={<Fallback name={destination.name} />}>
-      <Picks destination={destination} budget={budget} theme={typeof vibe === "string" ? vibe : null} />
+      <Picks destination={destination} budget={budget} theme={typeof vibe === "string" ? vibe : null} trip={trip} />
     </Suspense>
     <link rel="preconnect" href="https://lh3.googleusercontent.com" />
     <SiteFooter />

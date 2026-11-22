@@ -79,13 +79,13 @@ export default function HowItWorksPage() {
 
       <section id="method" aria-labelledby="method-heading" className="mt-12 scroll-mt-24 bg-ink text-white">
         <div className="mx-auto max-w-[1400px] px-6 py-20 sm:px-8 sm:py-28">
-          <p className="text-micro uppercase tracking-editorial text-white/55">How we pick trips</p>
+          <p className="text-micro uppercase tracking-editorial text-white">How we pick trips</p>
           <h2 id="method-heading" className="mt-4 max-w-2xl font-serif text-[clamp(2rem,3.6vw,3.25rem)] font-normal leading-[1.05] tracking-tight-2">The method, without the fine print.</h2>
           <dl className="mt-14 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
             {method.map(([term, body]) => (
               <div key={term} className="border-t border-white/20 pt-6">
                 <dt className="font-serif text-xl">{term}</dt>
-                <dd className="mt-3 text-[15px] leading-7 text-white/70">{body}</dd>
+                <dd className="mt-3 text-[15px] leading-7 text-white">{body}</dd>
               </div>
             ))}
           </dl>

@@ -136,15 +136,15 @@ function VisualQuestion({ question, value, onChoose, step, status = {}, note = n
           {question.options.filter((option) => warm || option.label === selected || option.label === active.label).map((option) => (
             <Image key={option.label} src={option.image} alt={option.label === active.label ? option.alt : ""} fill priority={option.label === selected} className={`object-cover transition-[opacity,transform] duration-500 ease-[cubic-bezier(.22,.61,.36,1)] ${option.label === active.label ? "scale-100 opacity-100" : "pointer-events-none scale-[1.012] opacity-0"}`} sizes="(min-width:1024px) 70vw, 100vw" />
           ))}
-          {credit ? <a href={credit.source} target="_blank" rel="noopener" className="absolute right-2 top-2 z-10 max-w-[80%] truncate bg-black/35 px-2 py-0.5 text-[10px] leading-4 text-white/85 backdrop-blur-sm hover:text-white">Photo: {credit.artist} · {credit.license}<span className="sr-only"> (opens in a new tab)</span></a> : null}
+          {credit ? <a href={credit.source} target="_blank" rel="noopener" className="absolute right-2 top-2 z-10 max-w-[80%] truncate bg-black/35 px-2 py-0.5 text-[10px] leading-4 text-white backdrop-blur-sm hover:text-white">Photo: {credit.artist} · {credit.license}<span className="sr-only"> (opens in a new tab)</span></a> : null}
         </div>
       </div>
       <div className="relative z-20 mx-auto w-full max-w-[1500px] bg-surface lg:-mt-16">
         <div className="grid grid-cols-2 border-l border-t border-black/10 sm:flex sm:border-x-0 sm:border-y sm:px-6">
           {question.options.map((option, index) => {
-            const isActive = selected === option.label;
+            const isActive = value === option.label; // only a real choice looks chosen, never the default preview
             const state = status[option.label] || {};
-            return <button type="button" key={option.label} ref={(node) => { tiles.current[index] = node; }} onKeyDown={(event) => moveFocus(event, index)} aria-pressed={value === option.label} aria-disabled={state.disabled || undefined} aria-describedby={state.note ? `option-note-${index}` : undefined} aria-keyshortcuts={String(index + 1)} onMouseEnter={() => setPreview(option.label)} onMouseLeave={() => setPreview(selected)} onFocus={() => setPreview(option.label)} onBlur={() => setPreview(selected)} onClick={() => { if (!state.disabled) onChoose(option.label); }} className={`relative min-h-14 border-b border-r border-black/10 px-3 text-micro uppercase tracking-label transition-colors sm:min-h-24 sm:flex-1 sm:border-0 sm:px-4 sm:text-eyebrow sm:tracking-label ${state.disabled ? "cursor-not-allowed text-black/25 line-through decoration-black/20" : isActive ? "bg-ink text-white sm:bg-transparent sm:text-black" : "text-subtle hover:text-black"}`}><span className={`absolute inset-x-6 top-0 hidden h-px bg-black transition-transform duration-500 sm:block ${isActive && !state.disabled ? "scale-x-100" : "scale-x-0"}`} />{option.display || option.label}{state.note ? <span id={`option-note-${index}`} className={`mt-1 block text-micro normal-case tracking-normal no-underline ${state.disabled ? "text-black/40" : "text-warning"}`}>{state.note}</span> : null}</button>;
+            return <button type="button" key={option.label} ref={(node) => { tiles.current[index] = node; }} onKeyDown={(event) => moveFocus(event, index)} aria-pressed={value === option.label} aria-disabled={state.disabled || undefined} aria-describedby={state.note ? `option-note-${index}` : undefined} aria-keyshortcuts={String(index + 1)} onMouseEnter={() => setPreview(option.label)} onMouseLeave={() => setPreview(selected)} onFocus={() => setPreview(option.label)} onBlur={() => setPreview(selected)} onClick={() => { if (!state.disabled) onChoose(option.label); }} className={`relative min-h-14 border-b border-r border-black/10 px-3 text-micro uppercase tracking-label transition-colors sm:min-h-24 sm:flex-1 sm:border-0 sm:px-4 sm:text-eyebrow sm:tracking-label ${state.disabled ? "cursor-not-allowed text-black/25 line-through decoration-black/20" : isActive ? "bg-ink text-white sm:bg-transparent sm:text-black" : "text-subtle hover:text-black"}`}><span className={`absolute inset-x-6 top-0 hidden h-px bg-black transition-transform duration-500 sm:block ${isActive && !state.disabled ? "scale-x-100" : "scale-x-0"}`} />{option.display || option.label}{state.note ? <span id={`option-note-${index}`} className={`mt-1 block text-micro normal-case tracking-normal no-underline ${state.disabled ? "text-black" : "text-warning"}`}>{state.note}</span> : null}</button>;
           })}
         </div>
       </div>
@@ -172,12 +172,12 @@ function BudgetQuestion({ value, includes, onValueChange, onToggle, onBack, onCo
       <label className="mx-auto mt-10 flex w-full max-w-xl items-center justify-center border-b border-black pb-4">
         <span className="sr-only">Total trip budget in US dollars</span>
         <span aria-hidden="true" className="mr-2 font-serif text-[clamp(2.75rem,6vw,5.75rem)] font-light">$</span>
-        <input aria-label="Total trip budget in US dollars" inputMode="numeric" autoComplete="off" value={formatted} onChange={(event) => onValueChange(event.target.value.replace(/\D/g, "").slice(0, 7))} placeholder="800" className="w-[6.5ch] min-w-0 bg-transparent text-center font-serif text-[clamp(2.75rem,6vw,5.75rem)] font-light tracking-tight-3 outline-none placeholder:text-black/18" />
+        <input aria-label="Total trip budget in US dollars" inputMode="numeric" autoComplete="off" value={formatted} onChange={(event) => onValueChange(event.target.value.replace(/\D/g, "").slice(0, 7))} placeholder="800" className="w-[6.5ch] min-w-0 bg-transparent text-center font-serif text-[clamp(2.75rem,6vw,5.75rem)] font-light tracking-tight-3 outline-none placeholder:text-black/45" />
       </label>
       <fieldset className="mt-10">
         <legend className="mx-auto text-micro uppercase tracking-editorial text-subtle">Count toward this budget</legend>
         <div className="mt-4 flex flex-wrap justify-center gap-2">
-          {Object.entries(budgetCategoryLabels).map(([key, label]) => <button type="button" key={key} aria-pressed={includes[key]} onClick={() => onToggle(key)} className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm transition-colors ${includes[key] ? "border-black bg-black text-white" : "border-black/20 text-black/55 hover:border-black hover:text-black"}`}><span aria-hidden="true">{includes[key] ? "✓" : "+"}</span>{label}</button>)}
+          {Object.entries(budgetCategoryLabels).map(([key, label]) => <button type="button" key={key} aria-pressed={includes[key]} onClick={() => onToggle(key)} className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm transition-colors ${includes[key] ? "border-black bg-black text-white" : "border-black/20 text-black hover:border-black hover:text-black"}`}><span aria-hidden="true">{includes[key] ? "✓" : "+"}</span>{label}</button>)}
         </div>
         <p className="mt-4 text-xs text-subtle">Anything you turn off is planned but paid on top.</p>
       </fieldset>
@@ -230,7 +230,7 @@ function ExtrasField({ answers, setAnswers }) {
   return <fieldset className="mt-9">
     <legend className="text-micro uppercase tracking-editorial text-muted">Want help booking any of these too? <span className="normal-case tracking-normal">Optional</span></legend>
     <div className="mt-3 flex flex-wrap gap-2">
-      {options.map((option) => <button type="button" key={option.id} aria-pressed={chosen.has(option.id)} onClick={() => toggle(option.id)} className={`min-h-11 border px-4 text-micro uppercase tracking-caps transition-colors ${chosen.has(option.id) ? "border-ink bg-ink text-white" : "border-black/20 text-black/70 hover:border-black hover:text-black"}`}>{option.label}</button>)}
+      {options.map((option) => <button type="button" key={option.id} aria-pressed={chosen.has(option.id)} onClick={() => toggle(option.id)} className={`min-h-11 border px-4 text-micro uppercase tracking-caps transition-colors ${chosen.has(option.id) ? "border-ink bg-ink text-white" : "border-black/20 text-black hover:border-black hover:text-black"}`}>{option.label}</button>)}
     </div>
   </fieldset>;
 }
@@ -261,7 +261,7 @@ function DateQuestion({ answers, setAnswers, tripStart, tripEnd, isFlexible, set
         <fieldset className="mt-9">
           <legend className="text-micro uppercase tracking-editorial text-muted">Where would you like to go?</legend>
           <div role="radiogroup" className="mt-3 grid grid-cols-3 border border-black/15">
-            {TRAVEL_AREA_OPTIONS.map((option) => <button type="button" role="radio" key={option.value} aria-checked={travelAreaPreference === option.value} onClick={() => setTravelAreaPreference(option.value)} className={`min-h-14 border-r border-black/15 px-2 text-micro leading-4 transition-colors last:border-r-0 sm:px-3 ${travelAreaPreference === option.value ? "bg-ink text-white" : "text-black/52 hover:text-black"}`}>{option.label}</button>)}
+            {TRAVEL_AREA_OPTIONS.map((option) => <button type="button" role="radio" key={option.value} aria-checked={travelAreaPreference === option.value} onClick={() => setTravelAreaPreference(option.value)} className={`min-h-14 border-r border-black/15 px-2 text-micro leading-4 transition-colors last:border-r-0 sm:px-3 ${travelAreaPreference === option.value ? "bg-ink text-white" : "text-black hover:text-black"}`}>{option.label}</button>)}
           </div>
         </fieldset>
 
@@ -430,7 +430,7 @@ export default function TravelQuiz({ durationFloors = null }) {
   if (phase === "complete") return <div className="grid min-h-[calc(100svh-5rem)] place-items-center bg-canvas px-5"><p className="font-serif text-[clamp(2.25rem,6vw,3.5rem)] tracking-tight-3">Building your trip</p></div>;
 
   return <section id="quiz" className={`relative overflow-hidden bg-canvas text-ink transition-[opacity,transform] duration-300 ease-out ${phase === "leaving" ? "-translate-y-2 opacity-0" : phase === "leaving-back" ? "translate-y-2 opacity-0" : phase === "entering" ? "translate-y-2 opacity-0" : "translate-y-0 opacity-100"}`}>
-    {preferredDestination ? <div className="pointer-events-none absolute inset-x-0 top-1 z-40 text-center"><span className="inline-flex border border-black/10 bg-canvas/90 px-3 py-1.5 text-micro uppercase tracking-label text-black/55 backdrop-blur">Planning {preferredDestination.name}</span></div> : null}
+    {preferredDestination ? <div className="pointer-events-none absolute inset-x-0 top-1 z-40 text-center"><span className="inline-flex border border-black/10 bg-canvas/90 px-3 py-1.5 text-micro uppercase tracking-label text-black backdrop-blur">Planning {preferredDestination.name}</span></div> : null}
     {step < adaptiveQuestions.length ? current.type === "budget" ? <BudgetQuestion value={exactBudget} includes={budgetIncludes} onValueChange={setExactBudget} onToggle={(key) => setBudgetIncludes((currentIncludes) => ({ ...currentIncludes, [key]: !currentIncludes[key] }))} onBack={back} onContinue={continueBudget} step={step} /> : <VisualQuestion question={current} value={current.id === "duration" && durationStatus[answers.duration]?.disabled ? null : answers[current.id]} onChoose={choose} step={step} {...(current.id === "duration" ? { status: durationStatus, note: durationNote } : {})} /> : step === adaptiveQuestions.length ? <DiscoveryQuestion value={discoveryLevel} onChange={setDiscoveryLevel} onBack={back} onContinue={continueDiscovery} /> : <DateQuestion answers={answers} setAnswers={setAnswers} tripStart={tripStart} tripEnd={tripEnd} isFlexible={isFlexible} setTripStart={setTripStart} setTripEnd={setTripEnd} setIsFlexible={setIsFlexible} originDetails={originDetails} setOriginDetails={setOriginDetails} travelAreaPreference={travelAreaPreference} setTravelAreaPreference={setTravelAreaPreference} guestCount={guestCount} setGuestCount={setGuestCount} onBack={back} onSubmit={submit} canSubmit={canSubmit} />}
   </section>;
 }

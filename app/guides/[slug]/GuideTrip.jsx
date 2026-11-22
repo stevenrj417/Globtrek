@@ -66,7 +66,7 @@ export function BudgetPicker({ place }) {
     <div role="group" aria-label={`Your budget in ${place}`} className="-mt-7 relative z-10 grid grid-cols-3 bg-ink p-1 sm:inline-grid sm:min-w-[30rem]">
       {trip.budgets.map((level) => {
         const active = level.key === trip.budget;
-        return <button key={level.key} type="button" onClick={() => trip.setBudget(level.key)} aria-pressed={active} className={`flex min-h-12 flex-col items-center justify-center px-3 py-1.5 text-center transition-colors ${active ? "bg-white text-ink" : "text-white/80 hover:text-white"}`}>
+        return <button key={level.key} type="button" onClick={() => trip.setBudget(level.key)} aria-pressed={active} className={`flex min-h-12 flex-col items-center justify-center px-3 py-1.5 text-center transition-colors ${active ? "bg-white text-ink" : "text-white hover:text-white"}`}>
           <span className="text-micro font-semibold uppercase tracking-caps">{level.label}</span>
           <span className="tabular text-[11px] opacity-70">{level.sign}</span>
         </button>;

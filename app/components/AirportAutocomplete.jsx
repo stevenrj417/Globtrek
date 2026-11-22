@@ -59,7 +59,7 @@ export function AirportAutocomplete({ value, onChange, id = "airport-suggestions
 
   return <div className={className}>
     <input
-      className="w-full border-0 border-b border-black/25 bg-transparent px-0 py-4 text-lg tracking-tight-1 outline-none transition-colors placeholder:text-black/28 focus:border-black"
+      className="w-full border-0 border-b border-black/25 bg-transparent px-0 py-4 text-lg tracking-tight-1 outline-none transition-colors placeholder:text-black/45 focus:border-black"
       type="text"
       inputMode="text"
       autoComplete="off"

@@ -25,19 +25,19 @@ export function FlightSearchSection({ destination, trip = {}, onSearched }) {
 
   return <section id="flights" className="scroll-mt-28 bg-placeholder px-6 py-16 sm:px-12 sm:py-20" aria-labelledby="flight-search-heading">
     <div className="mx-auto max-w-[1240px] lg:grid lg:grid-cols-[.72fr_1.28fr] lg:gap-24">
-      <div><p className="text-micro font-medium uppercase tracking-editorial text-black/45">02 · Flight</p><h2 id="flight-search-heading" className="mt-5 font-serif text-[clamp(2.8rem,5vw,5.5rem)] leading-[.92] tracking-tight-3">Get there.</h2></div>
+      <div><p className="text-micro font-medium uppercase tracking-editorial text-black">02 · Flight</p><h2 id="flight-search-heading" className="mt-5 font-serif text-[clamp(2.8rem,5vw,5.5rem)] leading-[.92] tracking-tight-3">Get there.</h2></div>
       <div className="mt-10 border-y border-black/15 bg-canvas px-6 py-7 lg:mt-0 lg:px-8">
         <div className="grid grid-cols-2 gap-x-8 gap-y-7 sm:grid-cols-4">
-          <div><p className="text-xs text-black/45">Route</p><p className="mt-2 text-base">{origin || "Choose origin"} <span aria-hidden="true">→</span> {destination.airport}</p></div>
-          <div><p className="text-xs text-black/45">Dates</p><p className="mt-2 text-base">{shortDate(trip?.tripStart)} — {shortDate(trip?.tripEnd)}</p></div>
-          <div><p className="text-xs text-black/45">Travelers</p><p className="mt-2 text-base">{travelers}</p></div>
-          <div><p className="text-xs text-black/45">Cabin</p><p className="mt-2 text-base">{cabinLabel}</p></div>
+          <div><p className="text-xs text-black">Route</p><p className="mt-2 text-base">{origin || "Choose origin"} <span aria-hidden="true">→</span> {destination.airport}</p></div>
+          <div><p className="text-xs text-black">Dates</p><p className="mt-2 text-base">{shortDate(trip?.tripStart)} — {shortDate(trip?.tripEnd)}</p></div>
+          <div><p className="text-xs text-black">Travelers</p><p className="mt-2 text-base">{travelers}</p></div>
+          <div><p className="text-xs text-black">Cabin</p><p className="mt-2 text-base">{cabinLabel}</p></div>
         </div>
         <div className="mt-7 flex flex-col gap-5 border-t border-black/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="max-w-md text-xs leading-5 text-black/50">Current fares and availability are confirmed by the flight provider.</p>
+          <p className="max-w-md text-xs leading-5 text-black">Current fares and availability are confirmed by the flight provider.</p>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <a href={searchUrl} target="_blank" rel="noopener sponsored" onClick={searchFlights} className="inline-flex min-h-14 items-center justify-center bg-ink px-8 text-eyebrow font-medium text-white transition hover:bg-black focus-visible:outline-white">{selected ? "Open flights again" : "Search current flights"}<span className="ml-3" aria-hidden="true">↗</span></a>
-          <a href="/discover" className="inline-flex min-h-12 items-center justify-center px-5 text-xs text-black/55 underline decoration-black/25 hover:text-black">Change trip details</a>
+          <a href="/discover" className="inline-flex min-h-12 items-center justify-center px-5 text-xs text-black underline decoration-black/25 hover:text-black">Change trip details</a>
           </div>
         </div>
       </div>

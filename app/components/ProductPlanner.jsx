@@ -4,7 +4,7 @@ import { useState } from "react";
 import { track } from "@vercel/analytics";
 
 const fieldClass = "mt-2 min-h-12 w-full border-0 border-b border-black/25 bg-transparent py-3 text-sm outline-none transition-colors placeholder:text-black/30 focus:border-black";
-const labelClass = "text-micro font-medium uppercase tracking-label text-black/48";
+const labelClass = "text-micro font-medium uppercase tracking-label text-black";
 
 const productConfig = {
   cruise: {
@@ -53,7 +53,7 @@ export function ProductPlanner({ product }) {
           <div className="pt-3 sm:col-span-2"><button type="submit" className="inline-flex min-h-14 w-full items-center justify-between bg-ink px-6 text-xs font-semibold uppercase tracking-caps text-white sm:w-auto sm:min-w-64"><span>{config.submit}</span><span aria-hidden="true">→</span></button></div>
         </form>
       </div>
-      {brief ? <section aria-live="polite" className="mt-16 border-t border-brass/40 pt-10 sm:mt-24"><p className="text-micro uppercase tracking-editorial text-brass">Planning brief ready</p><h3 className="mt-4 font-serif text-4xl tracking-tight-2 sm:text-5xl">{config.title}</h3><p className="mt-5 max-w-3xl text-sm leading-7 text-black/58">{brief.origin} → {brief.destination} · {brief.travelers} {Number(brief.travelers) === 1 ? "traveler" : "travelers"} · ${Number(brief.budget).toLocaleString("en-US")} total budget · {brief.style.toLowerCase()}.</p><p className="mt-4 text-xs text-black/45">This planning foundation is saved in this page for review. Live routes, availability, and prices are not yet quoted.</p></section> : null}
+      {brief ? <section aria-live="polite" className="mt-16 border-t border-brass/40 pt-10 sm:mt-24"><p className="text-micro uppercase tracking-editorial text-brass">Planning brief ready</p><h3 className="mt-4 font-serif text-4xl tracking-tight-2 sm:text-5xl">{config.title}</h3><p className="mt-5 max-w-3xl text-sm leading-7 text-black">{brief.origin} → {brief.destination} · {brief.travelers} {Number(brief.travelers) === 1 ? "traveler" : "travelers"} · ${Number(brief.budget).toLocaleString("en-US")} total budget · {brief.style.toLowerCase()}.</p><p className="mt-4 text-xs text-black">This planning foundation is saved in this page for review. Live routes, availability, and prices are not yet quoted.</p></section> : null}
     </div>
   </div>;
 }

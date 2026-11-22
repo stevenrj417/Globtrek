@@ -53,8 +53,8 @@ export function createPlacesClient({ key = placesKey(), fetchImpl = globalThis.f
 
     // Suggestions for the search box. The session token ties these keystrokes to
     // the Place Details call that follows, which Google bills as one session.
-    async autocomplete(input, { sessionToken, languageCode = "en" } = {}) {
-      const payload = await call("/places:autocomplete", { method: "POST", fieldMask: "suggestions.placePrediction.placeId,suggestions.placePrediction.structuredFormat,suggestions.placePrediction.types", body: { input, sessionToken, languageCode, includedPrimaryTypes: ["locality", "administrative_area_level_3", "postal_town", "sublocality", "natural_feature"] } });
+    async autocomplete(input, { sessionToken, languageCode = "en", types = ["locality", "administrative_area_level_3", "postal_town", "sublocality", "natural_feature"] } = {}) {
+      const payload = await call("/places:autocomplete", { method: "POST", fieldMask: "suggestions.placePrediction.placeId,suggestions.placePrediction.structuredFormat,suggestions.placePrediction.types", body: { input, sessionToken, languageCode, includedPrimaryTypes: types } });
       return (payload?.suggestions || []).map((item) => item.placePrediction).filter(Boolean).map((prediction) => ({
         placeId: prediction.placeId,
         name: prediction.structuredFormat?.mainText?.text || "",
@@ -72,7 +72,7 @@ export function createPlacesClient({ key = placesKey(), fetchImpl = globalThis.f
     },
 
     async text({ textQuery, center, radiusM, includedType, priceLevels, max = 20, fieldMask = SEARCH_FIELDS }) {
-      const payload = await call("/places:searchText", { method: "POST", fieldMask, body: { textQuery, pageSize: max, ...(includedType ? { includedType } : {}), ...(priceLevels?.length ? { priceLevels } : {}), locationBias: { circle: { center: { latitude: center.latitude, longitude: center.longitude }, radius: Math.min(50000, Math.round(radiusM)) } } } });
+      const payload = await call("/places:searchText", { method: "POST", fieldMask, body: { textQuery, pageSize: max, ...(includedType ? { includedType } : {}), ...(priceLevels?.length ? { priceLevels } : {}), ...(center ? { locationBias: { circle: { center: { latitude: center.latitude, longitude: center.longitude }, radius: Math.min(50000, Math.round(radiusM)) } } } : {}) } });
       return payload?.places || [];
     },
 

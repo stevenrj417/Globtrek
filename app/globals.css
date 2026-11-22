@@ -15,8 +15,8 @@
   --border: rgb(0 0 0 / 0.1);
   --border-strong: rgb(0 0 0 / 0.2);
   --text: #171717;
-  --text-muted: #565656;
-  --text-subtle: #6b6b6b;
+  --text-muted: #1c1c1c;
+  --text-subtle: #2a2a2a;
   --accent: #171717;
   --accent-hover: #000000;
   --accent-pressed: #2e2e2e;
@@ -148,6 +148,15 @@ body {
 *:focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
+}
+
+/* Typing fields show focus with a heavier bottom line instead of a box drawn
+   around them, which looked broken on the underline-style fields. */
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: none;
+  box-shadow: inset 0 -2px 0 var(--focus-ring);
 }
 
 ::selection {
@@ -328,4 +337,12 @@ p, li, dd { text-wrap-style: pretty; }
 }
 @media (pointer: coarse) {
   :is(input, select, textarea):is(.text-xs, .text-sm, .text-micro, .text-\[13px\], .text-\[14px\], .text-\[15px\]) { font-size: 16px; }
+}
+
+/* Grid items default to min-width:auto, so one long hotel name can push a whole
+   column past the screen edge on phones. Let grid children shrink instead. */
+@layer base {
+  .grid > * {
+    min-width: 0;
+  }
 }

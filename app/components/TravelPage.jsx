@@ -25,7 +25,7 @@ export function Breadcrumb({ items, width = "max-w-[1280px]" }) {
 
 export function PhotoCredit({ credit }) {
   if (!credit?.artist) return null;
-  return <p className="absolute bottom-2 right-3 max-w-[60%] truncate text-[10px] text-white/70">Photo: {credit.source ? <a href={credit.source} target="_blank" rel="noopener" className="underline decoration-white/40 underline-offset-2 hover:text-white">{credit.artist}</a> : credit.artist}{credit.license ? <>, {credit.licenseUrl ? <a href={credit.licenseUrl} target="_blank" rel="noopener" className="underline decoration-white/40 underline-offset-2 hover:text-white">{credit.license}</a> : credit.license}</> : null}</p>;
+  return <p className="absolute bottom-2 right-3 max-w-[60%] truncate text-[10px] text-white">Photo: {credit.source ? <a href={credit.source} target="_blank" rel="noopener" className="underline decoration-white/40 underline-offset-2 hover:text-white">{credit.artist}</a> : credit.artist}{credit.license ? <>, {credit.licenseUrl ? <a href={credit.licenseUrl} target="_blank" rel="noopener" className="underline decoration-white/40 underline-offset-2 hover:text-white">{credit.license}</a> : credit.license}</> : null}</p>;
 }
 
 // Full-width photo with the title over it, like the homepage hero.
@@ -140,9 +140,9 @@ export function PlaceTiles({ places }) {
 export function CtaBand({ eyebrow, title, body, href, label }) {
   return <section className="reveal mx-auto mt-[var(--section-space)] max-w-[1280px] px-5 sm:px-8">
     <div className="bg-ink px-6 py-14 text-white sm:px-14 sm:py-20">
-      {eyebrow ? <p className="text-micro font-semibold uppercase tracking-caps text-white/60">{eyebrow}</p> : null}
+      {eyebrow ? <p className="text-micro font-semibold uppercase tracking-caps text-white">{eyebrow}</p> : null}
       <h2 className="mt-3 max-w-2xl font-serif text-[clamp(2rem,4.5vw,3.75rem)] font-normal leading-[1.02] tracking-tight-3">{title}</h2>
-      {body ? <p className="mt-4 max-w-xl text-white/70">{body}</p> : null}
+      {body ? <p className="mt-4 max-w-xl text-white">{body}</p> : null}
       <Link href={href} className="mt-8 inline-flex min-h-12 min-w-[13rem] items-center justify-center gap-2 bg-white px-7 text-micro font-medium uppercase tracking-label text-black transition-opacity hover:opacity-90">{label} <span aria-hidden="true">→</span></Link>
     </div>
   </section>;

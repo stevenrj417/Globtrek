@@ -81,9 +81,11 @@ function PlaceCard({ place, index, added, onToggle, townKm, eager, kind }) {
 
 // The picks, with choosing built in: one stay, any number of dinners and things
 // to do. Choices are kept for this tab, so switching stay themes keeps them.
-export function PicksPicker({ placeId, budget, name, townKm, stays, allStays, dinners, activities, intros, themeLabels, stayControls, emptyStay, emptyDinners, emptyActivities }) {
+export function PicksPicker({ placeId, budget, name, townKm, stays, allStays, dinners, activities, intros, themeLabels, stayControls, emptyStay, emptyDinners, emptyActivities, pinned = {}, carry = {} }) {
   const key = storageKey(placeId, budget);
-  const [trip, setTrip] = useState(() => ({ stay: stays[0] ? { id: stays[0].id, name: stays[0].name } : null, dinners: dinners[0] ? [dinners[0].id] : [], activities: activities[0] ? [activities[0].id] : [] }));
+  // A hotel or sight chosen elsewhere on the site starts in the trip and stays there.
+  const pinnedStay = pinned.stay ? allStays.find((stay) => stay.id === pinned.stay) : null;
+  const [trip, setTrip] = useState(() => ({ stay: pinnedStay ? { id: pinnedStay.id, name: pinnedStay.name } : stays[0] ? { id: stays[0].id, name: stays[0].name } : null, dinners: dinners[0] ? [dinners[0].id] : [], activities: pinned.activity ? [pinned.activity] : activities[0] ? [activities[0].id] : [] }));
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -91,15 +93,15 @@ export function PicksPicker({ placeId, budget, name, townKm, stays, allStays, di
       try {
         const saved = JSON.parse(window.sessionStorage.getItem(key) || "null");
         if (saved && typeof saved === "object") setTrip((current) => ({
-          stay: saved.stay?.id && allStays.some((stay) => stay.id === saved.stay.id) ? saved.stay : current.stay,
+          stay: !pinned.stay && saved.stay?.id && allStays.some((stay) => stay.id === saved.stay.id) ? saved.stay : current.stay,
           dinners: Array.isArray(saved.dinners) ? saved.dinners.filter((id) => dinners.some((item) => item.id === id)) : current.dinners,
-          activities: Array.isArray(saved.activities) ? saved.activities.filter((id) => activities.some((item) => item.id === id)) : current.activities,
+          activities: Array.isArray(saved.activities) ? [...new Set([...(pinned.activity ? [pinned.activity] : []), ...saved.activities.filter((id) => activities.some((item) => item.id === id))])] : current.activities,
         }));
       } catch {}
       setReady(true);
     });
     return () => clearTimeout(timer);
-  }, [key, allStays, dinners, activities]);
+  }, [key, allStays, dinners, activities, pinned.stay, pinned.activity]);
 
   useEffect(() => {
     if (!ready) return;
@@ -108,7 +110,7 @@ export function PicksPicker({ placeId, budget, name, townKm, stays, allStays, di
 
   const toggle = (field, id) => setTrip((current) => ({ ...current, [field]: current[field].includes(id) ? current[field].filter((item) => item !== id) : [...current[field], id] }));
   const chooseStay = (stay) => setTrip((current) => ({ ...current, stay: current.stay?.id === stay.id ? null : { id: stay.id, name: stay.name } }));
-  const href = useMemo(() => tripPath(placeId, { budget, stay: trip.stay?.id || null, dinners: trip.dinners, activities: trip.activities }), [placeId, budget, trip]);
+  const href = useMemo(() => tripPath(placeId, { budget, stay: trip.stay?.id || null, dinners: trip.dinners, activities: trip.activities, start: carry.start, end: carry.end, adults: carry.adults, from: carry.from }), [placeId, budget, trip, carry.start, carry.end, carry.adults, carry.from]);
   const count = (trip.stay ? 1 : 0) + trip.dinners.length + trip.activities.length;
   const summary = [trip.stay?.name || null, trip.dinners.length ? `${trip.dinners.length} dinner${trip.dinners.length === 1 ? "" : "s"}` : null, trip.activities.length ? `${trip.activities.length} thing${trip.activities.length === 1 ? "" : "s"} to do` : null].filter(Boolean).join(" · ");
 

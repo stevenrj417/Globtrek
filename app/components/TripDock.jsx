@@ -26,14 +26,15 @@ export function TripDock({ city, summary, total, picks, emailButton, onBook }) {
     return () => observer.disconnect();
   }, []);
 
-  return <aside aria-label="Your trip" className={`fixed inset-x-3 bottom-[max(.75rem,env(safe-area-inset-bottom))] z-40 mx-auto max-w-3xl transition-[transform,opacity] duration-300 ease-[cubic-bezier(.2,0,0,1)] motion-reduce:transition-none sm:inset-x-6 ${visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-[130%] opacity-0"}`} inert={!visible}>
+  // The spacer keeps the end of the page clear of the bar.
+  return <><div aria-hidden="true" className="h-24" /><aside aria-label="Your trip" className={`fixed inset-x-3 bottom-[max(.75rem,env(safe-area-inset-bottom))] z-40 mx-auto max-w-3xl transition-[transform,opacity] duration-300 ease-[cubic-bezier(.2,0,0,1)] motion-reduce:transition-none sm:inset-x-6 ${visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-[130%] opacity-0"}`} inert={!visible}>
     <div className="flex items-center gap-3 rounded-full border border-black/10 bg-surface py-2 pl-5 pr-2 text-ink shadow-overlay">
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-medium">{city} <span className="font-normal text-black/50">· {summary}</span></p>
-        <p className="tabular truncate text-micro text-black/55"><span className="font-medium text-ink">{total}</span> estimated{picks ? ` · ${picks}` : ""}</p>
+        <p className="truncate text-sm font-medium">{city}<span className="hidden font-normal sm:inline"> · {summary}</span></p>
+        <p className="tabular truncate text-micro text-black"><span className="font-medium text-ink">{total}</span> estimated<span className="hidden sm:inline">{picks ? ` · ${picks}` : ""}</span></p>
       </div>
       <div className="hidden sm:block">{emailButton}</div>
       <button type="button" onClick={onBook} className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full bg-black px-5 text-micro font-medium uppercase tracking-label text-white">Check prices <span aria-hidden="true">→</span></button>
     </div>
-  </aside>;
+  </aside></>;
 }

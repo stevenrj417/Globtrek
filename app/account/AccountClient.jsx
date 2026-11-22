@@ -191,7 +191,7 @@ export function AccountClient() {
           <div className="flex items-end gap-5">
             {avatar ? <Image src={avatar} alt="" width={72} height={72} unoptimized className="h-14 w-14 rounded-full object-cover ring-2 ring-white/70 sm:h-[72px] sm:w-[72px]" /> : null}
             <div>
-              <p className="text-micro uppercase tracking-editorial text-white/75">{heroTrip ? `Last planned · ${heroTrip.trip_data?.title || heroTrip.destination_name}` : "Your GlobTrek"}</p>
+              <p className="text-micro uppercase tracking-editorial text-white">{heroTrip ? `Last planned · ${heroTrip.trip_data?.title || heroTrip.destination_name}` : "Your GlobTrek"}</p>
               <h1 className="mt-3 font-serif text-[clamp(2.4rem,5vw,4.5rem)] font-normal leading-none tracking-tight-2 [text-shadow:0_2px_24px_rgba(0,0,0,.3)]">{firstName ? `Welcome back, ${firstName}.` : "Welcome back."}</h1>
             </div>
           </div>

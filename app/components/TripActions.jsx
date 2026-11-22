@@ -20,7 +20,7 @@ export function TripActions({ trip, onChanged }) {
   const rename = (event) => { event.preventDefault(); call(`/api/trips/${trip.id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ title }) }, (data) => onChanged({ type: "update", trip: data.trip })); };
   const duplicate = () => call(`/api/trips/${trip.id}/duplicate`, { method: "POST" }, (data) => onChanged({ type: "add", trip: data.trip }));
   const remove = () => call(`/api/trips/${trip.id}`, { method: "DELETE" }, () => onChanged({ type: "remove", id: trip.id }));
-  const link = "min-h-11 text-micro uppercase tracking-editorial text-black/60 hover:text-black";
+  const link = "min-h-11 text-micro uppercase tracking-editorial text-black hover:text-black";
 
   return <div className="mt-4 border-t border-black/10 pt-3">
     <div className="flex flex-wrap gap-x-5">

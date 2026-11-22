@@ -22,7 +22,7 @@ export function EstimateDetails({ estimate, light = false, align = "center" }) {
   const position = align === "left" ? "left-0" : align === "right" ? "right-0" : "left-1/2 -translate-x-1/2";
 
   return <span ref={root} className="relative inline-block">
-    <button type="button" aria-expanded={open} aria-controls={id} onClick={(event) => { event.preventDefault(); event.stopPropagation(); setOpen((value) => !value); }} className={`min-h-11 text-xs underline decoration-1 underline-offset-4 transition-colors ${light ? "text-white/85 decoration-white/40 hover:text-white" : "text-muted decoration-black/25 hover:text-ink"}`}>
+    <button type="button" aria-expanded={open} aria-controls={id} onClick={(event) => { event.preventDefault(); event.stopPropagation(); setOpen((value) => !value); }} className={`min-h-11 text-xs underline decoration-1 underline-offset-4 transition-colors ${light ? "text-white decoration-white/40 hover:text-white" : "text-muted decoration-black/25 hover:text-ink"}`}>
       What&apos;s included
     </button>
     {open ? <span id={id} role="dialog" aria-label="What this estimate includes" className={`absolute top-full z-30 mt-1 block w-[min(20rem,calc(100vw-2.5rem))] border border-black/10 bg-surface-raised p-5 text-left text-ink shadow-overlay ${position}`}>

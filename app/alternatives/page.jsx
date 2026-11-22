@@ -38,14 +38,14 @@ export default function AlternativesPage() {
   return <main className="min-h-screen bg-canvas text-ink">
     <header className="flex items-center justify-between border-b border-black/10 px-6 py-7 sm:px-12">
       <Link href="/" className="text-sm font-semibold uppercase tracking-editorial">GlobTrek</Link>
-      <Link href={context.encodedTrip ? `/results?trip=${context.encodedTrip}` : "/results"} className="text-micro uppercase tracking-editorial text-black/50 transition hover:text-black">Back to your result</Link>
+      <Link href={context.encodedTrip ? `/results?trip=${context.encodedTrip}` : "/results"} className="text-micro uppercase tracking-editorial text-black transition hover:text-black">Back to your result</Link>
     </header>
 
     <section className="mx-auto max-w-[1460px] px-6 py-16 sm:px-12 sm:py-24">
       <div className="max-w-3xl border-b border-black/15 pb-12">
-        <p className="text-micro uppercase tracking-editorial text-black/40">Other destinations</p>
+        <p className="text-micro uppercase tracking-editorial text-black">Other destinations</p>
         <h1 className="mt-5 font-serif text-[clamp(3rem,7vw,7rem)] leading-[0.88] tracking-tight-3">Find a better fit.</h1>
-        <p className="mt-7 max-w-xl text-sm font-light leading-6 text-black/55">These places are ranked from the same travel preferences. Choose one to see its complete GlobTrek plan.</p>
+        <p className="mt-7 max-w-xl text-sm font-light leading-6 text-black">These places are ranked from the same travel preferences. Choose one to see its complete GlobTrek plan.</p>
       </div>
 
       <div className="grid gap-x-6 gap-y-12 pt-10 sm:grid-cols-2 lg:grid-cols-3">
@@ -55,7 +55,7 @@ export default function AlternativesPage() {
             <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-2 text-micro uppercase tracking-editorial">{String(index + 1).padStart(2, "0")}</span>
           </div>
           <div className="flex items-end justify-between gap-5 border-b border-black/10 py-5">
-            <div><h2 className="font-serif text-2xl">{place.city}</h2><p className="mt-2 text-micro uppercase tracking-editorial text-black/45">{place.country} · {place.season}</p></div>
+            <div><h2 className="font-serif text-2xl">{place.city}</h2><p className="mt-2 text-micro uppercase tracking-editorial text-black">{place.country} · {place.season}</p></div>
             <span className="text-lg transition-transform group-hover:translate-x-1">→</span>
           </div>
         </Link>)}
