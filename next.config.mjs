@@ -47,6 +47,12 @@ const nextConfig = {
     "/guides/[slug]": ["./app/data/feedStays/**"],
     "/sitemap.xml": ["./app/data/feedStays/**"],
   },
+  // The 100 MB feedStays.json is only a build input now (split per destination
+  // before each build); keep it, and the split folder where it isn't needed, out of functions.
+  outputFileTracingExcludes: {
+    "/**": ["./app/data/feedStays.json"],
+    "/guides/[slug]/opengraph-image": ["./app/data/feedStays/**"],
+  },
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },
