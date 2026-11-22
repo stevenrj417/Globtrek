@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "./components/Photo";
 import Link from "next/link";
 import { SiteFooter, SiteHeader } from "./components/SiteChrome";
 import { EmailSignup } from "./components/EmailSignup";

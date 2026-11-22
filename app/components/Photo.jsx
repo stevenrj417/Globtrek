@@ -34,11 +34,26 @@ function commonsLoader({ src, width }) {
   return `${base}/${step}px-${file}${/\.svg$/i.test(file) ? ".png" : /\.tiff?$/i.test(file) ? ".jpg" : ""}`;
 }
 
+// Unsplash resizes its own photos on its CDN (imgix), which is faster than
+// fetching the full photo through Vercel's optimizer on a cold cache, and it
+// sends WebP or AVIF to browsers that take them.
+const UNSPLASH = /^https:\/\/images\.unsplash\.com\/photo-/;
+
+function unsplashLoader({ src, width, quality }) {
+  const url = new URL(src);
+  url.searchParams.set("w", String(width));
+  url.searchParams.set("q", String(Math.min(quality || 65, 65)));
+  url.searchParams.set("auto", "format");
+  url.searchParams.set("fit", "max");
+  return url.toString();
+}
+
 export default function Photo({ alt, onError, ...props }) {
   // Commons can't make a thumbnail wider than the original; if one fails, show
   // the original file itself.
   const [fallback, setFallback] = useState(false);
   if (fallback) return <Image alt={alt} {...props} unoptimized onError={onError} />;
   const commons = Boolean(commonsBase(props.src));
-  return <Image alt={alt} {...props} loader={commons ? commonsLoader : props.loader} onError={(event) => { if (commons) setFallback(true); onError?.(event); }} />;
+  const unsplash = !commons && !props.loader && !props.unoptimized && typeof props.src === "string" && UNSPLASH.test(props.src);
+  return <Image alt={alt} {...props} loader={commons ? commonsLoader : unsplash ? unsplashLoader : props.loader} onError={(event) => { if (commons) setFallback(true); onError?.(event); }} />;
 }

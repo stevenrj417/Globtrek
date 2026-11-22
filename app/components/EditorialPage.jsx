@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "./Photo";
 import { SiteFooter, SiteHeader } from "./SiteChrome";
 
 function formatUpdated(value) {

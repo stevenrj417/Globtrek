@@ -20,7 +20,8 @@ function safeImage(item) {
 }
 
 function CatalogCard({ item, selected, onToggle, kind, destination }) {
-  const verifiedImage = safeImage(item);
+  const [broken, setBroken] = useState(false);
+  const verifiedImage = broken ? null : safeImage(item);
   const meta = kind === "restaurant"
     ? [Array.isArray(item.cuisine) ? item.cuisine.slice(0, 2).join(" · ") : item.cuisine, item.neighborhood, item.rating ? `${item.rating} rating` : null, item.priceRange ? `${item.priceRange.currency} ${item.priceRange.low}${item.priceRange.high ? `–${item.priceRange.high}` : "+"} per person (Google Maps)` : LEVEL_SIGN[item.priceLevel] || null]
     : [item.category ? String(item.category).replace(/_/g, " ") : null, item.isFree ? "Free" : null];
@@ -29,9 +30,9 @@ function CatalogCard({ item, selected, onToggle, kind, destination }) {
   const action = selected ? "Added to your trip" : "Add to trip";
   return <article className={`group relative overflow-hidden border border-black/8 transition duration-300 ${selected ? "bg-placeholder shadow-hover" : "bg-surface hover:bg-surface-sunken"}`}><button type="button" onClick={() => onToggle(item)} aria-pressed={selected} className="block w-full text-left">
     {verifiedImage ? <div className="relative aspect-[4/3] overflow-hidden bg-placeholder">
-      <Image src={verifiedImage} alt={`${item.name}, ${destination.city}`} fill sizes="(min-width:1280px) 22vw,(min-width:640px) 45vw,100vw" className="object-cover transition duration-700 motion-reduce:transition-none group-hover:scale-[1.02]" />
+      <Image src={verifiedImage} alt={`${item.name}, ${destination.city}`} fill sizes="(min-width:1280px) 22vw,(min-width:640px) 45vw,100vw" className="object-cover transition duration-700 motion-reduce:transition-none group-hover:scale-[1.02]" onError={() => setBroken(true)} />
       {selected ? <span className="absolute right-3 top-3"><SelectMark /></span> : null}
-    </div> : selected ? <span className="flex justify-end px-3 pt-3"><SelectMark /></span> : null}
+    </div> : <span className="relative flex aspect-[4/3] items-end bg-surface-sunken p-5"><span aria-hidden="true" className="font-serif text-[5rem] leading-none text-black/15">{String(item.name || "").trim().charAt(0)}</span>{selected ? <span className="absolute right-3 top-3"><SelectMark /></span> : null}</span>}
     <span className="block p-4"><span className="block text-micro uppercase tracking-label text-ink">{meta.filter(Boolean).join(" · ")}</span><span className="mt-2 block font-serif text-[1.35rem] leading-[1.02] tracking-tight-2">{item.name}</span>{kind === "activity" ? <span className="mt-2 block line-clamp-2 text-eyebrow leading-4 text-ink">{description}</span> : null}<span className="mt-4 block text-micro font-medium uppercase tracking-label">{action} &nbsp;→</span></span>
   </button>{verifiedImage && sourceUrl ? <a href={sourceUrl} target="_blank" rel="noopener" className="absolute left-2 top-2 z-10 inline-flex min-h-6 items-center bg-black/65 px-2 text-micro text-white">Photo: Google ↗<span className="sr-only"> (opens in a new tab)</span></a> : null}</article>;
 }
