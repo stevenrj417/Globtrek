@@ -16,6 +16,26 @@ const FALLBACK_HERO = "/quiz/v2/one-week.jpg";
 const label = "text-micro uppercase tracking-label text-subtle";
 const field = "mt-2 min-h-12 w-full border-b border-black/20 bg-transparent text-base outline-none transition-colors focus:border-ink";
 
+// The quiz stores short internal answers; show the words the quiz showed.
+const ANSWER_LABELS = {
+  Ocean: "Coast", Cities: "City", Culture: "History & culture", Wild: "Nature & wildlife", "Surprise Me": "No preference",
+  "Slow mornings": "Relaxed", "Balanced days": "Balanced", "Packed schedule": "Full schedule", "Mostly relaxing": "Mostly downtime", "Adventure days": "Active", "Surprise me": "No preference",
+  "Long Weekend": "3–4 nights", "Five Nights": "5 nights", "One Week": "One week", "Ten Days": "10 days", "Two Weeks": "Two weeks", "Open-Ended": "Not sure yet",
+};
+const answerLabel = (value) => (value ? ANSWER_LABELS[value] || value : null);
+
+// Destination names are stored in capitals ("TUNIS"); show them as "Tunis".
+function calmCase(value) {
+  const text = String(value || "");
+  return text && text === text.toUpperCase() ? text.toLowerCase().replace(/(^|[\s'(-])\p{L}/gu, (letter) => letter.toUpperCase()) : text;
+}
+
+// A bare number from the quiz ("800") reads as "$800".
+function budgetLabel(value) {
+  if (value == null || value === "") return null;
+  return /^\$?[\d,]+$/.test(String(value).trim()) ? `$${Number(String(value).replace(/[^\d]/g, "")).toLocaleString("en-US")}` : value;
+}
+
 function tripHref(trip) {
   return `/trip/${encodeURIComponent(trip.id)}`;
 }
@@ -134,7 +154,7 @@ export function AccountClient() {
   const trips = data?.trips || [];
   const heroTrip = trips.find((trip) => tripImage(trip));
   const preferences = data?.profile?.travel_preferences || {};
-  const profileFacts = [["Pace", preferences.pace], ["Budget", preferences.budget], ["Discovery", preferences.familiarity == null ? null : Number(preferences.familiarity) > 65 ? "Off the radar" : Number(preferences.familiarity) < 35 ? "Iconic" : "A mix"], ["Stay", preferences.quizAnswers?.hotel], ["Setting", preferences.quizAnswers?.alive], ["Trip length", preferences.quizAnswers?.duration]].filter(([, value]) => value);
+  const profileFacts = [["Pace", answerLabel(preferences.pace)], ["Budget", budgetLabel(preferences.budget)], ["Discovery", preferences.familiarity == null ? null : Number(preferences.familiarity) > 65 ? "Off the radar" : Number(preferences.familiarity) < 35 ? "Iconic" : "A mix"], ["Stay", answerLabel(preferences.quizAnswers?.hotel)], ["Setting", answerLabel(preferences.quizAnswers?.alive)], ["Trip length", answerLabel(preferences.quizAnswers?.duration)]].filter(([, value]) => value);
 
   async function saveProfile(event) {
     event.preventDefault();
@@ -214,8 +234,8 @@ export function AccountClient() {
             {tripImage(trip) ? <Image src={tripImage(trip)} alt="" fill unoptimized sizes="(max-width: 640px) 90vw, 32vw" className="image-calm object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" /> : <div className="grid h-full place-items-center text-micro uppercase tracking-label text-subtle">{trip.destination_country || "Saved trip"}</div>}
             <span className="tabular absolute left-3 top-3 bg-white/90 px-2 py-1 text-micro uppercase tracking-label">{tripDates(trip)}</span>
           </Link>
-          <h3 className="mt-5 font-serif text-2xl tracking-tight-1 sm:text-[1.7rem]"><Link href={tripHref(trip)} className="hover:underline hover:decoration-black/25 hover:underline-offset-4">{trip.trip_data?.title || trip.destination_name}</Link></h3>
-          {trip.destination_country ? <p className="mt-1 text-sm text-muted">{trip.destination_country}</p> : null}
+          <h3 className="mt-5 font-serif text-2xl tracking-tight-1 sm:text-[1.7rem]"><Link href={tripHref(trip)} className="hover:underline hover:decoration-black/25 hover:underline-offset-4">{calmCase(trip.trip_data?.title || trip.destination_name)}</Link></h3>
+          {trip.destination_country ? <p className="mt-1 text-sm text-muted">{calmCase(trip.destination_country)}</p> : null}
           <div className="mt-4 flex flex-wrap items-center gap-5"><Link href={tripHref(trip)} className="text-micro uppercase tracking-label">See trip <span aria-hidden="true">→</span></Link><ShareTripButton tripId={trip.id} initiallyPublic={trip.is_public} className="text-micro uppercase tracking-label text-muted" /></div>
           <TripActions trip={trip} onChanged={changeTrips} />
         </article>)}</div> : <PhotoPrompt image="/quiz/v2/surprise-me.jpg" alt="Hot-air balloons lifting off over Cappadocia" title="Your first trip is a few questions away." copy="Take the quiz, save the trip you like, and it will wait for you here." href="/discover" action="Find my trip" />}
@@ -231,7 +251,7 @@ export function AccountClient() {
 
       <section id="travel-profile" className="scroll-mt-40 border-t border-black/10 py-14 sm:py-20">
         <SectionHeading title="Travel profile" note="Built from your quiz answers. Retake the quiz any time to change it." action={profileFacts.length ? <Link href="/discover" className="text-micro uppercase tracking-label">Retake quiz <span aria-hidden="true">→</span></Link> : null} />
-        {profileFacts.length ? <dl className="grid grid-cols-2 gap-px overflow-hidden border border-black/10 bg-black/10 lg:grid-cols-6">{profileFacts.map(([title, value]) => <div key={title} className="bg-surface p-5 sm:p-6"><dt className={label}>{title}</dt><dd className="mt-3 font-serif text-xl tracking-tight-1">{value}</dd></div>)}</dl> : <PhotoPrompt image="/quiz/v2/adventure-days.jpg" alt="A hiker on the ridge of Mangart, Slovenia" title="Tell us how you travel." copy="Your pace, budget and favorite settings appear here after the quiz." href="/discover" action="Take the quiz" />}
+        {profileFacts.length ? <dl className="grid grid-cols-2 gap-px overflow-hidden border border-black/10 bg-black/10 lg:auto-cols-fr lg:grid-flow-col lg:grid-cols-none [&>*:last-child:nth-child(odd)]:col-span-2 lg:[&>*:last-child:nth-child(odd)]:col-span-1">{profileFacts.map(([title, value]) => <div key={title} className="bg-surface p-5 sm:p-6"><dt className={label}>{title}</dt><dd className="mt-3 font-serif text-xl tracking-tight-1">{value}</dd></div>)}</dl> : <PhotoPrompt image="/quiz/v2/adventure-days.jpg" alt="A hiker on the ridge of Mangart, Slovenia" title="Tell us how you travel." copy="Your pace, budget and favorite settings appear here after the quiz." href="/discover" action="Take the quiz" />}
       </section>
 
       <section id="recently-viewed" className="scroll-mt-40 border-t border-black/10 py-14 sm:py-20">

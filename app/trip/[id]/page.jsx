@@ -28,6 +28,13 @@ export default function FullTripPage({ params }) {
       if (cancelled) return;
       if (!response.ok) return setStatus(response.status === 401 ? "Sign in to view this saved trip." : response.status === 410 ? "This shared trip link has expired." : "This trip could not be found, or its owner stopped sharing it.");
       const savedTrip = data.trip?.trip_data;
+      // Trips saved before their day plan was built have no itinerary: open the
+      // trip's own results page instead of waiting here for a plan that never comes.
+      if (!savedTrip?.itinerary?.days?.length) {
+        const path = String(savedTrip?.sharePath || "");
+        if (/^\/(results|places|book)[/?]/.test(path)) { window.location.replace(path); return; }
+        return setStatus("This trip was saved without a day plan.");
+      }
       const trip = savedTrip?.destination && { ...savedTrip.destination, plan: savedTrip.itinerary, budgetPlan: savedTrip.estimatedCosts, why: savedTrip.destination.why || "A trip shaped around the way you travel." };
       setPayload({ trip, quiz: savedTrip?.trip, savedTrip });
     }

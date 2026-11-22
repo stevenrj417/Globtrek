@@ -1,12 +1,12 @@
 import { normalizeManifestLinks } from "../booking/cj.js";
 import { bookingPageUrl } from "../booking/bookPage.js";
-import { estimateLine } from "../format.js";
+import { estimateLine, sizedPhoto } from "../format.js";
 
 // Email palette and type, matched to the site. Email clients ignore most CSS,
 // so everything is inline and laid out with tables.
 const INK = "#171714";
-const MUTED = "#5f5b54";
-const SUBTLE = "#8b867d";
+const MUTED = "#2a2a2a";
+const SUBTLE = "#3d3d3d";
 const LINE = "#e3dfd8";
 const PAPER = "#f6f4ef";
 const SERIF = "Georgia,'Times New Roman',serif";
@@ -22,7 +22,7 @@ function escapeHtml(value) {
 function imageSource(url) {
   if (!url) return "";
   try {
-    const source = new URL(url, SITE);
+    const source = new URL(sizedPhoto(url, 1280), SITE);
     if (source.protocol !== "https:") return "";
     if (source.hostname === "images.unsplash.com" && !source.searchParams.has("w")) { source.searchParams.set("w", "1200"); source.searchParams.set("q", "80"); source.searchParams.set("auto", "format"); }
     return source.toString();
@@ -149,7 +149,7 @@ function detailButton(label, href) {
 }
 
 function selectionCard({ eyebrow, name, imageUrl, details = [], actionLabel, url }) {
-  return `<section style="border-top:1px solid #e3dfd8;padding:28px 0">${emailImage(imageUrl, name)}<p style="margin:18px 0 0;font-size:11px;letter-spacing:.2em;text-transform:uppercase">${escapeHtml(eyebrow)}</p><h2 style="font-family:Georgia,serif;font-size:28px;line-height:1.08;font-weight:400;margin:9px 0 12px">${escapeHtml(name)}</h2><p style="font-size:14px;line-height:1.7;margin:0 0 18px;color:#5f5b54">${details.filter(Boolean).map(escapeHtml).join("<br>")}</p>${detailButton(actionLabel, url)}</section>`;
+  return `<section style="border-top:1px solid #e3dfd8;padding:28px 0">${emailImage(imageUrl, name)}<p style="margin:18px 0 0;font-size:11px;letter-spacing:.2em;text-transform:uppercase">${escapeHtml(eyebrow)}</p><h2 style="font-family:Georgia,serif;font-size:28px;line-height:1.08;font-weight:400;margin:9px 0 12px">${escapeHtml(name)}</h2><p style="font-size:14px;line-height:1.7;margin:0 0 18px;color:#2a2a2a">${details.filter(Boolean).map(escapeHtml).join("<br>")}</p>${detailButton(actionLabel, url)}</section>`;
 }
 
 export function bookingChecklistUrl(model) {
@@ -165,21 +165,44 @@ function followupNote(followup) {
   return "";
 }
 
+
+// "TUNIS" reads as "Tunis" in an email title.
+function calmCase(value) {
+  const text = String(value || "");
+  return text && text === text.toUpperCase() ? text.toLowerCase().replace(/(^|[\s'(-])\p{L}/gu, (letter) => letter.toUpperCase()) : text;
+}
+
+const ISO_DAY = /^\d{4}-\d{2}-\d{2}$/;
+function prettyDay(iso, withYear = false) {
+  if (!ISO_DAY.test(String(iso || ""))) return String(iso || "");
+  return new Intl.DateTimeFormat("en-US", { weekday: "short", month: "short", day: "numeric", ...(withYear ? { year: "numeric" } : {}), timeZone: "UTC" }).format(new Date(`${iso}T00:00:00Z`));
+}
+// "Fri, Nov 27 – Wed, Dec 2, 2026"
+function prettyRange(start, end) {
+  if (!start) return "";
+  return end ? `${prettyDay(start)} – ${prettyDay(end, true)}` : prettyDay(start, true);
+}
+function nightsBetween(start, end) {
+  if (!ISO_DAY.test(String(start || "")) || !ISO_DAY.test(String(end || ""))) return 0;
+  return Math.max(0, Math.round((Date.parse(`${end}T00:00:00Z`) - Date.parse(`${start}T00:00:00Z`)) / 86400000));
+}
+const plural = (count, word) => `${count} ${word}${Number(count) === 1 ? "" : "s"}`;
+
 export function tripEmail({ model, viewUrl, arrival = false, followup = null }) {
   const days = model.itinerary?.days || [];
   const journey = model.journey;
   const sequenceLabel = journey?.type === "cruise" ? "Port" : "Day";
-  const dayHtml = days.map((day, index) => `<section style="border-top:1px solid #d8d4ce;padding:22px 0"><p style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#777">${sequenceLabel} ${String(index + 1).padStart(2, "0")} · ${escapeHtml(day.location || "")}</p><h2 style="font-family:Georgia,serif;font-size:25px;font-weight:400;margin:8px 0 14px">${escapeHtml(day.title)}</h2><p style="font-size:14px;line-height:1.7;color:#5f5b54"><b>Morning</b> ${escapeHtml(day.morning)}<br><b>Afternoon</b> ${escapeHtml(day.afternoon)}<br><b>Evening</b> ${escapeHtml(day.evening)}</p></section>`).join("");
+  const dayHtml = days.map((day, index) => `<section style="border-top:1px solid #d8d4ce;padding:22px 0"><p style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#2a2a2a">${sequenceLabel} ${String(index + 1).padStart(2, "0")} · ${escapeHtml(day.location || "")}</p><h2 style="font-family:Georgia,serif;font-size:25px;font-weight:400;margin:8px 0 14px">${escapeHtml(day.title)}</h2><p style="font-size:14px;line-height:1.7;color:#2a2a2a"><b>Morning</b> ${escapeHtml(day.morning)}<br><b>Afternoon</b> ${escapeHtml(day.afternoon)}<br><b>Evening</b> ${escapeHtml(day.evening)}</p></section>`).join("");
   const costs = model.estimatedCostBreakdown;
   const manifest = normalizeManifestLinks(model.bookingManifest || {});
   const bookAllUrl = bookingChecklistUrl(model);
-  const bookAll = bookAllUrl ? `<div style="margin:28px 0 8px;padding:22px;border:1px solid #171714;background:#fbfaf7"><p style="margin:0;font-size:13px;line-height:1.7">Your booking checklist: your stay, flight and bookable plans in one list. Open each one on the partner&#039;s site, with your dates and travelers filled in where the partner&#039;s link supports it, and check it off when it&#039;s booked.</p>${button("Open booking checklist", bookAllUrl)}<p style="margin:14px 0 0;font-size:11px;line-height:1.6;color:#6b6b6b">GlobTrek&#039;s prices are estimates; check the current price and availability on each partner&#039;s site. You pay each partner directly.</p></div>` : "";
+  const bookAll = bookAllUrl ? `<div style="margin:28px 0 8px;padding:22px;border:1px solid #171714;background:#fbfaf7"><p style="margin:0;font-size:13px;line-height:1.7">Your booking checklist: your stay, flight and bookable plans in one list. Open each one on the partner&#039;s site, with your dates and travelers filled in where the partner&#039;s link supports it, and check it off when it&#039;s booked.</p>${button("Open booking checklist", bookAllUrl)}<p style="margin:14px 0 0;font-size:11px;line-height:1.6;color:#2a2a2a">GlobTrek&#039;s prices are estimates; check the current price and availability on each partner&#039;s site. You pay each partner directly.</p></div>` : "";
   const travelerTotal = typeof model.travelers === "object" ? model.travelers.total : model.travelers;
-  const logistics = `<p style="font-size:12px;line-height:1.8">${model.dates?.start ? `${escapeHtml(model.dates.start)} – ${escapeHtml(model.dates.end || "")}` : "Flexible dates"}${travelerTotal ? ` · ${escapeHtml(travelerTotal)} travelers` : ""}${model.exactBudget ? ` · ${money(model.exactBudget)} budget` : ""}</p>`;
+  const logistics = `<p style="font-size:12px;line-height:1.8">${model.dates?.start ? escapeHtml(prettyRange(model.dates.start, model.dates.end)) : "Flexible dates"}${travelerTotal ? ` · ${escapeHtml(plural(travelerTotal, "traveler"))}` : ""}${model.exactBudget ? ` · ${money(model.exactBudget)} budget` : ""}</p>`;
   const hotelBooking = manifest.hotelBookings?.[0];
-  const hotelHtml = model.hotel ? selectionCard({ eyebrow: "Your stay", name: model.hotel.name, imageUrl: hotelBooking?.photoUrl || hotelBooking?.imageUrl || model.hotel.image, details: [model.hotel.neighborhood || model.hotel.address, model.hotel.rating != null ? `${model.hotel.rating} rating${model.hotel.reviewCount != null ? ` · ${Number(model.hotel.reviewCount).toLocaleString("en-US")} reviews` : ""}` : null, model.dates?.start ? `${model.dates.start} – ${model.dates.end || ""}` : null, model.hotel.priceEstimate || null], actionLabel: "Book hotel", url: hotelBooking?.exactUrl || model.bookingLinks?.hotel }) : "";
+  const hotelHtml = model.hotel ? selectionCard({ eyebrow: "Your stay", name: model.hotel.name, imageUrl: hotelBooking?.photoUrl || hotelBooking?.imageUrl || model.hotel.image, details: [model.hotel.neighborhood || model.hotel.address, model.hotel.rating != null ? `${model.hotel.rating} rating${model.hotel.reviewCount != null ? ` · ${Number(model.hotel.reviewCount).toLocaleString("en-US")} reviews` : ""}` : null, model.dates?.start ? prettyRange(model.dates.start, model.dates.end) : null, model.hotel.priceEstimate || null], actionLabel: "Book hotel", url: hotelBooking?.exactUrl || model.bookingLinks?.hotel }) : "";
   const flight = manifest.flightBooking || (model.flight?.selected ? model.flight : null);
-  const flightHtml = flight ? selectionCard({ eyebrow: "Your flight", name: `${flight.origin} → ${flight.destination}`, details: [flight.departureDate && flight.returnDate ? `${flight.departureDate} – ${flight.returnDate}` : "Flexible dates", `${flight.adults || 1} adults${flight.children ? ` · ${flight.children} children` : ""}`, flight.cabin || "ECONOMY", flight.preferredDeparture || flight.timing ? `${flight.preferredDeparture || flight.timing} departure preferred` : null, flight.selectedItinerary?.summary || null], actionLabel: "Book flight", url: flight.deepLink || model.bookingLinks?.flight }) : "";
+  const flightHtml = flight ? selectionCard({ eyebrow: "Your flight", name: `${flight.origin} → ${flight.destination}`, details: [flight.departureDate && flight.returnDate ? prettyRange(flight.departureDate, flight.returnDate) : "Flexible dates", `${plural(flight.adults || 1, "adult")}${flight.children ? ` · ${flight.children} ${Number(flight.children) === 1 ? "child" : "children"}` : ""}`, calmCase(flight.cabin || "ECONOMY").replace("_", " "), flight.preferredDeparture || flight.timing ? `${flight.preferredDeparture || flight.timing} departure preferred` : null, flight.selectedItinerary?.summary || null], actionLabel: "Book flight", url: flight.deepLink || model.bookingLinks?.flight }) : "";
   const restaurantLinks = new Map((manifest.restaurantBookings || model.bookingLinks?.restaurants || []).map((item) => [item.name, item.exactUrl || item.url]));
   const restaurantManifest = new Map((manifest.restaurantBookings || []).map((item) => [item.name, item]));
   const diningHtml = (model.restaurants || []).length ? `<div style="margin-top:38px"><p style="font-size:11px;letter-spacing:.2em;text-transform:uppercase">Dining</p>${model.restaurants.map((item) => { const booking = restaurantManifest.get(item.name); return selectionCard({ eyebrow: item.reservationTime || item.time || "Selected restaurant", name: item.name, imageUrl: booking?.imageUrl || item.imageUrl, details: [item.neighborhood || item.location, item.reservationTime || item.time || null], ...(booking?.reservation ? { actionLabel: `Reserve ${item.name}`, url: restaurantLinks.get(item.name) } : { actionLabel: `About ${item.name}`, url: restaurantLinks.get(item.name) }) }); }).join("")}</div>` : "";
@@ -191,10 +214,12 @@ export function tripEmail({ model, viewUrl, arrival = false, followup = null }) 
   const costRows = Object.entries(estimates).map(([key, value]) => `<tr><td style="padding:8px 0;border-top:1px solid #171714;font-size:12px">${escapeHtml(costLabels[key] || key)}</td><td style="padding:8px 0;border-top:1px solid #171714;font-family:Georgia,serif;font-size:15px;text-align:right">${money(value.low)}–${money(value.high)}</td></tr>`).join("");
   const costHtml = costs ? `<div style="margin-top:42px"><p style="font-size:11px;letter-spacing:.2em;text-transform:uppercase">Trip cost</p><h2 style="font-family:Georgia,serif;font-size:32px;font-weight:400;margin:10px 0">${money(costs.estimatedTripLow)}–${money(costs.estimatedTripHigh)} estimated</h2><table role="presentation" width="100%" cellspacing="0" cellpadding="0">${costRows}</table><p style="font-size:11px;line-height:1.6">Planning estimates only. Confirm final prices and availability with each provider.</p></div>` : "";
   const ports = Array.isArray(journey?.ports) ? journey.ports.map((port) => `${escapeHtml(port.name)}${port.country ? `, ${escapeHtml(port.country)}` : ""}`).join(" → ") : "";
-  const journeyHtml = journey?.type === "cruise" ? `<div style="margin-top:38px;border-top:1px solid #d8d4ce;padding-top:22px"><p style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#777">Ocean journey</p><h2 style="font-family:Georgia,serif;font-size:27px;font-weight:400;margin:10px 0 14px">${escapeHtml(journey.title)}</h2>${ports ? `<p style="font-size:12px;line-height:1.8;color:#555">${ports}</p>` : ""}<p style="font-size:12px;line-height:1.8;color:#555">Ship: ${journey.ship?.name ? escapeHtml(journey.ship.name) : "Pending verified sailing inventory"}<br>Flights: ${escapeHtml(journey.flight?.origin || "Origin pending")} → ${escapeHtml(journey.flight?.destination || "port")}${journey.flight?.departureDate ? ` · ${escapeHtml(journey.flight.departureDate)}` : " · dates flexible"}<br>${escapeHtml(journey.flight?.providerStatus || "Live itinerary not connected")}<br>Cruise: ${escapeHtml(journey.cruiseProviderStatus || "Provider link pending")}</p></div>` : "";
-  const title = journey?.type === "cruise" ? journey.title : `${days.length} days in ${model.destination?.city || model.destination?.name || "your destination"}`;
-  const preheader = journey?.type === "cruise" ? `Your ${journey.duration || "ocean"} GlobTrek journey.` : `Your complete ${days.length}-day GlobTrek itinerary.`;
-  return shell({ preheader, eyebrow: arrival ? "Here's your trip" : "One tab travel", title, hero: model.destinationImage, heroAlt: model.destination?.city || model.destination?.name || "Destination", body: `${logistics}${bookAll}${hotelHtml}${flightHtml}<div style="margin-top:42px"><p style="font-size:11px;letter-spacing:.2em;text-transform:uppercase">Your itinerary</p>${dayHtml}</div>${diningHtml}${experienceHtml}${costHtml}${journeyHtml}${bookAllUrl ? button("Open booking checklist", bookAllUrl) : ""}${viewUrl ? button("View trip", viewUrl) : ""}${followupNote(followup)}`, footer: footerHtml({ reason: arrival ? "You finished the GlobTrek quiz while signed in, so we sent your trip to your account email." : "You asked GlobTrek to email you this trip. It does not subscribe you to marketing email. Confirm final prices and availability with each provider." }) });
+  const journeyHtml = journey?.type === "cruise" ? `<div style="margin-top:38px;border-top:1px solid #d8d4ce;padding-top:22px"><p style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#2a2a2a">Ocean journey</p><h2 style="font-family:Georgia,serif;font-size:27px;font-weight:400;margin:10px 0 14px">${escapeHtml(journey.title)}</h2>${ports ? `<p style="font-size:12px;line-height:1.8;color:#2a2a2a">${ports}</p>` : ""}<p style="font-size:12px;line-height:1.8;color:#2a2a2a">Ship: ${journey.ship?.name ? escapeHtml(journey.ship.name) : "Pending verified sailing inventory"}<br>Flights: ${escapeHtml(journey.flight?.origin || "Origin pending")} → ${escapeHtml(journey.flight?.destination || "port")}${journey.flight?.departureDate ? ` · ${escapeHtml(journey.flight.departureDate)}` : " · dates flexible"}<br>${escapeHtml(journey.flight?.providerStatus || "Live itinerary not connected")}<br>Cruise: ${escapeHtml(journey.cruiseProviderStatus || "Provider link pending")}</p></div>` : "";
+  const place = calmCase(model.destination?.city || model.destination?.name) || "your destination";
+  const nights = nightsBetween(model.dates?.start, model.dates?.end);
+  const title = journey?.type === "cruise" ? journey.title : days.length ? `${plural(days.length, "day")} in ${place}` : nights ? `${plural(nights, "night")} in ${place}` : `Your trip to ${place}`;
+  const preheader = journey?.type === "cruise" ? `Your ${journey.duration || "ocean"} GlobTrek journey.` : days.length ? `Your complete ${days.length}-day GlobTrek itinerary.` : `Your GlobTrek trip to ${place}.`;
+  return shell({ preheader, eyebrow: arrival ? "Here's your trip" : "One tab travel", title, hero: model.destinationImage, heroAlt: place, body: `${logistics}${bookAll}${hotelHtml}${flightHtml}${days.length ? `<div style="margin-top:42px"><p style="font-size:11px;letter-spacing:.2em;text-transform:uppercase">Your itinerary</p>${dayHtml}</div>` : ""}${diningHtml}${experienceHtml}${costHtml}${journeyHtml}${bookAllUrl ? button("Open booking checklist", bookAllUrl) : ""}${viewUrl ? button("View trip", viewUrl) : ""}${followupNote(followup)}`, footer: footerHtml({ reason: arrival ? "You finished the GlobTrek quiz while signed in, so we sent your trip to your account email." : "You asked GlobTrek to email you this trip. It does not subscribe you to marketing email. Confirm final prices and availability with each provider." }) });
 }
 
 function cityOf(model) {
