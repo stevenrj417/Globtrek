@@ -188,7 +188,7 @@ function nightsBetween(start, end) {
 }
 const plural = (count, word) => `${count} ${word}${Number(count) === 1 ? "" : "s"}`;
 
-export function tripEmail({ model, viewUrl, arrival = false, followup = null }) {
+export function tripEmail({ model, viewUrl, arrival = false, followup = null, marketing = null }) {
   const days = model.itinerary?.days || [];
   const journey = model.journey;
   const sequenceLabel = journey?.type === "cruise" ? "Port" : "Day";
@@ -219,7 +219,7 @@ export function tripEmail({ model, viewUrl, arrival = false, followup = null }) 
   const nights = nightsBetween(model.dates?.start, model.dates?.end);
   const title = journey?.type === "cruise" ? journey.title : days.length ? `${plural(days.length, "day")} in ${place}` : nights ? `${plural(nights, "night")} in ${place}` : `Your trip to ${place}`;
   const preheader = journey?.type === "cruise" ? `Your ${journey.duration || "ocean"} GlobTrek journey.` : days.length ? `Your complete ${days.length}-day GlobTrek itinerary.` : `Your GlobTrek trip to ${place}.`;
-  return shell({ preheader, eyebrow: arrival ? "Here's your trip" : "One tab travel", title, hero: model.destinationImage, heroAlt: place, body: `${logistics}${bookAll}${hotelHtml}${flightHtml}${days.length ? `<div style="margin-top:42px"><p style="font-size:11px;letter-spacing:.2em;text-transform:uppercase">Your itinerary</p>${dayHtml}</div>` : ""}${diningHtml}${experienceHtml}${costHtml}${journeyHtml}${bookAllUrl ? button("Open booking checklist", bookAllUrl) : ""}${viewUrl ? button("View trip", viewUrl) : ""}${followupNote(followup)}`, footer: footerHtml({ reason: arrival ? "You finished the GlobTrek quiz while signed in, so we sent your trip to your account email." : "You asked GlobTrek to email you this trip. It does not subscribe you to marketing email. Confirm final prices and availability with each provider." }) });
+  return shell({ preheader, eyebrow: arrival ? "Here's your trip" : "One tab travel", title, hero: model.destinationImage, heroAlt: place, body: `${logistics}${bookAll}${hotelHtml}${flightHtml}${days.length ? `<div style="margin-top:42px"><p style="font-size:11px;letter-spacing:.2em;text-transform:uppercase">Your itinerary</p>${dayHtml}</div>` : ""}${diningHtml}${experienceHtml}${costHtml}${journeyHtml}${bookAllUrl ? button("Open booking checklist", bookAllUrl) : ""}${viewUrl ? button("View trip", viewUrl) : ""}${followupNote(followup)}`, footer: footerHtml({ reason: arrival ? "You finished the GlobTrek quiz while signed in, so we sent your trip to your account email." : marketing?.subscribed ? "You asked GlobTrek to email you this trip, and to get GlobTrek's travel deals and trip ideas (about once a month)." + (marketing.unsubscribeUrl ? " Change your mind anytime:" : " Every one of those emails has an unsubscribe link.") : "You asked GlobTrek to email you this trip. It does not subscribe you to marketing email. Confirm final prices and availability with each provider.", unsubscribeUrl: marketing?.unsubscribeUrl || null }) });
 }
 
 function cityOf(model) {

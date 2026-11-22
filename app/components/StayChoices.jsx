@@ -69,9 +69,13 @@ const STAY_TIERS = [["budget", "Budget", "Hostels, guest houses and simple hotel
 function TierStays({ tiers, destination, trip, selectedStayId, onSelected, onDetails }) {
   const groups = STAY_TIERS.map(([tier, label, hint]) => ({ tier, label, hint, stays: tiers?.[tier] || [] })).filter((group) => group.stays.length);
   if (!groups.length) return null;
-  return <div className="mt-12 border-t border-black/10 pt-8">
-    <h3 className="font-serif text-2xl leading-tight tracking-tight-2">Compare by price</h3>
-    <div className="mt-6 grid gap-8 lg:grid-cols-3">{groups.map((group) => <div key={group.tier}>
+  const count = groups.reduce((sum, group) => sum + group.stays.length, 0);
+  return <details className="group/more mt-12 border-y border-black/10">
+    <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 py-4 [&::-webkit-details-marker]:hidden">
+      <span><span className="block font-serif text-2xl leading-tight tracking-tight-2">More hotels by price</span><span className="mt-1 block text-xs text-subtle">{count} more stays: budget, mid-range and upscale</span></span>
+      <span aria-hidden="true" className="grid h-10 w-10 shrink-0 place-items-center border border-black/15 text-xl"><span className="inline-block transition-transform duration-200 group-open/more:rotate-45">+</span></span>
+    </summary>
+    <div className="grid gap-8 pb-8 pt-2 lg:grid-cols-3">{groups.map((group) => <div key={group.tier}>
       <p className="text-micro uppercase tracking-label">{group.label}</p>
       <p className="mt-1 text-xs text-subtle">{group.hint}</p>
       <ul className="mt-3 divide-y divide-black/10 border-y border-black/10">{group.stays.map((stay) => {
@@ -91,7 +95,7 @@ function TierStays({ tiers, destination, trip, selectedStayId, onSelected, onDet
         </li>;
       })}</ul>
     </div>)}</div>
-  </div>;
+  </details>;
 }
 
 // No checked stays for this place yet: hand off to a Booking.com search with the trip's dates and party.

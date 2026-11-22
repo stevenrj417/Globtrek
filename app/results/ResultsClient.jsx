@@ -10,8 +10,6 @@ import { normalizeTravelerProfile } from "../lib/recommendation/travelerProfile"
 import { planDestination, rankDestinations } from "../lib/recommendation/destinationEngine";
 import { buildBudgetPlan } from "../lib/recommendation/budgetEngine";
 import { nightlyLine } from "../lib/format";
-import { AccountEntry } from "../components/AccountEntry";
-import { SaveTripButton } from "../components/SaveTripButton";
 import { StayChoices, stayLinkContext } from "../components/StayChoices";
 import { TripDock } from "../components/TripDock";
 import { EmailTripButton } from "../components/EmailTripButton";
@@ -52,11 +50,14 @@ function ExploreArea({ trip }) {
   if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return null;
   const city = String(trip.city || "").toLowerCase().replace(/(^|[\s'(-])\p{L}/gu, (letter) => letter.toUpperCase());
   const country = String(trip.country || "").toLowerCase().replace(/(^|[\s'(-])\p{L}/gu, (letter) => letter.toUpperCase());
-  return <section id="explore" className="scroll-mt-24 border-t border-black/10 px-6 py-14 sm:px-12 sm:py-20" aria-labelledby="explore-heading"><div className="mx-auto max-w-[1180px]">
-    <p className="eyebrow">05 · Look around</p>
-    <h2 id="explore-heading" className="mt-3 font-serif text-[clamp(2.2rem,3.6vw,3.4rem)] leading-[.95] tracking-tight-3">Explore {city}</h2>
-    <p className="mt-3 max-w-xl text-base leading-7">Drag and zoom to get a feel for the place, or open it in Google Maps for Street View and directions.</p>
-    <ExploreMap className="mt-8" latitude={latitude} longitude={longitude} label={city} query={[city, country].filter(Boolean).join(", ")} zoomKm={6} />
+  return <section id="explore" className="scroll-mt-24 px-6 sm:px-12" aria-label={`Map of ${city}`}><div className="mx-auto max-w-[1180px]">
+    <details className="group/more border-y border-black/10">
+      <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 py-4 [&::-webkit-details-marker]:hidden">
+        <span><span className="block font-serif text-2xl leading-tight tracking-tight-2">Map of {city}</span><span className="mt-1 block text-xs text-subtle">Drag and zoom, or open it in Google Maps for Street View and directions</span></span>
+        <span aria-hidden="true" className="grid h-10 w-10 shrink-0 place-items-center border border-black/15 text-xl"><span className="inline-block transition-transform duration-200 group-open/more:rotate-45">+</span></span>
+      </summary>
+      <ExploreMap className="pb-8 pt-2" latitude={latitude} longitude={longitude} label={city} query={[city, country].filter(Boolean).join(", ")} zoomKm={6} />
+    </details>
   </div></section>;
 }
 
@@ -333,9 +334,9 @@ export default function ResultsPage({ shareToken = null }) {
     const url = bookingPageUrl({ ...bookingManifest, level: levelFrom({ lodging: view.activeProfile?.lodging, band: sleepBand(answers) }), interests: view.activeProfile?.extras, stayPoint: view.stay ? { latitude: view.stay.latitude, longitude: view.stay.longitude } : null, homeCountryCode: view.activeProfile?.originCountryCode || null }, window.location.origin); if (url) window.location.assign(url); }
 
   return <main className="results-editorial min-h-screen bg-canvas pb-28 text-ink">
-    <header className="absolute inset-x-0 top-0 z-30 flex items-center justify-between px-6 py-7 text-white sm:px-12 sm:py-10"><Link href="/" className="inline-flex min-h-11 items-center text-sm font-semibold uppercase tracking-editorial">GlobTrek</Link><div className="flex items-center gap-5"><AccountEntry compact light /><Link href="/discover" className="inline-flex min-h-11 items-center text-xs text-white/90 hover:text-white">Start over</Link></div></header>
+    <header className="absolute inset-x-0 top-0 z-30 flex items-center justify-between px-6 py-7 text-white sm:px-12 sm:py-10"><Link href="/" className="inline-flex min-h-11 items-center text-sm font-semibold uppercase tracking-editorial">GlobTrek</Link><div className="flex items-center gap-5"><Link href="/discover" className="inline-flex min-h-11 items-center text-xs text-white/90 hover:text-white">Start over</Link></div></header>
     <section data-trip-hero className="relative min-h-[92svh] overflow-hidden"><Image src={trip.image} alt={trip.imageAlt || `${trip.city}, ${trip.country}`} fill priority className="hero-drift object-cover" sizes="100vw" quality={75} /><div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/25 to-black/80" /><div className="absolute inset-x-0 bottom-0 h-2/3 bg-[radial-gradient(ellipse_at_bottom,rgba(0,0,0,.45),transparent_70%)]" aria-hidden="true" /><div className="rise absolute inset-x-0 bottom-0 mx-auto w-full max-w-[1240px] px-6 pb-16 text-center text-white [text-shadow:0_1px_12px_rgba(0,0,0,.45)] sm:px-12 sm:pb-20"><p className="text-micro uppercase tracking-editorial text-white">{titleCase(trip.country)}</p><h1 className="mx-auto mt-3 max-w-[92vw] font-serif text-[clamp(3rem,8vw,7.5rem)] font-normal leading-[.88] tracking-tight-3 [text-shadow:0_2px_28px_rgba(0,0,0,.25)]">{titleCase(trip.city)}</h1>{tagline ? <p className="mx-auto mt-5 max-w-xl font-serif text-lg italic text-white/90 sm:text-xl">{tagline}</p> : null}<p className="tabular mt-6 text-sm text-white">{schedule.label} · {datesLine} · {travelers} {travelers === 1 ? "traveler" : "travelers"}</p><p className="tabular mt-6 font-serif text-[clamp(2.4rem,4.5vw,3.5rem)] leading-none">{money(grand)}</p>{travelers > 1 ? <p className="tabular mt-2 text-base text-white">{money(grand / travelers)} per person</p> : null}{stayNightly(budgetPlan, travelers) ? <p className="tabular mt-2 text-sm text-white/90">Stay about {stayNightly(budgetPlan, travelers)}</p> : null}<p className="mt-2 text-xs text-white">Estimated price · final prices confirmed by providers</p><div className="mt-7 flex flex-wrap items-center justify-center gap-3"><button type="button" onClick={goToBooking} className="inline-flex min-h-12 items-center bg-white px-7 text-micro font-medium uppercase tracking-label text-black transition-opacity hover:opacity-90">Start booking</button><a href="#hotel-selection" className="inline-flex min-h-12 items-center px-4 text-micro uppercase tracking-label text-white/90 underline decoration-white/40 underline-offset-4 hover:decoration-white">See the trip</a></div></div></section>
-    <section id="overview" className="scroll-mt-20 border-b border-black/10 px-6 py-3 sm:px-12"><div className="mx-auto flex max-w-[1180px] items-center justify-end gap-5"><button type="button" aria-expanded={shareOpen} aria-controls="share-panel" onClick={() => setShareOpen((open) => !open)} className="min-h-11 text-micro text-ink">Share</button><SaveTripButton trip={savedTrip} className="inline-flex min-h-11 items-center text-micro" /></div>
+    <section id="overview" className="scroll-mt-20 border-b border-black/10 px-6 py-3 sm:px-12"><div className="mx-auto flex max-w-[1180px] items-center justify-end gap-5"><button type="button" aria-expanded={shareOpen} aria-controls="share-panel" onClick={() => setShareOpen((open) => !open)} className="min-h-11 text-micro text-ink">Share</button></div>
       {shareOpen ? <div id="share-panel" className="mx-auto mb-3 max-w-[1180px] border border-black/15 bg-white p-4 text-sm"><p>The link shows the destination, dates, budget, travelers and departure airport, never your name or email. It expires in 90 days.</p><div className="mt-3 flex flex-wrap items-center gap-3"><button type="button" onClick={shareTrip} className="inline-flex min-h-11 items-center bg-black px-5 text-micro uppercase tracking-label text-white">Create share link</button><p role="status" className="text-xs">{shareStatus}</p></div></div> : null}
     </section>
     <section aria-label="About this result" className="px-6 py-6 sm:px-12"><div className="mx-auto max-w-[1180px] space-y-4"><OverBudgetNotice budgetPlan={trip.budgetPlan} /><WhyThisMatches reasons={reasons} /><EstimateStatus current={currentEstimate} snapshot={snapshot} changed={changed} onRefresh={refreshEstimates} /></div></section>

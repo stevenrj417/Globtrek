@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { BrandWordmark } from "./BrandMark";
-import { AccountEntry } from "./AccountEntry";
 import { DestinationSearch } from "./DestinationSearch";
 import { ProductMenu } from "./ProductMenu";
 import { CurrentYear, MobileMenu, NavLinks, StickyHeader } from "./HeaderClient";
@@ -27,7 +26,6 @@ export function SiteHeader({ actionHref = "/discover", actionLabel = "Plan my tr
             <NavLinks items={navigation} />
             <div className="flex items-center gap-4 sm:gap-5">
               <DestinationSearch />
-              <span className="hidden sm:contents"><AccountEntry /></span>
               <Link className="btn btn-primary hidden min-h-11 shrink-0 sm:inline-flex" href={actionHref}>{actionLabel}</Link>
               <MobileMenu items={navigation} actionHref={actionHref} actionLabel={actionLabel} />
             </div>

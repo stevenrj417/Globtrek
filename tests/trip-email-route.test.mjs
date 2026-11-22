@@ -65,13 +65,16 @@ test("selection changes produce a new email idempotency key", async (t) => {
   assert.notEqual(keyOne, keyTwo);
 });
 
-test("logged-out email UX asks for an address and closes only after confirmed success", async () => {
+test("email UX asks for an address and closes only after confirmed success", async () => {
   const source = await readFile(new URL("../app/components/EmailTripButton.jsx", import.meta.url), "utf8");
-  assert.match(source, /Where should we send your trip\?/);
+  assert.match(source, /Keep this trip in your inbox/);
   assert.match(source, /Send my trip/);
   assert.match(source, /if \(!response\.ok \|\| !data\.sent\) throw/);
   assert.match(source, /setStatus\("Trip sent"\);[\s\S]*setSentFingerprint\(selectionFingerprint\);\s*setOpen\(false\)/);
-  assert.match(source, /const accountEmail = user\?\.email \|\| null/);
+  // An account email is only prefilled; the form always shows so the deals box is seen.
+  assert.match(source, /if \(!email && user\?\.email\) setEmail\(user\.email\)/);
+  assert.match(source, /marketingConsent: marketing/);
+  assert.match(source, /\/api\/email\/consent-default/);
   assert.doesNotMatch(source, /email_confirmed_at/);
   assert.match(source, /sendingRef\.current/);
 });

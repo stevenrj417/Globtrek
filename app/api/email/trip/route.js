@@ -5,7 +5,8 @@ import { enrollFollowups, followupToken } from "../../../lib/email/followups";
 import { sendEmail } from "../../../lib/email/resend";
 import { tripEmail } from "../../../lib/email/templates";
 import { confirmEmailAccepted, tripEmailIdempotencyKey } from "../../../lib/email/tripDelivery";
-import { normalizeEmail, publicSiteUrl } from "../../../lib/email/subscriptions";
+import { createUnsubscribeToken, hashUnsubscribeToken, normalizeEmail, publicSiteUrl } from "../../../lib/email/subscriptions";
+import { subscribeFromTripEmail } from "../../../lib/email/marketingConsent";
 import { buildTripEmailModel } from "../../../lib/recommendation/tripSerializer";
 import { sharedRateLimit } from "../../../lib/security/rateLimit";
 import { decodeSharedTrip } from "../../../lib/results/resolveResults";
@@ -84,11 +85,21 @@ export async function POST(request) {
       console.error(JSON.stringify({ level: "warn", msg: "trip_followup_enroll_failed", error: error instanceof Error ? error.message : "unknown" }));
     }
   }
+  // The "deals and trip ideas" box on the Email this trip form. Only a box
+  // the person left ticked or ticked themselves (marketingConsent === true).
+  let marketing = null;
+  if (kind === "requested" && body.marketingConsent === true && supabase) {
+    try {
+      marketing = await subscribeFromTripEmail(supabase, { email, siteUrl: publicSiteUrl(), createToken: createUnsubscribeToken, hashToken: hashUnsubscribeToken });
+    } catch (error) {
+      console.error(JSON.stringify({ level: "warn", msg: "trip_email_subscribe_failed", error: error instanceof Error ? error.message : "unknown" }));
+    }
+  }
   const subject = kind === "requested" ? `Your GlobTrek journey to ${city}` : `Here's your trip to ${city}`;
   try {
-    const provider = confirmEmailAccepted(await sendEmail({ from: "GlobTrek Trips <trips@glob-trek.com>", to: [email], subject, html: tripEmail({ model, viewUrl, arrival: kind === "arrival", followup }) }, { idempotencyKey: key }));
+    const provider = confirmEmailAccepted(await sendEmail({ from: "GlobTrek Trips <trips@glob-trek.com>", to: [email], subject, html: tripEmail({ model, viewUrl, arrival: kind === "arrival", followup, marketing }) }, { idempotencyKey: key }));
     try { await supabase?.from("email_sends").upsert({ recipient_email: email, email_type: kind === "arrival" ? "arrival" : "trip", provider_message_id: provider.id || null, idempotency_key: key }, { onConflict: "idempotency_key" }); } catch {}
-    return Response.json({ sent: true, followups: followup?.stopUrl ? "on" : followup?.confirmUrl ? "confirm" : "off" });
+    return Response.json({ sent: true, subscribed: Boolean(marketing?.subscribed), followups: followup?.stopUrl ? "on" : followup?.confirmUrl ? "confirm" : "off" });
   } catch (error) {
     console.error(JSON.stringify({ level: "error", msg: "trip_email_failed", error: error instanceof Error ? error.message : "unknown" }));
     return Response.json({ error: "Your trip could not be emailed right now." }, { status: 503 });

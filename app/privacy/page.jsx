@@ -56,7 +56,7 @@ export default function PrivacyPage() {
       </EditorialSection>
       <EditorialSection number="06" title="Email">
         <p>
-          If you email yourself a trip or subscribe, your email address and subscription choices are stored so we can send what you asked for. Emails are delivered by Resend. We only send what you asked for: a trip you emailed yourself, the monthly email if you subscribed, and trip check-ins only after you confirm them from the first email. Every marketing email has an unsubscribe link and our postal address, and you can change your choice from your account.
+          If you email yourself a trip or subscribe, your email address and subscription choices are stored so we can send what you asked for. Emails are delivered by Resend. We only send what you asked for: a trip you emailed yourself, the monthly deals and trip ideas email if you subscribed or left that box ticked when emailing yourself a trip, and trip check-ins only after you confirm them from the first email. Visitors in the EU, UK, Switzerland and Canada see that box unticked. Every marketing email has an unsubscribe link and our postal address.
         </p>
       </EditorialSection>
       <EditorialSection number="07" title="Analytics, logs and feedback">

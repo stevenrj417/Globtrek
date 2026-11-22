@@ -4,8 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { useAuth } from "./AuthProvider";
-import { AuthSheet } from "./AuthSheet";
 
 function isActive(pathname, href) {
   if (href.startsWith("/#")) return false;
@@ -37,8 +35,6 @@ export function NavLinks({ items }) {
 
 export function MobileMenu({ items, actionHref, actionLabel }) {
   const [open, setOpen] = useState(false);
-  const [signingIn, setSigningIn] = useState(false);
-  const { user } = useAuth();
   const pathname = usePathname();
   const panel = useRef(null);
   const trigger = useRef(null);
@@ -78,15 +74,11 @@ export function MobileMenu({ items, actionHref, actionLabel }) {
             const active = isActive(pathname, href);
             return <Link aria-current={active ? "page" : undefined} href={href} key={label} onClick={() => setOpen(false)} className={`flex min-h-14 items-center justify-between border-b border-black/10 text-lg tracking-tight-1 ${active ? "font-semibold" : ""}`}>{label}<span aria-hidden="true" className="text-subtle">→</span></Link>;
           })}
-          {user
-            ? <Link href="/account" onClick={() => setOpen(false)} className="flex min-h-14 items-center justify-between border-b border-black/10 text-lg tracking-tight-1 sm:hidden">Account<span aria-hidden="true" className="text-subtle">→</span></Link>
-            : <button type="button" onClick={() => { setOpen(false); setSigningIn(true); }} className="flex min-h-14 w-full items-center justify-between border-b border-black/10 text-left text-lg tracking-tight-1 sm:hidden">Sign in<span aria-hidden="true" className="text-subtle">→</span></button>}
         </nav>
         <Link href={actionHref} onClick={() => setOpen(false)} className="btn btn-primary mt-6 w-full">{actionLabel}</Link>
         <button type="button" onClick={() => { setOpen(false); trigger.current?.focus(); }} className="mt-2 min-h-12 w-full text-xs uppercase tracking-caps text-muted">Close</button>
       </div>
     </div>, document.body) : null}
-    <AuthSheet open={signingIn} onClose={() => setSigningIn(false)} returnTo={pathname} />
   </div>;
 }
 
