@@ -16,7 +16,7 @@ export default function SevenContinentsPage() {
   const hero = photoFor({ id: "CPT" });
   return <main className="min-h-screen bg-bg text-ink">
     <SiteHeader />
-    <Breadcrumb items={[["Home", "/"], ["Expeditions", "/expeditions"], ["Seven continents", null]]} />
+    <Breadcrumb items={[["Home", "/"], ["Trip ideas", "/trip-ideas#the-big-ones"], ["Seven continents", null]]} />
     <PageHero image={hero.url} alt={hero.alt} chips={["7 continents", "1 to 12 months"]} title="Every continent. Your timeline." subtitle="Slide to the number of months you have. GlobTrek picks the stops, orders them around the world and prices it all, Antarctic ship included." />
     <section className="mx-auto mt-10 max-w-[1280px] px-5 sm:px-8">
       <ol className="grid gap-px bg-black/10 sm:grid-cols-7">{CONTINENT_STOPS.map((item, index) => <li key={item.continent} className="bg-bg py-3 sm:px-3 sm:first:pl-0"><span className="tabular text-micro font-medium uppercase tracking-label">{index + 1}</span><p className="mt-1 text-sm font-medium">{item.continent}</p></li>)}</ol>

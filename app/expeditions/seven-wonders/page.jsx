@@ -21,7 +21,7 @@ export default function SevenWondersPage() {
   const hero = THEMED_PHOTOS.petra;
   return <main className="min-h-screen bg-bg text-ink">
     <SiteHeader />
-    <Breadcrumb items={[["Home", "/"], ["Expeditions", "/expeditions"], ["The Seven Wonders", null]]} />
+    <Breadcrumb items={[["Home", "/"], ["Trip ideas", "/trip-ideas#the-big-ones"], ["The Seven Wonders", null]]} />
     <PageHero image={hero.url} alt={hero.subject} credit={{ artist: hero.artist, source: hero.source, license: hero.license, licenseUrl: hero.licenseUrl }} chips={["7 wonders", "5 continents", "About 3 weeks"]} title="All seven wonders, one trip." subtitle="Rome, Petra, Agra, Beijing, the Yucatán, Cusco and Rio, in an order that follows the planet around. Every ticket, flight and night is in the price." />
     <div className="mx-auto mt-12 max-w-[1280px] px-5 sm:px-8"><TripPricer kind="wonders" heading="All seven: your full price" /></div>
     <TrustStrip className="mx-auto mt-10 max-w-[1280px] px-5 sm:px-8" />

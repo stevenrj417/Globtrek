@@ -25,7 +25,7 @@ export default function AntarcticaPage() {
   const trip = themedTrip("the-last-continent");
   return <main className="min-h-screen bg-bg text-ink">
     <SiteHeader />
-    <Breadcrumb items={[["Home", "/"], ["Expeditions", "/expeditions"], ["Antarctica", null]]} />
+    <Breadcrumb items={[["Home", "/"], ["Trip ideas", "/trip-ideas#the-big-ones"], ["Antarctica", null]]} />
     <PageHero image={photo.url} alt={photo.subject} credit={{ artist: photo.artist, source: photo.source, license: photo.license, licenseUrl: photo.licenseUrl }} chips={["November to March", "12 days"]} title="The last continent." subtitle={trip.hook} />
     <section className="mx-auto mt-12 max-w-[1280px] px-5 sm:px-8">
       <p className="eyebrow">Pick your ship</p>

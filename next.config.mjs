@@ -61,6 +61,9 @@ const nextConfig = {
       // Guide unpublished until the Booking.com feed lists stays in Stepantsminda.
       { source: "/destinations/kazbegi", destination: "/destinations", permanent: false },
       { source: "/destinations/maldives", destination: "/destinations", permanent: false },
+      // Themed trips and expeditions now share one Trip ideas page (2026-11-22).
+      { source: "/themed-trips", destination: "/trip-ideas", permanent: true },
+      { source: "/expeditions", destination: "/trip-ideas#the-big-ones", permanent: true },
       // Accents now drop out of guide URLs instead of splitting them.
       { source: "/destinations/bra-ov", destination: "/destinations/brasov", permanent: true },
     ];

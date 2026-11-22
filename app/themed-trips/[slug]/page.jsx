@@ -30,7 +30,7 @@ export default async function ThemedTripPage({ params }) {
   const more = THEMED_TRIPS.filter((item) => item.group === trip.group && item.slug !== trip.slug).slice(0, 4);
   return <main className="min-h-screen bg-bg text-ink">
     <SiteHeader />
-    <Breadcrumb items={[["Home", "/"], ["Themed trips", "/themed-trips"], [trip.title, null]]} />
+    <Breadcrumb items={[["Home", "/"], ["Trip ideas", "/trip-ideas"], [trip.title, null]]} />
     <PageHero image={photo.url} alt={photo.alt} credit={photo.credit} chips={[group?.short, length(trip)].filter(Boolean)} title={trip.title} subtitle={`${trip.place}. ${trip.hook}`} />
     <section className="mx-auto mt-10 grid max-w-[1280px] gap-10 px-5 sm:mt-14 sm:px-8 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
       <div>
@@ -52,7 +52,7 @@ export default async function ThemedTripPage({ params }) {
     <div className="mx-auto mt-12 max-w-[1280px] px-5 sm:px-8"><TripPricer kind="trip" slug={trip.slug} bestMonths={trip.bestMonths} /></div>
     <TrustStrip className="mx-auto mt-10 max-w-[1280px] px-5 sm:px-8" />
     {more.length ? <section className="mx-auto mt-[var(--section-space)] max-w-[1520px] px-5 sm:px-8">
-      <div className="flex flex-wrap items-end justify-between gap-4"><h2 className="font-serif text-3xl tracking-tight-3 sm:text-5xl">More trips to {group?.short.toLowerCase()}</h2><Link href="/themed-trips" className="inline-flex min-h-11 items-center text-micro font-medium uppercase tracking-label underline">All themed trips</Link></div>
+      <div className="flex flex-wrap items-end justify-between gap-4"><h2 className="font-serif text-3xl tracking-tight-3 sm:text-5xl">More trips to {group?.short.toLowerCase()}</h2><Link href={`/trip-ideas#${trip.group}`} className="inline-flex min-h-11 items-center text-micro font-medium uppercase tracking-label underline">All trip ideas</Link></div>
       <ul className="mt-10 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">{more.map((item) => <li key={item.slug}><ThemeCard card={themedCard(item)} /></li>)}</ul>
     </section> : null}
     <p className="mx-auto mt-12 max-w-[1280px] px-5 text-xs leading-5 sm:px-8">{AFFILIATE_DISCLOSURE}</p>

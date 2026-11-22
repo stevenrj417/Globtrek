@@ -4,23 +4,12 @@ import { SiteFooter, SiteHeader } from "./components/SiteChrome";
 import { EmailSignup } from "./components/EmailSignup";
 import { TripCard } from "./components/TripCard";
 import { trendingTrips } from "./data/trending";
-import { TrustStrip } from "./components/TrustStrip";
-import { THEMED_PHOTOS, THEMED_TRIPS } from "./data/themedTrips";
-import { photoFor } from "./lib/themed/cards";
+import { DestinationSearch } from "./components/DestinationSearch";
 
 export const metadata = {
   description: "Free trip planner: answer seven quick questions and get one affordable trip that fits your budget, with an estimated cost, places to stay and things to do.",
   alternates: { canonical: "/" },
 };
-
-const vibes = [
-  ["Coast", "Ocean", "/quiz/v2/ocean.jpg", "Atrani on the Amalfi Coast, Italy"],
-  ["Mountains", "Mountains", "/quiz/v2/mountains.jpg", "Lago di Carezza below the Latemar, Dolomites"],
-  ["City", "Cities", "/quiz/v2/cities.jpg", "Paris and the Eiffel Tower from above"],
-  ["History & culture", "Culture", "/quiz/v2/culture.jpg", "Kinkaku-ji reflected in its pond, Kyoto"],
-  ["Nature & wildlife", "Wild", "/quiz/v2/wild.jpg", "An elephant at the water's edge in the Okavango Delta, Botswana"],
-  ["Surprise me", "Surprise Me", "/quiz/v2/surprise-me.jpg", "Hot-air balloons lifting off over Cappadocia"],
-];
 
 const tripHref = (trip) => `/discover/quick?destination=${trip.id}&destinationName=${encodeURIComponent(trip.name)}&source=trending`;
 
@@ -36,62 +25,28 @@ export default function Home() {
           <div className="rise absolute inset-x-0 bottom-0 flex flex-col items-center px-5 pb-12 text-center sm:pb-16 lg:pb-20">
             <h1 className="max-w-4xl font-serif text-[clamp(2.6rem,7vw,6.5rem)] font-normal leading-[0.92] tracking-tight-3 text-white [text-shadow:0_2px_24px_rgba(0,0,0,.35)]">Where to next?</h1>
             <p className="mt-5 max-w-md text-base leading-7 text-white/90">Tell us how you like to travel. We&apos;ll find the place.</p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Link href="/discover" className="inline-flex min-h-12 min-w-[13rem] items-center justify-center gap-2 bg-white px-7 text-micro font-medium uppercase tracking-label text-black transition-opacity hover:opacity-90">Find my trip <span aria-hidden="true">→</span></Link>
-              <Link href="/destinations" prefetch={false} className="inline-flex min-h-12 min-w-[13rem] items-center justify-center border border-white/70 px-7 text-micro font-medium uppercase tracking-label text-white transition-colors hover:bg-white/10">Browse destinations</Link>
+            <div className="mt-8 flex w-full flex-col items-center gap-3">
+              <DestinationSearch variant="hero" />
+              <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+                <Link href="/discover" className="inline-flex min-h-12 min-w-[13rem] items-center justify-center gap-2 border border-white bg-black px-7 text-micro font-medium uppercase tracking-label text-white transition-opacity hover:opacity-90">Plan my trip <span aria-hidden="true">→</span></Link>
+                <Link href="/surprise" className="inline-flex min-h-12 items-center text-micro font-medium uppercase tracking-label text-white underline underline-offset-4">Or surprise me</Link>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <TrustStrip className="mx-auto max-w-[1520px] px-5 sm:px-8" />
-
-      <section id="trips" aria-labelledby="trips-heading" className="reveal scroll-mt-24 py-[var(--section-space)]">
+      <section id="trips" aria-labelledby="trips-heading" className="reveal scroll-mt-24 pb-[var(--section-space)]">
         <div className="mx-auto max-w-[1520px] px-5 sm:px-8">
-          <h2 id="trips-heading" className="mb-10 font-serif text-3xl tracking-tight-3 sm:mb-14 sm:text-5xl">Popular this season</h2>
+          <div className="mb-10 flex flex-wrap items-end justify-between gap-4 sm:mb-14">
+            <h2 id="trips-heading" className="font-serif text-3xl tracking-tight-3 sm:text-5xl">Popular this season</h2>
+            <Link href="/trip-ideas" className="inline-flex min-h-11 items-center text-micro font-medium uppercase tracking-label underline underline-offset-4">More trip ideas →</Link>
+          </div>
           <div className="-mx-5 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-2 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-3 md:gap-x-6 md:overflow-visible md:px-0 lg:gap-x-8">
-            {trendingTrips.map((trip) => (
+            {trendingTrips.slice(0, 3).map((trip) => (
               <div key={trip.id} className="w-[82%] shrink-0 snap-start md:w-auto">
                 <TripCard trip={trip} href={tripHref(trip)} />
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section aria-labelledby="vibe-heading" className="reveal py-[var(--section-space)]">
-        <div className="mx-auto max-w-[1520px] px-5 sm:px-8">
-          <div className="mb-10 flex items-end justify-between gap-3">
-            <h2 id="vibe-heading" className="font-serif text-3xl tracking-tight-3 sm:text-5xl">Start with a setting</h2>
-            <Link href="/destinations" className="inline-flex min-h-11 items-center text-sm text-muted underline decoration-black/25 underline-offset-4 hover:text-ink">All destinations</Link>
-          </div>
-          <div className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-3 md:overflow-visible lg:grid-cols-6 md:px-0">
-            {vibes.map(([label, setting, image, alt]) => (
-              <Link key={setting} href={`/discover?setting=${encodeURIComponent(setting)}`} className="group w-[44%] shrink-0 snap-start md:w-auto">
-                <div className="relative aspect-[3/4] overflow-hidden bg-placeholder">
-                  <Image src={image} alt={alt} fill className="image-calm object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" sizes="(min-width: 1024px) 16vw, (min-width: 768px) 33vw, 44vw" />
-                </div>
-                <p className="mt-3 text-sm font-medium">{label} <span aria-hidden="true" className="text-subtle">→</span></p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section aria-labelledby="bigger-heading" className="reveal py-[var(--section-space)]">
-        <div className="mx-auto max-w-[1520px] px-5 sm:px-8">
-          <h2 id="bigger-heading" className="mb-10 font-serif text-3xl tracking-tight-3 sm:text-5xl">Or go bigger</h2>
-          <div className="grid gap-6 md:grid-cols-3">
-            {[
-              ["/themed-trips", photoFor(THEMED_TRIPS[0]), "Themed trips", `${THEMED_TRIPS.length} trips built around a feeling: yoga in Bali, a month in Kyoto, Paris mornings.`],
-              ["/expeditions", { url: THEMED_PHOTOS.antarctica.url, alt: THEMED_PHOTOS.antarctica.subject }, "Expeditions", "All seven wonders, all seven continents, Antarctica. Priced to the night."],
-              ["/surprise", photoFor({ id: "RAK" }), "Surprise me", "Give us a budget. We'll pick a place that really fits it."],
-            ].map(([href, photo, title, body]) => (
-              <Link key={href} href={href} className="group block">
-                <div className="relative aspect-[4/3] overflow-hidden bg-placeholder">{photo.url ? <Image src={photo.url} alt={photo.alt} fill className="image-calm object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" sizes="(min-width: 768px) 33vw, 100vw" /> : null}</div>
-                <p className="mt-4 font-serif text-2xl tracking-tight-2">{title} <span aria-hidden="true">→</span></p>
-                <p className="mt-1 text-sm leading-6">{body}</p>
-              </Link>
             ))}
           </div>
         </div>
