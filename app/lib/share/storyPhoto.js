@@ -39,14 +39,20 @@ export async function commonsPhoto(fileName, width = 1080) {
 export async function wikipediaPhoto({ name, region, country, latitude, longitude }) {
   const query = [name, region, country].filter(Boolean).join(" ");
   if (!name) return null;
-  const data = await json(`https://en.wikipedia.org/w/api.php?action=query&format=json&generator=search&gsrlimit=4&gsrsearch=${encodeURIComponent(query)}&prop=pageimages|coordinates&piprop=name`);
+  const data = await json(`https://en.wikipedia.org/w/api.php?action=query&format=json&generator=search&gsrlimit=10&gsrsearch=${encodeURIComponent(query)}&prop=pageimages|coordinates&piprop=name`);
   const pages = Object.values(data?.query?.pages || {}).sort((a, b) => (a.index || 0) - (b.index || 0));
   const here = Number.isFinite(latitude) && Number.isFinite(longitude) ? { lat: latitude, lon: longitude } : null;
   for (const page of pages) {
     if (!page.pageimage) continue;
     const point = page.coordinates?.[0];
     if (here && (!point || distanceKm(here, point) > 60)) continue;
-    if (!here && !String(page.title || "").toLowerCase().includes(String(name).toLowerCase().split(",")[0])) continue;
+    // Without coordinates, only an article titled for the place itself ("Tiradentes"
+    // or "Tiradentes, Minas Gerais"), never one that merely mentions it ("Palácio Tiradentes").
+    if (!here) {
+      const title = String(page.title || "").toLowerCase();
+      const place = String(name).toLowerCase().split(",")[0].trim();
+      if (!page.coordinates?.length || (title !== place && !title.startsWith(`${place},`) && !title.startsWith(`${place} (`))) continue;
+    }
     const photo = await commonsPhoto(page.pageimage).catch(() => null);
     if (photo) return photo;
   }
