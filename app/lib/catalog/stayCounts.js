@@ -5,6 +5,15 @@
 // that a cheap room exists there at all.
 const BUDGET_ALWAYS = new Set(["Hostel", "Capsule hotel", "Motel"]);
 const BUDGET_SIMPLE = new Set(["Guest house", "Bed and breakfast", "Inn", "Homestay"]);
+const HOME_TYPES = new Set(["Apartment", "Holiday home", "Chalet", "Country house", "Holiday park", "Aparthotel"]);
+// Same rule as the importer's isLuxuryStay: 5 stars, villas, luxury tents, and
+// resorts unless rated 1-3 stars.
+function isLuxury(stay) {
+  const stars = Number(stay.starRating) || 0;
+  if (stars >= 5) return true;
+  if (stay.category === "Resort") return !stars || stars >= 4;
+  return stay.category === "Villa" || stay.category === "Luxury tent";
+}
 
 export function isBudgetStay(stay) {
   const stars = Number(stay.starRating) || 0;
@@ -21,5 +30,7 @@ export function stayCounts(snapshot) {
     counts: Object.fromEntries(entries.map(([id, stays]) => [id, stays.length])),
     dorms: pick((stay) => stay.dorms),
     budget: pick(isBudgetStay),
+    homes: pick((stay) => HOME_TYPES.has(stay.category)),
+    luxury: pick(isLuxury),
   };
 }

@@ -11,7 +11,7 @@ import { travelInfoFor } from "../../data/travelInfo.js";
 // checks read structured catalog data only; nothing an AI writes can make a
 // destination eligible or change its setting.
 
-export const MATCH_ALGORITHM_VERSION = "2026-11-15.1";
+export const MATCH_ALGORITHM_VERSION = "2026-11-22.1";
 
 // Quiz setting answer -> the catalog tag a destination must carry.
 export const SETTING_REQUIREMENTS = Object.freeze({
