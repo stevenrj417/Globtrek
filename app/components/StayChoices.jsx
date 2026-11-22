@@ -104,17 +104,27 @@ export function StayChoices({ destination, tripContext, selectedStayId, onSelect
   const destinationId = destination.id || destination.airport;
   const contextKey = JSON.stringify({ s: tripContext.tripStart, e: tripContext.tripEnd, f: tripContext.isFlexible, g: tripContext.guestCount, h: tripContext.answers?.hotel, p: tripContext.answers?.spendStyle, o: tripContext.originAirport });
 
+  const [attempt, setAttempt] = useState(0);
   useEffect(() => {
     const controller = new AbortController();
+    let timedOut = false;
+    // A stuck request must never leave the grey placeholders up: give up after
+    // 12 seconds, try once more on its own, then offer a Try again button.
+    const timer = setTimeout(() => { timedOut = true; controller.abort(); }, 12000);
     fetch("/api/hotels/recommend", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ destinationId, quiz: tripContext, accessibleOnly }), signal: controller.signal })
       .then(async (response) => { if (!response.ok) throw new Error("unavailable"); return response.json(); })
       .then((payload) => {
         const checked = payload.catalog?.checkedAt ? Date.parse(`${payload.catalog.checkedAt}T00:00:00Z`) : null;
         setState({ status: "ready", hotels: Array.isArray(payload.hotels) ? payload.hotels : [], tiers: payload.tiers || null, notice: payload.notice || null, catalog: payload.catalog || null, stale: Boolean(checked && Date.now() - checked > STALE_DAYS * 86400000) });
       })
-      .catch((error) => { if (error.name !== "AbortError") setState({ status: "error", hotels: [], notice: null, catalog: null }); });
-    return () => controller.abort();
-  }, [destinationId, contextKey, accessibleOnly]); // eslint-disable-line react-hooks/exhaustive-deps
+      .catch((error) => {
+        if (error.name === "AbortError" && !timedOut) return;
+        if (attempt === 0) { setAttempt(1); return; }
+        setState({ status: "error", hotels: [], notice: null, catalog: null });
+      })
+      .finally(() => clearTimeout(timer));
+    return () => { clearTimeout(timer); controller.abort(); };
+  }, [destinationId, contextKey, accessibleOnly, attempt]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Keep the chosen stay when it is still on the list; otherwise choose Our pick.
   useEffect(() => {
@@ -138,7 +148,7 @@ export function StayChoices({ destination, tripContext, selectedStayId, onSelect
       </div>
       <div aria-live="polite" aria-busy={state.status === "loading"}>
         {state.status === "loading" ? <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-label="Loading stays">{[0, 1, 2].map((item) => <li key={item} className="h-[520px] animate-pulse bg-placeholder motion-reduce:animate-none" />)}</ul> : null}
-        {state.status === "error" ? <p className="mt-6 border border-black/15 bg-surface p-5 text-sm">Stays aren&apos;t loading right now. Try again in a moment.</p> : null}
+        {state.status === "error" ? <p className="mt-6 flex flex-wrap items-center justify-between gap-3 border border-black/15 bg-surface p-5 text-sm">Stays didn&apos;t load. <button type="button" onClick={() => { setState((current) => ({ ...current, status: "loading" })); setAttempt((value) => value + 1); }} className="min-h-11 border border-black px-4 text-micro uppercase tracking-label hover:bg-black hover:text-white">Try again</button></p> : null}
         {state.status === "ready" && state.hotels.length ? <ul className="mt-8 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">{state.hotels.map((stay, index) => <StayCard key={stay.id} stay={stay} destination={destination} trip={tripContext} selected={stay.id === selectedStayId} onSelect={(choice) => { onSelected(choice, { automatic: false }); track("hotel_selected", { destination: destination.city, role: choice.role }); }} priority={index === 0} />)}</ul> : null}
         {state.status === "ready" && state.notice && (state.hotels.length || accessibleOnly) ? <p className="mt-4 text-sm">{state.notice}</p> : null}
         {state.status === "ready" && !state.hotels.length && !accessibleOnly ? <EmptyStays destination={destination} trip={tripContext} /> : null}

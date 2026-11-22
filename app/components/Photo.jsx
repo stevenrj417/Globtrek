@@ -31,7 +31,7 @@ function commonsLoader({ src, width }) {
   const sizes = original ? COMMONS_WIDTHS.filter((size) => size <= original) : COMMONS_WIDTHS;
   if (!sizes.length) return src;
   const step = sizes.find((size) => size >= width) || sizes[sizes.length - 1];
-  return `${base}/${step}px-${file}${/\.svg$/i.test(file) ? ".png" : ""}`;
+  return `${base}/${step}px-${file}${/\.svg$/i.test(file) ? ".png" : /\.tiff?$/i.test(file) ? ".jpg" : ""}`;
 }
 
 export default function Photo({ alt, onError, ...props }) {

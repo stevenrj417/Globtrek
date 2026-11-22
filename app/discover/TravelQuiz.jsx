@@ -96,7 +96,7 @@ function Progress({ step }) {
   </div>;
 }
 
-function VisualQuestion({ question, value, onChoose, step, status = {}, note = null }) {
+function VisualQuestion({ question, value, onChoose, onBack, step, status = {}, note = null }) {
   const selected = value || question.options[0].label;
   const [preview, setPreview] = useState(selected);
 
@@ -147,6 +147,7 @@ function VisualQuestion({ question, value, onChoose, step, status = {}, note = n
             return <button type="button" key={option.label} ref={(node) => { tiles.current[index] = node; }} onKeyDown={(event) => moveFocus(event, index)} aria-pressed={value === option.label} aria-disabled={state.disabled || undefined} aria-describedby={state.note ? `option-note-${index}` : undefined} aria-keyshortcuts={String(index + 1)} onMouseEnter={() => setPreview(option.label)} onMouseLeave={() => setPreview(selected)} onFocus={() => setPreview(option.label)} onBlur={() => setPreview(selected)} onClick={() => { if (!state.disabled) onChoose(option.label); }} className={`relative min-h-14 border-b border-r border-black/10 px-3 text-micro uppercase tracking-label transition-colors sm:min-h-24 sm:flex-1 sm:border-0 sm:px-4 sm:text-eyebrow sm:tracking-label ${state.disabled ? "cursor-not-allowed text-black/25 line-through decoration-black/20" : isActive ? "bg-ink text-white sm:bg-transparent sm:text-black" : "text-subtle hover:text-black"}`}><span className={`absolute inset-x-6 top-0 hidden h-px bg-black transition-transform duration-500 sm:block ${isActive && !state.disabled ? "scale-x-100" : "scale-x-0"}`} />{option.display || option.label}{state.note ? <span id={`option-note-${index}`} className={`mt-1 block text-micro normal-case tracking-normal no-underline ${state.disabled ? "text-black" : "text-warning"}`}>{state.note}</span> : null}</button>;
           })}
         </div>
+        {step > 0 && onBack ? <button type="button" onClick={onBack} className="mt-2 min-h-12 px-1 text-xs uppercase tracking-label text-muted hover:text-black">← Back</button> : null}
       </div>
     </div>
   );
@@ -181,7 +182,7 @@ function BudgetQuestion({ value, includes, onValueChange, onToggle, onBack, onCo
         </div>
         <p className="mt-4 text-xs text-subtle">Anything you turn off is planned but paid on top.</p>
       </fieldset>
-      <div className="mt-10 flex items-center justify-between gap-6 border-t border-black/10 pt-6">
+      <div className="quiz-actions mt-10 flex items-center justify-between gap-6 border-t border-black/10 pt-6">
         {step > 0 ? <button type="button" onClick={onBack} className="min-h-12 text-xs uppercase tracking-label text-muted">← Back</button> : <span />}
         <button type="submit" disabled={!valid} className="min-h-14 bg-black px-8 text-xs font-semibold uppercase tracking-label text-white disabled:opacity-25">Continue →</button>
       </div>
@@ -209,7 +210,7 @@ function DiscoveryQuestion({ value, onChange, onBack, onContinue }) {
         <div className="flex justify-between gap-8 border-t border-black/10 pt-5 text-micro uppercase tracking-editorial text-muted"><span>Hidden places</span><span className="text-right">Iconic places</span></div>
       </div>
     </div>
-    <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-6 border-t border-black/10 pt-7">
+    <div className="quiz-actions mx-auto flex w-full max-w-5xl items-center justify-between gap-6 border-t border-black/10 pt-7">
       <button type="button" onClick={onBack} className="min-h-12 text-xs uppercase tracking-label text-muted hover:text-black">← Back</button>
       <button type="button" onClick={onContinue} className="min-h-14 bg-ink px-8 text-xs font-semibold uppercase tracking-label text-white">Set the course →</button>
     </div>
@@ -280,7 +281,7 @@ function DateQuestion({ answers, setAnswers, tripStart, tripEnd, isFlexible, set
           </div>}
         </div>
 
-        <div className="mt-10 flex items-center justify-between gap-6">
+        <div className="quiz-actions mt-10 flex items-center justify-between gap-6">
           <button type="button" onClick={onBack} className="min-h-12 text-xs uppercase tracking-label text-muted hover:text-black">← Back</button>
           <button disabled={!canSubmit} type="submit" className="min-h-14 bg-ink px-8 text-xs font-semibold uppercase tracking-label text-white disabled:opacity-30">Reveal my trip</button>
         </div>
@@ -431,6 +432,6 @@ export default function TravelQuiz({ durationFloors = null }) {
 
   return <section id="quiz" className={`relative overflow-hidden bg-canvas text-ink transition-[opacity,transform] duration-300 ease-out ${phase === "leaving" ? "-translate-y-2 opacity-0" : phase === "leaving-back" ? "translate-y-2 opacity-0" : phase === "entering" ? "translate-y-2 opacity-0" : "translate-y-0 opacity-100"}`}>
     {preferredDestination ? <div className="pointer-events-none absolute inset-x-0 top-1 z-40 text-center"><span className="inline-flex border border-black/10 bg-canvas/90 px-3 py-1.5 text-micro uppercase tracking-label text-black backdrop-blur">Planning {preferredDestination.name}</span></div> : null}
-    {step < adaptiveQuestions.length ? current.type === "budget" ? <BudgetQuestion value={exactBudget} includes={budgetIncludes} onValueChange={setExactBudget} onToggle={(key) => setBudgetIncludes((currentIncludes) => ({ ...currentIncludes, [key]: !currentIncludes[key] }))} onBack={back} onContinue={continueBudget} step={step} /> : <VisualQuestion question={current} value={current.id === "duration" && durationStatus[answers.duration]?.disabled ? null : answers[current.id]} onChoose={choose} step={step} {...(current.id === "duration" ? { status: durationStatus, note: durationNote } : {})} /> : step === adaptiveQuestions.length ? <DiscoveryQuestion value={discoveryLevel} onChange={setDiscoveryLevel} onBack={back} onContinue={continueDiscovery} /> : <DateQuestion answers={answers} setAnswers={setAnswers} tripStart={tripStart} tripEnd={tripEnd} isFlexible={isFlexible} setTripStart={setTripStart} setTripEnd={setTripEnd} setIsFlexible={setIsFlexible} originDetails={originDetails} setOriginDetails={setOriginDetails} travelAreaPreference={travelAreaPreference} setTravelAreaPreference={setTravelAreaPreference} guestCount={guestCount} setGuestCount={setGuestCount} onBack={back} onSubmit={submit} canSubmit={canSubmit} />}
+    {step < adaptiveQuestions.length ? current.type === "budget" ? <BudgetQuestion value={exactBudget} includes={budgetIncludes} onValueChange={setExactBudget} onToggle={(key) => setBudgetIncludes((currentIncludes) => ({ ...currentIncludes, [key]: !currentIncludes[key] }))} onBack={back} onContinue={continueBudget} step={step} /> : <VisualQuestion question={current} value={current.id === "duration" && durationStatus[answers.duration]?.disabled ? null : answers[current.id]} onChoose={choose} onBack={back} step={step} {...(current.id === "duration" ? { status: durationStatus, note: durationNote } : {})} /> : step === adaptiveQuestions.length ? <DiscoveryQuestion value={discoveryLevel} onChange={setDiscoveryLevel} onBack={back} onContinue={continueDiscovery} /> : <DateQuestion answers={answers} setAnswers={setAnswers} tripStart={tripStart} tripEnd={tripEnd} isFlexible={isFlexible} setTripStart={setTripStart} setTripEnd={setTripEnd} setIsFlexible={setIsFlexible} originDetails={originDetails} setOriginDetails={setOriginDetails} travelAreaPreference={travelAreaPreference} setTravelAreaPreference={setTravelAreaPreference} guestCount={guestCount} setGuestCount={setGuestCount} onBack={back} onSubmit={submit} canSubmit={canSubmit} />}
   </section>;
 }

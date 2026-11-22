@@ -96,7 +96,7 @@ export function NumberedPlaces({ places, linkLabel = "Map and hours ↗" }) {
           {(place.tags || []).map((tag) => <span key={tag} className="border border-black/15 px-2 py-0.5">{tag}</span>)}
         </div>
         {place.note ? <p className="mt-2 text-xs text-subtle">{place.note}</p> : null}
-        {place.href ? <a href={place.href} target="_blank" rel="noopener" className={`mt-3 inline-block text-sm ${textLink}`}>{place.linkLabel || linkLabel}</a> : null}
+        {place.href ? <a href={place.href} target="_blank" rel="noopener" className={`mt-1 inline-flex min-h-11 items-center text-sm ${textLink}`}>{place.linkLabel || linkLabel}</a> : null}
       </div>
     </li>)}
   </ol>;

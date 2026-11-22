@@ -141,11 +141,14 @@ export function HotelExperience({ destination, quiz, tripContext = quiz, budgetP
   const hotels = catalogHotels || [];
   useEffect(() => {
     const controller = new AbortController();
+    let timedOut = false;
+    const timer = setTimeout(() => { timedOut = true; controller.abort(); }, 12000);
     fetch("/api/hotels/recommend", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ destinationId: destination.id || destination.airport, quiz }), signal: controller.signal })
       .then(async (response) => { if (!response.ok) throw new Error("catalog_unavailable"); return response.json(); })
       .then((payload) => setCatalogHotels(Array.isArray(payload?.hotels) ? payload.hotels : []))
-      .catch((error) => { if (error.name !== "AbortError") { setCatalogHotels([]); setCatalogError(true); } });
-    return () => controller.abort();
+      .catch((error) => { if (error.name !== "AbortError" || timedOut) { setCatalogHotels([]); setCatalogError(true); } })
+      .finally(() => clearTimeout(timer));
+    return () => { clearTimeout(timer); controller.abort(); };
   }, [destination.id, destination.airport, quiz]);
   useEffect(() => { const raw = window.localStorage.getItem(`globtrekStay:${destination.city}`); if (!raw) return; try { onSelected?.(JSON.parse(raw)); } catch {} }, [destination.city, onSelected]);
   useEffect(() => { if (!proposalMode || !hotels.length || selectedHotelId) return; choose(hotels[0]); }, [proposalMode, hotels, selectedHotelId]); // eslint-disable-line react-hooks/exhaustive-deps

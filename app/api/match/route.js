@@ -83,7 +83,7 @@ const CACHE_TTL = 24 * 60 * 60 * 1000;
     price: "Est. $4,250–$6,100 per person",
     costs: ["Flights: $850-$1,300", "Stay: $2,200-$3,300", "Food: $650-$950", "Car + experiences: $550-$700"],
     nights: "7 nights",
-    style: "Road Trips / Markets / Villa days",
+    style: "Scenic drives / Markets / Villa days",
     season: "June or September",
     tags: ["Road Trips", "Slow mornings", "Couple", "Family", "Private villa", "Food", "Shopping", "Premium", "Ten Days"],
     why:

@@ -13,7 +13,7 @@ export default async function TripRemindersPage({ searchParams }) {
         <Link href="/" className="text-eyebrow font-semibold uppercase tracking-editorial">GlobTrek</Link>
         <p className="mt-16 text-micro uppercase tracking-editorial text-black">Trip reminders</p>
         <h1 className="mt-4 font-serif text-5xl tracking-tight-3 sm:text-7xl">{action === "stop" ? "Stop the check-ins." : "Keep this trip close."}</h1>
-        <p className="mb-10 mt-7 max-w-lg text-base font-light leading-7 text-black">
+        <p className="mb-10 mt-7 max-w-lg text-base leading-7 text-black">
           {action === "stop"
             ? "We'll stop emailing you about this trip. Other GlobTrek email, like the monthly ideas, has its own unsubscribe link."
             : "Six short emails over the next month: things to do, where you'd stay and a nudge to check prices. Stop anytime from any of them."}

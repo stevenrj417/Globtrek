@@ -30,7 +30,7 @@ export function sizedPhoto(url, width = 1280) {
   const match = String(url || "").match(/^https:\/\/upload\.wikimedia\.org\/wikipedia\/commons\/([0-9a-f])\/([0-9a-f]{2})\/([^?#/]+)/);
   if (!match) return url;
   const [, a, b, file] = match;
-  return `https://upload.wikimedia.org/wikipedia/commons/thumb/${a}/${b}/${file}/${width}px-${file}${/\.svg$/i.test(file) ? ".png" : ""}`;
+  return `https://upload.wikimedia.org/wikipedia/commons/thumb/${a}/${b}/${file}/${width}px-${file}${/\.svg$/i.test(file) ? ".png" : /\.tiff?$/i.test(file) ? ".jpg" : ""}`;
 }
 
 // Lowercase a style phrase for a sentence, keeping proper names ("French Quarter",

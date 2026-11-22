@@ -53,7 +53,7 @@ function Toggle({ id, checked, onChange, children, hint }) {
 // Make a 9:16 story of the trip: pick a look, a line of text and what to show,
 // then share it straight to an app (phone share sheet) or download it.
 // story: { name, country, departure, returnDate, ll }
-export function StoryStudio({ story, id = "share-story" }) {
+export function StoryStudio({ story, id = "share-story", headingLevel = 2 }) {
   const [style, setStyle] = useState("minimal");
   const [headline, setHeadline] = useState("");
   const [countdown, setCountdown] = useState(true);
@@ -151,8 +151,10 @@ export function StoryStudio({ story, id = "share-story" }) {
 
   return <section id={id} aria-labelledby={`${id}-heading`} className="scroll-mt-24">
     <p className="text-micro uppercase tracking-editorial">Share the countdown</p>
-    <h2 id={`${id}-heading`} className="mt-2 font-serif text-[clamp(2rem,3.4vw,2.8rem)] leading-[.95] tracking-tight-2">Your trip, as a story</h2>
-    <p className="mt-3 max-w-2xl text-sm leading-6">A 9:16 picture of {story.name} for Instagram, TikTok, Snapchat or Facebook. Pick a look and the words; nothing personal goes on it unless you switch it on.</p>
+    {headingLevel === 1
+      ? <h1 id={`${id}-heading`} className="mt-2 font-serif text-[clamp(2rem,3.4vw,2.8rem)] leading-[.95] tracking-tight-2">Your trip, as a story</h1>
+      : <h2 id={`${id}-heading`} className="mt-2 font-serif text-[clamp(2rem,3.4vw,2.8rem)] leading-[.95] tracking-tight-2">Your trip, as a story</h2>}
+    <p className="mt-3 max-w-2xl text-sm leading-6">A 9:16 picture of {story.name === "Your next trip" ? "your next trip" : story.name} for Instagram, TikTok, Snapchat or Facebook. Pick a look and the words; nothing personal goes on it unless you switch it on.</p>
 
     <div className="mt-8 grid gap-8 md:grid-cols-[minmax(0,340px)_1fr] md:gap-12">
       <div>

@@ -58,7 +58,7 @@ export default function Home() {
         <div className="mx-auto max-w-[1520px] px-5 sm:px-8">
           <div className="mb-10 flex items-end justify-between gap-3">
             <h2 id="vibe-heading" className="font-serif text-3xl tracking-tight-3 sm:text-5xl">Start with a setting</h2>
-            <Link href="/destinations" className="text-sm text-muted underline decoration-black/25 underline-offset-4 hover:text-ink">All destinations</Link>
+            <Link href="/destinations" className="inline-flex min-h-11 items-center text-sm text-muted underline decoration-black/25 underline-offset-4 hover:text-ink">All destinations</Link>
           </div>
           <div className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-3 md:overflow-visible lg:grid-cols-6 md:px-0">
             {vibes.map(([label, setting, image, alt]) => (

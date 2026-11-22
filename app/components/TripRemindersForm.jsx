@@ -19,7 +19,7 @@ export function TripRemindersForm({ token, action }) {
       <button type="button" onClick={submit} disabled={!token || done} className="min-h-14 bg-black px-7 text-micro uppercase tracking-editorial text-white disabled:opacity-35">
         {action === "stop" ? "Stop emails about this trip" : "Yes, send me reminders"}
       </button>
-      <p role="status" className="mt-5 max-w-md text-sm font-light leading-6 text-black">{status}</p>
+      <p role="status" className="mt-5 max-w-md text-sm leading-6 text-black">{status}</p>
     </div>
   );
 }

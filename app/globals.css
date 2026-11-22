@@ -346,3 +346,12 @@ p, li, dd { text-wrap-style: pretty; }
     min-width: 0;
   }
 }
+
+/* Quiz Back / Continue rows stay in view on short laptop and phone screens. */
+.quiz-actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  background: var(--color-canvas, #f4f3ef);
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}

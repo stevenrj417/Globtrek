@@ -16,7 +16,7 @@ export default async function StoryPage({ searchParams }) {
   const story = { name: name || "Your next trip", country: cleanLine(one("c"), 40) || null, departure: ISO.test(one("dep")) ? one("dep") : null, returnDate: ISO.test(one("ret")) ? one("ret") : null, ll };
   return <main className="min-h-screen bg-canvas text-ink">
     <SiteHeader />
-    <div className="mx-auto max-w-[1080px] px-5 pt-12 sm:px-8 sm:pt-16"><StoryStudio story={story} /></div>
+    <div className="mx-auto max-w-[1080px] px-5 pt-12 sm:px-8 sm:pt-16"><StoryStudio story={story} headingLevel={1} /></div>
     <div className="h-[var(--section-space)]" aria-hidden="true" />
     <SiteFooter />
   </main>;

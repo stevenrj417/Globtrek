@@ -45,7 +45,7 @@ export default function AlternativesPage() {
       <div className="max-w-3xl border-b border-black/15 pb-12">
         <p className="text-micro uppercase tracking-editorial text-black">Other destinations</p>
         <h1 className="mt-5 font-serif text-[clamp(3rem,7vw,7rem)] leading-[0.88] tracking-tight-3">Find a better fit.</h1>
-        <p className="mt-7 max-w-xl text-sm font-light leading-6 text-black">These places are ranked from the same travel preferences. Choose one to see its complete GlobTrek plan.</p>
+        <p className="mt-7 max-w-xl text-sm leading-6 text-black">These places are ranked from the same travel preferences. Choose one to see its complete GlobTrek plan.</p>
       </div>
 
       <div className="grid gap-x-6 gap-y-12 pt-10 sm:grid-cols-2 lg:grid-cols-3">
