@@ -1,3 +1,5 @@
+import { THEMED_PHOTOS } from "../data/themedTrips.js";
+
 // Photo credits for the quiz images. Commons files are used under the licenses listed; edits are resizing and, for Prague, a crop.
 export const PHOTO_CREDITS = [
   {
@@ -215,7 +217,9 @@ export const PHOTO_CREDITS = [
     "license": "Unsplash License",
     "licenseUrl": "https://unsplash.com/license",
     "source": "https://unsplash.com/photos/black-metal-bunk-bed-WQJvWU_HZFo"
-  }
+  },
+  // Photos on the themed trips and expeditions pages.
+  ...Object.values(THEMED_PHOTOS).map(({ url, subject, artist, license, licenseUrl, source }) => ({ image: url, subject, artist, license, licenseUrl, source })),
 ];
 
 const byImage = new Map(PHOTO_CREDITS.map((credit) => [credit.image, credit]));

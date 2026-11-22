@@ -27,6 +27,18 @@ export function nightlyTier(perNight) {
   return cap ? `under_${cap}` : "100_plus";
 }
 
+// The dorm model is a fit on 20 hand-checked hostels and runs too low where prices
+// are far below that range (it gave Cairo $2 and Tunis $5 a bed). No hand-checked
+// well-rated bed costs under $4, and a bed rarely costs under 30% of a budget room
+// in the same city, so a modeled bed never drops below the higher of $6 and 30%
+// of the city's room night.
+export const MODEL_DORM_FLOOR = 6;
+export const MODEL_DORM_ROOM_SHARE = 0.3;
+export function modeledDormNight(modeled, roomNight, taxRate = 0) {
+  const floor = Math.max(MODEL_DORM_FLOOR, (Number(roomNight) || 0) * MODEL_DORM_ROOM_SHARE);
+  return Math.round(Math.max(Number(modeled) || 0, floor) * (1 + (Number(taxRate) || 0)));
+}
+
 function estimate(category, average, source, confidence, isLive = false, spread = 0.15) {
   const roundedAverage = Math.round(average);
   return { category, low: Math.round(average * (1 - spread)), high: Math.round(average * (1 + spread)), average: roundedAverage, source, confidence, lastUpdated: "2026-08-14", isLive };
@@ -119,7 +131,7 @@ function planForStyle(profile, destination, options = {}) {
   // It names no property: the rate is a city-level model, not any hostel's price.
   const local = destination.planningAverages?.localPrices;
   const modelDorm = profile.spendStyle === "cheapest" && !cheap && profile.lodging !== "private" && local?.lodging?.dormBed > 0 && (feedStayCounts.dorms?.[destination.id] || 0) > 0
-    ? Math.round(local.lodging.dormBed * (local.lodging.budgetRoom > 0 ? baseCityAverage.hotelNight / local.lodging.budgetRoom : 1) * (1 + cityTaxRate))
+    ? modeledDormNight(local.lodging.dormBed * (local.lodging.budgetRoom > 0 ? baseCityAverage.hotelNight / local.lodging.budgetRoom : 1), baseCityAverage.hotelNight, cityTaxRate)
     : null;
   const useModelDorm = !wantsHome && !wantsLuxury && Boolean(modelDorm) && (profile.lodging === "hostel" || modelDorm * travelers <= cityRoomNight * rooms);
   const chosen = options.stay?.perUnit > 0 ? options.stay : null;

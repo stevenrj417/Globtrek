@@ -42,8 +42,21 @@ export const AREA_LODGING_ERROR_PCT = 31;
 // the local price level the model learns from (the model gives the Seychelles
 // a $53 room and the Maldives a $49 one). They wait for real property prices.
 export const RESORT_ECONOMIES = new Set(["MLE", "seychelles-3d2d7", "OGG", "PPT", "bora-bora-40f39", "st-barts-e3772"]);
+// No place on the list has a cheaper-quarter restaurant meal anywhere near $40;
+// a value that high is a local-currency price read as dollars (Havana's pesos
+// came through as a $146 meal and a $627 room), so it is not used at all.
+export const MAX_BUDGET_MEAL_USD = 40;
+function observedCosts(id) {
+  const local = destinationCosts.destinations[id];
+  return local && local.meal?.budget > 0 && local.meal.budget <= MAX_BUDGET_MEAL_USD ? local : null;
+}
+// A clean, well-reviewed budget room rarely costs under $18 a night anywhere on the
+// list; the model, fit on pricier cities, gave Mumbai and Aswan $12.
+export const MIN_BUDGET_ROOM_USD = 18;
+
 export function localPrices(destination) {
-  const local = destinationCosts.destinations[destination.id];
+  const raw = observedCosts(destination.id);
+  const local = raw && raw.lodging?.budgetRoom > 0 && raw.lodging.budgetRoom < MIN_BUDGET_ROOM_USD ? { ...raw, lodging: { ...raw.lodging, budgetRoom: MIN_BUDGET_ROOM_USD } } : raw;
   if (!local) return null;
   if (LOCAL_TYPES.has(destination.destinationType || "city")) return local;
   if (RESORT_ECONOMIES.has(destination.id)) return null;
@@ -122,7 +135,7 @@ export function buildDestinationPlanningAverages(destination = {}) {
   const local = editorial ? null : localPrices(destination);
   const band = editorial || local ? null : priceBand(destination);
   // With a band, food and activities still come from observed local prices.
-  const meals = band ? destinationCosts.destinations[destination.id] || null : null;
+  const meals = band ? observedCosts(destination.id) : null;
   const city = editorial || (local ? { hotelNight: local.lodging.budgetRoom, foodDay: local.foodDay.value, activitiesDay: local.activity?.medianListedUsd }
     : band ? { hotelNight: band.budgetHotel ?? undefined, foodDay: meals?.foodDay.value, activitiesDay: meals?.activity?.medianListedUsd } : {});
   const baseline = {

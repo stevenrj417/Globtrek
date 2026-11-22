@@ -14,9 +14,9 @@ export default function PhotoCreditsPage() {
     <EditorialPage updated="2026-11-11"
       eyebrow="Photo credits"
       title="The people behind the pictures."
-      intro="Quiz and homepage photos come from Wikimedia Commons and Unsplash. Each is used under the license shown; we resized them and cropped the Prague view."
+      intro="Quiz, homepage, themed trip and expedition photos come from Wikimedia Commons and Unsplash. Each is used under the license shown; we resized them and cropped the Prague view."
     >
-      <EditorialSection number="01" title="Quiz and homepage photos">
+      <EditorialSection number="01" title="Quiz, homepage, themed trip and expedition photos">
         <ul className="divide-y divide-black/10 text-base">
           {PHOTO_CREDITS.map((credit) => (
             <li key={credit.image} className="py-3">

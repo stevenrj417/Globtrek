@@ -4,10 +4,13 @@ import { SiteFooter, SiteHeader } from "../../components/SiteChrome";
 import { Breadcrumb, Chip, PhotoCredit } from "../../components/TravelPage";
 import { createPlacesClient } from "../../lib/anyplace/google";
 import { isFreeToVisit, ticketsLink } from "../../lib/anyplace/trip";
+import { cjHotelSearchUrl } from "../../lib/booking/cj";
 
 export const dynamic = "force-dynamic";
 
 const PLACE_ID = /^[A-Za-z0-9_-]{10,300}$/;
+// Google's hotel types: these pages book a room on Booking.com instead of tickets.
+const LODGING_TYPES = /^(lodging|hotel|hostel|motel|resort_hotel|inn|bed_and_breakfast|guest_house|extended_stay_hotel|farmstay|cottage|budget_japanese_inn|japanese_inn|private_guest_room|campground)$/;
 const FIELDS = "id,displayName,formattedAddress,addressComponents,rating,userRatingCount,primaryType,primaryTypeDisplayName,regularOpeningHours.weekdayDescriptions,websiteUri,googleMapsUri,editorialSummary,photos,businessStatus";
 
 // A sight or activity from Google Maps, fetched fresh on every view (nothing
@@ -56,7 +59,9 @@ export default async function ThingToDoPage({ params }) {
   const place = await loadPlace(placeId);
   if (!place) notFound();
   const where = [place.town, place.country].filter(Boolean).join(", ");
-  const tickets = ticketsLink({ name: place.name, primaryType: place.primaryType }, { name: place.town || place.country });
+  const lodging = LODGING_TYPES.test(place.primaryType || "");
+  const hotelLink = lodging ? cjHotelSearchUrl(place.name, { city: place.town || place.country || "", country: place.town ? place.country : null }) : null;
+  const tickets = lodging ? null : ticketsLink({ name: place.name, primaryType: place.primaryType }, { name: place.town || place.country });
   const free = isFreeToVisit(place);
   const [hero, ...more] = place.photos;
   const button = "inline-flex min-h-14 items-center justify-center gap-2 px-6 text-micro font-medium uppercase tracking-label";
@@ -64,7 +69,7 @@ export default async function ThingToDoPage({ params }) {
   return <main className="min-h-screen bg-bg text-ink">
     <SiteHeader />
     <link rel="preconnect" href="https://lh3.googleusercontent.com" />
-    <Breadcrumb items={[["Home", "/"], [place.town || "Things to do", null], [place.name, null]]} />
+    <Breadcrumb items={[["Home", "/"], [place.town || (lodging ? "Hotels" : "Things to do"), null], [place.name, null]]} />
     <section className="mx-auto grid max-w-[1280px] gap-8 px-5 pt-4 sm:px-8 lg:grid-cols-[1.35fr_1fr] lg:gap-12">
       <div>
         <div className="relative aspect-[4/3] overflow-hidden bg-placeholder">
@@ -88,11 +93,12 @@ export default async function ThingToDoPage({ params }) {
         {place.summary ? <p className="mt-4 text-base leading-7">{place.summary}</p> : null}
         {place.address ? <p className="mt-4 text-sm">{place.address}</p> : null}
         <div className="mt-7 grid gap-2 border border-black bg-white p-5 sm:p-7">
+          {hotelLink ? <a href={hotelLink} target="_blank" rel="noopener sponsored" className={`${button} bg-black text-white hover:bg-black/85`}>See rooms and prices <span aria-hidden="true">↗</span><span className="sr-only"> (opens Booking.com in a new tab)</span></a> : null}
           {tickets && !free ? <a href={tickets} target="_blank" rel="noopener sponsored" className={`${button} bg-black text-white hover:bg-black/85`}>Book tickets or a tour <span aria-hidden="true">↗</span><span className="sr-only"> (opens Booking.com in a new tab)</span></a> : null}
-          {place.mapsUrl ? <a href={place.mapsUrl} target="_blank" rel="noopener" className={`${button} ${tickets && !free ? "border border-black/25 hover:border-black" : "bg-black text-white hover:bg-black/85"}`}>{free ? "Free to visit: get directions" : "Directions and hours"} <span aria-hidden="true">↗</span><span className="sr-only"> (opens Google Maps in a new tab)</span></a> : null}
+          {place.mapsUrl ? <a href={place.mapsUrl} target="_blank" rel="noopener" className={`${button} ${hotelLink || (tickets && !free) ? "border border-black/25 hover:border-black" : "bg-black text-white hover:bg-black/85"}`}>{lodging ? "Map and directions" : free ? "Free to visit: get directions" : "Directions and hours"} <span aria-hidden="true">↗</span><span className="sr-only"> (opens Google Maps in a new tab)</span></a> : null}
           {place.website ? <a href={place.website} target="_blank" rel="noopener" className={`${button} border border-black/25 hover:border-black`}>Official website <span aria-hidden="true">↗</span><span className="sr-only"> (opens in a new tab)</span></a> : null}
           <a href={`/plan?a=${encodeURIComponent(place.id)}`} className={`${button} border border-black hover:bg-black hover:text-white`}>Plan a whole trip around it <span aria-hidden="true">→</span></a>
-          <p className="mt-2 text-xs leading-5">{tickets && !free ? "Tickets and tours open on Booking.com, where you see live prices and pay. " : ""}A whole trip adds a place to stay, dinners and more nearby, booked in order from one page.</p>
+          <p className="mt-2 text-xs leading-5">{hotelLink ? "Rooms open on Booking.com with live prices for your dates; you book and pay there. " : tickets && !free ? "Tickets and tours open on Booking.com, where you see live prices and pay. " : ""}A whole trip adds a place to stay, dinners and more nearby, booked in order from one page.</p>
         </div>
         {place.hours.length ? <div className="mt-7">
           <h2 className="text-micro font-medium uppercase tracking-label">Opening hours</h2>
@@ -101,7 +107,7 @@ export default async function ThingToDoPage({ params }) {
         </div> : null}
       </div>
     </section>
-    <p className="mx-auto mt-12 max-w-[1280px] px-5 text-xs leading-5 sm:px-8">GlobTrek may earn a commission if you book tickets or tours through these links, at no extra cost to you.</p>
+    <p className="mx-auto mt-12 max-w-[1280px] px-5 text-xs leading-5 sm:px-8">GlobTrek may earn a commission if you book a stay, tickets or tours through these links, at no extra cost to you.</p>
     <div className="h-[var(--section-space)]" aria-hidden="true" />
     <SiteFooter />
   </main>;

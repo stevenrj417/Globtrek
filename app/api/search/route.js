@@ -20,12 +20,21 @@ export async function GET(request) {
   if (q.length < 3) return Response.json({ hotels: [], activities: [] }, { headers: NO_STORE });
   const hotels = searchStays(q, 6);
   let activities = [];
+  let moreHotels = [];
   if (sessionToken) {
-    try {
-      activities = (await createPlacesClient().autocomplete(q, { sessionToken, types: ACTIVITY_TYPES })).slice(0, 5);
-    } catch (error) {
-      console.log(JSON.stringify({ level: "warn", msg: "activity_search_failed", error: error.message }));
+    const places = createPlacesClient();
+    // Any hotel in the world: Google's lodging search fills in what the catalog
+    // doesn't have, and its page sends the traveler to that hotel on Booking.com.
+    const [found, lodging] = await Promise.allSettled([
+      places.autocomplete(q, { sessionToken, types: ACTIVITY_TYPES }),
+      hotels.length >= 4 ? Promise.resolve([]) : places.autocomplete(q, { sessionToken, types: ["lodging"] }),
+    ]);
+    if (found.status === "fulfilled") activities = found.value.slice(0, 5);
+    else console.log(JSON.stringify({ level: "warn", msg: "activity_search_failed", error: found.reason?.message }));
+    if (lodging.status === "fulfilled") {
+      const known = new Set(hotels.map((item) => item.name.toLowerCase()));
+      moreHotels = lodging.value.filter((item) => !known.has(item.name.toLowerCase())).slice(0, 6 - Math.min(hotels.length, 6));
     }
   }
-  return Response.json({ hotels, activities }, { headers: NO_STORE });
+  return Response.json({ hotels, moreHotels, activities }, { headers: NO_STORE });
 }

@@ -8,10 +8,10 @@ import { AFFILIATE_DISCLOSURE, CONTACT_EMAIL, INSTAGRAM_URL, LEGAL_NAME } from "
 import { BookingLogo } from "./PartnerLogo";
 import { BookingPartnerBadge } from "./PartnerLogo";
 
-const navigation = [["Popular trips", "/#trips"], ["Destinations", "/destinations"], ["Guides", "/guides"], ["How it works", "/how-it-works"], ["About", "/about"]];
+const navigation = [["Themed trips", "/themed-trips"], ["Expeditions", "/expeditions"], ["Destinations", "/destinations"], ["Guides", "/guides"], ["Surprise me", "/surprise"]];
 
 const footerGroups = [
-  ["Plan", [["Find my trip", "/discover"], ["Destinations", "/destinations"], ["Guides", "/guides"], ["How it works", "/how-it-works"]]],
+  ["Plan", [["Find my trip", "/discover"], ["Themed trips", "/themed-trips"], ["Expeditions", "/expeditions"], ["Surprise me", "/surprise"], ["Destinations", "/destinations"], ["Guides", "/guides"], ["How it works", "/how-it-works"]]],
   ["Company", [["About", "/about"], ["Help", "/help"], ["Contact", "/contact"], ["Send feedback", "/feedback"]]],
   ["Policies", [["Privacy", "/privacy"], ["Terms", "/terms"], ["Affiliate disclosure", "/affiliate-disclosure"], ["Photo credits", "/photo-credits"]]],
 ];

@@ -1,3 +1,4 @@
+import ALL_AIRPORT_COORDINATES from "../../data/airportCoords.json" with { type: "json" };
 import flightPrices from "../../data/flightPrices.json" with { type: "json" };
 import { fareForDate } from "../flights/travelpayouts.js";
 import { FARE_SNAPSHOT_CHECKED, monthLabel, snapshotFare } from "../../data/fareSnapshots.js";
@@ -130,8 +131,9 @@ function distanceFareAverage(miles, international) {
 function coordinateRoute(profile, destination) {
   const originCode = String(profile?.origin || "").toUpperCase();
   const destinationCode = String(destination?.airport || "").toUpperCase();
-  const originCoordinates = coordinates(profile?.originDetails) || AIRPORT_COORDINATES[originCode];
-  const destinationCoordinates = coordinates(destination) || AIRPORT_COORDINATES[destinationCode];
+  // The hand-checked hub list first, then every airport GlobTrek has coordinates for.
+  const originCoordinates = coordinates(profile?.originDetails) || AIRPORT_COORDINATES[originCode] || ALL_AIRPORT_COORDINATES[originCode];
+  const destinationCoordinates = coordinates(destination) || AIRPORT_COORDINATES[destinationCode] || ALL_AIRPORT_COORDINATES[destinationCode];
   if (!originCoordinates || !destinationCoordinates) return null;
   const miles = distanceMiles(originCoordinates, destinationCoordinates);
   const originCountry = String(profile?.originCountry || "").trim().toUpperCase();

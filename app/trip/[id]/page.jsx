@@ -32,7 +32,21 @@ export default function FullTripPage({ params }) {
       // trip's own results page instead of waiting here for a plan that never comes.
       if (!savedTrip?.itinerary?.days?.length) {
         const path = String(savedTrip?.sharePath || "");
-        if (/^\/(results|places|book)[/?]/.test(path)) { window.location.replace(path); return; }
+        if (/^\/(results|places|book)[/?]/.test(path)) {
+          // The results page plans from the quiz saved in this browser, so put this
+          // trip's own answers, dates, travelers and chosen stay back first;
+          // otherwise it would reopen with today's defaults.
+          if (path.startsWith("/results") && savedTrip?.trip && typeof savedTrip.trip === "object") {
+            try {
+              window.localStorage.setItem("globtrekQuiz", JSON.stringify({ ...savedTrip.trip, createdAt: Date.now() }));
+              const stayId = savedTrip.selections?.hotel?.id;
+              const destinationId = new URLSearchParams(path.split("?")[1] || "").get("destination");
+              if (stayId && destinationId) window.localStorage.setItem("globtrekStay", JSON.stringify({ destinationId, id: stayId }));
+            } catch {}
+          }
+          window.location.replace(path);
+          return;
+        }
         return setStatus("This trip was saved without a day plan.");
       }
       const trip = savedTrip?.destination && { ...savedTrip.destination, plan: savedTrip.itinerary, budgetPlan: savedTrip.estimatedCosts, why: savedTrip.destination.why || "A trip shaped around the way you travel." };

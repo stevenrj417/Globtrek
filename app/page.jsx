@@ -4,6 +4,9 @@ import { SiteFooter, SiteHeader } from "./components/SiteChrome";
 import { EmailSignup } from "./components/EmailSignup";
 import { TripCard } from "./components/TripCard";
 import { trendingTrips } from "./data/trending";
+import { TrustStrip } from "./components/TrustStrip";
+import { THEMED_PHOTOS, THEMED_TRIPS } from "./data/themedTrips";
+import { photoFor } from "./lib/themed/cards";
 
 export const metadata = {
   description: "Free trip planner: answer seven quick questions and get one affordable trip that fits your budget, with an estimated cost, places to stay and things to do.",
@@ -41,6 +44,8 @@ export default function Home() {
         </div>
       </section>
 
+      <TrustStrip className="mx-auto max-w-[1520px] px-5 sm:px-8" />
+
       <section id="trips" aria-labelledby="trips-heading" className="reveal scroll-mt-24 py-[var(--section-space)]">
         <div className="mx-auto max-w-[1520px] px-5 sm:px-8">
           <h2 id="trips-heading" className="mb-10 font-serif text-3xl tracking-tight-3 sm:mb-14 sm:text-5xl">Popular this season</h2>
@@ -67,6 +72,25 @@ export default function Home() {
                   <Image src={image} alt={alt} fill className="image-calm object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" sizes="(min-width: 1024px) 16vw, (min-width: 768px) 33vw, 44vw" />
                 </div>
                 <p className="mt-3 text-sm font-medium">{label} <span aria-hidden="true" className="text-subtle">→</span></p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="bigger-heading" className="reveal py-[var(--section-space)]">
+        <div className="mx-auto max-w-[1520px] px-5 sm:px-8">
+          <h2 id="bigger-heading" className="mb-10 font-serif text-3xl tracking-tight-3 sm:text-5xl">Or go bigger</h2>
+          <div className="grid gap-6 md:grid-cols-3">
+            {[
+              ["/themed-trips", photoFor(THEMED_TRIPS[0]), "Themed trips", `${THEMED_TRIPS.length} trips built around a feeling: yoga in Bali, a month in Kyoto, Paris mornings.`],
+              ["/expeditions", { url: THEMED_PHOTOS.antarctica.url, alt: THEMED_PHOTOS.antarctica.subject }, "Expeditions", "All seven wonders, all seven continents, Antarctica. Priced to the night."],
+              ["/surprise", photoFor({ id: "RAK" }), "Surprise me", "Give us a budget. We'll pick a place that really fits it."],
+            ].map(([href, photo, title, body]) => (
+              <Link key={href} href={href} className="group block">
+                <div className="relative aspect-[4/3] overflow-hidden bg-placeholder">{photo.url ? <Image src={photo.url} alt={photo.alt} fill className="image-calm object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" sizes="(min-width: 768px) 33vw, 100vw" /> : null}</div>
+                <p className="mt-4 font-serif text-2xl tracking-tight-2">{title} <span aria-hidden="true">→</span></p>
+                <p className="mt-1 text-sm leading-6">{body}</p>
               </Link>
             ))}
           </div>

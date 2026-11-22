@@ -1,6 +1,7 @@
 import { publishedDestinations } from "./data/destinationCatalog";
 import { publishedGuides } from "./lib/guides/buildGuide";
 import { CONTENT_UPDATED, SITE_URL } from "./lib/site";
+import { THEMED_TRIPS } from "./data/themedTrips";
 
 const routes = [
   "",
@@ -11,6 +12,12 @@ const routes = [
   // "/road-trips/quiz",
   "/destinations",
   "/guides",
+  "/themed-trips",
+  "/expeditions",
+  "/expeditions/seven-wonders",
+  "/expeditions/seven-continents",
+  "/expeditions/antarctica",
+  "/surprise",
   "/about",
   "/how-it-works",
   "/help",
@@ -25,6 +32,7 @@ const routes = [
 // Only indexable pages: quiz results are personal, and unpublished destinations stay out.
 export default function sitemap() {
   return [
+    ...THEMED_TRIPS.map((trip) => ({ url: `${SITE_URL}/themed-trips/${trip.slug}`, lastModified: new Date(`${CONTENT_UPDATED}T00:00:00Z`) })),
     ...routes.map((route) => ({
       url: `${SITE_URL}${route}`,
       lastModified: new Date(`${CONTENT_UPDATED}T00:00:00Z`),

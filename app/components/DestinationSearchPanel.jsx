@@ -34,7 +34,7 @@ export function DestinationSearchPanel({ onClose }) {
   const [anywhere, setAnywhere] = useState(null);
   const [anyBudget, setAnyBudget] = useState("mid");
   const [mode, setMode] = useState("search");
-  const [found, setFound] = useState({ hotels: [], activities: [] });
+  const [found, setFound] = useState({ hotels: [], moreHotels: [], activities: [] });
   const [flyFrom, setFlyFrom] = useState(null);
   const [flyTo, setFlyTo] = useState(null);
   const [sessionToken] = useState(() => (globalThis.crypto?.randomUUID?.() || String(Date.now())).replace(/-/g, ""));
@@ -49,7 +49,7 @@ export function DestinationSearchPanel({ onClose }) {
     const controller = new AbortController();
     const timer = setTimeout(() => {
       fetch(`/api/places/autocomplete?q=${encodeURIComponent(text)}&s=${sessionToken}`, { signal: controller.signal }).then((response) => response.ok ? response.json() : { suggestions: [] }).then((payload) => setPlaces(payload.suggestions || [])).catch(() => {});
-      fetch(`/api/search?q=${encodeURIComponent(text)}&s=${sessionToken}`, { signal: controller.signal }).then((response) => response.ok ? response.json() : { hotels: [], activities: [] }).then((payload) => setFound({ hotels: payload.hotels || [], activities: payload.activities || [] })).catch(() => {});
+      fetch(`/api/search?q=${encodeURIComponent(text)}&s=${sessionToken}`, { signal: controller.signal }).then((response) => response.ok ? response.json() : { hotels: [], moreHotels: [], activities: [] }).then((payload) => setFound({ hotels: payload.hotels || [], moreHotels: payload.moreHotels || [], activities: payload.activities || [] })).catch(() => {});
     }, 250);
     return () => { clearTimeout(timer); controller.abort(); };
   }, [query, sessionToken]);
@@ -111,11 +111,12 @@ export function DestinationSearchPanel({ onClose }) {
             {suggestions.length || otherPlaces.length ? <p className="pt-4 text-micro uppercase tracking-editorial">Destinations</p> : null}
             {suggestions.map((item) => <button key={item.id || item.airport} type="button" onClick={() => setDestination(item)} className="flex w-full items-center justify-between border-b border-black/10 py-4 text-left transition hover:pl-2"><span><strong className="font-serif text-xl font-normal">{titleCase(item.city)}</strong><span className="ml-3 text-micro uppercase tracking-label">{titleCase(item.country)}</span></span><span className="text-micro tracking-label">{item.airport}</span></button>)}
             {otherPlaces.map((item) => <button key={item.placeId} type="button" onClick={() => setAnywhere(item)} className="flex w-full items-center justify-between border-b border-black/10 py-4 text-left transition hover:pl-2"><span><strong className="font-serif text-xl font-normal">{item.name}</strong><span className="ml-3 text-micro uppercase tracking-label">{item.detail}</span></span></button>)}
-            {query.trim().length >= 3 && found.hotels.length ? <p className="pt-6 text-micro uppercase tracking-editorial">Hotels</p> : null}
+            {query.trim().length >= 3 && (found.hotels.length || found.moreHotels?.length) ? <p className="pt-6 text-micro uppercase tracking-editorial">Hotels</p> : null}
             {query.trim().length >= 3 ? found.hotels.map((item) => <a key={item.id} href={`/hotels/${item.id}`} className="flex w-full items-center justify-between gap-4 border-b border-black/10 py-4 text-left transition hover:pl-2"><span className="min-w-0"><strong className="block truncate font-serif text-xl font-normal">{item.name}</strong><span className="text-micro uppercase tracking-label">{[item.city, item.country].filter(Boolean).join(", ")}</span></span><span className="shrink-0 text-micro tracking-label">{item.stars ? `${item.stars}★` : item.category || ""}</span></a>) : null}
+            {query.trim().length >= 3 ? (found.moreHotels || []).map((item) => <a key={item.placeId} href={`/stays/${encodeURIComponent(item.placeId)}`} className="flex w-full items-center justify-between gap-4 border-b border-black/10 py-4 text-left transition hover:pl-2"><span className="min-w-0"><strong className="block truncate font-serif text-xl font-normal">{item.name}</strong><span className="text-micro uppercase tracking-label">{item.detail}</span></span><span className="shrink-0 text-micro tracking-label">Hotel</span></a>) : null}
             {query.trim().length >= 3 && found.activities.length ? <p className="pt-6 text-micro uppercase tracking-editorial">Things to do</p> : null}
             {query.trim().length >= 3 ? found.activities.map((item) => <a key={item.placeId} href={`/things-to-do/${encodeURIComponent(item.placeId)}`} className="flex w-full items-center justify-between border-b border-black/10 py-4 text-left transition hover:pl-2"><span className="min-w-0"><strong className="block truncate font-serif text-xl font-normal">{item.name}</strong><span className="text-micro uppercase tracking-label">{item.detail}</span></span></a>) : null}
-            {otherPlaces.length || found.activities.length ? <p className="pt-3 text-right text-[11px]">Place search by Google Maps</p> : null}
+            {otherPlaces.length || found.activities.length || found.moreHotels?.length ? <p className="pt-3 text-right text-[11px]">Place search by Google Maps</p> : null}
             {query.trim().length >= 3 ? <a href={cjTracked(CJ_LINKS.stays, `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(query.trim())}`)} target="_blank" rel="noopener sponsored" className="mt-4 flex w-full items-center justify-between border border-black/15 px-4 py-3 text-sm hover:border-black"><span>Can&apos;t see your hotel? Search &ldquo;{query.trim()}&rdquo; on Booking.com</span><span aria-hidden="true">↗</span></a> : null}
           </div>
           </>}
