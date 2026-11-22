@@ -29,7 +29,7 @@ export async function GET(request) {
     // finds a ballpark in New Jersey. Text search ranks by fame: its top three
     // come first, so the world's landmarks show up for everyone.
     const [famous, found, lodging] = await Promise.allSettled([
-      q.length >= 4 ? places.text({ textQuery: q, max: 3, fieldMask: "places.id,places.displayName,places.formattedAddress" }) : Promise.resolve([]),
+      q.length >= 4 ? places.text({ textQuery: q, includedType: "tourist_attraction", max: 3, fieldMask: "places.id,places.displayName,places.formattedAddress" }) : Promise.resolve([]),
       places.autocomplete(q, { sessionToken, types: ACTIVITY_TYPES }),
       hotels.length >= 4 ? Promise.resolve([]) : places.autocomplete(q, { sessionToken, types: ["lodging"] }),
     ]);
