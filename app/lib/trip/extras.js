@@ -1,3 +1,4 @@
+import { photoCredit } from "../photoCredits.js";
 import { CJ_LINKS, cjTracked } from "../booking/cj.js";
 import { intuiTransferPage } from "../../data/intuiTransfers.js";
 import { esimCountry } from "../extras/esim.js";
@@ -36,6 +37,23 @@ const attractionsUrl = (query) => `https://www.booking.com/attractions/searchres
 const mapsSearch = (query) => `https://www.google.com/maps/search/?${new URLSearchParams({ api: "1", query }).toString()}`;
 const transit = (from, to) => `https://www.google.com/maps/dir/?${new URLSearchParams({ api: "1", origin: from, destination: to, travelmode: "transit" }).toString()}`;
 
+// A mood photo for each card, from GlobTrek's own licensed set (credited).
+const EXTRA_PHOTOS = {
+  "uber-arrive": "packed-schedule", "uber-depart": "balanced-days", taxi: "nightlife", transit: "long-weekend",
+  driver: "open-ended", car: "two-weeks",
+  "private-tour": "surprise-me", boat: "surprise-pace", guide: "culture", chef: "slow-mornings",
+  tours: "adventure-days", tickets: "culture-priority",
+  "food-tour": "food", "fine-dining": "shopping", "cheap-eats": "food",
+  esim: "cities", luggage: "mostly-relaxing",
+};
+export function extraPhoto(id) {
+  const name = EXTRA_PHOTOS[id];
+  if (!name) return null;
+  const url = `/quiz/v2/${name}.jpg`;
+  const credit = photoCredit(url);
+  return { url, alt: credit?.subject || "", credit: credit ? { artist: credit.artist, license: credit.license, source: credit.source } : null };
+}
+
 // trip: { level, interests[], destination: { name, country }, airport: { code, name, latitude, longitude, km } | null,
 //         stay: { name, latitude, longitude, street, city } | null, homeCountry, sid }
 // Returns sections in a fixed order; empty sections are dropped. Items the
@@ -56,7 +74,7 @@ export function tripExtras(trip = {}) {
   const far = (airport?.km || 0) >= 40;
   // Past ~80 km an Uber is a long, pricey ride; a car or transfer makes more sense.
   const rideable = airportPoint && stayPoint && (airport.km || 0) <= 80;
-  const item = (id, interest, fields) => ({ id, interest, wanted: interest ? wants.has(interest) : false, ...fields });
+  const item = (id, interest, fields) => ({ id, interest, wanted: interest ? wants.has(interest) : false, photo: extraPhoto(id), ...fields });
 
   const transport = [
     rideable ? item("uber-arrive", "rides", { title: `Uber from ${airport.code} to ${stay.name}`, why: "Pickup and drop-off are filled in. In Uber, tap Reserve to schedule it and add your flight number, so the driver knows if you land late.", href: uberRideLink(airportPoint, stayPoint), partner: "Uber", sponsored: false, cta: "Open in Uber" }) : null,

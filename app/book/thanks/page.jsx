@@ -5,6 +5,8 @@ import { checklistItems } from "../../lib/booking/checklist";
 import { isCjUrl } from "../../lib/booking/cj";
 import { decodeBookingPage } from "../../lib/booking/bookPage";
 import { bookExtras, bookTripKey } from "../bookExtras";
+import { storyPhoto } from "../../lib/share/storyPhoto";
+import { extraPhoto } from "../../lib/trip/extras";
 
 export const metadata = { title: "Thank you for booking with GlobTrek", robots: { index: false, follow: false } };
 
@@ -26,11 +28,17 @@ export default async function BookThanksPage({ searchParams }) {
   </main>;
   const city = titleCase(trip.city) || "your trip";
   // The same items, ids and order as the booking checklist, so its ticks carry over.
-  const items = checklistItems(trip.items).map((item) => ({ id: item.id, kind: isCjUrl(item.exactUrl) ? KIND[item.type] || null : null, name: item.name, detail: LABEL[item.type], href: item.exactUrl, sponsored: item.type !== "restaurant", cta: CTA[item.type] }));
+  const [lat, lng] = trip.stayPoint || [];
+  const scenic = await storyPhoto({ name: titleCase(trip.city), country: trip.country, ...(Number.isFinite(lat) ? { latitude: lat, longitude: lng } : {}) }).catch(() => null);
+  const scenicPhoto = scenic ? { url: scenic.url, alt: city, credit: scenic.local ? null : { artist: scenic.credit, source: scenic.source || null } } : null;
+  // These items carry no photo of their own, so each gets the destination or a
+  // credited GlobTrek photo of its kind, never one that pretends to be the place.
+  const kindPhoto = { experience: extraPhoto("tours"), restaurant: extraPhoto("food-tour") };
+  const items = checklistItems(trip.items).map((item) => ({ id: item.id, kind: isCjUrl(item.exactUrl) ? KIND[item.type] || null : null, name: item.name, detail: LABEL[item.type], href: item.exactUrl, sponsored: item.type !== "restaurant", cta: CTA[item.type], photo: kindPhoto[item.type] || scenicPhoto }));
   const key = bookTripKey(trip);
   return <main className="min-h-screen bg-canvas text-ink">
     <SiteHeader />
-    <TripThanks destinationName={city} items={items} doneKey={`globtrek:booked:${key}`} refKey={key} extras={bookExtras(trip, city)} backHref={`/book?b=${encodeURIComponent(b)}`} />
+    <TripThanks destinationName={city} items={items} doneKey={`globtrek:booked:${key}`} refKey={key} extras={bookExtras(trip, city)} story={{ name: city, country: trip.country, departure: trip.start, returnDate: trip.end, ll: Number.isFinite(lat) ? `${lat.toFixed(4)},${lng.toFixed(4)}` : null }} backHref={`/book?b=${encodeURIComponent(b)}`} />
     <div className="h-[var(--section-space)]" aria-hidden="true" />
     <SiteFooter />
   </main>;

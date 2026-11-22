@@ -1,6 +1,6 @@
 "use client";
 
-
+import Image from "next/image";
 import { track } from "@vercel/analytics";
 
 // "Don't forget" extras, grouped: rides and cars, special experiences, more to do,
@@ -15,11 +15,17 @@ export function TripExtras({ sections, title = "Don't forget", intro = "Things p
       {sections.map((section) => <div key={section.id}>
         <h3 className="border-b border-black pb-2 text-micro uppercase tracking-label">{section.title}</h3>
         <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {section.items.map((item) => <li key={item.id} className="flex flex-col border border-black/15 bg-white p-5">
+          {section.items.map((item) => <li key={item.id} className="flex flex-col border border-black/15 bg-white">
+            {item.photo ? <div className="relative aspect-[16/9] overflow-hidden bg-surface">
+              <Image src={item.photo.url} alt="" fill sizes="(min-width: 1024px) 340px, (min-width: 640px) 45vw, 90vw" className="image-calm object-cover" />
+              {item.photo.credit ? <a href={item.photo.credit.source} target="_blank" rel="noopener" className="absolute bottom-1.5 right-1.5 max-w-[85%] truncate bg-black/45 px-1.5 py-0.5 text-[10px] leading-4 text-white backdrop-blur-sm">Photo: {item.photo.credit.artist} · {item.photo.credit.license}<span className="sr-only"> (opens in a new tab)</span></a> : null}
+            </div> : null}
+            <div className="flex flex-1 flex-col p-5">
             <p className="text-micro uppercase tracking-label">{item.partner}{item.wanted ? " · you asked for this" : ""}</p>
             <p className="mt-2 text-lg font-medium leading-snug">{item.title}</p>
             <p className="mt-2 flex-1 text-sm leading-6">{item.why}</p>
             <a href={item.href} target="_blank" rel={item.sponsored ? "noopener sponsored" : "noopener"} onClick={() => track("trip_extra_opened", { id: item.id })} className="mt-4 inline-flex min-h-11 items-center justify-center gap-2 border border-black/25 px-5 text-micro font-medium uppercase tracking-label transition-colors hover:border-black">{item.cta} <span aria-hidden="true">↗</span><span className="sr-only"> (opens in a new tab)</span></a>
+            </div>
           </li>)}
         </ul>
       </div>)}

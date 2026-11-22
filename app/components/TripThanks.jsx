@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { itemStatus, useConfirmations, useTripRef } from "../lib/booking/useTripStatus";
 import { withSid } from "../lib/booking/cj";
 import { TripExtras } from "./TripExtras";
+import { StoryStudio } from "./StoryStudio";
 
 const BADGE = {
   confirmed: ["Confirmed by Booking.com", "bg-black text-white"],
@@ -14,8 +15,20 @@ const BADGE = {
 // The "thank you" page: everything on the trip with an honest status for each.
 // "Confirmed" only when Booking.com has reported the booking (through CJ); a tick
 // from the traveler is shown as theirs, never as a confirmation.
-// items: [{ id, kind, name, detail, href, cta }]
-export function TripThanks({ destinationName, items, doneKey, refKey, tripRef = null, extras, backHref }) {
+// items: [{ id, kind, name, detail, href, cta, photo: { url, alt, credit } }]
+
+// A square photo for the row: the stay's own Booking.com photo, a place's Google
+// photo (loaded straight from Google), or a licensed photo of the destination.
+function RowPhoto({ photo, index }) {
+  return <div className="relative aspect-square w-full overflow-hidden bg-surface">
+    {photo?.url
+      // eslint-disable-next-line @next/next/no-img-element -- remote photos from several hosts
+      ? <img src={photo.url} alt={photo.alt || ""} loading="lazy" decoding="async" className="image-calm absolute inset-0 h-full w-full object-cover" />
+      : <span className="tabular grid h-full place-items-center font-serif text-3xl" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>}
+    {photo?.credit ? <a href={photo.credit.source || undefined} target="_blank" rel="noopener" title={`Photo: ${photo.credit.artist}${photo.credit.license ? ` · ${photo.credit.license}` : ""}`} className="absolute bottom-0 left-0 right-0 truncate bg-black/45 px-1 text-[9px] leading-4 text-white">{photo.credit.artist}<span className="sr-only"> (photo credit, opens in a new tab)</span></a> : null}
+  </div>;
+}
+export function TripThanks({ destinationName, items, doneKey, refKey, tripRef = null, extras, story, backHref }) {
   const [done, setDone] = useState({});
   const ref = useTripRef(refKey, tripRef);
   const { confirmed } = useConfirmations(ref);
@@ -48,19 +61,20 @@ export function TripThanks({ destinationName, items, doneKey, refKey, tripRef = 
       <ol className="mt-10 divide-y divide-black/12 border-y border-black">
         {rows.map((row, index) => {
           const [label, style] = BADGE[row.status];
-          return <li key={row.id} className="grid gap-3 py-5 sm:grid-cols-[2.5rem_1fr_auto] sm:items-center sm:gap-5">
-            <span className="tabular text-sm" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+          return <li key={row.id} className="grid grid-cols-[5.5rem_1fr] gap-x-4 gap-y-3 py-5 sm:grid-cols-[8rem_1fr_auto] sm:items-center sm:gap-5">
+            <RowPhoto photo={row.photo} index={index} />
             <div>
               <p className="text-lg font-medium leading-snug">{row.name}</p>
               {row.detail ? <p className="mt-1 text-sm">{row.detail}</p> : null}
               <span className={`mt-2 inline-block px-2.5 py-1 text-micro uppercase tracking-label ${style}`}>{label}</span>
             </div>
-            {row.status === "open" && row.href ? <a href={withSid(row.href, ref)} target="_blank" rel={row.sponsored === false ? "noopener" : "noopener sponsored"} className="inline-flex min-h-11 items-center justify-center gap-2 bg-black px-5 text-micro font-medium uppercase tracking-label text-white hover:bg-black/85">{row.cta || "Book now"} <span aria-hidden="true">↗</span><span className="sr-only"> (opens in a new tab)</span></a> : null}
+            {row.status === "open" && row.href ? <a href={withSid(row.href, ref)} target="_blank" rel={row.sponsored === false ? "noopener" : "noopener sponsored"} className="col-span-2 inline-flex min-h-11 items-center justify-center gap-2 bg-black px-5 sm:col-span-1 text-micro font-medium uppercase tracking-label text-white hover:bg-black/85">{row.cta || "Book now"} <span aria-hidden="true">↗</span><span className="sr-only"> (opens in a new tab)</span></a> : null}
           </li>;
         })}
       </ol>
       <p className="mt-6 text-sm"><a href={backHref} className="underline decoration-black/25 underline-offset-4 hover:decoration-black">← Back to your booking steps</a></p>
     </section>
+    {story?.name ? <div className="mx-auto mt-16 max-w-[1080px] px-5 sm:px-8"><StoryStudio story={story} /></div> : null}
     {extras?.length ? <section className="mx-auto mt-16 max-w-[1080px] px-5 sm:px-8"><TripExtras sections={extras} title="Before you go" intro="A few things travelers often forget. Picked for your trip and budget; each opens on the partner's site." /></section> : null}
   </>;
 }
