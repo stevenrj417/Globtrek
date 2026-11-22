@@ -44,7 +44,7 @@ const nextConfig = {
     "/api/hotels/**": ["./app/data/feedStays/**"],
     "/api/cron/catalog": ["./app/data/feedStays/**"],
     "/destinations/**": ["./app/data/feedStays/**"],
-    "/guides/**": ["./app/data/feedStays/**"],
+    "/guides/[slug]": ["./app/data/feedStays/**"],
     "/sitemap.xml": ["./app/data/feedStays/**"],
   },
   async headers() {
