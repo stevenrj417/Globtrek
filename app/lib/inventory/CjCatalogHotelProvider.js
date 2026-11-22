@@ -1,4 +1,4 @@
-import feedSnapshot from "../../data/feedStays.json" with { type: "json" };
+import { feedCheckedAt, feedStaysFor } from "../catalog/feedSnapshot.js";
 import { fromRow } from "../catalog/catalogStore.js";
 import { nearDestination } from "../catalog/nearDestination.js";
 import { GENERIC_NAME, isHomeCategory, isLuxuryStay } from "../catalog/cjBookingImporter.js";
@@ -21,7 +21,7 @@ function fromSnapshot(record) {
     catalogFreeWifi: record.catalogFreeWifi ?? record.freeWifi ?? null,
     catalogFreeBreakfast: record.catalogFreeBreakfast ?? record.freeBreakfast ?? null,
     accessibility: record.accessibility || [],
-    importedAt: record.importedAt || feedSnapshot.checkedAt,
+    importedAt: record.importedAt || feedCheckedAt(),
   };
 }
 
@@ -30,7 +30,7 @@ function destinationFor(destinationId) {
 }
 
 export function snapshotProperties(destinationId) {
-  return nearDestination((feedSnapshot.stays?.[destinationId] || []).map(fromSnapshot).filter((property) => !GENERIC_NAME.test(property.name || "")), destinationFor(destinationId));
+  return nearDestination(feedStaysFor(destinationId).map(fromSnapshot).filter((property) => !GENERIC_NAME.test(property.name || "")), destinationFor(destinationId));
 }
 
 export class CjCatalogHotelProvider {
@@ -52,6 +52,6 @@ export class CjCatalogHotelProvider {
       } catch {}
     }
     const properties = snapshotProperties(destinationId);
-    return { properties, source: properties.length ? "snapshot" : "none", checkedAt: properties.length ? feedSnapshot.checkedAt : null };
+    return { properties, source: properties.length ? "snapshot" : "none", checkedAt: properties.length ? feedCheckedAt() : null };
   }
 }

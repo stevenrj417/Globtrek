@@ -50,28 +50,28 @@ function TierGroups({ items, kind, renderCard }) {
   if (other.length) groups.push({ tier: "other", label: kind === "restaurant" ? "More local favorites" : "More to see", sign: null, items: other.slice(0, 3) });
   return <div className="space-y-8">{groups.map((group) => <div key={group.tier}>
     <h3 className="mb-3 flex items-baseline gap-2 text-micro uppercase tracking-label">{group.label}{group.sign ? <span className="tabular text-subtle" aria-hidden="true">{group.sign}</span> : null}</h3>
-    <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">{group.items.map(renderCard)}</div>
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{group.items.map(renderCard)}</div>
   </div>)}</div>;
 }
 
-function CuratedSection({ id, title, items, selections, onToggle, kind, destination, status, onRetry, initialLimit = null }) {
+function CuratedSection({ id, title, step, items, selections, onToggle, kind, destination, status, onRetry, initialLimit = null }) {
   const [expanded, setExpanded] = useState(false);
   // Nothing to show once loaded: leave the section out instead of an empty block.
   if (status === "ready" && !items.length) return null;
   const tiered = items.some((item) => item.tier);
   const card = (item) => <CatalogCard key={item.id || item.name} item={item} destination={destination} kind={kind} selected={selections.some((selected) => (selected.id || selected.name) === (item.id || item.name))} onToggle={onToggle} />;
   if (status === "ready" && tiered) {
-    return <section id={id} className="scroll-mt-24 border-t border-black/15 px-6 py-8 sm:px-12 sm:py-10" aria-labelledby={`${id}-heading`}><div className="mx-auto grid max-w-[1180px] gap-7 lg:grid-cols-[.48fr_1.52fr]"><header><h2 id={`${id}-heading`} className="max-w-xs font-serif text-[clamp(2rem,3.2vw,3rem)] leading-[.95] tracking-tight-3">{title}</h2></header>
+    return <section id={id} className="scroll-mt-24 border-t border-black/10 px-6 py-14 sm:px-12 sm:py-20" aria-labelledby={`${id}-heading`}><div className="mx-auto grid max-w-[1180px] gap-8"><header>{step ? <p className="eyebrow">{step}</p> : null}<h2 id={`${id}-heading`} className="mt-3 font-serif text-[clamp(2.2rem,3.6vw,3.4rem)] leading-[.95] tracking-tight-3">{title}</h2></header>
       <TierGroups items={items} kind={kind} renderCard={card} />
     </div></section>;
   }
   const visibleLimit = initialLimit ? (expanded ? Math.min(items.length, initialLimit * 2) : initialLimit) : items.length;
   const visibleItems = items.slice(0, visibleLimit);
   const noun = kind === "restaurant" ? "restaurants" : "experiences";
-  return <section id={id} className="scroll-mt-24 border-t border-black/15 px-6 py-8 sm:px-12 sm:py-10" aria-labelledby={`${id}-heading`} aria-busy={status === "loading"}><div className="mx-auto grid max-w-[1180px] gap-7 lg:grid-cols-[.48fr_1.52fr]"><header><h2 id={`${id}-heading`} className="max-w-xs font-serif text-[clamp(2rem,3.2vw,3rem)] leading-[.95] tracking-tight-3">{title}</h2></header>
+  return <section id={id} className="scroll-mt-24 border-t border-black/10 px-6 py-14 sm:px-12 sm:py-20" aria-labelledby={`${id}-heading`} aria-busy={status === "loading"}><div className="mx-auto grid max-w-[1180px] gap-8"><header>{step ? <p className="eyebrow">{step}</p> : null}<h2 id={`${id}-heading`} className="mt-3 font-serif text-[clamp(2.2rem,3.6vw,3.4rem)] leading-[.95] tracking-tight-3">{title}</h2></header>
     {status === "loading" ? <div role="status" className="grid min-h-56 place-items-center bg-surface-sunken text-sm text-ink">Loading {noun}…</div>
       : status === "error" ? <div role="alert" className="flex min-h-40 flex-col items-start justify-center gap-3 border-y border-black/15 py-7 text-sm"><p>We couldn&apos;t load {noun} just now.</p><button type="button" onClick={onRetry} className="inline-flex min-h-11 items-center border border-black/25 px-4 hover:border-black">Try again</button></div>
-      : <div><div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">{visibleItems.map((item) => <CatalogCard key={item.id || item.name} item={item} destination={destination} kind={kind} selected={selections.some((selected) => (selected.id || selected.name) === (item.id || item.name))} onToggle={onToggle} />)}</div>{initialLimit && items.length > initialLimit ? <button type="button" onClick={() => setExpanded((value) => !value)} aria-expanded={expanded} className="mt-5 min-h-11 border-b border-black/25 pb-1 text-micro">{expanded ? `Show fewer ${noun}` : `Show all ${Math.min(items.length, initialLimit * 2)} ${noun}`}</button> : null}</div>}
+      : <div><div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{visibleItems.map((item) => <CatalogCard key={item.id || item.name} item={item} destination={destination} kind={kind} selected={selections.some((selected) => (selected.id || selected.name) === (item.id || item.name))} onToggle={onToggle} />)}</div>{initialLimit && items.length > initialLimit ? <button type="button" onClick={() => setExpanded((value) => !value)} aria-expanded={expanded} className="mt-5 min-h-11 border-b border-black/25 pb-1 text-micro">{expanded ? `Show fewer ${noun}` : `Show all ${Math.min(items.length, initialLimit * 2)} ${noun}`}</button> : null}</div>}
   </div></section>;
 }
 
@@ -102,8 +102,8 @@ export function CuratedTripChoices({ destination, quiz, restaurants, activities,
   useEffect(() => { onCatalogChange?.({ restaurants: dining.items, activities: experiences.items }); }, [dining.items, experiences.items, onCatalogChange]);
   function toggle(item, selected, update) { update(selected.some((current) => (current.id || current.name) === (item.id || item.name)) ? selected.filter((current) => (current.id || current.name) !== (item.id || item.name)) : [...selected, item]); }
   return <>
-    <CuratedSection id="dining" title="Restaurants" items={dining.items} status={dining.status} onRetry={dining.retry} selections={restaurants} onToggle={(item) => toggle(item, restaurants, onRestaurantsChange)} kind="restaurant" destination={destination} initialLimit={4} />
-    <CuratedSection id="experiences" title="Experiences" items={experiences.items} status={experiences.status} onRetry={experiences.retry} selections={activities} onToggle={(item) => toggle(item, activities, onActivitiesChange)} kind="activity" destination={destination} initialLimit={4} />
+    <CuratedSection id="dining" step="03 · Where to eat" title="Restaurants" items={dining.items} status={dining.status} onRetry={dining.retry} selections={restaurants} onToggle={(item) => toggle(item, restaurants, onRestaurantsChange)} kind="restaurant" destination={destination} initialLimit={3} />
+    <CuratedSection id="experiences" step="04 · What to do" title="Experiences" items={experiences.items} status={experiences.status} onRetry={experiences.retry} selections={activities} onToggle={(item) => toggle(item, activities, onActivitiesChange)} kind="activity" destination={destination} initialLimit={3} />
     <BookableTours tours={experiences.extra?.bookable || []} destination={destination} />
   </>;
 }

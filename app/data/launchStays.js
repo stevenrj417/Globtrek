@@ -2,7 +2,7 @@
 // catalog listings. Kept apart from launchSet.js because the catalog snapshot
 // is large: browser code that only needs LAUNCH_DATA must not pull it in.
 
-import feedStays from "./feedStays.json" with { type: "json" };
+import { feedCheckedAt } from "../lib/catalog/feedSnapshot.js";
 import { CHEAP_STAYS, CHEAP_STAYS_CHECKED, stayMonthly } from "./cheapStays.js";
 import { LAUNCH_AIRPORTS, LAUNCH_DATA } from "./launchSet.js";
 import { snapshotProperties } from "../lib/inventory/CjCatalogHotelProvider.js";
@@ -26,7 +26,7 @@ function withFeed(hotel, listing) {
   return { ...extra, ...hotel, address: hotel.address || listing.address, feedSku: listing.sku };
 }
 
-export const FEED_STAYS_CHECKED = feedStays.checkedAt;
+export const FEED_STAYS_CHECKED = feedCheckedAt();
 export function feedListings(destinationId) {
   return snapshotProperties(destinationId);
 }

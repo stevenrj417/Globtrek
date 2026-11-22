@@ -6,6 +6,10 @@ import { track } from "@vercel/analytics";
 import { bookingPropertyUrl } from "../data/destinations";
 import { BookingLogo } from "./PartnerLogo";
 import { cjDestinationStaysUrl } from "../lib/booking/cj";
+import { HotelDetailsDialog } from "./HotelDetails";
+
+// The catalog id a hotel's details are looked up by.
+const detailsId = (stay) => String(stay.providerPropertyId || stay.propertyId || stay.id || "").replace(/^(cj|bk)[-:]/, "");
 
 const STALE_DAYS = 21;
 
@@ -34,19 +38,20 @@ export function stayLinkContext(trip, stay) {
 
 // One stay: photo, name, kind and distance, rating, and a price marked when it is
 // an estimate. Facts come from the catalog only.
-function StayCard({ stay, destination, trip, selected, onSelect, priority }) {
+function StayCard({ stay, destination, trip, selected, onSelect, priority, onDetails }) {
   const url = bookingPropertyUrl({ ...stay, providerLinkVerified: true }, stayLinkContext(trip, stay));
   const photo = stay.photos?.[0] || stay.image;
   const price = stay.price;
   const scale = Number(stay.rating) > 5 ? 10 : 5;
   const meta = [kindLabel(stay), stay.distanceKm !== null && stay.distanceKm !== undefined ? `${stay.distanceKm} km from center` : stay.neighborhood].filter(Boolean).join(" · ");
   return <li className="flex flex-col">
-    <div className={`relative aspect-[4/3] overflow-hidden bg-placeholder ${selected ? "outline outline-2 outline-offset-4 outline-black" : ""}`}>
-      {photo ? <Image src={photo} alt={`${stay.name}, photo from Booking.com`} fill priority={priority} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover" /> : null}
+    <button type="button" onClick={() => onDetails(stay, url)} aria-label={`${stay.name}: photos, reviews and facilities`} className={`group relative block aspect-[4/3] w-full overflow-hidden bg-placeholder text-left ${selected ? "outline outline-2 outline-offset-4 outline-black" : ""}`}>
+      {photo ? <Image src={photo} alt={`${stay.name}, photo from Booking.com`} fill priority={priority} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" /> : null}
       <span className="absolute left-3 top-3 bg-canvas px-2.5 py-1 text-micro font-medium uppercase tracking-label">{stay.role}</span>
-    </div>
+      <span className="absolute bottom-3 right-3 bg-canvas/95 px-2.5 py-1 text-micro font-medium uppercase tracking-label">Reviews &amp; details</span>
+    </button>
     <div className="flex flex-1 flex-col pt-5">
-      <h3 className="font-serif text-2xl leading-[1.05] tracking-tight-2">{stay.name}</h3>
+      <h3 className="font-serif text-2xl leading-[1.05] tracking-tight-2"><button type="button" onClick={() => onDetails(stay, url)} className="text-left hover:underline">{stay.name}</button></h3>
       {meta ? <p className="mt-2 text-sm">{meta}</p> : null}
       {stay.rating && stay.reviewCount ? <p className="tabular mt-1 text-sm">{Number(stay.rating).toFixed(1)}/{scale} · {Number(stay.reviewCount).toLocaleString("en-US")} reviews</p> : null}
       {price && price.kind !== "unavailable" ? <p className="tabular mt-4 font-serif text-2xl">{money(price.total)} <span className="font-sans text-sm">for {price.nights} night{price.nights === 1 ? "" : "s"}{price.kind === "estimate" ? ", estimated" : price.kind === "observed" ? ", recent price" : ""}</span></p> : null}
@@ -61,7 +66,7 @@ function StayCard({ stay, destination, trip, selected, onSelect, priority }) {
 // Three more stays at each price tier, compact, for comparing beyond the main three.
 const STAY_TIERS = [["budget", "Budget", "Hostels, guest houses and simple hotels"], ["mid", "Mid-range", "Three-star hotels, inns and B&Bs"], ["upscale", "Upscale", "Four- and five-star hotels"]];
 
-function TierStays({ tiers, destination, trip, selectedStayId, onSelected }) {
+function TierStays({ tiers, destination, trip, selectedStayId, onSelected, onDetails }) {
   const groups = STAY_TIERS.map(([tier, label, hint]) => ({ tier, label, hint, stays: tiers?.[tier] || [] })).filter((group) => group.stays.length);
   if (!groups.length) return null;
   return <div className="mt-12 border-t border-black/10 pt-8">
@@ -76,7 +81,7 @@ function TierStays({ tiers, destination, trip, selectedStayId, onSelected }) {
         return <li key={stay.id} className="flex gap-3 py-3">
           {stay.image ? <span className="relative h-16 w-20 shrink-0 overflow-hidden bg-placeholder"><Image src={stay.image} alt={`${stay.name}, photo from Booking.com`} fill sizes="80px" className="object-cover" /></span> : null}
           <span className="min-w-0 flex-1">
-            <span className="block truncate font-medium">{stay.name}</span>
+            <button type="button" onClick={() => onDetails(stay, url)} className="block max-w-full truncate text-left font-medium hover:underline">{stay.name}</button>
             <span className="block text-xs text-subtle">{[kindLabel(stay), stay.rating && stay.reviewCount ? `${Number(stay.rating).toFixed(1)}/${scale}` : null, stay.distanceKm !== null && stay.distanceKm !== undefined ? `${stay.distanceKm} km from center` : null].filter(Boolean).join(" · ")}</span>
             <span className="mt-1 flex items-center gap-4 text-xs">
               <button type="button" aria-pressed={selected} onClick={() => { onSelected({ ...stay, role: group.label }, { automatic: false }); track("hotel_selected", { destination: destination.city, role: `tier_${group.tier}` }); }} className="min-h-8 underline underline-offset-4">{selected ? "Selected ✓" : "Select"}</button>
@@ -109,8 +114,8 @@ export function StayChoices({ destination, tripContext, selectedStayId, onSelect
     const controller = new AbortController();
     let timedOut = false;
     // A stuck request must never leave the grey placeholders up: give up after
-    // 12 seconds, try once more on its own, then offer a Try again button.
-    const timer = setTimeout(() => { timedOut = true; controller.abort(); }, 12000);
+    // 20 seconds, try once more on its own, then offer a Try again button.
+    const timer = setTimeout(() => { timedOut = true; controller.abort(); }, 20000);
     fetch("/api/hotels/recommend", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ destinationId, quiz: tripContext, accessibleOnly }), signal: controller.signal })
       .then(async (response) => { if (!response.ok) throw new Error("unavailable"); return response.json(); })
       .then((payload) => {
@@ -135,11 +140,14 @@ export function StayChoices({ destination, tripContext, selectedStayId, onSelect
   }, [state]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const stale = state.stale;
-  return <section id="hotel-selection" className="scroll-mt-20 border-t border-black/15 px-6 py-10 sm:px-12 sm:py-14" aria-labelledby="stay-heading">
+  const [details, setDetails] = useState(null);
+  const openDetails = (stay, url) => { setDetails({ id: detailsId(stay), name: stay.name, url }); track("hotel_details_opened", { destination: destination.city }); };
+  return <section id="hotel-selection" className="scroll-mt-20 border-t border-black/10 px-6 py-14 sm:px-12 sm:py-20" aria-labelledby="stay-heading">
     <div className="mx-auto max-w-[1180px]">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h2 id="stay-heading" className="font-serif text-[clamp(2rem,3.2vw,3rem)] leading-[.95] tracking-tight-3">Stays</h2>
+          <p className="eyebrow">01 · Where you&apos;ll sleep</p>
+          <h2 id="stay-heading" className="mt-3 font-serif text-[clamp(2.2rem,3.6vw,3.4rem)] leading-[.95] tracking-tight-3">Stays</h2>
         </div>
         <label className="flex min-h-11 items-center gap-2 text-sm">
           <input type="checkbox" checked={accessibleOnly} onChange={(event) => setAccessibleOnly(event.target.checked)} className="h-4 w-4 accent-black" />
@@ -149,12 +157,13 @@ export function StayChoices({ destination, tripContext, selectedStayId, onSelect
       <div aria-live="polite" aria-busy={state.status === "loading"}>
         {state.status === "loading" ? <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-label="Loading stays">{[0, 1, 2].map((item) => <li key={item} className="h-[520px] animate-pulse bg-placeholder motion-reduce:animate-none" />)}</ul> : null}
         {state.status === "error" ? <p className="mt-6 flex flex-wrap items-center justify-between gap-3 border border-black/15 bg-surface p-5 text-sm">Stays didn&apos;t load. <button type="button" onClick={() => { setState((current) => ({ ...current, status: "loading" })); setAttempt((value) => value + 1); }} className="min-h-11 border border-black px-4 text-micro uppercase tracking-label hover:bg-black hover:text-white">Try again</button></p> : null}
-        {state.status === "ready" && state.hotels.length ? <ul className="mt-8 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">{state.hotels.map((stay, index) => <StayCard key={stay.id} stay={stay} destination={destination} trip={tripContext} selected={stay.id === selectedStayId} onSelect={(choice) => { onSelected(choice, { automatic: false }); track("hotel_selected", { destination: destination.city, role: choice.role }); }} priority={index === 0} />)}</ul> : null}
+        {state.status === "ready" && state.hotels.length ? <ul className="mt-8 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">{state.hotels.map((stay, index) => <StayCard key={stay.id} onDetails={openDetails} stay={stay} destination={destination} trip={tripContext} selected={stay.id === selectedStayId} onSelect={(choice) => { onSelected(choice, { automatic: false }); track("hotel_selected", { destination: destination.city, role: choice.role }); }} priority={index === 0} />)}</ul> : null}
         {state.status === "ready" && state.notice && (state.hotels.length || accessibleOnly) ? <p className="mt-4 text-sm">{state.notice}</p> : null}
         {state.status === "ready" && !state.hotels.length && !accessibleOnly ? <EmptyStays destination={destination} trip={tripContext} /> : null}
-        {state.status === "ready" && state.hotels.length ? <TierStays tiers={state.tiers} destination={destination} trip={tripContext} selectedStayId={selectedStayId} onSelected={onSelected} /> : null}
+        {state.status === "ready" && state.hotels.length ? <TierStays onDetails={openDetails} tiers={state.tiers} destination={destination} trip={tripContext} selectedStayId={selectedStayId} onSelected={onSelected} /> : null}
               </div>
       {state.status === "ready" && !state.hotels.length ? null : <p className="mt-8 text-xs">From Booking.com{state.catalog?.checkedAt ? ` on ${formatDay(state.catalog.checkedAt)}` : ""}. Not live availability.{stale ? " Over three weeks old." : ""}</p>}
+      {details ? <HotelDetailsDialog id={details.id} name={details.name} bookingUrl={details.url} onClose={() => setDetails(null)} /> : null}
       <button type="button" onClick={() => onSelected({ id: "none", type: "none", name: "No hotel needed" }, { automatic: false })} className="mt-2 min-h-11 text-sm underline underline-offset-4">I already have a place to stay</button>
     </div>
   </section>;

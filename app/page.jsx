@@ -3,7 +3,7 @@ import Link from "next/link";
 import { SiteFooter, SiteHeader } from "./components/SiteChrome";
 import { EmailSignup } from "./components/EmailSignup";
 import { TripCard } from "./components/TripCard";
-import { trendingTrips } from "./data/trending";
+import { beautifulPlaces } from "./data/trending";
 import { DestinationSearch } from "./components/DestinationSearch";
 
 export const metadata = {
@@ -11,7 +11,7 @@ export const metadata = {
   alternates: { canonical: "/" },
 };
 
-const tripHref = (trip) => `/discover/quick?destination=${trip.id}&destinationName=${encodeURIComponent(trip.name)}&source=trending`;
+const tripHref = (trip) => `/discover/quick?destination=${trip.id}&destinationName=${encodeURIComponent(trip.name)}&source=beautiful`;
 
 export default function Home() {
   return (
@@ -39,11 +39,11 @@ export default function Home() {
       <section id="trips" aria-labelledby="trips-heading" className="reveal scroll-mt-24 pb-[var(--section-space)]">
         <div className="mx-auto max-w-[1520px] px-5 sm:px-8">
           <div className="mb-10 flex flex-wrap items-end justify-between gap-4 sm:mb-14">
-            <h2 id="trips-heading" className="font-serif text-3xl tracking-tight-3 sm:text-5xl">Popular this season</h2>
+            <h2 id="trips-heading" className="font-serif text-3xl tracking-tight-3 sm:text-5xl">Three of the most beautiful places on Earth</h2>
             <Link href="/trip-ideas" className="inline-flex min-h-11 items-center text-micro font-medium uppercase tracking-label underline underline-offset-4">More trip ideas →</Link>
           </div>
           <div className="-mx-5 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-2 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-3 md:gap-x-6 md:overflow-visible md:px-0 lg:gap-x-8">
-            {trendingTrips.slice(0, 3).map((trip) => (
+            {beautifulPlaces.map((trip) => (
               <div key={trip.id} className="w-[82%] shrink-0 snap-start md:w-auto">
                 <TripCard trip={trip} href={tripHref(trip)} />
               </div>

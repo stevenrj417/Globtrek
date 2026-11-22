@@ -1,6 +1,7 @@
 import { THEMED_TRIPS, SEVEN_WONDERS, themedTrip } from "../../data/themedTrips";
 import { planSevenContinents, priceAllWonders, priceRoute, priceWonder } from "../../lib/themed/price";
 import { sharedRateLimit } from "../../lib/security/rateLimit";
+import { photoFor } from "../../lib/themed/cards";
 
 export const dynamic = "force-dynamic";
 
@@ -21,6 +22,8 @@ export async function GET(request) {
   else if (kind === "wonders") result = priceAllWonders(options);
   else if (kind === "continents") result = planSevenContinents(params.get("months"), options);
   if (!result) return Response.json({ error: "Unknown trip." }, { status: 404, headers: NO_STORE });
+  // A photo for each stop on the route, from GlobTrek's own destination photos.
+  result = { ...result, stops: (result.stops || []).map((stop) => ({ ...stop, photo: stop.id ? photoFor({ id: stop.id }).url || null : null })) };
   return Response.json({ result }, { headers: NO_STORE });
 }
 

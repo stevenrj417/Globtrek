@@ -13,7 +13,14 @@ export function displayName(value) {
   return String(value || "").toLowerCase().replace(/(^|[\s&,(-])\S/g, (letter) => letter.toUpperCase());
 }
 
-export const trendingTrips = TRENDING.map((trip) => {
+// The homepage's three: some of the most beautiful places on Earth, each a full trip.
+const BEAUTIFUL = [
+  { id: "JTR", nights: 5, vibe: "Cliffs & sunsets", alt: "White houses and blue domes above the caldera in Oia, Santorini" },
+  { id: "lofoten-98845", nights: 6, vibe: "Fjords & peaks", alt: "Reine and its fjord from the top of Reinebringen, Lofoten" },
+  { id: "bled-mtn", nights: 4, vibe: "Lake & castle", alt: "Lake Bled and its island church from the hills above" },
+];
+
+const asTrip = (trip) => {
   const destination = destinations.find((item) => item.id === trip.id);
   return {
     ...trip,
@@ -24,4 +31,6 @@ export const trendingTrips = TRENDING.map((trip) => {
     estimate: estimateTrip(destination, { nights: trip.nights, travelers: 1 }),
     planning: destination.planningAverages?.monthly?.[4] || null,
   };
-});
+};
+export const trendingTrips = TRENDING.map(asTrip);
+export const beautifulPlaces = BEAUTIFUL.map(asTrip);

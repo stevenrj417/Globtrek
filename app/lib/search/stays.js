@@ -1,5 +1,4 @@
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
+import { feedDestinationOf, feedStaysFor } from "../catalog/feedSnapshot.js";
 import index from "../../data/stayIndex.json" with { type: "json" };
 import { stayTier } from "../anyplace/stays.js";
 import { countryName } from "./country.js";
@@ -38,14 +37,10 @@ export function searchStays(query, limit = 6) {
   return found.slice(0, limit).map(({ row }) => ({ id: row.id, name: row.name, city: row.city, country: countryName(row.country), stars: row.stars || null, category: row.category || null }));
 }
 
-let feedPromise;
-function feed() {
-  feedPromise ||= readFile(join(process.cwd(), "app/data/feedStays.json"), "utf8").then((text) => {
-    const byId = new Map();
-    for (const list of Object.values(JSON.parse(text).stays)) for (const stay of list) if (!byId.has(String(stay.providerPropertyId))) byId.set(String(stay.providerPropertyId), stay);
-    return byId;
-  });
-  return feedPromise;
+// The full feed record for one hotel: its destination file, found by id.
+async function feedRecord(id) {
+  const destinationId = feedDestinationOf(id);
+  return destinationId ? feedStaysFor(destinationId).find((stay) => String(stay.providerPropertyId) === String(id)) || null : null;
 }
 
 export const isStayId = (value) => /^\d{1,12}$/.test(String(value || ""));
@@ -53,7 +48,7 @@ export const isStayId = (value) => /^\d{1,12}$/.test(String(value || ""));
 // The full catalog record for one hotel, shaped for its page, or null.
 export async function stayById(id) {
   if (!isStayId(id)) return null;
-  const stay = (await feed()).get(String(id));
+  const stay = await feedRecord(id);
   if (!stay) return null;
   const stars = stay.starRating ? Math.round(stay.starRating) : null;
   return {
@@ -72,6 +67,8 @@ export async function stayById(id) {
     longitude: Number.isFinite(stay.longitude) ? stay.longitude : null,
     photos: (stay.photos || []).filter((url) => /^https:\/\/[a-z0-9-]+\.bstatic\.com\//.test(url)).slice(0, 6),
     amenities: Array.isArray(stay.amenities) ? stay.amenities : [],
+    accessibility: Array.isArray(stay.accessibility) ? stay.accessibility : [],
+    dining: typeof stay.dining === "string" ? stay.dining : null,
     roomTypes: Array.isArray(stay.roomTypes) ? stay.roomTypes.slice(0, 8) : [],
     dorms: Boolean(stay.dorms),
     bedrooms: stay.bedrooms || null,

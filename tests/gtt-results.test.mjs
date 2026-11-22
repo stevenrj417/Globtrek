@@ -49,8 +49,8 @@ test("flight card prices only from recent fares, offers one search action, and k
   assert.doesNotMatch(page, /flight number|airline/i);
 });
 
-test("dining and experience edits each surface four verified choices with visual fallbacks", () => {
-  assert.equal((sections.match(/initialLimit=\{4\}/g) || []).length, 2);
+test("dining and experience edits each show three at a time, with visual fallbacks", () => {
+  assert.equal((sections.match(/initialLimit=\{3\}/g) || []).length, 2);
   assert.match(restaurantRoute, /slice\(0, 4\)/);
   assert.match(restaurantRoute, /slice\(0, 4\)/);
   assert.match(sections, /Show all \$\{.*\} \$\{noun\}/);

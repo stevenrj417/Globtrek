@@ -5,6 +5,9 @@ import { Breadcrumb, Chip } from "../../components/TravelPage";
 import { BookItPanel } from "../../components/BookItPanel";
 import { BookingLogo } from "../../components/PartnerLogo";
 import { stayById } from "../../lib/search/stays";
+import { AmenityChecklist, HotelLiveDetails } from "../../components/HotelDetails";
+import { ExploreMap } from "../../components/ExploreMap";
+import { amenityChecklist } from "../../lib/hotels/amenities";
 
 export const revalidate = 86400;
 
@@ -67,6 +70,21 @@ export default async function HotelPage({ params }) {
         <p className="mt-4 text-xs leading-5">As listed on Booking.com. Check the room you choose there: some facilities cost extra or apply to certain rooms only.</p>
       </div> : null}
     </section>
+    <section className="mx-auto mt-[var(--section-space)] grid max-w-[1280px] gap-10 px-5 sm:px-8 lg:grid-cols-2 lg:gap-16">
+      <div>
+        <h2 className="font-serif text-3xl font-normal tracking-tight-3 sm:text-4xl">What guests say</h2>
+        <div className="mt-6"><HotelLiveDetails id={stay.id} /></div>
+      </div>
+      <div>
+        <h2 className="font-serif text-3xl font-normal tracking-tight-3 sm:text-4xl">At a glance</h2>
+        <div className="mt-6"><AmenityChecklist checklist={amenityChecklist(stay)} /></div>
+        <p className="mt-5 text-xs leading-5">&ldquo;Not listed&rdquo; means the Booking.com listing doesn&apos;t mention it; ask the hotel if it matters.</p>
+      </div>
+    </section>
+    {stay.latitude != null ? <section className="mx-auto mt-[var(--section-space)] max-w-[1280px] px-5 sm:px-8">
+      <h2 className="font-serif text-3xl font-normal tracking-tight-3 sm:text-4xl">Explore the area</h2>
+      <ExploreMap className="mt-6" latitude={stay.latitude} longitude={stay.longitude} label={stay.name} query={[stay.name, stay.city].filter(Boolean).join(", ")} zoomKm={1.5} />
+    </section> : null}
     <p className="mx-auto mt-12 max-w-[1280px] px-5 text-xs leading-5 sm:px-8">GlobTrek may earn a commission if you book through these links, at no extra cost to you. Prices and availability are on Booking.com.</p>
     <div className="h-[var(--section-space)]" aria-hidden="true" />
     <SiteFooter />

@@ -10,7 +10,7 @@ export function DestinationSearch({ variant }) {
   const [open, setOpen] = useState(false);
   const warm = () => import("./DestinationSearchPanel");
   if (variant === "hero") return <>
-    <button type="button" onClick={() => setOpen(true)} onPointerEnter={warm} onFocus={warm} className="flex min-h-14 w-full max-w-xl items-center gap-3 bg-white px-5 text-left text-base text-black shadow-overlay transition-opacity hover:opacity-95" aria-label="Search places, hotels, things to do and flights"><svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5 shrink-0 fill-none stroke-current" strokeWidth="1.5"><circle cx="11" cy="11" r="6" /><path d="m16 16 4 4" /></svg>Search a city, hotel or sight</button>
+    <button type="button" onClick={() => setOpen(true)} onPointerEnter={warm} onFocus={warm} className="flex min-h-14 w-full max-w-xl items-center gap-3 border border-white/55 bg-white/10 px-5 text-left text-base text-white backdrop-blur-md transition-colors hover:border-white hover:bg-white/20" aria-label="Search places, hotels, things to do and flights"><svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5 shrink-0 fill-none stroke-current" strokeWidth="1.5"><circle cx="11" cy="11" r="6" /><path d="m16 16 4 4" /></svg>Search a city, hotel or sight</button>
     {open ? <DestinationSearchPanel onClose={() => setOpen(false)} /> : null}
   </>;
   return <>

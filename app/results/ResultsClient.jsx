@@ -2,6 +2,7 @@
 
 import Image from "../components/Photo";
 import Link from "next/link";
+import { ExploreMap } from "../components/ExploreMap";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { track } from "../lib/analytics";
 import { bookingFlightUrl, bookingPropertyUrl, destinations } from "../data/destinations";
@@ -44,6 +45,21 @@ function titleCase(value) { return String(value || "").toLowerCase().replace(/(^
 function money(value) { return `$${Math.round(value || 0).toLocaleString("en-US")}`; }
 function airportCode(value) { return String(value || "").replace(/[^a-z]/gi, "").slice(0, 3).toUpperCase(); }
 
+// 05: the destination on a map you can drag and zoom, with links out to Google Maps.
+function ExploreArea({ trip }) {
+  const latitude = Number(trip.latitude);
+  const longitude = Number(trip.longitude);
+  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return null;
+  const city = String(trip.city || "").toLowerCase().replace(/(^|[\s'(-])\p{L}/gu, (letter) => letter.toUpperCase());
+  const country = String(trip.country || "").toLowerCase().replace(/(^|[\s'(-])\p{L}/gu, (letter) => letter.toUpperCase());
+  return <section id="explore" className="scroll-mt-24 border-t border-black/10 px-6 py-14 sm:px-12 sm:py-20" aria-labelledby="explore-heading"><div className="mx-auto max-w-[1180px]">
+    <p className="eyebrow">05 · Look around</p>
+    <h2 id="explore-heading" className="mt-3 font-serif text-[clamp(2.2rem,3.6vw,3.4rem)] leading-[.95] tracking-tight-3">Explore {city}</h2>
+    <p className="mt-3 max-w-xl text-base leading-7">Drag and zoom to get a feel for the place, or open it in Google Maps for Street View and directions.</p>
+    <ExploreMap className="mt-8" latitude={latitude} longitude={longitude} label={city} query={[city, country].filter(Boolean).join(", ")} zoomKm={6} />
+  </div></section>;
+}
+
 function FlightPlan({ trip, profile, estimate, preferences, range, onUpdate, searchUrl, datesLabel, suggestedDates }) {
   const origin = profile.originDetails?.displayName || profile.originDetails?.airportName || profile.origin || "Departure origin";
   const [draft, setDraft] = useState(preferences);
@@ -61,8 +77,9 @@ function FlightPlan({ trip, profile, estimate, preferences, range, onUpdate, sea
   const from = preferences.departureAirport || (/^[A-Z]{3}$/.test(profile.origin || "") ? profile.origin : "Home");
   const fromName = profile.originDetails?.displayName || profile.originDetails?.airportName || null;
   const people = (preferences.adults || 1) + (preferences.children || 0);
-  return <section className="border-t border-black/15 px-6 py-10 sm:px-12 sm:py-14" aria-labelledby="flight-plan-heading"><div className="mx-auto max-w-[1180px]">
-    <h2 id="flight-plan-heading" className="font-serif text-[clamp(2rem,3.2vw,3rem)] leading-[.95] tracking-tight-3">Flight</h2>
+  return <section className="border-t border-black/10 px-6 py-14 sm:px-12 sm:py-20" aria-labelledby="flight-plan-heading"><div className="mx-auto max-w-[1180px]">
+    <p className="eyebrow">02 · Getting there</p>
+    <h2 id="flight-plan-heading" className="mt-3 font-serif text-[clamp(2.2rem,3.6vw,3.4rem)] leading-[.95] tracking-tight-3">Flight</h2>
     <div className="mt-6 grid gap-8 bg-white p-6 sm:p-10 md:grid-cols-[1.5fr_1fr] md:items-center">
       <div>
         <p className="flex flex-wrap items-start gap-x-6 gap-y-3 sm:gap-x-10">
@@ -318,18 +335,18 @@ export default function ResultsPage({ shareToken = null }) {
   return <main className="results-editorial min-h-screen bg-canvas pb-28 text-ink">
     <header className="absolute inset-x-0 top-0 z-30 flex items-center justify-between px-6 py-7 text-white sm:px-12 sm:py-10"><Link href="/" className="inline-flex min-h-11 items-center text-sm font-semibold uppercase tracking-editorial">GlobTrek</Link><div className="flex items-center gap-5"><AccountEntry compact light /><Link href="/discover" className="inline-flex min-h-11 items-center text-xs text-white/90 hover:text-white">Start over</Link></div></header>
     <section data-trip-hero className="relative min-h-[92svh] overflow-hidden"><Image src={trip.image} alt={trip.imageAlt || `${trip.city}, ${trip.country}`} fill priority className="hero-drift object-cover" sizes="100vw" quality={88} /><div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/25 to-black/80" /><div className="absolute inset-x-0 bottom-0 h-2/3 bg-[radial-gradient(ellipse_at_bottom,rgba(0,0,0,.45),transparent_70%)]" aria-hidden="true" /><div className="rise absolute inset-x-0 bottom-0 mx-auto w-full max-w-[1240px] px-6 pb-16 text-center text-white [text-shadow:0_1px_12px_rgba(0,0,0,.45)] sm:px-12 sm:pb-20"><p className="text-micro uppercase tracking-editorial text-white">{titleCase(trip.country)}</p><h1 className="mx-auto mt-3 max-w-[92vw] font-serif text-[clamp(3rem,8vw,7.5rem)] font-normal leading-[.88] tracking-tight-3 [text-shadow:0_2px_28px_rgba(0,0,0,.25)]">{titleCase(trip.city)}</h1>{tagline ? <p className="mx-auto mt-5 max-w-xl font-serif text-lg italic text-white/90 sm:text-xl">{tagline}</p> : null}<p className="tabular mt-6 text-sm text-white">{schedule.label} · {datesLine} · {travelers} {travelers === 1 ? "traveler" : "travelers"}</p><p className="tabular mt-6 font-serif text-[clamp(2.4rem,4.5vw,3.5rem)] leading-none">{money(grand)}</p>{travelers > 1 ? <p className="tabular mt-2 text-base text-white">{money(grand / travelers)} per person</p> : null}{stayNightly(budgetPlan, travelers) ? <p className="tabular mt-2 text-sm text-white/90">Stay about {stayNightly(budgetPlan, travelers)}</p> : null}<p className="mt-2 text-xs text-white">Estimated price · final prices confirmed by providers</p><div className="mt-7 flex flex-wrap items-center justify-center gap-3"><button type="button" onClick={goToBooking} className="inline-flex min-h-12 items-center bg-white px-7 text-micro font-medium uppercase tracking-label text-black transition-opacity hover:opacity-90">Start booking</button><a href="#hotel-selection" className="inline-flex min-h-12 items-center px-4 text-micro uppercase tracking-label text-white/90 underline decoration-white/40 underline-offset-4 hover:decoration-white">See the trip</a></div></div></section>
-    <section id="overview" className="scroll-mt-20 border-b border-black/10 px-6 py-3 sm:px-12"><div className="mx-auto flex max-w-[1240px] items-center justify-end gap-5"><button type="button" aria-expanded={shareOpen} aria-controls="share-panel" onClick={() => setShareOpen((open) => !open)} className="min-h-11 text-micro text-ink">Share</button><SaveTripButton trip={savedTrip} className="inline-flex min-h-11 items-center text-micro" /></div>
-      {shareOpen ? <div id="share-panel" className="mx-auto mb-3 max-w-[1240px] border border-black/15 bg-white p-4 text-sm"><p>The link shows the destination, dates, budget, travelers and departure airport, never your name or email. It expires in 90 days.</p><div className="mt-3 flex flex-wrap items-center gap-3"><button type="button" onClick={shareTrip} className="inline-flex min-h-11 items-center bg-black px-5 text-micro uppercase tracking-label text-white">Create share link</button><p role="status" className="text-xs">{shareStatus}</p></div></div> : null}
+    <section id="overview" className="scroll-mt-20 border-b border-black/10 px-6 py-3 sm:px-12"><div className="mx-auto flex max-w-[1180px] items-center justify-end gap-5"><button type="button" aria-expanded={shareOpen} aria-controls="share-panel" onClick={() => setShareOpen((open) => !open)} className="min-h-11 text-micro text-ink">Share</button><SaveTripButton trip={savedTrip} className="inline-flex min-h-11 items-center text-micro" /></div>
+      {shareOpen ? <div id="share-panel" className="mx-auto mb-3 max-w-[1180px] border border-black/15 bg-white p-4 text-sm"><p>The link shows the destination, dates, budget, travelers and departure airport, never your name or email. It expires in 90 days.</p><div className="mt-3 flex flex-wrap items-center gap-3"><button type="button" onClick={shareTrip} className="inline-flex min-h-11 items-center bg-black px-5 text-micro uppercase tracking-label text-white">Create share link</button><p role="status" className="text-xs">{shareStatus}</p></div></div> : null}
     </section>
-    <section aria-label="About this result" className="px-6 py-6 sm:px-12"><div className="mx-auto max-w-[1240px] space-y-4"><OverBudgetNotice budgetPlan={trip.budgetPlan} /><WhyThisMatches reasons={reasons} /><EstimateStatus current={currentEstimate} snapshot={snapshot} changed={changed} onRefresh={refreshEstimates} /></div></section>
+    <section aria-label="About this result" className="px-6 py-6 sm:px-12"><div className="mx-auto max-w-[1180px] space-y-4"><OverBudgetNotice budgetPlan={trip.budgetPlan} /><WhyThisMatches reasons={reasons} /><EstimateStatus current={currentEstimate} snapshot={snapshot} changed={changed} onRefresh={refreshEstimates} /></div></section>
     <StayChoices key={`stay-${destinationKey}`} destination={trip} tripContext={context} selectedStayId={preferredStayId} onSelected={chooseStay} />
     <FlightPlan key={`flight-${destinationKey}`} trip={trip} profile={profile} estimate={budgetPlan.estimates?.flights} searchUrl={view.flightUrl} datesLabel={datesLine} suggestedDates={view.bookingDates.suggested ? view.bookingDates : null} preferences={prefs} range={view.nightsAllowed} onUpdate={updateFlightPreferences} />
     <CuratedTripChoices destination={trip} quiz={quiz} restaurants={selectedRestaurants} activities={selectedActivities} onRestaurantsChange={setSelectedRestaurants} onActivitiesChange={setSelectedActivities} />
+    <ExploreArea trip={trip} />
     <BeforeYouGo trip={trip} seasonWarning={!seasonSuitable(trip, view.activeProfile)} />
     <CostSection budgetPlan={budgetPlan} trip={trip} nights={schedule.nights} travelers={travelers} missingPriceStay={view.stayMissingPrice ? view.stay.name : null} snapshot={snapshot} onBook={goToBooking} />
     <Alternatives alternatives={alternatives} current={trip} answers={quiz.answers || {}} />
     <AdjustTrip key={quizKey(quiz)} quiz={quiz} profile={profile} currentTotal={trip.budgetPlan.budgetCheckTotal} currentId={destinationKey} currentStyle={trip.budgetPlan.spendStyle} />
-    <section aria-labelledby="setting-heading" className="border-t border-black/15 px-6 py-10 sm:px-12"><div className="mx-auto max-w-[1180px]"><h2 id="setting-heading" className="text-xl font-medium tracking-tight-1">Try a different setting</h2><div className="mt-5 flex flex-wrap gap-2">{[["Coast", "Ocean"], ["Mountains", "Mountains"], ["City", "Cities"], ["History & culture", "Culture"], ["Nature & wildlife", "Wild"], ["Surprise me", "Surprise Me"]].filter(([, setting]) => setting !== quiz.answers?.alive).map(([label, setting]) => <Link key={setting} href={`/discover?setting=${encodeURIComponent(setting)}`} className="inline-flex min-h-11 items-center border border-black/20 px-4 text-sm transition-colors duration-150 hover:border-ink">{label}</Link>)}<Link href="/discover" className="inline-flex min-h-11 items-center px-4 text-sm underline decoration-black/25 underline-offset-4 hover:decoration-ink">Retake quiz</Link></div></div></section>
     <section aria-label="Feedback" className="border-t border-black/15 px-6 py-10 sm:px-12"><div className="mx-auto max-w-[1180px]"><FeedbackPanel resultId={snapshot?.resultId || null} destinationId={destinationKey} algorithmVersion={trip.algorithmVersion || snapshot?.algorithmVersion || null} /><p className="mt-6 max-w-2xl text-xs leading-5 text-ink">{AFFILIATE_DISCLOSURE}</p></div></section>
     <TripDock city={trip.city} summary={`${datesLine} · ${schedule.label} · ${travelers} ${travelers === 1 ? "traveler" : "travelers"}`} total={money(grand)} picks={[view.stay ? "stay chosen" : null, prefs.updated ? "flight set" : null, selectedRestaurants.length + selectedActivities.length ? `${selectedRestaurants.length + selectedActivities.length} plans` : null].filter(Boolean).join(" · ")} emailButton={<EmailTripButton trip={savedTrip} viewUrl={tripLink()} className="min-h-11 rounded-full border border-black/15 px-4 text-micro text-black" />} onBook={goToBooking} />
   </main>;

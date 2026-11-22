@@ -9,7 +9,7 @@ const contentSecurityPolicy = [
   "font-src 'self' data: https://fonts.gstatic.com",
   "img-src 'self' data: blob: https:",
   "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://maps.googleapis.com https://places.googleapis.com https://vitals.vercel-insights.com https://va.vercel-scripts.com",
-  "frame-src 'none'",
+  "frame-src https://www.openstreetmap.org",
   "frame-ancestors 'none'",
   "object-src 'none'",
   "base-uri 'self'",
@@ -37,10 +37,15 @@ const nextConfig = {
   // The share-story image route reads its fonts from disk.
   outputFileTracingIncludes: {
     "/api/story": ["./app/lib/share/fonts/*.woff"],
-    // Hotel pages and trip planning read the full Booking.com catalog from disk.
-    "/hotels/*": ["./app/data/feedStays.json"],
-    "/plan": ["./app/data/feedStays.json"],
-    "/places/**": ["./app/data/feedStays.json"],
+    // These read the Booking.com catalog from disk, one destination file at a time.
+    "/hotels/*": ["./app/data/feedStays/**"],
+    "/plan": ["./app/data/feedStays/**"],
+    "/places/**": ["./app/data/feedStays/**"],
+    "/api/hotels/**": ["./app/data/feedStays/**"],
+    "/api/cron/catalog": ["./app/data/feedStays/**"],
+    "/destinations/**": ["./app/data/feedStays/**"],
+    "/guides/**": ["./app/data/feedStays/**"],
+    "/sitemap.xml": ["./app/data/feedStays/**"],
   },
   async headers() {
     return [

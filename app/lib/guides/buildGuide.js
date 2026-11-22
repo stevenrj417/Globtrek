@@ -1,7 +1,7 @@
 // Builds each search guide from real data only (server-side; the stay feed and
 // Google Places files are too large for the browser). A guide that can't show
 // 4 real stays for its search returns null and isn't published.
-import feedStays from "../../data/feedStays.json" with { type: "json" };
+import { feedStaysFor } from "../catalog/feedSnapshot.js";
 import guidePlaces from "../../data/guidePlaces.json" with { type: "json" };
 import airportCoords from "../../data/airportCoords.json" with { type: "json" };
 import climate from "../../../scripts/destinations/climate.json" with { type: "json" };
@@ -43,7 +43,7 @@ for (const [key, town] of Object.entries(GUIDE_TOWNS)) {
   pageById.set(id, { id, name: town.name, slug: pageById.get(town.parent)?.slug || null, alt: `${town.name}, ${town.state}`, country: "United States", continent: "North America", state: town.state, parent: town.parent || null, credit: data.image });
   townStays.set(id, guideStays.towns?.[key]?.stays || []);
 }
-const staysFor = (id) => townStays.get(id) || feedStays.stays?.[id] || [];
+const staysFor = (id) => townStays.get(id) || feedStaysFor(id);
 // A guide's own photo (app/data/guideTowns.js GUIDE_PHOTOS), else its place's.
 const guidePhoto = (guide) => guide.photo ? guideTownData.photos?.[guide.photo] || null : null;
 const climateFor = (id) => climate.climate?.[id] || guideTownData.towns?.[byId.get(id)?.town]?.climate || null;
@@ -613,7 +613,7 @@ function listGuide(guide) {
   const startDate = `${year}-${String(month).padStart(2, "0")}-12`;
   // Ranked only where lodging comes from a regional band or an editorial city
   // budget, so every place is priced on the same footing.
-  let pool = publishedDestinations.filter((page) => (feedStays.stays?.[page.id] || []).length >= 3 && !(rule.exclude || []).includes(page.id) && (bandFor(byId.get(page.id)) || byId.get(page.id)?.planningAverages?.model === "city"));
+  let pool = publishedDestinations.filter((page) => feedStaysFor(page.id).length >= 3 && !(rule.exclude || []).includes(page.id) && (bandFor(byId.get(page.id)) || byId.get(page.id)?.planningAverages?.model === "city"));
   const why = {};
   // Leave out poor-weather months and places far below freezing (high passes and treks).
   // Month lists: places with good weather that month (15–32 °C, under about 4 mm

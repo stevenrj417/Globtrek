@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "./Photo";
 import { useEffect, useMemo, useState } from "react";
 import { AirportAutocomplete } from "./AirportAutocomplete";
 import { formatMoney } from "../lib/format";
@@ -88,8 +89,8 @@ export function TripPricer({ kind, slug = "", bestMonths = [], months: initialMo
   const today = iso(new Date());
   const button = "inline-flex min-h-12 items-center justify-center gap-2 px-5 text-micro font-medium uppercase tracking-label";
 
-  return <section aria-labelledby="pricer-heading" className="border border-black bg-white">
-    <div className="border-b border-black/15 p-5 sm:p-7">
+  return <section aria-labelledby="pricer-heading" className="border border-black/10 bg-white shadow-[0_1px_0_rgba(0,0,0,.04)]">
+    <div className="border-b border-black/10 p-6 sm:p-10">
       <h2 id="pricer-heading" className="font-serif text-3xl tracking-tight-3 sm:text-4xl">{heading}</h2>
       <p className="mt-2 text-sm">Change anything and the price updates. Built from GlobTrek&apos;s price data for your dates, not a guess.</p>
       <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -104,49 +105,61 @@ export function TripPricer({ kind, slug = "", bestMonths = [], months: initialMo
 
     {state.status === "error" && !result ? <p className="p-7 text-base">The price didn&apos;t load. Check your connection; it retries when you change anything.</p> : null}
     {!result ? <p className="p-7 text-base" aria-live="polite">Pricing your trip…</p> : <div className={state.status === "loading" ? "opacity-60 transition-opacity" : "transition-opacity"} aria-live="polite">
-      <div className="grid gap-6 border-b border-black/15 p-5 sm:p-7 lg:grid-cols-[1fr_1.2fr]">
+      <div className="grid gap-8 border-b border-black/10 p-6 sm:p-10 lg:grid-cols-[1fr_1.2fr] lg:gap-14">
         <div>
           <p className="text-micro font-medium uppercase tracking-label">Estimated total</p>
-          <p className="tabular mt-2 font-serif text-[clamp(2.8rem,6vw,4.5rem)] leading-none tracking-tight-3">{formatMoney(result.total)}</p>
-          <p className="tabular mt-3 text-base">{travelers > 1 ? `${formatMoney(result.perPerson)} a person · ` : ""}{result.nights} nights · {range(result.start, result.end)}</p>
+          <p className="tabular mt-3 font-serif text-[clamp(3rem,6vw,5rem)] leading-none tracking-tight-3">{formatMoney(result.total)}</p>
+          <p className="tabular mt-4 text-base">{travelers > 1 ? `${formatMoney(result.perPerson)} a person · ` : ""}{result.nights} nights · {range(result.start, result.end)}</p>
           <p className="tabular mt-1 text-sm">Most likely between {formatMoney(result.low)} and {formatMoney(result.high)}, depending on the flights and rooms you pick.</p>
           {result.suggestedStart ? <p className="mt-4 border-l-2 border-black pl-3 text-sm">Antarctic ships only sail November to March. Start on <button type="button" className="underline" onClick={() => setStart(result.suggestedStart)}>{prettyDay(result.suggestedStart, true)}</button> and your ship sails in season.</p> : null}
         </div>
-        <dl className="grid content-start gap-px bg-black/10">
-          {ROWS.map(([key, label]) => result.totals[key] > 0 ? <div key={key} className="flex items-baseline justify-between gap-4 bg-white py-2.5"><dt className="text-sm">{label}</dt><dd className="tabular text-sm font-medium">{formatMoney(result.totals[key])}</dd></div> : null)}
+        <dl className="grid content-start divide-y divide-black/10 border-y border-black/10">
+          {ROWS.map(([key, label]) => result.totals[key] > 0 ? <div key={key} className="flex items-baseline justify-between gap-4 py-3"><dt className="text-sm">{label}</dt><dd className="tabular text-sm font-medium">{formatMoney(result.totals[key])}</dd></div> : null)}
         </dl>
       </div>
 
-      <div className="p-5 sm:p-7">
-        <h3 className="text-micro font-medium uppercase tracking-label">Your route, day by day</h3>
-        <ol className="mt-4 grid gap-px bg-black/10">
-          {result.stops.map((stop, index) => <li key={`${stop.id}-${stop.start}`} className="grid gap-3 bg-white py-4 sm:grid-cols-[auto_1fr_auto] sm:items-center sm:gap-6">
-            <span className="tabular grid h-10 w-10 place-items-center border border-black text-sm font-medium">{index + 1}</span>
+      <div className="p-6 sm:p-10">
+        <h3 className="font-serif text-2xl tracking-tight-2 sm:text-3xl">Your route</h3>
+        <ol className="relative mt-8 space-y-5 before:absolute before:bottom-6 before:left-[27px] before:top-6 before:w-px before:bg-black/15 sm:before:left-[39px]">
+          {result.stops.map((stop, index) => <li key={`${stop.id}-${stop.start}`} className="relative grid grid-cols-[56px_1fr] gap-4 sm:grid-cols-[80px_1fr_auto] sm:items-center sm:gap-6">
+            <span className="relative block aspect-square w-14 sm:w-20">
+              <span className="absolute inset-0 overflow-hidden rounded-full bg-placeholder ring-4 ring-white">{stop.photo ? <Image src={stop.photo} alt="" fill sizes="80px" className="object-cover" /> : null}</span>
+              <span className="tabular absolute -bottom-0.5 -right-0.5 grid h-6 w-6 place-items-center rounded-full bg-black text-[11px] font-medium text-white ring-2 ring-white">{index + 1}</span>
+            </span>
             <div className="min-w-0">
-              <p className="font-serif text-2xl leading-tight">{calm(stop.city)}<span className="ml-2 text-micro uppercase tracking-label">{calm(stop.country)}{stop.continent ? ` · ${stop.continent}` : ""}</span></p>
-              <p className="tabular mt-1 text-sm">{range(stop.start, stop.end)} · {stop.nights} night{stop.nights === 1 ? "" : "s"} · {formatMoney(stop.total)}{stop.kind === "stay" && stop.lodging?.perUnit ? ` (room or bed about ${formatMoney(stop.lodging.perUnit)} a night)` : ""}</p>
-              {stop.kind === "package" ? <div className="mt-2 text-sm leading-6"><p className="font-medium">{stop.label}: {formatMoney(stop.perPerson.typical)} a person (operators list {formatMoney(stop.perPerson.low)} to {formatMoney(stop.perPerson.high)}).</p><p>{stop.includes}</p><p>{stop.note}</p>{!stop.inSeason ? <p className="font-medium">These trips run {stop.seasonMonths.map((month) => MONTHS[month - 1]).join(", ")}; move your dates to sail.</p> : null}</div> : null}
+              <p className="font-serif text-2xl leading-tight">{calm(stop.city)}<span className="ml-2 text-micro uppercase tracking-label">{calm(stop.country)}</span></p>
+              <p className="tabular mt-1 text-sm">{range(stop.start, stop.end)} · {stop.nights} night{stop.nights === 1 ? "" : "s"} · <span className="font-medium">{formatMoney(stop.total)}</span></p>
+              {stop.kind === "package" ? <div className="mt-2 text-sm leading-6"><p className="font-medium">{stop.label}: {formatMoney(stop.perPerson.typical)} a person (operators list {formatMoney(stop.perPerson.low)} to {formatMoney(stop.perPerson.high)}).</p><p>{stop.includes}</p>{!stop.inSeason ? <p className="font-medium">These trips run {stop.seasonMonths.map((month) => MONTHS[month - 1]).join(", ")}; move your dates to sail.</p> : null}</div> : null}
             </div>
-            {stop.kind === "stay"
-              ? <button type="button" onClick={() => planStop(stop, { origin: index === 0 ? origin : { airportCode: result.stops[index - 1].airport, city: result.stops[index - 1].city }, travelers, style })} className={`${button} border border-black hover:bg-black hover:text-white`}>Plan and book this stop →</button>
-              : <a href={stop.sources?.[0]} target="_blank" rel="noopener" className={`${button} border border-black hover:bg-black hover:text-white`}>See sailings and dates ↗</a>}
+            <div className="col-start-2 sm:col-start-auto">
+              {stop.kind === "stay"
+                ? <button type="button" onClick={() => planStop(stop, { origin: index === 0 ? origin : { airportCode: result.stops[index - 1].airport, city: result.stops[index - 1].city }, travelers, style })} className="inline-flex min-h-11 items-center gap-2 text-micro font-medium uppercase tracking-label underline underline-offset-4">Plan this stop →</button>
+                : <a href={stop.sources?.[0]} target="_blank" rel="noopener" className="inline-flex min-h-11 items-center gap-2 text-micro font-medium uppercase tracking-label underline underline-offset-4">See sailings ↗</a>}
+            </div>
           </li>)}
         </ol>
 
-        <h3 className="mt-10 text-micro font-medium uppercase tracking-label">Flights</h3>
-        <ul className="mt-4 grid gap-px bg-black/10">
-          {result.legs.map((leg) => <li key={`${leg.from}-${leg.to}-${leg.date}`} className="flex flex-wrap items-center justify-between gap-3 bg-white py-3">
-            <span className="tabular text-sm"><strong className="font-medium">{leg.from} → {leg.to}</strong> · {prettyDay(leg.date, true)}{leg.roundTrip ? " · round trip" : ""}</span>
-            {leg.mode === "ground" ? <span className="text-sm">By road or rail</span> : <span className="flex items-center gap-4"><span className="tabular text-sm font-medium">{formatMoney(leg.total)}{travelers > 1 ? ` (${formatMoney(leg.perPerson)} each)` : ""}</span><a href={flightBookingUrl({ from: leg.from, to: leg.to, start: leg.date, end: leg.roundTrip ? result.end : null, adults: travelers, oneWay: !leg.roundTrip })} target="_blank" rel="noopener sponsored" className="text-micro font-medium uppercase tracking-label underline">Search ↗</a></span>}
-          </li>)}
-        </ul>
+        <div className="mt-12 grid gap-px border-y border-black/10 bg-black/10">
+          <details className="group bg-white">
+            <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-3"><span className="font-medium">Flights <span className="tabular font-normal">· {result.legs.filter((leg) => leg.mode !== "ground").length} legs · {formatMoney(result.totals.flights || 0)}</span></span><span aria-hidden="true" className="text-xl transition-transform group-open:rotate-45">+</span></summary>
+            <ul className="grid gap-px bg-black/10 pb-4">
+              {result.legs.map((leg) => <li key={`${leg.from}-${leg.to}-${leg.date}`} className="flex flex-wrap items-center justify-between gap-3 bg-white py-3">
+                <span className="tabular text-sm"><strong className="font-medium">{leg.from} → {leg.to}</strong> · {prettyDay(leg.date, true)}{leg.roundTrip ? " · round trip" : ""}</span>
+                {leg.mode === "ground" ? <span className="text-sm">By road or rail</span> : <span className="flex items-center gap-4"><span className="tabular text-sm font-medium">{formatMoney(leg.total)}{travelers > 1 ? ` (${formatMoney(leg.perPerson)} each)` : ""}</span><a href={flightBookingUrl({ from: leg.from, to: leg.to, start: leg.date, end: leg.roundTrip ? result.end : null, adults: travelers, oneWay: !leg.roundTrip })} target="_blank" rel="noopener sponsored" className="text-micro font-medium uppercase tracking-label underline">Search ↗</a></span>}
+              </li>)}
+            </ul>
+          </details>
+          {result.extras.length ? <details className="group bg-white">
+            <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-3"><span className="font-medium">Tickets and passes <span className="tabular font-normal">· {result.extras.length} · {formatMoney(result.totals.extras || 0)}</span></span><span aria-hidden="true" className="text-xl transition-transform group-open:rotate-45">+</span></summary>
+            <ul className="grid gap-px bg-black/10 pb-4">{result.extras.map((extra) => <li key={extra.key} className="bg-white py-3 text-sm leading-6"><span className="flex flex-wrap justify-between gap-3"><span className="font-medium">{extra.label}</span><span className="tabular font-medium">{formatMoney(extra.total)}{travelers > 1 ? ` (${formatMoney(extra.perPerson)} each)` : ""}</span></span><span>{extra.local ? `${extra.local}. ` : ""}{extra.note} <a href={extra.source} target="_blank" rel="noopener" className="underline">Source ↗</a></span></li>)}</ul>
+          </details> : null}
+          {result.notPriced?.length ? <details className="group bg-white">
+            <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-3"><span className="font-medium">Not in the total <span className="tabular font-normal">· {result.notPriced.length}</span></span><span aria-hidden="true" className="text-xl transition-transform group-open:rotate-45">+</span></summary>
+            <ul className="list-disc space-y-1 pb-4 pl-5 text-sm leading-6">{result.notPriced.map((line) => <li key={line}>{line}</li>)}</ul>
+          </details> : null}
+        </div>
 
-        {result.extras.length ? <><h3 className="mt-10 text-micro font-medium uppercase tracking-label">Tickets and passes</h3>
-          <ul className="mt-4 grid gap-px bg-black/10">{result.extras.map((extra) => <li key={extra.key} className="bg-white py-3 text-sm leading-6"><span className="flex flex-wrap justify-between gap-3"><span className="font-medium">{extra.label}</span><span className="tabular font-medium">{formatMoney(extra.total)}{travelers > 1 ? ` (${formatMoney(extra.perPerson)} each)` : ""}</span></span><span>{extra.local ? `${extra.local}. ` : ""}{extra.note} <a href={extra.source} target="_blank" rel="noopener" className="underline">Source ↗</a></span></li>)}</ul></> : null}
-
-        {result.notPriced?.length ? <><h3 className="mt-10 text-micro font-medium uppercase tracking-label">Not in the total</h3><ul className="mt-3 list-disc space-y-1 pl-5 text-sm leading-6">{result.notPriced.map((line) => <li key={line}>{line}</li>)}</ul></> : null}
-
-        <details className="mt-10 border-t border-black/15 pt-5">
+        <details className="mt-8">
           <summary className="cursor-pointer text-micro font-medium uppercase tracking-label">How GlobTrek built this price</summary>
           <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-6">
             <li>Places to stay, food, things to do and getting around come from GlobTrek&apos;s price model for each stop and month: local restaurant prices, hostel and hotel prices we checked on Booking.com, and government lodging rates where they exist.</li>
