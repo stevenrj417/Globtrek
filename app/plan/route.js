@@ -4,6 +4,8 @@ import { stayById } from "../lib/search/stays";
 import { countryName } from "../lib/search/country";
 import { budgetKey } from "../lib/anyplace/rank";
 import { sharedRateLimit } from "../lib/security/rateLimit";
+import { feedDestinationOf } from "../lib/catalog/feedSnapshot";
+import { destinations } from "../data/destinations";
 
 export const dynamic = "force-dynamic";
 
@@ -67,6 +69,14 @@ export async function GET(request) {
     }
   } catch (error) {
     console.log(JSON.stringify({ level: "warn", msg: "plan_around_failed", error: error.message }));
+  }
+  // Without Google (paid lookups are off), plan around the catalog destination
+  // the hotel or airport belongs to instead.
+  if (!placeId) {
+    const airport = /^[A-Z]{3}$/.test(q("airport")) ? q("airport") : null;
+    const destinationId = q("stay") ? feedDestinationOf(q("stay")) : airport ? (destinations.find((item) => item.airport === airport || item.primaryAirportCodes?.includes(airport))?.id || null) : null;
+    const known = destinationId && destinations.find((item) => (item.id || item.airport) === destinationId || item.id === destinationId);
+    if (known) return Response.redirect(new URL(`/results?destination=${encodeURIComponent(known.id || known.airport)}`, url.origin), 302);
   }
   const target = placeId ? `/places/${encodeURIComponent(placeId)}?${next}${hash}` : `${fallback}${fallback.includes("?") ? "&" : "?"}plan=unavailable`;
   return Response.redirect(new URL(target, url.origin), 302);

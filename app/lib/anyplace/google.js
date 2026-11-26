@@ -25,10 +25,12 @@ export const PICK_FIELDS = "id,displayName,primaryType,primaryTypeDisplayName,ra
 // The destination itself: where it is, its name and a photo for the page.
 export const DESTINATION_FIELDS = "id,displayName,formattedAddress,location,viewport,addressComponents,types,photos,googleMapsUri";
 
+import { googleBlocked } from "../google/paidSwitch.js";
+
 export function createPlacesClient({ key = placesKey(), fetchImpl = globalThis.fetch, timeoutMs = 8000 } = {}) {
   let calls = 0;
   async function call(path, { method = "GET", body, fieldMask, query } = {}) {
-    if (!key) throw new PlacesError("google_places_not_configured");
+    if (!key || googleBlocked(fetchImpl)) throw new PlacesError("google_places_not_configured");
     calls += 1;
     const url = `${ROOT}${path}${query ? `?${new URLSearchParams(query)}` : ""}`;
     let response;

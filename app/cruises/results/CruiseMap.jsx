@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { OsmAreaFrame } from "../../components/ExploreMap";
 import { fitMapToPositions, globTrekMapStyles, loadGoogleMaps } from "../../lib/google-maps/client";
 
 export function CruiseMap({ route, onReveal }) {
@@ -47,5 +48,5 @@ export function CruiseMap({ route, onReveal }) {
     mount();
     return () => { cancelled = true; cancelAnimationFrame(frame); markers.forEach((marker) => marker.setMap(null)); line?.setMap(null); };
   }, [route]);
-  return <div ref={containerRef} className="absolute inset-0 z-0 bg-[#bfcdd1]" role="region" aria-label={`Animated Google map for ${route.title}`}>{error ? <p className="absolute inset-0 grid place-items-center text-xs uppercase tracking-label text-black">{error}</p> : null}</div>;
+  return <div ref={containerRef} className="absolute inset-0 z-0 bg-[#bfcdd1]" role="region" aria-label={`Map for ${route.title}`}>{error ? <OsmAreaFrame points={route.ports} title={`Map of ${route.title}`} /> : null}</div>;
 }

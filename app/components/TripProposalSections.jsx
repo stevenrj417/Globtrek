@@ -19,11 +19,21 @@ function safeImage(item) {
   } catch { return null; }
 }
 
+const titleWords = (value) => String(value || "").toLowerCase().replace(/(^|[\s'(-])\p{L}/gu, (letter) => letter.toUpperCase());
+
+// The tile shown when a place has no free photo: what kind of place it is.
+function placeKindWord(item, kind) {
+  const cuisine = Array.isArray(item.cuisine) ? item.cuisine[0] : item.cuisine;
+  if (kind === "restaurant") return cuisine ? titleWords(cuisine) : "Restaurant";
+  const category = String(item.category || "").replace(/_/g, " ").trim();
+  return category ? titleWords(category) : "Things to do";
+}
+
 function CatalogCard({ item, selected, onToggle, kind, destination }) {
   const [broken, setBroken] = useState(false);
   const verifiedImage = broken ? null : safeImage(item);
   const meta = kind === "restaurant"
-    ? [Array.isArray(item.cuisine) ? item.cuisine.slice(0, 2).join(" · ") : item.cuisine, item.neighborhood, item.rating ? `${item.rating} rating` : null, item.priceRange ? `${item.priceRange.currency} ${item.priceRange.low}${item.priceRange.high ? `–${item.priceRange.high}` : "+"} per person (Google Maps)` : LEVEL_SIGN[item.priceLevel] || null]
+    ? [Array.isArray(item.cuisine) ? item.cuisine.slice(0, 2).join(" · ") : item.cuisine, item.neighborhood, item.rating ? `${item.rating} rating` : null, item.priceRange ? `${item.priceRange.currency} ${item.priceRange.low}${item.priceRange.high ? `–${item.priceRange.high}` : "+"} per person` : LEVEL_SIGN[item.priceLevel] || null]
     : [item.category ? String(item.category).replace(/_/g, " ") : null, item.isFree ? "Free" : null];
   const description = item.description || null;
   const sourceUrl = item.imageSourceUrl || item.imageLicenseMetadata?.sourcePageUrl || null;
@@ -32,9 +42,9 @@ function CatalogCard({ item, selected, onToggle, kind, destination }) {
     {verifiedImage ? <div className="relative aspect-[4/3] overflow-hidden bg-placeholder">
       <Image src={verifiedImage} alt={`${item.name}, ${destination.city}`} fill sizes="(min-width:1280px) 22vw,(min-width:640px) 45vw,100vw" className="object-cover transition duration-700 motion-reduce:transition-none group-hover:scale-[1.02]" onError={() => setBroken(true)} />
       {selected ? <span className="absolute right-3 top-3"><SelectMark /></span> : null}
-    </div> : <span className="relative flex aspect-[4/3] items-end bg-surface-sunken p-5"><span aria-hidden="true" className="font-serif text-[5rem] leading-none text-black/15">{String(item.name || "").trim().charAt(0)}</span>{selected ? <span className="absolute right-3 top-3"><SelectMark /></span> : null}</span>}
+    </div> : <span aria-hidden="true" className={`relative flex aspect-[4/3] flex-col justify-end p-5 ${kind === "restaurant" ? "bg-[radial-gradient(120%_90%_at_100%_0%,#f3ece0_0%,#e6dccb_100%)]" : "bg-[radial-gradient(120%_90%_at_100%_0%,#eef0ea_0%,#dde2d8_100%)]"}`}><span className="font-serif text-[1.7rem] italic leading-none tracking-tight-2 text-black/55">{placeKindWord(item, kind)}</span><span className="mt-2 text-micro uppercase tracking-label text-black/45">{item.neighborhood || titleWords(destination.city)}</span>{selected ? <span className="absolute right-3 top-3"><SelectMark /></span> : null}</span>}
     <span className="block p-4"><span className="block text-micro uppercase tracking-label text-ink">{meta.filter(Boolean).join(" · ")}</span><span className="mt-2 block font-serif text-[1.35rem] leading-[1.02] tracking-tight-2">{item.name}</span>{kind === "activity" ? <span className="mt-2 block line-clamp-2 text-eyebrow leading-4 text-ink">{description}</span> : null}<span className="mt-4 block text-micro font-medium uppercase tracking-label">{action} &nbsp;→</span></span>
-  </button>{verifiedImage && sourceUrl ? <a href={sourceUrl} target="_blank" rel="noopener" className="absolute left-2 top-2 z-10 inline-flex min-h-6 items-center bg-black/65 px-2 text-micro text-white">Photo: Google ↗<span className="sr-only"> (opens in a new tab)</span></a> : null}</article>;
+  </button>{verifiedImage && sourceUrl ? <a href={sourceUrl} target="_blank" rel="noopener" title={item.imageCredit ? `Photo: ${item.imageCredit}, via Wikimedia Commons` : undefined} className="absolute left-2 top-2 z-10 inline-flex min-h-6 max-w-[calc(100%-1rem)] items-center bg-black/65 px-2 text-micro text-white"><span className="truncate">Photo: {item.imageCredit || "Wikimedia Commons"}</span>&nbsp;↗<span className="sr-only"> (opens in a new tab)</span></a> : null}</article>;
 }
 
 // Places collected in price tiers (scripts/activities/curate-places.mjs --tiers),

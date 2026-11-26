@@ -1,35 +1,29 @@
-import { GooglePlacesHotelProvider } from "./GooglePlacesHotelProvider.js";
+// Each place's own photo, for cards that name a specific restaurant or sight.
+//
+// Free only: photos come from the place's Wikipedia article on Wikimedia
+// Commons, matched ahead of time by location and name
+// (scripts/places/match-free-photos.mjs -> app/data/placePhotos.json). No paid
+// API is called here. A place without a matched photo keeps imageUrl null and
+// its card shows no picture rather than an unrelated one.
+import placePhotos from "../../data/placePhotos.json" with { type: "json" };
 
-// Each place's own Google photo, for cards that name a specific restaurant or
-// sight. Google's photo links are short-lived, so they are fetched per request
-// and cached briefly in memory. A place without a photo keeps imageUrl null and
-// its card shows no picture rather than an unrelated city view.
-const TTL_MS = 45 * 60 * 1000;
-const cache = globalThis.__globtrekPlacePhotoCache || new Map();
-globalThis.__globtrekPlacePhotoCache = cache;
-
-async function photoFor(provider, placeId, withPrice = false) {
-  const key = withPrice ? `${placeId}:price` : placeId;
-  const hit = cache.get(key);
-  if (hit && hit.expiresAt > Date.now()) return hit.value;
-  let value = null;
-  try {
-    const manifest = await provider.getPhotoManifest(placeId, { limit: 1, maxWidthPx: 1200, includePrice: withPrice });
-    const photo = manifest.photos?.[0];
-    if (photo?.photoUri) value = { imageUrl: photo.photoUri, imageSourceUrl: photo.googleMapsUri || manifest.googleMapsUri || null, imageAttribution: photo.authorAttributions || [] };
-    if (withPrice && manifest.place?.priceRange) value = { ...(value || {}), priceRange: manifest.place.priceRange };
-  } catch {}
-  cache.set(key, { value, expiresAt: Date.now() + (value ? TTL_MS : TTL_MS / 3) });
-  return value;
+export function freePhotoFor(placeId) {
+  const photo = placeId ? placePhotos.photos?.[placeId] : null;
+  if (!photo?.url) return null;
+  return {
+    imageUrl: photo.url,
+    imageSourceUrl: photo.page,
+    imageCredit: `${photo.author}, ${photo.license}`,
+    imageProvider: "wikimedia",
+  };
 }
 
-// withPrice: also Google's live per-person price range (restaurants only).
-export async function withPlacePhotos(items, { provider = null, withPrice = false } = {}) {
-  if (!process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY && !provider) return items;
-  const places = provider || new GooglePlacesHotelProvider({ maxRetries: 1 });
-  return Promise.all(items.map(async (item) => {
-    if ((item.imageUrl && !withPrice) || !item.googlePlaceId) return item;
-    const photo = await photoFor(places, item.googlePlaceId, withPrice);
-    return photo ? { ...item, ...photo } : item;
-  }));
+// The options are kept so existing callers don't change; withPrice used to add
+// Google's live price range and is now ignored.
+export async function withPlacePhotos(items) {
+  return items.map((item) => {
+    if (item.imageUrl && !/googleusercontent\.com|googleapis\.com/.test(item.imageUrl)) return item;
+    const photo = freePhotoFor(item.googlePlaceId);
+    return photo ? { ...item, ...photo } : { ...item, imageUrl: null };
+  });
 }

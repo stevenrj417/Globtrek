@@ -122,6 +122,8 @@ function livePriceRange(place) {
   return { low, high: Number.isFinite(high) ? high : null, currency, source: "Google Maps price range per person" };
 }
 
+import { googleBlocked } from "../google/paidSwitch.js";
+
 export class GooglePlacesHotelProvider {
   constructor({ apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY, fetchImpl = fetch, sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms)), maxRetries = 3 } = {}) {
     this.apiKey = apiKey;
@@ -131,7 +133,7 @@ export class GooglePlacesHotelProvider {
   }
 
   requireApiKey() {
-    if (!this.apiKey) throw new GooglePlacesError("google_maps_api_key_missing");
+    if (!this.apiKey || googleBlocked(this.fetchImpl)) throw new GooglePlacesError("google_maps_api_key_missing");
   }
 
   async request(path, { method = "GET", body, fieldMask } = {}) {

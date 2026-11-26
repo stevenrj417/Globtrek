@@ -1,5 +1,7 @@
 "use client";
 
+import { GOOGLE_PAID_APIS_ENABLED } from "../google/paidSwitch.js";
+
 let loaderPromise;
 
 export const globTrekMapStyles = Object.freeze([
@@ -16,7 +18,7 @@ export function loadGoogleMaps() {
   if (window.google?.maps) return Promise.resolve(window.google.maps);
   if (loaderPromise) return loaderPromise;
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-  if (!apiKey) return Promise.reject(new Error("google_maps_api_key_missing"));
+  if (!apiKey || !GOOGLE_PAID_APIS_ENABLED) return Promise.reject(new Error("google_maps_api_key_missing"));
   loaderPromise = new Promise((resolve, reject) => {
     const callback = `__globtrekGoogleMapsReady${Date.now()}`;
     const script = document.createElement("script");

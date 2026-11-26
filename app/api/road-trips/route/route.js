@@ -1,3 +1,4 @@
+import { googleBlocked } from "../../../lib/google/paidSwitch.js";
 import { roadTripRoutes } from "../../../data/roadTripRoutes";
 
 export const revalidate = 86_400;
@@ -25,7 +26,7 @@ export async function GET(request) {
   const route = roadTripRoutes.find((candidate) => candidate.id === routeId);
   if (!route) return Response.json({ error: "Unknown route" }, { status: 400 });
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-  if (!apiKey) return Response.json({ coordinates: fallbackGeometry(route), source: "Verified stop progression", distanceMeters: null, durationSeconds: null });
+  if (!apiKey || googleBlocked()) return Response.json({ coordinates: fallbackGeometry(route), source: "Verified stop progression", distanceMeters: null, durationSeconds: null });
   try {
     const [origin, ...remaining] = route.stops;
     const destination = remaining.at(-1);

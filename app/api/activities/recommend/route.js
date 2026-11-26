@@ -8,6 +8,9 @@ import { createClient } from "../../../lib/supabase/server";
 import { GooglePlacesDiscoveryProvider } from "../../../lib/google-places/GooglePlacesDiscoveryProvider";
 import { launchActivities } from "../../../data/launchSet";
 import { withPlacePhotos } from "../../../lib/google-places/placePhotos";
+
+// Sights with a free photo lead (stable: their curated order is kept otherwise).
+const photosFirst = (items) => [...items.filter((item) => item.imageUrl), ...items.filter((item) => !item.imageUrl)];
 import { curatedActivities } from "../../../lib/places/curated";
 import { sharedRateLimit } from "../../../lib/security/rateLimit";
 import { bookableActivities } from "../../../lib/activities/bookable";
@@ -39,7 +42,7 @@ export async function POST(request) {
   if (verified.length) return Response.json({ activities: await withPlacePhotos(verified), bookable: await bookablePromise, source: "globtrek_launch_verified", isLive: false });
   // Then the curated list checked against Google Places for this destination.
   const curated = curatedActivities(destination.id || destination.airport);
-  if (curated.length) return Response.json({ activities: await withPlacePhotos(curated.slice(0, 12)), bookable: await bookablePromise, source: "globtrek_curated_google_places", tiered: curated.some((activity) => activity.tier), isLive: false });
+  if (curated.length) return Response.json({ activities: photosFirst(await withPlacePhotos(curated.slice(0, 12))), bookable: await bookablePromise, source: "globtrek_curated_google_places", tiered: curated.some((activity) => activity.tier), isLive: false });
   try {
     const profile = normalizeTravelerProfile(body.quiz || {});
     await prefetchObservedFares(profile.origin);

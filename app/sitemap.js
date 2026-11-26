@@ -38,7 +38,8 @@ export default function sitemap() {
       changeFrequency: route === "" ? "weekly" : "monthly",
       priority: route === "" ? 1 : 0.8,
     })),
-    ...publishedDestinations.map((item) => ({
+    // /destinations/maldives redirects (next.config.mjs), so it stays out.
+    ...publishedDestinations.filter((item) => item.slug !== "maldives").map((item) => ({
       url: `${SITE_URL}/destinations/${item.slug}`,
       lastModified: item.modelDate ? new Date(`${item.modelDate}T00:00:00Z`) : new Date(`${CONTENT_UPDATED}T00:00:00Z`),
       changeFrequency: "monthly",
