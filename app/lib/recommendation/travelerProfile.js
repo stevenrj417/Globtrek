@@ -67,7 +67,10 @@ export function normalizeTravelerProfile(input = {}) {
     budgetMode: input.budgetMode === "closest" ? "closest" : "under",
     // "auto": the budget engine plans the most comfortable style the budget covers.
     spendStyle: SPEND_STYLES.includes(input.spendStyle || input.answers?.spendStyle) ? (input.spendStyle || input.answers?.spendStyle) : "auto",
-    lodging: { "Hostel bed": "hostel", "Private room": "private", "Whole place": "home", Luxury: "luxury" }[answers.hotel] || "either",
+    // Two or more people get a private room unless they asked for a hostel bed or
+    // explicitly chose the lowest-cost trip; few couples expect dorm beds.
+    lodging: { "Hostel bed": "hostel", "Private room": "private", "Whole place": "home", Luxury: "luxury" }[answers.hotel]
+      || (travelers >= 2 && (input.spendStyle || input.answers?.spendStyle) !== "cheapest" ? "private" : "either"),
     preferredDestinationId: input.destination || input.preferredDestination?.id || null,
     pace: answers.escape || null,
     relaxationPreference: ["Slow mornings", "Mostly relaxing"].includes(answers.escape) ? "high" : answers.escape === "Packed schedule" ? "low" : "medium",

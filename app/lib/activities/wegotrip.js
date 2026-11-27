@@ -60,14 +60,47 @@ export function scoreProduct(product, { interest, pace, perPersonBudget } = {}) 
   if (pace === "Packed schedule" || pace === "Adventure days") score += minutes >= 120 ? 8 : 0;
   // The allowance is in USD; other currencies aren't converted, so they skip this check.
   if (Number.isFinite(perPersonBudget) && product.currency === "USD") score += product.price <= perPersonBudget ? 10 : -25;
-  if (product.rating) score += (product.rating - 4) * 10 + Math.min(10, Math.log10(1 + product.ratingsCount) * 4);
+  // A 5.0 from one review shouldn't beat a 3.9 from a thousand: the rating is
+  // pulled toward 4.2 until it has about 30 reviews, and reviews count on their own.
+  if (product.rating) {
+    const count = product.ratingsCount || 0;
+    const steady = (product.rating * count + 4.2 * 30) / (count + 30);
+    score += (steady - 4) * 20 + Math.log10(1 + count) * 8;
+  }
   return Math.round(score);
 }
 
+// Words that name what a product is (a stadium, a palace, a district), for
+// spotting the same thing sold several ways.
+const PLAIN_WORDS = new Set(["ticket", "tickets", "entry", "entrance", "admission", "tour", "tours", "audio", "guide", "guided", "self", "walk", "walking", "through", "with", "priority",
+  "skip", "line", "offer", "experience", "and", "the", "from", "city", "plus", "access", "area", "museum", "park", "historic", "heart", "old", "quarter", "quarters", "your", "private", "small", "group", "day", "trip", "half", "full", "hour", "hours", "meal", "snack", "wine", "tasting", "scarf", "fast", "track", "combo", "pass"]);
+function keyWords(name, cityWords) {
+  return new Set(String(name).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().split(/[^a-z]+/).filter((word) => word.length >= 4 && !PLAIN_WORDS.has(word) && !cityWords.has(word)));
+}
+
+// Best first, but the same sight or district only once until everything else
+// has had a turn.
+function diversify(products) {
+  const cityWords = new Set();
+  const counts = {};
+  for (const product of products) for (const word of keyWords(product.name, cityWords)) counts[word] = (counts[word] || 0) + 1;
+  // A word in most product names is the city itself ("lisbon"), not a sight.
+  for (const [word, count] of Object.entries(counts)) if (count >= Math.max(4, products.length * 0.4)) cityWords.add(word);
+  const picked = [];
+  const later = [];
+  const seen = new Set();
+  for (const product of products) {
+    const words = keyWords(product.name, cityWords);
+    if ([...words].some((word) => seen.has(word))) later.push(product);
+    else { picked.push(product); words.forEach((word) => seen.add(word)); }
+  }
+  return [...picked, ...later];
+}
+
 export function rankProducts(products, preferences = {}) {
-  return products
+  return diversify(products
     .map((product) => ({ ...product, fit: scoreProduct(product, preferences), matchesInterest: Boolean(preferences.interest && (INTEREST_CATEGORIES[preferences.interest] || []).includes(product.category)) }))
-    .sort((a, b) => b.fit - a.fit || a.price - b.price || a.id.localeCompare(b.id));
+    .sort((a, b) => b.fit - a.fit || a.price - b.price || a.id.localeCompare(b.id)));
 }
 
 export async function fetchCityProducts(cityId, { fetchImpl = fetch, perPage = 60 } = {}) {
