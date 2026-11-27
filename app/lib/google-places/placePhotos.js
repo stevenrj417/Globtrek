@@ -6,6 +6,7 @@
 // API is called here. A place without a matched photo keeps imageUrl null and
 // its card shows no picture rather than an unrelated one.
 import placePhotos from "../../data/placePhotos.json" with { type: "json" };
+import placeAbout from "../../data/placeAbout.json" with { type: "json" };
 
 export function freePhotoFor(placeId) {
   const photo = placeId ? placePhotos.photos?.[placeId] : null;
@@ -15,6 +16,9 @@ export function freePhotoFor(placeId) {
     imageSourceUrl: photo.page,
     imageCredit: `${photo.author}, ${photo.license}`,
     imageProvider: "wikimedia",
+    // Pronunciation guides ("[hwâː lɔ̀]") read as noise on a travel page.
+    about: String(placeAbout.about?.[photo.article] || "").replace(/\s*\[[^\]]*\],?/g, "").replace(/:\s*,/g, ":").replace(/\(\s*[;,]?\s*\)/g, "").replace(/ {2,}/g, " ") || null,
+    aboutSourceUrl: `https://en.wikipedia.org/wiki/${encodeURIComponent(photo.article.replace(/ /g, "_"))}`,
   };
 }
 

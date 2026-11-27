@@ -7,7 +7,8 @@ import { AFFILIATE_DISCLOSURE, CONTACT_EMAIL, INSTAGRAM_URL, LEGAL_NAME } from "
 import { BookingLogo } from "./PartnerLogo";
 import { BookingPartnerBadge } from "./PartnerLogo";
 
-const navigation = [["Trip ideas", "/trip-ideas"], ["Surprise me", "/surprise"]];
+const navigation = [["Trip ideas", "/trip-ideas"]];
+const mobileNavigation = [["Trip ideas", "/trip-ideas"], ["Surprise me", "/surprise"]];
 
 const footerGroups = [
   ["Plan", [["Plan my trip", "/discover"], ["Trip ideas", "/trip-ideas"], ["Surprise me", "/surprise"], ["Destinations", "/destinations"], ["Guides", "/guides"], ["How it works", "/how-it-works"]]],
@@ -26,8 +27,14 @@ export function SiteHeader({ actionHref = "/discover", actionLabel = "Plan my tr
             <NavLinks items={navigation} />
             <div className="flex items-center gap-4 sm:gap-5">
               <DestinationSearch />
-              <Link className="btn btn-primary hidden min-h-11 shrink-0 sm:inline-flex" href={actionHref}>{actionLabel}</Link>
-              <MobileMenu items={navigation} actionHref={actionHref} actionLabel={actionLabel} />
+              {/* Plan my trip, with "Surprise me" just under it on hover or keyboard focus. */}
+              <div className="group relative hidden shrink-0 sm:block">
+                <Link className="inline-flex min-h-11 items-center gap-2 border border-black px-5 text-micro font-medium uppercase tracking-label text-ink transition-colors duration-200 hover:bg-black hover:text-white focus-visible:bg-black focus-visible:text-white" href={actionHref}>{actionLabel}<span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-0.5">→</span></Link>
+                {actionLabel === "Plan my trip" ? <div className="invisible absolute right-0 top-full z-50 w-full min-w-[12rem] pt-2 opacity-0 transition duration-150 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
+                  <Link href="/surprise" className="flex min-h-11 items-center justify-between gap-3 border border-black/10 bg-bg px-5 text-micro font-medium uppercase tracking-label text-ink shadow-hover transition-colors hover:border-black">Surprise me <span aria-hidden="true">✦</span></Link>
+                </div> : null}
+              </div>
+              <MobileMenu items={mobileNavigation} actionHref={actionHref} actionLabel={actionLabel} />
             </div>
           </div>
         </nav>

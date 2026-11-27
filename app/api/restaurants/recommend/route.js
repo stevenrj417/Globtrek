@@ -4,7 +4,8 @@ import { SupabaseRestaurantProvider } from "../../../lib/restaurants/SupabaseRes
 import { createClient } from "../../../lib/supabase/server";
 import { GooglePlacesDiscoveryProvider } from "../../../lib/google-places/GooglePlacesDiscoveryProvider";
 import { launchDinners } from "../../../data/launchSet";
-import { withPlacePhotos } from "../../../lib/google-places/placePhotos";
+import { withPlacePhotos as placePhotos } from "../../../lib/google-places/placePhotos";
+import { withCuisinePhotos } from "../../../lib/places/cuisinePhotos";
 import { curatedRestaurants } from "../../../lib/places/curated";
 import { sharedRateLimit } from "../../../lib/security/rateLimit";
 import { usdRate } from "../../../lib/pricing/aggregate";
@@ -13,6 +14,12 @@ import { localPrices } from "../../../data/destinationPlanningAverages";
 // GlobTrek is a budget site: unless a traveler asks for comfort, no expensive tables.
 function pricey(level) {
   return /EXPENSIVE/.test(String(level || "")) || Number(level) >= 3 || /^\${3,}$/.test(String(level || ""));
+}
+
+// The place's own photo when there is one; otherwise a food photo of its
+// cuisine, never the same photo twice in one list.
+async function withPhotos(items, destination) {
+  return withCuisinePhotos(await placePhotos(items), destination);
 }
 
 export async function POST(request) {
@@ -24,13 +31,13 @@ export async function POST(request) {
   if (!destination) return Response.json({ error: "Unknown destination" }, { status: 400 });
   // Launch destinations show only hand-verified restaurants.
   const verified = launchDinners(destination.id);
-  if (verified.length) return Response.json({ restaurants: await withPlacePhotos(verified), source: "globtrek_launch_verified", availabilitySource: "not_requested" });
+  if (verified.length) return Response.json({ restaurants: await withPhotos(verified, destination), source: "globtrek_launch_verified", availabilitySource: "not_requested" });
   // Tiered places: three cheap, three mid-range and three splurge tables, each
   // with Google's live per-person price range, so the traveler sees the spread.
   const all = curatedRestaurants(destination.id || destination.airport);
-  if (all.some((restaurant) => restaurant.tier)) return Response.json({ restaurants: await withPlacePhotos(all.slice(0, 9), { withPrice: true }), source: "globtrek_curated_google_places", tiered: true, availabilitySource: "not_requested" });
+  if (all.some((restaurant) => restaurant.tier)) return Response.json({ restaurants: await withPhotos(all.slice(0, 9), destination), source: "globtrek_curated_google_places", tiered: true, availabilitySource: "not_requested" });
   const curated = all.filter((restaurant) => body.spendStyle === "comfortable" || !pricey(restaurant.priceLevel));
-  if (curated.length) return Response.json({ restaurants: await withPlacePhotos(curated.slice(0, 8)), source: "globtrek_curated_google_places", availabilitySource: "not_requested" });
+  if (curated.length) return Response.json({ restaurants: await withPhotos(curated.slice(0, 8), destination), source: "globtrek_curated_google_places", availabilitySource: "not_requested" });
   try {
     let restaurants = [];
     let source = "supabase_verified";
@@ -64,7 +71,7 @@ export async function POST(request) {
         return restaurant;
       }
     }));
-    return Response.json({ restaurants: await withPlacePhotos(enriched.slice(0, 4)), source, availabilitySource: canCheckAvailability ? "opentable" : "not_requested" });
+    return Response.json({ restaurants: await withPhotos(enriched.slice(0, 4), destination), source, availabilitySource: canCheckAvailability ? "opentable" : "not_requested" });
   } catch (error) {
     console.warn("Verified restaurant catalog unavailable.", error instanceof Error ? error.message : "unknown");
     return Response.json({ restaurants: [], source: "unavailable", availabilitySource: "unavailable" });

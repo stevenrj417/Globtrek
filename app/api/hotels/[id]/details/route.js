@@ -47,6 +47,18 @@ async function googleReviews(stay) {
   };
 }
 
+// The hotel's full facility list, minus the pandemic-era hygiene notes and
+// fragments that the feed splits on commas.
+function facilityList(amenities) {
+  const seen = new Set();
+  return (Array.isArray(amenities) ? amenities : []).map((item) => String(item).trim()).filter((item) => {
+    const key = item.toLowerCase();
+    if (!item || item.length > 60 || seen.has(key) || /coronavirus|covid|disinfect|sanitiz|social distanc|local authority|protective|physical distanc|^towels|^linens|screens|contactless|first aid|thermometer|face mask|cashless/i.test(item)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
 // Hotels added by the daily catalog import may not be in the bundled snapshot yet.
 async function stayFromDatabase(id) {
   if (!isStayId(id)) return null;
@@ -56,7 +68,7 @@ async function stayFromDatabase(id) {
     if (!data) return null;
     const row = fromRow(data);
     const stars = row.starRating ? Math.round(row.starRating) : null;
-    return { id: String(row.providerPropertyId), name: row.name, category: row.category || null, stars, description: row.description || null, street: row.address || null, city: row.city || null, country: row.country || null, latitude: row.latitude != null && Number.isFinite(Number(row.latitude)) ? Number(row.latitude) : null, longitude: row.longitude != null && Number.isFinite(Number(row.longitude)) ? Number(row.longitude) : null, photos: (row.photos || []).filter((url) => /^https:\/\/[a-z0-9-]+\.bstatic\.com\//.test(url)).slice(0, 6), amenities: row.amenities || [], accessibility: row.accessibility || [], dining: typeof row.dining === "string" ? row.dining : null, roomTypes: (row.roomTypes || []).slice(0, 8), freeBreakfast: Boolean(row.catalogFreeBreakfast), bookingUrl: row.bookingUrl };
+    return { id: String(row.providerPropertyId), name: row.name, category: row.category || null, stars, description: row.description || null, street: row.address || null, city: row.city || null, country: row.country || null, latitude: row.latitude != null && Number.isFinite(Number(row.latitude)) ? Number(row.latitude) : null, longitude: row.longitude != null && Number.isFinite(Number(row.longitude)) ? Number(row.longitude) : null, photos: (row.photos || []).filter((url) => /^https:\/\/[a-z0-9-]+\.bstatic\.com\//.test(url)).slice(0, 6), amenities: row.amenities || [], freeWifi: Boolean(row.catalogFreeWifi), freeCancellation: Boolean(row.catalogFreeCancellation), maxGuests: row.maxGuests || null, bedrooms: row.bedrooms || null, accessibility: row.accessibility || [], dining: typeof row.dining === "string" ? row.dining : null, roomTypes: (row.roomTypes || []).slice(0, 12), freeBreakfast: Boolean(row.catalogFreeBreakfast), bookingUrl: row.bookingUrl };
   } catch {
     return null;
   }
@@ -75,6 +87,8 @@ export async function GET(request, { params }) {
       id: stay.id, name: stay.name, city: stay.city, country: stay.country, street: stay.street, stars: stay.stars, category: stay.category,
       description: stay.description, photos: stay.photos, latitude: stay.latitude, longitude: stay.longitude, bookingUrl: stay.bookingUrl,
       checklist: amenityChecklist(stay), accessibility: stay.accessibility, roomTypes: stay.roomTypes,
+      amenities: facilityList(stay.amenities), dining: stay.dining || null,
+      facts: { freeCancellation: Boolean(stay.freeCancellation), freeBreakfast: Boolean(stay.freeBreakfast), freeWifi: Boolean(stay.freeWifi), bedrooms: stay.bedrooms || null, bathrooms: stay.bathrooms || null, maxGuests: stay.maxGuests || null, beds: stay.bedsDescription || null, dorms: Boolean(stay.dorms), nearAirport: stay.nearAirport || null },
       mapUrl: googleMapsSearchUrl(stay),
     },
     google,

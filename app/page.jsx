@@ -27,9 +27,9 @@ export default function Home() {
             <p className="mt-5 max-w-md text-base leading-7 text-white/90">Tell us how you like to travel. We&apos;ll find the place.</p>
             <div className="mt-8 flex w-full flex-col items-center gap-3">
               <DestinationSearch variant="hero" />
-              <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
-                <Link href="/discover" className="inline-flex min-h-12 min-w-[13rem] items-center justify-center gap-2 border border-white bg-black px-7 text-micro font-medium uppercase tracking-label text-white transition-opacity hover:opacity-90">Plan my trip <span aria-hidden="true">→</span></Link>
-                <Link href="/surprise" className="inline-flex min-h-12 items-center text-micro font-medium uppercase tracking-label text-white underline underline-offset-4">Or surprise me</Link>
+              <div className="flex flex-col items-center gap-2">
+                <Link href="/discover" className="group inline-flex min-h-12 min-w-[13rem] items-center justify-center gap-2 bg-white px-7 text-micro font-medium uppercase tracking-label text-black transition-colors duration-200 hover:bg-white/85">Plan my trip <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-0.5">→</span></Link>
+                <Link href="/surprise" className="inline-flex min-h-11 items-center gap-2 text-micro font-medium uppercase tracking-label text-white/90 underline decoration-white/40 underline-offset-4 transition hover:text-white hover:decoration-white">or surprise me <span aria-hidden="true">✦</span></Link>
               </div>
             </div>
           </div>

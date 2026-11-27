@@ -4,6 +4,7 @@ import Image from "./Photo";
 import { useEffect, useState } from "react";
 import { BrandMark } from "./BrandMark";
 import { BookableTours } from "./results/BookableTours";
+import { PlaceDetailsDialog } from "./PlaceDetails";
 
 function SelectMark() {
   return <span className="grid h-12 w-12 place-items-center rounded-full bg-canvas/95 shadow-sm" aria-hidden="true"><BrandMark className="!h-6 !w-10" /></span>;
@@ -29,22 +30,28 @@ function placeKindWord(item, kind) {
   return category ? titleWords(category) : "Things to do";
 }
 
-function CatalogCard({ item, selected, onToggle, kind, destination }) {
+function CatalogCard({ item, selected, onToggle, onOpen, kind, destination }) {
   const [broken, setBroken] = useState(false);
   const verifiedImage = broken ? null : safeImage(item);
   const meta = kind === "restaurant"
-    ? [Array.isArray(item.cuisine) ? item.cuisine.slice(0, 2).join(" · ") : item.cuisine, item.neighborhood, item.rating ? `${item.rating} rating` : null, item.priceRange ? `${item.priceRange.currency} ${item.priceRange.low}${item.priceRange.high ? `–${item.priceRange.high}` : "+"} per person` : LEVEL_SIGN[item.priceLevel] || null]
-    : [item.category ? String(item.category).replace(/_/g, " ") : null, item.isFree ? "Free" : null];
-  const description = item.description || null;
+    ? [(item.category && !/^restaurant$/i.test(item.category) ? titleWords(String(item.category).replace(/_/g, " ")) : null) || (Array.isArray(item.cuisine) ? item.cuisine.slice(0, 2).join(" · ") : item.cuisine), item.neighborhood, item.rating ? `★ ${Number(item.rating).toFixed(1)}` : null, item.priceRange ? `${item.priceRange.currency} ${item.priceRange.low}${item.priceRange.high ? `–${item.priceRange.high}` : "+"} per person` : LEVEL_SIGN[item.priceLevel] || null]
+    : [item.category ? String(item.category).replace(/_/g, " ") : null, item.rating ? `★ ${Number(item.rating).toFixed(1)}` : null, item.isFree ? "Free" : null];
+  const description = item.description || (item.about ? item.about.split("\n")[0] : null);
   const sourceUrl = item.imageSourceUrl || item.imageLicenseMetadata?.sourcePageUrl || null;
-  const action = selected ? "Added to your trip" : "Add to trip";
-  return <article className={`group relative overflow-hidden border border-black/8 transition duration-300 ${selected ? "bg-placeholder shadow-hover" : "bg-surface hover:bg-surface-sunken"}`}><button type="button" onClick={() => onToggle(item)} aria-pressed={selected} className="block w-full text-left">
-    {verifiedImage ? <div className="relative aspect-[4/3] overflow-hidden bg-placeholder">
-      <Image src={verifiedImage} alt={`${item.name}, ${destination.city}`} fill sizes="(min-width:1280px) 22vw,(min-width:640px) 45vw,100vw" className="object-cover transition duration-700 motion-reduce:transition-none group-hover:scale-[1.02]" onError={() => setBroken(true)} />
-      {selected ? <span className="absolute right-3 top-3"><SelectMark /></span> : null}
-    </div> : <span aria-hidden="true" className={`relative flex aspect-[4/3] flex-col justify-end p-5 ${kind === "restaurant" ? "bg-[radial-gradient(120%_90%_at_100%_0%,#f3ece0_0%,#e6dccb_100%)]" : "bg-[radial-gradient(120%_90%_at_100%_0%,#eef0ea_0%,#dde2d8_100%)]"}`}><span className="font-serif text-[1.7rem] italic leading-none tracking-tight-2 text-black/55">{placeKindWord(item, kind)}</span><span className="mt-2 text-micro uppercase tracking-label text-black/45">{item.neighborhood || titleWords(destination.city)}</span>{selected ? <span className="absolute right-3 top-3"><SelectMark /></span> : null}</span>}
-    <span className="block p-4"><span className="block text-micro uppercase tracking-label text-ink">{meta.filter(Boolean).join(" · ")}</span><span className="mt-2 block font-serif text-[1.35rem] leading-[1.02] tracking-tight-2">{item.name}</span>{kind === "activity" ? <span className="mt-2 block line-clamp-2 text-eyebrow leading-4 text-ink">{description}</span> : null}<span className="mt-4 block text-micro font-medium uppercase tracking-label">{action} &nbsp;→</span></span>
-  </button>{verifiedImage && sourceUrl ? <a href={sourceUrl} target="_blank" rel="noopener" title={item.imageCredit ? `Photo: ${item.imageCredit}, via Wikimedia Commons` : undefined} className="absolute left-2 top-2 z-10 inline-flex min-h-6 max-w-[calc(100%-1rem)] items-center bg-black/65 px-2 text-micro text-white"><span className="truncate">Photo: {item.imageCredit || "Wikimedia Commons"}</span>&nbsp;↗<span className="sr-only"> (opens in a new tab)</span></a> : null}</article>;
+  return <article className={`group relative flex flex-col overflow-hidden border border-black/8 transition duration-300 ${selected ? "bg-placeholder shadow-hover" : "bg-surface hover:bg-surface-sunken"}`}>
+    <button type="button" onClick={() => onOpen(item)} aria-label={`About ${item.name}`} className="block w-full text-left">
+      {verifiedImage ? <span className="relative block aspect-[4/3] overflow-hidden bg-placeholder">
+        <Image src={verifiedImage} alt={item.imageIsExample ? `${item.exampleDish || item.cuisineLabel || "Food"}, an example dish` : `${item.name}, ${destination.city}`} fill sizes="(min-width:1280px) 22vw,(min-width:640px) 45vw,100vw" className="object-cover transition duration-700 motion-reduce:transition-none group-hover:scale-[1.02]" onError={() => setBroken(true)} />
+        {selected ? <span className="absolute right-3 top-3"><SelectMark /></span> : null}
+      </span> : <span aria-hidden="true" className={`relative flex aspect-[4/3] flex-col justify-end p-5 ${kind === "restaurant" ? "bg-[radial-gradient(120%_90%_at_100%_0%,#f3ece0_0%,#e6dccb_100%)]" : "bg-[radial-gradient(120%_90%_at_100%_0%,#eef0ea_0%,#dde2d8_100%)]"}`}><span className="font-serif text-[1.7rem] italic leading-none tracking-tight-2 text-black/55">{placeKindWord(item, kind)}</span><span className="mt-2 text-micro uppercase tracking-label text-black/45">{item.neighborhood || titleWords(destination.city)}</span>{selected ? <span className="absolute right-3 top-3"><SelectMark /></span> : null}</span>}
+      <span className="block p-4 pb-3"><span className="block text-micro uppercase tracking-label text-ink">{meta.filter(Boolean).join(" · ")}</span><span className="mt-2 block font-serif text-[1.35rem] leading-[1.02] tracking-tight-2 group-hover:underline group-hover:decoration-black/30 group-hover:underline-offset-4">{item.name}</span>{description ? <span className="mt-2 block line-clamp-2 text-eyebrow leading-4 text-ink">{description}</span> : null}</span>
+    </button>
+    <div className="mt-auto flex items-center justify-between gap-3 px-4 pb-4">
+      <button type="button" onClick={() => onToggle(item)} aria-pressed={selected} aria-label={`${selected ? "Remove" : "Add"} ${item.name} ${selected ? "from" : "to"} your trip`} className="inline-flex min-h-11 items-center text-micro font-medium uppercase tracking-label">{selected ? "Added to your trip ✓" : "Add to trip +"}</button>
+      <button type="button" onClick={() => onOpen(item)} className="inline-flex min-h-11 items-center text-micro text-subtle underline underline-offset-4 hover:text-ink" aria-label={`Details about ${item.name}`}>Details</button>
+    </div>
+    {verifiedImage && sourceUrl ? <a href={sourceUrl} target="_blank" rel="noopener" title={item.imageCredit ? `Photo: ${item.imageCredit}, via Wikimedia Commons` : undefined} className="absolute left-2 top-2 z-10 inline-flex min-h-6 max-w-[calc(100%-1rem)] items-center bg-black/65 px-2 text-micro text-white"><span className="truncate">{item.imageIsExample ? "Example dish · " : "Photo: "}{item.imageCredit || "Wikimedia Commons"}</span>&nbsp;↗<span className="sr-only"> (opens in a new tab)</span></a> : null}
+  </article>;
 }
 
 // Places collected in price tiers (scripts/activities/curate-places.mjs --tiers),
@@ -67,14 +74,17 @@ function TierGroups({ items, kind, renderCard }) {
 
 function CuratedSection({ id, title, step, items, selections, onToggle, kind, destination, status, onRetry, initialLimit = null }) {
   const [expanded, setExpanded] = useState(false);
+  const [open, setOpen] = useState(null);
+  const isSelected = (item) => selections.some((selected) => (selected.id || selected.name) === (item.id || item.name));
+  const dialog = open ? <PlaceDetailsDialog item={open} kind={kind} destination={destination} selected={isSelected(open)} onToggle={onToggle} onClose={() => setOpen(null)} /> : null;
   // Nothing to show once loaded: leave the section out instead of an empty block.
   if (status === "ready" && !items.length) return null;
   const tiered = items.some((item) => item.tier);
-  const card = (item) => <CatalogCard key={item.id || item.name} item={item} destination={destination} kind={kind} selected={selections.some((selected) => (selected.id || selected.name) === (item.id || item.name))} onToggle={onToggle} />;
+  const card = (item) => <CatalogCard key={item.id || item.name} item={item} destination={destination} kind={kind} selected={isSelected(item)} onToggle={onToggle} onOpen={setOpen} />;
   if (status === "ready" && tiered) {
     return <section id={id} className="scroll-mt-24 border-t border-black/10 px-6 py-14 sm:px-12 sm:py-20" aria-labelledby={`${id}-heading`}><div className="mx-auto grid max-w-[1180px] gap-8"><header>{step ? <p className="eyebrow">{step}</p> : null}<h2 id={`${id}-heading`} className="mt-3 font-serif text-[clamp(2.2rem,3.6vw,3.4rem)] leading-[.95] tracking-tight-3">{title}</h2></header>
       <TierGroups items={items} kind={kind} renderCard={card} />
-    </div></section>;
+    </div>{dialog}</section>;
   }
   const visibleLimit = initialLimit ? (expanded ? Math.min(items.length, initialLimit * 2) : initialLimit) : items.length;
   const visibleItems = items.slice(0, visibleLimit);
@@ -82,8 +92,8 @@ function CuratedSection({ id, title, step, items, selections, onToggle, kind, de
   return <section id={id} className="scroll-mt-24 border-t border-black/10 px-6 py-14 sm:px-12 sm:py-20" aria-labelledby={`${id}-heading`} aria-busy={status === "loading"}><div className="mx-auto grid max-w-[1180px] gap-8"><header>{step ? <p className="eyebrow">{step}</p> : null}<h2 id={`${id}-heading`} className="mt-3 font-serif text-[clamp(2.2rem,3.6vw,3.4rem)] leading-[.95] tracking-tight-3">{title}</h2></header>
     {status === "loading" ? <div role="status" className="grid min-h-56 place-items-center bg-surface-sunken text-sm text-ink">Loading {noun}…</div>
       : status === "error" ? <div role="alert" className="flex min-h-40 flex-col items-start justify-center gap-3 border-y border-black/15 py-7 text-sm"><p>We couldn&apos;t load {noun} just now.</p><button type="button" onClick={onRetry} className="inline-flex min-h-11 items-center border border-black/25 px-4 hover:border-black">Try again</button></div>
-      : <div><div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{visibleItems.map((item) => <CatalogCard key={item.id || item.name} item={item} destination={destination} kind={kind} selected={selections.some((selected) => (selected.id || selected.name) === (item.id || item.name))} onToggle={onToggle} />)}</div>{initialLimit && items.length > initialLimit ? <button type="button" onClick={() => setExpanded((value) => !value)} aria-expanded={expanded} className="mt-5 min-h-11 border-b border-black/25 pb-1 text-micro">{expanded ? `Show fewer ${noun}` : `Show all ${Math.min(items.length, initialLimit * 2)} ${noun}`}</button> : null}</div>}
-  </div></section>;
+      : <div><div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{visibleItems.map(card)}</div>{initialLimit && items.length > initialLimit ? <button type="button" onClick={() => setExpanded((value) => !value)} aria-expanded={expanded} className="mt-5 min-h-11 border-b border-black/25 pb-1 text-micro">{expanded ? `Show fewer ${noun}` : `Show all ${Math.min(items.length, initialLimit * 2)} ${noun}`}</button> : null}</div>}
+  </div>{dialog}</section>;
 }
 
 const LOAD_TIMEOUT = 9000;

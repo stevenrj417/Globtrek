@@ -72,6 +72,34 @@ export function HotelLiveDetails({ id }) {
   return <GoogleReviews google={data.google} />;
 }
 
+// Plain facts from the listing, as short tiles.
+function GoodToKnow({ facts }) {
+  if (!facts) return null;
+  const tiles = [
+    facts.freeCancellation ? ["Free cancellation", "On some rooms"] : null,
+    facts.freeBreakfast ? ["Breakfast", "Included on some rooms"] : null,
+    facts.freeWifi ? ["Wi-Fi", "Free"] : null,
+    facts.maxGuests ? ["Sleeps", `Up to ${facts.maxGuests}`] : null,
+    facts.bedrooms ? ["Bedrooms", String(facts.bedrooms)] : null,
+    facts.bathrooms ? ["Bathrooms", String(facts.bathrooms)] : null,
+    facts.beds ? ["Beds", facts.beds] : null,
+    facts.dorms ? ["Dorm beds", "Shared rooms available"] : null,
+  ].filter(Boolean);
+  if (!tiles.length) return null;
+  return <><h3 className="mt-12 font-serif text-2xl tracking-tight-2">Good to know</h3>
+    <dl className="mt-5 grid grid-cols-2 gap-px bg-black/10 sm:grid-cols-3">{tiles.map(([label, value]) => <div key={label} className="bg-bg p-4"><dt className="text-micro uppercase tracking-label text-subtle">{label}</dt><dd className="mt-1 text-sm">{value}</dd></div>)}</dl></>;
+}
+
+// The listing's description, a few lines with "Read more".
+function AboutText({ text }) {
+  const [more, setMore] = useState(false);
+  const long = text.length > 480;
+  return <>
+    <p className={`mt-4 whitespace-pre-line text-sm leading-7 ${long && !more ? "line-clamp-6" : ""}`}>{text}</p>
+    {long ? <button type="button" onClick={() => setMore(!more)} className="mt-2 min-h-11 text-sm underline underline-offset-4">{more ? "Show less" : "Read more"}</button> : null}
+  </>;
+}
+
 // The pop-up for one hotel on the results page.
 export function HotelDetailsDialog({ id, name, bookingUrl, onClose }) {
   const { status, data } = useHotelDetails(id);
@@ -102,11 +130,27 @@ export function HotelDetailsDialog({ id, name, bookingUrl, onClose }) {
         {data.reviews ? <><h3 className="mt-12 font-serif text-2xl tracking-tight-2">What guests say</h3>
         <div className="mt-5"><GoogleReviews google={data.google} /></div></> : null}
 
-        <h3 className="mt-12 font-serif text-2xl tracking-tight-2">What it has</h3>
+        <GoodToKnow facts={hotel.facts} />
+
+        {hotel.description ? <><h3 className="mt-12 font-serif text-2xl tracking-tight-2">About it</h3><AboutText text={hotel.description} /></> : null}
+
+        {hotel.roomTypes?.length ? <><h3 className="mt-12 font-serif text-2xl tracking-tight-2">Rooms</h3>
+        <ul className="mt-5 divide-y divide-black/10 border-y border-black/10 text-sm">{hotel.roomTypes.map((room) => <li key={room} className="py-3">{room}</li>)}</ul>
+        <p className="mt-3 text-xs leading-5">Room types on the hotel&apos;s listing. Prices and what&apos;s free for your dates are on Booking.com.</p></> : null}
+
+        <h3 className="mt-12 font-serif text-2xl tracking-tight-2">The basics</h3>
         <div className="mt-5"><AmenityChecklist checklist={hotel.checklist} /></div>
         <p className="mt-5 text-xs leading-5">From the hotel&apos;s Booking.com listing. &ldquo;Not listed&rdquo; means the listing doesn&apos;t mention it; ask the hotel if it matters.</p>
 
-        {hotel.description ? <><h3 className="mt-12 font-serif text-2xl tracking-tight-2">About it</h3><p className="mt-4 line-clamp-[10] text-sm leading-6">{hotel.description}</p></> : null}
+        {hotel.amenities?.length ? <details className="group mt-10 border-t border-black/10 pt-5">
+          <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between font-serif text-2xl tracking-tight-2">All {hotel.amenities.length} facilities<span aria-hidden="true" className="inline-block text-xl transition group-open:rotate-45">+</span></summary>
+          <ul className="mt-4 columns-1 gap-8 text-sm leading-7 sm:columns-2">{hotel.amenities.map((item) => <li key={item} className="break-inside-avoid">{item}</li>)}</ul>
+        </details> : null}
+
+        {hotel.accessibility?.length ? <><h3 className="mt-12 font-serif text-2xl tracking-tight-2">Accessibility</h3>
+        <ul className="mt-4 columns-1 gap-8 text-sm leading-7 sm:columns-2">{hotel.accessibility.map((item) => <li key={item} className="break-inside-avoid">{item}</li>)}</ul></> : null}
+
+        {hotel.dining && !/^restaurant\s*#?\d*$/i.test(hotel.dining.trim()) ? <><h3 className="mt-12 font-serif text-2xl tracking-tight-2">Eat and drink here</h3><p className="mt-4 text-sm leading-6">{hotel.dining}</p></> : null}
 
         <h3 className="mt-12 font-serif text-2xl tracking-tight-2">Where it is</h3>
         <ExploreMap className="mt-5" latitude={hotel.latitude} longitude={hotel.longitude} label={hotel.name} query={[hotel.name, hotel.city].filter(Boolean).join(", ")} zoomKm={1.2} height="h-[300px]" />
