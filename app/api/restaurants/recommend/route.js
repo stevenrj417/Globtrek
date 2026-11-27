@@ -37,7 +37,9 @@ export async function POST(request) {
   // with Google's live per-person price range, so the traveler sees the spread.
   const all = curatedRestaurants(destination.id || destination.airport);
   if (all.some((restaurant) => restaurant.tier)) return Response.json({ restaurants: await withPhotos(all.slice(0, 9), destination), source: "globtrek_curated_google_places", tiered: true, availabilitySource: "not_requested" });
-  const curated = all.filter((restaurant) => body.spendStyle === "comfortable" || !pricey(restaurant.priceLevel));
+  const affordable = all.filter((restaurant) => body.spendStyle === "comfortable" || !pricey(restaurant.priceLevel));
+  // Budget first, but never a list of one or two: top up with the pricier picks.
+  const curated = affordable.length >= 3 ? affordable : [...affordable, ...all.filter((restaurant) => !affordable.includes(restaurant))].slice(0, Math.max(3, affordable.length));
   if (curated.length) return Response.json({ restaurants: await withPhotos(curated.slice(0, 8), destination), source: "globtrek_curated_google_places", availabilitySource: "not_requested" });
   try {
     let restaurants = [];

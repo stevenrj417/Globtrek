@@ -109,8 +109,8 @@ export function DestinationSearchPanel({ onClose }) {
   // The header's backdrop blur makes it the containing block for fixed children,
   // so the dialog is mounted on the body to cover the real viewport.
   return createPortal(<>
-    {open ? <div className="fixed inset-0 z-[120] grid place-items-center bg-black/30 px-4 py-4 backdrop-blur-[3px]" onMouseDown={close}>
-      <section role="dialog" aria-modal="true" aria-label={destination ? `Personalize ${destination.city}` : anywhere ? `Pick a budget for ${anywhere.name}` : "Search destinations"} className="max-h-[calc(100dvh-2rem)] w-full max-w-2xl overflow-y-auto overscroll-contain bg-bg p-6 shadow-overlay sm:p-10" onMouseDown={(event) => event.stopPropagation()}>
+    {open ? <div className="fixed inset-0 z-[120] grid items-start justify-items-center bg-black/30 px-4 pb-4 pt-[max(1rem,8vh)] backdrop-blur-[3px]" onMouseDown={close}>
+      <section role="dialog" aria-modal="true" aria-label={destination ? `Personalize ${destination.city}` : anywhere ? `Pick a budget for ${anywhere.name}` : "Search destinations"} className="max-h-[calc(100dvh-max(1rem,8vh)-1rem)] w-full max-w-2xl overflow-y-auto overscroll-contain bg-bg p-6 shadow-overlay sm:p-10" onMouseDown={(event) => event.stopPropagation()}>
         <div className="flex items-start justify-between gap-6"><div><p className="text-micro uppercase tracking-editorial text-black">{destination ? "A quick edit" : anywhere ? "Pick your budget" : "Search GlobTrek"}</p><h2 className="mt-3 font-serif text-4xl tracking-tight-3 sm:text-5xl">{destination ? titleCase(destination.city) : anywhere ? anywhere.name : mode === "flights" ? "Find a flight." : "Where, or what?"}</h2></div><button type="button" onClick={close} aria-label="Close" className="grid h-10 w-10 place-items-center text-xl font-light">×</button></div>
         {!destination && !anywhere ? <div className="mt-7">
           <div role="tablist" aria-label="What to search" className="flex gap-2">
