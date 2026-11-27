@@ -1,5 +1,5 @@
 // A short "what it is" for every place matched to a Wikipedia article
-// (app/data/placePhotos.json): the article's opening paragraph, plain text,
+// (app/data/placePhotos.json and app/data/placeWikidata.json): the article's opening paragraph, plain text,
 // from the free Wikipedia API. Text is CC BY-SA; the details panel credits it
 // with a link to the article. Writes app/data/placeAbout.json. Resumes.
 //   node scripts/places/fetch-place-about.mjs
@@ -21,7 +21,10 @@ async function getJson(url) {
   throw new Error("Wikipedia did not answer");
 }
 
-const articles = [...new Set(Object.values(photos).map((photo) => photo.article))].filter((title) => !(title in out.about));
+// Also the articles Wikidata links to (scripts/places/fetch-wikidata-facts.mjs).
+let wikidata = {};
+try { wikidata = JSON.parse(await readFile(new URL("../../app/data/placeWikidata.json", import.meta.url), "utf8")).facts || {}; } catch {}
+const articles = [...new Set([...Object.values(photos).map((photo) => photo.article), ...Object.values(wikidata).map((fact) => fact.article)].filter(Boolean))].filter((title) => !(title in out.about));
 console.log(`${articles.length} articles to fetch`);
 for (let index = 0; index < articles.length; index += 20) {
   const batch = articles.slice(index, index + 20);

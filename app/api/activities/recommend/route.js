@@ -7,7 +7,11 @@ import { normalizeTravelerProfile } from "../../../lib/recommendation/travelerPr
 import { createClient } from "../../../lib/supabase/server";
 import { GooglePlacesDiscoveryProvider } from "../../../lib/google-places/GooglePlacesDiscoveryProvider";
 import { launchActivities } from "../../../data/launchSet";
-import { withPlacePhotos } from "../../../lib/google-places/placePhotos";
+import { withPlacePhotos as placePhotos } from "../../../lib/google-places/placePhotos";
+import { withPlaceFacts } from "../../../lib/places/placeFacts";
+
+// Free photo, then price level and "what it is" where the saved check left gaps.
+const withPlacePhotos = async (items) => withPlaceFacts(await placePhotos(items), "activity");
 
 // Sights with a free photo lead (stable: their curated order is kept otherwise).
 const photosFirst = (items) => [...items.filter((item) => item.imageUrl), ...items.filter((item) => !item.imageUrl)];

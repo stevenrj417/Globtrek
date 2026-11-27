@@ -5,7 +5,8 @@ import { Breadcrumb, Chip } from "../../components/TravelPage";
 import { BookItPanel } from "../../components/BookItPanel";
 import { BookingLogo } from "../../components/PartnerLogo";
 import { stayById } from "../../lib/search/stays";
-import { AmenityChecklist } from "../../components/HotelDetails";
+import { AmenityChecklist, HotelPriceLevel } from "../../components/HotelDetails";
+import { hotelPriceLevel } from "../../lib/hotels/priceLevel";
 import { ExploreMap } from "../../components/ExploreMap";
 import { amenityChecklist } from "../../lib/hotels/amenities";
 
@@ -48,6 +49,7 @@ export default async function HotelPage({ params }) {
         <p className="eyebrow">{where}</p>
         <h1 className="mt-3 text-balance font-serif text-[clamp(2.2rem,4.5vw,3.8rem)] font-normal leading-[0.98] tracking-tight-3">{stay.name}</h1>
         {stay.street ? <p className="mt-3 text-sm">{[stay.street, stay.city].filter(Boolean).join(", ")}</p> : null}
+        <HotelPriceLevel price={hotelPriceLevel(stay)} />
         {perks.length ? <ul className="mt-4 flex flex-wrap gap-1.5 text-xs">{perks.map((perk) => <li key={perk} className="border border-black/20 px-2 py-1">{perk}</li>)}</ul> : null}
         <div className="mt-7">
           <BookItPanel kind="stay" stay={{ bookingUrl: stay.bookingUrl }} planHref={`/plan?stay=${stay.id}&budget=${TIER_BUDGET[stay.tier] || "mid"}`} planLabel={`Plan a whole trip around it`} />

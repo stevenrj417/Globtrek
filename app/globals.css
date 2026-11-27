@@ -324,7 +324,8 @@ p, li, dd { text-wrap-style: pretty; }
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 /* Phones skip the slow zoom so the first photo shows at once. */
 @media (min-width: 640px) { .hero-drift { animation: hero-drift 2.4s cubic-bezier(.2,.7,.2,1) both; } }
-.rise { animation: rise .9s .25s cubic-bezier(.2,.7,.2,1) both; }
+.rise { animation: rise .45s cubic-bezier(.2,.7,.2,1) both; }
+@media (min-width: 640px) { .rise { animation: rise .9s .25s cubic-bezier(.2,.7,.2,1) both; } }
 @media (prefers-reduced-motion: reduce) { .hero-drift, .rise { animation: none; } }
 
 /* iPhone zooms the whole page when a field under 16px gets focus. On touch

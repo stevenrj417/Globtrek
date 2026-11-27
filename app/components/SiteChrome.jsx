@@ -8,7 +8,7 @@ import { BookingLogo } from "./PartnerLogo";
 import { BookingPartnerBadge } from "./PartnerLogo";
 
 const navigation = [["Trip ideas", "/trip-ideas"]];
-const mobileNavigation = [["Trip ideas", "/trip-ideas"], ["Surprise me", "/surprise"]];
+const mobileNavigation = [["Trip ideas", "/trip-ideas"], ["Surprise me", "/surprise"], ["Destinations", "/destinations"], ["Guides", "/guides"]];
 
 const footerGroups = [
   ["Plan", [["Plan my trip", "/discover"], ["Trip ideas", "/trip-ideas"], ["Surprise me", "/surprise"], ["Destinations", "/destinations"], ["Guides", "/guides"], ["How it works", "/how-it-works"]]],

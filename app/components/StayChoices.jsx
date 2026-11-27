@@ -48,7 +48,7 @@ function StayCard({ stay, destination, trip, selected, onSelect, priority, onDet
     <button type="button" onClick={() => onDetails(stay, url)} aria-label={`${stay.name}: photos, rooms and facilities`} className={`group relative block aspect-[4/3] w-full overflow-hidden bg-placeholder text-left ${selected ? "outline outline-2 outline-offset-4 outline-black" : ""}`}>
       {photo ? <Image src={photo} alt={`${stay.name}, photo from Booking.com`} fill priority={priority} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" /> : null}
       <span className="absolute left-3 top-3 bg-canvas px-2.5 py-1 text-micro font-medium uppercase tracking-label">{stay.role}</span>
-      <span className="absolute bottom-3 right-3 bg-canvas/95 px-2.5 py-1 text-micro font-medium uppercase tracking-label">Reviews &amp; details</span>
+      <span className="absolute bottom-3 right-3 bg-canvas/95 px-2.5 py-1 text-micro font-medium uppercase tracking-label">Photos &amp; details</span>
     </button>
     <div className="flex flex-1 flex-col pt-5">
       <h3 className="font-serif text-2xl leading-[1.05] tracking-tight-2"><button type="button" onClick={() => onDetails(stay, url)} className="text-left hover:underline">{stay.name}</button></h3>
@@ -86,7 +86,7 @@ function TierStays({ tiers, destination, trip, selectedStayId, onSelected, onDet
           {stay.image ? <span className="relative h-16 w-20 shrink-0 overflow-hidden bg-placeholder"><Image src={stay.image} alt={`${stay.name}, photo from Booking.com`} fill sizes="80px" className="object-cover" /></span> : null}
           <span className="min-w-0 flex-1">
             <button type="button" onClick={() => onDetails(stay, url)} className="block max-w-full truncate text-left font-medium hover:underline">{stay.name}</button>
-            <span className="block text-xs text-subtle">{[kindLabel(stay), stay.rating && stay.reviewCount ? `${Number(stay.rating).toFixed(1)}/${scale}` : null, stay.distanceKm !== null && stay.distanceKm !== undefined ? `${stay.distanceKm} km from center` : null].filter(Boolean).join(" · ")}</span>
+            <span className="block text-xs text-subtle">{[stay.priceLevel, kindLabel(stay), stay.rating && stay.reviewCount ? `${Number(stay.rating).toFixed(1)}/${scale}` : null, stay.distanceKm !== null && stay.distanceKm !== undefined ? `${stay.distanceKm} km from center` : null].filter(Boolean).join(" · ")}</span>
             <span className="mt-1 flex items-center gap-4 text-xs">
               <button type="button" aria-pressed={selected} onClick={() => { onSelected({ ...stay, role: group.label }, { automatic: false }); track("hotel_selected", { destination: destination.city, role: `tier_${group.tier}` }); }} className="min-h-8 underline underline-offset-4">{selected ? "Selected ✓" : "Select"}</button>
               {url ? <a href={url} target="_blank" rel="noopener sponsored" aria-label={`${stay.name} on Booking.com (opens in a new tab)`} onClick={() => track("stay_partner_opened", { destination: destination.city, role: `tier_${group.tier}` })} className="inline-flex min-h-8 items-center gap-1 underline underline-offset-4"><BookingLogo className="h-2.5 w-auto" /> ↗</a> : null}

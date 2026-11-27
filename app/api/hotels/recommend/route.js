@@ -11,6 +11,7 @@ import { normalizeTravelerProfile } from "../../../lib/recommendation/travelerPr
 import { createClient } from "../../../lib/supabase/server.js";
 import { verifiedStays } from "../../../data/launchStays.js";
 import { sharedRateLimit } from "../../../lib/security/rateLimit";
+import { hotelPriceLevel } from "../../../lib/hotels/priceLevel";
 
 export const runtime = "nodejs";
 
@@ -44,7 +45,7 @@ export async function POST(request) {
       notice,
       considered,
       // Three more per price tier for comparing; trimmed to what a card needs.
-      tiers: Object.fromEntries(Object.entries(tiers).map(([tier, list]) => [tier, list.map((stay) => ({ id: stay.id, name: stay.name, category: stay.category || null, starRating: stay.starRating || null, dorms: Boolean(stay.dorms), rating: stay.rating || null, reviewCount: stay.reviewCount || null, distanceKm: stay.distanceKm ?? null, bookingUrl: stay.bookingUrl, cjTrackingBaseUrl: stay.cjTrackingBaseUrl || null, providerPropertyId: stay.providerPropertyId || null, image: stay.image || stay.photos?.[0] || null, price: stay.price, tier }))])),
+      tiers: Object.fromEntries(Object.entries(tiers).map(([tier, list]) => [tier, list.map((stay) => ({ id: stay.id, name: stay.name, category: stay.category || null, starRating: stay.starRating || null, dorms: Boolean(stay.dorms), rating: stay.rating || null, reviewCount: stay.reviewCount || null, distanceKm: stay.distanceKm ?? null, bookingUrl: stay.bookingUrl, cjTrackingBaseUrl: stay.cjTrackingBaseUrl || null, providerPropertyId: stay.providerPropertyId || null, image: stay.image || stay.photos?.[0] || null, price: stay.price, priceLevel: hotelPriceLevel({ ...stay, destinationId: stay.destinationId || destination.id })?.level || null, tier }))])),
       catalog: { source: catalog.source, checkedAt: catalog.checkedAt },
       liveRates: BookingComDemandHotelProvider.isConfigured(),
       budget: { month: budgetPlan.lodging.month, perNight: budgetPlan.lodging.perNight, unit: budgetPlan.lodging.unit, units: budgetPlan.lodging.units, nights: budgetPlan.lodging.nights, total: budgetPlan.lodging.total, priceKind: budgetPlan.lodging.priceKind, name: budgetPlan.lodging.name },

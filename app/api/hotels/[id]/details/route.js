@@ -1,5 +1,6 @@
 import { createPlacesClient, PlacesError } from "../../../../lib/anyplace/google";
 import { amenityChecklist, googleMapsSearchUrl } from "../../../../lib/hotels/amenities";
+import { hotelPriceLevel } from "../../../../lib/hotels/priceLevel";
 import { isStayId, stayById } from "../../../../lib/search/stays";
 import { fromRow } from "../../../../lib/catalog/catalogStore";
 import { createClient } from "../../../../lib/supabase/server";
@@ -90,6 +91,7 @@ export async function GET(request, { params }) {
       amenities: facilityList(stay.amenities), dining: stay.dining || null,
       facts: { freeCancellation: Boolean(stay.freeCancellation), freeBreakfast: Boolean(stay.freeBreakfast), freeWifi: Boolean(stay.freeWifi), bedrooms: stay.bedrooms || null, bathrooms: stay.bathrooms || null, maxGuests: stay.maxGuests || null, beds: stay.bedsDescription || null, dorms: Boolean(stay.dorms), nearAirport: stay.nearAirport || null },
       mapUrl: googleMapsSearchUrl(stay),
+      priceLevel: hotelPriceLevel(stay),
     },
     google,
     reviews: GOOGLE_REVIEWS,

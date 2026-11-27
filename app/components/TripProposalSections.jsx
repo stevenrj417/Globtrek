@@ -34,11 +34,11 @@ function CatalogCard({ item, selected, onToggle, onOpen, kind, destination }) {
   const [broken, setBroken] = useState(false);
   const verifiedImage = broken ? null : safeImage(item);
   const meta = kind === "restaurant"
-    ? [(item.category && !/^restaurant$/i.test(item.category) ? titleWords(String(item.category).replace(/_/g, " ")) : null) || (Array.isArray(item.cuisine) ? item.cuisine.slice(0, 2).join(" · ") : item.cuisine), item.neighborhood, item.rating ? `★ ${Number(item.rating).toFixed(1)}` : null, item.priceRange ? `${item.priceRange.currency} ${item.priceRange.low}${item.priceRange.high ? `–${item.priceRange.high}` : "+"} per person` : LEVEL_SIGN[item.priceLevel] || null]
-    : [item.category ? String(item.category).replace(/_/g, " ") : null, item.rating ? `★ ${Number(item.rating).toFixed(1)}` : null, item.isFree ? "Free" : null];
+    ? [(item.category && !/^restaurant$/i.test(item.category) ? titleWords(String(item.category).replace(/_/g, " ")) : null) || (Array.isArray(item.cuisine) ? item.cuisine.slice(0, 2).join(" · ") : item.cuisine), item.neighborhood, item.rating ? `★ ${Number(item.rating).toFixed(1)}` : null, item.priceRange ? `${item.priceRange.currency} ${item.priceRange.low}${item.priceRange.high ? `–${item.priceRange.high}` : "+"} per person` : LEVEL_SIGN[item.priceLevel] || item.priceSign || null]
+    : [item.category ? String(item.category).replace(/_/g, " ") : null, item.rating ? `★ ${Number(item.rating).toFixed(1)}` : null, item.isFree ? "Free" : item.priceSign || null];
   const description = item.description || (item.about ? item.about.split("\n")[0] : null);
   const sourceUrl = item.imageSourceUrl || item.imageLicenseMetadata?.sourcePageUrl || null;
-  return <article className={`group relative flex flex-col overflow-hidden border border-black/8 transition duration-300 ${selected ? "bg-placeholder shadow-hover" : "bg-surface hover:bg-surface-sunken"}`}>
+  return <article className={`group relative flex w-[82%] shrink-0 snap-start flex-col overflow-hidden border sm:w-auto border-black/8 transition duration-300 ${selected ? "bg-placeholder shadow-hover" : "bg-surface hover:bg-surface-sunken"}`}>
     <button type="button" onClick={() => onOpen(item)} aria-label={`About ${item.name}`} className="block w-full text-left">
       {verifiedImage ? <span className="relative block aspect-[4/3] overflow-hidden bg-placeholder">
         <Image src={verifiedImage} alt={item.imageIsExample ? `${item.exampleDish || item.cuisineLabel || "Food"}, an example dish` : `${item.name}, ${destination.city}`} fill sizes="(min-width:1280px) 22vw,(min-width:640px) 45vw,100vw" className="object-cover transition duration-700 motion-reduce:transition-none group-hover:scale-[1.02]" onError={() => setBroken(true)} />
@@ -50,7 +50,7 @@ function CatalogCard({ item, selected, onToggle, onOpen, kind, destination }) {
       <button type="button" onClick={() => onToggle(item)} aria-pressed={selected} aria-label={`${selected ? "Remove" : "Add"} ${item.name} ${selected ? "from" : "to"} your trip`} className="inline-flex min-h-11 items-center text-micro font-medium uppercase tracking-label">{selected ? "Added to your trip ✓" : "Add to trip +"}</button>
       <button type="button" onClick={() => onOpen(item)} className="inline-flex min-h-11 items-center text-micro text-subtle underline underline-offset-4 hover:text-ink" aria-label={`Details about ${item.name}`}>Details</button>
     </div>
-    {verifiedImage && sourceUrl ? <a href={sourceUrl} target="_blank" rel="noopener" title={item.imageCredit ? `Photo: ${item.imageCredit}, via Wikimedia Commons` : undefined} className="absolute left-2 top-2 z-10 inline-flex min-h-6 max-w-[calc(100%-1rem)] items-center bg-black/65 px-2 text-micro text-white"><span className="truncate">{item.imageIsExample ? "Example dish · " : "Photo: "}{item.imageCredit || "Wikimedia Commons"}</span>&nbsp;↗<span className="sr-only"> (opens in a new tab)</span></a> : null}
+    {verifiedImage && sourceUrl ? <a href={sourceUrl} target="_blank" rel="noopener" title={item.imageCredit ? `Photo: ${item.imageCredit}, via Wikimedia Commons` : undefined} className="absolute left-2 top-2 z-10 inline-flex min-h-6 max-w-[calc(100%-1rem)] items-center bg-black/45 px-1.5 text-[10px] leading-none text-white/95 backdrop-blur-sm"><span className="truncate">{item.imageIsExample ? "Example dish · " : "Photo: "}{item.imageCredit || "Wikimedia Commons"}</span>&nbsp;↗<span className="sr-only"> (opens in a new tab)</span></a> : null}
   </article>;
 }
 
@@ -68,7 +68,7 @@ function TierGroups({ items, kind, renderCard }) {
   if (other.length) groups.push({ tier: "other", label: kind === "restaurant" ? "More local favorites" : "More to see", sign: null, items: other.slice(0, 3) });
   return <div className="space-y-8">{groups.map((group) => <div key={group.tier}>
     <h3 className="mb-3 flex items-baseline gap-2 text-micro uppercase tracking-label">{group.label}{group.sign ? <span className="tabular text-subtle" aria-hidden="true">{group.sign}</span> : null}</h3>
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{group.items.map(renderCard)}</div>
+    <div className="-mx-6 flex snap-x snap-mandatory scroll-px-6 gap-3 overflow-x-auto px-6 pb-1 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-4 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-3">{group.items.map(renderCard)}</div>
   </div>)}</div>;
 }
 
@@ -92,7 +92,7 @@ function CuratedSection({ id, title, step, items, selections, onToggle, kind, de
   return <section id={id} className="scroll-mt-24 border-t border-black/10 px-6 py-14 sm:px-12 sm:py-20" aria-labelledby={`${id}-heading`} aria-busy={status === "loading"}><div className="mx-auto grid max-w-[1180px] gap-8"><header>{step ? <p className="eyebrow">{step}</p> : null}<h2 id={`${id}-heading`} className="mt-3 font-serif text-[clamp(2.2rem,3.6vw,3.4rem)] leading-[.95] tracking-tight-3">{title}</h2></header>
     {status === "loading" ? <div role="status" className="grid min-h-56 place-items-center bg-surface-sunken text-sm text-ink">Loading {noun}…</div>
       : status === "error" ? <div role="alert" className="flex min-h-40 flex-col items-start justify-center gap-3 border-y border-black/15 py-7 text-sm"><p>We couldn&apos;t load {noun} just now.</p><button type="button" onClick={onRetry} className="inline-flex min-h-11 items-center border border-black/25 px-4 hover:border-black">Try again</button></div>
-      : <div><div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{visibleItems.map(card)}</div>{initialLimit && items.length > initialLimit ? <button type="button" onClick={() => setExpanded((value) => !value)} aria-expanded={expanded} className="mt-5 min-h-11 border-b border-black/25 pb-1 text-micro">{expanded ? `Show fewer ${noun}` : `Show all ${Math.min(items.length, initialLimit * 2)} ${noun}`}</button> : null}</div>}
+      : <div><div className="-mx-6 flex snap-x snap-mandatory scroll-px-6 gap-3 overflow-x-auto px-6 pb-1 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-4 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-3">{visibleItems.map(card)}</div>{initialLimit && items.length > initialLimit ? <button type="button" onClick={() => setExpanded((value) => !value)} aria-expanded={expanded} className="mt-5 min-h-11 border-b border-black/25 pb-1 text-micro">{expanded ? `Show fewer ${noun}` : `Show all ${Math.min(items.length, initialLimit * 2)} ${noun}`}</button> : null}</div>}
   </div>{dialog}</section>;
 }
 

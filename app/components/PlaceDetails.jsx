@@ -32,7 +32,9 @@ export function PlaceDetailsDialog({ item, kind, destination, selected, onToggle
   }, [onClose]);
   const city = destination.city;
   const type = titleWords(String(item.category || (kind === "restaurant" ? "Restaurant" : "Things to do")).replace(/_/g, " "));
-  const price = TIER[item.tier] || LEVEL[item.priceLevel] || null;
+  const fromFacts = item.priceInfo && (!TIER[item.tier] || item.tier === "ticketed") && !LEVEL[item.priceLevel];
+  const price = fromFacts ? `${item.priceInfo.sign} · ${item.priceInfo.label}` : TIER[item.tier] || LEVEL[item.priceLevel] || null;
+  const priceNote = fromFacts ? (item.priceInfo.basis === "wikidata" ? "Fee as listed on Wikidata; it may have changed." : `Typical for this kind of ${kind === "restaurant" ? "place" : "sight"}, not a price GlobTrek checked.`) : null;
   const mapsUrl = item.googleMapsUrl && /^https:\/\/(maps\.google\.com|www\.google\.com\/maps)/.test(item.googleMapsUrl) ? item.googleMapsUrl : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([item.name, titleWords(city)].join(", "))}`;
   const website = item.websiteUrl && /^https?:\/\//.test(item.websiteUrl) ? item.websiteUrl : null;
   const latitude = Number(item.latitude);
@@ -54,20 +56,21 @@ export function PlaceDetailsDialog({ item, kind, destination, selected, onToggle
           {item.rating ? <p><span className="tabular font-serif text-2xl">{Number(item.rating).toFixed(1)}</span> <Stars value={item.rating} />{item.reviewCount ? <span className="text-subtle"> · {Number(item.reviewCount).toLocaleString("en-US")} reviews</span> : null}<span className="sr-only"> out of 5</span></p> : null}
           {price ? <p className="tabular">{price}</p> : null}
         </div>
-        {item.rating ? <p className="mt-1 text-xs text-subtle">Rating from Google Maps when GlobTrek last checked.</p> : null}
+        {item.rating || priceNote ? <p className="mt-1 text-xs text-subtle">{[item.rating ? "Rating from Google Maps when GlobTrek last checked." : null, priceNote].filter(Boolean).join(" ")}</p> : null}
+        {!price && kind === "restaurant" ? <p className="mt-1 text-xs text-subtle">Price level not listed; check the menu on their website.</p> : null}
         {item.location ? <p className="mt-4 text-sm leading-6">{item.location}</p> : null}
 
-        <div className="mt-7 flex flex-wrap gap-2">
-          <button type="button" onClick={() => onToggle(item)} aria-pressed={selected} className={`inline-flex min-h-12 items-center px-6 text-micro font-medium uppercase tracking-label ${selected ? "border border-black" : "bg-black text-white"}`}>{selected ? "Added to your trip ✓" : "Add to trip"}</button>
-          {website ? <a href={website} target="_blank" rel="noopener nofollow" className="inline-flex min-h-12 items-center border border-black/20 px-5 text-micro font-medium uppercase tracking-label hover:border-black">Website ↗</a> : null}
-          <a href={mapsUrl} target="_blank" rel="noopener" className="inline-flex min-h-12 items-center border border-black/20 px-5 text-micro font-medium uppercase tracking-label hover:border-black">Google Maps ↗</a>
+        <div className="mt-7 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
+          <button type="button" onClick={() => onToggle(item)} aria-pressed={selected} className={`col-span-2 inline-flex min-h-12 items-center justify-center px-6 text-micro font-medium uppercase tracking-label ${selected ? "border border-black" : "bg-black text-white"}`}>{selected ? "Added to your trip ✓" : "Add to trip"}</button>
+          {website ? <a href={website} target="_blank" rel="noopener nofollow" className="inline-flex min-h-12 items-center justify-center border border-black/20 px-5 text-micro font-medium uppercase tracking-label hover:border-black">Website ↗</a> : null}
+          <a href={mapsUrl} target="_blank" rel="noopener" className={`${website ? "" : "col-span-2 "}inline-flex min-h-12 items-center justify-center border border-black/20 px-5 text-micro font-medium uppercase tracking-label hover:border-black`}>Google Maps ↗</a>
         </div>
 
         <h3 className="mt-12 font-serif text-2xl tracking-tight-2">{kind === "restaurant" ? "About the restaurant" : "What it is"}</h3>
         {item.about ? <>
           {item.about.split(/\n+/).map((paragraph, index) => <p key={index} className="mt-4 text-sm leading-7">{paragraph}</p>)}
           <p className="mt-4 text-xs text-subtle">From <a href={item.aboutSourceUrl} target="_blank" rel="noopener" className="underline">Wikipedia</a>, CC BY-SA 4.0.</p>
-        </> : <p className="mt-4 text-sm leading-7">{item.description || summary(item, kind, city)} {kind === "restaurant" ? "Check the menu, hours and booking on their website or Google Maps before you go." : "Check opening hours and tickets on their website before you go."}</p>}
+        </> : <p className="mt-4 text-sm leading-7">{item.description || summary(item, kind, city)}{item.descriptionSource ? <> <span className="text-xs text-subtle">(<a href={item.descriptionSource} target="_blank" rel="noopener" className="underline">Wikidata</a>)</span></> : null} {kind === "restaurant" ? "Check the menu, hours and booking on their website or Google Maps before you go." : "Check opening hours and tickets on their website before you go."}</p>}
 
         {Number.isFinite(latitude) && Number.isFinite(longitude) ? <>
           <h3 className="mt-12 font-serif text-2xl tracking-tight-2">Where it is</h3>

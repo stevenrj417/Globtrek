@@ -5,6 +5,7 @@ import { createClient } from "../../../lib/supabase/server";
 import { GooglePlacesDiscoveryProvider } from "../../../lib/google-places/GooglePlacesDiscoveryProvider";
 import { launchDinners } from "../../../data/launchSet";
 import { withPlacePhotos as placePhotos } from "../../../lib/google-places/placePhotos";
+import { withPlaceFacts } from "../../../lib/places/placeFacts";
 import { withCuisinePhotos } from "../../../lib/places/cuisinePhotos";
 import { curatedRestaurants } from "../../../lib/places/curated";
 import { sharedRateLimit } from "../../../lib/security/rateLimit";
@@ -19,7 +20,7 @@ function pricey(level) {
 // The place's own photo when there is one; otherwise a food photo of its
 // cuisine, never the same photo twice in one list.
 async function withPhotos(items, destination) {
-  return withCuisinePhotos(await placePhotos(items), destination);
+  return withCuisinePhotos(withPlaceFacts(await placePhotos(items), "restaurant"), destination);
 }
 
 export async function POST(request) {

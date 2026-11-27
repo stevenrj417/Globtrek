@@ -72,6 +72,16 @@ export function HotelLiveDetails({ id }) {
   return <GoogleReviews google={data.google} />;
 }
 
+// $ to $$$$ and the typical nightly price for this kind of stay in its city
+// (app/lib/hotels/priceLevel.js), never presented as the hotel's own rate.
+export function HotelPriceLevel({ price, className = "mt-5" }) {
+  if (!price?.level) return null;
+  return <div className={className}>
+    <p className="text-sm"><span className="tabular font-serif text-2xl">{price.level}</span> <span>{price.words}</span>{price.label ? <span> · {price.label}{price.unit === "bed" ? " for a bed" : ""}</span> : null}</p>
+    <p className="mt-1 text-xs text-subtle">{price.basis}</p>
+  </div>;
+}
+
 // Plain facts from the listing, as short tiles.
 function GoodToKnow({ facts }) {
   if (!facts) return null;
@@ -125,6 +135,7 @@ export function HotelDetailsDialog({ id, name, bookingUrl, onClose }) {
         <p className="mt-8 text-micro uppercase tracking-label">{[hotel.stars ? `${hotel.stars}-star` : null, hotel.category, hotel.city].filter(Boolean).join(" · ")}</p>
         <h2 className="mt-2 font-serif text-4xl leading-none tracking-tight-3">{hotel.name}</h2>
         {hotel.street ? <p className="mt-2 text-sm">{hotel.street}</p> : null}
+        <HotelPriceLevel price={hotel.priceLevel} />
         {bookingUrl ? <a href={bookingUrl} target="_blank" rel="noopener sponsored" className="mt-6 inline-flex min-h-12 items-center gap-2 bg-black px-6 text-micro font-medium uppercase tracking-label text-white">See rooms on <BookingLogo className="h-3 w-auto invert" /> ↗</a> : null}
 
         {data.reviews ? <><h3 className="mt-12 font-serif text-2xl tracking-tight-2">What guests say</h3>
