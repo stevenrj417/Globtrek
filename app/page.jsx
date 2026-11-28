@@ -24,7 +24,6 @@ export default function Home() {
           <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black/70 via-black/30 to-transparent" aria-hidden="true" />
           <div className="rise absolute inset-x-0 bottom-0 flex flex-col items-center px-5 pb-12 text-center sm:pb-16 lg:pb-20">
             <h1 className="max-w-4xl font-serif text-[clamp(2.6rem,7vw,6.5rem)] font-normal leading-[0.92] tracking-tight-3 text-white [text-shadow:0_2px_24px_rgba(0,0,0,.35)]">Where to next?</h1>
-            <p className="mt-5 max-w-md text-base leading-7 text-white/90">Tell us how you like to travel. We&apos;ll find the place.</p>
             <div className="mt-8 flex w-full flex-col items-center gap-3">
               <DestinationSearch variant="hero" />
               <div className="flex flex-col items-center gap-2">
